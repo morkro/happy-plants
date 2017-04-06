@@ -1,0 +1,11 @@
+/* TEAM */
+Developer: Moritz Kröger
+Contact: write@morkro.de
+Location: Berlin, Germany
+
+/* SITE */
+Last Update: XX.XX.2017
+Language: English
+Standards: HTML5, CSS3, JavaScript
+Components: Vue.js
+Software: Atom.io
