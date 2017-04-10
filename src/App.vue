@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>Happy Plants 🌵</h1>
     <router-view></router-view>
   </div>
 </template>
@@ -28,5 +27,12 @@
     // Enable best font rendering
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+  }
+
+  #app {
+    width: 80vw;
+    max-width: 1400px;
   }
 </style>
