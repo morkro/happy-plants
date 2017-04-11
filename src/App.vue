@@ -10,9 +10,10 @@
   }
 </script>
 
-<style src="../node_modules/normalize.css/normalize.css"></style>
 <style lang="scss">
-  @import "./styles/typography.scss";
+  @import "../node_modules/normalize.css/normalize";
+  @import "./styles/typography";
+  @import "./styles/buttons";
 
   // General
   * {
@@ -22,11 +23,6 @@
   }
 
   body {
-    font-weight: 400;
-    text-rendering: geometricPrecision;
-    // Enable best font rendering
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     display: flex;
     justify-content: center;
   }

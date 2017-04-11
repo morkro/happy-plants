@@ -1,11 +1,13 @@
 <template>
   <main>
-    <h1>Happy Plants 🌵</h1>
-    <router-link :to="{ path: 'settings' }">
-      <button>Settings</button>
-    </router-link>
-    <router-link :to="{ path: 'plant/add' }">
-      <button>Add a plant</button>
+    <header>
+      <h1>Happy Plants 🌵</h1>
+      <router-link :to="{ path: 'settings' }">
+        Settings
+      </router-link>
+    </header>
+    <router-link :to="{ path: 'plant/add' }" class="add-plant">
+      + Add a plant
     </router-link>
     <div v-if="plants.length <= 0">
       <p>Looks like you haven't added any plants yet.</p>
@@ -31,3 +33,17 @@
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  @import "../../styles/variables";
+
+  .add-plant {
+    background: $light-grey;
+    display: block;
+    border-radius: $border-radius;
+    color: $text-base-color;
+    text-align: center;
+    padding: 1.5vh;
+    font-weight: 700;
+  }
+</style>

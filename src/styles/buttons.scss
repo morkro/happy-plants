@@ -1,0 +1,10 @@
+@import "./variables";
+
+button {
+  font-size: $text-base-size;
+  border: none;
+
+  &.rounded {
+    border-radius: $border-radius;
+  }
+}

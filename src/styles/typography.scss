@@ -1,4 +1,23 @@
+@import "./variables";
+
+body {
+  font-family: $Asap;
+  font-size: $text-base-size;
+  font-weight: 400;
+  color: $text-base-color;
+  text-rendering: geometricPrecision;
+  // Enable best font rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+}
+
 h1 {
   margin: 0;
   font-weight: 700;
+  color: $text-special-color;
 }
