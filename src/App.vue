@@ -12,7 +12,9 @@
 
 <style lang="scss">
   @import "../node_modules/normalize.css/normalize";
+  @import "./styles/fonts";
   @import "./styles/typography";
+  @import "./styles/forms";
   @import "./styles/buttons";
 
   // General
@@ -28,7 +30,7 @@
   }
 
   #app {
-    width: 80vw;
+    width: 90vw;
     max-width: 1400px;
   }
 </style>

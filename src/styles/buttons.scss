@@ -1,8 +1,10 @@
 @import "./variables";
 
 button {
+  background: $blue;
   font-size: $text-base-size;
   border: none;
+  padding: 1.5vh 3vw;
 
   &.rounded {
     border-radius: $border-radius;
