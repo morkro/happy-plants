@@ -30,7 +30,8 @@
   }
 
   #app {
-    width: 90vw;
+    width: 100vw;
     max-width: 1400px;
+    height: 100vh;
   }
 </style>

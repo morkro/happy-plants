@@ -2,9 +2,10 @@
 
 body {
   font-family: $Asap;
-  font-size: $text-base-size;
+  font-size: $text-size-base;
   font-weight: 400;
-  color: $text-base-color;
+  color: $text-color-base;
+  line-height: 120%;
   text-rendering: geometricPrecision;
   // Enable best font rendering
   -webkit-font-smoothing: antialiased;
@@ -19,5 +20,6 @@ a {
 h1 {
   margin: 0;
   font-weight: 700;
-  color: $text-special-color;
+  font-size: $text-size-large;
+  color: $text-color-special;
 }
