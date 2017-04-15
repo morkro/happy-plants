@@ -1,10 +1,16 @@
 <template>
   <main>
-    <h1>Settings</h1>
-    <router-link :to="{ path: '/' }">
-      <button>Back to overview</button>
-    </router-link>
-    Customise your experience
+    <header class="page-header">
+      <h1>Settings</h1>
+      <router-link :to="{ path: '/' }">
+        <button>Back to overview</button>
+      </router-link>
+    </header>
+
+    <section>
+      export data<br />
+      show scientific name instead<br />
+    </section>
   </main>
 </template>
 

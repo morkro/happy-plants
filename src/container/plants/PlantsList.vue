@@ -1,10 +1,10 @@
 <template>
   <main>
-    <header>
-      <h1>Happy Plants 🌵</h1>
-      <router-link :to="{ path: 'settings' }">
-        Settings
-      </router-link>
+    <header class="page-header">
+      <h1>🌵 Happy Plants</h1>
+      <div class="header-controls">
+        <settings-button />
+      </div>
     </header>
 
     <section>
@@ -18,13 +18,12 @@
 
       <ul v-if="plants.length" class="plant-list">
         <li v-for="plant in plants">
-          <router-link :to="{ path: `plant/${plant.guid}` }">
-            <div class="list-content">
-              <h1>{{ plant.name }}</h1>
-              <span>Scientific name</span>
-            </div>
-            <img :src="plant.imageUrl" :alt="plant.name" />
-          </router-link>
+          <plant-preview
+            :guid="plant.guid"
+            :name="plant.name"
+            :imageURL="plant.imageURL"
+            :scientific="plant.scientific"
+          />
         </li>
       </ul>
     </section>
@@ -34,36 +33,36 @@
 <script>
   import blobUtil from 'blob-util'
   import localforage from 'localforage'
+  import SettingsButton from '@/components/SettingsButton'
+  import PlantPreview from '@/components/PlantPreview'
   export default {
     name: 'PlantsList',
-    methods: {
-      getPlants () {
-        localforage.keys()
-          .then(keys => keys.filter(k => k.startsWith('plant-')))
-          .then(keys => Promise.all(keys.map(p => localforage.getItem(p))))
-          .then(plants => plants.map(this.addImageUrl))
-          .then(plants => {
-            this.plants = plants
-          })
-      },
-      addImageUrl (obj) {
-        return Object.assign({}, obj, {
-          imageUrl: blobUtil.createObjectURL(obj.blob)
-        })
-      }
+    components: {
+      'settings-button': SettingsButton,
+      'plant-preview': PlantPreview
     },
-    filters: {
-      toUrl (blob) {
-        return blobUtil.createObjectURL(blob)
-      }
+    beforeRouteEnter (to, from, next) {
+      localforage.keys()
+        // grab all entries starting with 'plant-'
+        .then(keys =>
+          keys.filter(k => k.startsWith('plant-')))
+        // load each entry from IndexedDB
+        .then(keys =>
+          Promise.all(keys.map(p => localforage.getItem(p))))
+        // modify entries with an image URL from blob
+        .then(plants =>
+          plants.map(p => ({
+            ...p,
+            imageURL: blobUtil.createObjectURL(p.blob)
+          })))
+        // pass data to soon-to-be created view
+        .then(plants =>
+          next(vm => { vm.plants = plants }))
     },
     data () {
       return {
         plants: []
       }
-    },
-    created () {
-      this.getPlants()
     }
   }
 </script>
@@ -76,21 +75,16 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-  }
-
-  header {
-    padding: 2vh 5vw;
-    border-bottom: 1px solid $light-grey200;
+    background: $light-grey;
   }
 
   section {
     height: 100%;
     padding: 0 5vw;
-    background: $light-grey;
   }
 
   .add-plant {
-    background: $light-grey;
+    background: rgba(0, 0, 0, .05);
     display: block;
     border-radius: $border-radius;
     color: $text-color-base;
@@ -112,39 +106,6 @@
       height: 42.5vw;
       margin-bottom: 2vh;
       box-shadow: 0px 1px 12px rgba(0, 0, 0, .1);
-
-      a {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: $border-radius;
-        overflow: hidden;
-      }
-    }
-
-    img {
-      flex-shrink: 0;
-      min-width: 100%;
-      min-height: 100%;
-    }
-
-    .list-content {
-      position: absolute;
-      color: white;
-      width: 100%;
-      bottom: 0;
-      left: 0;
-      padding: 10px;
-      font-size: $text-size-small;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
-
-      h1 {
-        color: white;
-        font-size: $text-size-base;
-      }
     }
   }
 </style>

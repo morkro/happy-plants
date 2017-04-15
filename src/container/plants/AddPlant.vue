@@ -1,9 +1,12 @@
 <template>
   <main>
-    <h1>+🌵 Add a new plant</h1>
-    <router-link :to="{ path: '/' }">
-      Back to overview
-    </router-link>
+    <header class="page-header">
+      <h1>+🌵 Add a new plant</h1>
+      <router-link :to="{ path: '/' }">
+        Back to overview
+      </router-link>
+    </header>
+
     <form @submit.prevent="validateForm">
       <label for="name">
         <span>What's your plants name?</span>
@@ -47,7 +50,8 @@
       },
       saveData (blob) {
         const guid = uuid()
-        localforage.setItem(`plant-${guid}`, { guid, name: this.name, blob })
+        const config = { guid, name: this.name, blob, scientific: this.scientific }
+        localforage.setItem(`plant-${guid}`, config)
           .then(what => console.log(what))
       },
       showError (error) {

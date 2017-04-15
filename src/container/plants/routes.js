@@ -1,5 +1,6 @@
 import PlantsList from './PlantsList'
 import AddPlant from './AddPlant'
+import PlantView from './PlantView'
 
 export default [
   {
@@ -14,6 +15,7 @@ export default [
   },
   {
     path: '/plant/:id',
-    name: 'PlantView'
+    name: 'PlantView',
+    component: PlantView
   }
 ]

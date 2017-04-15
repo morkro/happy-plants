@@ -1,0 +1,14 @@
+@import "./variables";
+
+.page-header {
+  background: white;
+  padding: 2vh 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    text-transform: uppercase;
+    color: $text-color-base;
+  }
+}
