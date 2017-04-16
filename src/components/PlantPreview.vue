@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  import localforage from 'localforage'
   import router from '@/router'
   export default {
     name: 'PlantPreview',
@@ -25,8 +24,7 @@
         router.push(`plant/${this.guid}`)
       },
       deleteElement () {
-        localforage.removeItem(`plant-${this.guid}`)
-          .then(() => this.$forceUpdate())
+        this.$emit('delete-plant', [this.guid])
       }
     }
   }

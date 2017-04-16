@@ -24,6 +24,7 @@
       <ul v-if="plants.length" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
+            @delete-plant="deleteElementFromList"
             :configMode="filter"
             :guid="plant.guid"
             :name="plant.name"
@@ -37,10 +38,10 @@
 </template>
 
 <script>
-  import blobUtil from 'blob-util'
   import localforage from 'localforage'
   import SettingsButton from '@/components/SettingsButton'
   import PlantPreview from '@/components/PlantPreview'
+  import { getAllPlants } from '@/utils/localforage'
   export default {
     name: 'PlantsList',
     components: {
@@ -48,26 +49,15 @@
       'plant-preview': PlantPreview
     },
     beforeRouteEnter (to, from, next) {
-      localforage.keys()
-        // grab all entries starting with 'plant-'
-        .then(keys =>
-          keys.filter(k => k.startsWith('plant-')))
-        // load each entry from IndexedDB
-        .then(keys =>
-          Promise.all(keys.map(p => localforage.getItem(p))))
-        // modify entries with an image URL from blob
-        .then(plants =>
-          plants.map(p => ({
-            ...p,
-            imageURL: blobUtil.createObjectURL(p.blob)
-          })))
-        // pass data to soon-to-be created view
-        .then(plants =>
-          next(vm => { vm.plants = plants }))
+      getAllPlants(plants => next(vm => { vm.plants = plants }))
     },
     methods: {
       toggleFilter () {
         this.filter = !this.filter
+      },
+      deleteElementFromList (args) {
+        localforage.removeItem(`plant-${args[0]}`)
+          .then(() => getAllPlants(plants => { this.plants = plants }))
       }
     },
     data () {
