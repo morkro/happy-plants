@@ -9,4 +9,9 @@ button {
   &.rounded {
     border-radius: $border-radius;
   }
+
+  &.icon {
+    background: transparent;
+    padding: 0;
+  }
 }

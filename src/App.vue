@@ -33,6 +33,7 @@
   #app {
     width: 100vw;
     max-width: 1400px;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
   }
 </style>

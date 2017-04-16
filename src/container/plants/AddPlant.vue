@@ -33,6 +33,8 @@
   import blobUtil from 'blob-util'
   import localforage from 'localforage'
   import uuid from 'uuid/v4'
+  import router from '@/router'
+
   export default {
     name: 'AddPlant',
     methods: {
@@ -52,7 +54,10 @@
         const guid = uuid()
         const config = { guid, name: this.name, blob, scientific: this.scientific }
         localforage.setItem(`plant-${guid}`, config)
-          .then(what => console.log(what))
+          .then(data => {
+            console.log(data)
+            router.push('/')
+          })
       },
       showError (error) {
         console.warn(error)
@@ -77,6 +82,15 @@
 </script>
 
 <style lang="scss" scoped>
+  main {
+    background: #38B449;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
   label {
     display: block;
     width: 100%;

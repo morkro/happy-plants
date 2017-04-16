@@ -3,6 +3,11 @@
     <header class="page-header">
       <h1>🌵 Happy Plants</h1>
       <div class="header-controls">
+        <button @click="toggleFilter" class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,0,0,.15)">
+            <path d="M19.479 2l-7.479 12.543v5.924l-1-.6v-5.324l-7.479-12.543h15.958zm3.521-2h-23l9 15.094v5.906l5 3v-8.906l9-15.094z" />
+          </svg>
+        </button>
         <settings-button />
       </div>
     </header>
@@ -19,6 +24,7 @@
       <ul v-if="plants.length" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
+            :configMode="filter"
             :guid="plant.guid"
             :name="plant.name"
             :imageURL="plant.imageURL"
@@ -59,9 +65,15 @@
         .then(plants =>
           next(vm => { vm.plants = plants }))
     },
+    methods: {
+      toggleFilter () {
+        this.filter = !this.filter
+      }
+    },
     data () {
       return {
-        plants: []
+        plants: [],
+        filter: false
       }
     }
   }
@@ -81,6 +93,15 @@
   section {
     height: 100%;
     padding: 0 5vw;
+  }
+
+  .header-controls {
+    display: flex;
+
+    button {
+      margin-right: 5vw;
+    }
+
   }
 
   .add-plant {
