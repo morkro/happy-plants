@@ -6,6 +6,10 @@ button {
   border: none;
   padding: 1.5vh 3vw;
 
+  &:active, &:focus {
+    outline: none;
+  }
+
   &.rounded {
     border-radius: $border-radius;
   }

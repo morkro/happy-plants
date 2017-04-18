@@ -3,7 +3,7 @@
     <header class="page-header">
       <h1>🌵 Happy Plants</h1>
       <div class="header-controls">
-        <button @click="toggleFilter" class="icon">
+        <button @click="toggleFilter" :class="{ icon: true, active: this.filter }">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,0,0,.15)">
             <path d="M19.479 2l-7.479 12.543v5.924l-1-.6v-5.324l-7.479-12.543h15.958zm3.521-2h-23l9 15.094v5.906l5 3v-8.906l9-15.094z" />
           </svg>
@@ -39,17 +39,33 @@
 
 <script>
   import localforage from 'localforage'
+  import blobUtil from 'blob-util'
   import SettingsButton from '@/components/SettingsButton'
   import PlantPreview from '@/components/PlantPreview'
-  import { getAllPlants } from '@/utils/localforage'
   export default {
     name: 'PlantsList',
     components: {
       'settings-button': SettingsButton,
       'plant-preview': PlantPreview
     },
+    /**
+     * 1. Grab all entries starting with 'plant-'
+     * 2. Load each entry from IndexedDB
+     * 3. Modify entries with an image URL from blob
+     * 4. Pass callback to `then`
+     */
     beforeRouteEnter (to, from, next) {
-      getAllPlants(plants => next(vm => { vm.plants = plants }))
+      localforage.keys()
+        .then(keys =>
+          keys.filter(k => k.startsWith('plant-')))
+        .then(keys =>
+          Promise.all(keys.map(p => localforage.getItem(p))))
+        .then(plants =>
+          plants.map(p => ({
+            ...p,
+            imageURL: blobUtil.createObjectURL(p.blob)
+          })))
+        .then(plants => next(vm => { vm.plants = plants }))
     },
     methods: {
       toggleFilter () {
@@ -57,7 +73,9 @@
       },
       deleteElementFromList (args) {
         localforage.removeItem(`plant-${args[0]}`)
-          .then(() => getAllPlants(plants => { this.plants = plants }))
+          .then(() => {
+            this.plants = this.plants.filter(p => p.guid !== args[0])
+          })
       }
     },
     data () {
@@ -73,7 +91,8 @@
   @import "../../styles/variables";
 
   main {
-    height: 100%;
+    min-height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -92,6 +111,9 @@
       margin-right: 5vw;
     }
 
+    .active svg {
+      fill: black;
+    }
   }
 
   .add-plant {
