@@ -1,10 +1,8 @@
 <template>
   <main>
     <header class="page-header">
+      <back-button />
       <h1>+🌵 Add a new plant</h1>
-      <router-link :to="{ path: '/' }">
-        Back to overview
-      </router-link>
     </header>
 
     <form @submit.prevent="validateForm">
@@ -34,9 +32,13 @@
   import localforage from 'localforage'
   import uuid from 'uuid/v4'
   import router from '@/router'
+  import BackButton from '@/components/BackButton'
 
   export default {
     name: 'AddPlant',
+    components: {
+      'back-button': BackButton
+    },
     methods: {
       validateForm (event) {
         this.$validator.validateAll()

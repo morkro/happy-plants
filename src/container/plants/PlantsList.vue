@@ -42,19 +42,31 @@
   import blobUtil from 'blob-util'
   import SettingsButton from '@/components/SettingsButton'
   import PlantPreview from '@/components/PlantPreview'
+
   export default {
     name: 'PlantsList',
     components: {
       'settings-button': SettingsButton,
       'plant-preview': PlantPreview
     },
-    /**
-     * 1. Grab all entries starting with 'plant-'
-     * 2. Load each entry from IndexedDB
-     * 3. Modify entries with an image URL from blob
-     * 4. Pass callback to `then`
-     */
+    methods: {
+      toggleFilter () {
+        this.filter = !this.filter
+      },
+      deleteElementFromList (guid) {
+        localforage.removeItem(`plant-${guid}`)
+          .then(() => {
+            this.plants = this.plants.filter(p => p.guid !== guid)
+          })
+      }
+    },
     beforeRouteEnter (to, from, next) {
+      /**
+       * 1. Grab all entries starting with 'plant-'
+       * 2. Load each entry from IndexedDB
+       * 3. Modify entries with an image URL from blob
+       * 4. Pass callback to `then`
+       */
       localforage.keys()
         .then(keys =>
           keys.filter(k => k.startsWith('plant-')))
@@ -66,17 +78,6 @@
             imageURL: blobUtil.createObjectURL(p.blob)
           })))
         .then(plants => next(vm => { vm.plants = plants }))
-    },
-    methods: {
-      toggleFilter () {
-        this.filter = !this.filter
-      },
-      deleteElementFromList (args) {
-        localforage.removeItem(`plant-${args[0]}`)
-          .then(() => {
-            this.plants = this.plants.filter(p => p.guid !== args[0])
-          })
-      }
     },
     data () {
       return {

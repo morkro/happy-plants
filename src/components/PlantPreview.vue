@@ -24,7 +24,7 @@
         router.push(`plant/${this.guid}`)
       },
       deleteElement () {
-        this.$emit('delete-plant', [this.guid])
+        this.$emit('delete-plant', this.guid)
       }
     }
   }

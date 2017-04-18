@@ -1,10 +1,8 @@
 <template>
   <main>
     <header class="page-header">
+      <back-button />
       <h1>Settings</h1>
-      <router-link :to="{ path: '/' }">
-        <button>Back to overview</button>
-      </router-link>
     </header>
 
     <section>
@@ -15,7 +13,12 @@
 </template>
 
 <script>
+  import BackButton from '@/components/BackButton'
+
   export default {
-    name: 'Settings'
+    name: 'Settings',
+    components: {
+      'back-button': BackButton
+    }
   }
 </script>
