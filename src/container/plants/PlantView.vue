@@ -7,6 +7,11 @@
 
     <section class="view-content">
       <img :src="imageURL" :alt="name" />
+      <div>
+        <h2>{{ name }}</h2>
+        <h3>{{ scientific }}</h3>
+        <span v-if="!!location">Location: {{ location }}</span>
+      </div>
     </section>
   </main>
 </template>
@@ -26,6 +31,8 @@
         .then(plant => next(vm => {
           vm.guid = plant.guid
           vm.name = plant.name
+          vm.scientific = plant.scientific
+          vm.location = plant.location
           vm.blob = plant.blob
           vm.imageURL = blobUtil.createObjectURL(plant.blob)
         }))
@@ -35,6 +42,8 @@
       return {
         guid: '',
         name: '',
+        scientific: '',
+        location: '',
         blob: {},
         imageURL: ''
       }
@@ -43,8 +52,16 @@
 </script>
 
 <style lang="scss" scoped>
-  .view-content img {
-    width: 100%;
-    height: auto;
+@import "../../styles/variables";
+
+  .view-content {
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    > div {
+      padding: $base-gap;
+    }
   }
 </style>

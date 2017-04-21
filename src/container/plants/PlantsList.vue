@@ -4,7 +4,7 @@
       <h1>🌵 Happy Plants</h1>
       <div class="header-controls">
         <button @click="toggleFilter" :class="{ icon: true, active: this.filter }">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="rgba(0,0,0,.15)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="black">
             <path d="M19.479 2l-7.479 12.543v5.924l-1-.6v-5.324l-7.479-12.543h15.958zm3.521-2h-23l9 15.094v5.906l5 3v-8.906l9-15.094z" />
           </svg>
         </button>
@@ -102,14 +102,14 @@
 
   section {
     height: 100%;
-    padding: 0 5vw;
+    padding: 0 $base-gap;
   }
 
   .header-controls {
     display: flex;
 
     button {
-      margin-right: 5vw;
+      margin-right: $base-gap;
     }
 
     .active svg {
@@ -124,7 +124,7 @@
     color: $text-color-base;
     text-align: center;
     padding: 1.5vh;
-    margin: 2vh 0;
+    margin: $base-gap 0;
     font-weight: 700;
   }
 
@@ -138,7 +138,7 @@
     li {
       width: 42.5vw;
       height: 42.5vw;
-      margin-bottom: 2vh;
+      margin-bottom: $base-gap;
       box-shadow: 0px 1px 12px rgba(0, 0, 0, .1);
     }
   }

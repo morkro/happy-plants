@@ -18,7 +18,6 @@
   @import "./styles/buttons";
   @import "./styles/header";
 
-  // General
   * {
     padding: 0;
     margin: 0;
