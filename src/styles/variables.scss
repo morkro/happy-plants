@@ -1,9 +1,8 @@
 // Colors
 $light-grey: #F5F5F5;
-$light-grey200: #DCE1E2;
-$grey: #CFCFD0;
-$timber-green: #3B493E;
-$blue: #A3E2FF;
+$grey: #D8D8D8;
+$green: #17C37B;
+$yellow: #FDF06F;
 
 $background-primary: white;
 $background-secondary: $light-grey;
@@ -16,11 +15,14 @@ $text-size-base: 16px;
 $text-size-large: 115%;
 
 $text-color-base: black;
-$text-color-special: $timber-green;
+$text-color-special: $green;
+$text-color-button: white;
 $link-color: black;
 
 // Dimensions
-$border-radius: 4px;
+$border-radius: 6px;
 $base-gap: 15px;
 
 $icon-size: 20px;
+
+$shadow: 4px 4px 0 rgba(0, 0, 0, .12);

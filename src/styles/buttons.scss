@@ -1,10 +1,12 @@
 @import "./variables";
 
 button {
-  background: $blue;
+  background: $green;
   font-size: $text-size-base;
+  color: $text-color-button;
   border: none;
   padding: 1.5vh 3vw;
+  box-shadow: $shadow;
 
   &:active, &:focus {
     outline: none;
@@ -12,6 +14,11 @@ button {
 
   &.rounded {
     border-radius: $border-radius;
+  }
+
+  &.circle {
+    border-radius: 50%;
+    padding: 3vw;
   }
 
   &.icon {

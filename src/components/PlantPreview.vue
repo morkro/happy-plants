@@ -7,7 +7,6 @@
     </button>
     <div :class="{ 'preview-content': true, inactive: configMode }">
       <h1>{{ name }}</h1>
-      <span>{{ scientific }}</span>
     </div>
   </div>
 </template>
@@ -17,7 +16,7 @@
 
   export default {
     name: 'PlantPreview',
-    props: ['configMode', 'guid', 'name', 'scientific', 'imageURL'],
+    props: ['configMode', 'guid', 'name', 'imageURL'],
     methods: {
       handleClick () {
         if (this.configMode) return
@@ -43,6 +42,7 @@
     border-radius: $border-radius;
     overflow: hidden;
     background-size: cover;
+    box-shadow: $shadow;
   }
 
   .preview-delete {
@@ -60,7 +60,7 @@
     left: 0;
     padding: 10px;
     font-size: $text-size-small;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .55));
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 
     &.inactive,
     &.inactive h1 {
@@ -70,6 +70,7 @@
     h1 {
       color: white;
       font-size: $text-size-base;
+      font-weight: 600;
     }
   }
 </style>
