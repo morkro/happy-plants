@@ -1,16 +1,8 @@
 <template>
   <main>
-    <header class="page-header">
-      <h1>🌵 Happy Plants</h1>
-      <div class="header-controls">
-        <button @click="toggleFilter" :class="{ icon: true, active: this.filter }">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="black">
-            <path d="M19.479 2l-7.479 12.543v5.924l-1-.6v-5.324l-7.479-12.543h15.958zm3.521-2h-23l9 15.094v5.906l5 3v-8.906l9-15.094z" />
-          </svg>
-        </button>
-        <settings-button />
-      </div>
-    </header>
+    <app-header :settings="true">
+      <h1 slot="title">Happy Plants</h1>
+    </app-header>
 
     <section>
       <router-link :to="{ path: 'plant/add' }" class="add-plant">
@@ -40,13 +32,13 @@
 <script>
   import localforage from 'localforage'
   import blobUtil from 'blob-util'
-  import SettingsButton from '@/components/SettingsButton'
+  import AppHeader from '@/components/AppHeader'
   import PlantPreview from '@/components/PlantPreview'
 
   export default {
     name: 'PlantsList',
     components: {
-      'settings-button': SettingsButton,
+      'app-header': AppHeader,
       'plant-preview': PlantPreview
     },
     methods: {

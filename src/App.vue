@@ -16,7 +16,6 @@
   @import "./styles/typography";
   @import "./styles/forms";
   @import "./styles/buttons";
-  @import "./styles/header";
 
   * {
     padding: 0;

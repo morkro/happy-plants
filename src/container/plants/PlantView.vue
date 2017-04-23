@@ -1,9 +1,8 @@
 <template>
   <main>
-    <header class="page-header">
-      <back-button />
-      <h1>{{ name }}</h1>
-    </header>
+    <app-header :back="true">
+      <h1 slot="title">Hello, I am</h1>
+    </app-header>
 
     <section class="view-content">
       <img :src="imageURL" :alt="name" />
@@ -19,12 +18,12 @@
 <script>
   import localforage from 'localforage'
   import blobUtil from 'blob-util'
-  import BackButton from '@/components/BackButton'
+  import AppHeader from '@/components/AppHeader'
 
   export default {
     name: 'PlantView',
     components: {
-      'back-button': BackButton
+      'app-header': AppHeader
     },
     beforeRouteEnter (to, from, next) {
       localforage.getItem(`plant-${to.params.id}`)

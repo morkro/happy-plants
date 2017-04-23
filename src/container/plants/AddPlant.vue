@@ -1,9 +1,8 @@
 <template>
   <main>
-    <header class="page-header">
-      <back-button />
-      <h1>+🌵 Add a new plant</h1>
-    </header>
+    <app-header>
+      <h1 slot="title">Add a new friend</h1>
+    </app-header>
 
     <form @submit.prevent="validateForm">
       <label for="name">
@@ -32,12 +31,12 @@
   import localforage from 'localforage'
   import uuid from 'uuid/v4'
   import router from '@/router'
-  import BackButton from '@/components/BackButton'
+  import AppHeader from '@/components/AppHeader'
 
   export default {
     name: 'AddPlant',
     components: {
-      'back-button': BackButton
+      'app-header': AppHeader
     },
     methods: {
       validateForm (event) {

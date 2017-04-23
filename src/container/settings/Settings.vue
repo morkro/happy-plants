@@ -1,9 +1,8 @@
 <template>
   <main>
-    <header class="page-header">
-      <back-button />
-      <h1>Settings</h1>
-    </header>
+    <app-header :back="true">
+      <h1 slot="title">Settings</h1>
+    </app-header>
 
     <section>
       export data<br />
@@ -13,12 +12,12 @@
 </template>
 
 <script>
-  import BackButton from '@/components/BackButton'
+  import AppHeader from '@/components/AppHeader'
 
   export default {
     name: 'Settings',
     components: {
-      'back-button': BackButton
+      'app-header': AppHeader
     }
   }
 </script>
