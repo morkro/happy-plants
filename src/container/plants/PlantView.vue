@@ -1,16 +1,16 @@
 <template>
   <main>
-    <app-header :back="true">
+    <app-header :back="true" :settings="true">
       <h1 slot="title">Hello, I am</h1>
     </app-header>
 
     <section class="view-content">
-      <img :src="imageURL" :alt="name" />
-      <div>
-        <h2>{{ name }}</h2>
-        <h3>{{ scientific }}</h3>
-        <span v-if="!!location">Location: {{ location }}</span>
-      </div>
+      <header>
+        <div>
+          <h2> {{ scientific }} </h2>
+        </div>
+        <img :src="imageURL" :alt="name" />
+      </header>
     </section>
   </main>
 </template>
@@ -53,14 +53,29 @@
 <style lang="scss" scoped>
 @import "../../styles/variables";
 
-  .view-content {
-    img {
-      width: 100%;
-      height: auto;
+  .view-content header {
+    position: relative;
+    color: white;
+    height: 305px;
+
+    h2 {
+      font-size: $text-size-large;
+      font-weight: 600;
     }
 
     > div {
       padding: $base-gap;
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
     }
   }
 </style>

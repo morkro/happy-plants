@@ -99,14 +99,15 @@
 
   $list-gap: ($base-gap * 2) - $base-gap / 2;
   $footer-btn-size: 60px;
+  $header-size: 50px;
 
   main {
-    min-height: 100%;
-    height: 100vh;
+    min-height: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     background: $light-grey;
+    padding-top: $header-size;
   }
 
   section {
@@ -127,7 +128,7 @@
   }
 
   section footer {
-    position: absolute;
+    position: fixed;
     bottom: $base-gap;
     left: 50%;
     transform: translateX(-50%);
@@ -145,12 +146,17 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    --list-gap: ($base-gap * 2) - $base-gap / 2;
 
     li {
-      width: calc(50vw - #{$list-gap});
-      height: calc(50vw - #{$list-gap});
+      width: calc(50vw - var(--list-gap));
+      height: calc(50vw - var(--list-gap));
       margin-bottom: $base-gap;
       box-shadow: 0px 1px 12px rgba(0, 0, 0, .1);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 </style>

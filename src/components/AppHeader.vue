@@ -17,7 +17,7 @@
     <slot name="title"></slot>
 
     <div class="header-ctrl">
-      <router-link v-if="settings" :to="{ path: 'settings' }" class="link-wrapper">
+      <router-link v-if="settings" :to="{ path: '/settings' }" class="link-wrapper">
         <svg width="20px" height="20px" viewBox="0 0 22 22">
           <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g transform="translate(-340.000000, -12.000000)" stroke="#000000" stroke-width="0.5" fill="#000000" fill-rule="nonzero">
@@ -53,6 +53,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    max-height: 50px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
 
     h1 {
       text-transform: uppercase;
