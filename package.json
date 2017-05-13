@@ -14,7 +14,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
     "svg": "vsvg -s ./static/icons -t ./src/assets",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint -q"
   },
   "dependencies": {
     "blob-util": "^1.2.1",
