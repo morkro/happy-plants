@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-controls">
-          <form-progress :steps="formLabels.length" :current="currentStep + 1" />
+          <form-progress :steps="formLabels.length" :current="currentStep" />
         </div>
       </form>
 
@@ -59,15 +59,18 @@
     },
     methods: {
       validateForm (event) {
-        this.updateForm()
-        // this.$validator.validateAll()
-        //   .then(this.prepareData)
-        //   .catch(this.showError)
+        if (this.currentStep < this.formLabels.length) {
+          this.updateForm()
+        } else {
+          this.$validator.validateAll()
+            .then(this.prepareData)
+            .catch(this.showError)
+        }
       },
       updateForm () {
-        if (this.currentStep <= this.formLabels.length) {
+        if (this.currentStep < this.formLabels.length) {
           this.currentStep = this.currentStep + 1
-          this.currentLabel = this.formLabels[this.currentStep]
+          this.currentLabel = this.formLabels[this.currentStep - 1]
           this.removeActiveLabel()
           this.setActiveLabel(this.currentLabel)
         }
@@ -121,11 +124,11 @@
         location: '',
         formLabels: ['name', 'scientific', 'file', 'location'],
         currentLabel: null,
-        currentStep: 0
+        currentStep: 1
       }
     },
     created () {
-      this.currentLabel = this.formLabels[this.currentStep]
+      this.currentLabel = this.formLabels[this.currentStep - 1]
     },
     mounted () {
       this.setActiveLabel(this.currentLabel)
@@ -172,7 +175,6 @@
     .background-icon {
       width: 50%;
       height: 50%;
-      transform: translateY(25px);
       fill: $green;
     }
   }

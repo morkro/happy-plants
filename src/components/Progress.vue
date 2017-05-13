@@ -38,6 +38,7 @@
     &::-webkit-progress-value {
       border-radius: $border-radius;
       background: $yellow;
+      transition: width $base-speed $ease-out-back;
     }
   }
 
