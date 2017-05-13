@@ -1,4 +1,4 @@
-# happy-plants
+# happy-plants [![Build Status](https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)](https://travis-ci.com/morkro/happy-plants)
 
 > 🌵 Web application to keep your plants happy
 
