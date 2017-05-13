@@ -2,7 +2,11 @@
 
 > 🌵 Web application to keep your plants happy
 
-## Build Setup
+## Development
+### Available commands
+| Command | Description |
+| ------- | ----------- |
+| `yarn` / `npm install` | Installs dependencies |
 
 ``` bash
 # install dependencies
