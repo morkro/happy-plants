@@ -2,8 +2,13 @@
 
 input {
   background: white;
-  padding: 1.5vh 1.5vw;
+  padding: $base-gap;
   color: $text-color-base;
-  border: 1px solid $grey;
+  border: none;
   border-radius: $border-radius;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }

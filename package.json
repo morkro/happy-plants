@@ -5,14 +5,15 @@
   "author": "Moritz Kröger <write@morkro.de>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
+    "dev": "npm run svg && node build/dev-server.js",
+    "build": "npm run svg && node build/build.js",
     "prod": "npm run build && node index.js",
     "start": "npm run build && node index.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "svg": "vsvg -s ./static/icons -t ./src/assets",
     "precommit": "npm run lint"
   },
   "dependencies": {
@@ -61,6 +62,7 @@
     "function-bind": "^1.1.0",
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
+    "husky": "^0.13.3",
     "inject-loader": "^2.0.1",
     "karma": "^1.4.1",
     "karma-coverage": "^1.1.1",
@@ -88,6 +90,7 @@
     "url-loader": "^0.5.7",
     "vue-loader": "^11.1.4",
     "vue-style-loader": "^2.0.0",
+    "vue-svgicon": "^1.1.8",
     "vue-template-compiler": "^2.2.4",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.2.1",
