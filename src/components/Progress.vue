@@ -36,7 +36,7 @@
     }
 
     &::-webkit-progress-value {
-      border-radius: 6px;
+      border-radius: $border-radius;
       background: $yellow;
     }
   }

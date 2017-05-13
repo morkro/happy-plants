@@ -4,46 +4,40 @@
       <h1 slot="title">Add a new friend</h1>
     </app-header>
 
-    <form @submit.prevent="validateForm">
-      <label for="name" data-step="1" class="active">
-        <span>What's your plants name?</span>
-        <input v-model="name" name="name" type="text">
-      </label>
-      <label for="scientific" data-step="2">
-        <span>Do you also know its scientific name?</span>
-        <input v-model="scientific" name="scientific" type="text">
-      </label>
-      <label for="file" data-step="3">
-        <span>Upload photo</span>
-        <input name="file" v-on:change="getFileInput" type="file">
-      </label>
-      <label for="location" data-step="4">
-        <span>Where is it located?</span>
-        <input v-model="location" name="location" type="text">
-      </label>
+    <section>
+      <form @submit.prevent="validateForm">
+        <div class="form-order" ref="labels">
+          <label for="name" data-step="1">
+            <h2>What's your friends name?</h2>
+            <input v-model="name" name="name" type="text">
+          </label>
+          <label for="scientific" data-step="2">
+            <h2>Do you also know its scientific name?</h2>
+            <input v-model="scientific" name="scientific" type="text">
+          </label>
+          <label for="file" data-step="3">
+            <h2>Upload photo</h2>
+            <input name="file" v-on:change="getFileInput" type="file">
+          </label>
+          <label for="location" data-step="4">
+            <h2>Where is it located?</h2>
+            <input v-model="location" name="location" type="text">
+          </label>
 
-      <button class="rounded" type="submit">Add</button>
-      <div class="form-controls">
-        <form-progress :steps="10" :current="1" />
+          <button class="rounded" type="submit">
+            <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
+          </button>
+        </div>
+
+        <div class="form-controls">
+          <form-progress :steps="formLabels.length" :current="currentStep + 1" />
+        </div>
+      </form>
+
+      <div class="form-background">
+        <svg-icon icon="leaf" class="background-icon"></svg-icon>
       </div>
-    </form>
-
-    <div class="form-background">
-      <svg class="background-icon" width="20px" height="30px" viewBox="0 0 20 30">
-        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g transform="translate(-178.000000, -595.000000)" stroke="#17C37B" stroke-width="0.5" fill="#17C37B" fill-rule="nonzero">
-            <g transform="translate(157.000000, 579.000000)">
-              <g transform="translate(22.000000, 17.000000)">
-                <path d="M9.50889908,0.238191033 C9.25266055,-0.0793606238 8.80431193,-0.0793606238 8.54807339,0.238191033 C8.16374312,0.682752437 0.0289541284,10.3366394 0.0289541284,15.7987135 C0.0289541284,21.0067135 3.74405505,23.4837037 7.26699083,24.0553294 C7.90761468,24.1823392 8.3559633,24.6904327 8.3559633,25.3255361 L8.3559633,27.3579103 C8.3559633,27.7389942 8.61220183,27.9930136 8.99647706,27.9930136 C9.38075229,27.9930136 9.63699083,27.7389396 9.63699083,27.3579103 L9.63699083,25.3255361 C9.63699083,24.0552749 8.74023853,23.0390877 7.45915596,22.7850682 C6.04998165,22.5309942 1.3100367,21.3242651 1.3100367,15.7987135 C1.3100367,11.4798908 7.20297248,3.85837817 8.99642202,1.69899415 C10.7899266,3.85843275 16.6828073,11.4798908 16.6828073,15.7987135 C16.6828073,20.4986199 13.8003853,22.1499649 11.4304404,22.7215361 C11.1101835,22.7850682 10.853945,23.1660975 10.9180183,23.4837037 C10.9820917,23.8012554 11.366367,24.0553294 11.6866789,23.9917973 C15.7220367,23.1026199 17.9638899,20.1810682 17.9638899,15.8622456 C17.963945,10.3366394 9.82921101,0.682752437 9.50889908,0.238191033 Z" id="Shape"></path>
-              </g>
-              <g transform="translate(27.000000, 28.000000)">
-                <polygon id="Shape" points="8 3.33333333 4.66666667 3.33333333 4.66666667 0 3.33333333 0 3.33333333 3.33333333 0 3.33333333 0 4.66666667 3.33333333 4.66666667 3.33333333 8 4.66666667 8 4.66666667 4.66666667 8 4.66666667"></polygon>
-              </g>
-            </g>
-          </g>
-        </g>
-      </svg>
-    </div>
+    </section>
   </main>
 </template>
 
@@ -54,6 +48,8 @@
   import router from '@/router'
   import AppHeader from '@/components/AppHeader'
   import Progress from '@/components/Progress'
+  import '@/assets/leaf'
+  import '@/assets/right-arrow'
 
   export default {
     name: 'AddPlant',
@@ -63,9 +59,35 @@
     },
     methods: {
       validateForm (event) {
-        this.$validator.validateAll()
-          .then(this.prepareData)
-          .catch(this.showError)
+        this.updateForm()
+        // this.$validator.validateAll()
+        //   .then(this.prepareData)
+        //   .catch(this.showError)
+      },
+      updateForm () {
+        if (this.currentStep <= this.formLabels.length) {
+          this.currentStep = this.currentStep + 1
+          this.currentLabel = this.formLabels[this.currentStep]
+          this.removeActiveLabel()
+          this.setActiveLabel(this.currentLabel)
+        }
+      },
+      updateCurrentStep () {
+        if (this.currentStep <= this.formLabels.length) {
+          this.currentStep = this.currentStep + 1
+        }
+      },
+      removeActiveLabel () {
+        this.$refs.labels
+          .querySelector('label.active')
+          .classList
+            .remove('active')
+      },
+      setActiveLabel (name) {
+        this.$refs.labels
+          .querySelector(`label[for="${name}"]`)
+          .classList
+            .add('active')
       },
       prepareData () {
         const fileReader = new FileReader()
@@ -96,11 +118,17 @@
         scientific: '',
         file: '',
         blob: '',
-        location: ''
+        location: '',
+        formLabels: ['name', 'scientific', 'file', 'location'],
+        currentLabel: null,
+        currentStep: 0
       }
     },
+    created () {
+      this.currentLabel = this.formLabels[this.currentStep]
+    },
     mounted () {
-      console.log(localforage)
+      this.setActiveLabel(this.currentLabel)
     }
   }
 </script>
@@ -114,8 +142,19 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: stretch;
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      min-height: calc(100vh - #{$app-header-size});
+      position: relative;
+      top: $app-header-size;
+    }
   }
 
   .form-background {
@@ -123,7 +162,7 @@
     position: absolute;
     z-index: 0;
     width: 100%;
-    height: 50vh;
+    height: 50%;
     background: rgba(0, 0, 0, .12);
     display: flex;
     flex-direction: column;
@@ -134,6 +173,7 @@
       width: 50%;
       height: 50%;
       transform: translateY(25px);
+      fill: $green;
     }
   }
 
@@ -141,16 +181,49 @@
     position: relative;
     z-index: 1;
     padding: 0 $base-gap;
+    width: 100%;
+    transform: translateY(20%);
+  }
+
+  .form-order {
+    display: flex;
+    background: white;
+    padding: 0;
+    margin-bottom: $base-gap;
+    color: $text-color-base;
+    border: none;
+    border-radius: $border-radius;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+    width: 100%;
+
+    button {
+      background: transparent;
+      box-shadow: none;
+      padding: $base-gap;
+    }
   }
 
   label {
-    display: block;
+    display: none;
     width: 100%;
-    margin: 2vh 0;
+    position: relative;
+
+    &.active {
+      display: block;
+    }
+
+    h2 {
+      position: absolute;
+      color: $text-color-button;
+      left: 0;
+      top: 0;
+      transform: translateY(-140%);
+    }
   }
 
   input:not([type="file"]) {
     display: block;
     width: 100%;
+    height: 100%;
   }
 </style>
