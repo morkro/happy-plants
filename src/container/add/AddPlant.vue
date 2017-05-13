@@ -6,6 +6,8 @@
 
     <section>
       <form @submit.prevent="validateForm">
+        <button class="form-skip">Skip</button>
+
         <div class="form-order" ref="labels">
           <label for="name" data-step="1">
             <h2>What's your friends name?</h2>
@@ -230,5 +232,17 @@
       display: block;
       height: 100%;
     }
+  }
+
+  .form-skip {
+    background: none;
+    box-shadow: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: $text-size-xsmall;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .35);
+    transform: translateY(-100%) translateX(-5%);
   }
 </style>

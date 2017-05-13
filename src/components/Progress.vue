@@ -45,7 +45,7 @@
   span {
     font-size: $text-size-xsmall;
     color: rgba(0, 0, 0, .35);
-    margin-left: $base-gap * 2;
+    margin-left: $base-gap;
 
     &:before {
       content: attr(data-current) " / ";
