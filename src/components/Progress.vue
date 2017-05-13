@@ -1,6 +1,6 @@
 <template>
   <div class="progress-container">
-    <progress value="0" max="4"></progress>
+    <progress :value="current" :max="steps"></progress>
     <span :data-current="current" :data-steps="steps"></span>
   </div>
 </template>
@@ -26,10 +26,24 @@
 
   progress {
     flex: 1;
+    appearance: none;
+    height: 8px;
+    width: 100%;
+
+    &::-webkit-progress-bar {
+      border-radius: 6px;
+      background: rgba(0, 0, 0, .12);
+    }
+
+    &::-webkit-progress-value {
+      border-radius: 6px;
+      background: $yellow;
+    }
   }
 
   span {
     font-size: $text-size-xsmall;
+    color: rgba(0, 0, 0, .35);
     margin-left: $base-gap * 2;
 
     &:before {

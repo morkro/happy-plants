@@ -24,7 +24,7 @@
 
       <button class="rounded" type="submit">Add</button>
       <div class="form-controls">
-        <form-progress :steps="10" :current="0" />
+        <form-progress :steps="10" :current="1" />
       </div>
     </form>
 
