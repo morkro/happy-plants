@@ -221,9 +221,12 @@
     }
   }
 
-  input:not([type="file"]) {
-    display: block;
+  input {
     width: 100%;
-    height: 100%;
+
+    &:not([type="file"]) {
+      display: block;
+      height: 100%;
+    }
   }
 </style>

@@ -22,7 +22,7 @@
       </ul>
 
       <footer>
-        <router-link :to="{ path: 'plant/add' }" class="add-plant circle" tag="button">
+        <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
           <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
         </router-link>
       </footer>
