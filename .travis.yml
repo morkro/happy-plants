@@ -4,4 +4,5 @@ node_js:
 install:
   - yarn
 script:
-  - npm start
+  # - yarn test
+  - yarn run build
