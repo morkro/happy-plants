@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="main-wireframe">
     <app-header :back="true" :settings="true">
       <h1 slot="title">Hello, I am</h1>
     </app-header>

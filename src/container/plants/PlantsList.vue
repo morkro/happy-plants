@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="main-wireframe">
     <app-header :settings="true">
       <h1 slot="title">Happy Plants</h1>
     </app-header>
@@ -87,15 +87,10 @@
 
   $list-gap: ($base-gap * 2) - $base-gap / 2;
   $footer-btn-size: 60px;
-  $header-size: 50px;
 
   main {
     min-height: 10vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
     background: $light-grey;
-    padding-top: $header-size;
   }
 
   section {

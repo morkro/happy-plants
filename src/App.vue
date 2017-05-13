@@ -34,4 +34,14 @@
     min-height: 100vh;
     height: 100%;
   }
+
+  .main-wireframe {
+    display: flex;
+    height: 100%;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding-top: $app-header-size;
+  }
 </style>

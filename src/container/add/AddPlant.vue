@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main class="main-wireframe">
     <app-header :back="true" :settings="true">
       <h1 slot="title">Add a new friend</h1>
     </app-header>
@@ -143,12 +143,6 @@
 
   main {
     background: $green;
-    height: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
 
     section {
       display: flex;
@@ -158,7 +152,6 @@
       height: 100%;
       min-height: calc(100vh - #{$app-header-size});
       position: relative;
-      top: $app-header-size;
     }
   }
 
