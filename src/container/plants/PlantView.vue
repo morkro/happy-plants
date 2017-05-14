@@ -16,7 +16,6 @@
 </template>
 
 <script>
-  import localforage from 'localforage'
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
 
@@ -26,16 +25,18 @@
       'app-header': AppHeader
     },
     beforeRouteEnter (to, from, next) {
-      localforage.getItem(`plant-${to.params.id}`)
-        .then(plant => next(vm => {
-          vm.guid = plant.guid
-          vm.name = plant.name
-          vm.scientific = plant.scientific
-          vm.location = plant.location
-          vm.blob = plant.blob
-          vm.imageURL = blobUtil.createObjectURL(plant.blob)
-        }))
-        .catch(() => next('/'))
+      next(vm => {
+        vm.$localforage.getItem(`plant-${to.params.id}`)
+          .then(plant => {
+            vm.guid = plant.guid
+            vm.name = plant.name
+            vm.scientific = plant.scientific
+            vm.location = plant.location
+            vm.blob = plant.blob
+            vm.imageURL = blobUtil.createObjectURL(plant.blob)
+          })
+          .catch(() => next('/'))
+      })
     },
     data () {
       return {

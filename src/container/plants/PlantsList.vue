@@ -31,7 +31,6 @@
 </template>
 
 <script>
-  import localforage from 'localforage'
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
   import PlantPreview from '@/components/PlantPreview'
@@ -48,7 +47,7 @@
         this.filter = !this.filter
       },
       deleteElementFromList (guid) {
-        localforage.removeItem(`plant-${guid}`)
+        this.$localforage.removeItem(`plant-${guid}`)
           .then(() => {
             this.plants = this.plants.filter(p => p.guid !== guid)
           })
@@ -61,17 +60,20 @@
        * 3. Modify entries with an image URL from blob
        * 4. Pass callback to `then`
        */
-      localforage.keys()
-        .then(keys =>
-          keys.filter(k => k.startsWith('plant-')))
-        .then(keys =>
-          Promise.all(keys.map(p => localforage.getItem(p))))
-        .then(plants =>
-          plants.map(p => ({
-            ...p,
-            imageURL: blobUtil.createObjectURL(p.blob)
-          })))
-        .then(plants => next(vm => { vm.plants = plants }))
+      next(vm => {
+        vm.$localforage.keys()
+          .then(data => { console.log(data); return data })
+          .then(keys =>
+            keys.filter(k => k.startsWith('plant-')))
+          .then(keys =>
+            Promise.all(keys.map(p => vm.$localforage.getItem(p))))
+          .then(plants =>
+            plants.map(p => ({
+              ...p,
+              imageURL: blobUtil.createObjectURL(p.blob)
+            })))
+          .then(plants => { vm.plants = plants })
+      })
     },
     data () {
       return {
