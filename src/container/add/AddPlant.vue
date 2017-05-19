@@ -11,16 +11,21 @@
         <div class="form-order" ref="labels">
           <label for="name" data-step="1">
             <h2>What's your friends name?</h2>
-            <input v-model="name" name="name" type="text">
+            <input name="name" type="text"
+              v-model="name"
+              placeholder="Plant name">
           </label>
+
           <label for="scientific" data-step="2">
             <h2>Do you also know its scientific name?</h2>
             <input v-model="scientific" name="scientific" type="text">
           </label>
+
           <label for="file" data-step="3">
             <h2>Upload photo</h2>
             <input name="file" v-on:change="getFileInput" type="file">
           </label>
+
           <label for="location" data-step="4">
             <h2>Where is it located?</h2>
             <input v-model="location" name="location" type="text">
@@ -44,10 +49,9 @@
 </template>
 
 <script>
+  import { Validator } from 'vee-validate'
   import blobUtil from 'blob-util'
-  import localforage from 'localforage'
   import uuid from 'uuid/v4'
-  import router from '@/router'
   import AppHeader from '@/components/AppHeader'
   import Progress from '@/components/Progress'
   import '@/assets/leaf'
@@ -55,18 +59,18 @@
 
   export default {
     name: 'AddPlant',
+    validator: null,
     components: {
       'app-header': AppHeader,
       'form-progress': Progress
     },
     methods: {
-      validateForm (event) {
+      validateForm () {
         if (this.currentStep < this.formLabels.length) {
           this.updateForm()
         } else {
-          this.$validator.validateAll()
-            .then(this.prepareData)
-            .catch(this.showError)
+          this.packageResults()
+          // this.prepareData()
         }
       },
       updateForm () {
@@ -77,10 +81,13 @@
           this.setActiveLabel(this.currentLabel)
         }
       },
-      updateCurrentStep () {
-        if (this.currentStep <= this.formLabels.length) {
-          this.currentStep = this.currentStep + 1
-        }
+      packageResults (blob) {
+        const guid = uuid()
+        const config = { guid, name: this.name, blob, scientific: this.scientific }
+        this.$localforage.setItem(`plant-${guid}`, config)
+          .then(data => {
+            this.$router.push(`/plant/${guid}`)
+          })
       },
       removeActiveLabel () {
         this.$refs.labels
@@ -99,37 +106,33 @@
         fileReader.readAsArrayBuffer(this.file)
         fileReader.onloadend = event =>
           blobUtil.arrayBufferToBlob(event.target.result, this.file.type)
-            .then(this.saveData)
-      },
-      saveData (blob) {
-        const guid = uuid()
-        const config = { guid, name: this.name, blob, scientific: this.scientific }
-        localforage.setItem(`plant-${guid}`, config)
-          .then(data => {
-            console.log(data)
-            router.push('/')
-          })
-      },
-      showError (error) {
-        console.warn(error)
+            .then(this.packageResults)
       },
       getFileInput (event) {
         this.file = event.target.files[0]
       }
     },
-    data () {
-      return {
-        name: '',
-        scientific: '',
-        file: '',
-        blob: '',
-        location: '',
-        formLabels: ['name', 'scientific', 'file', 'location'],
-        currentLabel: null,
-        currentStep: 1
+    watch: {
+      name (value) {
+        this.validator.validate('name', value)
       }
     },
+    data: () => ({
+      name: '',
+      scientific: '',
+      file: '',
+      blob: '',
+      location: '',
+      formLabels: ['name', 'scientific', 'file', 'location'],
+      currentLabel: null,
+      currentStep: 1,
+      errors: null
+    }),
     created () {
+      this.validator = new Validator({
+        name: 'required|alpha|min:3'
+      })
+      this.errors = this.validator.errorBag
       this.currentLabel = this.formLabels[this.currentStep - 1]
     },
     mounted () {

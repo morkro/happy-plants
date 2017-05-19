@@ -16,8 +16,7 @@
             :configMode="filter"
             :guid="plant.guid"
             :name="plant.scientific"
-            :imageURL="plant.imageURL"
-          />
+            :imageURL="plant.imageURL" />
         </li>
       </ul>
 
@@ -37,7 +36,7 @@
   import '@/assets/leaf'
 
   export default {
-    name: 'PlantsList',
+    name: 'Overview',
     components: {
       'app-header': AppHeader,
       'plant-preview': PlantPreview
@@ -62,7 +61,6 @@
        */
       next(vm => {
         vm.$localforage.keys()
-          .then(data => { console.log(data); return data })
           .then(keys =>
             keys.filter(k => k.startsWith('plant-')))
           .then(keys =>
@@ -70,7 +68,7 @@
           .then(plants =>
             plants.map(p => ({
               ...p,
-              imageURL: blobUtil.createObjectURL(p.blob)
+              imageURL: p.blob ? blobUtil.createObjectURL(p.blob) : ''
             })))
           .then(plants => { vm.plants = plants })
       })

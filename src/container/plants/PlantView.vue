@@ -11,6 +11,21 @@
         </div>
         <img :src="imageURL" :alt="name" />
       </header>
+
+      <div class="content-notes">
+        <div v-if="!notes">
+          <p>Seems like you haven't added any notes yet.</p>
+          <button @click="openNotes">Add notes.</button>
+        </div>
+        <div v-else>
+          <button @click="openNotes">Show notes.</button>
+        </div>
+
+        <plant-notes
+          v-show="showPlantNotes"
+          @update-notes="updateNotes"
+          :notes="notes" />
+      </div>
     </section>
   </main>
 </template>
@@ -25,27 +40,33 @@
       'app-header': AppHeader
     },
     beforeRouteEnter (to, from, next) {
-      next(vm => {
-        vm.$localforage.getItem(`plant-${to.params.id}`)
-          .then(plant => {
-            vm.guid = plant.guid
-            vm.name = plant.name
-            vm.scientific = plant.scientific
-            vm.location = plant.location
-            vm.blob = plant.blob
-            vm.imageURL = blobUtil.createObjectURL(plant.blob)
+      next(vm => vm.$localforage.getItem(`plant-${to.params.id}`)
+        .then(plant =>
+          Object.assign(vm, plant, {
+            imageURL: blobUtil.createObjectURL(plant.blob),
+            notes: {
+              content: plant.notes
+            }
           })
-          .catch(() => next('/'))
-      })
+        )
+        .catch(() => next('/'))
+      )
     },
-    data () {
-      return {
-        guid: '',
-        name: '',
-        scientific: '',
-        location: '',
-        blob: {},
-        imageURL: ''
+    data: () => ({
+      guid: '',
+      name: '',
+      scientific: '',
+      location: '',
+      blob: {},
+      imageURL: '',
+      notes: {
+        show: false,
+        content: false
+      }
+    }),
+    methods: {
+      openNotes (event) {
+        console.log(event)
       }
     }
   }
