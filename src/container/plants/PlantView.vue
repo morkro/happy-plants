@@ -12,13 +12,17 @@
         <img :src="imageURL" :alt="name" />
       </header>
 
+      <div class="content-seasons">
+        <plant-seasons :seasons="seasons" />
+      </div>
+
       <div class="content-notes">
-        <div v-if="!notes">
+        <div v-if="!notes.content">
           <p>Seems like you haven't added any notes yet.</p>
-          <button @click="openNotes">Add notes.</button>
+          <button @click="openNotes">Add notes</button>
         </div>
         <div v-else>
-          <button @click="openNotes">Show notes.</button>
+          <button @click="openNotes">Show notes</button>
         </div>
 
         <plant-notes
@@ -35,12 +39,14 @@
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
   import PlantNotes from './PlantNotes'
+  import PlantSeasons from './PlantSeasons'
 
   export default {
     name: 'PlantView',
     components: {
       'app-header': AppHeader,
-      'plant-notes': PlantNotes
+      'plant-notes': PlantNotes,
+      'plant-seasons': PlantSeasons
     },
     beforeRouteEnter (to, from, next) {
       next(vm => vm.$localforage.getItem(`plant-${to.params.id}`)
@@ -63,6 +69,20 @@
       location: '',
       blob: {},
       imageURL: '',
+      seasons: [
+        { month: 'January', growth: false },
+        { month: 'February', growth: false },
+        { month: 'March', growth: true },
+        { month: 'April', growth: true },
+        { month: 'Mai', growth: true },
+        { month: 'June', growth: true },
+        { month: 'July', growth: true },
+        { month: 'August', growth: true },
+        { month: 'September', growth: true },
+        { month: 'October', growth: false },
+        { month: 'November', growth: false },
+        { month: 'December', growth: false }
+      ],
       notes: {
         show: false,
         content: false
@@ -84,6 +104,10 @@
 
 <style lang="scss" scoped>
   @import "../../styles/variables";
+
+  .view-content {
+    background: $background-secondary;
+  }
 
   .view-content header {
     position: relative;
