@@ -22,9 +22,10 @@
         </div>
 
         <plant-notes
-          v-show="showPlantNotes"
+          class="notes-modal"
+          v-if="notes.show"
           @update-notes="updateNotes"
-          :notes="notes" />
+          :content="{ notes: notes.content }" />
       </div>
     </section>
   </main>
@@ -33,11 +34,13 @@
 <script>
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
+  import PlantNotes from './PlantNotes'
 
   export default {
     name: 'PlantView',
     components: {
-      'app-header': AppHeader
+      'app-header': AppHeader,
+      'plant-notes': PlantNotes
     },
     beforeRouteEnter (to, from, next) {
       next(vm => vm.$localforage.getItem(`plant-${to.params.id}`)
@@ -45,6 +48,7 @@
           Object.assign(vm, plant, {
             imageURL: blobUtil.createObjectURL(plant.blob),
             notes: {
+              ...vm.notes,
               content: plant.notes
             }
           })
@@ -65,15 +69,21 @@
       }
     }),
     methods: {
-      openNotes (event) {
-        console.log(event)
+      openNotes () {
+        this.notes.show = !this.notes.show
+      },
+      updateNotes (notes) {
+        const guid = `plant-${this.guid}`
+        this.$localforage.getItem(guid)
+          .then(plant =>
+            this.$localforage.setItem(guid, Object.assign({}, plant, { notes })))
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/variables";
+  @import "../../styles/variables";
 
   .view-content header {
     position: relative;
