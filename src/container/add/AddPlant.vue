@@ -6,7 +6,9 @@
 
     <section>
       <form @submit.prevent="validateForm">
-        <button class="form-skip">Skip</button>
+        <button v-if="!currentLabel.required" class="form-skip">
+          Skip
+        </button>
 
         <div class="form-order" ref="labels">
           <label for="name" data-step="1">
@@ -32,17 +34,21 @@
           </label>
 
           <button class="rounded" type="submit">
-            <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
+            <svg-icon v-if="currentLabel.type === 'file'"
+              icon="settings" width="25" height="25" color="#000000"></svg-icon>
+            <svg-icon v-else
+              icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
           </button>
         </div>
 
         <div class="form-controls">
-          <form-progress :steps="formLabels.length" :current="currentStep" />
+          <form-progress :steps="formSteps.length" :current="currentStep" />
         </div>
       </form>
 
       <div class="form-background">
-        <svg-icon icon="leaf" class="background-icon"></svg-icon>
+        <svg-icon v-if="!file" icon="leaf" class="background-icon"></svg-icon>
+        <img v-if="!!file" :src="filePreviewBlob" />
       </div>
     </section>
   </main>
@@ -66,20 +72,18 @@
     },
     methods: {
       validateForm () {
-        if (this.currentStep < this.formLabels.length) {
-          this.updateForm()
+        if (this.currentStep < this.formSteps.length) {
+          this.triggerNextFormStep()
         } else {
           this.packageResults()
           // this.prepareData()
         }
       },
-      updateForm () {
-        if (this.currentStep < this.formLabels.length) {
-          this.currentStep = this.currentStep + 1
-          this.currentLabel = this.formLabels[this.currentStep - 1]
-          this.removeActiveLabel()
-          this.setActiveLabel(this.currentLabel)
-        }
+      triggerNextFormStep () {
+        this.currentStep = this.currentStep + 1
+        this.currentLabel = this.formSteps[this.currentStep - 1]
+        this.removeActiveLabel()
+        this.setActiveLabel(this.currentLabel)
       },
       packageResults (blob) {
         const guid = uuid()
@@ -95,9 +99,9 @@
           .classList
             .remove('active')
       },
-      setActiveLabel (name) {
+      setActiveLabel ({ type }) {
         this.$refs.labels
-          .querySelector(`label[for="${name}"]`)
+          .querySelector(`label[for="${type}"]`)
           .classList
             .add('active')
       },
@@ -109,6 +113,7 @@
             .then(this.packageResults)
       },
       getFileInput (event) {
+        this.filePreviewBlob = blobUtil.createObjectURL(event.target.files[0])
         this.file = event.target.files[0]
       }
     },
@@ -120,10 +125,16 @@
     data: () => ({
       name: '',
       scientific: '',
-      file: '',
+      file: undefined,
+      filePreviewBlob: undefined,
       blob: '',
       location: '',
-      formLabels: ['name', 'scientific', 'file', 'location'],
+      formSteps: [
+        { type: 'name', required: true },
+        { type: 'scientific', required: false },
+        { type: 'file', required: false },
+        { type: 'location', required: false }
+      ],
       currentLabel: null,
       currentStep: 1,
       errors: null
@@ -133,7 +144,7 @@
         name: 'required|alpha|min:3'
       })
       this.errors = this.validator.errorBag
-      this.currentLabel = this.formLabels[this.currentStep - 1]
+      this.currentLabel = this.formSteps[this.currentStep - 1]
     },
     mounted () {
       this.setActiveLabel(this.currentLabel)
@@ -169,11 +180,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     .background-icon {
       width: 50%;
       height: 50%;
       fill: $green;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .5;
     }
   }
 

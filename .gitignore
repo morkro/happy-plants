@@ -1,4 +1,5 @@
 .DS_Store
+.todo
 node_modules/
 dist/
 npm-debug.log*
