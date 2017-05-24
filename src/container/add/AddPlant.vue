@@ -13,8 +13,11 @@
         <div class="form-order" ref="labels">
           <label for="name" data-step="1">
             <h2>What's your friends name?</h2>
-            <input name="name" type="text"
+            <input
+              name="name"
+              type="text"
               v-model="name"
+              v-validate="'required'"
               placeholder="Plant name">
           </label>
 
@@ -48,14 +51,13 @@
 
       <div class="form-background">
         <svg-icon v-if="!file" icon="leaf" class="background-icon"></svg-icon>
-        <img v-if="!!file" :src="filePreviewBlob" />
+        <img v-else :src="filePreviewBlob" />
       </div>
     </section>
   </main>
 </template>
 
 <script>
-  import { Validator } from 'vee-validate'
   import blobUtil from 'blob-util'
   import uuid from 'uuid/v4'
   import AppHeader from '@/components/AppHeader'
@@ -65,7 +67,6 @@
 
   export default {
     name: 'AddPlant',
-    validator: null,
     components: {
       'app-header': AppHeader,
       'form-progress': Progress
@@ -75,8 +76,7 @@
         if (this.currentStep < this.formSteps.length) {
           this.triggerNextFormStep()
         } else {
-          this.packageResults()
-          // this.prepareData()
+          this.packageResults(this.file)
         }
       },
       triggerNextFormStep () {
@@ -105,13 +105,6 @@
           .classList
             .add('active')
       },
-      prepareData () {
-        const fileReader = new FileReader()
-        fileReader.readAsArrayBuffer(this.file)
-        fileReader.onloadend = event =>
-          blobUtil.arrayBufferToBlob(event.target.result, this.file.type)
-            .then(this.packageResults)
-      },
       getFileInput (event) {
         this.filePreviewBlob = blobUtil.createObjectURL(event.target.files[0])
         this.file = event.target.files[0]
@@ -136,14 +129,9 @@
         { type: 'location', required: false }
       ],
       currentLabel: null,
-      currentStep: 1,
-      errors: null
+      currentStep: 1
     }),
     created () {
-      this.validator = new Validator({
-        name: 'required|alpha|min:3'
-      })
-      this.errors = this.validator.errorBag
       this.currentLabel = this.formSteps[this.currentStep - 1]
     },
     mounted () {
