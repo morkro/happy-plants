@@ -1,12 +1,11 @@
 <template>
   <section>
     <h1>Growing seasons</h1>
-    <!-- TODO: implement logic -->
-    <p v-if="true">
-      Your plant is currently in <strong>active growth</strong>1
+    <p v-if="isGrowthMonth()">
+      Your plant is currently in <strong>active growth</strong>.
     </p>
     <p v-else>
-      Your plant is currently in a dormant phase.
+      Your plant is currently in a <strong>dormant phase</strong>.
     </p>
     <ul class="season-list">
       <li
@@ -27,6 +26,9 @@
     methods: {
       isCurrentMonth (month) {
         return month === new Date().getMonth()
+      },
+      isGrowthMonth () {
+        return this.seasons[new Date().getMonth()].growth
       }
     }
   }
