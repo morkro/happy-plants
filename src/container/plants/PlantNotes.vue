@@ -1,6 +1,7 @@
 <template>
   <section>
     <h1>Notes</h1>
+    <button @click="emitClose">close</button>
     <textarea @change="emitContentChange">{{ content.notes }}</textarea>
   </section>
 </template>
@@ -12,6 +13,9 @@
       content: { type: [Object, Boolean], default: () => ({}) }
     },
     methods: {
+      emitClose () {
+        this.$emit('close-notes')
+      },
       emitContentChange (event) {
         this.$emit('update-notes', event.srcElement.value)
       }

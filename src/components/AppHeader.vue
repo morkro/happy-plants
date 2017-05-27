@@ -4,6 +4,7 @@
       <router-link v-if="back" :to="backPath" class="link-wrapper">
         <svg-icon icon="left-arrow" width="20" height="20" color="#000000"></svg-icon>
       </router-link>
+      <slot name="custom-action"></slot>
     </div>
 
     <slot name="title"></slot>

@@ -37,10 +37,7 @@
           </label>
 
           <button class="rounded" type="submit">
-            <svg-icon v-if="currentLabel.type === 'file'"
-              icon="settings" width="25" height="25" color="#000000"></svg-icon>
-            <svg-icon v-else
-              icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
+            <svg-icon :icon="getSubmitIconName()" width="25" height="25" color="#000000"></svg-icon>
           </button>
         </div>
 
@@ -64,6 +61,8 @@
   import Progress from '@/components/Progress'
   import '@/assets/leaf'
   import '@/assets/right-arrow'
+  import '@/assets/check'
+  import '@/assets/shutter'
 
   export default {
     name: 'AddPlant',
@@ -90,7 +89,7 @@
         const config = { guid, name: this.name, blob, scientific: this.scientific }
         this.$localforage.setItem(`plant-${guid}`, config)
           .then(data => {
-            this.$router.push(`/plant/${guid}`)
+            this.$router.replace(`/plant/${guid}`)
           })
       },
       removeActiveLabel () {
@@ -108,11 +107,15 @@
       getFileInput (event) {
         this.filePreviewBlob = blobUtil.createObjectURL(event.target.files[0])
         this.file = event.target.files[0]
-      }
-    },
-    watch: {
-      name (value) {
-        this.validator.validate('name', value)
+      },
+      getSubmitIconName () {
+        if (this.currentLabel.type === 'file') {
+          return 'shutter'
+        }
+        if (this.currentStep === this.formSteps.length) {
+          return 'check'
+        }
+        return 'right-arrow'
       }
     },
     data: () => ({

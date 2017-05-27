@@ -1,8 +1,17 @@
 language: node_js
+
 node_js:
   - "node"
+
 install:
   - yarn
+
 script:
   # - yarn test
   - yarn run build
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  on:
+    branch: master

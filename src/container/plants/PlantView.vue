@@ -12,23 +12,24 @@
         <img :src="imageURL" :alt="name" />
       </header>
 
-      <div class="content-seasons">
+      <div class="content-group content-seasons">
         <plant-seasons :seasons="seasons" />
       </div>
 
-      <div class="content-notes">
+      <div class="content-group content-notes">
         <div v-if="!notes.content">
           <p>Seems like you haven't added any notes yet.</p>
-          <button @click="openNotes">Add notes</button>
+          <button @click="toggleNotes">Add notes</button>
         </div>
         <div v-else>
-          <button @click="openNotes">Show notes</button>
+          <button @click="toggleNotes">Show notes</button>
         </div>
 
         <plant-notes
           class="notes-modal"
           v-if="notes.show"
           @update-notes="updateNotes"
+          @close-notes="closeNotes"
           :content="{ notes: notes.content }" />
       </div>
     </section>
@@ -89,11 +90,15 @@
       }
     }),
     methods: {
-      openNotes () {
+      toggleNotes () {
         this.notes.show = !this.notes.show
+      },
+      closeNotes () {
+        this.notes.show = false
       },
       updateNotes (notes) {
         const guid = `plant-${this.guid}`
+        this.notes.content = notes
         this.$localforage.getItem(guid)
           .then(plant =>
             this.$localforage.setItem(guid, Object.assign({}, plant, { notes })))
@@ -133,5 +138,9 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  .content-group:not(:last-of-type) {
+    margin-bottom: 30px;
   }
 </style>
