@@ -15,6 +15,7 @@
 
 <script>
   import AppHeader from '@/components/AppHeader'
+  import downloadJSON from '@/utils/downloadJSON'
 
   export default {
     name: 'Settings',
@@ -23,12 +24,9 @@
     },
     methods: {
       downloadData () {
-        // TODO: Actually trigger download.
         this.$localforage.keys()
-          .then(keys =>
-            Promise.all(keys.map(k => this.$localforage.getItem(k))))
-          .then(JSON.stringify)
-          .then(console.log)
+          .then(keys => Promise.all(keys.map(k => this.$localforage.getItem(k))))
+          .then(downloadJSON)
       },
       importData () {
         // TODO: Implement import logic with `<input type="file" />`
