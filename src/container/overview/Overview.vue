@@ -32,7 +32,7 @@
 <script>
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
-  import PlantPreview from '@/components/PlantPreview'
+  import PlantPreview from './PlantPreview'
   import '@/assets/leaf'
 
   export default {
@@ -84,7 +84,9 @@
 
 <style lang="scss" scoped>
   @import "../../styles/variables";
+  @import "../../styles/z-index";
 
+  $content-index: list, footer;
   $list-gap: ($base-gap * 2) - $base-gap / 2;
   $footer-btn-size: 60px;
 
@@ -116,6 +118,7 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    z-index: z($content-index, footer);
 
     .add-plant {
       width: $footer-btn-size;
@@ -129,6 +132,8 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
+    z-index: z($content-index, list);
     $list-gap: ($base-gap * 2) - $base-gap / 2;
 
     li {

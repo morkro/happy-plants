@@ -4,7 +4,7 @@
       <router-link v-if="back" :to="backPath" class="link-wrapper">
         <svg-icon icon="left-arrow" width="20" height="20" color="#000000"></svg-icon>
       </router-link>
-      <slot name="custom-action"></slot>
+      <slot name="custom-action-left"></slot>
     </div>
 
     <slot name="title"></slot>
@@ -13,6 +13,7 @@
       <router-link v-if="settings" :to="{ path: '/settings' }" class="link-wrapper">
         <svg-icon icon="settings" width="20" height="20" color="#000000"></svg-icon>
       </router-link>
+      <slot name="custom-action-right"></slot>
     </div>
   </header>
 </template>
@@ -44,7 +45,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: 10;
 
     h1 {
       text-transform: uppercase;

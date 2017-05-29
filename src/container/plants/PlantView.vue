@@ -12,8 +12,8 @@
         <img :src="imageURL" :alt="name" />
       </header>
 
-      <div class="content-group content-seasons">
-        <plant-seasons :seasons="seasons" />
+      <div v-if="seasons.length" class="content-group content-seasons">
+        <plant-seasons :seasons="seasons" @toggle-season="updateSeasons" />
       </div>
 
       <div class="content-group content-notes">
@@ -70,20 +70,7 @@
       location: '',
       blob: {},
       imageURL: '',
-      seasons: [
-        { month: 'January', growth: false },
-        { month: 'February', growth: false },
-        { month: 'March', growth: true },
-        { month: 'April', growth: true },
-        { month: 'Mai', growth: true },
-        { month: 'June', growth: true },
-        { month: 'July', growth: true },
-        { month: 'August', growth: true },
-        { month: 'September', growth: true },
-        { month: 'October', growth: false },
-        { month: 'November', growth: false },
-        { month: 'December', growth: false }
-      ],
+      seasons: [],
       notes: {
         show: false,
         content: false
@@ -102,6 +89,14 @@
         this.$localforage.getItem(guid)
           .then(plant =>
             this.$localforage.setItem(guid, Object.assign({}, plant, { notes })))
+      },
+      updateSeasons (name) {
+        const guid = `plant-${this.guid}`
+        const month = this.seasons.find(season => season.month === name)
+        month.growth = !month.growth
+        this.$localforage.getItem(guid)
+          .then(plant =>
+            this.$localforage.setItem(guid, Object.assign({}, plant, { seasons: this.seasons })))
       }
     }
   }

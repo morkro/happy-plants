@@ -1,14 +1,15 @@
 <template>
-  <div @click="handleClick"
-    :class="{ 'plant-preview': true, 'no-photo': !this.imageURL }"
+  <div :class="{ 'plant-preview': true, 'no-photo': !this.imageURL }"
     :style="{ backgroundImage: `url(${imageURL})` }">
-    <button v-if="configMode" @click="deleteElement" class="preview-delete icon">
+    <button @click="deleteElement" class="preview-delete icon">
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
         <path d="M9 19c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5-17v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712zm-3 4v16h-14v-16h-2v18h18v-18h-2z"/>
       </svg>
     </button>
-    <div :class="{ 'preview-content': true, inactive: configMode }">
-      <h1>{{ name }}</h1>
+    <div @click="handleClick" class="preview-content">
+      <div class="preview-headline">
+        <h1>{{ name }}</h1>
+      </div>
     </div>
   </div>
 </template>
@@ -20,8 +21,8 @@
     name: 'PlantPreview',
     props: ['configMode', 'guid', 'name', 'imageURL'],
     methods: {
-      handleClick () {
-        if (this.configMode) return
+      handleClick (event) {
+        console.log(event.target)
         router.push(`plant/${this.guid}`)
       },
       deleteElement () {
@@ -32,15 +33,12 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "../styles/variables";
+  @import "../../styles/variables";
 
   .plant-preview {
     width: 100%;
     height: 100%;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: $border-radius;
     overflow: hidden;
     background-size: cover;
@@ -55,11 +53,22 @@
   .preview-delete {
     fill: white;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    padding: 10px;
+    top: 0;
+    right: 0;
+    z-index: 1;
   }
 
   .preview-content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .preview-headline {
     position: absolute;
     color: white;
     width: 100%;

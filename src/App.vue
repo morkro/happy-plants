@@ -6,7 +6,8 @@
 
 <script>
   export default {
-    name: 'happy-plants'
+    name: 'happy-plants',
+    mounted () { console.log(this.$localforage) }
   }
 </script>
 

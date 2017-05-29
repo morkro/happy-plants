@@ -86,7 +86,7 @@
       },
       packageResults (blob) {
         const guid = uuid()
-        const config = { guid, name: this.name, blob, scientific: this.scientific }
+        const config = { guid, blob, ...this.createBaseConfig() }
         this.$localforage.setItem(`plant-${guid}`, config)
           .then(data => {
             this.$router.replace(`/plant/${guid}`)
@@ -116,6 +116,19 @@
           return 'check'
         }
         return 'right-arrow'
+      },
+      createBaseConfig () {
+        const months = [
+          'January', 'February', 'March',
+          'April', 'Mai', 'June',
+          'July', 'August', 'September',
+          'October', 'November', 'December'
+        ]
+        return {
+          name: this.name,
+          scientific: this.scientific,
+          seasons: months.map(month => ({ month, growth: false }))
+        }
       }
     },
     data: () => ({

@@ -7,10 +7,11 @@
     <p v-else>
       Your plant is currently in a <strong>dormant phase</strong>.
     </p>
-    <ul class="season-list">
+    <ul @click="emitStateToggle" class="season-list">
       <li
         v-for="(season, index) of seasons"
-        :class="{ current: isCurrentMonth(index), growth: season.growth }">
+        :class="{ current: isCurrentMonth(index), growth: season.growth }"
+        :data-season="season.month">
         {{ season.month[0] }}
       </li>
     </ul>
@@ -29,6 +30,10 @@
       },
       isGrowthMonth () {
         return this.seasons[new Date().getMonth()].growth
+      },
+      emitStateToggle (event) {
+        if (event.target.nodeName !== 'LI') return
+        this.$emit('toggle-season', event.target.getAttribute('data-season'))
       }
     }
   }

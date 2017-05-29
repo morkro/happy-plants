@@ -1,0 +1,13 @@
+// Method to manage z-indexes across the page. No more `z-index: 999999`.
+// @url: https://www.smashingmagazine.com/2014/06/sassy-z-index-management-for-complex-layouts/
+@function z($list, $element) {
+  $z-index: index($list, $element);
+
+  @if $z-index {
+    @return $z-index;
+  }
+
+  @warn 'There is no item "#{$element}" in this list; choose one of: #{$list}';
+
+  @return null;
+}
