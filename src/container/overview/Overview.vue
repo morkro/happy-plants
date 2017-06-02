@@ -9,6 +9,10 @@
         <p>Looks like you haven't added any plants yet.</p>
       </div>
 
+      <div v-if="plants.length" class="plant-options">
+        <overview-filter @update-selection="sortItems" class="plant-filter" />
+      </div>
+
       <ul v-if="plants.length" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
@@ -33,13 +37,15 @@
   import blobUtil from 'blob-util'
   import AppHeader from '@/components/AppHeader'
   import PlantPreview from './PlantPreview'
+  import OverviewFilter from './Filter'
   import '@/assets/leaf'
 
   export default {
     name: 'Overview',
     components: {
       'app-header': AppHeader,
-      'plant-preview': PlantPreview
+      'plant-preview': PlantPreview,
+      'overview-filter': OverviewFilter
     },
     methods: {
       toggleFilter () {
@@ -50,6 +56,9 @@
           .then(() => {
             this.plants = this.plants.filter(p => p.guid !== guid)
           })
+      },
+      sortItems (type) {
+        console.log(type)
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -73,11 +82,12 @@
           .then(plants => { vm.plants = plants })
       })
     },
-    data () {
-      return {
-        plants: [],
-        filter: false
-      }
+    data: () => ({
+      plants: [],
+      filter: false
+    }),
+    updated () {
+      console.log(this.$data.plants)
     }
   }
 </script>
@@ -95,7 +105,7 @@
     background: $light-grey;
   }
 
-  section {
+  main > section {
     height: 100%;
     padding: $base-gap $base-gap ($footer-btn-size + ($base-gap * 2));
   }
@@ -124,6 +134,10 @@
       width: $footer-btn-size;
       height: $footer-btn-size;
     }
+  }
+
+  .plant-options {
+    margin-bottom: $base-gap;
   }
 
   .plant-list {

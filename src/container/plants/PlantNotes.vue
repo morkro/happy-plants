@@ -27,6 +27,11 @@
   section {
     background: yellow;
     width: 100%;
+    position: fixed;
+    top: 50%;
+    z-index: 1;
+    transform: translateY(-50%);
+    height: 45vh;
   }
 
   textarea {

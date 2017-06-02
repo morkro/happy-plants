@@ -93,10 +93,12 @@
       updateSeasons (name) {
         const guid = `plant-${this.guid}`
         const month = this.seasons.find(season => season.month === name)
+        const modified = Date.now()
         month.growth = !month.growth
         this.$localforage.getItem(guid)
           .then(plant =>
-            this.$localforage.setItem(guid, Object.assign({}, plant, { seasons: this.seasons })))
+            this.$localforage.setItem(guid,
+              Object.assign({}, plant, { seasons: this.seasons, modified })))
       }
     }
   }
@@ -105,14 +107,18 @@
 <style lang="scss" scoped>
   @import "../../styles/variables";
 
+  $content-gap: $base-gap * 2;
+
   .view-content {
     background: $background-secondary;
   }
 
   .view-content header {
+    box-shadow: $shadow;
     position: relative;
     color: white;
     height: 305px;
+    margin-bottom: $content-gap;
 
     h2 {
       font-size: $text-size-large;
@@ -136,6 +142,6 @@
   }
 
   .content-group:not(:last-of-type) {
-    margin-bottom: 30px;
+    margin-bottom: $content-gap;
   }
 </style>

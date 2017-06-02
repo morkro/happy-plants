@@ -1,12 +1,14 @@
 <template>
   <section>
-    <h1>Growing seasons</h1>
-    <p v-if="isGrowthMonth()">
-      Your plant is currently in <strong>active growth</strong>.
-    </p>
-    <p v-else>
-      Your plant is currently in a <strong>dormant phase</strong>.
-    </p>
+    <header>
+      <h1>Growing seasons</h1>
+      <p v-if="isGrowthMonth()">
+        Your plant is currently in <strong>active growth</strong>.
+      </p>
+      <p v-else>
+        Your plant is currently in a <strong>dormant phase</strong>.
+      </p>
+    </header>
     <ul @click="emitStateToggle" class="season-list">
       <li
         v-for="(season, index) of seasons"
@@ -45,6 +47,10 @@
   section {
     width: 100%;
     background: $background-primary;
+  }
+
+  header {
+    padding: $base-gap;
   }
 
   .season-list {

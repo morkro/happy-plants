@@ -64,6 +64,15 @@
   import '@/assets/check'
   import '@/assets/shutter'
 
+  function getAllMonth () {
+    return [
+      'January', 'February', 'March',
+      'April', 'Mai', 'June',
+      'July', 'August', 'September',
+      'October', 'November', 'December'
+    ]
+  }
+
   export default {
     name: 'AddPlant',
     components: {
@@ -118,16 +127,12 @@
         return 'right-arrow'
       },
       createBaseConfig () {
-        const months = [
-          'January', 'February', 'March',
-          'April', 'Mai', 'June',
-          'July', 'August', 'September',
-          'October', 'November', 'December'
-        ]
         return {
+          created: Date.now(),
+          modified: Date.now(),
           name: this.name,
           scientific: this.scientific,
-          seasons: months.map(month => ({ month, growth: false }))
+          seasons: getAllMonth().map(month => ({ month, growth: false }))
         }
       }
     },
