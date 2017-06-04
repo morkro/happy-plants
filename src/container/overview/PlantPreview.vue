@@ -42,6 +42,7 @@
     border-radius: $border-radius;
     overflow: hidden;
     background-size: cover;
+    background-position: center;
     box-shadow: $shadow;
 
     &.no-photo {
