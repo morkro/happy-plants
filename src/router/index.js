@@ -5,6 +5,7 @@ import { routes as overview } from '@/container/overview'
 import { routes as add } from '@/container/add'
 import { routes as plants } from '@/container/plants'
 import { routes as settings } from '@/container/settings'
+import { routes as notfound } from '@/container/not-found'
 
 Vue.use(Router)
 
@@ -14,6 +15,7 @@ export default new Router({
     ...overview,
     ...add,
     ...plants,
-    ...settings
+    ...settings,
+    ...notfound
   ]
 })
