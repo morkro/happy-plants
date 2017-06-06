@@ -17,7 +17,6 @@
               name="name"
               type="text"
               v-model="name"
-              v-validate="'required'"
               placeholder="Plant name">
           </label>
 
@@ -55,8 +54,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   import blobUtil from 'blob-util'
-  import uuid from 'uuid/v4'
   import AppHeader from '@/app/shared/AppHeader'
   import Progress from '@/app/shared/Progress'
   import '@/assets/leaf'
@@ -75,11 +74,16 @@
 
   export default {
     name: 'RegisterPlant',
+
     components: {
       'app-header': AppHeader,
       'form-progress': Progress
     },
+
     methods: {
+      ...mapActions([
+        'addPlant'
+      ]),
       validateForm () {
         if (this.currentStep < this.formSteps.length) {
           this.triggerNextFormStep()
@@ -94,12 +98,15 @@
         this.setActiveLabel(this.currentLabel)
       },
       packageResults (blob) {
-        const guid = uuid()
-        const config = { guid, blob, ...this.createBaseConfig() }
-        this.$localforage.setItem(`plant-${guid}`, config)
-          .then(data => {
-            this.$router.replace(`/plant/${guid}`)
-          })
+        const config = {
+          blob,
+          name: this.name,
+          scientific: this.scientific,
+          seasons: getAllMonth().map(month => ({ month, growth: false }))
+        }
+
+        this.addPlant(config).then(guid =>
+          this.$router.push(`/plant/${guid}`))
       },
       removeActiveLabel () {
         this.$refs.labels
@@ -125,36 +132,32 @@
           return 'check'
         }
         return 'right-arrow'
-      },
-      createBaseConfig () {
-        return {
-          created: Date.now(),
-          modified: Date.now(),
-          name: this.name,
-          scientific: this.scientific,
-          seasons: getAllMonth().map(month => ({ month, growth: false }))
-        }
       }
     },
-    data: () => ({
-      name: '',
-      scientific: '',
-      file: undefined,
-      filePreviewBlob: undefined,
-      blob: '',
-      location: '',
-      formSteps: [
-        { type: 'name', required: true },
-        { type: 'scientific', required: false },
-        { type: 'file', required: false },
-        { type: 'location', required: false }
-      ],
-      currentLabel: null,
-      currentStep: 1
-    }),
+
+    data () {
+      return {
+        name: '',
+        scientific: '',
+        file: undefined,
+        filePreviewBlob: undefined,
+        blob: '',
+        location: '',
+        formSteps: [
+          { type: 'name', required: true },
+          { type: 'scientific', required: false },
+          { type: 'file', required: false },
+          { type: 'location', required: false }
+        ],
+        currentLabel: null,
+        currentStep: 1
+      }
+    },
+
     created () {
       this.currentLabel = this.formSteps[this.currentStep - 1]
     },
+
     mounted () {
       this.setActiveLabel(this.currentLabel)
     }

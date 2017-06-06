@@ -1,3 +1,4 @@
+import uuid from 'uuid/v4'
 import {
   fetchPlants,
   addPlant as addPlantFromAPI,
@@ -11,12 +12,27 @@ export const loadPlants = ({ state, commit }) => {
   }
 }
 
+export const loadPlantItem = ({ state, commit }, guid) => {
+  const item = state.plants.find(p => p.guid === guid)
+  return commit('LOAD_PLANT_ITEM', { item })
+}
+
 export const addPlant = ({ state, commit }, data) => {
-  return addPlantFromAPI(data)
-    .then(() => commit('ADD_PLANT', { data }))
+  const config = {
+    ...data,
+    guid: uuid(),
+    created: Date.now(),
+    modified: Date.now()
+  }
+
+  return addPlantFromAPI(config)
+    .then(data => {
+      commit('ADD_PLANT', config)
+      return data.guid
+    })
 }
 
 export const deletePlant = ({ state, commit }, plantIndex) => {
-  return deletePlantFromAPI(state[plantIndex])
+  return deletePlantFromAPI(state.plants[plantIndex])
     .then(() => commit('DELETE_PLANT', { plantIndex }))
 }

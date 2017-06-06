@@ -5,13 +5,25 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
-    name: 'HappyPlants'
+    name: 'HappyPlants',
+
+    methods: {
+      ...mapActions([
+        'loadPlants'
+      ])
+    },
+
+    mounted () {
+      this.loadPlants()
+    }
   }
 </script>
 
 <style lang="scss">
-  @import "../../node_modules/normalize.css/normalize";
+  @import "~node_modules/normalize.css/normalize";
   @import "~styles/fonts";
   @import "~styles/typography";
   @import "~styles/forms";

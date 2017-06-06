@@ -59,13 +59,12 @@
 
     computed: {
       ...mapState({
-        plants: state => state.overview.plants
+        plants: state => state.plants
       })
     },
 
     methods: {
       ...mapActions([
-        'loadPlants',
         'deletePlant'
       ]),
       toggleFilter () {
@@ -89,10 +88,6 @@
       return {
         filter: false
       }
-    },
-
-    mounted () {
-      this.loadPlants()
     }
   }
 </script>

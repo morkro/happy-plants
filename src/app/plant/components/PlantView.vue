@@ -17,7 +17,7 @@
       </div>
 
       <div class="content-group content-notes">
-        <div v-if="!notes.content">
+        <div v-if="notes === ''">
           <p>Seems like you haven't added any notes yet.</p>
           <button @click="toggleNotes">Add notes</button>
         </div>
@@ -27,17 +27,17 @@
 
         <plant-notes
           class="notes-modal"
-          v-if="notes.show"
+          v-if="!!notes"
           @update-notes="updateNotes"
           @close-notes="closeNotes"
-          :content="{ notes: notes.content }" />
+          :content="{ notes }" />
       </div>
     </section>
   </main>
 </template>
 
 <script>
-  import { mapState, mapActions, mapGetters } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/app/shared/AppHeader'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
@@ -53,23 +53,21 @@
 
     computed: {
       ...mapState({
-        guid: state => state.plant.guid,
-        name: state => state.plant.name,
-        scientific: state => state.plant.scientific,
-        location: state => state.plant.location,
-        blob: state => state.plant.blob,
-        imageURL: state => state.imageURL,
-        seasons: state => state.plant.seasons,
-        notes: state => state.plant.notes
-      }),
-      ...mapGetters([
-        'getPlantItem'
-      ])
+        guid: state => state.active.guid,
+        name: state => state.active.name,
+        scientific: state => state.active.scientific,
+        location: state => state.active.location,
+        blob: state => state.active.blob,
+        imageURL: state => state.active.imageURL,
+        seasons: state => state.active.seasons,
+        notes: state => state.active.notes
+      })
     },
 
     methods: {
       ...mapActions([
-        'loadPlantItem'
+        'loadPlantItem',
+        'loadPlants'
       ]),
       toggleNotes () {
         this.notes.show = !this.notes.show
@@ -97,8 +95,8 @@
     },
 
     mounted () {
-      this.loadPlantItem(this.$route.params.id)
-      console.log(this.getPlantItem(this.$route.params.id))
+      this.loadPlants()
+        .then(() => this.loadPlantItem(this.$route.params.id))
     }
   }
 </script>
