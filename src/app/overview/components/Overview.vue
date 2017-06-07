@@ -1,0 +1,173 @@
+<template>
+  <main class="main-wireframe">
+    <app-header :settings="true">
+      <h1 slot="title">Happy Plants</h1>
+    </app-header>
+
+    <section>
+      <div v-if="plants.length <= 0">
+        <p>Looks like you haven't added any plants yet.</p>
+      </div>
+
+      <div v-if="plants.length" class="plant-options">
+        <overview-filter @update-selection="sortItems" class="plant-filter" />
+      </div>
+
+      <ul v-if="plants.length" class="plant-list">
+        <li v-for="plant in plants">
+          <plant-preview
+            @delete-plant="deleteElementFromList"
+            :configMode="filter"
+            :guid="plant.guid"
+            :name="plant.scientific"
+            :imageURL="plant.imageURL" />
+        </li>
+      </ul>
+
+      <footer>
+        <button @click="toggleDeleteMode" class="delete-plants circle">
+          <svg-icon icon="trash" width="15" height="15" color="#000"></svg-icon>
+        </button>
+        <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
+          <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
+        </router-link>
+        <button @click="toggleCategoryMode" class="organise-plants circle">
+          <svg-icon icon="categories" width="15" height="15" color="#000"></svg-icon>
+        </button>
+      </footer>
+    </section>
+  </main>
+</template>
+
+<script>
+  import { mapState, mapActions } from 'vuex'
+  import AppHeader from '@/app/shared/AppHeader'
+  import PlantPreview from './PlantPreview'
+  import OverviewFilter from './Filter'
+  import '@/assets/leaf'
+  import '@/assets/trash'
+  import '@/assets/categories'
+
+  export default {
+    name: 'Overview',
+
+    components: {
+      'app-header': AppHeader,
+      'plant-preview': PlantPreview,
+      'overview-filter': OverviewFilter
+    },
+
+    computed: mapState({
+      plants: state => state.plants
+    }),
+
+    methods: {
+      ...mapActions([
+        'deletePlant'
+      ]),
+      toggleFilter () {
+        this.filter = !this.filter
+      },
+      deleteElementFromList (guid) {
+        this.deletePlant(this.plants.findIndex(p => p.guid === guid))
+      },
+      toggleDeleteMode () {
+        console.log('delete')
+      },
+      toggleCategoryMode () {
+        console.log('categories')
+      },
+      sortItems () {
+        console.log('sort')
+      }
+    },
+
+    data () {
+      return {
+        filter: false
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import "~styles/variables";
+  @import "~styles/z-index";
+
+  $content-index: list, footer;
+  $list-gap: ($base-gap * 2) - $base-gap / 2;
+  $footer-btn-size: 60px;
+
+  main {
+    min-height: 10vh;
+    background: $light-grey;
+  }
+
+  main > section {
+    height: 100%;
+    padding: $base-gap $base-gap ($footer-btn-size + ($base-gap * 2));
+  }
+
+  .header-controls {
+    display: flex;
+
+    button {
+      margin-right: $base-gap;
+    }
+
+    .active svg {
+      fill: black;
+    }
+  }
+
+  section footer {
+    position: fixed;
+    bottom: $base-gap;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: z($content-index, footer);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
+    .add-plant {
+      width: $footer-btn-size;
+      height: $footer-btn-size;
+    }
+
+    button:not(.add-plant) {
+      width: $footer-btn-size - 20px;
+      height: $footer-btn-size - 20px;
+      padding: 0;
+      background: $background-primary;
+    }
+  }
+
+  .plant-options {
+    margin-bottom: $base-gap;
+  }
+
+  .plant-list {
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: z($content-index, list);
+    $list-gap: ($base-gap * 2) - $base-gap / 2;
+
+    li {
+      width: calc(50vw - #{$list-gap});
+      height: calc(50vw - #{$list-gap});
+      margin-bottom: $base-gap;
+      box-shadow: 0px 1px 12px rgba(0, 0, 0, .1);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+</style>
