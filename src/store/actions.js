@@ -2,7 +2,8 @@ import uuid from 'uuid/v4'
 import {
   fetchPlants,
   addPlant as addPlantFromAPI,
-  deletePlant as deletePlantFromAPI
+  deletePlant as deletePlantFromAPI,
+  updatePlant as updatePlantFromAPI
 } from '@/api/plants'
 
 export const loadPlants = ({ state, commit }) => {
@@ -10,11 +11,13 @@ export const loadPlants = ({ state, commit }) => {
     return fetchPlants()
       .then(plants => commit('LOAD_PLANTS', { plants }))
   }
+
+  return Promise.resolve()
 }
 
 export const loadPlantItem = ({ state, commit }, guid) => {
   const item = state.plants.find(p => p.guid === guid)
-  return commit('LOAD_PLANT_ITEM', { item })
+  commit('LOAD_PLANT_ITEM', { item })
 }
 
 export const addPlant = ({ state, commit }, data) => {
@@ -24,7 +27,6 @@ export const addPlant = ({ state, commit }, data) => {
     created: Date.now(),
     modified: Date.now()
   }
-
   return addPlantFromAPI(config)
     .then(data => {
       commit('ADD_PLANT', config)
@@ -35,4 +37,11 @@ export const addPlant = ({ state, commit }, data) => {
 export const deletePlant = ({ state, commit }, plantIndex) => {
   return deletePlantFromAPI(state.plants[plantIndex])
     .then(() => commit('DELETE_PLANT', { plantIndex }))
+}
+
+export const updatePlant = ({ state, commit }, data) => {
+  const item = state.plants.find(p => p.guid === data.guid)
+  const config = { ...item, ...data, modified: Date.now() }
+  return updatePlantFromAPI(config)
+    .then(data => commit('UPDATE_PLANT', { config }))
 }

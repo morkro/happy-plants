@@ -17,7 +17,7 @@
       </div>
 
       <div class="content-group content-notes">
-        <div v-if="notes === ''">
+        <div v-if="showNotes">
           <p>Seems like you haven't added any notes yet.</p>
           <button @click="toggleNotes">Add notes</button>
         </div>
@@ -27,10 +27,10 @@
 
         <plant-notes
           class="notes-modal"
-          v-if="!!notes"
-          @update-notes="updateNotes"
+          v-if="showNotes"
+          @update-notes="onNotesUpdate"
           @close-notes="closeNotes"
-          :content="{ notes }" />
+          :content="notes" />
       </div>
     </section>
   </main>
@@ -51,46 +51,41 @@
       'plant-seasons': PlantSeasons
     },
 
-    computed: {
-      ...mapState({
-        guid: state => state.active.guid,
-        name: state => state.active.name,
-        scientific: state => state.active.scientific,
-        location: state => state.active.location,
-        blob: state => state.active.blob,
-        imageURL: state => state.active.imageURL,
-        seasons: state => state.active.seasons,
-        notes: state => state.active.notes
-      })
+    data () {
+      return {
+        showNotes: false
+      }
     },
+
+    computed: mapState({
+      guid: state => state.active.guid,
+      name: state => state.active.name,
+      scientific: state => state.active.scientific,
+      location: state => state.active.location,
+      blob: state => state.active.blob,
+      imageURL: state => state.active.imageURL,
+      seasons: state => state.active.seasons,
+      notes: state => state.active.notes
+    }),
 
     methods: {
       ...mapActions([
         'loadPlantItem',
-        'loadPlants'
+        'loadPlants',
+        'updateSeason',
+        'updateNotes'
       ]),
       toggleNotes () {
-        this.notes.show = !this.notes.show
+        this.showNotes = !this.showNotes
       },
       closeNotes () {
-        this.notes.show = false
+        this.showNotes = false
       },
-      updateNotes (notes) {
-        const guid = `plant-${this.guid}`
-        this.notes.content = notes
-        this.$localforage.getItem(guid)
-          .then(plant =>
-            this.$localforage.setItem(guid, Object.assign({}, plant, { notes })))
+      onNotesUpdate (notes) {
+        this.updateNotes({ guid: this.guid, notes })
       },
       updateSeasons (name) {
-        const guid = `plant-${this.guid}`
-        const month = this.seasons.find(season => season.month === name)
-        const modified = Date.now()
-        month.growth = !month.growth
-        this.$localforage.getItem(guid)
-          .then(plant =>
-            this.$localforage.setItem(guid,
-              Object.assign({}, plant, { seasons: this.seasons, modified })))
+        this.updateSeason({ guid: this.guid, month: name })
       }
     },
 

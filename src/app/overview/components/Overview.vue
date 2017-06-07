@@ -57,11 +57,9 @@
       'overview-filter': OverviewFilter
     },
 
-    computed: {
-      ...mapState({
-        plants: state => state.plants
-      })
-    },
+    computed: mapState({
+      plants: state => state.plants
+    }),
 
     methods: {
       ...mapActions([

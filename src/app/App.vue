@@ -10,11 +10,9 @@
   export default {
     name: 'HappyPlants',
 
-    methods: {
-      ...mapActions([
-        'loadPlants'
-      ])
-    },
+    methods: mapActions([
+      'loadPlants'
+    ]),
 
     mounted () {
       this.loadPlants()

@@ -5,24 +5,25 @@ import * as actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 
+import plant from '@/app/plant/store'
+import settings from '@/app/settings/store'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
     plants: [],
-    active: {
-      guid: '',
-      name: '',
-      scientific: '',
-      location: '',
-      blob: undefined,
-      imageURL: '',
-      seasons: [],
-      notes: ''
-    }
+    active: plant.state
   },
-  actions,
+  actions: {
+    ...actions,
+    ...plant.actions,
+    ...settings.actions
+  },
   getters,
-  mutations
+  mutations: {
+    ...mutations,
+    ...plant.mutations
+  }
 })

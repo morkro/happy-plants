@@ -23,9 +23,14 @@
 <script>
   export default {
     name: 'PlantSeasons',
+
     props: {
-      seasons: { type: Array, default: [] }
+      seasons: {
+        type: Array,
+        default: []
+      }
     },
+
     methods: {
       isCurrentMonth (month) {
         return month === new Date().getMonth()

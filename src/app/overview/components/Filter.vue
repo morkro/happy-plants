@@ -9,13 +9,17 @@
 <script>
   export default {
     name: 'OverviewFilter',
-    data: () => ({
-      options: [
-        { value: 'latest', name: 'Latest' },
-        { value: 'alphabetical', name: 'Alphabetical' },
-        { value: 'category', name: 'Category' }
-      ]
-    }),
+
+    data () {
+      return {
+        options: [
+          { value: 'latest', name: 'Latest' },
+          { value: 'alphabetical', name: 'Alphabetical' },
+          { value: 'category', name: 'Category' }
+        ]
+      }
+    },
+
     methods: {
       updateSelection (event) {
         const $option = event.target.options[event.target.options.selectedIndex]

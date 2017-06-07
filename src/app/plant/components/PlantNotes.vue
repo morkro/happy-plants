@@ -4,16 +4,21 @@
       <h1>Notes</h1>
     </header>
     <button @click="emitClose">close</button>
-    <textarea @change="emitContentChange">{{ content.notes }}</textarea>
+    <textarea @change="emitContentChange">{{ content }}</textarea>
   </section>
 </template>
 
 <script>
   export default {
     name: 'PlantNotes',
+
     props: {
-      content: { type: [Object, Boolean], default: () => ({}) }
+      content: {
+        type: String,
+        default: () => ({})
+      }
     },
+
     methods: {
       emitClose () {
         this.$emit('close-notes')

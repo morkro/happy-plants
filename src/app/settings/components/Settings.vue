@@ -17,14 +17,20 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
   import AppHeader from '@/app/shared/AppHeader'
 
   export default {
     name: 'Settings',
+
     components: {
       'app-header': AppHeader
     },
+
     methods: {
+      ...mapActions([
+        'getAllPlants'
+      ]),
       triggerDownload (data = { message: 'No data!' }) {
         const dataString = JSON.stringify(data, null, 2)
         const $a = document.createElement('a')
@@ -36,8 +42,7 @@
         $a.dispatchEvent(new MouseEvent('click', { view: window }))
       },
       downloadData () {
-        this.$localforage.keys()
-          .then(keys => Promise.all(keys.map(k => this.$localforage.getItem(k))))
+        this.getAllPlants()
           .then(this.triggerDownload)
       },
       importData () {

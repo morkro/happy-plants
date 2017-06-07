@@ -19,10 +19,11 @@
 
   export default {
     name: 'PlantPreview',
+
     props: ['configMode', 'guid', 'name', 'imageURL'],
+
     methods: {
       handleClick (event) {
-        console.log(event.target)
         router.push(`plant/${this.guid}`)
       },
       deleteElement () {

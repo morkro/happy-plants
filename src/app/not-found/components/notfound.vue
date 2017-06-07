@@ -10,6 +10,7 @@
   import AppHeader from '@/app/shared/AppHeader'
   export default {
     name: 'NotFound',
+
     components: {
       'app-header': AppHeader
     }
