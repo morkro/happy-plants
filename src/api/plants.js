@@ -11,8 +11,8 @@ export const addPlant = data => {
   return localforage.setItem(namespace + data.guid, data)
 }
 
-export const deletePlant = data => {
-  return localforage.removeItem(namespace + data.guid)
+export const deletePlants = data => {
+  return Promise.all(data.map(item => localforage.removeItem(namespace + item.guid)))
 }
 
 export const updatePlant = data => {

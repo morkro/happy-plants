@@ -16,8 +16,8 @@
       <ul v-if="plants.length" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
-            @delete-plant="deleteElementFromList"
-            :configMode="filter"
+            @delete-plant="toggleElementInSelection"
+            :deleteMode="deleteMode"
             :guid="plant.guid"
             :name="plant.scientific"
             :imageURL="plant.imageURL" />
@@ -25,13 +25,19 @@
       </ul>
 
       <footer>
-        <button @click="toggleDeleteMode" class="delete-plants circle">
-          <svg-icon icon="trash" width="15" height="15" color="#000"></svg-icon>
-        </button>
+        <div :class="{ 'footer-deletion': true, 'active': deleteMode }">
+          <button @click="activateDeleteMode" class="delete-plants circle">
+            <svg-icon icon="trash" width="15" height="15" :color="deleteMode ? '#fff' : '#000'">
+            </svg-icon>
+          </button>
+          <button @click="cancelDeleteMode" class="delete-plants-cancel circle">
+            ✕
+          </button>
+        </div>
         <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
           <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
         </router-link>
-        <button @click="toggleCategoryMode" class="organise-plants circle">
+        <button @click="toggleSortingMode" class="organise-plants circle">
           <svg-icon icon="categories" width="15" height="15" color="#000"></svg-icon>
         </button>
       </footer>
@@ -63,19 +69,47 @@
 
     methods: {
       ...mapActions([
-        'deletePlant'
+        'deletePlants'
       ]),
       toggleFilter () {
         this.filter = !this.filter
       },
-      deleteElementFromList (guid) {
-        this.deletePlant(this.plants.findIndex(p => p.guid === guid))
+      toggleElementInSelection (item) {
+        if (item.selected) {
+          this.selection.push(item)
+        } else {
+          this.selection = this.selection.filter(s => s.guid !== item.guid)
+        }
       },
-      toggleDeleteMode () {
-        console.log('delete')
+      clearSelection () {
+        this.selection = []
       },
-      toggleCategoryMode () {
-        console.log('categories')
+      activateDeleteMode () {
+        if (this.sortingMode) return
+
+        // If the delete mode is already active, the selected elements should
+        // be deleted and the mode deactivated again.
+        if (this.deleteMode) {
+          if (this.selection.length) {
+            this.deletePlants(this.selection)
+          }
+          this.cancelDeleteMode()
+          return
+        }
+
+        this.deleteMode = true
+      },
+      cancelDeleteMode () {
+        this.deleteMode = false
+        this.clearSelection()
+      },
+      toggleSortingMode () {
+        if (this.deleteMode) return
+        this.sortingMode = !this.sortingMode
+
+        if (!this.sortingMode) {
+          this.clearSelection()
+        }
       },
       sortItems () {
         console.log('sort')
@@ -84,7 +118,9 @@
 
     data () {
       return {
-        filter: false
+        selection: [],
+        sortingMode: false,
+        deleteMode: false
       }
     }
   }
@@ -145,6 +181,26 @@
     }
   }
 
+  .footer-deletion {
+    position: relative;
+
+    &.active .delete-plants {
+      background: $red;
+    }
+
+    .delete-plants-cancel {
+      display: none;
+      color: $link-color;
+      position: absolute;
+      top: 0;
+      transform: translateX(110%);
+    }
+
+    &.active .delete-plants-cancel {
+      display: block;
+    }
+  }
+
   .plant-options {
     margin-bottom: $base-gap;
   }
@@ -163,7 +219,6 @@
       width: calc(50vw - #{$list-gap});
       height: calc(50vw - #{$list-gap});
       margin-bottom: $base-gap;
-      box-shadow: 0px 1px 12px rgba(0, 0, 0, .1);
 
       &:last-child {
         margin-bottom: 0;

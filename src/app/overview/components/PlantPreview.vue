@@ -1,12 +1,13 @@
 <template>
-  <div :class="{ 'plant-preview': true, 'no-photo': !this.imageURL }"
-    :style="{ backgroundImage: `url(${imageURL})` }">
-    <button @click="deleteElement" class="preview-delete icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-        <path d="M9 19c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5-17v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712zm-3 4v16h-14v-16h-2v18h18v-18h-2z"/>
-      </svg>
-    </button>
-    <div @click="handleClick" class="preview-content">
+  <div @click="handleClick"
+    :style="{ backgroundImage: `url(${imageURL})` }"
+    :class="{
+      'plant-preview': true,
+      'no-photo': !this.imageURL,
+      'select-delete': this.deleteMode && this.selected,
+      'select': this.deleteMode
+    }">
+    <div class="preview-content">
       <div class="preview-headline">
         <h1>{{ name }}</h1>
       </div>
@@ -20,14 +21,40 @@
   export default {
     name: 'PlantPreview',
 
-    props: ['configMode', 'guid', 'name', 'imageURL'],
+    props: ['deleteMode', 'guid', 'name', 'imageURL'],
 
     methods: {
       handleClick (event) {
+        event.preventDefault()
+
+        if (this.deleteMode) {
+          this.toggleSelection()
+          this.deleteElement()
+          return
+        }
+
         router.push(`plant/${this.guid}`)
       },
       deleteElement () {
-        this.$emit('delete-plant', this.guid)
+        this.$emit('delete-plant', {
+          guid: this.guid,
+          selected: this.selected
+        })
+      },
+      toggleSelection () {
+        this.selected = !this.selected
+      }
+    },
+
+    data () {
+      return {
+        selected: false
+      }
+    },
+
+    updated () {
+      if (!this.deleteMode) {
+        this.selected = false
       }
     }
   }
@@ -45,20 +72,51 @@
     background-size: cover;
     background-position: center;
     box-shadow: $shadow;
+    transform-origin: center;
+    transition: transform 50ms ease-in-out;
+
+    &:before,
+    &:after {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: "";
+      border-radius: $border-radius;
+      transition: opacity 100ms ease-in-out;
+    }
+
+    &:before {
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      border: 2px dashed white;
+      opacity: 0;
+      z-index: 2;
+    }
+
+    &:after {
+      opacity: 0;
+      background: red;
+      z-index: 1;
+    }
 
     &.no-photo {
       // TODO: Show default image instead
       background: $grey;
     }
-  }
 
-  .preview-delete {
-    fill: white;
-    position: absolute;
-    padding: 10px;
-    top: 0;
-    right: 0;
-    z-index: 1;
+    &.select:before {
+      opacity: 1;
+    }
+
+    &.select-delete {
+      transform: scale(.95);
+
+      &:after {
+        opacity: .3
+      }
+    }
   }
 
   .preview-content {
@@ -79,6 +137,7 @@
     padding: 10px;
     font-size: $text-size-small;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    transition: opacity 100ms ease-in-out;
 
     &.inactive,
     &.inactive h1 {

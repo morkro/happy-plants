@@ -7,6 +7,7 @@ button {
   border: none;
   padding: 1.5vh 3vw;
   box-shadow: $shadow;
+  transition: background-color 100ms ease-in-out;
 
   &:active, &:focus {
     outline: none;

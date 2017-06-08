@@ -2,7 +2,7 @@ import uuid from 'uuid/v4'
 import {
   fetchPlants,
   addPlant as addPlantFromAPI,
-  deletePlant as deletePlantFromAPI,
+  deletePlants as deletePlantsFromAPI,
   updatePlant as updatePlantFromAPI
 } from '@/api/plants'
 
@@ -34,9 +34,9 @@ export const addPlant = ({ state, commit }, data) => {
     })
 }
 
-export const deletePlant = ({ state, commit }, plantIndex) => {
-  return deletePlantFromAPI(state.plants[plantIndex])
-    .then(() => commit('DELETE_PLANT', { plantIndex }))
+export const deletePlants = ({ state, commit }, items) => {
+  return deletePlantsFromAPI(items)
+    .then(() => commit('DELETE_PLANTS', { items }))
 }
 
 export const updatePlant = ({ state, commit }, data) => {

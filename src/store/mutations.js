@@ -17,8 +17,10 @@ export default {
     Vue.set(state.plants, payload.data)
   },
 
-  DELETE_PLANT (state, payload) {
-    Vue.delete(state.plants, payload.plantIndex)
+  DELETE_PLANTS (state, payload) {
+    for (const item of payload.items) {
+      Vue.delete(state.plants, state.plants.findIndex(p => p.guid === item.guid))
+    }
   },
 
   UPDATE_PLANT (state, payload) {
