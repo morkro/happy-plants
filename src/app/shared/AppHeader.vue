@@ -34,6 +34,7 @@
 
 <style lang="scss" scoped>
   @import "~styles/variables";
+  @import "~styles/z-index";
 
   header {
     background: $background-primary;
@@ -45,7 +46,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 10;
+    z-index: z($page-elements, header);
 
     h1 {
       text-transform: uppercase;

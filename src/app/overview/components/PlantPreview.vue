@@ -73,7 +73,7 @@
     background-position: center;
     box-shadow: $shadow;
     transform-origin: center;
-    transition: transform 50ms ease-in-out;
+    transition: transform 50ms $ease-out-back;
 
     &:before,
     &:after {
@@ -84,7 +84,7 @@
       left: 0;
       content: "";
       border-radius: $border-radius;
-      transition: opacity 100ms ease-in-out;
+      transition: opacity 100ms $ease-out-back;
     }
 
     &:before {
@@ -137,7 +137,7 @@
     padding: 10px;
     font-size: $text-size-small;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    transition: opacity 100ms ease-in-out;
+    transition: opacity 100ms $ease-out-back;
 
     &.inactive,
     &.inactive h1 {

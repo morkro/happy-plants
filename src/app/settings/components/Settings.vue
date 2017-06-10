@@ -9,7 +9,6 @@
         <h2>Data</h2>
         <div class="data-actions">
           <button @click="downloadData">Download plants data</button>
-          <button @click="importData">Import data</button>
         </div>
       </section>
     </div>
@@ -44,10 +43,6 @@
       downloadData () {
         this.getAllPlants()
           .then(this.triggerDownload)
-      },
-      importData () {
-        // TODO: Implement import logic with `<input type="file" />`
-        console.log('import')
       }
     }
   }

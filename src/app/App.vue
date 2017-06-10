@@ -1,14 +1,20 @@
 <template>
   <div id="app">
+    <app-notifications class="notifications" :message="'Foo'"></app-notifications>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
+  import Notifications from '@/app/shared/Notifications'
 
   export default {
     name: 'HappyPlants',
+
+    components: {
+      'app-notifications': Notifications
+    },
 
     methods: mapActions([
       'loadPlants'
@@ -26,6 +32,7 @@
   @import "~styles/typography";
   @import "~styles/forms";
   @import "~styles/buttons";
+  @import "~styles/z-index";
 
   * {
     padding: 0;
@@ -43,6 +50,11 @@
     max-width: 1400px;
     min-height: 100vh;
     height: 100%;
+  }
+
+  .notifications {
+    display: none;
+    z-index: z($page-elements, notifications);
   }
 
   .main-wireframe {
