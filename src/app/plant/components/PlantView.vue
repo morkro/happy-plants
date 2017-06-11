@@ -110,7 +110,7 @@
   .view-content header {
     box-shadow: $shadow;
     position: relative;
-    color: white;
+    color: $text-color-inverse;
     height: 305px;
     margin-bottom: 4px;
 

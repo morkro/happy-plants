@@ -2,8 +2,8 @@
   <section>
     <header>
       <h1>Notes</h1>
+      <button @click="emitClose" class="circle">✕</button>
     </header>
-    <button @click="emitClose">close</button>
     <textarea @change="emitContentChange">{{ content }}</textarea>
   </section>
 </template>
@@ -31,21 +31,41 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~styles/variables";
+
   section {
-    background: yellow;
+    background: rgba(0, 0, 0, .5);
     width: 100%;
     position: fixed;
-    top: 50%;
+    top: 0;
     z-index: 1;
-    transform: translateY(-50%);
-    height: 45vh;
+    height: 100vh;
+    left: 0;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: $base-gap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      color: $text-color-inverse;
+    }
+
+    button {
+      height: 40px;
+      width: 40px;
+    }
   }
 
   textarea {
     border: none;
     width: 100%;
-    max-width: 100vw;
     height: 100%;
-    min-height: 150px;
+    padding: $base-gap;
   }
 </style>

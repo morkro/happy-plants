@@ -86,7 +86,7 @@
       }
 
       &.growth.current {
-        color: white;
+        color: $text-color-inverse;
         background: $green;
       }
 

@@ -130,7 +130,7 @@
 
   .preview-headline {
     position: absolute;
-    color: white;
+    color: $text-color-inverse;
     width: 100%;
     bottom: 0;
     left: 0;
@@ -145,7 +145,7 @@
     }
 
     h1 {
-      color: white;
+      color: $text-color-inverse;
       font-size: $text-size-base;
       font-weight: 600;
     }

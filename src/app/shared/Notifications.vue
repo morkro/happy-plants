@@ -27,7 +27,7 @@
 
   .notification-wrapper {
     background: rgba(0, 0, 0, .8);
-    color: white;
+    color: $text-color-inverse;
     width: 90vw;
     padding: 10px 15px;
     border-radius: $border-radius;

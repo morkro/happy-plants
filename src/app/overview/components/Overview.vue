@@ -135,7 +135,7 @@
   $footer-btn-size: 60px;
 
   main {
-    min-height: 10vh;
+    min-height: 100vh;
     background: $light-grey;
   }
 
