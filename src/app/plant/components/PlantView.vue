@@ -12,8 +12,12 @@
         <img :src="imageURL" :alt="name" />
       </header>
 
+      <div class="content-group content-watering">
+        <plant-watering :water="watering" @toggle-watering="onWateringUpdate" />
+      </div>
+
       <div v-if="seasons.length" class="content-group content-seasons">
-        <plant-seasons :seasons="seasons" @toggle-season="updateSeasons" />
+        <plant-seasons :seasons="seasons" @toggle-season="onSeasonUpdate" />
       </div>
 
       <div class="content-group content-notes">
@@ -42,6 +46,7 @@
   import AppHeader from '@/app/shared/AppHeader'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
+  import PlantWatering from './PlantWatering'
 
   export default {
     name: 'PlantView',
@@ -49,7 +54,8 @@
     components: {
       'app-header': AppHeader,
       'plant-notes': PlantNotes,
-      'plant-seasons': PlantSeasons
+      'plant-seasons': PlantSeasons,
+      'plant-watering': PlantWatering
     },
 
     data () {
@@ -66,7 +72,8 @@
       blob: state => state.active.blob,
       imageURL: state => state.active.imageURL,
       seasons: state => state.active.seasons,
-      notes: state => state.active.notes
+      notes: state => state.active.notes,
+      watering: state => state.active.watering
     }),
 
     methods: {
@@ -74,7 +81,8 @@
         'loadPlantItem',
         'loadPlants',
         'updateSeason',
-        'updateNotes'
+        'updateNotes',
+        'updateWatering'
       ]),
       toggleNotes () {
         this.showNotes = !this.showNotes
@@ -85,8 +93,11 @@
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
       },
-      updateSeasons (name) {
+      onSeasonUpdate (name) {
         this.updateSeason({ guid: this.guid, month: name })
+      },
+      onWateringUpdate (water) {
+        this.updateWatering({ guid: this.guid, watering: water })
       }
     },
 

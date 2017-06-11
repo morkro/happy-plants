@@ -1,16 +1,18 @@
 <template>
   <div class="progress-container">
     <progress :value="current" :max="steps"></progress>
-    <span :data-current="current" :data-steps="steps"></span>
+    <span v-if="showInfo" :data-current="current" :data-steps="steps"></span>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Progress',
+
     props: {
       current: { type: Number, default: 0 },
-      steps: { type: Number, default: 0 }
+      steps: { type: Number, default: 0 },
+      showInfo: { type: Boolean, default: true }
     }
   }
 </script>

@@ -51,7 +51,6 @@
 
   section {
     width: 100%;
-    background: $background-primary;
     padding: $base-gap;
   }
 

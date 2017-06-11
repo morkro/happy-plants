@@ -58,19 +58,12 @@
   import blobUtil from 'blob-util'
   import AppHeader from '@/app/shared/AppHeader'
   import Progress from '@/app/shared/Progress'
+  import getDefaultStructure from '../utils/getDefaultStructure'
+
   import '@/assets/leaf'
   import '@/assets/right-arrow'
   import '@/assets/check'
   import '@/assets/shutter'
-
-  function getAllMonth () {
-    return [
-      'January', 'February', 'March',
-      'April', 'Mai', 'June',
-      'July', 'August', 'September',
-      'October', 'November', 'December'
-    ]
-  }
 
   export default {
     name: 'RegisterPlant',
@@ -99,12 +92,11 @@
       },
       packageResults (blob) {
         const config = {
+          ...getDefaultStructure(),
           blob,
           name: this.name,
-          scientific: this.scientific,
-          seasons: getAllMonth().map(month => ({ month, growth: false }))
+          scientific: this.scientific
         }
-
         this.addPlant(config).then(guid =>
           this.$router.push(`/plant/${guid}`))
       },

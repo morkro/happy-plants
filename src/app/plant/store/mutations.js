@@ -16,5 +16,10 @@ export default {
   UPDATE_NOTES (state, payload) {
     const index = state.plants.findIndex(p => p.guid === payload.guid)
     state.plants[index].notes = payload.notes
+  },
+
+  UPDATE_WATERING (state, payload) {
+    const index = state.plants.findIndex(p => p.guid === payload.guid)
+    state.plants[index].watering = payload.watering
   }
 }
