@@ -17,12 +17,12 @@
       </div>
 
       <div class="content-group content-notes">
-        <div v-if="showNotes">
+        <h3>Notebook</h3>
+        <div v-if="!notes">
           <p>Seems like you haven't added any notes yet.</p>
           <button @click="toggleNotes">Add notes</button>
         </div>
         <div v-else>
-          <h3>Notebook</h3>
           <button @click="toggleNotes">Show notes</button>
         </div>
 
@@ -142,7 +142,8 @@
   .content-notes {
     padding: $base-gap;
 
-    h3 {
+    h3,
+    p {
       margin-bottom: $base-gap;
     }
   }

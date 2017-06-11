@@ -15,7 +15,7 @@
     props: {
       content: {
         type: String,
-        default: () => ({})
+        default: 'Add your notes here!'
       }
     },
 
