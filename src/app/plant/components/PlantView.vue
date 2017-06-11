@@ -22,6 +22,7 @@
           <button @click="toggleNotes">Add notes</button>
         </div>
         <div v-else>
+          <h3>Notebook</h3>
           <button @click="toggleNotes">Show notes</button>
         </div>
 
@@ -100,7 +101,10 @@
   @import "~styles/variables";
 
   .view-content {
-    background: $background-secondary;
+    h3 {
+      font-weight: 600;
+      font-size: $text-size-medium;
+    }
   }
 
   .view-content header {
@@ -108,7 +112,7 @@
     position: relative;
     color: white;
     height: 305px;
-    margin-bottom: $base-gap;
+    margin-bottom: 4px;
 
     h2 {
       font-size: $text-size-large;
@@ -132,6 +136,14 @@
   }
 
   .content-group:not(:last-of-type) {
-    margin-bottom: $base-gap;
+    border-bottom: 4px solid $background-secondary;
+  }
+
+  .content-notes {
+    padding: $base-gap;
+
+    h3 {
+      margin-bottom: $base-gap;
+    }
   }
 </style>

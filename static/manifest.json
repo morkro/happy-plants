@@ -1,0 +1,9 @@
+{
+  "name": "Happy Plants",
+  "short_name": "happy-plants",
+  "icons": [],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}

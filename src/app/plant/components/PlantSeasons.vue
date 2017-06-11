@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h1>Growing seasons</h1>
+      <h3>Growing seasons</h3>
       <p v-if="isGrowthMonth()">
         Your plant is currently in <strong>active growth</strong>.
       </p>
@@ -73,6 +73,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background $base-speed $ease-out-back,
+                  color $base-speed $ease-out-back;
 
       &:not(:last-child) {
         margin-right: 1px;

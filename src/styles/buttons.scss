@@ -5,9 +5,10 @@ button {
   font-size: $text-size-base;
   color: $text-color-button;
   border: none;
+  border-radius: $border-radius;
   padding: 1.5vh 3vw;
   box-shadow: $shadow;
-  transition: background-color 100ms ease-in-out;
+  transition: background-color 100ms $ease-out-back;
 
   &:active, &:focus {
     outline: none;
