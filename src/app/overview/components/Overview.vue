@@ -99,6 +99,7 @@
         // be deleted and the mode deactivated again.
         if (this.deleteMode) {
           if (this.selection.length) {
+            this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
             this.deletePlants(this.selection)
           }
           this.cancelDeleteMode()
@@ -112,7 +113,6 @@
         this.clearSelection()
       },
       toggleSortingMode () {
-        this.showNotification({ message: 'toggle sortingMode' })
         if (this.deleteMode) return
         this.sortingMode = !this.sortingMode
 
