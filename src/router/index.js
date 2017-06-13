@@ -9,8 +9,11 @@ import { routes as notfound } from '@/app/not-found'
 
 Vue.use(Router)
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+
 export default new Router({
-  mode: 'history',
+  // FIXME: Work-around for Netlify.
+  mode: isDevelopment ? 'history' : 'hash',
   routes: [
     ...overview,
     ...register,
