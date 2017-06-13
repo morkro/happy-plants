@@ -20,7 +20,7 @@ export const loadPlantItem = ({ state, commit }, guid) => {
   commit('LOAD_PLANT_ITEM', { item })
 }
 
-export const addPlant = ({ state, commit }, data) => {
+export const addPlant = ({ commit }, data) => {
   const config = {
     ...data,
     guid: uuid(),
@@ -34,7 +34,7 @@ export const addPlant = ({ state, commit }, data) => {
     })
 }
 
-export const deletePlants = ({ state, commit }, items) => {
+export const deletePlants = ({ commit }, items) => {
   return deletePlantsFromAPI(items)
     .then(() => commit('DELETE_PLANTS', { items }))
 }
@@ -44,4 +44,12 @@ export const updatePlant = ({ state, commit }, data) => {
   const config = { ...item, ...data, modified: Date.now() }
   return updatePlantFromAPI(config)
     .then(data => commit('UPDATE_PLANT', { config }))
+}
+
+export const showNotification = ({ commit }, data) => {
+  commit('SHOW_NOTIFICATION', data)
+}
+
+export const hideNotification = ({ commit }) => {
+  commit('HIDE_NOTIFICATION')
 }

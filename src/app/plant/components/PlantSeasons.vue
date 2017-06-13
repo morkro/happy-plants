@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h3>Growing seasons</h3>
+      <h2>Growing seasons</h2>
       <p v-if="isGrowthMonth()">
         Your plant is currently in <strong>active growth</strong>.
       </p>
@@ -56,6 +56,10 @@
 
   header {
     margin-bottom: $base-gap;
+
+    h2 {
+      margin-bottom: $base-gap / 2;
+    }
   }
 
   .season-list {

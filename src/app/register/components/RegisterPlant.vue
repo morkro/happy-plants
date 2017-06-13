@@ -58,7 +58,7 @@
   import blobUtil from 'blob-util'
   import AppHeader from '@/app/shared/AppHeader'
   import Progress from '@/app/shared/Progress'
-  import getDefaultStructure from '../utils/getDefaultStructure'
+  import getDefaultStructure from '@/utils/getDefaultStructure'
 
   import '@/assets/leaf'
   import '@/assets/right-arrow'

@@ -8,7 +8,8 @@
       <section class="settings-data">
         <h2>Data</h2>
         <div class="data-actions">
-          <button @click="downloadData">Download plants data</button>
+          <button @click="downloadData">Download</button>
+          <button @click="importData">Import</button>
         </div>
       </section>
     </div>
@@ -43,6 +44,10 @@
       downloadData () {
         this.getAllPlants()
           .then(this.triggerDownload)
+      },
+      importData (data) {
+        this.importData(data)
+          .then(/* show notification */)
       }
     }
   }

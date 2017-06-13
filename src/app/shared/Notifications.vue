@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-wrapper">
+  <div class="notification-wrapper" v-if="message">
     {{ message }}
   </div>
 </template>
@@ -10,15 +10,10 @@
 
     props: {
       message: {
-        type: String,
-        default: ''
-      },
-      timeout: {
-        type: Number,
-        default: 1000
+        type: [String, Boolean],
+        default: false
       }
     }
-
   }
 </script>
 

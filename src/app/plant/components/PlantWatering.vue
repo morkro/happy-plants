@@ -1,18 +1,20 @@
 <template>
   <section>
     <header>
-      <h3>Watering</h3>
+      <h2>Watering</h2>
     </header>
 
     <water-level
       class="water-level"
       :showInfo="false"
-      :current="watering"
-      :steps="levels.length" />
+      :current="level"
+      :steps="levels.length"
+      @click="updateWaterLevel" />
 
-    <p contenteditable>
-      Water regularly during the growing season, but the water must be able to drain away quickly. It's very rot prone.
-    </p>
+    <div class="notes">
+      <h3>Notes</h3>
+      <p contenteditable @change="emitContentChange">Type here</p>
+    </div>
   </section>
 </template>
 
@@ -22,9 +24,12 @@
     name: 'PlantWatering',
 
     props: {
-      watering: {
+      level: {
         type: Number,
         default: 1
+      },
+      notes: {
+        type: String
       }
     },
 
@@ -35,6 +40,19 @@
     data () {
       return {
         levels: [{ type: 1 }, { type: 2 }, { type: 3 }]
+      }
+    },
+
+    methods: {
+      emitContentChange (event) {
+        console.log(event)
+      },
+      updateWaterLevel () {
+        this.level++
+        if (this.level >= this.levels.length) {
+          this.level = 1
+        }
+        console.log(this.level)
       }
     }
   }
@@ -50,6 +68,9 @@
 
   header {
     margin-bottom: $base-gap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .water-level {
@@ -61,6 +82,14 @@
       &::-webkit-progress-value {
         background: $blue;
       }
+    }
+  }
+
+  .notes {
+    color: $text-color-secondary;
+
+    p {
+      font-size: $text-size-small;
     }
   }
 </style>

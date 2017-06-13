@@ -30,16 +30,23 @@
             <svg-icon icon="trash" width="15" height="15" :color="deleteMode ? '#fff' : '#000'">
             </svg-icon>
           </button>
-          <button @click="cancelDeleteMode" class="delete-plants-cancel circle">
+          <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
             ✕
           </button>
         </div>
+
         <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
           <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
         </router-link>
-        <button @click="toggleSortingMode" class="organise-plants circle">
-          <svg-icon icon="categories" width="15" height="15" color="#000"></svg-icon>
-        </button>
+
+        <div :class="{ 'footer-sorting': true, 'active': sortingMode }">
+          <button @click="cancelSortingMode" class="footer-cancel-mode circle">
+            ✕
+          </button>
+          <button @click="toggleSortingMode" class="organise-plants circle">
+            <svg-icon icon="categories" width="15" height="15" color="#000"></svg-icon>
+          </button>
+        </div>
       </footer>
     </section>
   </main>
@@ -69,7 +76,8 @@
 
     methods: {
       ...mapActions([
-        'deletePlants'
+        'deletePlants',
+        'showNotification'
       ]),
       toggleFilter () {
         this.filter = !this.filter
@@ -104,12 +112,16 @@
         this.clearSelection()
       },
       toggleSortingMode () {
+        this.showNotification({ message: 'toggle sortingMode' })
         if (this.deleteMode) return
         this.sortingMode = !this.sortingMode
 
         if (!this.sortingMode) {
           this.clearSelection()
         }
+      },
+      cancelSortingMode () {
+        this.sortingMode = false
       },
       sortItems () {
         console.log('sort')
@@ -179,6 +191,15 @@
       padding: 0;
       background: $background-primary;
     }
+
+    .footer-cancel-mode {
+      display: block;
+      color: $link-color;
+      position: absolute;
+      top: 0;
+      transform: scale(0);
+      transition: transform $base-speed $ease-out-back;
+    }
   }
 
   .footer-deletion {
@@ -188,16 +209,24 @@
       background: $red;
     }
 
-    .delete-plants-cancel {
-      display: none;
-      color: $link-color;
-      position: absolute;
-      top: 0;
-      transform: translateX(110%);
+    .footer-cancel-mode {
+      transform: translateX(120%) scale(0);
     }
 
-    &.active .delete-plants-cancel {
-      display: block;
+    &.active .footer-cancel-mode {
+      transform: translateX(120%) scale(1);
+    }
+  }
+
+  .footer-sorting {
+    position: relative;
+
+    .footer-cancel-mode {
+      transform: translateX(-120%) scale(0);
+    }
+
+    &.active .footer-cancel-mode {
+      transform: translateX(-120%) scale(1);
     }
   }
 

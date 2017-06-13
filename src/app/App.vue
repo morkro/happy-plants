@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <app-notifications class="notifications" :message="'Foo'"></app-notifications>
+    <app-notifications class="notifications" :message="message" ></app-notifications>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   import Notifications from '@/app/shared/Notifications'
 
   export default {
@@ -16,12 +16,25 @@
       'app-notifications': Notifications
     },
 
+    computed: mapState({
+      message: state => state.notification.message
+    }),
+
     methods: mapActions([
-      'loadPlants'
+      'loadPlants',
+      'hideNotification'
     ]),
 
     mounted () {
       this.loadPlants()
+    },
+
+    updated () {
+      if (this.message) {
+        setTimeout(() => {
+          this.hideNotification()
+        }, 2000)
+      }
     }
   }
 </script>
@@ -53,7 +66,6 @@
   }
 
   .notifications {
-    display: none;
     z-index: z($page-elements, notifications);
   }
 

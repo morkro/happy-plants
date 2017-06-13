@@ -18,7 +18,13 @@ export default function getDefaultStructure () {
     location: '',
     seasons: getCalendarMonth().map(month => ({ month, growth: false })),
     notes: '',
-    watering: 0,
-    sun: 0
+    watering: {
+      level: 0,
+      notes: ''
+    },
+    sun: {
+      level: 0,
+      notes: ''
+    }
   }
 }

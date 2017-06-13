@@ -26,5 +26,13 @@ export default {
   UPDATE_PLANT (state, payload) {
     const itemIndex = state.plants.findIndex(p => p.guid === payload.data.guid)
     state.plants[itemIndex] = payload.data
+  },
+
+  SHOW_NOTIFICATION (state, payload) {
+    state.notification.message = payload.message
+  },
+
+  HIDE_NOTIFICATION (state) {
+    state.notification.message = false
   }
 }

@@ -1,10 +1,23 @@
 <template>
   <section>
     <header>
-      <h1>Notes</h1>
-      <button @click="emitClose" class="circle">✕</button>
+      <h2>Notebook</h2>
+      <div v-if="!content">
+        <p>Seems like you haven't added any notes yet.</p>
+        <button @click="toggleNotes">Add notes</button>
+      </div>
+      <div v-else>
+        <button @click="toggleNotes">Show notes</button>
+      </div>
     </header>
-    <textarea @change="emitContentChange">{{ content }}</textarea>
+
+    <section class="modal" v-if="showNotes">
+      <header>
+        <h2>Notebook</h2>
+        <button @click="closeNotes" class="circle">✕</button>
+      </header>
+      <textarea @change="emitContentChange">{{ content }}</textarea>
+    </section>
   </section>
 </template>
 
@@ -19,9 +32,18 @@
       }
     },
 
+    data () {
+      return {
+        showNotes: false
+      }
+    },
+
     methods: {
-      emitClose () {
-        this.$emit('close-notes')
+      toggleNotes () {
+        this.showNotes = !this.showNotes
+      },
+      closeNotes () {
+        this.showNotes = false
       },
       emitContentChange (event) {
         this.$emit('update-notes', event.srcElement.value)
@@ -33,7 +55,13 @@
 <style lang="scss" scoped>
   @import "~styles/variables";
 
-  section {
+  section:not(.modal) {
+    h2 {
+      margin-bottom: $base-gap;
+    }
+  }
+
+  .modal {
     background: rgba(0, 0, 0, .5);
     width: 100%;
     position: fixed;
@@ -44,28 +72,29 @@
     padding-top: 50px;
     display: flex;
     flex-direction: column;
-  }
 
-  header {
-    padding: $base-gap;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    header {
+      padding: $base-gap;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    h1 {
-      color: $text-color-inverse;
+      h2 {
+        color: $text-color-inverse;
+        margin-bottom: 0;
+      }
+
+      button {
+        height: 40px;
+        width: 40px;
+      }
     }
 
-    button {
-      height: 40px;
-      width: 40px;
+    textarea {
+      border: none;
+      width: 100%;
+      height: 100%;
+      padding: $base-gap;
     }
-  }
-
-  textarea {
-    border: none;
-    width: 100%;
-    height: 100%;
-    padding: $base-gap;
   }
 </style>

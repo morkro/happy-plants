@@ -7,35 +7,29 @@
     <section class="view-content">
       <header>
         <div>
-          <h2> {{ scientific }} </h2>
+          <h1>{{ scientific }}</h1>
         </div>
         <img :src="imageURL" :alt="name" />
       </header>
 
       <div class="content-group content-watering">
-        <plant-watering :water="watering" @toggle-watering="onWateringUpdate" />
+        <plant-watering
+          :level="watering && watering.level"
+          :notes="watering && watering.notes"
+          @toggle-watering="onWateringUpdate" />
       </div>
 
       <div v-if="seasons.length" class="content-group content-seasons">
-        <plant-seasons :seasons="seasons" @toggle-season="onSeasonUpdate" />
+        <plant-seasons
+          :seasons="seasons"
+          @toggle-season="onSeasonUpdate" />
       </div>
 
       <div class="content-group content-notes">
-        <h3>Notebook</h3>
-        <div v-if="!notes">
-          <p>Seems like you haven't added any notes yet.</p>
-          <button @click="toggleNotes">Add notes</button>
-        </div>
-        <div v-else>
-          <button @click="toggleNotes">Show notes</button>
-        </div>
-
         <plant-notes
           class="notes-modal"
-          v-if="showNotes"
-          @update-notes="onNotesUpdate"
-          @close-notes="closeNotes"
-          :content="notes" />
+          :content="notes"
+          @update-notes="onNotesUpdate" />
       </div>
     </section>
   </main>
@@ -58,12 +52,6 @@
       'plant-watering': PlantWatering
     },
 
-    data () {
-      return {
-        showNotes: false
-      }
-    },
-
     computed: mapState({
       guid: state => state.active.guid,
       name: state => state.active.name,
@@ -84,20 +72,14 @@
         'updateNotes',
         'updateWatering'
       ]),
-      toggleNotes () {
-        this.showNotes = !this.showNotes
-      },
-      closeNotes () {
-        this.showNotes = false
-      },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
       },
       onSeasonUpdate (name) {
         this.updateSeason({ guid: this.guid, month: name })
       },
-      onWateringUpdate (water) {
-        this.updateWatering({ guid: this.guid, watering: water })
+      onWateringUpdate (watering) {
+        this.updateWatering({ guid: this.guid, watering })
       }
     },
 
@@ -125,9 +107,10 @@
     height: 305px;
     margin-bottom: 4px;
 
-    h2 {
+    h1 {
       font-size: $text-size-large;
       font-weight: 600;
+      color: $text-color-inverse;
     }
 
     > div {
@@ -153,7 +136,7 @@
   .content-notes {
     padding: $base-gap;
 
-    h3,
+    h2,
     p {
       margin-bottom: $base-gap;
     }

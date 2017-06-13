@@ -14,7 +14,10 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
     plants: [],
-    active: plant.state
+    active: plant.state,
+    notification: {
+      message: false
+    }
   },
   actions: {
     ...actions,
