@@ -1,7 +1,7 @@
 <template>
   <section>
     <select @change="updateSelection">
-      <option v-for="option in options" value="option.value">{{ option.name }}</option>
+      <option v-for="option in options" :value="option.value">{{ option.name }}</option>
     </select>
   </section>
 </template>

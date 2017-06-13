@@ -123,8 +123,8 @@
       cancelSortingMode () {
         this.sortingMode = false
       },
-      sortItems () {
-        console.log('sort')
+      sortItems (type) {
+        console.log(type)
       }
     },
 

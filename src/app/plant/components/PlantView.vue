@@ -9,7 +9,11 @@
         <div>
           <h1>{{ scientific }}</h1>
         </div>
-        <img :src="imageURL" :alt="name" />
+        <div class="header-background">
+          <img v-if="imageURL" :src="imageURL" :alt="name" />
+          <svg-icon v-else icon="shutter" width="50" height="50" color="#fff">
+          </svg-icon>
+        </div>
       </header>
 
       <div class="content-group content-watering">
@@ -106,6 +110,7 @@
     color: $text-color-inverse;
     height: 305px;
     margin-bottom: 4px;
+    background: $grey;
 
     h1 {
       font-size: $text-size-large;
@@ -113,7 +118,7 @@
       color: $text-color-inverse;
     }
 
-    > div {
+    > div:not(.header-background) {
       padding: $base-gap;
       position: absolute;
       z-index: 1;
@@ -126,6 +131,14 @@
       object-fit: cover;
       width: 100%;
       height: 100%;
+    }
+
+    .header-background {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 
