@@ -16,6 +16,12 @@
       'app-notifications': Notifications
     },
 
+    data () {
+      return {
+        notificationTimeout: 2000
+      }
+    },
+
     computed: mapState({
       message: state => state.notification.message
     }),
@@ -31,9 +37,7 @@
 
     updated () {
       if (this.message) {
-        setTimeout(() => {
-          this.hideNotification()
-        }, 2000)
+        setTimeout(this.hideNotification, this.notificationTimeout)
       }
     }
   }
