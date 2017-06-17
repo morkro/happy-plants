@@ -44,6 +44,13 @@
   @import "~styles/variables";
 
   select {
+    appearance: none;
+    background: rgba(0, 0, 0, .05);
+    border-radius: $border-radius;
+    border: none;
+    color: $text-color-base;
+    padding: 1.5vh 3vw;
     width: 100%;
+    font-size: $text-size-small;
   }
 </style>
