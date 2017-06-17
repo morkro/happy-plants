@@ -9,7 +9,7 @@ export default {
       imageURL: item.blob ? blobUtil.createObjectURL(item.blob) : ''
     }))
 
-    switch (state.settings.filter) {
+    switch (state.settings && state.settings.filter) {
       case 'latest':
         state.plants = transformed.sort(sortByDate).reverse()
         break
