@@ -86,11 +86,29 @@
       &.growth {
         color: $green;
         background: lighten($green, 30);
+
+        &:after {
+          opacity: 0;
+          content: "";
+          border-radius: $border-radius;
+          width: 100%;
+          height: 100%;
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          box-shadow: 0 0 12px 0px rgba($green, .7);
+          transition: opacity $base-speed $ease-out-back;
+        }
       }
 
       &.growth.current {
         color: $text-color-inverse;
         background: $green;
+
+        &:after {
+          opacity: 1;
+        }
       }
 
       &.current {

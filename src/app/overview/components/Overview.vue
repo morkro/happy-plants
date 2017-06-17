@@ -212,6 +212,23 @@
 
     &.active .delete-plants {
       background: $red;
+
+      &:after {
+        opacity: 1;
+      }
+    }
+
+    .delete-plants:after {
+      opacity: 0;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0px 0px 14px 2px $red;
+      transition: opacity $base-speed $ease-out-back;
     }
 
     .footer-cancel-mode {

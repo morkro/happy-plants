@@ -6,26 +6,20 @@
 
     <section>
       <form @submit.prevent="validateForm">
-        <button v-if="!currentLabel.required" class="form-skip">
-          Skip
-        </button>
-
         <div class="form-order" ref="labels">
-          <label for="name" data-step="1">
-            <h2>What's your friends name?</h2>
-            <input name="name" type="text" v-model="name" placeholder="Name">
-            <button class="rounded" type="submit">
-              <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
-            </button>
-          </label>
+          <label-group
+            data-step="1"
+            label="What's your friends name?"
+            name="name"
+            placeholder="Name">
+          </label-group>
 
-          <label for="file" data-step="3">
-            <h2>Upload photo</h2>
-            <input name="file" v-on:change="getFileInput" type="file">
-            <button class="rounded" type="submit">
-              <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
-            </button>
-          </label>
+          <label-group
+            data-step="2"
+            label="Upload photo"
+            name="file"
+            type="file">
+          </label-group>
 
           <!-- <button class="rounded" type="submit">
             <svg-icon :icon="getSubmitIconName()" width="25" height="25" color="#000000"></svg-icon>
@@ -51,6 +45,7 @@
   import AppHeader from '@/app/shared/AppHeader'
   import Progress from '@/app/shared/Progress'
   import getDefaultStructure from '@/utils/getDefaultStructure'
+  import LabelGroup from './LabelGroup'
 
   import '@/assets/leaf'
   import '@/assets/right-arrow'
@@ -62,7 +57,8 @@
 
     components: {
       'app-header': AppHeader,
-      'form-progress': Progress
+      'form-progress': Progress,
+      'label-group': LabelGroup
     },
 
     methods: {
@@ -205,50 +201,14 @@
     border-radius: $border-radius;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
     width: 100%;
-
-    button {
-      background: transparent;
-      box-shadow: none;
-      padding: $base-gap;
-    }
   }
 
   label {
     display: none;
     width: 100%;
-    position: relative;
 
     &.active {
       display: block;
     }
-
-    h2 {
-      position: absolute;
-      color: $text-color-button;
-      left: 0;
-      top: 0;
-      transform: translateY(-140%);
-    }
-  }
-
-  input {
-    width: 100%;
-
-    &:not([type="file"]) {
-      display: block;
-      height: 100%;
-    }
-  }
-
-  .form-skip {
-    background: none;
-    box-shadow: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: $text-size-xsmall;
-    font-weight: 600;
-    color: rgba(0, 0, 0, .35);
-    transform: translateY(-100%) translateX(-5%);
   }
 </style>

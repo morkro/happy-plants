@@ -1,5 +1,6 @@
 require('./categories')
 require('./check')
+require('./edit')
 require('./leaf')
 require('./left-arrow')
 require('./right-arrow')

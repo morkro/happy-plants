@@ -6,6 +6,9 @@
 
     <section class="view-content">
       <header>
+        <button class="edit-data circle">
+          <svg-icon icon="edit" color="#fff" width="18" height="18"></svg-icon>
+        </button>
         <div>
           <h1>{{ name }}</h1>
         </div>
@@ -45,6 +48,8 @@
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
   import PlantWatering from './PlantWatering'
+
+  import '@/assets/edit'
 
   export default {
     name: 'PlantView',
@@ -110,6 +115,14 @@
     margin-bottom: 4px;
     background: $grey;
 
+    .edit-data {
+      position: absolute;
+      right: 3vw;
+      bottom: 4px;
+      z-index: 2;
+      transform: translateY(50%);
+    }
+
     h1 {
       font-size: $text-size-large;
       font-weight: 600;
@@ -117,7 +130,7 @@
     }
 
     > div:not(.header-background) {
-      padding: $base-gap;
+      padding: $base-gap 70px $base-gap $base-gap;
       position: absolute;
       z-index: 1;
       bottom: 0;

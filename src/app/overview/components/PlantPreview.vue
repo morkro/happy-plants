@@ -68,7 +68,6 @@
     height: 100%;
     position: relative;
     border-radius: $border-radius;
-    overflow: hidden;
     background-size: cover;
     background-position: center;
     box-shadow: $shadow;
@@ -93,11 +92,12 @@
       border: 2px dashed white;
       opacity: 0;
       z-index: 2;
+      transition: box-shadow $base-speed $ease-out-back;
     }
 
     &:after {
       opacity: 0;
-      background: red;
+      background: $red;
       z-index: 1;
     }
 
@@ -114,7 +114,12 @@
       transform: scale(.95);
 
       &:after {
-        opacity: .3
+        opacity: .85;
+      }
+
+      &:before {
+        border: none;
+        box-shadow: 2px 2px 14px 2px rgba($red, .7);
       }
     }
   }
@@ -126,6 +131,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: $border-radius;
+    overflow: hidden;
+    z-index: 2;
   }
 
   .preview-headline {
@@ -137,7 +145,12 @@
     padding: 10px;
     font-size: $text-size-small;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    transition: opacity 100ms $ease-out-back;
+    transition: opacity 100ms $ease-out-back,
+                background 100ms $ease-out-back;
+
+    .select-delete & {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    }
 
     &.inactive,
     &.inactive h1 {
