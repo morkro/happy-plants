@@ -56,7 +56,10 @@
   @import "~styles/variables";
 
   section:not(.modal) {
-    h2 {
+    margin-bottom: 4px;
+
+    h2,
+    p {
       margin-bottom: $base-gap;
     }
   }
