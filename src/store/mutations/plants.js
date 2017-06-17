@@ -1,12 +1,25 @@
 import Vue from 'vue'
 import blobUtil from 'blob-util'
+import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
 export default {
   LOAD_PLANTS (state, payload) {
-    state.plants = payload.plants.map(item => ({
+    const transformed = payload.plants.map(item => ({
       ...item,
       imageURL: item.blob ? blobUtil.createObjectURL(item.blob) : ''
     }))
+
+    switch (state.settings.filter) {
+      case 'latest':
+        state.plants = transformed.sort(sortByDate).reverse()
+        break
+      case 'alphabetical':
+        state.plants = transformed.sort(sortByAlphabet)
+        break
+      default:
+        state.plants = transformed
+        break
+    }
   },
 
   LOAD_PLANT_ITEM (state, payload) {

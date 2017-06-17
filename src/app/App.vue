@@ -34,7 +34,7 @@
 
     mounted () {
       this.loadSettings()
-      this.loadPlants()
+        .then(() => this.loadPlants())
     },
 
     updated () {
