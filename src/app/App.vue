@@ -28,10 +28,12 @@
 
     methods: mapActions([
       'loadPlants',
+      'loadSettings',
       'hideNotification'
     ]),
 
     mounted () {
+      this.loadSettings()
       this.loadPlants()
     },
 

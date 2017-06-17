@@ -13,31 +13,23 @@
         <div class="form-order" ref="labels">
           <label for="name" data-step="1">
             <h2>What's your friends name?</h2>
-            <input
-              name="name"
-              type="text"
-              v-model="name"
-              placeholder="Plant name">
-          </label>
-
-          <label for="scientific" data-step="2">
-            <h2>Do you also know its scientific name?</h2>
-            <input v-model="scientific" name="scientific" type="text">
+            <input name="name" type="text" v-model="name" placeholder="Name">
+            <button class="rounded" type="submit">
+              <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
+            </button>
           </label>
 
           <label for="file" data-step="3">
             <h2>Upload photo</h2>
             <input name="file" v-on:change="getFileInput" type="file">
+            <button class="rounded" type="submit">
+              <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
+            </button>
           </label>
 
-          <label for="location" data-step="4">
-            <h2>Where is it located?</h2>
-            <input v-model="location" name="location" type="text">
-          </label>
-
-          <button class="rounded" type="submit">
+          <!-- <button class="rounded" type="submit">
             <svg-icon :icon="getSubmitIconName()" width="25" height="25" color="#000000"></svg-icon>
-          </button>
+          </button> -->
         </div>
 
         <div class="form-controls">
@@ -94,8 +86,7 @@
         const config = {
           ...getDefaultStructure(),
           blob,
-          name: this.name,
-          scientific: this.scientific
+          name: this.name
         }
         this.addPlant(config).then(guid =>
           this.$router.push(`/plant/${guid}`))
@@ -130,16 +121,12 @@
     data () {
       return {
         name: '',
-        scientific: '',
         file: undefined,
         filePreviewBlob: undefined,
         blob: '',
-        location: '',
         formSteps: [
           { type: 'name', required: true },
-          { type: 'scientific', required: false },
-          { type: 'file', required: false },
-          { type: 'location', required: false }
+          { type: 'file', required: false }
         ],
         currentLabel: null,
         currentStep: 1

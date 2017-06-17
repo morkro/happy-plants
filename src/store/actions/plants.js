@@ -43,13 +43,5 @@ export const updatePlant = ({ state, commit }, data) => {
   const item = state.plants.find(p => p.guid === data.guid)
   const config = { ...item, ...data, modified: Date.now() }
   return updatePlantFromAPI(config)
-    .then(data => commit('UPDATE_PLANT', { config }))
-}
-
-export const showNotification = ({ commit }, data) => {
-  commit('SHOW_NOTIFICATION', data)
-}
-
-export const hideNotification = ({ commit }) => {
-  commit('HIDE_NOTIFICATION')
+    .then(() => commit('UPDATE_PLANT', { config }))
 }

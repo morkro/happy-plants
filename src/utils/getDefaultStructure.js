@@ -14,8 +14,6 @@ export default function getDefaultStructure () {
     modified: 0,
     blob: undefined,
     name: '',
-    scientific: '',
-    location: '',
     seasons: getCalendarMonth().map(month => ({ month, growth: false })),
     notes: '',
     watering: {

@@ -7,7 +7,7 @@
     <section class="view-content">
       <header>
         <div>
-          <h1>{{ scientific }}</h1>
+          <h1>{{ name }}</h1>
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
@@ -59,8 +59,6 @@
     computed: mapState({
       guid: state => state.active.guid,
       name: state => state.active.name,
-      scientific: state => state.active.scientific,
-      location: state => state.active.location,
       blob: state => state.active.blob,
       imageURL: state => state.active.imageURL,
       seasons: state => state.active.seasons,

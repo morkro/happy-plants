@@ -10,7 +10,10 @@
       </div>
 
       <div v-if="plants.length" class="plant-options">
-        <overview-filter @update-selection="sortItems" class="plant-filter" />
+        <overview-filter
+          class="plant-filter"
+          :selected="filter"
+          @update-selection="sortItems" />
       </div>
 
       <ul v-if="plants.length" class="plant-list">
@@ -19,7 +22,7 @@
             @delete-plant="toggleElementInSelection"
             :deleteMode="deleteMode"
             :guid="plant.guid"
-            :name="plant.scientific"
+            :name="plant.name"
             :imageURL="plant.imageURL" />
         </li>
       </ul>
@@ -71,13 +74,15 @@
     },
 
     computed: mapState({
-      plants: state => state.plants
+      plants: state => state.plants,
+      filter: state => state.settings.filter
     }),
 
     methods: {
       ...mapActions([
         'deletePlants',
-        'showNotification'
+        'showNotification',
+        'updateFilter'
       ]),
       toggleFilter () {
         this.filter = !this.filter
@@ -124,7 +129,7 @@
         this.sortingMode = false
       },
       sortItems (type) {
-        console.log(type)
+        this.updateFilter({ filter: type })
       }
     },
 

@@ -1,7 +1,12 @@
 <template>
   <section>
     <select @change="updateSelection">
-      <option v-for="option in options" :value="option.value">{{ option.name }}</option>
+      <option
+        v-for="option in options"
+        :selected="option.value === selected"
+        :value="option.value">
+        {{ option.name }}
+      </option>
     </select>
   </section>
 </template>
@@ -10,12 +15,18 @@
   export default {
     name: 'OverviewFilter',
 
+    props: {
+      selected: {
+        type: String,
+        default: 'latest'
+      }
+    },
+
     data () {
       return {
         options: [
           { value: 'latest', name: 'Latest' },
-          { value: 'alphabetical', name: 'Alphabetical' },
-          { value: 'category', name: 'Category' }
+          { value: 'alphabetical', name: 'Alphabetical' }
         ]
       }
     },
