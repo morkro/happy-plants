@@ -16,7 +16,7 @@
         <h2>Notebook</h2>
         <button @click="closeNotes" class="circle">✕</button>
       </header>
-      <textarea @change="emitContentChange">{{ content }}</textarea>
+      <textarea @change="emitContentChange" v-model="textContent"></textarea>
     </section>
   </section>
 </template>
@@ -34,7 +34,8 @@
 
     data () {
       return {
-        showNotes: false
+        showNotes: false,
+        textContent: this.content
       }
     },
 
@@ -44,9 +45,10 @@
       },
       closeNotes () {
         this.showNotes = false
+        this.emitContentChange()
       },
-      emitContentChange (event) {
-        this.$emit('update-notes', event.srcElement.value)
+      emitContentChange () {
+        this.$emit('update-notes', this.textContent)
       }
     }
   }
@@ -54,6 +56,7 @@
 
 <style lang="scss" scoped>
   @import "~styles/variables";
+  @import "~styles/z-index";
 
   section:not(.modal) {
     margin-bottom: 4px;
@@ -69,7 +72,7 @@
     width: 100%;
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: z($page-elements, modals);
     height: 100vh;
     left: 0;
     padding-top: 50px;

@@ -32,7 +32,7 @@
           @toggle-season="onSeasonUpdate" />
       </div>
 
-      <div class="content-group content-notes">
+      <div v-if="notes" class="content-group content-notes">
         <plant-notes
           class="notes-modal"
           :content="notes"
@@ -119,7 +119,7 @@
       position: absolute;
       right: 3vw;
       bottom: 4px;
-      z-index: 2;
+      z-index: 1;
       transform: translateY(50%);
     }
 
@@ -132,7 +132,7 @@
     > div:not(.header-background) {
       padding: $base-gap 70px $base-gap $base-gap;
       position: absolute;
-      z-index: 1;
+      z-index: 0;
       bottom: 0;
       width: 100%;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
