@@ -91,7 +91,7 @@
       height: calc(100% - 4px);
       border: 2px dashed white;
       opacity: 0;
-      z-index: 2;
+      z-index: 3;
       transition: box-shadow $base-speed $ease-out-back;
     }
 
@@ -118,8 +118,10 @@
       }
 
       &:before {
+        width: 100%;
+        height: 100%;
         border: none;
-        box-shadow: 2px 2px 14px 2px rgba($red, .7);
+        box-shadow: 0 0 14px 2px rgba($red, .7);
       }
     }
   }
