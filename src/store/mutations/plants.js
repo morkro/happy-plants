@@ -1,25 +1,24 @@
 import Vue from 'vue'
-import blobUtil from 'blob-util'
+import { getUrlFromBlob } from '@/utils/blob'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
+
+function sortPlants (state, array = state.plants) {
+  switch (state.settings && state.settings.filter) {
+    case 'alphabetical':
+      state.plants = array.sort(sortByAlphabet)
+      break
+    case 'latest':
+    default:
+      state.plants = array.sort(sortByDate).reverse()
+      break
+  }
+}
 
 export default {
   LOAD_PLANTS (state, payload) {
-    const transformed = payload.plants.map(item => ({
-      ...item,
-      imageURL: item.blob ? blobUtil.createObjectURL(item.blob) : ''
-    }))
-
-    switch (state.settings && state.settings.filter) {
-      case 'latest':
-        state.plants = transformed.sort(sortByDate).reverse()
-        break
-      case 'alphabetical':
-        state.plants = transformed.sort(sortByAlphabet)
-        break
-      default:
-        state.plants = transformed
-        break
-    }
+    const transformed = payload.plants.map(item =>
+      ({ ...item, imageURL: getUrlFromBlob(item.blob) }))
+    sortPlants(state, transformed)
   },
 
   LOAD_PLANT_ITEM (state, payload) {
@@ -27,7 +26,8 @@ export default {
   },
 
   ADD_PLANT (state, payload) {
-    Vue.set(state.plants, payload.data)
+    state.plants.push(payload.item)
+    sortPlants(state)
   },
 
   DELETE_PLANTS (state, payload) {

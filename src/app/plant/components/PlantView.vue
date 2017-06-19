@@ -32,7 +32,7 @@
           @toggle-season="onSeasonUpdate" />
       </div>
 
-      <div v-if="notes" class="content-group content-notes">
+      <div class="content-group content-notes">
         <plant-notes
           class="notes-modal"
           :content="notes"

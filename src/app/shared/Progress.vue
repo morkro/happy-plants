@@ -40,6 +40,7 @@
     &::-webkit-progress-value {
       border-radius: $border-radius;
       background: $yellow;
+      box-shadow: 0 0 12px $yellow;
       transition: width $base-speed $ease-out-back;
     }
   }

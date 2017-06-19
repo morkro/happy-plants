@@ -29,7 +29,7 @@ export const addPlant = ({ commit }, data) => {
   }
   return addPlantFromAPI(config)
     .then(data => {
-      commit('ADD_PLANT', config)
+      commit('ADD_PLANT', { item: config })
       return data.guid
     })
 }

@@ -81,6 +81,7 @@
 
       &::-webkit-progress-value {
         background: $blue;
+        box-shadow: 0 0 12px $blue;
       }
     }
   }

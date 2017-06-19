@@ -28,7 +28,7 @@
       </ul>
 
       <footer>
-        <div :class="{ 'footer-deletion': true, 'active': deleteMode }">
+        <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
           <button @click="activateDeleteMode" class="delete-plants circle">
             <svg-icon icon="trash" width="15" height="15" :color="deleteMode ? '#fff' : '#000'">
             </svg-icon>
@@ -42,7 +42,7 @@
           <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
         </router-link>
 
-        <div :class="{ 'footer-sorting': true, 'active': sortingMode }">
+        <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
           <button @click="cancelSortingMode" class="footer-cancel-mode circle">
             ✕
           </button>

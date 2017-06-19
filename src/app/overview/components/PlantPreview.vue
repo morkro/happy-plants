@@ -92,12 +92,13 @@
       border: 2px dashed white;
       opacity: 0;
       z-index: 3;
-      transition: box-shadow $base-speed $ease-out-back;
+      transition: opacity 100ms $ease-out-back;
     }
 
     &:after {
       opacity: 0;
       background: $red;
+      box-shadow: 0 0 14px $red;
       z-index: 1;
     }
 
@@ -118,10 +119,7 @@
       }
 
       &:before {
-        width: 100%;
-        height: 100%;
-        border: none;
-        box-shadow: 0 0 14px 2px rgba($red, .7);
+        opacity: 0;
       }
     }
   }
@@ -147,8 +145,6 @@
     padding: 10px;
     font-size: $text-size-small;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    transition: opacity 100ms $ease-out-back,
-                background 100ms $ease-out-back;
 
     .select-delete & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));

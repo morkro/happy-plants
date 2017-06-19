@@ -38,9 +38,11 @@
       isGrowthMonth () {
         return this.seasons[new Date().getMonth()].growth
       },
+      // FIXME: Weird bug with `event.target` always being the same if it has the growth class
       emitStateToggle (event) {
         if (event.target.nodeName !== 'LI') return
         this.$emit('toggle-season', event.target.getAttribute('data-season'))
+        event.target.blur()
       }
     }
   }
