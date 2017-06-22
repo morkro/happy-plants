@@ -55,7 +55,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/layout";
+  @import "~styles/colors";
   @import "~styles/z-index";
 
   section:not(.modal) {

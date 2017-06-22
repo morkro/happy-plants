@@ -59,7 +59,9 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/fonts";
+  @import "~styles/layout";
 
   section {
     width: 100%;

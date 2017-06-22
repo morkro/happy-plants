@@ -18,7 +18,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
 
   .notification-wrapper {
     background: rgba(0, 0, 0, .8);

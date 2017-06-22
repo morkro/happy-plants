@@ -18,7 +18,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/layout";
+  @import "~styles/colors";
+  @import "~styles/fonts";
+  @import "~styles/animations";
 
   .progress-container {
     display: flex;

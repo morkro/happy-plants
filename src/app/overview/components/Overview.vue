@@ -144,7 +144,9 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
+  @import "~styles/animations";
   @import "~styles/z-index";
 
   $content-index: list, footer;

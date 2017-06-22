@@ -5,31 +5,23 @@
     </app-header>
 
     <section>
-      <form @submit.prevent="validateForm">
-        <div class="form-order" ref="labels">
-          <label-group
-            data-step="1"
-            label="What's your friends name?"
-            name="name"
-            placeholder="Name">
-          </label-group>
+      <!-- <form @submit.prevent="validateForm"> -->
+      <div class="form">
+        <label-group
+          class="form-label-group"
+          v-for="(step, index) of formSteps"
+          :data-step="index"
+          :required="step.required"
+          :label="step.label"
+          :name="step.type"
+          :type="step.type"
+          :placeholder="step.placeholder"
+          @process-step="getInputValue">
+        </label-group>
 
-          <label-group
-            data-step="2"
-            label="Upload photo"
-            name="file"
-            type="file">
-          </label-group>
-
-          <!-- <button class="rounded" type="submit">
-            <svg-icon :icon="getSubmitIconName()" width="25" height="25" color="#000000"></svg-icon>
-          </button> -->
-        </div>
-
-        <div class="form-controls">
-          <form-progress :steps="formSteps.length" :current="currentStep" />
-        </div>
-      </form>
+        <button>Add plant</button>
+        <!-- <form-progress :steps="formSteps.length" :current="currentStep" /> -->
+      </div>
 
       <div class="form-background">
         <svg-icon v-if="!file" icon="leaf" class="background-icon"></svg-icon>
@@ -65,6 +57,9 @@
       ...mapActions([
         'addPlant'
       ]),
+      getInputValue (data) {
+        console.log(data)
+      },
       validateForm () {
         if (this.currentStep < this.formSteps.length) {
           this.triggerNextFormStep()
@@ -87,30 +82,9 @@
         this.addPlant(config).then(guid =>
           this.$router.push(`/plant/${guid}`))
       },
-      removeActiveLabel () {
-        this.$refs.labels
-          .querySelector('label.active')
-          .classList
-            .remove('active')
-      },
-      setActiveLabel ({ type }) {
-        this.$refs.labels
-          .querySelector(`label[for="${type}"]`)
-          .classList
-            .add('active')
-      },
       getFileInput (event) {
         this.filePreviewBlob = blobUtil.createObjectURL(event.target.files[0])
         this.file = event.target.files[0]
-      },
-      getSubmitIconName () {
-        if (this.currentLabel.type === 'file') {
-          return 'shutter'
-        }
-        if (this.currentStep === this.formSteps.length) {
-          return 'check'
-        }
-        return 'right-arrow'
       }
     },
 
@@ -121,26 +95,35 @@
         filePreviewBlob: undefined,
         blob: '',
         formSteps: [
-          { type: 'name', required: true },
-          { type: 'file', required: false }
+          {
+            type: 'name',
+            required: true,
+            label: 'What\'s your friends name?',
+            description: '',
+            placeholder: 'Name'
+          },
+          {
+            type: 'file',
+            required: false,
+            label: 'Upload photo',
+            description: '',
+            placeholder: ''
+          }
         ],
         currentLabel: null,
-        currentStep: 1
+        currentStep: 0
       }
     },
 
     created () {
-      this.currentLabel = this.formSteps[this.currentStep - 1]
-    },
-
-    mounted () {
-      this.setActiveLabel(this.currentLabel)
+      this.currentLabel = this.formSteps[this.currentStep]
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
 
   main {
     background: $green;
@@ -183,7 +166,7 @@
     }
   }
 
-  form {
+  .form {
     position: relative;
     z-index: 1;
     padding: 0 $base-gap;
@@ -203,12 +186,8 @@
     width: 100%;
   }
 
-  label {
-    display: none;
+  .form-label-group {
     width: 100%;
-
-    &.active {
-      display: block;
-    }
+    margin-bottom: $base-gap;
   }
 </style>

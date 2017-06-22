@@ -54,7 +54,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
 
   main {
     min-height: 10vh;

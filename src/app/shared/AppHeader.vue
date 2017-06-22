@@ -33,7 +33,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
   @import "~styles/z-index";
 
   header {

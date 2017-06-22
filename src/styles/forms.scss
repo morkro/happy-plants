@@ -1,8 +1,9 @@
-@import "./variables";
+@import "./layout";
+@import "./colors";
 
 input {
   background: white;
-  padding: $base-gap;
+  padding: $base-gap + 5 $base-gap;
   color: $text-color-base;
   border: none;
   border-radius: $border-radius;

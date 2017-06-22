@@ -1,4 +1,7 @@
-@import "./variables";
+@import "./colors";
+@import "./fonts";
+@import "./layout";
+@import "./animations";
 
 button {
   background: $green;

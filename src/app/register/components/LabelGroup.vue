@@ -1,10 +1,12 @@
 <template>
   <label :for="name" data-step="1">
-    <h2>{{ label }}</h2>
-    <input :name="name" :type="type" :placeholder="placeholder">
-    <button class="rounded">
-      <svg-icon icon="right-arrow" width="25" height="25" color="#000000"></svg-icon>
-    </button>
+    <h2 :class="{ required }">{{ label }}</h2>
+    <input ref="input"
+      :name="name"
+      :type="type"
+      :required="required"
+      :placeholder="placeholder"
+      @change="emitValue">
   </label>
 </template>
 
@@ -13,45 +15,59 @@
     name: 'LabelGroup',
 
     props: {
+      required: { type: Boolean, default: false },
       label: { type: String },
       name: { type: String },
       placeholder: { type: String },
       type: { type: String, default: 'text' }
+    },
+
+    methods: {
+      getInputValue () {
+        const data = { type: this.type, payload: undefined }
+
+        if (this.$refs.input.files && this.$refs.input.files.length) {
+          data.payload = this.$refs.input.files[0]
+        } else if (this.$refs.input.value) {
+          data.payload = this.$refs.input.value
+        }
+
+        return data
+      },
+      emitValue () {
+        this.$emit('process-step', this.getInputValue())
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/variables";
+  @import "~styles/colors";
+  @import "~styles/layout";
+  @import "~styles/fonts";
 
   label {
     position: relative;
+    display: block;
   }
 
   h2 {
-    position: absolute;
     color: $text-color-button;
-    left: 0;
-    top: 0;
-    transform: translateY(-140%);
+    margin-bottom: $base-gap / 2;
+
+    &.required:after {
+      color: $yellow;
+      content: " *";
+      font-size: $text-size-small;
+    }
   }
 
   input {
     width: 100%;
-    padding-right: 47px;
 
     &:not([type="file"]) {
       display: block;
       height: 100%;
     }
-  }
-
-  button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: transparent;
-    box-shadow: none;
-    padding: $base-gap - 3;
   }
 </style>
