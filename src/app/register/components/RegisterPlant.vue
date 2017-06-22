@@ -28,7 +28,6 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import blobUtil from 'blob-util'
   import AppHeader from '@/app/shared/AppHeader'
   import getDefaultStructure from '@/utils/getDefaultStructure'
   import LabelGroup from './LabelGroup'
@@ -51,7 +50,7 @@
         if (data.type === 'name') {
           this.name = data.payload
         } else if (data.type === 'file') {
-          this.blob = blobUtil.createObjectURL(data.payload)
+          this.blob = data.payload
         }
       },
       validateForm () {
