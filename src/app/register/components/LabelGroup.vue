@@ -1,6 +1,7 @@
 <template>
   <label :for="name" data-step="1">
     <h2 :class="{ required }">{{ label }}</h2>
+    <span v-if="description">{{ description }}</span>
     <input ref="input"
       :name="name"
       :type="type"
@@ -17,6 +18,7 @@
     props: {
       required: { type: Boolean, default: false },
       label: { type: String },
+      description: { type: String },
       name: { type: String },
       placeholder: { type: String },
       type: { type: String, default: 'text' }
@@ -60,6 +62,14 @@
       content: " *";
       font-size: $text-size-small;
     }
+  }
+
+  span {
+    display: block;
+    color: $text-color-secondary;
+    font-size: $text-size-small;
+    margin-bottom: $base-gap / 2;
+    padding: 0 1px;
   }
 
   input {

@@ -4,6 +4,7 @@
 @import "./animations";
 
 button {
+  cursor: pointer;
   background: $green;
   font-size: $text-size-base;
   color: $text-color-button;
