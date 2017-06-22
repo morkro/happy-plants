@@ -9,7 +9,6 @@
         <h2>Data</h2>
         <div class="data-actions">
           <button @click="downloadData">Download</button>
-          <button @click="importData">Import</button>
         </div>
       </section>
     </div>

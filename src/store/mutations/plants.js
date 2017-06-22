@@ -22,7 +22,9 @@ export default {
   },
 
   LOAD_PLANT_ITEM (state, payload) {
-    state.active = payload.item
+    const needsBlobUrl = !!payload.item.blob && !payload.item.imageURL
+    const imageURL = needsBlobUrl ? getUrlFromBlob(payload.item.blob) : payload.item.imageURL
+    state.active = Object.assign(payload.item, { imageURL })
   },
 
   ADD_PLANT (state, payload) {

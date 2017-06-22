@@ -19,7 +19,8 @@
         </label-group>
 
         <button>
-          Add plant <svg-icon class="icon" icon="right-arrow"></svg-icon>
+          Add plant
+          <svg-icon class="icon" icon="right-arrow" color="#000"></svg-icon>
         </button>
       </form>
     </section>
@@ -113,9 +114,11 @@
     width: 100%;
 
     button {
+      color: $text-color-base;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: $yellow;
 
       .icon {
         margin-left: $base-gap / 2;
