@@ -8,7 +8,8 @@
       <form @submit.prevent="validateForm">
         <label-group
           class="form-label-group"
-          v-for="step of formSteps"
+          v-for="(step, index) of formSteps"
+          :key="step.type + index"
           :required="step.required"
           :label="step.label"
           :description="step.description"

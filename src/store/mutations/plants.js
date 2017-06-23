@@ -17,13 +17,16 @@ function sortPlants (state, array = state.plants) {
 export default {
   LOAD_PLANTS (state, payload) {
     const transformed = payload.plants.map(item =>
-      ({ ...item, imageURL: getUrlFromBlob(item.blob) }))
+      Object.assign(item, { imageURL: getUrlFromBlob(item.blob) }))
     sortPlants(state, transformed)
   },
 
   LOAD_PLANT_ITEM (state, payload) {
     const needsBlobUrl = !!payload.item.blob && !payload.item.imageURL
-    const imageURL = needsBlobUrl ? getUrlFromBlob(payload.item.blob) : payload.item.imageURL
+    const imageURL = needsBlobUrl
+      ? getUrlFromBlob(payload.item.blob)
+      : payload.item.imageURL
+
     state.active = Object.assign(payload.item, { imageURL })
   },
 
