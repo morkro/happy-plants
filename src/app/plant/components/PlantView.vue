@@ -19,12 +19,12 @@
         </div>
       </header>
 
-      <div class="content-group content-watering">
+      <!-- <div class="content-group content-watering">
         <plant-watering
           :level="watering && watering.level"
           :notes="watering && watering.notes"
           @toggle-watering="onWateringUpdate" />
-      </div>
+      </div> -->
 
       <div v-if="seasons.length" class="content-group content-seasons">
         <plant-seasons

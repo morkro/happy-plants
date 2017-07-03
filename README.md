@@ -1,9 +1,36 @@
-# happy-plants [![Build Status](https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)](https://travis-ci.com/morkro/happy-plants)
+# Happy Plants 🌵🌱 [![Build Status](https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)](https://travis-ci.com/morkro/happy-plants)
+> Version 1.0.0-alpha
 
-> 🌵 Web application to keep your plants happy
+_Happy Plants_ is a web application which wants to help you keeping your plants happy!
+
+_This is a personal project of mine to help me keeping track of all the plants I have and still in active development._
+
+## Features
+This project is currently still very early in development and only has a bare minimum set of features. So far, you can:
+
+- Add a new plant, add a name and photo
+- Have an overview of all your plants
+  - Filter them by date and name
+- View your plants
+  - Add notes
+  - Update the growth seasons
+- Download your data from the settings page
+
+#### What's planned
+<table>
+  <thead>
+    <td>Feature</td>
+    <td>Development</td>
+    <td>Description</td>
+  </thead>
+  <tbody>
+    <td>Google Account sync</td>
+    <td>🚧 In progress</td>
+    <td>Enables you to store your application data on Google Drive Application Storage and access the same data cross-device.</td>
+  </tbody>
+</table>
 
 ## Development
-### Available commands
 This project supports Yarn, so you can either use `yarn` or `npm` for the tasks.
 
 | Command | Description |
@@ -15,6 +42,7 @@ This project supports Yarn, so you can either use `yarn` or `npm` for the tasks.
 | `yarn/npm run unit` | Run unit tests |
 | `yarn/npm run e2e` | Run end-to-end tests |
 | `yarn/npm test` | Run all tests |
+| `yarn/npm lint` | Runs `Standard` over all `.js` files |
 
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
