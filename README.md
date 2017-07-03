@@ -16,17 +16,23 @@ This project is currently still very early in development and only has a bare mi
   - Update the growth seasons
 - Download your data from the settings page
 
-#### What's planned
+#### Next milestone
 <table>
   <thead>
-    <td>Feature</td>
-    <td>Development</td>
-    <td>Description</td>
+    <tr>
+      <th>Feature</th>
+      <th>Development</th>
+      <th>Description</th>
+      <th>Issue</th>
+    </tr>
   </thead>
   <tbody>
-    <td>Google Account sync</td>
-    <td>🚧 In progress</td>
-    <td>Enables you to store your application data on Google Drive Application Storage and access the same data cross-device.</td>
+    <tr>
+      <td>Google Account sync</td>
+      <td>🚧 In progress</td>
+      <td>Enables you to store your application data on Google Drive Application Storage and access the same data cross-device.</td>
+      <td><a href="https://github.com/morkro/happy-plants/issues/20">#20</a></td>
+    </tr>
   </tbody>
 </table>
 
