@@ -3,7 +3,7 @@
 
 _Happy Plants_ is a web application which wants to help you keeping your plants happy!
 
-_This is a personal project of mine to help me keeping track of all the plants I have and still in active development._
+_This is a personal project of mine to help me keeping track of all the plants I have and still in active development. There is currently no desktop version, only mobile. Desktop is planned, but for now focus is on mobile._
 
 ## Features
 This project is currently still very early in development and only has a bare minimum set of features. So far, you can:
