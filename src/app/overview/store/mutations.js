@@ -2,6 +2,7 @@ import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
 export default {
   UPDATE_FILTER (state, payload) {
+    state.updated = Date.now()
     state.settings.filter = payload.filter
 
     switch (state.settings.filter) {

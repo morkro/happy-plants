@@ -14,6 +14,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
+    updated: Date.now(),
     plants: [],
     active: plant.state,
     // TODO: move to shared component
