@@ -1,8 +1,11 @@
 <template>
   <header>
     <div class="header-ctrl">
-      <router-link v-if="back" :to="backPath" class="link-wrapper">
-        <svg-icon icon="left-arrow" width="20" height="20" color="#000000"></svg-icon>
+      <router-link
+        v-if="back"
+        :to="backPath"
+        :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
+        <svg-icon icon="left-arrow" width="20" height="20" :color="color"></svg-icon>
       </router-link>
       <slot name="custom-action-left"></slot>
     </div>
@@ -10,8 +13,11 @@
     <slot name="title"></slot>
 
     <div class="header-ctrl">
-      <router-link v-if="settings" :to="{ path: '/settings' }" class="link-wrapper">
-        <svg-icon icon="settings" width="20" height="20" color="#000000"></svg-icon>
+      <router-link
+        v-if="settings"
+        :to="{ path: '/settings' }"
+        :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
+        <svg-icon icon="settings" width="20" height="20" :color="color"></svg-icon>
       </router-link>
       <slot name="custom-action-right"></slot>
     </div>
@@ -24,10 +30,18 @@
 
   export default {
     name: 'AppHeader',
+
     props: {
       backPath: { type: String, default: '/' },
       back: { type: Boolean, default: false },
-      settings: { type: Boolean, default: false }
+      settings: { type: Boolean, default: false },
+      color: { type: String, default: 'black' }
+    },
+
+    methods: {
+      isWhite (color) {
+        return color === 'white'
+      }
     }
   }
 </script>
@@ -65,5 +79,28 @@
   .header-ctrl {
     width: $icon-size;
     height: $icon-size;
+
+    a {
+      width: $icon-size;
+      height: $icon-size;
+      display: block;
+    }
+
+    .backdrop {
+      position: relative;
+
+      &::before {
+        background: rgba(0, 0, 0, .22);
+        border-radius: 50%;
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: $icon-size + $base-gap / 2;
+        height: $icon-size + $base-gap / 2;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+      }
+    }
   }
 </style>

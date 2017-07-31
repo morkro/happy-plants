@@ -1,20 +1,18 @@
 <template>
   <main class="main-wireframe">
-    <app-header :back="true" :settings="true">
-      <h1 slot="title">Hello, I am</h1>
-    </app-header>
+    <app-header class="app-header" color="white" :back="true" :settings="true"></app-header>
 
     <section class="view-content">
       <header>
         <button class="edit-data circle">
           <svg-icon icon="edit" color="#fff" width="18" height="18"></svg-icon>
         </button>
-        <div>
+        <div :class="{ 'is-skeleton': !name }">
           <h1>{{ name }}</h1>
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
-          <svg-icon v-else icon="shutter" width="50" height="50" color="#fff">
+          <svg-icon v-else icon="cactus" width="50" height="50" color="#000">
           </svg-icon>
         </div>
       </header>
@@ -50,6 +48,7 @@
   import PlantWatering from './PlantWatering'
 
   import '@/assets/edit'
+  import '@/assets/cactus'
 
   export default {
     name: 'PlantView',
@@ -103,6 +102,14 @@
   @import "~styles/layout";
   @import "~styles/animations";
 
+  .main-wireframe {
+    padding-top: 0;
+  }
+
+  .app-header {
+    background: transparent;
+  }
+
   .view-content {
     h3 {
       font-weight: 600;
@@ -153,6 +160,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      svg {
+        width: 65% !important;
+        height: auto !important;
+        opacity: .12;
+      }
     }
   }
 

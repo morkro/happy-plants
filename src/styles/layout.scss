@@ -1,6 +1,19 @@
+@import "~styles/colors";
+
 $border-radius: 6px;
 $base-gap: 15px;
 $icon-size: 20px;
 $shadow: 4px 4px 0 rgba(0, 0, 0, .12);
 
 $app-header-size: 50px;
+
+.is-skeleton {
+  background: $grey !important;
+  box-shadow: none !important;
+
+  h1, h2, p, span {
+    color: transparent !important;
+    background: rgba(0, 0, 0, .12);
+    border-radius: $border-radius;
+  }
+}

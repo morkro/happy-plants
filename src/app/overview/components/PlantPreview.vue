@@ -11,12 +11,16 @@
       <div class="preview-headline">
         <h1>{{ name }}</h1>
       </div>
+      <svg-icon v-if="!this.imageURL" icon="cactus" width="40" height="40" color="#000">
+      </svg-icon>
     </div>
   </div>
 </template>
 
 <script>
   import router from '@/router'
+
+  import '@/assets/cactus'
 
   export default {
     name: 'PlantPreview',
@@ -137,6 +141,12 @@
     border-radius: $border-radius;
     overflow: hidden;
     z-index: 2;
+
+    svg {
+      width: 65% !important;
+      height: auto !important;
+      opacity: .12;
+    }
   }
 
   .preview-headline {
@@ -151,6 +161,10 @@
 
     .select-delete & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    }
+
+    .no-photo & {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
     }
 
     &.inactive,
