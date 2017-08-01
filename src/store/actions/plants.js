@@ -1,4 +1,7 @@
 import uuid from 'uuid/v4'
+import { blobToBase64String } from 'blob-util'
+import { convertToBlob } from '@/utils/blob'
+import { iOSSafari } from '@/utils/useragent'
 import {
   fetchPlants,
   addPlant as addPlantFromAPI,
@@ -9,7 +12,8 @@ import {
 export const loadPlants = ({ state, commit }) => {
   if (!state.plants || state.plants.length === 0) {
     return fetchPlants()
-      .then(plants => commit('LOAD_PLANTS', { plants }))
+      .then(data => Promise.all(data.map(convertToBlob))
+        .then(plants => commit('LOAD_PLANTS', { plants })))
   }
 
   return Promise.resolve()
@@ -27,6 +31,21 @@ export const addPlant = ({ commit }, data) => {
     created: Date.now(),
     modified: Date.now()
   }
+
+  // FIXME: This is generally a bad idea. Use feature detection instead.
+  // However, I could not find a reliable way to test if IndexedDB supports blobs,
+  // because it fails silently. We have to convert the blob to base64,
+  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
+  if (iOSSafari) {
+    return blobToBase64String(data.blob)
+      .then(base64String => Object.assign({}, config, { blob: base64String }))
+      .then(config => addPlantFromAPI(config)
+        .then(data => {
+          commit('ADD_PLANT', { item: config })
+          return data.guid
+        }))
+  }
+
   return addPlantFromAPI(config)
     .then(data => {
       commit('ADD_PLANT', { item: config })

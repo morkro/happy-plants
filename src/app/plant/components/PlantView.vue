@@ -7,7 +7,7 @@
         <button class="edit-data circle">
           <svg-icon icon="edit" color="#fff" width="18" height="18"></svg-icon>
         </button>
-        <div :class="{ 'is-skeleton': !name }">
+        <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL }">
           <h1>{{ name }}</h1>
         </div>
         <div class="header-background">
@@ -146,6 +146,10 @@
       bottom: 0;
       width: 100%;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+
+      &.no-photo {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .2));
+      }
     }
 
     img {
