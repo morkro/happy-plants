@@ -118,7 +118,7 @@
   }
 
   .view-content header {
-    box-shadow: $shadow;
+    box-shadow: 0 4px 0 $dark-transparency;
     position: relative;
     color: $text-color-inverse;
     height: 305px;

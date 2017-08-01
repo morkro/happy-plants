@@ -25,7 +25,7 @@ export const loadPlantItem = ({ state, commit }, guid) => {
 }
 
 export const addPlant = ({ commit }, data) => {
-  const config = {
+  const meta = {
     ...data,
     guid: uuid(),
     created: Date.now(),
@@ -34,21 +34,27 @@ export const addPlant = ({ commit }, data) => {
 
   // FIXME: This is generally a bad idea. Use feature detection instead.
   // However, I could not find a reliable way to test if IndexedDB supports blobs,
-  // because it fails silently. We have to convert the blob to base64,
+  // as it fails silently. We have to convert the blob to base64,
   // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
   if (iOSSafari) {
+    // 1. Turn blob into base64 string (only needed for storage)
     return blobToBase64String(data.blob)
-      .then(base64String => Object.assign({}, config, { blob: base64String }))
-      .then(config => addPlantFromAPI(config)
-        .then(data => {
-          commit('ADD_PLANT', { item: config })
-          return data.guid
-        }))
+      // 2. Take the base64 string and add it to the data object
+      .then(base64String => Object.assign({}, meta, { blob: base64String }))
+      // 3. Add data to IndexedDB and return it
+      .then(config => addPlantFromAPI(config).then(() => config))
+      // 4. Add the blob back to the object
+      .then(config => Object.assign({}, config, { blob: data.blob }))
+      // 5. Add new data to Vuex
+      .then(data => {
+        commit('ADD_PLANT', { item: data })
+        return data.guid
+      })
   }
 
-  return addPlantFromAPI(config)
+  return addPlantFromAPI(meta)
     .then(data => {
-      commit('ADD_PLANT', { item: config })
+      commit('ADD_PLANT', { item: meta })
       return data.guid
     })
 }

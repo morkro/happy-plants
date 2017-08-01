@@ -3,7 +3,7 @@
 $border-radius: 6px;
 $base-gap: 15px;
 $icon-size: 20px;
-$shadow: 4px 4px 0 rgba(0, 0, 0, .12);
+$shadow: 4px 4px 0 $dark-transparency;
 
 $app-header-size: 50px;
 
@@ -13,7 +13,7 @@ $app-header-size: 50px;
 
   h1, h2, p, span {
     color: transparent !important;
-    background: rgba(0, 0, 0, .12);
+    background: $dark-transparency;
     border-radius: $border-radius;
   }
 }

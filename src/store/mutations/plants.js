@@ -31,13 +31,14 @@ export default {
   },
 
   ADD_PLANT (state, payload) {
-    state.updated = payload.updated
+    console.log(payload)
+    state.updated = Date.now()
     state.plants.push(payload.item)
     sortPlants(state)
   },
 
   DELETE_PLANTS (state, payload) {
-    state.updated = payload.updated
+    state.updated = Date.now()
     for (const item of payload.items) {
       Vue.delete(state.plants, state.plants.findIndex(p => p.guid === item.guid))
     }
@@ -45,7 +46,7 @@ export default {
 
   UPDATE_PLANT (state, payload) {
     const itemIndex = state.plants.findIndex(p => p.guid === payload.data.guid)
-    state.updated = payload.updated
+    state.updated = Date.now()
     state.plants[itemIndex] = payload.data
   }
 }

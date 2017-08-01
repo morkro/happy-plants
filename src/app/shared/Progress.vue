@@ -37,7 +37,7 @@
 
     &::-webkit-progress-bar {
       border-radius: 6px;
-      background: rgba(0, 0, 0, .12);
+      background: $dark-transparency;
     }
 
     &::-webkit-progress-value {
