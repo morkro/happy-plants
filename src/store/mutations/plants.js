@@ -31,7 +31,6 @@ export default {
   },
 
   ADD_PLANT (state, payload) {
-    console.log(payload)
     state.updated = Date.now()
     state.plants.push(payload.item)
     sortPlants(state)

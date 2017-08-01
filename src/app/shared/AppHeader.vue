@@ -5,6 +5,7 @@
         v-if="back"
         :to="backPath"
         :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
+        <span hidden>Back</span>
         <svg-icon icon="left-arrow" width="20" height="20" :color="color"></svg-icon>
       </router-link>
       <slot name="custom-action-left"></slot>
@@ -17,6 +18,7 @@
         v-if="settings"
         :to="{ path: '/settings' }"
         :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
+        <span hidden>Settings</span>
         <svg-icon icon="settings" width="20" height="20" :color="color"></svg-icon>
       </router-link>
       <slot name="custom-action-right"></slot>
@@ -100,6 +102,10 @@
         height: $icon-size + $base-gap / 2;
         transform: translate(-50%, -50%);
         z-index: -1;
+      }
+
+      svg {
+        transform: translateY(-1px);
       }
     }
   }

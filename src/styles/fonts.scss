@@ -10,6 +10,7 @@ $text-size-large: 150%;
   font-family: 'Asap';
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
   src: url(/static/fonts/Asap-Regular.ttf) format('truetype');
 }
 
@@ -17,6 +18,7 @@ $text-size-large: 150%;
   font-family: 'Asap';
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
   src: url(/static/fonts/Asap-Medium.ttf) format('truetype');
 }
 
@@ -24,5 +26,6 @@ $text-size-large: 150%;
   font-family: 'Asap';
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
   src: url(/static/fonts/Asap-Bold.ttf) format('truetype');
 }

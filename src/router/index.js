@@ -12,6 +12,12 @@ Vue.use(Router)
 export default new Router({
   // FIXME: Work-around for Netlify. Revert when history mode can be resolved on server side.
   mode: process.env.NODE_ENV === 'development' ? 'history' : 'hash',
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    return { x: 0, y: 0 }
+  },
   routes: [
     ...overview,
     ...register,

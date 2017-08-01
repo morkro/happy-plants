@@ -36,7 +36,7 @@ export const addPlant = ({ commit }, data) => {
   // However, I could not find a reliable way to test if IndexedDB supports blobs,
   // as it fails silently. We have to convert the blob to base64,
   // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-  if (iOSSafari) {
+  if (iOSSafari && !!data.blob) {
     // 1. Turn blob into base64 string (only needed for storage)
     return blobToBase64String(data.blob)
       // 2. Take the base64 string and add it to the data object
