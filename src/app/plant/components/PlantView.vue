@@ -1,6 +1,6 @@
 <template>
   <main class="main-wireframe">
-    <app-header class="app-header" color="white" :back="true" :settings="true"></app-header>
+    <app-header class="app-header" color="white" :back="true"></app-header>
 
     <section class="view-content">
       <header>
@@ -81,8 +81,9 @@
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
       },
-      onSeasonUpdate (name) {
-        this.updateSeason({ guid: this.guid, month: name })
+      onSeasonUpdate (month) {
+        console.log('twice?', month)
+        this.updateSeason({ guid: this.guid, month })
       },
       onWateringUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })

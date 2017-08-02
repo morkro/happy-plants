@@ -9,11 +9,11 @@
         Your plant is currently in a <strong>dormant phase</strong>.
       </p>
     </header>
-    <ul @click="emitStateToggle" class="season-list">
+    <ul class="season-list">
       <li
         v-for="(season, index) of seasons"
-        :class="{ current: isCurrentMonth(index), growth: season.growth }"
-        :data-season="season.month">
+        @click.self="emitStateToggle(season.month)"
+        :class="{ current: isCurrentMonth(index), growth: season.growth }">
         {{ season.month[0] }}
       </li>
     </ul>
@@ -38,11 +38,8 @@
       isGrowthMonth () {
         return this.seasons[new Date().getMonth()].growth
       },
-      // FIXME: Weird bug with `event.target` always being the same if it has the growth class
-      emitStateToggle (event) {
-        if (event.target.nodeName !== 'LI') return
-        this.$emit('toggle-season', event.target.getAttribute('data-season'))
-        event.target.blur()
+      emitStateToggle (month) {
+        this.$emit('toggle-season', month)
       }
     }
   }

@@ -1,29 +1,23 @@
+// https://vuejs.org/v2/guide/list.html#Caveats
 
 export default {
   UPDATE_SEASON (state, payload) {
-    const index = state.plants.findIndex(p => p.guid === payload.item.guid)
-    const item = state.plants[index]
+    const index = state.active.seasons.findIndex(s => s.month === payload.item.month)
+    const season = state.active.seasons[index]
 
-    item.modified = Date.now()
-    item.seasons.forEach(season => {
-      if (season.month === payload.item.month) {
-        season.growth = !season.growth
-      }
-    })
-
+    season.growth = !season.growth
+    state.active.modified = Date.now()
+    state.active.seasons.splice(index, 1, season)
     state.updated = payload.updated
-    state.plants[index] = item
   },
 
   UPDATE_NOTES (state, payload) {
-    const index = state.plants.findIndex(p => p.guid === payload.item.guid)
     state.updated = payload.updated
-    state.plants[index].notes = payload.item.notes
+    state.active.notes = payload.item.notes
   },
 
   UPDATE_WATERING (state, payload) {
-    const index = state.plants.findIndex(p => p.guid === payload.item.guid)
     state.updated = payload.updated
-    state.plants[index].watering = payload.item.watering
+    state.active.watering = payload.item.watering
   }
 }

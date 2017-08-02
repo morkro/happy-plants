@@ -42,6 +42,7 @@
     methods: {
       toggleNotes () {
         this.showNotes = !this.showNotes
+        window.scrollTo(0, 0)
       },
       closeNotes () {
         this.showNotes = false
