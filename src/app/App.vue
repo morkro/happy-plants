@@ -32,14 +32,20 @@
         'loadSettings',
         'hideNotification'
       ]),
+      isOverviewRoute () {
+        return (
+          this.$route.name === 'Overview' ||
+          this.$route.path === '/'
+        )
+      },
       onSwipeRight () {
-        if (this.$route.name === 'Overview' || this.$route.path === '/') {
+        if (this.isOverviewRoute()) {
           return
         }
         this.$router.back()
       },
       onSwipeLeft () {
-        if (this.$route.name !== 'Overview' || this.$route.path !== '/') {
+        if (!this.isOverviewRoute()) {
           return
         }
         this.$router.push('/add')

@@ -131,6 +131,7 @@
       bottom: 4px;
       z-index: 1;
       transform: translateY(50%);
+      z-index: 2;
     }
 
     h1 {
@@ -146,7 +147,8 @@
       z-index: 0;
       bottom: 0;
       width: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
+      z-index: 1;
 
       &.no-photo {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .2));
