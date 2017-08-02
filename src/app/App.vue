@@ -1,8 +1,8 @@
 <template>
-  <div id="app">
+  <v-touch id="app" @swiperight="onSwipeRight" @swipeleft="onSwipeLeft">
     <app-notifications class="notifications" :message="message" ></app-notifications>
     <router-view></router-view>
-  </div>
+  </v-touch>
 </template>
 
 <script>
@@ -26,11 +26,25 @@
       message: state => state.notification.message
     }),
 
-    methods: mapActions([
-      'loadPlants',
-      'loadSettings',
-      'hideNotification'
-    ]),
+    methods: {
+      ...mapActions([
+        'loadPlants',
+        'loadSettings',
+        'hideNotification'
+      ]),
+      onSwipeRight () {
+        if (this.$route.name === 'Overview' || this.$route.path === '/') {
+          return
+        }
+        this.$router.back()
+      },
+      onSwipeLeft () {
+        if (this.$route.name !== 'Overview' || this.$route.path !== '/') {
+          return
+        }
+        this.$router.push('/add')
+      }
+    },
 
     mounted () {
       this.loadSettings()

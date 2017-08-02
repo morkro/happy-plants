@@ -137,6 +137,7 @@
       font-size: $text-size-large;
       font-weight: 600;
       color: $text-color-inverse;
+      line-height: 115%;
     }
 
     > div:not(.header-background) {

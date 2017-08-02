@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
@@ -14,6 +15,7 @@ localforage.config({
 })
 
 Vue.config.productionTip = false
+Vue.use(VueTouch)
 Vue.use(VueSVGIcon, { tagName: 'svg-icon' })
 
 sync(store, router)
