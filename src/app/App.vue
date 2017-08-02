@@ -1,5 +1,9 @@
 <template>
-  <v-touch id="app" @swiperight="onSwipeRight" @swipeleft="onSwipeLeft">
+  <v-touch
+    id="app"
+    @swiperight="onSwipeRight"
+    @swipeleft="onSwipeLeft"
+    :swipe-options="{ direction: 'horizontal' }">
     <app-notifications class="notifications" :message="message" ></app-notifications>
     <router-view></router-view>
   </v-touch>
