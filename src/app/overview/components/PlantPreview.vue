@@ -1,6 +1,6 @@
 <template>
   <div @click="handleClick"
-    :style="{ backgroundImage: `url(${imageURL})` }"
+    :style="{ backgroundImage: imageURL ? `url(${imageURL})`: '' }"
     :class="{
       'plant-preview': true,
       'no-photo': !this.imageURL,

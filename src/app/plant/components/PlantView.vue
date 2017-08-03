@@ -1,10 +1,18 @@
 <template>
   <main class="main-wireframe">
+    <plant-modal
+      :show="showPlantModal"
+      :name="name"
+      :photo="imageURL"
+      @content-update="updateFromModal"
+      @close-modal="closePlantEditModal">
+    </plant-modal>
+
     <app-header class="app-header" color="white" :back="true"></app-header>
 
     <section class="view-content">
       <header>
-        <button class="edit-data circle">
+        <button class="edit-data circle" @click.prevent="openPlantEditModal">
           <svg-icon icon="edit" color="#fff" width="18" height="18"></svg-icon>
         </button>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL }">
@@ -43,6 +51,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/app/shared/AppHeader'
+  import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
   import PlantWatering from './PlantWatering'
@@ -55,10 +64,15 @@
 
     components: {
       'app-header': AppHeader,
+      'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering
     },
+
+    data: () => ({
+      showPlantModal: false
+    }),
 
     computed: mapState({
       guid: state => state.active.guid,
@@ -78,6 +92,12 @@
         'updateNotes',
         'updateWatering'
       ]),
+      openPlantEditModal () {
+        this.showPlantModal = true
+      },
+      closePlantEditModal () {
+        this.showPlantModal = false
+      },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
       },
@@ -86,6 +106,9 @@
       },
       onWateringUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
+      },
+      updateFromModal (data) {
+        console.log(data)
       }
     },
 

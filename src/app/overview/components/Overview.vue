@@ -193,8 +193,6 @@
     }
 
     button:not(.add-plant) {
-      width: $footer-btn-size - 20px;
-      height: $footer-btn-size - 20px;
       padding: 0;
       background: $background-primary;
     }

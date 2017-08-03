@@ -3,6 +3,8 @@
 @import "./layout";
 @import "./animations";
 
+$button-circle-size: 40px;
+
 button {
   cursor: pointer;
   background: $green;
@@ -25,6 +27,8 @@ button {
   &.circle {
     border-radius: 50%;
     padding: 3vw;
+    width: $button-circle-size;
+    height: $button-circle-size;
   }
 
   &.icon {

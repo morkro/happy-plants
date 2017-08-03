@@ -1,5 +1,12 @@
 <template>
   <section>
+    <app-modal :show="showNotes" @close-modal="closeNotes">
+      <h1 slot="headline">Notebook</h1>
+      <div slot="content">
+        <textarea @change="emitContentChange" v-model="textContent"></textarea>
+      </div>
+    </app-modal>
+
     <header>
       <h2>Notebook</h2>
       <div v-if="!content">
@@ -10,18 +17,11 @@
         <button @click="toggleNotes">Show notes</button>
       </div>
     </header>
-
-    <section class="modal" v-if="showNotes">
-      <header>
-        <h2>Notebook</h2>
-        <button @click="closeNotes" class="circle">✕</button>
-      </header>
-      <textarea @change="emitContentChange" v-model="textContent"></textarea>
-    </section>
   </section>
 </template>
 
 <script>
+  import Modal from '@/app/shared/Modal'
   export default {
     name: 'PlantNotes',
 
@@ -30,6 +30,10 @@
         type: String,
         default: 'Add your notes here!'
       }
+    },
+
+    components: {
+      'app-modal': Modal
     },
 
     data () {
@@ -42,7 +46,6 @@
     methods: {
       toggleNotes () {
         this.showNotes = !this.showNotes
-        window.scrollTo(0, 0)
       },
       closeNotes () {
         this.showNotes = false
@@ -60,49 +63,11 @@
   @import "~styles/colors";
   @import "~styles/z-index";
 
-  section:not(.modal) {
-    margin-bottom: 4px;
-
-    h2,
-    p {
-      margin-bottom: $base-gap;
-    }
-  }
-
-  .modal {
-    background: rgba(0, 0, 0, .5);
+  textarea {
+    border: none;
     width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: z($page-elements, modals);
-    height: 100vh;
-    left: 0;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: column;
-
-    header {
-      padding: $base-gap;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      h2 {
-        color: $text-color-inverse;
-        margin-bottom: 0;
-      }
-
-      button {
-        height: 40px;
-        width: 40px;
-      }
-    }
-
-    textarea {
-      border: none;
-      width: 100%;
-      height: 100%;
-      padding: $base-gap;
-    }
+    height: 100%;
+    min-height: calc(100vh - 85px);
+    padding: $base-gap;
   }
 </style>
