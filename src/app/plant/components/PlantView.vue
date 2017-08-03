@@ -82,7 +82,6 @@
         this.updateNotes({ guid: this.guid, notes })
       },
       onSeasonUpdate (month) {
-        console.log('twice?', month)
         this.updateSeason({ guid: this.guid, month })
       },
       onWateringUpdate (watering) {

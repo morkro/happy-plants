@@ -12,8 +12,8 @@
     <ul class="season-list">
       <li
         v-for="(season, index) of seasons"
-        @click.self="emitStateToggle(season.month)"
-        :class="{ current: isCurrentMonth(index), growth: season.growth }">
+        :class="{ current: isCurrentMonth(index), growth: season.growth }"
+        @click.self="emitSeasonToggle(season)">
         {{ season.month[0] }}
       </li>
     </ul>
@@ -38,8 +38,8 @@
       isGrowthMonth () {
         return this.seasons[new Date().getMonth()].growth
       },
-      emitStateToggle (month) {
-        this.$emit('toggle-season', month)
+      emitSeasonToggle (season) {
+        this.$emit('toggle-season', season.month)
       }
     }
   }
@@ -87,9 +87,14 @@
       &.growth {
         color: $green;
         background: lighten($green, 30);
+      }
+
+      &.growth.current {
+        color: $text-color-inverse;
+        background: $green;
 
         &:after {
-          opacity: 0;
+          opacity: 1;
           content: "";
           border-radius: $border-radius;
           width: 100%;
@@ -100,15 +105,6 @@
           left: 0;
           box-shadow: 0 0 12px 0px rgba($green, .7);
           transition: opacity $base-speed $ease-out-back;
-        }
-      }
-
-      &.growth.current {
-        color: $text-color-inverse;
-        background: $green;
-
-        &:after {
-          opacity: 1;
         }
       }
 
