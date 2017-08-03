@@ -4,10 +4,10 @@
     :show="show"
     @close-modal="emitCloseModal">
     <h1 slot="headline">Update your plant</h1>
-    <div slot="content" class="modal-content">
+    <form slot="content" class="modal-content" @submit.prevent="updatePlant">
       <label for="modal-name">
         <h2>Name</h2>
-        <input id="modal-name" type="text" :placeholder="name" :value="name" />
+        <input id="modal-name" type="text" :placeholder="name" v-model="newName" />
       </label>
       <label for="modal-file">
         <h2>Upload or change photo</h2>
@@ -18,14 +18,15 @@
           </div>
           <span>You can either select a photo from your gallery or take one now.</span>
         </div>
-        <input id="modal-file" type="file" />
+        <input id="modal-file" type="file" @change="assignPhoto" />
       </label>
       <button>Save</button>
-    </div>
+    </form>
   </app-modal>
 </template>
 
 <script>
+  import { isBlobbable } from '@/utils/blob'
   import Modal from '@/app/shared/Modal'
   import '@/assets/cactus'
 
@@ -42,14 +43,36 @@
       'app-modal': Modal
     },
 
-    data: () => ({
-      newName: false,
-      newPhoto: false
-    }),
+    data () {
+      return {
+        newName: '',
+        newPhoto: ''
+      }
+    },
 
     methods: {
       emitCloseModal () {
+        this.newName = ''
+        this.newPhoto = ''
         this.$emit('close-modal')
+      },
+      assignPhoto (event) {
+        if (event.target.files && event.target.files.length) {
+          this.newPhoto = event.target.files[0]
+        }
+      },
+      updatePlant () {
+        const data = { name: this.name, photo: this.photo }
+
+        if (this.name !== this.newName && this.newName !== '') {
+          data.name = this.newName
+        }
+        if (this.newPhoto !== '' && isBlobbable(this.newPhoto)) {
+          data.photo = this.newPhoto
+        }
+
+        this.$emit('content-update', data)
+        this.emitCloseModal()
       }
     }
   }
