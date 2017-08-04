@@ -1,5 +1,10 @@
 <template>
   <main class="main-wireframe">
+    <settings-modal
+      :show="showSettingsModal"
+      @close-modal="closeSettingsModal">
+    </settings-modal>
+
     <app-header :back="true">
       <h1 slot="title">Settings</h1>
     </app-header>
@@ -7,8 +12,13 @@
     <div class="settings-content">
       <section class="settings-data">
         <h2>Data</h2>
+        <span>
+          Download all your application data as JSON file or
+          import another data file to add to your collection.
+        </span>
         <div class="data-actions">
           <button @click="downloadData">Download</button>
+          <button @click="openSettingsModal">Import</button>
         </div>
       </section>
       <hr />
@@ -28,19 +38,23 @@
 </template>
 
 <script>
+  import pkg from '#/package.json'
   import { mapActions } from 'vuex'
   import AppHeader from '@/app/shared/AppHeader'
+  import SettingsModal from './SettingsModal'
 
   export default {
     name: 'Settings',
 
     components: {
-      'app-header': AppHeader
+      'app-header': AppHeader,
+      'settings-modal': SettingsModal
     },
 
     data () {
       return {
-        version: '0.1.0'
+        version: pkg.version,
+        showSettingsModal: false
       }
     },
 
@@ -62,9 +76,11 @@
         this.getAllPlants()
           .then(this.triggerDownload)
       },
-      importData (data) {
-        this.importData(data)
-          .then(/* show notification */)
+      openSettingsModal () {
+        this.showSettingsModal = true
+      },
+      closeSettingsModal () {
+        this.showSettingsModal = false
       }
     }
   }
@@ -93,19 +109,26 @@
     section h2 {
       margin-bottom: $base-gap;
     }
-  }
 
-  .settings-data .data-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .settings-info {
     p, span {
       color: $text-color-secondary;
       font-size: 90%;
     }
+  }
 
+  .settings-data {
+    span {
+      display: inline-block;
+      margin-bottom: $base-gap;
+    }
+
+    .data-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .settings-info {
     a {
       color: $text-color-base;
     }

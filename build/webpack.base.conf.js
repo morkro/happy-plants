@@ -23,6 +23,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      '#': resolve(''),
       'styles': resolve('src/styles'),
       'node_modules': resolve('node_modules')
     }

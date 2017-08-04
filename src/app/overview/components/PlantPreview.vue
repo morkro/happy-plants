@@ -157,7 +157,7 @@
     left: 0;
     padding: 10px;
     font-size: $text-size-small;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .65));
     z-index: 1;
 
     .select-delete & {
