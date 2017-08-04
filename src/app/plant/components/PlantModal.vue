@@ -13,11 +13,11 @@
         <h2>Upload or change photo</h2>
         <span>You can either select a photo from your gallery or take one now.</span>
         <div class="modal-file-photo">
-          <div :class="{ fallback: !photo }">
-            <img v-if="photo" :src="photo" :alt="name" />
+          <div :class="{ fallback: imageURL === '' }">
+            <img v-if="imageURL !== ''" :src="imageURL" :alt="name" />
             <svg-icon v-else icon="cactus" width="30" height="30" color="#000"></svg-icon>
           </div>
-          <span>Choose a file</span>
+          <span>{{ fileName }}</span>
         </div>
         <input id="modal-file" type="file" @change="assignPhoto" />
       </label>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { isBlobbable } from '@/utils/blob'
+  import { isBlobbable, getUrlFromBlob } from '@/utils/blob'
   import Modal from '@/app/shared/Modal'
   import '@/assets/cactus'
 
@@ -36,8 +36,7 @@
 
     props: {
       show: { type: Boolean, default: false },
-      name: { type: String },
-      photo: { type: [String, Boolean], default: false }
+      name: { type: String }
     },
 
     components: {
@@ -47,19 +46,22 @@
     data () {
       return {
         newName: '',
-        newPhoto: ''
+        newPhoto: '',
+        imageURL: '',
+        fileName: 'Choose a file'
       }
     },
 
     methods: {
       emitCloseModal () {
-        this.newName = ''
-        this.newPhoto = ''
+        Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')
       },
       assignPhoto (event) {
         if (event.target.files && event.target.files.length) {
           this.newPhoto = event.target.files[0]
+          this.fileName = this.newPhoto.name
+          this.imageURL = getUrlFromBlob(this.newPhoto)
         }
       },
       updatePlant () {
@@ -147,6 +149,9 @@
       box-shadow: none;
       color: $text-color-base;
       padding: $base-gap + 5 $base-gap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     img {

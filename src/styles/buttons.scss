@@ -28,6 +28,9 @@ button {
     border-radius: 50%;
     width: $button-circle-size;
     height: $button-circle-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   &.icon {

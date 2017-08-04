@@ -3,7 +3,6 @@
     <plant-modal
       :show="showPlantModal"
       :name="name"
-      :photo="imageURL"
       @content-update="updateFromModal"
       @close-modal="closePlantEditModal">
     </plant-modal>

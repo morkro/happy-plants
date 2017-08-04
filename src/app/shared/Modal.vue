@@ -62,7 +62,7 @@
       font-size: $text-size-large;
       font-weight: 600;
       line-height: 115%;
-      margin-top: 7px;
+      margin-top: 8px;
     }
   }
 </style>
