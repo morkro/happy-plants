@@ -50,6 +50,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import AppHeader from '@/app/shared/AppHeader'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
@@ -90,7 +91,9 @@
         'loadPlants',
         'updateSeason',
         'updateNotes',
-        'updateWatering'
+        'updateWatering',
+        'updateName',
+        'updatePhoto'
       ]),
       openPlantEditModal () {
         this.showPlantModal = true
@@ -107,8 +110,11 @@
       onWateringUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
       },
-      updateFromModal (data) {
-        console.log(data)
+      updateFromModal ({ name, blob, photo }) {
+        console.log(name, blob)
+        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : photo
+        this.updateName({ guid: this.guid, name })
+        this.updatePhoto({ guid: this.guid, blob, imageURL })
       }
     },
 

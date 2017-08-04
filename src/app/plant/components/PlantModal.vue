@@ -11,12 +11,13 @@
       </label>
       <label for="modal-file">
         <h2>Upload or change photo</h2>
+        <span>You can either select a photo from your gallery or take one now.</span>
         <div class="modal-file-photo">
           <div :class="{ fallback: !photo }">
             <img v-if="photo" :src="photo" :alt="name" />
             <svg-icon v-else icon="cactus" width="30" height="30" color="#000"></svg-icon>
           </div>
-          <span>You can either select a photo from your gallery or take one now.</span>
+          <span>Choose a file</span>
         </div>
         <input id="modal-file" type="file" @change="assignPhoto" />
       </label>
@@ -68,7 +69,7 @@
           data.name = this.newName
         }
         if (this.newPhoto !== '' && isBlobbable(this.newPhoto)) {
-          data.photo = this.newPhoto
+          data.blob = this.newPhoto
         }
 
         this.$emit('content-update', data)
@@ -81,7 +82,7 @@
 <style lang="scss" scoped>
   @import "~styles/layout";
 
-  $photo-size: 50px;
+  $photo-size: 59px;
 
   .modal-content {
     border-top: 3px solid rgba(0, 0, 0, .06);
@@ -101,17 +102,37 @@
     }
   }
 
+  input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  label[for="modal-file"] {
+    > span {
+      color: $text-color-secondary;
+      font-size: 90%;
+      display: block;
+      margin-bottom: $base-gap;
+    }
+  }
+
   .modal-file-photo {
     display: flex;
     margin-bottom: $base-gap;
+    background: $background-primary;
+    border-radius: $border-radius;
+    overflow: hidden;
+    cursor: pointer;
 
     > div {
-      border-radius: $border-radius;
       width: $photo-size;
       height: $photo-size;
       flex-shrink: 0;
       overflow: hidden;
-      margin-right: $base-gap;
 
       &.fallback {
         background: $dark-transparency;
@@ -121,18 +142,22 @@
       }
     }
 
+    span {
+      background: transparent;
+      box-shadow: none;
+      color: $text-color-base;
+      padding: $base-gap + 5 $base-gap;
+    }
+
     img {
-      width: 100%;
+      width: $photo-size;
+      height: $photo-size;
+      object-fit: cover;
     }
 
     svg {
       height: 80%;
       opacity: .22;
-    }
-
-    span {
-      color: $text-color-secondary;
-      font-size: 90%;
     }
   }
 </style>
