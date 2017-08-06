@@ -34,7 +34,7 @@
     name: 'AppHeader',
 
     props: {
-      backPath: { type: String, default: '/' },
+      backPath: { type: [String, Object], default: '/' },
       back: { type: Boolean, default: false },
       settings: { type: Boolean, default: false },
       color: { type: String, default: 'black' }
