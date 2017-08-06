@@ -58,14 +58,16 @@
         this.$emit('close-modal')
       },
       assignPhoto (event) {
-        if (event.target.files && event.target.files.length) {
-          this.newPhoto = event.target.files[0]
-          this.fileName = this.newPhoto.name
-          this.imageURL = getUrlFromBlob(this.newPhoto)
+        if (!event.target.files && !event.target.files.length) {
+          return
         }
+
+        this.newPhoto = event.target.files[0]
+        this.fileName = this.newPhoto.name
+        this.imageURL = getUrlFromBlob(this.newPhoto)
       },
       updatePlant () {
-        const data = { name: this.name, photo: this.photo }
+        const data = { name: this.name }
 
         if (this.name !== this.newName && this.newName !== '') {
           data.name = this.newName

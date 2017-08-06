@@ -109,9 +109,8 @@
       onWateringUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
       },
-      updateFromModal ({ name, blob, photo }) {
-        console.log(name, blob)
-        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : photo
+      updateFromModal ({ name, blob }) {
+        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
         this.updateName({ guid: this.guid, name })
         this.updatePhoto({ guid: this.guid, blob, imageURL })
       }
