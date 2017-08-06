@@ -1,5 +1,5 @@
 <template>
-  <section v-if="show">
+  <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
       <button @click.prevent="emitModalClose" class="circle">
         ✕
@@ -15,10 +15,8 @@
     name: 'Modal',
 
     props: {
-      show: {
-        type: Boolean,
-        default: false
-      }
+      show: { type: Boolean, default: false },
+      backgroundColor: { type: String, default: '#F5F5F5' }
     },
 
     methods: {

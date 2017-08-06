@@ -36,6 +36,7 @@ export default new Vuex.Store({
   mutations: {
     ...mutations,
     ...overview.mutations,
-    ...plant.mutations
+    ...plant.mutations,
+    ...settings.mutations
   }
 })

@@ -14,6 +14,8 @@ localforage.config({
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE]
 })
 
+console.log(localforage)
+
 Vue.config.productionTip = false
 Vue.use(VueTouch)
 Vue.use(VueSVGIcon, { tagName: 'svg-icon' })

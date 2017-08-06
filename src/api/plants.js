@@ -23,3 +23,7 @@ export const getAllPlants = () => {
   return localforage.keys()
     .then(keys => Promise.all(keys.map(k => localforage.getItem(k))))
 }
+
+export const deleteAllPlants = () => {
+  return fetchPlants().then(deletePlants)
+}

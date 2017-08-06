@@ -1,30 +1,58 @@
 <template>
   <section>
+    <app-modal
+      class="danger-modal"
+      backgroundColor="#ef494f"
+      :show="showDangerModal"
+      @close-modal="closeDangerModal">
+      <h1 slot="headline">Deleting application data</h1>
+      <div slot="content">
+        <p>
+          Be aware that once you've done this, your data <strong>cannot</strong> be restored!
+          This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
+        </p>
+        <button @click="deleteApplicationData">I understand, delete my data</button>
+      </div>
+    </app-modal>
+
     <span>
       Download all your application data as JSON file or
       import another data file to add to your collection.
     </span>
     <div class="data-actions">
-      <button @click="downloadData">Download</button>
-      <button @click="openSettingsModal">Import</button>
+      <button @click="downloadData">Download data</button>
+      <button class="disabled" disabled>Import data</button>
+    </div>
+    <hr />
+    <div class="danger-zone">
+      <h2>Danger Zone</h2>
+      <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
+      <button class="warning" @click="openDangerModal">Delete application data</button>
     </div>
   </section>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
+  import Modal from '@/app/shared/Modal'
+
   export default {
     name: 'SettingsData',
 
+    components: {
+      'app-modal': Modal
+    },
+
     data () {
       return {
-        showSettingsModal: false
+        showDangerModal: false
       }
     },
 
     methods: {
       ...mapActions([
-        'getAllPlants'
+        'getAllPlants',
+        'deleteAllPlants'
       ]),
       triggerDownload (data = { message: 'No data!' }) {
         const dataString = JSON.stringify(data, null, 2)
@@ -40,17 +68,23 @@
         this.getAllPlants()
           .then(this.triggerDownload)
       },
-      openSettingsModal () {
-        this.showSettingsModal = true
+      openDangerModal () {
+        this.showDangerModal = true
       },
-      closeSettingsModal () {
-        this.showSettingsModal = false
+      closeDangerModal () {
+        this.showDangerModal = false
+      },
+      deleteApplicationData () {
+        this.deleteAllPlants()
+          .then(() => this.closeDangerModal())
+          .then(() => this.$router.push('/'))
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "~styles/colors";
   @import "~styles/layout";
 
   section {
@@ -65,6 +99,25 @@
     .data-actions {
       display: flex;
       justify-content: space-between;
+    }
+  }
+
+  hr {
+    margin: $base-gap * 1.5 0 $base-gap 0;
+    border: none;
+    border-top: 3px solid $dark-transparency;
+  }
+
+  .danger-modal {
+    h1, p {
+      color: $text-color-inverse;
+    }
+
+    button {
+      margin-top: $base-gap;
+      display: block;
+      background: $yellow;
+      color: $link-color;
     }
   }
 </style>

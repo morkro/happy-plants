@@ -9,8 +9,8 @@ import {
   updatePlant as updatePlantFromAPI
 } from '@/api/plants'
 
-export const loadPlants = ({ state, commit }) => {
-  if (!state.plants || state.plants.length === 0) {
+export const loadPlants = ({ state, commit }, data = {}) => {
+  if (!state.plants || state.plants.length === 0 || !!data.force) {
     return fetchPlants()
       .then(data => Promise.all(data.map(convertToBlob))
         .then(plants => commit('LOAD_PLANTS', { plants })))

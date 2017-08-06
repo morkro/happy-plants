@@ -38,4 +38,14 @@ button {
     box-shadow: none;
     padding: 0;
   }
+
+  &.warning {
+    background: $red;
+  }
+
+  &.disabled {
+    background: $background-primary;
+    color: transparentize($text-color-secondary, .3);
+    cursor: not-allowed;
+  }
 }

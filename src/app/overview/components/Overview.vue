@@ -80,6 +80,7 @@
 
     methods: {
       ...mapActions([
+        'loadPlants',
         'deletePlants',
         'showNotification',
         'updateFilter'
