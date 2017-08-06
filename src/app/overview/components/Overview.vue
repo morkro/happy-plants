@@ -30,7 +30,7 @@
       <footer>
         <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
           <button @click="activateDeleteMode" class="delete-plants circle">
-            <svg-icon icon="trash" width="15" height="15" :color="deleteMode ? '#fff' : '#000'">
+            <svg-icon icon="trash" width="14" height="14" :color="deleteMode ? '#fff' : '#000'">
             </svg-icon>
           </button>
           <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
@@ -39,7 +39,7 @@
         </div>
 
         <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
-          <svg-icon icon="leaf" width="20" height="30" color="#fff"></svg-icon>
+          <svg-icon icon="leaf" width="16" height="24" color="#fff"></svg-icon>
         </router-link>
 
         <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
@@ -47,7 +47,7 @@
             ✕
           </button>
           <button @click="toggleSortingMode" class="organise-plants circle">
-            <svg-icon icon="categories" width="15" height="15" color="#000"></svg-icon>
+            <svg-icon icon="categories" width="14" height="14" color="#000"></svg-icon>
           </button>
         </div>
       </footer>
@@ -151,7 +151,7 @@
 
   $content-index: list, footer;
   $list-gap: ($base-gap * 2) - $base-gap / 2;
-  $footer-btn-size: 60px;
+  $footer-btn-size: 50px;
 
   main {
     min-height: 100vh;
