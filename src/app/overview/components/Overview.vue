@@ -212,6 +212,7 @@
     button:not(.add-plant) {
       padding: 0;
       background: $background-primary;
+      box-shadow: $plain-shadow;
     }
 
     .footer-cancel-mode {

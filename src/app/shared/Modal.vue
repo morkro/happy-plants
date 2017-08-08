@@ -54,6 +54,7 @@
       margin-right: $base-gap + 5;
       background: $background-primary;
       color: $link-color;
+      box-shadow: $plain-shadow;
     }
 
     h1 {

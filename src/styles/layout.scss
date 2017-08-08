@@ -3,7 +3,9 @@
 $border-radius: 6px;
 $base-gap: 15px;
 $icon-size: 20px;
-$shadow: 4px 4px 0 $dark-transparency;
+$plain-shadow: 4px 4px 0 $dark-transparency;
+$green-shadow: 4px 4px 0 transparentize($green, .8);
+$red-shadow: 4px 4px 0 transparentize($red, .8);
 
 $app-header-size: 50px;
 

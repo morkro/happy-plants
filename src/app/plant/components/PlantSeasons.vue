@@ -92,6 +92,7 @@
       &.growth.current {
         color: $text-color-inverse;
         background: $green;
+        box-shadow: $green-shadow;
 
         &:after {
           opacity: 1;
@@ -103,14 +104,14 @@
           position: absolute;
           top: 0;
           left: 0;
-          box-shadow: 0 0 12px 0px rgba($green, .7);
+          box-shadow: 0 0 12px 0px rgba($green, .7),;
           transition: opacity $base-speed $ease-out-back;
         }
       }
 
       &.current {
         font-weight: 600;
-        box-shadow: $shadow;
+        box-shadow: $plain-shadow;
         transform: scale(1.2);
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <main class="main-wireframe">
-    <app-header :back="true" :settings="true">
+    <app-header :back="true">
       <h1 slot="title">Add a new friend</h1>
     </app-header>
 

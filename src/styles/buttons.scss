@@ -13,7 +13,7 @@ button {
   border: none;
   border-radius: $border-radius;
   padding: 1.5vh 3vw;
-  box-shadow: $shadow;
+  box-shadow: $green-shadow;
   transition: background-color 100ms $ease-out-back;
 
   &:active, &:focus {
@@ -41,11 +41,13 @@ button {
 
   &.warning {
     background: $red;
+    box-shadow: $red-shadow;
   }
 
   &.disabled {
     background: $background-primary;
     color: transparentize($text-color-secondary, .3);
     cursor: not-allowed;
+    box-shadow: $plain-shadow;
   }
 }

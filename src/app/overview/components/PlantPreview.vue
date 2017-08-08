@@ -77,7 +77,7 @@
     border-radius: $border-radius;
     background-size: cover;
     background-position: center;
-    box-shadow: $shadow;
+    box-shadow: $plain-shadow;
     transform-origin: center;
     transition: transform 50ms $ease-out-back;
 

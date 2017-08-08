@@ -54,6 +54,7 @@
   @import "~styles/z-index";
 
   header {
+    box-shadow: 0 0 22px rgba(0, 0, 0, .05);
     background: $background-primary;
     padding: $base-gap;
     display: flex;
