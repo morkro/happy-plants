@@ -22,13 +22,15 @@
   @import "~styles/layout";
 
   .notification-wrapper {
+    display: flex;
+    align-items: center;
     background: rgba(0, 0, 0, .8);
     color: $text-color-inverse;
-    width: 90vw;
+    width: 100vw;
+    height: $app-header-size;
     padding: 10px 15px;
-    border-radius: $border-radius;
     position: fixed;
-    top: 55px;
-    left: 5vw;
+    top: 0;
+    left: 0;
   }
 </style>

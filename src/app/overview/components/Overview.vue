@@ -28,28 +28,34 @@
       </ul>
 
       <footer>
-        <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
-          <button @click="activateDeleteMode" class="delete-plants circle">
-            <svg-icon icon="trash" width="14" height="14" :color="deleteMode ? '#fff' : '#000'">
-            </svg-icon>
-          </button>
-          <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
-            ✕
-          </button>
-        </div>
+        <transition appear name="footer-appear">
+          <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
+            <button @click="activateDeleteMode" class="delete-plants circle">
+              <svg-icon icon="trash" width="14" height="14" :color="deleteMode ? '#fff' : '#000'">
+              </svg-icon>
+            </button>
+            <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
+              ✕
+            </button>
+          </div>
+        </transition>
 
-        <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
-          <svg-icon icon="leaf" width="16" height="24" color="#fff"></svg-icon>
-        </router-link>
+        <transition appear name="footer-appear">
+          <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
+            <svg-icon icon="leaf" width="16" height="24" color="#fff"></svg-icon>
+          </router-link>
+        </transition>
 
-        <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
-          <button @click="cancelSortingMode" class="footer-cancel-mode circle">
-            ✕
-          </button>
-          <button @click="toggleSortingMode" class="organise-plants circle">
-            <svg-icon icon="categories" width="14" height="14" color="#000"></svg-icon>
-          </button>
-        </div>
+        <transition appear name="footer-appear">
+          <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
+            <button @click="cancelSortingMode" class="footer-cancel-mode circle">
+              ✕
+            </button>
+            <button @click="toggleSortingMode" class="organise-plants circle">
+              <svg-icon icon="categories" width="14" height="14" color="#000"></svg-icon>
+            </button>
+          </div>
+        </transition>
       </footer>
     </section>
   </main>
@@ -153,6 +159,16 @@
   $content-index: list, footer;
   $list-gap: ($base-gap * 2) - $base-gap / 2;
   $footer-btn-size: 50px;
+
+  .footer-appear-enter-active {
+    transition: transform $base-speed $ease-out-back;
+  }
+  .footer-appear-enter {
+    transform: scale(0);
+  }
+  .footer-appear-enter-to {
+    transform: scale(1);
+  }
 
   main {
     min-height: 100vh;
