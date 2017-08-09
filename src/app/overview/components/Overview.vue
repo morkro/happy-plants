@@ -161,7 +161,7 @@
   $footer-btn-size: 50px;
 
   .footer-appear-enter-active {
-    transition: transform $base-speed $ease-out-back;
+    transition: transform $base-speed * 2 $ease-out-back;
   }
   .footer-appear-enter {
     transform: scale(0);
