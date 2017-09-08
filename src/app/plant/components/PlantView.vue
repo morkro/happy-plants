@@ -135,6 +135,7 @@
 
   .app-header {
     background: transparent;
+    box-shadow: none;
   }
 
   .view-content {

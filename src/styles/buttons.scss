@@ -16,7 +16,8 @@ button {
   box-shadow: $green-shadow;
   transition: background-color 100ms $ease-out-back;
 
-  &:active, &:focus {
+  &:active,
+  &:focus {
     outline: none;
   }
 
@@ -31,6 +32,10 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    svg {
+      margin: 0 auto;
+    }
   }
 
   &.icon {
@@ -46,7 +51,7 @@ button {
 
   &.disabled {
     background: $background-primary;
-    color: transparentize($text-color-secondary, .3);
+    color: transparentize($text-color-secondary, 0.3);
     cursor: not-allowed;
     box-shadow: $plain-shadow;
   }
