@@ -2,18 +2,20 @@
   <section>
     <header>
       <h2>Growing seasons</h2>
-      <p v-if="isGrowthMonth()">
-        Your plant is currently in <strong>active growth</strong>.
-      </p>
-      <p v-else>
-        Your plant is currently in a <strong>dormant phase</strong>.
+      <p>
+        Your plant is currently <strong>{{ getGrowthText() }}</strong>.
       </p>
     </header>
     <ul class="season-list">
       <li
         v-for="(season, index) of seasons"
-        :class="{ current: isCurrentMonth(index), growth: season.growth }"
-        @click.self="emitSeasonToggle(season)">
+        @click.self="emitSeasonToggle(season)"
+        :class="{
+          current: isCurrentMonth(index),
+          growth: season.growth,
+          'growth-transition-from': isTransitioning('from', index),
+          'growth-transition-to': isTransitioning('to', index),
+        }">
         {{ season.month[0] }}
       </li>
     </ul>
@@ -31,12 +33,39 @@
       }
     },
 
+    computed: {
+      currentMonth () {
+        return this.seasons[new Date().getMonth()]
+      }
+    },
+
     methods: {
       isCurrentMonth (month) {
         return month === new Date().getMonth()
       },
       isGrowthMonth () {
         return this.seasons[new Date().getMonth()].growth
+      },
+      isTransitioning (type, index) {
+        const currentGrowth = this.seasons[index].growth
+        const nextMonth = this.seasons[index + 1]
+        const prevMonth = this.seasons[index - 1]
+        return (
+          (type === 'to' && !currentGrowth && nextMonth && nextMonth.growth) ||
+          (type === 'from' && !currentGrowth && nextMonth && !nextMonth.growth && prevMonth && prevMonth.growth)
+        )
+      },
+      getGrowthText () {
+        const currentMonth = new Date().getMonth()
+        if (this.currentMonth.growth) {
+          return 'in active growth'
+        } else if (this.isTransitioning('to', currentMonth)) {
+          return 'starting to get into active growth'
+        } else if (this.isTransitioning('from', currentMonth)) {
+          return 'transitioning into a dormant phase'
+        } else {
+          return 'in a dormant phase'
+        }
       },
       emitSeasonToggle (season) {
         this.$emit('toggle-season', season.month)
@@ -87,6 +116,14 @@
       &.growth {
         color: $green;
         background: lighten($green, 30);
+      }
+
+      &.growth-transition-to {
+        background: linear-gradient(90deg, $grey, lighten($green, 30));
+      }
+
+      &.growth-transition-from {
+        background: linear-gradient(90deg, lighten($green, 30), $grey);
       }
 
       &.growth.current {
