@@ -53,6 +53,6 @@
     color: $text-color-base;
     padding: 1.5vh 3vw;
     width: 100%;
-    font-size: $text-size-small;
+    font-size: $text-size-base;
   }
 </style>
