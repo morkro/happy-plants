@@ -44,28 +44,6 @@
       'label-group': LabelGroup
     },
 
-    methods: {
-      ...mapActions([
-        'addPlant'
-      ]),
-      getInputValue (data) {
-        if (data.type === 'name') {
-          this.name = data.payload
-        } else if (data.type === 'file') {
-          this.blob = data.payload
-        }
-      },
-      validateForm () {
-        const config = {
-          ...getDefaultStructure(),
-          blob: this.blob,
-          name: this.name
-        }
-        this.addPlant(config).then(guid =>
-          this.$router.push(`/plant/${guid}`))
-      }
-    },
-
     data () {
       return {
         name: '',
@@ -85,6 +63,28 @@
             placeholder: ''
           }
         ]
+      }
+    },
+
+    methods: {
+      ...mapActions([
+        'addPlant'
+      ]),
+      getInputValue (data) {
+        if (data.type === 'name') {
+          this.name = data.payload
+        } else if (data.type === 'file') {
+          this.blob = data.payload
+        }
+      },
+      validateForm () {
+        const config = {
+          ...getDefaultStructure(),
+          blob: this.blob,
+          name: this.name
+        }
+        this.addPlant(config).then(guid =>
+          this.$router.push(`/plant/${guid}`))
       }
     }
   }

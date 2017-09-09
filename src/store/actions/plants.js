@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4'
+import loadImage from 'blueimp-load-image/js'
 import { blobToBase64String } from 'blob-util'
 import { convertToBlob } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
@@ -8,6 +9,23 @@ import {
   deletePlants as deletePlantsFromAPI,
   updatePlant as updatePlantFromAPI
 } from '@/api/plants'
+
+function fixRotation (blob) {
+  if (blob === undefined) return
+  let parsed = blob
+
+  loadImage(
+    blob,
+    canvas => {
+      canvas.toBlob(ctb => {
+        parsed = ctb
+      })
+    },
+    { canvas: true, orientation: true }
+  )
+
+  return parsed
+}
 
 export const loadPlants = ({ state, commit }, data = {}) => {
   if (!state.plants || state.plants.length === 0 || !!data.force) {
@@ -27,6 +45,7 @@ export const loadPlantItem = ({ state, commit }, guid) => {
 export const addPlant = ({ commit }, data) => {
   const meta = {
     ...data,
+    blob: fixRotation(data.blob),
     guid: uuid(),
     created: Date.now(),
     modified: Date.now()
