@@ -1,7 +1,6 @@
 import uuid from 'uuid/v4'
-import loadImage from 'blueimp-load-image/js'
 import { blobToBase64String } from 'blob-util'
-import { convertToBlob } from '@/utils/blob'
+import { convertToBlob, fixRotation } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
 import {
   fetchPlants,
@@ -9,23 +8,6 @@ import {
   deletePlants as deletePlantsFromAPI,
   updatePlant as updatePlantFromAPI
 } from '@/api/plants'
-
-function fixRotation (blob) {
-  if (blob === undefined) return
-  let parsed = blob
-
-  loadImage(
-    blob,
-    canvas => {
-      canvas.toBlob(ctb => {
-        parsed = ctb
-      })
-    },
-    { canvas: true, orientation: true }
-  )
-
-  return parsed
-}
 
 export const loadPlants = ({ state, commit }, data = {}) => {
   if (!state.plants || state.plants.length === 0 || !!data.force) {
@@ -45,7 +27,6 @@ export const loadPlantItem = ({ state, commit }, guid) => {
 export const addPlant = ({ commit }, data) => {
   const meta = {
     ...data,
-    blob: fixRotation(data.blob),
     guid: uuid(),
     created: Date.now(),
     modified: Date.now()
@@ -57,7 +38,8 @@ export const addPlant = ({ commit }, data) => {
   // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
   if (iOS && !!data.blob) {
     // 1. Turn blob into base64 string (only needed for storage)
-    return blobToBase64String(data.blob)
+    return fixRotation(meta)
+      .then(data => blobToBase64String(data.blob))
       // 2. Take the base64 string and add it to the data object
       .then(base64String => Object.assign({}, meta, { blob: base64String }))
       // 3. Add data to IndexedDB and return it
@@ -71,7 +53,8 @@ export const addPlant = ({ commit }, data) => {
       })
   }
 
-  return addPlantFromAPI(meta)
+  return fixRotation(meta)
+    .then(addPlantFromAPI)
     .then(data => {
       commit('ADD_PLANT', { item: meta })
       return data.guid

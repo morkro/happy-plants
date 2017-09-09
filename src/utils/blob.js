@@ -1,4 +1,5 @@
 import blobUtil from 'blob-util'
+import loadImage from 'blueimp-load-image/js'
 
 export const isBase64 = string => {
   try {
@@ -26,4 +27,22 @@ export function convertToBlob (config) {
 
   return blobUtil.base64StringToBlob(config.blob)
     .then(blob => Object.assign({}, config, { blob }))
+}
+
+export function fixRotation (data) {
+  if (!isBlobbable(data.blob)) return
+  return new Promise((resolve, reject) => {
+    const config = {
+      canvas: true,
+      orientation: 1
+    }
+    loadImage(
+      data.blob,
+      canvas => {
+        if (canvas.type === 'error') reject()
+        canvas.toBlob(blob => resolve({ ...data, blob }))
+      },
+      config
+    )
+  })
 }
