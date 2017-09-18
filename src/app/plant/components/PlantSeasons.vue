@@ -2,7 +2,10 @@
   <section>
     <header>
       <h2>Growing seasons</h2>
-      <p>
+      <p v-if="isEvergreen">
+        Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
+      </p>
+      <p v-else>
         Your plant is currently <strong>{{ getGrowthText() }}</strong>.
       </p>
     </header>
@@ -36,6 +39,9 @@
     computed: {
       currentMonth () {
         return this.seasons[new Date().getMonth()]
+      },
+      isEvergreen () {
+        return this.seasons.every(season => season.growth)
       }
     },
 
