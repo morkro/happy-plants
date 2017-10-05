@@ -54,7 +54,6 @@
   }
 
   h2 {
-    color: $text-color-button;
     margin-bottom: $base-gap / 2;
 
     &.required:after {

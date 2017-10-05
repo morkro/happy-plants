@@ -50,7 +50,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'

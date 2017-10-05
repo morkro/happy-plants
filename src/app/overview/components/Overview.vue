@@ -63,7 +63,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
   import PlantPreview from './PlantPreview'
   import OverviewFilter from './Filter'
   import '@/assets/leaf'

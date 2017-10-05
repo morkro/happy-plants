@@ -19,10 +19,7 @@
           @process-step="getInputValue">
         </label-group>
 
-        <button>
-          Add plant
-          <svg-icon class="icon" icon="right-arrow" color="#000"></svg-icon>
-        </button>
+        <button>Add plant</button>
       </form>
     </section>
   </main>
@@ -30,7 +27,7 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
   import getDefaultStructure from '@/utils/getDefaultStructure'
   import LabelGroup from './LabelGroup'
 
@@ -95,16 +92,11 @@
   @import "~styles/layout";
 
   main {
-    background: $green;
+    background: $background-secondary;
 
     section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      min-height: calc(100vh - #{$app-header-size});
-      position: relative;
+      padding: $base-gap 0;
+      line-height: 150%;
     }
   }
 
@@ -113,18 +105,6 @@
     z-index: 1;
     padding: 0 $base-gap;
     width: 100%;
-
-    button {
-      color: $text-color-base;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $yellow;
-
-      .icon {
-        margin-left: $base-gap / 2;
-      }
-    }
   }
 
   .form-order {
@@ -132,7 +112,6 @@
     background: white;
     padding: 0;
     margin-bottom: $base-gap;
-    color: $text-color-base;
     border: none;
     border-radius: $border-radius;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import Modal from '@/app/shared/Modal'
+  import Modal from '@/components/Modal'
   export default {
     name: 'PlantNotes',
 

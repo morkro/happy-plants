@@ -28,7 +28,7 @@
 
 <script>
   import { isBlobbable, getUrlFromBlob } from '@/utils/blob'
-  import Modal from '@/app/shared/Modal'
+  import Modal from '@/components/Modal'
   import '@/assets/cactus'
 
   export default {

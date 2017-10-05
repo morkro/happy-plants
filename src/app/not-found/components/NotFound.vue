@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
 
   export default {
     name: 'NotFound',
