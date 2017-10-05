@@ -39,7 +39,7 @@ export function fixRotation (data) {
     loadImage(
       data.blob,
       canvas => {
-        if (canvas.type === 'error') reject()
+        if (canvas.type === 'error') reject(canvas)
         canvas.toBlob(blob => resolve({ ...data, blob }))
       },
       config
