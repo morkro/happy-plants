@@ -50,14 +50,14 @@
 
   span {
     font-size: $text-size-xsmall;
-    color: rgba(0, 0, 0, .35);
+    color: rgba(0, 0, 0, 0.35);
     margin-left: $base-gap;
 
-    &:before {
+    &::before {
       content: attr(data-current) " / ";
     }
 
-    &:after {
+    &::after {
       content: attr(data-steps);
     }
   }

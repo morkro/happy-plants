@@ -24,7 +24,7 @@
   .notification-wrapper {
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, 0.8);
     color: $text-color-inverse;
     width: 100vw;
     height: $app-header-size;

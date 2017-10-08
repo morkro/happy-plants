@@ -64,7 +64,8 @@
   @import "~styles/z-index";
 
   section {
-    h2, p {
+    h2,
+    p {
       margin-bottom: $base-gap;
     }
   }

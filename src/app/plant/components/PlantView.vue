@@ -157,7 +157,6 @@
       position: absolute;
       right: 3vw;
       bottom: 4px;
-      z-index: 1;
       transform: translateY(50%);
       z-index: 2;
     }
@@ -172,14 +171,13 @@
     > div:not(.header-background) {
       padding: $base-gap 70px $base-gap $base-gap;
       position: absolute;
-      z-index: 0;
       bottom: 0;
       width: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .5));
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
       z-index: 1;
 
       &.no-photo {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .2));
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
       }
     }
 
@@ -199,7 +197,7 @@
       svg {
         width: 65% !important;
         height: auto !important;
-        opacity: .12;
+        opacity: 0.12;
       }
     }
   }

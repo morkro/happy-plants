@@ -45,7 +45,8 @@
       border-bottom: 3px solid rgba(0, 0, 0, 0.05);
     }
 
-    a, &.menu-version {
+    a,
+    &.menu-version {
       width: 100%;
       display: flex;
       justify-content: space-between;

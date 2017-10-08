@@ -89,7 +89,7 @@
   $photo-size: 59px;
 
   .modal-content {
-    border-top: 3px solid rgba(0, 0, 0, .06);
+    border-top: 3px solid rgba(0, 0, 0, 0.06);
     padding-top: $base-gap;
   }
 
@@ -164,7 +164,7 @@
 
     svg {
       height: 80%;
-      opacity: .22;
+      opacity: 0.22;
     }
   }
 </style>

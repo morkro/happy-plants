@@ -47,7 +47,7 @@
 
   select {
     appearance: none;
-    background: rgba(0, 0, 0, .05);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: $border-radius;
     border: none;
     color: $text-color-base;

@@ -56,7 +56,7 @@
   h2 {
     margin-bottom: $base-gap / 2;
 
-    &.required:after {
+    &.required::after {
       color: $yellow;
       content: " *";
       font-size: $text-size-small;

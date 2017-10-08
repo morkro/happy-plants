@@ -6,6 +6,7 @@ var config = require('../config')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var StylelintPlugin = require('stylelint-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 // add hot-reload related code to entry chunks
@@ -33,6 +34,9 @@ module.exports = merge(baseWebpackConfig, {
       inject: true,
       serviceWorkerLoader: `<script>${fs.readFileSync(path.join(__dirname,
         './service-worker-dev.js'), 'utf-8')}</script>`
+    }),
+    new StylelintPlugin({
+      files: ['**/*.vue']
     }),
     new FriendlyErrorsPlugin()
   ]

@@ -109,7 +109,8 @@
   }
 
   .danger-modal {
-    h1, p {
+    h1,
+    p {
       color: $text-color-inverse;
     }
 
