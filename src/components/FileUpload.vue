@@ -41,7 +41,7 @@
         this.fileName = this.newPhoto.name
         this.imageURL = getUrlFromBlob(this.newPhoto)
 
-        this.$emit('photo-selected', { blob: this.newPhoto })
+        this.$emit('file-selected', { blob: this.newPhoto })
       }
     }
   }

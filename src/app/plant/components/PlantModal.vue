@@ -12,14 +12,7 @@
       <label for="modal-file">
         <h2>Upload or change photo</h2>
         <span>You can either select a photo from your gallery or take one now.</span>
-        <div class="modal-file-photo">
-          <div :class="{ fallback: imageURL === '' }">
-            <img v-if="imageURL !== ''" :src="imageURL" :alt="name" />
-            <svg-icon v-else icon="cactus" width="30" height="30" color="#000"></svg-icon>
-          </div>
-          <span>{{ fileName }}</span>
-        </div>
-        <input id="modal-file" type="file" @change="assignPhoto" />
+        <file-upload name="modal-file" @file-selected="assignPhoto" />
       </label>
       <button>Save</button>
     </form>
@@ -27,8 +20,9 @@
 </template>
 
 <script>
-  import { isBlobbable, getUrlFromBlob } from '@/utils/blob'
+  import { isBlobbable } from '@/utils/blob'
   import Modal from '@/components/Modal'
+  import FileUpload from '@/components/FileUpload'
   import '@/assets/cactus'
 
   export default {
@@ -40,15 +34,14 @@
     },
 
     components: {
-      'app-modal': Modal
+      'app-modal': Modal,
+      'file-upload': FileUpload
     },
 
     data () {
       return {
         newName: '',
-        newPhoto: '',
-        imageURL: '',
-        fileName: 'Choose a file'
+        newPhoto: ''
       }
     },
 
@@ -57,14 +50,12 @@
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')
       },
-      assignPhoto (event) {
-        if (!event.target.files && !event.target.files.length) {
+      assignPhoto (data) {
+        console.log(data)
+        if (!data.blob) {
           return
         }
-
-        this.newPhoto = event.target.files[0]
-        this.fileName = this.newPhoto.name
-        this.imageURL = getUrlFromBlob(this.newPhoto)
+        this.newPhoto = data.blob
       },
       updatePlant () {
         const data = { name: this.name }
@@ -85,6 +76,7 @@
 
 <style lang="scss" scoped>
   @import "~styles/layout";
+  @import "~styles/fonts";
 
   $photo-size: 59px;
 
@@ -101,70 +93,16 @@
       margin-bottom: $base-gap;
     }
 
+    span {
+      display: block;
+      color: $text-color-secondary;
+      font-size: $text-size-small;
+      margin-bottom: $base-gap;
+      padding: 0 1px;
+    }
+
     input {
       width: 100%;
-    }
-  }
-
-  input[type="file"] {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
-
-  label[for="modal-file"] {
-    > span {
-      color: $text-color-secondary;
-      font-size: 90%;
-      display: block;
-      margin-bottom: $base-gap;
-    }
-  }
-
-  .modal-file-photo {
-    display: flex;
-    margin-bottom: $base-gap;
-    background: $background-primary;
-    border-radius: $border-radius;
-    overflow: hidden;
-    cursor: pointer;
-
-    > div {
-      width: $photo-size;
-      height: $photo-size;
-      flex-shrink: 0;
-      overflow: hidden;
-
-      &.fallback {
-        background: $dark-transparency;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    span {
-      background: transparent;
-      box-shadow: none;
-      color: $text-color-base;
-      padding: $base-gap + 5 $base-gap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    img {
-      width: $photo-size;
-      height: $photo-size;
-      object-fit: cover;
-    }
-
-    svg {
-      height: 80%;
-      opacity: 0.22;
     }
   }
 </style>

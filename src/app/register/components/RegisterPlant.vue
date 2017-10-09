@@ -21,7 +21,7 @@
           <span>You can either select a photo from your gallery or take one now.</span>
           <file-upload
             name="register-file"
-            @photo-selected="getFile" />
+            @file-selected="getFile" />
         </label>
 
         <button>Add plant</button>
