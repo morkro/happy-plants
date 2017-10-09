@@ -1,5 +1,5 @@
-export const signInUser = ({ commit }) => {
-  commit('LOGIN_USER')
+export const signInUser = ({ commit }, data) => {
+  commit('LOGIN_USER', data)
 }
 
 export const signOutUser = ({ commit }) => {

@@ -49,10 +49,11 @@ button {
     box-shadow: $red-shadow;
   }
 
-  &.disabled {
+  &.disabled,
+  &[disabled] {
     background: $background-primary;
     color: transparentize($text-color-secondary, 0.3);
     cursor: not-allowed;
-    box-shadow: $plain-shadow;
+    box-shadow: $inset-shadow;
   }
 }

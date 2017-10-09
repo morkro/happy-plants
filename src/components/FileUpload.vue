@@ -7,7 +7,7 @@
       </div>
       <span>{{ fileName }}</span>
     </div>
-    <input type="file" :id="name" @change="emitPhoto" />
+    <input type="file" :id="name" @change="emitPhoto" accept=".png, .jpg, .jpeg" />
   </div>
 </template>
 

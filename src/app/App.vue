@@ -63,8 +63,11 @@
 
     created () {
       firebase.auth().onAuthStateChanged(user => {
-        if (user) this.signInUser()
-        else this.signOutUser()
+        if (user) {
+          this.signInUser(user)
+        } else {
+          this.signOutUser()
+        }
       })
     },
 

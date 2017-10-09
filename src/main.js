@@ -23,6 +23,7 @@ localforage.config({
 })
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
+
 Vue.use(VueTouch)
 Vue.use(VueFire)
 Vue.use(VueSVGIcon, { tagName: 'svg-icon' })
