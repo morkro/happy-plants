@@ -4,16 +4,19 @@
     :show="show"
     @close-modal="emitCloseModal">
     <h1 slot="headline">Update your plant</h1>
+
     <form slot="content" class="modal-content" @submit.prevent="updatePlant">
       <label for="modal-name">
         <h2>Name</h2>
         <input id="modal-name" type="text" :placeholder="name" v-model="newName" />
       </label>
+
       <label for="modal-file">
         <h2>Upload or change photo</h2>
         <span>You can either select a photo from your gallery or take one now.</span>
         <file-upload name="modal-file" @file-selected="assignPhoto" />
       </label>
+
       <button>Save</button>
     </form>
   </app-modal>
@@ -51,7 +54,6 @@
         this.$emit('close-modal')
       },
       assignPhoto (data) {
-        console.log(data)
         if (!data.blob) {
           return
         }
