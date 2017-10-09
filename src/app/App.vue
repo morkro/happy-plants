@@ -10,6 +10,7 @@
 </template>
 
 <script>
+  import firebase from 'firebase'
   import { mapActions, mapState } from 'vuex'
   import Notifications from '@/components/Notifications'
 
@@ -27,6 +28,7 @@
     },
 
     computed: mapState({
+      authenticated: state => state.user.authenticated,
       message: state => state.notification.message
     }),
 
@@ -34,7 +36,10 @@
       ...mapActions([
         'loadPlants',
         'loadSettings',
-        'hideNotification'
+        'hideNotification',
+        'signInUser',
+        'signOutUser',
+        'authError'
       ]),
       isOverviewRoute () {
         return (
@@ -54,6 +59,16 @@
         }
         this.$router.push('/add')
       }
+    },
+
+    created () {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.signInUser(user)
+        } else {
+          this.signOutUser()
+        }
+      })
     },
 
     mounted () {

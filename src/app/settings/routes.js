@@ -10,6 +10,11 @@ export default [
       },
       {
         path: 'about',
+        name: 'SettingsAccount',
+        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsAccount')
+      },
+      {
+        path: 'about',
         name: 'SettingsAbout',
         component: () => import(/* webpackChunkName: "settings" */ './components/SettingsAbout')
       },

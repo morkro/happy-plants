@@ -8,6 +8,7 @@ var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var StylelintPlugin = require('stylelint-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var Dotenv = require('dotenv-webpack')
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -38,6 +39,7 @@ module.exports = merge(baseWebpackConfig, {
     new StylelintPlugin({
       files: ['**/*.vue']
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    new Dotenv()
   ]
 })

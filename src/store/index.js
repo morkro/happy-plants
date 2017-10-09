@@ -14,6 +14,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
   state: {
+    user: {
+      authenticated: false,
+      email: null,
+      name: null,
+      avatar: null
+    },
     updated: Date.now(),
     plants: [],
     active: plant.state,
