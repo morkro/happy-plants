@@ -1,6 +1,6 @@
 <template>
   <div @click="handleClick"
-    :style="{ backgroundImage: imageURL ? `url(${imageURL})`: '' }"
+    :style="{ backgroundImage: imageURL ? `url(${imageURL})` : '' }"
     :class="{
       'plant-preview': true,
       'no-photo': !this.imageURL,
@@ -81,8 +81,8 @@
     transform-origin: center;
     transition: transform 50ms $ease-out-back;
 
-    &:before,
-    &:after {
+    &::before,
+    &::after {
       width: 100%;
       height: 100%;
       position: absolute;
@@ -93,7 +93,7 @@
       transition: opacity 100ms $ease-out-back;
     }
 
-    &:before {
+    &::before {
       width: calc(100% - 4px);
       height: calc(100% - 4px);
       border: 2px dashed white;
@@ -102,7 +102,7 @@
       transition: opacity 100ms $ease-out-back;
     }
 
-    &:after {
+    &::after {
       opacity: 0;
       background: $red;
       box-shadow: 0 0 14px $red;
@@ -110,22 +110,22 @@
     }
 
     &.no-photo {
-      // TODO: Show default image instead
+      /* TODO: Show default image instead */
       background: $grey;
     }
 
-    &.select:before {
+    &.select::before {
       opacity: 1;
     }
 
     &.select-delete {
-      transform: scale(.95);
+      transform: scale(0.95);
 
-      &:after {
-        opacity: .85;
+      &::after {
+        opacity: 0.85;
       }
 
-      &:before {
+      &::before {
         opacity: 0;
       }
     }
@@ -145,7 +145,7 @@
     svg {
       width: 65% !important;
       height: auto !important;
-      opacity: .12;
+      opacity: 0.12;
     }
   }
 
@@ -157,7 +157,7 @@
     left: 0;
     padding: 10px;
     font-size: $text-size-small;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .65));
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     z-index: 1;
 
     .select-delete & {
@@ -170,7 +170,7 @@
 
     &.inactive,
     &.inactive h1 {
-      color: rgba(255, 255, 255, .75);
+      color: rgba(255, 255, 255, 0.75);
     }
 
     h1 {

@@ -2,7 +2,10 @@
   <section>
     <header>
       <h2>Growing seasons</h2>
-      <p>
+      <p v-if="isEvergreen">
+        Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
+      </p>
+      <p v-else>
         Your plant is currently <strong>{{ getGrowthText() }}</strong>.
       </p>
     </header>
@@ -36,6 +39,9 @@
     computed: {
       currentMonth () {
         return this.seasons[new Date().getMonth()]
+      },
+      isEvergreen () {
+        return this.seasons.every(season => season.growth)
       }
     },
 
@@ -106,8 +112,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background $base-speed $ease-out-back,
-                  color $base-speed $ease-out-back;
+      transition:
+        background $base-speed $ease-out-back,
+        color $base-speed $ease-out-back;
 
       &:not(:last-child) {
         margin-right: 1px;
@@ -131,7 +138,7 @@
         background: $green;
         box-shadow: $green-shadow;
 
-        &:after {
+        &::after {
           opacity: 1;
           content: "";
           border-radius: $border-radius;
@@ -141,7 +148,7 @@
           position: absolute;
           top: 0;
           left: 0;
-          box-shadow: 0 0 12px 0px rgba($green, .7),;
+          box-shadow: 0 0 12px 0 rgba($green, 0.7);
           transition: opacity $base-speed $ease-out-back;
         }
       }

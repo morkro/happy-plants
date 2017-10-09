@@ -63,7 +63,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
   import PlantPreview from './PlantPreview'
   import OverviewFilter from './Filter'
   import '@/assets/leaf'
@@ -163,9 +163,11 @@
   .footer-appear-enter-active {
     transition: transform $base-speed * 2 $ease-out-back;
   }
+
   .footer-appear-enter {
     transform: scale(0);
   }
+
   .footer-appear-enter-to {
     transform: scale(1);
   }
@@ -231,12 +233,12 @@
     &.active .delete-plants {
       background: $red;
 
-      &:after {
+      &::after {
         opacity: 1;
       }
     }
 
-    .delete-plants:after {
+    .delete-plants::after {
       opacity: 0;
       content: "";
       position: absolute;
@@ -245,7 +247,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      box-shadow: 0px 0px 14px 2px $red;
+      box-shadow: 0 0 14px 2px $red;
       transition: opacity $base-speed $ease-out-back;
     }
 

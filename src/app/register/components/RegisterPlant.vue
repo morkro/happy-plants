@@ -6,23 +6,25 @@
 
     <section>
       <form @submit.prevent="validateForm">
-        <label-group
-          class="form-label-group"
-          v-for="(step, index) of formSteps"
-          :key="step.type + index"
-          :required="step.required"
-          :label="step.label"
-          :description="step.description"
-          :name="step.type"
-          :type="step.type"
-          :placeholder="step.placeholder"
-          @process-step="getInputValue">
-        </label-group>
+        <label for="register-name" class="form-label-group">
+          <h2 class="required">What's your friends name?</h2>
+          <span></span>
+          <input required
+            type="text"
+            id="register-name"
+            placeholder="Name"
+            @change="getName" />
+        </label>
 
-        <button>
-          Add plant
-          <svg-icon class="icon" icon="right-arrow" color="#000"></svg-icon>
-        </button>
+        <label for="register-file" class="form-label-group">
+          <h2>Upload photo</h2>
+          <span>You can either select a photo from your gallery or take one now.</span>
+          <file-upload
+            name="register-file"
+            @file-selected="getFile" />
+        </label>
+
+        <button>Add plant</button>
       </form>
     </section>
   </main>
@@ -30,10 +32,9 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import AppHeader from '@/app/shared/AppHeader'
+  import AppHeader from '@/components/AppHeader'
+  import FileUpload from '@/components/FileUpload'
   import getDefaultStructure from '@/utils/getDefaultStructure'
-  import LabelGroup from './LabelGroup'
-
   import '@/assets/right-arrow'
 
   export default {
@@ -41,28 +42,13 @@
 
     components: {
       'app-header': AppHeader,
-      'label-group': LabelGroup
+      'file-upload': FileUpload
     },
 
     data () {
       return {
         name: '',
-        blob: undefined,
-        formSteps: [
-          {
-            type: 'name',
-            required: true,
-            label: 'What\'s your friends name?',
-            placeholder: 'Name'
-          },
-          {
-            type: 'file',
-            required: false,
-            label: 'Upload photo',
-            description: 'You can either select a photo from your gallery or take one now.',
-            placeholder: ''
-          }
-        ]
+        blob: undefined
       }
     },
 
@@ -70,12 +56,12 @@
       ...mapActions([
         'addPlant'
       ]),
-      getInputValue (data) {
-        if (data.type === 'name') {
-          this.name = data.payload
-        } else if (data.type === 'file') {
-          this.blob = data.payload
-        }
+      getFile (data) {
+        this.blob = data.blob
+      },
+      getName (event) {
+        if (!event.target.value) return
+        this.name = event.target.value
       },
       validateForm () {
         const config = {
@@ -93,18 +79,14 @@
 <style lang="scss" scoped>
   @import "~styles/colors";
   @import "~styles/layout";
+  @import "~styles/fonts";
 
   main {
-    background: $green;
+    background: $background-secondary;
 
     section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      min-height: calc(100vh - #{$app-header-size});
-      position: relative;
+      padding: $base-gap 0;
+      line-height: 150%;
     }
   }
 
@@ -114,16 +96,8 @@
     padding: 0 $base-gap;
     width: 100%;
 
-    button {
-      color: $text-color-base;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: $yellow;
-
-      .icon {
-        margin-left: $base-gap / 2;
-      }
+    input {
+      width: 100%;
     }
   }
 
@@ -132,7 +106,6 @@
     background: white;
     padding: 0;
     margin-bottom: $base-gap;
-    color: $text-color-base;
     border: none;
     border-radius: $border-radius;
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
@@ -140,7 +113,26 @@
   }
 
   .form-label-group {
+    display: block;
     width: 100%;
     margin-bottom: $base-gap * 2;
+  }
+
+  label h2 {
+    margin-bottom: $base-gap / 2;
+
+    &.required::after {
+      color: $blue;
+      content: " *";
+      font-size: $text-size-small;
+    }
+  }
+
+  label span {
+    display: block;
+    color: $text-color-secondary;
+    font-size: $text-size-small;
+    margin-bottom: $base-gap / 2;
+    padding: 0 1px;
   }
 </style>

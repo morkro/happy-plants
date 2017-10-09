@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import Modal from '@/app/shared/Modal'
+  import Modal from '@/components/Modal'
   export default {
     name: 'PlantNotes',
 
@@ -64,7 +64,8 @@
   @import "~styles/z-index";
 
   section {
-    h2, p {
+    h2,
+    p {
       margin-bottom: $base-gap;
     }
   }

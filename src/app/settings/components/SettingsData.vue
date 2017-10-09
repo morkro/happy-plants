@@ -34,7 +34,7 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import Modal from '@/app/shared/Modal'
+  import Modal from '@/components/Modal'
 
   export default {
     name: 'SettingsData',
@@ -109,7 +109,8 @@
   }
 
   .danger-modal {
-    h1, p {
+    h1,
+    p {
       color: $text-color-inverse;
     }
 

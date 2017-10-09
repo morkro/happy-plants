@@ -12,7 +12,7 @@
 <script>
   import firebase from 'firebase'
   import { mapActions, mapState } from 'vuex'
-  import Notifications from '@/app/shared/Notifications'
+  import Notifications from '@/components/Notifications'
 
   export default {
     name: 'HappyPlants',

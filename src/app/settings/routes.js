@@ -1,18 +1,23 @@
-import Settings from './components/Settings'
-import SettingsMenu from './components/SettingsMenu'
-import SettingsAbout from './components/SettingsAbout'
-import SettingsAccount from './components/SettingsAccount'
-import SettingsData from './components/SettingsData'
-
 export default [
   {
     path: '/settings',
-    component: Settings,
+    component: () => import(/* webpackChunkName: "settings" */ './components/Settings'),
     children: [
-      { path: '', name: 'Settings', component: SettingsMenu },
-      { path: 'about', name: 'SettingsAbout', component: SettingsAbout },
-      { path: 'account', name: 'SettingsAccount', component: SettingsAccount },
-      { path: 'data', name: 'SettingsData', component: SettingsData }
+      {
+        path: '',
+        name: 'Settings',
+        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsMenu')
+      },
+      {
+        path: 'about',
+        name: 'SettingsAbout',
+        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsAbout')
+      },
+      {
+        path: 'data',
+        name: 'SettingsData',
+        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsData')
+      }
     ]
   }
 ]

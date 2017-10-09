@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import Progress from '@/app/shared/Progress'
+  import Progress from '@/components/Progress'
   export default {
     name: 'PlantWatering',
 
