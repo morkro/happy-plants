@@ -35,7 +35,6 @@
   import AppHeader from '@/components/AppHeader'
   import FileUpload from '@/components/FileUpload'
   import getDefaultStructure from '@/utils/getDefaultStructure'
-  import '@/assets/right-arrow'
 
   export default {
     name: 'RegisterPlant',

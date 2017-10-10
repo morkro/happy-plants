@@ -3,7 +3,7 @@
     <div class="upload-preview">
       <div :class="{ fallback: imageURL === '' }">
         <img v-if="imageURL !== ''" :src="imageURL" :alt="name" />
-        <svg-icon v-else icon="cactus" width="30" height="30" color="#000"></svg-icon>
+        <svgicon v-else icon="cactus" width="30" height="30" color="#000"></svgicon>
       </div>
       <span>{{ fileName }}</span>
     </div>

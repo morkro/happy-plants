@@ -19,6 +19,8 @@ button {
   &:active,
   &:focus {
     outline: none;
+    box-shadow: $green-shadow-touch;
+    transform: translateY(2px);
   }
 
   &.rounded {

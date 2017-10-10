@@ -2,7 +2,7 @@
   <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
       <button @click.prevent="emitModalClose" class="circle">
-        ✕
+        <feather-x width="18" height="18" />
       </button>
       <slot name="headline"></slot>
     </header>
@@ -17,6 +17,10 @@
     props: {
       show: { type: Boolean, default: false },
       backgroundColor: { type: String, default: '#F5F5F5' }
+    },
+
+    components: {
+      'feather-x': () => import('vue-feather-icon/components/x')
     },
 
     methods: {

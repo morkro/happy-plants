@@ -55,4 +55,4 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 ## Credits
 ### Icons
-Icons taken from [iconmonstr](https://iconmonstr.com) and [Lucy G](http://www.flaticon.com/authors/lucy-g), [GraphicsBay](http://www.flaticon.com/authors/graphicsbay), [Gregor Cresnar](http://www.flaticon.com/authors/gregor-cresnar), [Freepik](http://www.freepik.com), [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov) licensed under [CC 3.0](http://creativecommons.org/licenses/by/3.0/).
+Icons taken from [Freepik](http://www.freepik.com), [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov) licensed under [CC 3.0](http://creativecommons.org/licenses/by/3.0/).

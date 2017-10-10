@@ -6,7 +6,7 @@
         :to="backPath"
         :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
         <span hidden>Back</span>
-        <svg-icon icon="left-arrow" width="20" height="20" :color="color"></svg-icon>
+        <feather-arrow-left />
       </router-link>
       <slot name="custom-action-left"></slot>
     </div>
@@ -19,7 +19,7 @@
         :to="{ path: '/settings' }"
         :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
         <span hidden>Settings</span>
-        <svg-icon icon="settings" width="20" height="20" :color="color"></svg-icon>
+        <feather-settings class="header-settings-icon" />
       </router-link>
       <slot name="custom-action-right"></slot>
     </div>
@@ -27,9 +27,6 @@
 </template>
 
 <script>
-  import '@/assets/left-arrow'
-  import '@/assets/settings'
-
   export default {
     name: 'AppHeader',
 
@@ -38,6 +35,11 @@
       back: { type: Boolean, default: false },
       settings: { type: Boolean, default: false },
       color: { type: String, default: 'black' }
+    },
+
+    components: {
+      'feather-arrow-left': () => import('vue-feather-icon/components/arrow-left'),
+      'feather-settings': () => import('vue-feather-icon/components/settings')
     },
 
     methods: {
@@ -71,12 +73,6 @@
       color: $text-color-base;
       margin: 0 $base-gap;
     }
-
-    svg {
-      width: $icon-size;
-      height: $icon-size;
-      fill: $link-color;
-    }
   }
 
   .header-ctrl {
@@ -109,5 +105,10 @@
         transform: translateY(-1px);
       }
     }
+  }
+
+  .header-settings-icon {
+    width: $icon-size;
+    height: $icon-size;
   }
 </style>

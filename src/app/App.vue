@@ -12,13 +12,13 @@
 <script>
   import firebase from 'firebase'
   import { mapActions, mapState } from 'vuex'
-  import Notifications from '@/components/Notifications'
+  import AppNotifications from '@/components/AppNotifications'
 
   export default {
     name: 'HappyPlants',
 
     components: {
-      'app-notifications': Notifications
+      'app-notifications': AppNotifications
     },
 
     data () {

@@ -11,8 +11,8 @@
       <div class="preview-headline">
         <h1>{{ name }}</h1>
       </div>
-      <svg-icon v-if="!this.imageURL" icon="cactus" width="40" height="40" color="#000">
-      </svg-icon>
+      <svgicon v-if="!this.imageURL" icon="cactus" width="40" height="40" color="#000">
+      </svgicon>
     </div>
   </div>
 </template>

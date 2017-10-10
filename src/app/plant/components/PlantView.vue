@@ -12,15 +12,15 @@
     <section class="view-content">
       <header>
         <button class="edit-data circle" @click.prevent="openPlantEditModal">
-          <svg-icon icon="edit" color="#fff" width="18" height="18"></svg-icon>
+          <feather-edit width="18" height="18" />
         </button>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL }">
           <h1>{{ name }}</h1>
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
-          <svg-icon v-else icon="cactus" width="50" height="50" color="#000">
-          </svg-icon>
+          <svgicon v-else icon="cactus" width="50" height="50" color="#000">
+          </svgicon>
         </div>
       </header>
 
@@ -55,8 +55,6 @@
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
   import PlantWatering from './PlantWatering'
-
-  import '@/assets/edit'
   import '@/assets/cactus'
 
   export default {
@@ -67,7 +65,8 @@
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
-      'plant-watering': PlantWatering
+      'plant-watering': PlantWatering,
+      'feather-edit': () => import('vue-feather-icon/components/edit-2')
     },
 
     data: () => ({
@@ -159,6 +158,11 @@
       bottom: 4px;
       transform: translateY(50%);
       z-index: 2;
+
+      svg {
+        /* FIXME: Figure out how to use stroke on polygon. */
+        filter: invert(1);
+      }
     }
 
     h1 {

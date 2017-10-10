@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
+import VueFeatherIcon from 'vue-feather-icon'
+
 import VueFire from 'vuefire'
 import firebase from 'firebase'
 import { sync } from 'vuex-router-sync'
@@ -24,9 +26,10 @@ localforage.config({
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
-Vue.use(VueTouch)
 Vue.use(VueFire)
-Vue.use(VueSVGIcon, { tagName: 'svg-icon' })
+Vue.use(VueFeatherIcon)
+Vue.use(VueSVGIcon)
+Vue.use(VueTouch)
 
 sync(store, router)
 

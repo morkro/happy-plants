@@ -1,19 +1,11 @@
 <template>
   <main class="main-wireframe">
-    <!-- <settings-modal
-      :show="showSettingsModal"
-      @close-modal="closeSettingsModal">
-    </settings-modal> -->
-
     <app-header :back="true" :backPath="returnRoutePath">
       <h1 slot="title">{{ headline }}</h1>
-      <img
-        class="settings-avatar"
-        slot="custom-action-right"
-        v-if="authenticated"
-        :src="avatar"
-        :alt="userName"
-        :title="userName" />
+      <div v-if="authenticated" slot="custom-action-right" class="settings-avatar">
+        <img v-if="authenticated" :src="avatar" :alt="userName" :title="userName" />
+        <feather-user v-else />
+      </div>
     </app-header>
 
     <router-view></router-view>
@@ -23,14 +15,13 @@
 <script>
   import { mapState } from 'vuex'
   import AppHeader from '@/components/AppHeader'
-  import SettingsModal from './SettingsModal'
 
   export default {
     name: 'Settings',
 
     components: {
       'app-header': AppHeader,
-      'settings-modal': SettingsModal
+      FeatherUser: () => import('vue-feather-icon/components/user')
     },
 
     computed: {
@@ -69,5 +60,20 @@
     width: $avatar-size;
     height: $avatar-size;
     margin-right: $base-gap;
+    overflow: hidden;
+    background: $light-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 </style>

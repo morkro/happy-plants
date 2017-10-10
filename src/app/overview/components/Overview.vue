@@ -31,28 +31,27 @@
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
             <button @click="activateDeleteMode" class="delete-plants circle">
-              <svg-icon icon="trash" width="14" height="14" :color="deleteMode ? '#fff' : '#000'">
-              </svg-icon>
+              <feather-trash width="18" height="18" :stroke="deleteMode ? '#fff' : '#000'" />
             </button>
             <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
-              ✕
+              <feather-x width="18" height="18" />
             </button>
           </div>
         </transition>
 
         <transition appear name="footer-appear">
           <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
-            <svg-icon icon="leaf" width="16" height="24" color="#fff"></svg-icon>
+            <svgicon icon="leaf" width="16" height="24" color="#fff"></svgicon>
           </router-link>
         </transition>
 
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
             <button @click="cancelSortingMode" class="footer-cancel-mode circle">
-              ✕
+              <feather-x width="18" height="18" />
             </button>
             <button @click="toggleSortingMode" class="organise-plants circle">
-              <svg-icon icon="categories" width="14" height="14" color="#000"></svg-icon>
+              <feather-layers width="18" height="18" />
             </button>
           </div>
         </transition>
@@ -67,8 +66,6 @@
   import PlantPreview from './PlantPreview'
   import OverviewFilter from './Filter'
   import '@/assets/leaf'
-  import '@/assets/trash'
-  import '@/assets/categories'
 
   export default {
     name: 'Overview',
@@ -76,7 +73,10 @@
     components: {
       'app-header': AppHeader,
       'plant-preview': PlantPreview,
-      'overview-filter': OverviewFilter
+      'overview-filter': OverviewFilter,
+      'feather-trash': () => import('vue-feather-icon/components/trash-2'),
+      'feather-x': () => import('vue-feather-icon/components/x'),
+      'feather-layers': () => import('vue-feather-icon/components/layers')
     },
 
     computed: mapState({
@@ -218,7 +218,9 @@
     }
 
     .footer-cancel-mode {
-      display: block;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: $link-color;
       position: absolute;
       top: 0;
