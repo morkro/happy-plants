@@ -9,10 +9,10 @@
       </span>
       <div class="auth-actions">
         <button :disabled="authenticated" @click="googleSignIn">
-          Sign in
+          <feather-sign-in :width="iconSize" :height="iconSize" /> Sign in
         </button>
         <button :disabled="!authenticated" @click="googleSignOut">
-          Sign out
+          <feather-sign-out :width="iconSize" :height="iconSize" /> Sign out
         </button>
       </div>
     </div>
@@ -24,6 +24,17 @@
   import { mapState, mapActions } from 'vuex'
   export default {
     name: 'SettingsAccount',
+
+    components: {
+      'feather-sign-in': () => import('vue-feather-icon/components/log-in'),
+      'feather-sign-out': () => import('vue-feather-icon/components/log-out')
+    },
+
+    data () {
+      return {
+        iconSize: 18
+      }
+    },
 
     computed: mapState({
       authenticated: state => state.user.authenticated,

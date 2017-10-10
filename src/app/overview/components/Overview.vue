@@ -41,7 +41,7 @@
 
         <transition appear name="footer-appear">
           <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
-            <svgicon icon="leaf" width="16" height="24" color="#fff"></svgicon>
+            <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
           </router-link>
         </transition>
 
@@ -237,6 +237,10 @@
 
       &::after {
         opacity: 1;
+      }
+
+      svg {
+        filter: none;
       }
     }
 

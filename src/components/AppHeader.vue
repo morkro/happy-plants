@@ -6,7 +6,7 @@
         :to="backPath"
         :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
         <span hidden>Back</span>
-        <feather-arrow-left />
+        <feather-arrow-left :stroke="color" />
       </router-link>
       <slot name="custom-action-left"></slot>
     </div>

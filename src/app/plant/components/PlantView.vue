@@ -158,11 +158,6 @@
       bottom: 4px;
       transform: translateY(50%);
       z-index: 2;
-
-      svg {
-        /* FIXME: Figure out how to use stroke on polygon. */
-        filter: invert(1);
-      }
     }
 
     h1 {

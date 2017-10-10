@@ -6,6 +6,8 @@
 $button-circle-size: 40px;
 
 button {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   background: $green;
   font-size: $text-size-base;
@@ -21,6 +23,12 @@ button {
     outline: none;
     box-shadow: $green-shadow-touch;
     transform: translateY(2px);
+  }
+
+  svg {
+    margin-right: $base-gap / 2;
+    stroke: $text-color-button;
+    filter: invert(1);
   }
 
   &.rounded {
@@ -57,5 +65,10 @@ button {
     color: transparentize($text-color-secondary, 0.3);
     cursor: not-allowed;
     box-shadow: $inset-shadow;
+
+    svg {
+      opacity: 0.3;
+      filter: invert(0);
+    }
   }
 }
