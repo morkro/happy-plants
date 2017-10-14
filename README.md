@@ -1,43 +1,60 @@
-# Happy Plants 🌵🌱 [![Build Status](https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)](https://travis-ci.com/morkro/happy-plants)
-> Version 1.0.0-alpha
+<h1 align="center">
+  Happy Plants 🌵🌱
+</h1>
 
-_Happy Plants_ is a web application which wants to help you keeping your plants happy!
+<p align="center">
+  Current version: <code>1.0.0-alpha</code>
+</p>
 
-_This is a personal project of mine to help me keeping track of all the plants I have and still in active development. There is currently no desktop version, only mobile. Desktop is planned, but for now focus is on mobile._
+<p align="center">
+  <a href="https://travis-ci.com/morkro/happy-plants">
+    <img src="https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)" alt="Build Status" />
+    <img src="https://img.shields.io/maintenance/yes/2017.svg" alt="Maintenance" />
+  </a>
+</p>
 
-## Features
-This project is currently still very early in development and only has a bare minimum set of features. So far, you can:
+---
 
-- Add a new plant, add a name and photo
-- Have an overview of all your plants
-  - Filter them by date and name
-- View your plants
-  - Add notes
-  - Update the growth seasons
-- Download your data from the settings page
+_Happy Plants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants. See the list of [features](#features) for more information.
 
-#### Next milestone
-<table>
-  <thead>
-    <tr>
-      <th>Feature</th>
-      <th>Development</th>
-      <th>Description</th>
-      <th>Issue</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Google Account sync</td>
-      <td>🚧 In progress</td>
-      <td>Enables you to store your application data on Google Drive Application Storage and access the same data cross-device.</td>
-      <td><a href="https://github.com/morkro/happy-plants/issues/20">#20</a></td>
-    </tr>
-  </tbody>
-</table>
+#### Usage
+_Happy Plants_ is available at [happy-plans.netlify.com](https://happy-plans.netlify.com). You can either add it to your bookmarks on desktop, or save it to your homescreens on mobile devices.
 
-## Development
-This project supports Yarn, so you can either use `yarn` or `npm` for the tasks.
+- [About](#about)
+- [Features](#features)
+- [Development](#development)
+
+---
+
+# About
+If your hobby is collecting (and growing) plants, you maybe also like to gather all the information about them and keep an organised overview about your little home garden.
+
+**_Happy Plants_ is all about organising, collecting all sorts of information and trivia, and adding notes on your little friends.** Basically, creating your own plant database.
+
+# Features
+This project is currently still very early in development right now and only supports a bare minimum set of features.
+
+### Adding plants
+Add a name and photo to your plant. This can always be updated in the detailed plant view.
+
+### Overview
+An overview of all your plants. Currently, you can only filter them by date or name.
+
+### Detailed plant profile
+- Maintain a growth calendar to know if your plant is currently in a growth or dormant phase.
+- Add notes.
+
+## Planned features
+Keeping track of planned features here. This is the minimum of features to move the project out of `alpha` state.
+
+- Integrate Firebase.
+- Add more basic information (scientific name, location of your plant, pruning, how much sun, ...) to plants.
+- Add gallery.
+- Create custom categories and sorting in overview.
+- Highlight specific plants in overview.
+
+# Development
+This project supports Yarn, so you can either use `yarn` or `npm` to run tasks.
 
 | Command | Description |
 | ------- | ----------- |
@@ -50,9 +67,10 @@ This project supports Yarn, so you can either use `yarn` or `npm` for the tasks.
 | `yarn/npm test` | Run all tests |
 | `yarn/npm lint` | Runs `Standard` over all `.js` files |
 
+This is an Vue.js progressive web application, bootstrapped with [`vue-init pwa`](https://github.com/vuejs-templates/pwa). For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-## Credits
-### Icons
+# Credits
 Icons taken from [Freepik](http://www.freepik.com), [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov) licensed under [CC 3.0](http://creativecommons.org/licenses/by/3.0/).
+
+# License
+[MIT](https:/github.com/morkro/happy-plants/LICENSE)
