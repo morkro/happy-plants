@@ -1,5 +1,5 @@
-import { mount, shallow } from 'avoriaz'
-import AppHeader from '@/app/shared/AppHeader'
+import { mount } from 'avoriaz'
+import AppHeader from '@/components/AppHeader'
 
 describe('AppHeader.vue', () => {
   it('is a Vue component', () => {
@@ -20,12 +20,5 @@ describe('AppHeader.vue', () => {
     expect(typeof wrapper.vm.isWhite).to.equal('function')
     expect(wrapper.vm.isWhite('foo')).to.equal(false)
     expect(wrapper.vm.isWhite('white')).to.equal(true)
-  })
-
-  it('renders links correctly', () => {
-    const wrapper = shallow(AppHeader)
-    expect(wrapper.contains('.link-wrapper')).to.equal(false)
-    // wrapper.setProps({ back: true })
-    // expect(wrapper.contains('.link-wrapper')).to.equal(true)
   })
 })
