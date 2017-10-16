@@ -6,32 +6,32 @@ export default {
     const season = state.active.seasons[index]
     season.growth = !season.growth
 
-    state.active.modified = Date.now()
+    state.active.modified = payload.updated
     state.active.seasons.splice(index, 1, season)
     state.updated = payload.updated
   },
 
   UPDATE_NOTES (state, payload) {
     state.updated = payload.updated
-    state.active.modified = Date.now()
+    state.active.modified = payload.updated
     state.active.notes = payload.item.notes
   },
 
   UPDATE_WATERING (state, payload) {
     state.updated = payload.updated
-    state.active.modified = Date.now()
+    state.active.modified = payload.updated
     state.active.watering = payload.item.watering
   },
 
   UPDATE_NAME (state, payload) {
     state.updated = payload.updated
-    state.active.modified = Date.now()
+    state.active.modified = payload.updated
     state.active.name = payload.item.name
   },
 
   UPDATE_PHOTO (state, payload) {
     state.updated = payload.updated
-    state.active.modified = Date.now()
+    state.active.modified = payload.updated
     state.active.imageURL = payload.item.imageURL
 
     if (payload.item.blob) {

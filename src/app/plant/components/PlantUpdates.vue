@@ -1,7 +1,7 @@
 <template>
   <section>
     <feather-clock class="updates-icon" />
-    <p>Last updated: {{ formatDate(modified) }}</p>
+    <p>Last updated: {{ modifiedDate }}</p>
   </section>
 </template>
 
@@ -17,12 +17,12 @@
       FeatherClock: () => import('vue-feather-icon/components/clock' /* webpackChunkName: "plant" */)
     },
 
-    methods: {
-      formatDate (dateObject) {
-        const date = new Date(dateObject)
+    computed: {
+      modifiedDate () {
+        const date = new Date(this.modified)
         const year = date.getFullYear()
-        const month = date.getMonth() < 10 ? `0${date.getMonth()}` : date.getMonth()
-        const day = date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()
+        const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+        const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
         return `${day}.${month}.${year}`
       }
     }

@@ -94,7 +94,7 @@
     margin-bottom: $base-gap;
 
     h2 {
-      margin-bottom: $base-gap / 2;
+      margin-bottom: $base-gap/2;
     }
   }
 
