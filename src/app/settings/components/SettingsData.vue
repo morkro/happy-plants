@@ -20,14 +20,20 @@
       import another data file to add to your collection.
     </span>
     <div class="data-actions">
-      <button @click="downloadData">Download data</button>
+      <button @click="downloadData">
+        <feather-download />
+        Download data
+      </button>
       <button class="disabled" disabled>Import data</button>
     </div>
     <hr />
     <div class="danger-zone">
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
-      <button class="warning" @click="openDangerModal">Delete application data</button>
+      <button class="warning" @click="openDangerModal">
+        <feather-delete />
+        Delete application data
+      </button>
     </div>
   </section>
 </template>
@@ -40,7 +46,9 @@
     name: 'SettingsData',
 
     components: {
-      'app-modal': Modal
+      'app-modal': Modal,
+      FeatherDownload: () => import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
+      FeatherDelete: () => import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */)
     },
 
     data () {
@@ -96,9 +104,10 @@
       margin-bottom: $base-gap;
     }
 
-    .data-actions {
-      display: flex;
-      justify-content: space-between;
+    svg {
+      height: 18px;
+      width: 18px;
+      filter: none;
     }
   }
 
@@ -106,6 +115,11 @@
     margin: $base-gap * 1.5 0 $base-gap 0;
     border: none;
     border-top: 3px solid $dark-transparency;
+  }
+
+  .data-actions {
+    display: flex;
+    justify-content: space-between;
   }
 
   .danger-modal {
