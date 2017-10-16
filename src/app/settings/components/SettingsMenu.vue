@@ -19,7 +19,7 @@
     name: 'SettingsMenu',
 
     components: {
-      FeatherArrowRight: () => import('vue-feather-icon/components/arrow-right')
+      FeatherArrowRight: () => import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "settings" */)
     },
 
     data () {

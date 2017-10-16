@@ -1,27 +1,27 @@
 export default [
   {
     path: '/settings',
-    component: () => import(/* webpackChunkName: "settings" */ './components/Settings'),
+    component: () => import('./components/Settings' /* webpackChunkName: "settings" */),
     children: [
       {
         path: '',
         name: 'Settings',
-        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsMenu')
+        component: () => import('./components/SettingsMenu' /* webpackChunkName: "settings" */)
       },
       {
         path: 'about',
         name: 'SettingsAccount',
-        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsAccount')
+        component: () => import('./components/SettingsAccount' /* webpackChunkName: "settings" */)
       },
       {
         path: 'about',
         name: 'SettingsAbout',
-        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsAbout')
+        component: () => import('./components/SettingsAbout' /* webpackChunkName: "settings" */)
       },
       {
         path: 'data',
         name: 'SettingsData',
-        component: () => import(/* webpackChunkName: "settings" */ './components/SettingsData')
+        component: () => import('./components/SettingsData' /* webpackChunkName: "settings" */)
       }
     ]
   }

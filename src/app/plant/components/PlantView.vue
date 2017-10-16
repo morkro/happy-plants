@@ -73,7 +73,7 @@
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-updates': PlantUpdates,
-      'feather-edit': () => import('vue-feather-icon/components/edit-2')
+      'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
