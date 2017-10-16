@@ -43,6 +43,11 @@
           :content="notes"
           @update-notes="onNotesUpdate" />
       </div>
+
+      <div class="content-group content-updates">
+        <plant-updates
+          :modified="modified" />
+      </div>
     </section>
   </main>
 </template>
@@ -55,6 +60,7 @@
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
   import PlantWatering from './PlantWatering'
+  import PlantUpdates from './PlantUpdates'
   import '@/assets/cactus'
 
   export default {
@@ -66,6 +72,7 @@
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
+      'plant-updates': PlantUpdates,
       'feather-edit': () => import('vue-feather-icon/components/edit-2')
     },
 
@@ -80,7 +87,8 @@
       imageURL: state => state.active.imageURL,
       seasons: state => state.active.seasons,
       notes: state => state.active.notes,
-      watering: state => state.active.watering
+      watering: state => state.active.watering,
+      modified: state => state.active.modified
     }),
 
     methods: {
