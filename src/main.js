@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
-
 import VueFire from 'vuefire'
 import firebase from 'firebase'
 import { sync } from 'vuex-router-sync'
