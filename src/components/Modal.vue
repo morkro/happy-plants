@@ -40,13 +40,14 @@
   section {
     width: 100%;
     min-height: 100vh;
-    height: auto;
+    height: 100%;
     background: $background-secondary;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     padding: $base-gap;
     z-index: z($page-elements, modals);
+    overflow-y: scroll;
   }
 
   .modal-header {

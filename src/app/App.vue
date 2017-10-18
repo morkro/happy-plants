@@ -102,6 +102,10 @@
   body {
     display: flex;
     justify-content: center;
+
+    &.no-scrolling {
+      overflow: hidden;
+    }
   }
 
   #app {

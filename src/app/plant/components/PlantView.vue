@@ -103,9 +103,11 @@
       ]),
       openPlantEditModal () {
         this.showPlantModal = true
+        this.$root.$el.parentNode.classList.add('no-scrolling')
       },
       closePlantEditModal () {
         this.showPlantModal = false
+        this.$root.$el.parentNode.classList.remove('no-scrolling')
       },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
@@ -209,8 +211,12 @@
     }
   }
 
-  .content-group:not(:last-of-type) {
-    border-bottom: 4px solid $background-secondary;
+  .content-group {
+    position: relative;
+
+    &:not(:last-of-type) {
+      border-bottom: 4px solid $background-secondary;
+    }
   }
 
   .content-notes {
