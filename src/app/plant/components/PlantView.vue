@@ -31,18 +31,24 @@
           @toggle-watering="onWateringUpdate" />
       </div> -->
 
-      <div v-if="seasons.length" class="content-group content-seasons">
+      <plant-component v-if="seasons.length">
+        <feather-moon slot="icon" />
+        <h2 slot="title">Growing seasons</h2>
         <plant-seasons
+          slot="content"
           :seasons="seasons"
           @toggle-season="onSeasonUpdate" />
-      </div>
+      </plant-component>
 
-      <div class="content-group content-notes">
+      <plant-component>
+        <feather-book slot="icon" />
+        <h2 slot="title">Notebook</h2>
         <plant-notes
+          slot="content"
           class="notes-modal"
           :content="notes"
           @update-notes="onNotesUpdate" />
-      </div>
+      </plant-component>
 
       <div class="content-group content-updates">
         <plant-updates
@@ -56,6 +62,7 @@
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import AppHeader from '@/components/AppHeader'
+  import PlantComponentContainer from './PlantComponentContainer'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
@@ -68,11 +75,14 @@
 
     components: {
       'app-header': AppHeader,
+      'plant-component': PlantComponentContainer,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-updates': PlantUpdates,
+      'feather-book': () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
+      'feather-moon': () => import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
       'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
@@ -148,6 +158,9 @@
   }
 
   .view-content {
+    background-color: $background-secondary;
+    min-height: 100vh;
+
     h3 {
       font-weight: 600;
       font-size: $text-size-medium;
@@ -208,14 +221,6 @@
         height: auto !important;
         opacity: 0.12;
       }
-    }
-  }
-
-  .content-group {
-    position: relative;
-
-    &:not(:last-of-type) {
-      border-bottom: 4px solid $background-secondary;
     }
   }
 

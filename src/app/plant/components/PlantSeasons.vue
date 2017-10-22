@@ -1,14 +1,11 @@
 <template>
   <section>
-    <header>
-      <h2>Growing seasons</h2>
-      <p v-if="isEvergreen">
-        Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
-      </p>
-      <p v-else>
-        Your plant is currently <strong>{{ getGrowthText() }}</strong>.
-      </p>
-    </header>
+    <p v-if="isEvergreen">
+      Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
+    </p>
+    <p v-else>
+      Your plant is currently <strong>{{ getGrowthText() }}</strong>.
+    </p>
     <ul class="season-list">
       <li
         v-for="(season, index) of seasons"
@@ -85,17 +82,8 @@
   @import "~styles/colors";
   @import "~styles/layout";
 
-  section {
-    width: 100%;
-    padding: $base-gap;
-  }
-
-  header {
+  p {
     margin-bottom: $base-gap;
-
-    h2 {
-      margin-bottom: $base-gap/2;
-    }
   }
 
   .season-list {

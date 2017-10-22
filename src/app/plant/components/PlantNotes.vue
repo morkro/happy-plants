@@ -7,16 +7,13 @@
       </div>
     </app-modal>
 
-    <header>
-      <h2><feather-book /> Notebook</h2>
-      <div v-if="!content">
-        <p>Seems like you haven't added any notes yet.</p>
-        <button @click="toggleNotes">Add notes</button>
-      </div>
-      <div v-else>
-        <button @click="toggleNotes">Show notes</button>
-      </div>
-    </header>
+    <div v-if="!content">
+      <p>Seems like you haven't added any notes yet.</p>
+      <button @click="toggleNotes">Add notes</button>
+    </div>
+    <div v-else>
+      <button @click="toggleNotes">Show notes</button>
+    </div>
   </section>
 </template>
 
@@ -64,26 +61,8 @@
   @import "~styles/colors";
   @import "~styles/z-index";
 
-  section {
-    h2,
-    p {
-      margin-bottom: $base-gap;
-    }
-  }
-
-  header h2 {
-    display: flex;
-    align-items: center;
-  }
-
-  header svg {
-    width: $icon-size;
-    height: $icon-size;
-    margin-right: $base-gap/2;
-
-    /deep/ path {
-      stroke: $text-color-secondary;
-    }
+  p {
+    margin-bottom: $base-gap;
   }
 
   textarea {
