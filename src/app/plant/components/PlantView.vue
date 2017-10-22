@@ -81,14 +81,14 @@
     }),
 
     computed: mapState({
-      guid: state => state.active.guid,
-      name: state => state.active.name,
-      blob: state => state.active.blob,
-      imageURL: state => state.active.imageURL,
-      seasons: state => state.active.seasons,
-      notes: state => state.active.notes,
-      watering: state => state.active.watering,
-      modified: state => state.active.modified
+      guid: state => state.selected.guid,
+      name: state => state.selected.name,
+      blob: state => state.selected.blob,
+      imageURL: state => state.selected.imageURL,
+      seasons: state => state.selected.seasons,
+      notes: state => state.selected.notes,
+      watering: state => state.selected.watering,
+      modified: state => state.selected.modified
     }),
 
     methods: {
@@ -103,11 +103,11 @@
       ]),
       openPlantEditModal () {
         this.showPlantModal = true
-        this.$root.$el.parentNode.classList.add('no-scrolling')
+        this.$root.$el.parentNode.classList.add('js-no-scrolling')
       },
       closePlantEditModal () {
         this.showPlantModal = false
-        this.$root.$el.parentNode.classList.remove('no-scrolling')
+        this.$root.$el.parentNode.classList.remove('js-no-scrolling')
       },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })

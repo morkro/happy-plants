@@ -103,7 +103,7 @@
     display: flex;
     justify-content: center;
 
-    &.no-scrolling {
+    &.js-no-scrolling {
       overflow: hidden;
     }
   }

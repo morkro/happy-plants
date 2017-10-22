@@ -8,7 +8,7 @@
     </app-modal>
 
     <header>
-      <h2>Notebook</h2>
+      <h2><feather-book /> Notebook</h2>
       <div v-if="!content">
         <p>Seems like you haven't added any notes yet.</p>
         <button @click="toggleNotes">Add notes</button>
@@ -33,7 +33,8 @@
     },
 
     components: {
-      'app-modal': Modal
+      'app-modal': Modal,
+      FeatherBook: () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
     },
 
     data () {
@@ -67,6 +68,21 @@
     h2,
     p {
       margin-bottom: $base-gap;
+    }
+  }
+
+  header h2 {
+    display: flex;
+    align-items: center;
+  }
+
+  header svg {
+    width: $icon-size;
+    height: $icon-size;
+    margin-right: $base-gap/2;
+
+    /deep/ path {
+      stroke: $text-color-secondary;
     }
   }
 

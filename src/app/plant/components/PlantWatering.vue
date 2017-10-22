@@ -1,6 +1,7 @@
 <template>
   <section>
     <header>
+      <feather-droplet />
       <h2>Watering</h2>
     </header>
 
@@ -34,7 +35,8 @@
     },
 
     components: {
-      'water-level': Progress
+      'water-level': Progress,
+      FeatherDroplet: () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
     },
 
     data () {
@@ -71,8 +73,17 @@
   header {
     margin-bottom: $base-gap;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+
+    svg {
+      width: $icon-size;
+      height: $icon-size;
+      margin-right: $base-gap/2;
+    }
+
+    svg /deep/ path {
+      stroke: $blue;
+    }
   }
 
   .water-level {

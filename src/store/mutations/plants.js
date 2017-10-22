@@ -27,7 +27,7 @@ export default {
       ? getUrlFromBlob(payload.item.blob)
       : payload.item.imageURL
 
-    state.active = Object.assign(payload.item, { imageURL })
+    state.selected = Object.assign(payload.item, { imageURL })
   },
 
   ADD_PLANT (state, payload) {

@@ -2,40 +2,40 @@
 
 export default {
   UPDATE_SEASON (state, payload) {
-    const index = state.active.seasons.findIndex(s => s.month === payload.item.month)
-    const season = state.active.seasons[index]
+    const index = state.selected.seasons.findIndex(s => s.month === payload.item.month)
+    const season = state.selected.seasons[index]
     season.growth = !season.growth
 
-    state.active.modified = payload.updated
-    state.active.seasons.splice(index, 1, season)
+    state.selected.modified = payload.updated
+    state.selected.seasons.splice(index, 1, season)
     state.updated = payload.updated
   },
 
   UPDATE_NOTES (state, payload) {
     state.updated = payload.updated
-    state.active.modified = payload.updated
-    state.active.notes = payload.item.notes
+    state.selected.modified = payload.updated
+    state.selected.notes = payload.item.notes
   },
 
   UPDATE_WATERING (state, payload) {
     state.updated = payload.updated
-    state.active.modified = payload.updated
-    state.active.watering = payload.item.watering
+    state.selected.modified = payload.updated
+    state.selected.watering = payload.item.watering
   },
 
   UPDATE_NAME (state, payload) {
     state.updated = payload.updated
-    state.active.modified = payload.updated
-    state.active.name = payload.item.name
+    state.selected.modified = payload.updated
+    state.selected.name = payload.item.name
   },
 
   UPDATE_PHOTO (state, payload) {
     state.updated = payload.updated
-    state.active.modified = payload.updated
-    state.active.imageURL = payload.item.imageURL
+    state.selected.modified = payload.updated
+    state.selected.imageURL = payload.item.imageURL
 
     if (payload.item.blob) {
-      state.active.blob = payload.item.blob
+      state.selected.blob = payload.item.blob
     }
   }
 }
