@@ -31,8 +31,8 @@
     margin-bottom: $base-gap/2;
 
     svg {
-      width: $icon-size;
-      height: $icon-size;
+      width: $icon-size-small;
+      height: $icon-size-small;
       opacity: 0.5;
       margin-right: $base-gap/3;
     }

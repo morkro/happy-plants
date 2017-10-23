@@ -11,16 +11,15 @@
 
     <section class="view-content">
       <header>
-        <button class="edit-data circle" @click.prevent="openPlantEditModal">
-          <feather-edit width="18" height="18" />
-        </button>
-        <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL }">
+        <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
+          <button class="edit-data icon" @click.prevent="openPlantEditModal">
+            <feather-edit />
+          </button>
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
-          <svgicon v-else icon="cactus" width="50" height="50" color="#000">
-          </svgicon>
+          <svgicon v-else icon="cactus" width="50" height="50" color="#000"></svgicon>
         </div>
       </header>
 
@@ -50,9 +49,8 @@
           @update-notes="onNotesUpdate" />
       </plant-component>
 
-      <div class="content-group content-updates">
-        <plant-updates
-          :modified="modified" />
+      <plant-updates
+        :modified="modified" />
       </div>
     </section>
   </main>
@@ -168,7 +166,6 @@
   }
 
   .view-content header {
-    box-shadow: 0 4px 0 $dark-transparency;
     position: relative;
     color: $text-color-inverse;
     height: 305px;
@@ -176,22 +173,26 @@
     background: $grey;
 
     .edit-data {
-      position: absolute;
-      right: 3vw;
-      bottom: 4px;
-      transform: translateY(50%);
+      padding: $base-gap + 5;
       z-index: 2;
+
+      svg {
+        margin: 0;
+      }
     }
 
     h1 {
+      padding: $base-gap;
       font-size: $text-size-large;
       font-weight: 600;
       color: $text-color-inverse;
       line-height: 115%;
     }
 
-    > div:not(.header-background) {
-      padding: $base-gap 70px $base-gap $base-gap;
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
       position: absolute;
       bottom: 0;
       width: 100%;

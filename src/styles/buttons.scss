@@ -5,6 +5,18 @@
 
 $button-circle-size: 40px;
 
+
+/**
+ * Types
+ * Rounded:    <button class="rounded"></button>
+ * Circle:     <button class="circle"></button>
+ * Icon only:  <button class="icon"></button>
+ *
+ * States
+ * Warning:   <button class="warning"></button>
+ * Disabled:  <button class="disabled"></button>
+ *            <button disabled></button>
+ */
 button {
   display: flex;
   align-items: center;
