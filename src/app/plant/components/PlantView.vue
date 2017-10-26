@@ -23,14 +23,16 @@
         </div>
       </header>
 
-      <!-- <div class="content-group content-watering">
+      <plant-component>
+        <feather-droplet slot="icon" />
+        <h2 slot="title">Watering</h2>
         <plant-watering
-          :level="watering && watering.level"
-          :notes="watering && watering.notes"
-          @toggle-watering="onWateringUpdate" />
-      </div> -->
+          slot="content"
+          :amount="watering && watering.level"
+          @toggle-water-level="onWaterLevelUpdate" />
+      </plant-component>
 
-      <plant-component v-if="seasons.length">
+      <plant-component>
         <feather-moon slot="icon" />
         <h2 slot="title">Growing seasons</h2>
         <plant-seasons
@@ -81,7 +83,8 @@
       'plant-updates': PlantUpdates,
       'feather-book': () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
       'feather-moon': () => import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
-      'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
+      'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */),
+      'feather-droplet': () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
@@ -123,7 +126,7 @@
       onSeasonUpdate (month) {
         this.updateSeason({ guid: this.guid, month })
       },
-      onWateringUpdate (watering) {
+      onWaterLevelUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
       },
       updateFromModal ({ name, blob }) {

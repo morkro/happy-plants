@@ -23,7 +23,6 @@ export default new Vuex.Store({
     updated: Date.now(),
     plants: [],
     selected: plant.state,
-    // TODO: move to shared component
     notification: {
       message: false
     },

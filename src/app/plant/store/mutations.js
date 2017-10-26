@@ -20,7 +20,7 @@ export default {
   UPDATE_WATERING (state, payload) {
     state.updated = payload.updated
     state.selected.modified = payload.updated
-    state.selected.watering = payload.item.watering
+    state.selected.watering.level = payload.item.watering.level
   },
 
   UPDATE_NAME (state, payload) {

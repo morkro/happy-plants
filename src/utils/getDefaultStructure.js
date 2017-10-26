@@ -17,12 +17,10 @@ export default function getDefaultStructure () {
     seasons: getCalendarMonth().map(month => ({ month, growth: false })),
     notes: '',
     watering: {
-      level: 0,
-      notes: ''
+      level: 0
     },
     sun: {
-      level: 0,
-      notes: ''
+      grade: 0
     }
   }
 }

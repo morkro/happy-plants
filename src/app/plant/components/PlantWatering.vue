@@ -1,60 +1,33 @@
 <template>
   <section>
-    <header>
-      <feather-droplet />
-      <h2>Watering</h2>
-    </header>
-
-    <water-level
-      class="water-level"
-      :showInfo="false"
-      :current="level"
-      :steps="levels.length"
-      @click="updateWaterLevel" />
-
-    <div class="notes">
-      <h3>Notes</h3>
-      <p contenteditable @change="emitContentChange">Type here</p>
-    </div>
+    <ul class="watering-list">
+      <li v-for="(level, index) of levels" @click="emitContentChange($event, level)">
+        <button
+          :class="{ active: index <= (amount-1), 'no-shadow': index > (amount-1) }">
+        </button>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
-  import Progress from '@/components/Progress'
   export default {
     name: 'PlantWatering',
 
     props: {
-      level: {
-        type: Number,
-        default: 1
-      },
-      notes: {
-        type: String
-      }
-    },
-
-    components: {
-      'water-level': Progress,
-      FeatherDroplet: () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
+      amount: { type: Number, default: 1 }
     },
 
     data () {
       return {
-        levels: [{ type: 1 }, { type: 2 }, { type: 3 }]
+        levels: [{ level: 1 }, { level: 2 }, { level: 3 }]
       }
     },
 
     methods: {
-      emitContentChange (event) {
-        console.log(event)
-      },
-      updateWaterLevel () {
-        this.level++
-        if (this.level >= this.levels.length) {
-          this.level = 1
-        }
-        console.log(this.level)
+      emitContentChange (event, level) {
+        this.$emit('toggle-water-level', level)
+        event.target.blur()
       }
     }
   }
@@ -65,45 +38,29 @@
   @import "~styles/fonts";
   @import "~styles/layout";
 
-  section {
-    width: 100%;
-    padding: $base-gap;
-  }
-
-  header {
-    margin-bottom: $base-gap;
+  .watering-list {
+    margin-top: $base-gap;
     display: flex;
-    align-items: center;
+    list-style: none;
+    justify-content: space-between;
 
-    svg {
-      width: $icon-size;
-      height: $icon-size;
-      margin-right: $base-gap/2;
+    li {
+      width: calc(100% / 3 - #{$base-gap} / 2);
     }
 
-    svg /deep/ path {
-      stroke: $blue;
-    }
-  }
+    button {
+      width: 100%;
+      height: 44px;
 
-  .water-level {
-    margin-bottom: $base-gap;
-
-    /deep/ progress {
-      height: 50px;
-
-      &::-webkit-progress-value {
-        background: $blue;
-        box-shadow: 0 0 12px $blue;
+      &:not(.active) {
+        background-color: $grey;
+        box-shadow: none;
       }
-    }
-  }
 
-  .notes {
-    color: $text-color-secondary;
-
-    p {
-      font-size: $text-size-small;
+      &.active {
+        background-color: $blue;
+        box-shadow: $blue-shadow;
+      }
     }
   }
 </style>
