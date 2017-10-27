@@ -5,11 +5,18 @@ import VueFire from 'vuefire'
 import firebase from 'firebase'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
-import 'localforage-startswith'
+import { extendPrototype } from 'localforage-startswith'
 
 import App from '@/app/App'
 import router from './router'
 import store from './store'
+
+/**
+ * This is required as Webpack seems to do some static analysis
+ * and breaking the module.
+ * @see https://github.com/localForage/localForage-startsWith/issues/5
+ */
+extendPrototype(localforage)
 
 firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
