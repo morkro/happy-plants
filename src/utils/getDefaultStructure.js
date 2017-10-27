@@ -20,7 +20,7 @@ export default function getDefaultStructure () {
       level: 0
     },
     sun: {
-      grade: 0
+      level: 0
     }
   }
 }

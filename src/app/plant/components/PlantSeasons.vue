@@ -83,6 +83,7 @@
   @import "~styles/layout";
 
   p {
+    color: $text-color-secondary;
     margin-bottom: $base-gap;
   }
 

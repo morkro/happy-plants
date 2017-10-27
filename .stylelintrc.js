@@ -11,6 +11,7 @@ module.exports = {
         "return"
       ]
     }],
-    "no-empty-source": null
+    "no-empty-source": null,
+    "declaration-empty-line-before": null,
   }
 }

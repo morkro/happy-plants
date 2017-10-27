@@ -23,12 +23,13 @@
     width: 100%;
     padding: $base-gap;
     margin-bottom: 4px;
+    overflow: hidden;
   }
 
   .plant-component header {
     display: flex;
     align-items: center;
-    margin-bottom: $base-gap/2;
+    margin-bottom: $base-gap/1.5;
 
     svg {
       width: $icon-size-small;

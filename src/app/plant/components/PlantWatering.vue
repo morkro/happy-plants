@@ -27,7 +27,7 @@
     methods: {
       emitContentChange (event, level) {
         this.$emit('toggle-water-level', level)
-        event.target.blur()
+        event.target && event.target.blur()
       }
     }
   }
@@ -37,6 +37,7 @@
   @import "~styles/colors";
   @import "~styles/fonts";
   @import "~styles/layout";
+  @import "~styles/animations";
 
   .watering-list {
     margin-top: $base-gap;
@@ -51,6 +52,7 @@
     button {
       width: 100%;
       height: 44px;
+      transition: transform $base-speed * 2 $ease-out-back;
 
       &:not(.active) {
         background-color: $grey;
@@ -60,6 +62,7 @@
       &.active {
         background-color: $blue;
         box-shadow: $blue-shadow;
+        transform: scale(1.1);
       }
     }
   }

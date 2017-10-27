@@ -23,6 +23,12 @@ export default {
     state.selected.watering.level = payload.item.watering.level
   },
 
+  UPDATE_SUNSHINE (state, payload) {
+    state.updated = payload.updated
+    state.selected.modified = payload.updated
+    state.selected.sunshine.level = payload.item.sunshine.level
+  },
+
   UPDATE_NAME (state, payload) {
     state.updated = payload.updated
     state.selected.modified = payload.updated

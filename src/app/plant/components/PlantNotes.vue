@@ -62,6 +62,7 @@
   @import "~styles/z-index";
 
   p {
+    color: $text-color-secondary;
     margin-bottom: $base-gap;
   }
 
