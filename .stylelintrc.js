@@ -8,7 +8,8 @@ module.exports = {
         "if",
         "extends",
         "warn",
-        "return"
+        "return",
+        "for"
       ]
     }],
     "no-empty-source": null,
