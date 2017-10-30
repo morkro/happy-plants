@@ -17,7 +17,7 @@
     "lint": "npm run lint:css && npm run lint:js",
     "svg": "vsvg -s ./static/icons -t ./src/assets",
     "cm": "git-cz",
-    "precommit": "npm run lint -q && npm run cm"
+    "precommit": "npm run lint -q"
   },
   "dependencies": {
     "blob-util": "^1.3.0",

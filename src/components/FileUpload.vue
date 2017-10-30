@@ -1,13 +1,27 @@
 <template>
   <div class="file-upload">
     <div class="upload-preview">
-      <div :class="{ fallback: imageURL === '' }">
-        <img v-if="imageURL !== ''" :src="imageURL" :alt="name" />
-        <svgicon v-else icon="cactus" width="30" height="30" color="#000"></svgicon>
+      <div :class="{
+        fallback: disablePreview || imageURL === '',
+        'has-file': disablePreview && newPhoto !== '' }">
+        <img v-if="disablePreview == false && imageURL !== ''"
+          :src="imageURL"
+          :alt="name" />
+        <svgicon v-else
+          icon="cactus"
+          width="30"
+          height="30"
+          color="#000">
+        </svgicon>
       </div>
       <span>{{ fileName }}</span>
     </div>
-    <input type="file" :id="name" @change="emitPhoto" accept=".png, .jpg, .jpeg" />
+
+    <input
+      type="file"
+      :id="name"
+      :accept="acceptedFilePattern"
+      @change="emitPhoto" />
   </div>
 </template>
 
@@ -19,7 +33,9 @@
     name: 'FileUpload',
 
     props: {
-      name: { type: String }
+      name: { type: String },
+      accepts: { type: [Array, String], default: () => ['.png', '.jpg', '.jpeg'] },
+      disablePreview: { type: Boolean, default: false }
     },
 
     data () {
@@ -28,6 +44,14 @@
         newPhoto: '',
         imageURL: '',
         fileName: 'Choose a file'
+      }
+    },
+
+    computed: {
+      acceptedFilePattern () {
+        return Array.isArray(this.accepts)
+          ? this.accepts.join(', ')
+          : this.accepts
       }
     },
 
@@ -49,6 +73,7 @@
 
 <style lang="scss" scoped>
   @import "~styles/layout";
+  @import "~styles/animations";
 
   $photo-size: 64px;
 
@@ -79,6 +104,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: background-color $base-speed ease-in-out;
+      }
+
+      &.fallback.has-file {
+        background: $green;
       }
     }
 

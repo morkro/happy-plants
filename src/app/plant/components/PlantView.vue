@@ -181,6 +181,7 @@
 
       svg {
         margin: 0;
+        filter: invert(1); /* FIXME: Not a good solution, should use color instead. */
       }
     }
 

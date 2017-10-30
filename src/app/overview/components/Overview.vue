@@ -30,10 +30,10 @@
       <footer>
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
-            <button @click="activateDeleteMode" class="delete-plants circle">
+            <button @click="activateDeleteMode" class="delete-plants circle inverse">
               <feather-trash width="18" height="18" :stroke="deleteMode ? '#fff' : '#000'" />
             </button>
-            <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
+            <button @click="cancelDeleteMode" class="footer-cancel-mode circle inverse">
               <feather-x width="18" height="18" />
             </button>
           </div>
@@ -47,10 +47,10 @@
 
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
-            <button @click="cancelSortingMode" class="footer-cancel-mode circle">
+            <button @click="cancelSortingMode" class="footer-cancel-mode circle inverse">
               <feather-x width="18" height="18" />
             </button>
-            <button @click="toggleSortingMode" class="organise-plants circle">
+            <button @click="toggleSortingMode" class="organise-plants circle inverse">
               <feather-layers width="18" height="18" />
             </button>
           </div>
@@ -237,10 +237,6 @@
 
       &::after {
         opacity: 1;
-      }
-
-      svg {
-        filter: none;
       }
     }
 
