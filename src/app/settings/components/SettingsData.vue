@@ -40,6 +40,7 @@
                 @change="updateImportType(type.id)" />
               <label :for="type.id">
                 {{ type.label }}
+                <span>{{ type.description }}</span>
               </label>
             </li>
           </ul>
@@ -119,8 +120,16 @@
         importModalTitle: 'Import plant data',
         selectedImportType: false,
         importTypes: [
-          { label: 'Overwrite', id: 'import-overwrite' },
-          { label: 'Merge and add', id: 'import-merge' }
+          {
+            label: 'Overwrite',
+            description: 'Overwrites all your existing plant data.',
+            id: 'import-overwrite'
+          },
+          {
+            label: 'Merge and add',
+            description: 'Merges existing plants and adds new.',
+            id: 'import-merge'
+          }
         ]
       }
     },
@@ -284,6 +293,8 @@
 
     span {
       margin: 0;
+      font-size: $text-size-small;
+      color: $text-color-secondary;
     }
 
     li {
