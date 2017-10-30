@@ -103,6 +103,8 @@ This project supports Yarn, so you can either use `yarn` or `npm` to run tasks.
 
 This is an Vue.js progressive web application, bootstrapped with [`vue-init pwa`](https://github.com/vuejs-templates/pwa). For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
 ## Credits
 Icons taken from [Freepik](http://www.freepik.com), [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov) licensed under [CC 3.0](http://creativecommons.org/licenses/by/3.0/).
 
