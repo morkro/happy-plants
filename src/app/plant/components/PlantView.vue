@@ -13,7 +13,10 @@
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
-          <button class="edit-data icon" @click.prevent="openPlantEditModal">
+          <button
+            aria-label="Edit"
+            class="edit-data icon"
+            @click.prevent="openPlantEditModal">
             <feather-edit />
           </button>
         </div>
