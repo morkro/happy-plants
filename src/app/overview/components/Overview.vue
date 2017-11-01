@@ -4,10 +4,9 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
-    <section>
-      <div v-if="plants.length <= 0">
-        <p>Looks like you haven't added any plants yet.</p>
-      </div>
+    <section :class="{ 'no-plants': plants.length <= 0 }">
+      <plants-intro
+        v-if="plants.length <= 0" />
 
       <div v-if="plants.length" class="plant-options">
         <overview-filter
@@ -80,6 +79,7 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import PlantPreview from './PlantPreview'
+  import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
   import '@/assets/leaf'
 
@@ -88,6 +88,7 @@
 
     components: {
       'app-header': AppHeader,
+      'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
       'feather-trash': () => import('vue-feather-icon/components/trash-2'),
@@ -196,6 +197,13 @@
   main > section {
     height: 100%;
     padding: $base-gap $base-gap ($footer-btn-size + ($base-gap * 2));
+
+    &.no-plants {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
   }
 
   .header-controls {
