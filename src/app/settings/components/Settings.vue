@@ -21,7 +21,7 @@
 
     components: {
       'app-header': AppHeader,
-      FeatherUser: () => import('vue-feather-icon/components/user')
+      'feather-user': () => import('vue-feather-icon/components/user')
     },
 
     computed: {

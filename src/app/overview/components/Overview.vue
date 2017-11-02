@@ -4,10 +4,9 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
-    <section>
-      <div v-if="plants.length <= 0">
-        <p>Looks like you haven't added any plants yet.</p>
-      </div>
+    <section :class="{ 'no-plants': plants.length <= 0 }">
+      <plants-intro
+        v-if="plants.length <= 0" />
 
       <div v-if="plants.length" class="plant-options">
         <overview-filter
@@ -30,27 +29,43 @@
       <footer>
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
-            <button @click="activateDeleteMode" class="delete-plants circle">
+            <button
+              aria-label="Trash"
+              class="delete-plants circle inverse"
+              @click="activateDeleteMode">
               <feather-trash width="18" height="18" :stroke="deleteMode ? '#fff' : '#000'" />
             </button>
-            <button @click="cancelDeleteMode" class="footer-cancel-mode circle">
+            <button
+              aria-label="Cancel trash"
+              class="footer-cancel-mode circle inverse"
+              @click="cancelDeleteMode">
               <feather-x width="18" height="18" />
             </button>
           </div>
         </transition>
 
         <transition appear name="footer-appear">
-          <router-link :to="{ path: 'add' }" class="add-plant circle" tag="button">
+          <router-link
+            tag="button"
+            aria-label="Add plant"
+            class="add-plant circle"
+            :to="{ path: 'add' }">
             <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
           </router-link>
         </transition>
 
         <transition appear name="footer-appear">
           <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
-            <button @click="cancelSortingMode" class="footer-cancel-mode circle">
+            <button
+              aria-label="Cancel sort"
+              class="footer-cancel-mode circle inverse"
+              @click="cancelSortingMode">
               <feather-x width="18" height="18" />
             </button>
-            <button @click="toggleSortingMode" class="organise-plants circle">
+            <button
+              aria-label="Sort"
+              class="organise-plants circle inverse"
+              @click="toggleSortingMode">
               <feather-layers width="18" height="18" />
             </button>
           </div>
@@ -64,6 +79,7 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import PlantPreview from './PlantPreview'
+  import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
   import '@/assets/leaf'
 
@@ -72,6 +88,7 @@
 
     components: {
       'app-header': AppHeader,
+      'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
       'feather-trash': () => import('vue-feather-icon/components/trash-2'),
@@ -180,6 +197,13 @@
   main > section {
     height: 100%;
     padding: $base-gap $base-gap ($footer-btn-size + ($base-gap * 2));
+
+    &.no-plants {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
   }
 
   .header-controls {
@@ -237,10 +261,6 @@
 
       &::after {
         opacity: 1;
-      }
-
-      svg {
-        filter: none;
       }
     }
 

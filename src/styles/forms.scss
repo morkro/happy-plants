@@ -11,5 +11,8 @@ input {
   &:active,
   &:focus {
     outline: none;
+    box-shadow:
+      0 0 0 2px $dark-transparency,
+      0 0 12px $dark-transparency;
   }
 }

@@ -1,7 +1,10 @@
 <template>
   <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
-      <button @click.prevent="emitModalClose" class="circle">
+      <button
+        aria-label="Close"
+        class="circle inverse"
+        @click.prevent="emitModalClose">
         <feather-x width="18" height="18" />
       </button>
       <slot name="headline"></slot>
@@ -16,7 +19,7 @@
 
     props: {
       show: { type: Boolean, default: false },
-      backgroundColor: { type: String, default: '#F5F5F5' }
+      backgroundColor: { type: [String], default: '#F5F5F5' }
     },
 
     components: {

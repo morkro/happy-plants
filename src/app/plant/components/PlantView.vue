@@ -13,7 +13,10 @@
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
-          <button class="edit-data icon" @click.prevent="openPlantEditModal">
+          <button
+            aria-label="Edit"
+            class="edit-data icon"
+            @click.prevent="openPlantEditModal">
             <feather-edit />
           </button>
         </div>
@@ -198,8 +201,7 @@
   .view-content header {
     position: relative;
     color: $text-color-inverse;
-    height: 305px;
-    margin-bottom: 4px;
+    height: 100vw;
     background: $grey;
 
     .edit-data {
@@ -208,6 +210,7 @@
 
       svg {
         margin: 0;
+        filter: invert(1); /* FIXME: Not a good solution, should use color instead. */
       }
     }
 

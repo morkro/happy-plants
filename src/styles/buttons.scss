@@ -5,7 +5,6 @@
 
 $button-circle-size: 40px;
 
-
 /**
  * Types
  * Rounded:    <button class="rounded"></button>
@@ -40,7 +39,21 @@ button {
   svg {
     margin-right: $base-gap / 2;
     stroke: $text-color-button;
-    filter: invert(1);
+
+    rect,
+    path {
+      stroke: $text-color-button;
+    }
+  }
+
+
+  &.inverse svg {
+    stroke: $text-color-base;
+
+    rect,
+    path {
+      stroke: $text-color-base;
+    }
   }
 
   &.rounded {

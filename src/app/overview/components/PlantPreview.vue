@@ -11,7 +11,12 @@
       <div class="preview-headline">
         <h1>{{ name }}</h1>
       </div>
-      <svgicon v-if="!this.imageURL" icon="cactus" width="40" height="40" color="#000">
+      <svgicon
+        v-if="!this.imageURL"
+        icon="cactus"
+        width="40"
+        height="40"
+        color="#000">
       </svgicon>
     </div>
   </div>
@@ -19,7 +24,6 @@
 
 <script>
   import router from '@/router'
-
   import '@/assets/cactus'
 
   export default {

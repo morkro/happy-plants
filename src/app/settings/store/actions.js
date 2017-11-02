@@ -13,3 +13,11 @@ export const deleteAllPlants = ({ commit }) => {
     .then(config => commit('DELETE_ALL_PLANTS', { updated: config.updated }))
     .then(() => deleteAllPlantsFromAPI())
 }
+
+export const importPlantData = ({ commit }, data) => {
+  return updateStore()
+    .then(config => commit('IMPORT_PLANT_DATA', {
+      updated: config.updated,
+      ...data
+    }))
+}
