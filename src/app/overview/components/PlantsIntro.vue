@@ -21,7 +21,7 @@
 
     data () {
       return {
-        iconSize: 140
+        iconSize: '140'
       }
     }
   }

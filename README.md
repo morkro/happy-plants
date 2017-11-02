@@ -76,7 +76,7 @@ In the application settings, you can download all your plant data and as well as
       "level": Number
     },
     "sun": {
-      "grade": Number
+      "intensity": Number
     }
   }
 ]

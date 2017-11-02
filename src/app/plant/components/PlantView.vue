@@ -22,7 +22,13 @@
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
-          <svgicon v-else icon="cactus" width="50" height="50" color="#000"></svgicon>
+          <svgicon
+            v-else
+            icon="cactus"
+            width="50"
+            height="50"
+            color="#000">
+          </svgicon>
         </div>
       </header>
 
@@ -32,7 +38,18 @@
         <plant-watering
           slot="content"
           :amount="watering && watering.level"
-          @toggle-water-level="onWaterLevelUpdate" />
+          @toggle-water-level="onWaterLevelUpdate">
+        </plant-watering>
+      </plant-component>
+
+      <plant-component>
+        <feather-sun slot="icon" />
+        <h2 slot="title">Sunshine</h2>
+        <plant-sunshine
+          slot="content"
+          :intensity="sunshine && sunshine.intensity"
+          @toggle-sunshine="onSunshineUpdate">
+        </plant-sunshine>
       </plant-component>
 
       <plant-component>
@@ -41,7 +58,8 @@
         <plant-seasons
           slot="content"
           :seasons="seasons"
-          @toggle-season="onSeasonUpdate" />
+          @toggle-season="onSeasonUpdate">
+        </plant-seasons>
       </plant-component>
 
       <plant-component>
@@ -51,12 +69,13 @@
           slot="content"
           class="notes-modal"
           :content="notes"
-          @update-notes="onNotesUpdate" />
+          @update-notes="onNotesUpdate">
+        </plant-notes>
       </plant-component>
 
       <plant-updates
-        :modified="modified" />
-      </div>
+        :modified="modified">
+      </plant-updates>
     </section>
   </main>
 </template>
@@ -70,6 +89,7 @@
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
   import PlantWatering from './PlantWatering'
+  import PlantSunshine from './PlantSunshine'
   import PlantUpdates from './PlantUpdates'
   import '@/assets/cactus'
 
@@ -83,11 +103,13 @@
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
+      'plant-sunshine': PlantSunshine,
       'plant-updates': PlantUpdates,
       'feather-book': () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
       'feather-moon': () => import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
       'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */),
-      'feather-droplet': () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
+      'feather-droplet': () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
+      'feather-sun': () => import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
@@ -102,6 +124,7 @@
       seasons: state => state.selected.seasons,
       notes: state => state.selected.notes,
       watering: state => state.selected.watering,
+      sunshine: state => state.selected.sunshine,
       modified: state => state.selected.modified
     }),
 
@@ -111,17 +134,16 @@
         'loadPlants',
         'updateSeason',
         'updateNotes',
+        'updateSunshine',
         'updateWatering',
         'updateName',
         'updatePhoto'
       ]),
       openPlantEditModal () {
         this.showPlantModal = true
-        this.$root.$el.parentNode.classList.add('js-no-scrolling')
       },
       closePlantEditModal () {
         this.showPlantModal = false
-        this.$root.$el.parentNode.classList.remove('js-no-scrolling')
       },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
@@ -131,6 +153,9 @@
       },
       onWaterLevelUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
+      },
+      onSunshineUpdate (sunshine) {
+        this.updateSunshine({ guid: this.guid, sunshine })
       },
       updateFromModal ({ name, blob }) {
         const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL

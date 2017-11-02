@@ -26,6 +26,16 @@
       'feather-x': () => import('vue-feather-icon/components/x')
     },
 
+    watch: {
+      show () {
+        if (this.show) {
+          this.$root.$el.parentNode.classList.add('js-no-scrolling')
+        } else {
+          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
+        }
+      }
+    },
+
     methods: {
       emitModalClose () {
         this.$emit('close-modal')
