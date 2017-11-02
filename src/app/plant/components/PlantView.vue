@@ -141,11 +141,9 @@
       ]),
       openPlantEditModal () {
         this.showPlantModal = true
-        this.$root.$el.parentNode.classList.add('js-no-scrolling')
       },
       closePlantEditModal () {
         this.showPlantModal = false
-        this.$root.$el.parentNode.classList.remove('js-no-scrolling')
       },
       onNotesUpdate (notes) {
         this.updateNotes({ guid: this.guid, notes })
