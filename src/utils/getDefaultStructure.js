@@ -19,8 +19,8 @@ export default function getDefaultStructure () {
     watering: {
       level: 0
     },
-    sun: {
-      level: 0
+    sunshine: {
+      intensity: 0
     }
   }
 }

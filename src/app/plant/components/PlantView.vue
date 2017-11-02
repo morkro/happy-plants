@@ -47,7 +47,7 @@
         <h2 slot="title">Sunshine</h2>
         <plant-sunshine
           slot="content"
-          :amount="sunshine && sunshine.level"
+          :intensity="sunshine && sunshine.intensity"
           @toggle-sunshine="onSunshineUpdate">
         </plant-sunshine>
       </plant-component>
@@ -134,6 +134,7 @@
         'loadPlants',
         'updateSeason',
         'updateNotes',
+        'updateSunshine',
         'updateWatering',
         'updateName',
         'updatePhoto'
@@ -156,8 +157,7 @@
         this.updateWatering({ guid: this.guid, watering })
       },
       onSunshineUpdate (sunshine) {
-        console.log(sunshine)
-        // this.updateWatering({ guid: this.guid, watering })
+        this.updateSunshine({ guid: this.guid, sunshine })
       },
       updateFromModal ({ name, blob }) {
         const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL

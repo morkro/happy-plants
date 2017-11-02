@@ -26,7 +26,7 @@ export default {
   UPDATE_SUNSHINE (state, payload) {
     state.updated = payload.updated
     state.selected.modified = payload.updated
-    state.selected.sunshine.level = payload.item.sunshine.level
+    state.selected.sunshine.intensity = payload.item.sunshine.level
   },
 
   UPDATE_NAME (state, payload) {
