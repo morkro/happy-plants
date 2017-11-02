@@ -7,7 +7,10 @@
     <div class="sunshine-canvas">
       <div
         v-for="(level, index) of insenityLevels"
-        :class="{ active: index <= (intensity-1) }"
+        :class="{
+          active: isActiveLevel(index),
+          'intensity-one': index === 1 && intensity > 1
+        }"
         @click="onEmitIntensityChange($event, level)">
       </div>
     </div>
@@ -43,6 +46,9 @@
     },
 
     methods: {
+      isActiveLevel (index) {
+        return index <= (this.intensity - 1)
+      },
       onEmitIntensityChange (event, level) {
         this.$emit('toggle-sunshine', level)
         event.target && event.target.blur()
@@ -84,16 +90,24 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, calc(-50% - 14px)); /* 14: magic number. just looks good. */
+      transform: translate(-50%, calc(-50% - 14px)); /* 14: magic number. looks good in the UI. */
       width: var(--base-sunshine-radius);
       height: var(--base-sunshine-radius);
       border-radius: 50%;
-      border: 1px solid white;
+      border: 2px solid white;
       background-color: $grey;
       z-index: $max-sunshine-rings;
 
       &.active {
         background-color: $yellow;
+      }
+
+      &.active.intensity-one:first-of-type {
+        box-shadow: 0 0 10px 3px $yellow;
+      }
+
+      &.active:first-of-type {
+        box-shadow: 0 0 30px 3px $yellow;
       }
 
       &:nth-of-type(2) {
