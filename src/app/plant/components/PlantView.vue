@@ -174,8 +174,7 @@
   .view-content header {
     position: relative;
     color: $text-color-inverse;
-    height: 305px;
-    margin-bottom: 4px;
+    height: 100vw;
     background: $grey;
 
     .edit-data {
