@@ -1,11 +1,16 @@
 <template>
   <section>
     <ul class="watering-list">
-      <li v-for="(level, index) of levels" @click="emitContentChange($event, level)">
+      <v-touch
+        tag="li"
+        v-for="(level, index) of levels"
+        :key="`level-${index}`"
+        @tap="emitContentChange($event, level)"
+        @click="emitContentChange($event, level)">
         <button
           :class="{ active: index <= (amount-1), 'no-shadow': index > (amount-1) }">
         </button>
-      </li>
+      </v-touch>
     </ul>
   </section>
 </template>

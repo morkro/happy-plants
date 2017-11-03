@@ -5,17 +5,20 @@
       <p>{{ intensityDescription }}</p>
     </div>
     <div class="sunshine-canvas">
-      <div
+      <v-touch
+        tag="div"
         v-for="(level, index) of insenityLevels"
+        :key="`intensity-${index}`"
         :class="{
           active: isActiveLevel(index),
           'intensity-one': index === 1 && intensity > 1
         }"
+        @tap="onEmitIntensityChange($event, level)"
         @click="onEmitIntensityChange($event, level)">
-      </div>
+      </v-touch>
     </div>
   </section>
-</template>
+</template>1
 
 <script>
   export default {
