@@ -295,6 +295,7 @@
       margin: 0;
       font-size: $text-size-small;
       color: $text-color-secondary;
+      display: block;
     }
 
     li {
