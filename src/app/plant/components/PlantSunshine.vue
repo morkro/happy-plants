@@ -4,15 +4,12 @@
       <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
       <p>{{ intensityDescription }}</p>
     </div>
-    <div class="sunshine-canvas">
+    <div :class="`sunshine-canvas intensity-${intensity}`">
       <v-touch
         tag="div"
         v-for="(level, index) of insenityLevels"
         :key="`intensity-${index}`"
-        :class="{
-          active: isActiveLevel(index),
-          'intensity-one': index === 1 && intensity > 1
-        }"
+        :class="{ active: isActiveLevel(index) }"
         @tap="onEmitIntensityChange($event, level)"
         @click="onEmitIntensityChange($event, level)">
       </v-touch>
@@ -77,7 +74,7 @@
     color: $text-color-secondary;
     width: 50%;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 
     .description-level {
       margin-bottom: $base-gap/2;
@@ -88,7 +85,7 @@
     width: 50%;
     height: 100%;
     position: absolute;
-    z-index: 0;
+    z-index: 1;
     top: 0;
     right: 0;
 
@@ -109,7 +106,7 @@
         background-color: $yellow;
       }
 
-      &.active.intensity-one:first-of-type {
+      .intensity-1 &.active:first-of-type {
         box-shadow: 0 0 10px 3px $yellow;
       }
 
@@ -121,6 +118,10 @@
         --base-sunshine-radius: $base-sunshine-radius * 3;
         opacity: 0.5;
         z-index: $max-sunshine-rings - 1;
+
+        &.active {
+          box-shadow: 0 0 30px 3px $yellow;
+        }
       }
 
       &:nth-of-type(3) {
