@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="sunshine-description">
-      <p><strong>Intensity: {{ intensity }}</strong></p>
+      <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
       <p>{{ intensityDescription }}</p>
     </div>
     <div class="sunshine-canvas">
@@ -78,6 +78,10 @@
     width: 50%;
     position: relative;
     z-index: 1;
+
+    .description-level {
+      margin-bottom: $base-gap/2;
+    }
   }
 
   .sunshine-canvas {
