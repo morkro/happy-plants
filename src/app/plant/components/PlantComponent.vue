@@ -10,7 +10,7 @@
 
 <script>
   export default {
-    name: 'PlantComponentContainer'
+    name: 'PlantComponent'
   }
 </script>
 

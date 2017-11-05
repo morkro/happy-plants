@@ -4,7 +4,10 @@
     @swiperight="onSwipeRight"
     @swipeleft="onSwipeLeft"
     :swipe-options="{ direction: 'horizontal' }">
-    <app-notifications class="notifications" :message="message" ></app-notifications>
+    <app-notifications
+      class="notifications"
+      :message="message">
+    </app-notifications>
     <router-view></router-view>
   </v-touch>
 </template>

@@ -1,7 +1,7 @@
 export default [
   {
     path: '/settings',
-    component: () => import('./components/Settings' /* webpackChunkName: "settings" */),
+    component: () => import('./components/SettingsContainer' /* webpackChunkName: "settings" */),
     children: [
       {
         path: '',

@@ -84,7 +84,7 @@
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import AppHeader from '@/components/AppHeader'
-  import PlantComponentContainer from './PlantComponentContainer'
+  import PlantComponent from './PlantComponent'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
@@ -98,7 +98,7 @@
 
     components: {
       'app-header': AppHeader,
-      'plant-component': PlantComponentContainer,
+      'plant-component': PlantComponent,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,

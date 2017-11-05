@@ -2,6 +2,6 @@ export default [
   {
     path: '/add',
     name: 'RegisterPlant',
-    component: () => import('./components/RegisterPlant')
+    component: () => import('./components/RegisterContainer')
   }
 ]
