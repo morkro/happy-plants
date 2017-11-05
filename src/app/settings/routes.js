@@ -9,7 +9,7 @@ export default [
         component: () => import('./components/SettingsMenu' /* webpackChunkName: "settings" */)
       },
       {
-        path: 'about',
+        path: 'account',
         name: 'SettingsAccount',
         component: () => import('./components/SettingsAccount' /* webpackChunkName: "settings" */)
       },

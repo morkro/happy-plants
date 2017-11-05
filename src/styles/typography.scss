@@ -1,5 +1,6 @@
 @import "./colors";
 @import "./fonts";
+@import "./layout";
 
 body {
   font-family: $Asap;
@@ -14,8 +15,18 @@ body {
 }
 
 a {
-  color: $link-color;
+  color: $text-color-base;
   text-decoration: none;
+
+  &[target="_blank"] {
+    color: $text-color-button;
+    text-decoration: none;
+    background: $green;
+    border-radius: $border-radius;
+    box-shadow: $green-shadow;
+    padding: 3px 6px;
+    margin: 0 2px;
+  }
 
   &[target="_blank"]::after {
     content: "";
@@ -29,6 +40,7 @@ a {
     display: inline-block;
     margin: 0 3px;
     transform: translateY(-2px);
+    opacity: 0.4;
   }
 }
 
