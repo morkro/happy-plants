@@ -251,6 +251,11 @@
       transform: scale(0);
       transition: transform $base-speed $ease-out-back;
     }
+
+    /* TODO: Remove when desktop layout is actually in development. */
+    @media (min-width: $app-media-max-size) {
+      width: $app-media-max-size;
+    }
   }
 
   .footer-deletion {

@@ -109,13 +109,25 @@
     &.js-no-scrolling {
       overflow: hidden;
     }
+
+    /* TODO: Remove when desktop layout is actually in development. */
+    @media (min-width: $app-media-max-size) {
+      background: $green;
+    }
   }
 
   #app {
     width: 100vw;
-    max-width: 1400px;
+    max-width: 600px;
     min-height: 100vh;
     height: 100%;
+
+    /* TODO: Remove when desktop layout is actually in development. */
+    @media (min-width: $app-media-max-size) {
+      background: $background-primary;
+      height: 450px;
+      box-shadow: 0 0 20px $dark-transparency;
+    }
   }
 
   .notifications {

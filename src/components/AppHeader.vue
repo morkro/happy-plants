@@ -73,6 +73,11 @@
       color: $text-color-base;
       margin: 0 $base-gap;
     }
+
+    /* TODO: Remove when desktop layout is actually in development. */
+    @media (min-width: $app-media-max-size) {
+      width: $app-media-max-size;
+    }
   }
 
   .header-ctrl {
