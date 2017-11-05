@@ -54,8 +54,16 @@
         const nextMonth = this.seasons[index + 1]
         const prevMonth = this.seasons[index - 1]
         return (
-          (type === 'to' && !currentGrowth && nextMonth && nextMonth.growth) ||
-          (type === 'from' && !currentGrowth && nextMonth && !nextMonth.growth && prevMonth && prevMonth.growth)
+          (
+            type === 'to' &&
+            !currentGrowth &&
+            nextMonth && nextMonth.growth
+          ) || (
+            type === 'from' &&
+            !currentGrowth &&
+            nextMonth && !nextMonth.growth &&
+            prevMonth && prevMonth.growth
+          )
         )
       },
       getGrowthText () {
