@@ -75,7 +75,7 @@ In the application settings, you can download all your plant data and as well as
     "watering": {
       "level": Number
     },
-    "sun": {
+    "sunshine": {
       "intensity": Number
     }
   }
@@ -83,7 +83,7 @@ In the application settings, you can download all your plant data and as well as
 ```
 
 - `watering.level`: Can range from `1` to `3`.
-- `sun.grade`: Can range from `1` to `3`.
+- `sunshine.intensity`: Can range from `1` to `3`.
 - `seasons`: Should be an array containing each month.
   - If the plant is in a growth phase during that month, set `growth` to `true`.
 
