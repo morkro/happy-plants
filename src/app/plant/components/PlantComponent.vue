@@ -50,7 +50,7 @@
     justify-content: space-between;
     margin-bottom: $base-gap/1.5;
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     .component-title {
       display: flex;
