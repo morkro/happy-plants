@@ -1,30 +1,41 @@
 <template>
-  <section>
-    <p v-if="isEvergreen">
-      Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
-    </p>
-    <p v-else>
-      Your plant is currently <strong>{{ getGrowthText() }}</strong>.
-    </p>
-    <ul class="season-list">
-      <li
-        v-for="(season, index) of seasons"
-        @click.self="emitSeasonToggle(season)"
-        :class="{
-          current: isCurrentMonth(index),
-          growth: season.growth,
-          'growth-transition-from': isTransitioning('from', index),
-          'growth-transition-to': isTransitioning('to', index),
-        }">
-        {{ season.month[0] }}
-      </li>
-    </ul>
-  </section>
+  <plant-component>
+    <feather-moon slot="icon" />
+    <h2 slot="title">Growing seasons</h2>
+    <div slot="content">
+      <p v-if="isEvergreen">
+        Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
+      </p>
+      <p v-else>
+        Your plant is currently <strong>{{ getGrowthText() }}</strong>.
+      </p>
+      <ul class="season-list">
+        <li
+          v-for="(season, index) of seasons"
+          @click.self="emitSeasonToggle(season)"
+          :class="{
+            current: isCurrentMonth(index),
+            growth: season.growth,
+            'growth-transition-from': isTransitioning('from', index),
+            'growth-transition-to': isTransitioning('to', index),
+          }">
+          {{ season.month[0] }}
+        </li>
+      </ul>
+    </div>
+  </plant-component>
 </template>
 
 <script>
+  import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantSeasons',
+
+    components: {
+      'plant-component': PlantComponent,
+      'feather-moon': () =>
+        import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */)
+    },
 
     props: {
       seasons: {

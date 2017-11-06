@@ -1,47 +1,63 @@
 <template>
-  <section>
-    <div class="sunshine-description">
-      <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
-      <p>{{ intensityDescription }}</p>
+  <plant-component>
+    <feather-sun slot="icon" />
+    <h2 slot="title">Sunshine</h2>
+
+    <div slot="content">
+      <div class="sunshine-description">
+        <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
+        <p>{{ intensityDescription }}</p>
+      </div>
+      <div :class="`sunshine-canvas intensity-${intensity}`">
+        <v-touch
+          tag="div"
+          v-for="(level, index) of insenityLevels"
+          :key="`intensity-${index}`"
+          :class="{ active: isActiveLevel(index) }"
+          @tap="onEmitIntensityChange($event, level)"
+          @click="onEmitIntensityChange($event, level)">
+        </v-touch>
+      </div>
     </div>
-    <div :class="`sunshine-canvas intensity-${intensity}`">
-      <v-touch
-        tag="div"
-        v-for="(level, index) of insenityLevels"
-        :key="`intensity-${index}`"
-        :class="{ active: isActiveLevel(index) }"
-        @tap="onEmitIntensityChange($event, level)"
-        @click="onEmitIntensityChange($event, level)">
-      </v-touch>
-    </div>
-  </section>
-</template>1
+  </plant-component>
+</template>
 
 <script>
+  import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantSunshine',
 
+    components: {
+      'plant-component': PlantComponent,
+      'feather-sun': () =>
+        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */)
+    },
+
     props: {
-      intensity: { type: Number, default: 1 }
+      intensity: { type: Number, default: 1 },
+      messages: { type: [Object, Boolean], default: false }
     },
 
     data () {
       return {
-        insenityLevels: [{ level: 1 }, { level: 2 }, { level: 3 }]
+        insenityLevels: [{ level: 1 }, { level: 2 }, { level: 3 }],
+        defaultMessages: {
+          intensity: [
+            'This plant doesn\'t require a lot of sun, shade is also fine.',
+            'This plant needs bright, indirect, or filtered light but no direct sun.',
+            'This plant needs a lot of direct, bright sun to partial shade!'
+          ]
+        }
       }
     },
 
     computed: {
       intensityDescription () {
-        switch (this.intensity) {
-          case 1:
-            return 'This plant doesn\'t require a lot of sun, shade is also fine.'
-          case 2:
-            return 'This plant needs bright, indirect, or filtered light but no direct sun.'
-          case 3:
-          default:
-            return 'This plant needs a lot of direct, bright sun to partial shade!'
-        }
+        const messages = this.messages
+          ? this.messages.intensity
+          : this.defaultMessages.intensity
+
+        return messages[this.intensity - 1]
       }
     },
 
@@ -58,6 +74,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~styles/animations";
   @import "~styles/colors";
   @import "~styles/fonts";
   @import "~styles/layout";
@@ -94,13 +111,14 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, calc(-50% - 14px)); /* 14: magic number. looks good in the UI. */
+      transform: translate(-50%, -50%);
       width: var(--base-sunshine-radius);
       height: var(--base-sunshine-radius);
       border-radius: 50%;
       border: 2px solid white;
       background-color: $grey;
       z-index: $max-sunshine-rings;
+      transition: background-color $base-speed*2 $ease-out-expo;
 
       &.active {
         background-color: $yellow;

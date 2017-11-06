@@ -1,6 +1,8 @@
 <template>
-  <section>
-    <ul class="watering-list">
+  <plant-component>
+    <feather-droplet slot="icon" />
+    <h2 slot="title">Watering</h2>
+    <ul slot="content" class="watering-list">
       <v-touch
         tag="li"
         v-for="(level, index) of levels"
@@ -12,12 +14,19 @@
         </button>
       </v-touch>
     </ul>
-  </section>
+  </plant-component>
 </template>
 
 <script>
+  import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantWatering',
+
+    components: {
+      'plant-component': PlantComponent,
+      'feather-droplet': () =>
+        import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
+    },
 
     props: {
       amount: { type: Number, default: 1 }

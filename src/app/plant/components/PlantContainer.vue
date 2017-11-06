@@ -32,46 +32,25 @@
         </div>
       </header>
 
-      <plant-component>
-        <feather-droplet slot="icon" />
-        <h2 slot="title">Watering</h2>
-        <plant-watering
-          slot="content"
-          :amount="watering && watering.level"
-          @toggle-water-level="onWaterLevelUpdate">
-        </plant-watering>
-      </plant-component>
+      <plant-watering
+        :amount="watering && watering.level"
+        @toggle-water-level="onWaterLevelUpdate">
+      </plant-watering>
 
-      <plant-component>
-        <feather-sun slot="icon" />
-        <h2 slot="title">Sunshine</h2>
-        <plant-sunshine
-          slot="content"
-          :intensity="sunshine && sunshine.intensity"
-          @toggle-sunshine="onSunshineUpdate">
-        </plant-sunshine>
-      </plant-component>
+      <plant-sunshine
+        :intensity="sunshine && sunshine.intensity"
+        @toggle-sunshine="onSunshineUpdate">
+      </plant-sunshine>
 
-      <plant-component>
-        <feather-moon slot="icon" />
-        <h2 slot="title">Growing seasons</h2>
-        <plant-seasons
-          slot="content"
-          :seasons="seasons"
-          @toggle-season="onSeasonUpdate">
-        </plant-seasons>
-      </plant-component>
+      <plant-seasons
+        :seasons="seasons"
+        @toggle-season="onSeasonUpdate">
+      </plant-seasons>
 
-      <plant-component>
-        <feather-book slot="icon" />
-        <h2 slot="title">Notebook</h2>
-        <plant-notes
-          slot="content"
-          class="notes-modal"
-          :content="notes"
-          @update-notes="onNotesUpdate">
-        </plant-notes>
-      </plant-component>
+      <plant-notes
+        :content="notes"
+        @update-notes="onNotesUpdate">
+      </plant-notes>
 
       <plant-updates
         :modified="modified">
@@ -84,7 +63,6 @@
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import AppHeader from '@/components/AppHeader'
-  import PlantComponent from './PlantComponent'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
   import PlantSeasons from './PlantSeasons'
@@ -98,18 +76,14 @@
 
     components: {
       'app-header': AppHeader,
-      'plant-component': PlantComponent,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
       'plant-updates': PlantUpdates,
-      'feather-book': () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
-      'feather-moon': () => import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
-      'feather-edit': () => import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */),
-      'feather-droplet': () => import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
-      'feather-sun': () => import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */)
+      'feather-edit': () =>
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
