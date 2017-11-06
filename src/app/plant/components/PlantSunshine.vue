@@ -1,25 +1,37 @@
 <template>
-  <section>
-    <div class="sunshine-description">
-      <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
-      <p>{{ intensityDescription }}</p>
+  <plant-component>
+    <feather-sun slot="icon" />
+    <h2 slot="title">Sunshine</h2>
+
+    <div slot="content">
+      <div class="sunshine-description">
+        <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
+        <p>{{ intensityDescription }}</p>
+      </div>
+      <div :class="`sunshine-canvas intensity-${intensity}`">
+        <v-touch
+          tag="div"
+          v-for="(level, index) of insenityLevels"
+          :key="`intensity-${index}`"
+          :class="{ active: isActiveLevel(index) }"
+          @tap="onEmitIntensityChange($event, level)"
+          @click="onEmitIntensityChange($event, level)">
+        </v-touch>
+      </div>
     </div>
-    <div :class="`sunshine-canvas intensity-${intensity}`">
-      <v-touch
-        tag="div"
-        v-for="(level, index) of insenityLevels"
-        :key="`intensity-${index}`"
-        :class="{ active: isActiveLevel(index) }"
-        @tap="onEmitIntensityChange($event, level)"
-        @click="onEmitIntensityChange($event, level)">
-      </v-touch>
-    </div>
-  </section>
-</template>1
+  </plant-component>
+</template>
 
 <script>
+  import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantSunshine',
+
+    components: {
+      'plant-component': PlantComponent,
+      'feather-sun': () =>
+        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */)
+    },
 
     props: {
       intensity: { type: Number, default: 1 },
@@ -98,7 +110,7 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, calc(-50% - 14px)); /* 14: magic number. looks good in the UI. */
+      transform: translate(-50%, -50%);
       width: var(--base-sunshine-radius);
       height: var(--base-sunshine-radius);
       border-radius: 50%;

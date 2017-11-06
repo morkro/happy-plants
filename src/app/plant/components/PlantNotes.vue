@@ -1,37 +1,47 @@
 <template>
-  <section>
-    <app-modal :show="showNotes" @close-modal="closeNotes">
-      <h1 slot="headline">Notebook</h1>
-      <div slot="content">
-        <textarea @change="emitContentChange" v-model="textContent"></textarea>
-      </div>
-    </app-modal>
+  <plant-component>
+    <feather-book slot="icon" />
+    <h2 slot="title">Notebook</h2>
+    <div slot="content">
+      <app-modal :show="showNotes" @close-modal="closeNotes">
+        <h1 slot="headline">Notebook</h1>
+        <div slot="content">
+          <textarea
+            @change="emitContentChange"
+            v-model="textContent">
+          </textarea>
+        </div>
+      </app-modal>
 
-    <div v-if="!content">
-      <p>Seems like you haven't added any notes yet.</p>
-      <button @click="toggleNotes">Add notes</button>
+      <div v-if="!content">
+        <p>Seems like you haven't added any notes yet.</p>
+        <button @click="toggleNotes">Add notes</button>
+      </div>
+      <div v-else>
+        <button @click="toggleNotes">Show notes</button>
+      </div>
     </div>
-    <div v-else>
-      <button @click="toggleNotes">Show notes</button>
-    </div>
-  </section>
+  </plant-component>
 </template>
 
 <script>
   import Modal from '@/components/Modal'
+  import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
+
+    components: {
+      'app-modal': Modal,
+      'plant-component': PlantComponent,
+      'feather-book': () =>
+        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
+    },
 
     props: {
       content: {
         type: String,
         default: 'Add your notes here!'
       }
-    },
-
-    components: {
-      'app-modal': Modal,
-      FeatherBook: () => import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
     },
 
     data () {
