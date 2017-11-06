@@ -74,6 +74,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~styles/animations";
   @import "~styles/colors";
   @import "~styles/fonts";
   @import "~styles/layout";
@@ -117,6 +118,7 @@
       border: 2px solid white;
       background-color: $grey;
       z-index: $max-sunshine-rings;
+      transition: background-color $base-speed*2 $ease-out-expo;
 
       &.active {
         background-color: $yellow;
