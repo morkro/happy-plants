@@ -22,26 +22,30 @@
     name: 'PlantSunshine',
 
     props: {
-      intensity: { type: Number, default: 1 }
+      intensity: { type: Number, default: 1 },
+      messages: { type: [Object, Boolean], default: false }
     },
 
     data () {
       return {
-        insenityLevels: [{ level: 1 }, { level: 2 }, { level: 3 }]
+        insenityLevels: [{ level: 1 }, { level: 2 }, { level: 3 }],
+        defaultMessages: {
+          intensity: [
+            'This plant doesn\'t require a lot of sun, shade is also fine.',
+            'This plant needs bright, indirect, or filtered light but no direct sun.',
+            'This plant needs a lot of direct, bright sun to partial shade!'
+          ]
+        }
       }
     },
 
     computed: {
       intensityDescription () {
-        switch (this.intensity) {
-          case 1:
-            return 'This plant doesn\'t require a lot of sun, shade is also fine.'
-          case 2:
-            return 'This plant needs bright, indirect, or filtered light but no direct sun.'
-          case 3:
-          default:
-            return 'This plant needs a lot of direct, bright sun to partial shade!'
-        }
+        const messages = this.messages
+          ? this.messages.intensity
+          : this.defaultMessages.intensity
+
+        return messages[this.intensity - 1]
       }
     },
 
