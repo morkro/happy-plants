@@ -32,25 +32,17 @@
         </div>
       </header>
 
-      <plant-watering
-        :amount="watering && watering.level"
-        @toggle-water-level="onWaterLevelUpdate">
-      </plant-watering>
-
-      <plant-sunshine
-        :intensity="sunshine && sunshine.intensity"
-        @toggle-sunshine="onSunshineUpdate">
-      </plant-sunshine>
-
-      <plant-seasons
-        :seasons="seasons"
-        @toggle-season="onSeasonUpdate">
-      </plant-seasons>
-
-      <plant-notes
-        :content="notes"
-        @update-notes="onNotesUpdate">
-      </plant-notes>
+      <!--
+        Components are dynamically rendered since they
+        can be added/removed and sorted.
+      -->
+      <component
+        v-for="component in componentOrder"
+        v-bind="getComponentProps(component)"
+        :key="component"
+        :is="`plant-${component}`"
+        @update-plant="getComponentListener">
+      </component>
 
       <plant-updates
         :modified="modified">
@@ -62,6 +54,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
+  import getDefaultStructure from '@/utils/getDefaultStructure'
   import AppHeader from '@/components/AppHeader'
   import PlantModal from './PlantModal'
   import PlantNotes from './PlantNotes'
@@ -70,6 +63,8 @@
   import PlantSunshine from './PlantSunshine'
   import PlantUpdates from './PlantUpdates'
   import '@/assets/cactus'
+
+  const defaultState = getDefaultStructure()
 
   export default {
     name: 'PlantView',
@@ -95,6 +90,10 @@
       name: state => state.selected.name,
       blob: state => state.selected.blob,
       imageURL: state => state.selected.imageURL,
+      componentOrder: state => (
+        state.selected.componentOrder ||
+        defaultState.componentOrder
+      ),
       seasons: state => state.selected.seasons,
       notes: state => state.selected.notes,
       watering: state => state.selected.watering,
@@ -113,6 +112,38 @@
         'updateName',
         'updatePhoto'
       ]),
+      getComponentProps (componentName) {
+        switch (componentName) {
+          case 'watering':
+            return {
+              amount: this.watering && this.watering.level
+            }
+          case 'sunshine':
+            return {
+              intensity: this.sunshine && this.sunshine.intensity
+            }
+          case 'seasons':
+            return {
+              seasons: this.seasons
+            }
+          case 'notes':
+            return {
+              content: this.notes
+            }
+        }
+      },
+      getComponentListener (event) {
+        switch (event.type) {
+          case 'watering':
+            return this.onWaterLevelUpdate(event.payload)
+          case 'sunshine':
+            return this.onSunshineUpdate(event.payload)
+          case 'seasons':
+            return this.onSeasonUpdate(event.payload)
+          case 'notes':
+            return this.onNotesUpdate(event.payload)
+        }
+      },
       openPlantEditModal () {
         this.showPlantModal = true
       },

@@ -40,7 +40,7 @@
     props: {
       seasons: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
 
@@ -90,7 +90,7 @@
         }
       },
       emitSeasonToggle (season) {
-        this.$emit('toggle-season', season.month)
+        this.$emit('update-plant', { type: 'seasons', payload: season.month })
       }
     }
   }

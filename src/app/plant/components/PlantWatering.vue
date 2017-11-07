@@ -40,7 +40,7 @@
 
     methods: {
       emitContentChange (event, level) {
-        this.$emit('toggle-water-level', level)
+        this.$emit('update-plant', { type: 'watering', payload: level })
         event.target && event.target.blur()
       }
     }

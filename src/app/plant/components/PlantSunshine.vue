@@ -66,7 +66,7 @@
         return index <= (this.intensity - 1)
       },
       onEmitIntensityChange (event, level) {
-        this.$emit('toggle-sunshine', level)
+        this.$emit('update-plant', { type: 'sunshine', payload: level })
         event.target && event.target.blur()
       }
     }

@@ -60,7 +60,7 @@
         this.emitContentChange()
       },
       emitContentChange () {
-        this.$emit('update-notes', this.textContent)
+        this.$emit('update-plant', { type: 'notes', payload: this.textContent })
       }
     }
   }

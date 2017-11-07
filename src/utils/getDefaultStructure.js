@@ -14,6 +14,12 @@ export default function getDefaultStructure () {
     modified: 0,
     blob: undefined,
     name: '',
+    componentOrder: [
+      'watering',
+      'sunshine',
+      'seasons',
+      'notes'
+    ],
     seasons: getCalendarMonth().map(month => ({ month, growth: false })),
     notes: '',
     watering: {
