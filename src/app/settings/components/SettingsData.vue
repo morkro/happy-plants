@@ -106,9 +106,12 @@
     components: {
       'app-modal': Modal,
       'file-upload': FileUpload,
-      'feather-download': () => import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
-      'feather-delete': () => import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
-      'feather-copy': () => import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
+      'feather-download': () =>
+        import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
+      'feather-delete': () =>
+        import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
+      'feather-copy': () =>
+      import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
     },
 
     data () {
