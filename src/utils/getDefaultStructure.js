@@ -23,10 +23,10 @@ export default function getDefaultStructure () {
     seasons: getCalendarMonth().map(month => ({ month, growth: false })),
     notes: '',
     watering: {
-      level: 0
+      level: 1
     },
     sunshine: {
-      intensity: 0
+      intensity: 1
     }
   }
 }
