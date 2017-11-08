@@ -14,6 +14,7 @@ export default function getDefaultStructure () {
     modified: 0,
     blob: undefined,
     name: '',
+    category: undefined,
     componentOrder: [
       'watering',
       'sunshine',
