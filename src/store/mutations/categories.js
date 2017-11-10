@@ -17,7 +17,7 @@ export default {
     state.updated = Date.now()
     Vue.delete(
       state.categories,
-      state.categories.findIndex(c => c.guid === payload.category.guid)
+      state.categories.findIndex(c => c.guid === payload.item.guid)
     )
   },
 

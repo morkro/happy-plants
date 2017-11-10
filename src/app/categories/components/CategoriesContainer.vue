@@ -12,7 +12,7 @@
             type="text"
             id="category-name"
             placeholder="Category"
-            @change="getCategoryName" />
+            v-model="categoryName" />
         </label>
         <button>
           Add category
@@ -30,10 +30,16 @@
             </span>
 
             <div class="categories-actions">
-              <button class="icon" aria-label="Edit category">
+              <button
+                class="icon"
+                aria-label="Edit category"
+                @click="editCategoryName(category)">
                 <feather-edit />
               </button>
-              <button class="icon" aria-label="Delete category">
+              <button
+                class="icon"
+                aria-label="Delete category"
+                @click="requestDeleteCategory(category)">
                 <feather-trash />
               </button>
             </div>
@@ -85,9 +91,11 @@
             this.categoryName = ''
           })
       },
-      getCategoryName (event) {
-        if (!event.target.value) return
-        this.categoryName = event.target.value.trim()
+      editCategoryName (category) {
+        console.log('edit', category)
+      },
+      requestDeleteCategory (category) {
+        this.deleteCategory(category)
       }
     }
   }
@@ -101,5 +109,21 @@
   main {
     min-height: 100vh;
     background: $light-grey;
+  }
+
+  .categories-list {
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .categories-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
