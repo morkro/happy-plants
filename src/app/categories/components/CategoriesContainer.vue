@@ -82,10 +82,19 @@
       ...mapActions([
         'addCategory',
         'deleteCategory',
-        'updateCategory'
+        'updateCategory',
+        'showNotification'
       ]),
       submitNewCategory () {
         if (!this.hasCategoryName) return
+
+        const categoryNameExists = this.categories.find(c => c.label === this.categoryName)
+        if (categoryNameExists) {
+          return this.showNotification({
+            message: `A category with name "${this.categoryName}" already exists.`
+          })
+        }
+
         this.addCategory({ label: this.categoryName })
           .then(() => {
             this.categoryName = ''
@@ -96,6 +105,8 @@
       },
       requestDeleteCategory (category) {
         this.deleteCategory(category)
+          .then(() =>
+            this.showNotification({ message: `Category "${category.label}" deleted.` }))
       }
     }
   }
