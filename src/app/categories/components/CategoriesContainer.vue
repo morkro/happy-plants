@@ -8,7 +8,7 @@
       <form @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
           <h2>Category name</h2>
-          <input
+          <input required
             type="text"
             id="category-name"
             placeholder="Category"
@@ -23,9 +23,20 @@
 
       <section>
         <h2>Categories</h2>
-        <ul v-if="categories.length">
+        <ul v-if="categories.length" class="categories-list">
           <li v-for="category in categories">
-            {{ category.label }}
+            <span>
+              {{ category.label }}
+            </span>
+
+            <div class="categories-actions">
+              <button class="icon" aria-label="Edit category">
+                <feather-edit />
+              </button>
+              <button class="icon" aria-label="Delete category">
+                <feather-trash />
+              </button>
+            </div>
           </li>
         </ul>
       </section>
@@ -41,7 +52,11 @@
     name: 'Categories',
 
     components: {
-      'app-header': AppHeader
+      'app-header': AppHeader,
+      'feather-edit': () =>
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
+      'feather-trash': () =>
+        import('vue-feather-icon/components/trash' /* webpackChunkName: "categories" */)
     },
 
     data: () => ({
@@ -65,7 +80,7 @@
       ]),
       submitNewCategory () {
         if (!this.hasCategoryName) return
-        this.addCategory({ categoryName: this.categoryName })
+        this.addCategory({ label: this.categoryName })
           .then(() => {
             this.categoryName = ''
           })

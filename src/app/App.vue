@@ -39,6 +39,7 @@
       ...mapActions([
         'loadPlants',
         'loadSettings',
+        'loadCategories',
         'hideNotification',
         'signInUser',
         'signOutUser',
@@ -75,8 +76,11 @@
     },
 
     mounted () {
-      this.loadSettings()
-        .then(() => this.loadPlants())
+      Promise.all([
+        this.loadSettings(),
+        this.loadPlants(),
+        this.loadCategories()
+      ])
     },
 
     updated () {

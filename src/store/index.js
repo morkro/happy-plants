@@ -6,7 +6,6 @@ import getters from './getters'
 import mutations from './mutations'
 
 import overview from '@/app/overview/store'
-import categories from '@/app/categories/store'
 import plant from '@/app/plant/store'
 import settings from '@/app/settings/store'
 
@@ -38,7 +37,6 @@ export default new Vuex.Store({
   actions: {
     ...actions,
     ...overview.actions,
-    ...categories.actions,
     ...plant.actions,
     ...settings.actions
   },
@@ -48,7 +46,6 @@ export default new Vuex.Store({
   mutations: {
     ...mutations,
     ...overview.mutations,
-    ...categories.mutations,
     ...plant.mutations,
     ...settings.mutations
   }

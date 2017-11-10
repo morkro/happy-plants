@@ -39,7 +39,10 @@ export default {
   DELETE_PLANTS (state, payload) {
     state.updated = Date.now()
     for (const item of payload.items) {
-      Vue.delete(state.plants, state.plants.findIndex(p => p.guid === item.guid))
+      Vue.delete(
+        state.plants,
+        state.plants.findIndex(p => p.guid === item.guid)
+      )
     }
   },
 
