@@ -14,7 +14,8 @@
     },
 
     components: {
-      FeatherClock: () => import('vue-feather-icon/components/clock' /* webpackChunkName: "plant" */)
+      'feather-clock': () =>
+        import('vue-feather-icon/components/clock' /* webpackChunkName: "plant" */)
     },
 
     computed: {

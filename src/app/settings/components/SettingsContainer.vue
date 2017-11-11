@@ -21,7 +21,8 @@
 
     components: {
       'app-header': AppHeader,
-      'feather-user': () => import('vue-feather-icon/components/user')
+      'feather-user': () =>
+        import('vue-feather-icon/components/user' /* webpackChunkName: "settings" */)
     },
 
     computed: {

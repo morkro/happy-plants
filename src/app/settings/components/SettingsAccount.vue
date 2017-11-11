@@ -26,8 +26,10 @@
     name: 'SettingsAccount',
 
     components: {
-      'feather-sign-in': () => import('vue-feather-icon/components/log-in'),
-      'feather-sign-out': () => import('vue-feather-icon/components/log-out')
+      'feather-sign-in': () =>
+        import('vue-feather-icon/components/log-in' /* webpackChunkName: "settings" */),
+      'feather-sign-out': () =>
+        import('vue-feather-icon/components/log-out' /* webpackChunkName: "settings" */)
     },
 
     data () {

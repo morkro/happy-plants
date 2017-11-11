@@ -38,8 +38,10 @@
     },
 
     components: {
-      'feather-arrow-left': () => import('vue-feather-icon/components/arrow-left'),
-      'feather-settings': () => import('vue-feather-icon/components/settings')
+      'feather-arrow-left': () =>
+        import('vue-feather-icon/components/arrow-left' /* webpackChunkName: "general" */),
+      'feather-settings': () =>
+        import('vue-feather-icon/components/settings' /* webpackChunkName: "general" */)
     },
 
     methods: {

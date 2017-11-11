@@ -111,7 +111,7 @@
       'feather-delete': () =>
         import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
       'feather-copy': () =>
-      import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
+        import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
     },
 
     data () {
