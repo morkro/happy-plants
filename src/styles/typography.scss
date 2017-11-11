@@ -24,8 +24,9 @@ a {
     background: $green;
     border-radius: $border-radius;
     box-shadow: $green-shadow;
-    padding: 3px 6px;
+    padding: 1px 6px;
     margin: 0 2px;
+    display: inline-block;
   }
 
   &[target="_blank"]::after {

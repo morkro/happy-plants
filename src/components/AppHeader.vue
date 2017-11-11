@@ -58,7 +58,6 @@
   header {
     box-shadow: 0 0 22px rgba(0, 0, 0, 0.05);
     background: $background-primary;
-    padding: $base-gap;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -72,6 +71,7 @@
       text-transform: uppercase;
       color: $text-color-base;
       margin: 0 $base-gap;
+      padding: $base-gap 0;
     }
 
     /* TODO: Remove when desktop layout is actually in development. */
@@ -81,13 +81,17 @@
   }
 
   .header-ctrl {
-    width: $icon-size;
-    height: $icon-size;
+    width: $app-header-size;
+    min-height: $app-header-size;
+    height: 100%;
 
     a {
-      width: $icon-size;
-      height: $icon-size;
-      display: block;
+      width: $app-header-size;
+      min-height: $app-header-size;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .backdrop {
@@ -100,14 +104,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: $icon-size + $base-gap / 2;
-        height: $icon-size + $base-gap / 2;
+        width: $icon-size + $base-gap;
+        height: $icon-size + $base-gap;
         transform: translate(-50%, -50%);
         z-index: -1;
-      }
-
-      svg {
-        transform: translateY(-1px);
       }
     }
   }
