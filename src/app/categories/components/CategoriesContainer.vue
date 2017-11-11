@@ -1,13 +1,19 @@
 <template>
   <main class="main-wireframe">
+    <category-modal
+      :show="showModal"
+      :category="selectedCategory"
+      @content-update="editCategoryLabel"
+      @close-modal="closeModal">
+    </category-modal>
+
     <app-header :back="true">
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
     <section>
-      <form @submit.prevent="submitNewCategory">
+      <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
-          <h2>Category name</h2>
           <input required
             type="text"
             id="category-name"
@@ -19,11 +25,9 @@
         </button>
       </form>
 
-      <hr />
-
-      <section>
+      <section class="categories-list">
         <h2>Categories</h2>
-        <ul v-if="categories.length" class="categories-list">
+        <ul v-if="categories.length">
           <li v-for="category in categories">
             <span>
               {{ category.label }}
@@ -33,7 +37,7 @@
               <button
                 class="icon"
                 aria-label="Edit category"
-                @click="editCategoryName(category)">
+                @click="openCategoryModal(category)">
                 <feather-edit />
               </button>
               <button
@@ -53,12 +57,14 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
+  import CategoryModal from './CategoryModal'
 
   export default {
     name: 'Categories',
 
     components: {
       'app-header': AppHeader,
+      'category-modal': CategoryModal,
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
       'feather-trash': () =>
@@ -66,7 +72,9 @@
     },
 
     data: () => ({
-      categoryName: ''
+      showModal: false,
+      categoryName: '',
+      selectedCategory: null
     }),
 
     computed: {
@@ -85,6 +93,9 @@
         'updateCategory',
         'showNotification'
       ]),
+      closeModal () {
+        this.showModal = false
+      },
       submitNewCategory () {
         if (!this.hasCategoryName) return
 
@@ -96,12 +107,15 @@
         }
 
         this.addCategory({ label: this.categoryName })
-          .then(() => {
-            this.categoryName = ''
-          })
+          // Reset state
+          .then(() => Object.assign(this.$data, this.$options.data()))
       },
-      editCategoryName (category) {
-        console.log('edit', category)
+      editCategoryLabel (category) {
+        console.log(category)
+      },
+      openCategoryModal (category) {
+        this.selectedCategory = category
+        this.showModal = true
       },
       requestDeleteCategory (category) {
         this.deleteCategory(category)
@@ -122,13 +136,41 @@
     background: $light-grey;
   }
 
-  .categories-list {
+  .add-category {
+    padding: $base-gap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+      flex: 1 0 auto;
+    }
+
+    input {
+      width: 100%;
+    }
+
+    button {
+      margin-left: $base-gap;
+    }
+  }
+
+  .categories-list h2 {
+    padding: $base-gap;
+  }
+
+  .categories-list ul {
     list-style: none;
 
     li {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: $base-gap/2 $base-gap;
+
+      &:not(:last-child) {
+        border-bottom: 2px solid $dark-transparency;
+      }
     }
   }
 
