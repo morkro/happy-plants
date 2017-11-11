@@ -91,9 +91,12 @@
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
-      'feather-trash': () => import('vue-feather-icon/components/trash-2'),
-      'feather-x': () => import('vue-feather-icon/components/x'),
-      'feather-layers': () => import('vue-feather-icon/components/layers')
+      'feather-trash': () =>
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+      'feather-x': () =>
+        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */),
+      'feather-layers': () =>
+        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
     },
 
     computed: mapState({

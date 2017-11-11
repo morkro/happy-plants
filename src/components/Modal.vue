@@ -23,7 +23,8 @@
     },
 
     components: {
-      'feather-x': () => import('vue-feather-icon/components/x')
+      'feather-x': () =>
+        import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
     },
 
     watch: {
