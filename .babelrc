@@ -17,7 +17,7 @@
   "plugins": [
     "transform-runtime"
   ],
-  "comments": false,
+  "comments": true,
   "env": {
     "test": {
       "presets": [
