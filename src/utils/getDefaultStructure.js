@@ -13,6 +13,7 @@ export default function getDefaultStructure () {
     created: 0,
     modified: 0,
     blob: undefined,
+    imageURL: '',
     name: '',
     category: undefined,
     componentOrder: [

@@ -22,11 +22,7 @@ export default {
   },
 
   LOAD_PLANT_ITEM (state, payload) {
-    const needsBlobUrl = !!payload.item.blob && !payload.item.imageURL
-    const imageURL = needsBlobUrl
-      ? getUrlFromBlob(payload.item.blob)
-      : payload.item.imageURL
-
+    const imageURL = getUrlFromBlob(payload.item.blob)
     state.selected = Object.assign(payload.item, { imageURL })
   },
 

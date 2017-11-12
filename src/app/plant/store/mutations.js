@@ -1,6 +1,10 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
 
 export default {
+  RESET_SELECTED_PLANT (state, payload) {
+    state.selected = Object.assign({}, state.selected, payload.defaultState)
+  },
+
   UPDATE_SEASON (state, payload) {
     const index = state.selected.seasons.findIndex(s => s.month === payload.item.month)
     const season = state.selected.seasons[index]
@@ -24,12 +28,6 @@ export default {
   },
 
   UPDATE_SUNSHINE (state, payload) {
-    // The data structure has changed.
-    // If a plant still has old data, it will fail to update.
-    if (!state.selected.sunshine) {
-      state.selected.sunshine = { intensity: 1 }
-    }
-
     state.updated = payload.updated
     state.selected.modified = payload.updated
     state.selected.sunshine.intensity = payload.item.sunshine.level
@@ -42,9 +40,19 @@ export default {
   },
 
   UPDATE_PHOTO (state, payload) {
+    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
+
     state.updated = payload.updated
     state.selected.modified = payload.updated
     state.selected.imageURL = payload.item.imageURL
+
+    if (state.plants[itemIndex]) {
+      state.plants[itemIndex] = Object.assign(
+        {},
+        state.plants[itemIndex],
+        payload.item
+      )
+    }
 
     if (payload.item.blob) {
       state.selected.blob = payload.item.blob

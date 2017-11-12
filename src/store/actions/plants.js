@@ -4,24 +4,35 @@ import { convertToBlob } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
 import {
   fetchPlants,
+  getPlant,
   addPlant as addPlantFromAPI,
   deletePlants as deletePlantsFromAPI,
   updatePlant as updatePlantFromAPI
 } from '@/api/plants'
 
+function shrinkPlantObjects (plant) {
+  return {
+    name: plant.name,
+    blob: plant.blob,
+    created: plant.created,
+    guid: plant.guid
+  }
+}
+
 export const loadPlants = ({ state, commit }, data = {}) => {
   if (!state.plants || state.plants.length === 0 || !!data.force) {
     return fetchPlants()
-      .then(data => Promise.all(data.map(convertToBlob))
-        .then(plants => commit('LOAD_PLANTS', { plants })))
+      .then(data => Promise.all(data.map(shrinkPlantObjects).map(convertToBlob)))
+      .then(plants => commit('LOAD_PLANTS', { plants }))
   }
 
   return Promise.resolve()
 }
 
 export const loadPlantItem = ({ state, commit }, guid) => {
-  const item = state.plants.find(p => p.guid === guid)
-  commit('LOAD_PLANT_ITEM', { item })
+  getPlant(guid)
+    .then(convertToBlob)
+    .then(item => commit('LOAD_PLANT_ITEM', { item }))
 }
 
 export const addPlant = ({ commit }, data) => {

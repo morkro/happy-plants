@@ -110,7 +110,8 @@
         'updateSunshine',
         'updateWatering',
         'updateName',
-        'updatePhoto'
+        'updatePhoto',
+        'resetSelectedState'
       ]),
       getComponentProps (componentName) {
         switch (componentName) {
@@ -170,8 +171,11 @@
     },
 
     mounted () {
-      this.loadPlants()
-        .then(() => this.loadPlantItem(this.$route.params.id))
+      this.loadPlantItem(this.$route.params.id)
+    },
+
+    beforeDestroy () {
+      this.resetSelectedState()
     }
   }
 </script>

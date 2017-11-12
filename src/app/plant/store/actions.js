@@ -1,5 +1,10 @@
 import { updatePlant } from '@/api/plants'
 import { updateStore } from '@/api/store'
+import getDefaultStructure from '@/utils/getDefaultStructure'
+
+export const resetSelectedState = ({ commit }) => {
+  commit('RESET_SELECTED_PLANT', { defaultState: getDefaultStructure() })
+}
 
 export const updateSeason = ({ state, commit }, data) => {
   updateStore(data)
@@ -37,6 +42,7 @@ export const updateName = ({ state, commit }, data) => {
 }
 
 export const updatePhoto = ({ state, commit }, data) => {
+  console.log(data)
   updateStore(data)
     .then(config =>
       commit('UPDATE_PHOTO', { item: config.data, updated: config.updated }))
