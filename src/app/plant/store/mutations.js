@@ -28,12 +28,6 @@ export default {
   },
 
   UPDATE_SUNSHINE (state, payload) {
-    // The data structure has changed.
-    // If a plant still has old data, it will fail to update.
-    if (!state.selected.sunshine) {
-      state.selected.sunshine = { intensity: 1 }
-    }
-
     state.updated = payload.updated
     state.selected.modified = payload.updated
     state.selected.sunshine.intensity = payload.item.sunshine.level
