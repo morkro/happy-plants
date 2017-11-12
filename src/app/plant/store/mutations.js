@@ -1,6 +1,10 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
 
 export default {
+  RESET_SELECTED_PLANT (state, payload) {
+    state.selected = Object.assign({}, state.selected, payload.defaultState)
+  },
+
   UPDATE_SEASON (state, payload) {
     const index = state.selected.seasons.findIndex(s => s.month === payload.item.month)
     const season = state.selected.seasons[index]

@@ -19,6 +19,10 @@ export const updatePlant = data => {
   return localforage.setItem(namespace + data.guid, data)
 }
 
+export const getPlant = guid => {
+  return localforage.getItem(namespace + guid)
+}
+
 export const getAllPlants = () => {
   return localforage.keys()
     .then(keys => Promise.all(keys.map(k => localforage.getItem(k))))

@@ -34,6 +34,7 @@ export function fixRotation (data) {
   return new Promise((resolve, reject) => {
     const config = {
       canvas: true,
+      noRevoke: true,
       orientation: 1
     }
     loadImage(
