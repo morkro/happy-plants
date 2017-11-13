@@ -45,6 +45,7 @@ export default {
     state.updated = payload.updated
     state.selected.modified = payload.updated
     state.selected.imageURL = payload.item.imageURL
+    if (payload.item.blob) state.selected.blob = payload.item.blob
 
     if (state.plants[itemIndex]) {
       state.plants[itemIndex] = Object.assign(
@@ -52,10 +53,6 @@ export default {
         state.plants[itemIndex],
         payload.item
       )
-    }
-
-    if (payload.item.blob) {
-      state.selected.blob = payload.item.blob
     }
   }
 }

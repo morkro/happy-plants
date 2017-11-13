@@ -22,8 +22,8 @@ export default {
   },
 
   UPDATE_CATEGORY (state, payload) {
-    const itemIndex = state.categories.findIndex(c => c.guid === payload.data.guid)
+    const itemIndex = state.categories.findIndex(c => c.guid === payload.item.guid)
     state.updated = Date.now()
-    state.categories[itemIndex] = payload.data
+    state.categories[itemIndex] = payload.item
   }
 }

@@ -3,7 +3,9 @@
     <category-modal
       :show="showModal"
       :category="selectedCategory"
+      :categoryNames="categories.map(c => c.label)"
       @content-update="editCategoryLabel"
+      @content-error="showUpdateError"
       @close-modal="closeModal">
     </category-modal>
 
@@ -49,6 +51,11 @@
             </div>
           </li>
         </ul>
+        <div v-else>
+          <p>
+            You don't have any categories yet.
+          </p>
+        </div>
       </section>
     </section>
   </main>
@@ -99,8 +106,7 @@
       submitNewCategory () {
         if (!this.hasCategoryName) return
 
-        const categoryNameExists = this.categories.find(c => c.label === this.categoryName)
-        if (categoryNameExists) {
+        if (this.categories.find(c => c.label === this.categoryName)) {
           return this.showNotification({
             message: `A category with name "${this.categoryName}" already exists.`
           })
@@ -110,8 +116,14 @@
           // Reset state
           .then(() => Object.assign(this.$data, this.$options.data()))
       },
+      showUpdateError (category) {
+        this.showNotification({
+          message: `A category with name "${category.label}" already exists.`
+        })
+      },
       editCategoryLabel (category) {
-        console.log(category)
+        this.updateCategory(category)
+          .then(() => this.showNotification({ message: `Updated category.` }))
       },
       openCategoryModal (category) {
         this.selectedCategory = category

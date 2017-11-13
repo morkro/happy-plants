@@ -35,6 +35,6 @@ export const updateCategory = ({ state, commit }, data) => {
   const meta = { ...item, ...data, modified: Date.now() }
   updateStore(meta)
     .then(config =>
-      commit('UPDATE_CATEGORY', { config: meta }))
+      commit('UPDATE_CATEGORY', { item: meta }))
     .then(() => updateCategories(state.categories))
 }

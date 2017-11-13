@@ -26,7 +26,8 @@
 
     props: {
       show: { type: Boolean, default: false },
-      category: { type: Object, default: () => {} }
+      category: { type: Object, default: () => {} },
+      categoryNames: { type: Array, default: [] }
     },
 
     components: {
@@ -52,6 +53,11 @@
       },
       updateCategory () {
         const data = { ...this.category, label: this.newLabelName }
+
+        if (this.categoryNames.includes(this.newLabelName)) {
+          return this.$emit('content-error', data)
+        }
+
         this.$emit('content-update', data)
         this.emitCloseModal()
       }

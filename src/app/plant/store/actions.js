@@ -42,7 +42,6 @@ export const updateName = ({ state, commit }, data) => {
 }
 
 export const updatePhoto = ({ state, commit }, data) => {
-  console.log(data)
   updateStore(data)
     .then(config =>
       commit('UPDATE_PHOTO', { item: config.data, updated: config.updated }))
