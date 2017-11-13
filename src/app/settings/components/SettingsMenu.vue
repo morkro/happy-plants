@@ -27,7 +27,7 @@
       return {
         version: pkg.version,
         menu: [
-          { label: 'Account', name: 'SettingsAccount' },
+          // { label: 'Account', name: 'SettingsAccount' },
           { label: 'Plant Data', name: 'SettingsData' },
           { label: 'About', name: 'SettingsAbout' }
         ]
