@@ -5,7 +5,7 @@
       :category="selectedCategory"
       :categoryNames="categories.map(c => c.label)"
       @content-update="editCategoryLabel"
-      @content-error="showUpdateError"
+      @content-error="showCategoryUpdateError"
       @close-modal="closeModal">
     </category-modal>
 
@@ -116,7 +116,7 @@
           // Reset state
           .then(() => Object.assign(this.$data, this.$options.data()))
       },
-      showUpdateError (category) {
+      showCategoryUpdateError (category) {
         this.showNotification({
           message: `A category with name "${category.label}" already exists.`
         })
@@ -184,6 +184,10 @@
         border-bottom: 2px solid $dark-transparency;
       }
     }
+  }
+
+  .categories-list div {
+    padding: 0 $base-gap;
   }
 
   .categories-actions {
