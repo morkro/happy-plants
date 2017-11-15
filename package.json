@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "blob-util": "^1.3.0",
-    "blueimp-load-image": "https://github.com/blueimp/JavaScript-Load-Image",
     "connect-history-api-fallback": "^1.3.0",
     "dotenv-webpack": "^1.5.4",
     "express": "^4.16.1",
