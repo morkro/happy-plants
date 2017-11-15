@@ -122,6 +122,7 @@
 
     > div {
       width: $photo-size;
+      height: $photo-size;
       flex-shrink: 0;
       overflow: hidden;
 
