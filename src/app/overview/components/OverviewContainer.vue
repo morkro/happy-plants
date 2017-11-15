@@ -205,7 +205,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      min-height: calc(100vh - #{$app-header-size});
     }
   }
 
