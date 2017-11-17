@@ -13,5 +13,15 @@ export default {
         state.plants = state.plants.sort(sortByAlphabet)
         break
     }
+  },
+
+  UPDATE_PLANT_OVERVIEW (state, payload) {
+    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
+
+    state.updated = Date.now()
+
+    if (state.plants[itemIndex]) {
+      state.plants[itemIndex] = Object.assign(state.plants[itemIndex], payload.item)
+    }
   }
 }

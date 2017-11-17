@@ -40,19 +40,12 @@ export default {
   },
 
   UPDATE_PHOTO (state, payload) {
-    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
-
     state.updated = payload.updated
     state.selected.modified = payload.updated
     state.selected.imageURL = payload.item.imageURL
-    if (payload.item.blob) state.selected.blob = payload.item.blob
 
-    if (state.plants[itemIndex]) {
-      state.plants[itemIndex] = Object.assign(
-        {},
-        state.plants[itemIndex],
-        payload.item
-      )
+    if (payload.item.blob) {
+      state.selected.blob = payload.item.blob
     }
   }
 }

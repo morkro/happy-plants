@@ -14,7 +14,13 @@
           color="#000">
         </svgicon>
       </div>
-      <span>{{ fileName }}</span>
+
+      <span v-if="loading" class="loading-icon">
+        <feather-aperture />
+      </span>
+      <span v-else>
+        {{ fileName }}
+      </span>
     </div>
 
     <input
@@ -26,7 +32,7 @@
 </template>
 
 <script>
-  import { getUrlFromBlob } from '@/utils/blob'
+  import { getUrlFromBlob, resizeBlob } from '@/utils/blob'
   import '@/assets/cactus'
 
   export default {
@@ -38,8 +44,14 @@
       disablePreview: { type: Boolean, default: false }
     },
 
+    components: {
+      'feather-aperture': () =>
+        import('vue-feather-icon/components/aperture' /* webpackChunkName: "general" */)
+    },
+
     data () {
       return {
+        loading: false,
         newName: '',
         newPhoto: '',
         imageURL: '',
@@ -56,15 +68,27 @@
     },
 
     methods: {
-      emitPhoto (event) {
+      async emitPhoto (event) {
         if (!event.target.files && !event.target.files.length) {
           return
         }
 
-        this.newPhoto = event.target.files[0]
-        this.fileName = this.newPhoto.name
+        this.loading = true
+        this.$emit('loading-file', { loading: this.loading })
+
+        const file = event.target.files[0]
+
+        try {
+          this.newPhoto = await resizeBlob(file, { width: window.outerWidth * 1.5 })
+        } catch (e) {
+          this.newPhoto = file
+        }
+
+        this.loading = false
+        this.fileName = file.name
         this.imageURL = getUrlFromBlob(this.newPhoto)
 
+        this.$emit('loading-file', { loading: this.loading })
         this.$emit('file-selected', { blob: this.newPhoto })
       }
     }
@@ -76,6 +100,12 @@
   @import "~styles/animations";
 
   $photo-size: 64px;
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
   .file-upload input[type="file"] {
     width: 0.1px;
@@ -96,6 +126,7 @@
 
     > div {
       width: $photo-size;
+      height: $photo-size;
       flex-shrink: 0;
       overflow: hidden;
 
@@ -128,9 +159,22 @@
       object-fit: cover;
     }
 
-    svg {
+    svg.svg-icon {
       height: 80%;
       opacity: 0.22;
+    }
+
+    .loading-icon {
+      display: flex;
+      align-items: center;
+      transform-origin: 50% 50%;
+      animation: rotate 2s linear infinite;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        margin: 3px;
+      }
     }
   }
 </style>

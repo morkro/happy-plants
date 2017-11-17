@@ -8,16 +8,25 @@
     <form slot="content" class="modal-content" @submit.prevent="updatePlant">
       <label for="modal-name">
         <h2>Name</h2>
-        <input id="modal-name" type="text" :placeholder="name" v-model="newName" />
+        <input
+          id="modal-name"
+          type="text"
+          :value="name"
+          @change="updateName" />
       </label>
 
       <label for="modal-file">
         <h2>Upload or change photo</h2>
         <span>You can either select a photo from your gallery or take one now.</span>
-        <file-upload name="modal-file" @file-selected="assignPhoto" />
+        <file-upload
+          name="modal-file"
+          @loading-file="handleLoadingState"
+          @file-selected="assignPhoto" />
       </label>
 
-      <button>Save</button>
+      <button :disabled="isUploadingFile">
+        Save
+      </button>
     </form>
   </app-modal>
 </template>
@@ -44,11 +53,18 @@
     data () {
       return {
         newName: '',
-        newPhoto: ''
+        newPhoto: '',
+        isUploadingFile: false
       }
     },
 
     methods: {
+      handleLoadingState ({ loading }) {
+        this.isUploadingFile = loading
+      },
+      updateName (event) {
+        this.newName = event.target.value
+      },
       emitCloseModal () {
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')

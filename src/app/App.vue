@@ -13,7 +13,6 @@
 </template>
 
 <script>
-  import firebase from 'firebase'
   import { mapActions, mapState } from 'vuex'
   import AppNotifications from '@/components/AppNotifications'
 
@@ -65,15 +64,15 @@
       }
     },
 
-    created () {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.signInUser(user)
-        } else {
-          this.signOutUser()
-        }
-      })
-    },
+    // created () {
+    //   firebase.auth().onAuthStateChanged(user => {
+    //     if (user) {
+    //       this.signInUser(user)
+    //     } else {
+    //       this.signOutUser()
+    //     }
+    //   })
+    // },
 
     mounted () {
       Promise.all([
