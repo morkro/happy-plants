@@ -22,9 +22,7 @@ export const isBlobbable = blob => (
 export function getUrlFromBlob (blob) {
   return isBlobbable(blob)
     ? blobUtil.createObjectURL(blob)
-    : blob.src
-      ? blob.src
-      : ''
+    : ''
 }
 
 export function convertToBlob (config) {
