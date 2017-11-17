@@ -72,7 +72,10 @@
         if (!event.target.files && !event.target.files.length) {
           return
         }
+
         this.loading = true
+        this.$emit('loading-file', { loading: this.loading })
+
         const file = event.target.files[0]
 
         try {
@@ -85,6 +88,7 @@
         this.fileName = file.name
         this.imageURL = getUrlFromBlob(this.newPhoto)
 
+        this.$emit('loading-file', { loading: this.loading })
         this.$emit('file-selected', { blob: this.newPhoto })
       }
     }

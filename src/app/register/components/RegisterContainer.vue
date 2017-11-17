@@ -21,10 +21,13 @@
           <span>You can either select a photo from your gallery or take one now.</span>
           <file-upload
             name="register-file"
-            @file-selected="getFile" />
+            @file-selected="getFile"
+            @loading-file="handleLoadingState" />
         </label>
 
-        <button>Add plant</button>
+        <button :disabled="isUploadingFile">
+          Add plant
+        </button>
       </form>
     </section>
   </main>
@@ -47,7 +50,8 @@
     data () {
       return {
         name: '',
-        blob: undefined
+        blob: undefined,
+        isUploadingFile: false
       }
     },
 
@@ -55,6 +59,9 @@
       ...mapActions([
         'addPlant'
       ]),
+      handleLoadingState ({ loading }) {
+        this.isUploadingFile = loading
+      },
       getFile (data) {
         this.blob = data.blob
       },
