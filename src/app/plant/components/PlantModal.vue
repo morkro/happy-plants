@@ -8,7 +8,11 @@
     <form slot="content" class="modal-content" @submit.prevent="updatePlant">
       <label for="modal-name">
         <h2>Name</h2>
-        <input id="modal-name" type="text" :placeholder="name" v-model="newName" />
+        <input
+          id="modal-name"
+          type="text"
+          :value="name"
+          @change="updateName" />
       </label>
 
       <label for="modal-file">
@@ -49,6 +53,9 @@
     },
 
     methods: {
+      updateName (event) {
+        this.newName = event.target.value
+      },
       emitCloseModal () {
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')

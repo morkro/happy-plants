@@ -1,5 +1,5 @@
 import blobUtil from 'blob-util'
-import hermitResize from './hermiteResize'
+import hermiteResize from './hermiteResize'
 
 export const isBase64 = string => {
   try {
@@ -56,7 +56,7 @@ export function resizeBlob (file, options = {}) {
 
       ctx.drawImage(img, 0, 0)
 
-      blobUtil.canvasToBlob(hermitResize(canvas, width, height, resizedWidth, resizedHeight))
+      blobUtil.canvasToBlob(hermiteResize(canvas, width, height, resizedWidth, resizedHeight))
         .then(blob => {
           blobUtil.revokeObjectURL(img.src)
           resolve(blob)

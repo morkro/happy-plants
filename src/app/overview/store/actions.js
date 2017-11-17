@@ -5,3 +5,8 @@ export const updateFilter = ({ state, commit }, data) => {
   return updateSettings(config)
     .then(() => commit('UPDATE_FILTER', data))
 }
+
+export const updatePlantInOverview = ({ state, commit }, data) => {
+  return Promise.resolve()
+    .then(() => commit('UPDATE_PLANT_OVERVIEW', { item: data }))
+}
