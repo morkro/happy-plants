@@ -179,10 +179,7 @@
       justify-content: space-between;
       align-items: center;
       padding: $base-gap/2 $base-gap;
-
-      &:not(:last-child) {
-        border-bottom: 2px solid $dark-transparency;
-      }
+      border-top: 2px solid $dark-transparency;
     }
   }
 

@@ -10,8 +10,8 @@
         <input
           id="modal-name"
           type="text"
-          :placeholder="categoryLabel"
-          v-model="newLabelName" />
+          :value="categoryLabel"
+          @change="updateLabelName" />
       </label>
 
       <button>Update name</button>
@@ -47,6 +47,10 @@
     },
 
     methods: {
+      updateLabelName (event) {
+        if (!event.target.value) return
+        this.newLabelName = event.target.value
+      },
       emitCloseModal () {
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')
