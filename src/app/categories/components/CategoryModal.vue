@@ -69,4 +69,35 @@
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  @import "~styles/layout";
+  @import "~styles/fonts";
+
+  $photo-size: 59px;
+
+  .modal-content {
+    border-top: 3px solid rgba(0, 0, 0, 0.06);
+    padding-top: $base-gap;
+  }
+
+  label {
+    display: block;
+    margin-bottom: $base-gap * 2;
+
+    h2 {
+      margin-bottom: $base-gap;
+    }
+
+    span {
+      display: block;
+      color: $text-color-secondary;
+      font-size: $text-size-small;
+      margin-bottom: $base-gap;
+      padding: 0 1px;
+    }
+
+    input {
+      width: 100%;
+    }
+  }
+</style>
