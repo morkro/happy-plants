@@ -181,15 +181,19 @@
       padding: $base-gap/2 $base-gap;
       border-top: 2px solid $dark-transparency;
     }
-  }
 
-  .categories-list div {
-    padding: 0 $base-gap;
+    svg {
+      margin: 0;
+    }
   }
 
   .categories-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    button:first-of-type {
+      margin-right: $base-gap/2;
+    }
   }
 </style>
