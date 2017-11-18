@@ -63,6 +63,7 @@
         this.isUploadingFile = loading
       },
       updateName (event) {
+        if (!event.target.value) return
         this.newName = event.target.value
       },
       emitCloseModal () {

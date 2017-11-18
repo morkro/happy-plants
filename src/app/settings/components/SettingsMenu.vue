@@ -28,6 +28,7 @@
         version: pkg.version,
         menu: [
           // { label: 'Account', name: 'SettingsAccount' },
+          { label: 'Categories', name: 'Categories' },
           { label: 'Plant Data', name: 'SettingsData' },
           { label: 'About', name: 'SettingsAbout' }
         ]

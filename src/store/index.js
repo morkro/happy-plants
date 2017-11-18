@@ -13,6 +13,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
+
   state: {
     user: {
       authenticated: false,
@@ -29,15 +30,19 @@ export default new Vuex.Store({
     // TODO: move to respective components and merge here
     settings: {
       filter: 'latest'
-    }
+    },
+    categories: []
   },
+
   actions: {
     ...actions,
     ...overview.actions,
     ...plant.actions,
     ...settings.actions
   },
+
   getters,
+
   mutations: {
     ...mutations,
     ...overview.mutations,

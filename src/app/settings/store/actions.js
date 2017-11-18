@@ -10,7 +10,8 @@ export const getAllPlants = () => {
 
 export const deleteAllPlants = ({ commit }) => {
   return updateStore()
-    .then(config => commit('DELETE_ALL_PLANTS', { updated: config.updated }))
+    .then(config =>
+      commit('DELETE_ALL_PLANTS', { updated: config.updated }))
     .then(() => deleteAllPlantsFromAPI())
 }
 
