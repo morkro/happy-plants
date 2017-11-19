@@ -22,8 +22,9 @@ export const updateNotes = ({ state, commit }, data) => {
 
 export const updateWatering = ({ state, commit }, data) => {
   updateStore(data)
-    .then(config =>
-      commit('UPDATE_WATERING', { item: config.data, updated: config.updated }))
+    .then(config => {
+      commit('UPDATE_WATERING', { item: config.data, updated: config.updated })
+    })
     .then(() => updatePlant(state.selected))
 }
 

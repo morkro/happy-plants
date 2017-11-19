@@ -30,7 +30,7 @@
       <section class="categories-list">
         <h2>Categories</h2>
         <ul v-if="categories.length">
-          <li v-for="category in categories">
+          <li v-for="(category, index) in categories" :key="`category-${index}`">
             <span>
               {{ category.label }}
             </span>

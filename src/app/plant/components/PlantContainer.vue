@@ -112,7 +112,7 @@
         'updateName',
         'updatePhoto',
         'resetSelectedState',
-        'updatePlantInOverview'
+        'updatePlantsList'
       ]),
       getComponentProps (componentName) {
         switch (componentName) {
@@ -176,7 +176,7 @@
     },
 
     beforeDestroy () {
-      this.updatePlantInOverview({ guid: this.guid, name: this.name, imageURL: this.imageURL })
+      this.updatePlantsList({ guid: this.guid, name: this.name, imageURL: this.imageURL })
         .then(() => this.resetSelectedState())
     }
   }

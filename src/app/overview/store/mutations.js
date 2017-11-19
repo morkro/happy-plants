@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
 export default {
@@ -21,7 +22,7 @@ export default {
     state.updated = Date.now()
 
     if (state.plants[itemIndex]) {
-      state.plants[itemIndex] = Object.assign(state.plants[itemIndex], payload.item)
+      Vue.set(state.plants, itemIndex, Object.assign(state.plants[itemIndex], payload.item))
     }
   }
 }

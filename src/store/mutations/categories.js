@@ -24,6 +24,6 @@ export default {
   UPDATE_CATEGORY (state, payload) {
     const itemIndex = state.categories.findIndex(c => c.guid === payload.item.guid)
     state.updated = Date.now()
-    state.categories[itemIndex] = payload.item
+    Vue.set(state.categories, itemIndex, payload.item)
   }
 }
