@@ -178,7 +178,8 @@
 
   $content-index: list, footer;
   $list-gap: ($base-gap * 2) - $base-gap / 2;
-  $footer-btn-size: 50px;
+  $footer-btn-size: 60px;
+  $footer-btn-size-secondary: 50px;
 
   .footer-appear-enter-active {
     transition: transform $base-speed * 2 $ease-out-back;
@@ -242,6 +243,8 @@
       padding: 0;
       background: $background-primary;
       box-shadow: $plain-shadow;
+      width: $footer-btn-size-secondary;
+      height: $footer-btn-size-secondary;
     }
 
     .footer-cancel-mode {
