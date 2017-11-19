@@ -78,10 +78,14 @@
 
         const file = event.target.files[0]
 
-        try {
-          this.newPhoto = await resizeBlob(file, { width: window.outerWidth * 1.5 })
-        } catch (e) {
+        if (!file.type.includes('image')) {
           this.newPhoto = file
+        } else {
+          try {
+            this.newPhoto = await resizeBlob(file, { width: window.outerWidth * 1.5 })
+          } catch (e) {
+            this.newPhoto = file
+          }
         }
 
         this.loading = false
