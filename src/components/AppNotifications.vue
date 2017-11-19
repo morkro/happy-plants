@@ -26,11 +26,13 @@
     align-items: center;
     background: rgba(0, 0, 0, 0.8);
     color: $text-color-inverse;
-    width: 100vw;
+    width: calc(100% - #{$base-gap*2});
     height: $app-header-size;
-    padding: 10px 15px;
+    padding: 10px $base-gap;
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: $base-gap;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: $border-radius;
   }
 </style>
