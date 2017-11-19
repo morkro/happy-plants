@@ -9,7 +9,7 @@
       @close-modal="closeModal">
     </category-modal>
 
-    <app-header :back="true">
+    <app-header :back="true" backPath="settings">
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
