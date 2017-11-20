@@ -9,3 +9,7 @@ export const fetchCategories = () => {
 export const updateCategories = data => {
   return localforage.setItem(namespace, data)
 }
+
+export const deleteAllCategories = () => {
+  return localforage.removeItem(namespace)
+}

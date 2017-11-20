@@ -153,9 +153,11 @@
     methods: {
       ...mapActions([
         'showNotification',
-        'getAllPlants',
-        'deleteAllPlants',
-        'importPlantData'
+        'getAllData',
+        'deleteAllData',
+        'importCategories',
+        'importSettings',
+        'importPlants'
       ]),
 
       isDangerModal () {
@@ -174,7 +176,7 @@
       },
 
       downloadData () {
-        this.getAllPlants()
+        this.getAllData()
           .then(this.triggerDownload)
       },
 
@@ -205,12 +207,23 @@
         this.modalType = null
       },
 
-      importApplicationData () {
-        const payload = {
-          data: this.file,
-          importType: this.selectedImportType
+      selectImportType (key) {
+        const data = this.file[key]
+
+        if (key === 'categories') {
+          return this.importCategories(data)
+        } else if (key === 'settings') {
+          return this.importSettings(data)
+        } else if (key.startsWith('plant-')) {
+          return this.importPlants({ data, importType: this.selectedImportType })
+        } else {
+          return Promise.resolve()
         }
-        this.importPlantData(payload)
+      },
+
+      importApplicationData () {
+        Promise.resolve(Object.keys(this.file))
+          .then(keys => Promise.all(keys.map(this.selectImportType)))
           .then(() => this.closeModal())
           .then(() => this.showNotification({
             message: 'Successfully imported your plant data!'
@@ -219,7 +232,7 @@
       },
 
       deleteApplicationData () {
-        this.deleteAllPlants()
+        this.deleteAllData()
           .then(() => this.closeModal())
           .then(() => this.showNotification({
             message: 'Successfully deleted all your data.'

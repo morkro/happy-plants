@@ -1,24 +1,40 @@
 import { updateStore } from '@/api/store'
+import { getAllData as getAllDataFromAPI } from '@/api/settings'
+import { deleteAllCategories } from '@/api/categories'
 import {
-  getAllPlants as getAllPlantsFromAPI,
-  deleteAllPlants as deleteAllPlantsFromAPI
+  // addPlant,
+  deleteAllPlants
 } from '@/api/plants'
 
-export const getAllPlants = () => {
-  return getAllPlantsFromAPI()
+export const getAllData = ({ commit }) => {
+  return getAllDataFromAPI()
 }
 
-export const deleteAllPlants = ({ commit }) => {
+export const deleteAllData = ({ commit }) => {
   return updateStore()
     .then(config =>
-      commit('DELETE_ALL_PLANTS', { updated: config.updated }))
-    .then(() => deleteAllPlantsFromAPI())
+      commit('DELETE_ALL_DATA', { updated: config.updated }))
+    .then(() => Promise.all([deleteAllPlants(), deleteAllCategories()]))
 }
 
-export const importPlantData = ({ commit }, data) => {
-  return updateStore()
-    .then(config => commit('IMPORT_PLANT_DATA', {
-      updated: config.updated,
-      ...data
-    }))
+export const importCategories = ({ commit }, data) => {
+  return updateStore(data)
+    .then(config => {
+      commit('IMPORT_CATEGORIES', { data: config.data, updated: config.updated })
+      return config
+    })
+}
+
+export const importSettings = ({ commit }, data) => {
+  return updateStore(data)
+    .then(config => {
+      commit('IMPORT_SETTINGS', { data: config.data, updated: config.updated })
+      return config
+    })
+}
+
+export const importPlants = ({ commit }, data) => {
+  return updateStore(data)
+    .then(config =>
+      commit('IMPORT_PLANTS', { data: config.data.data, updated: config.updated }))
 }

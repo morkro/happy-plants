@@ -11,12 +11,23 @@ function mergeObectArray (arr1 = [], arr2 = []) {
 }
 
 export default {
-  DELETE_ALL_PLANTS (state, payload) {
+  DELETE_ALL_DATA (state, payload) {
     state.updated = payload.updated
     state.plants = []
+    state.categories = []
   },
 
-  IMPORT_PLANT_DATA (state, payload) {
+  IMPORT_CATEGORIES (state, payload) {
+    state.updated = payload.updated
+    state.categories = payload.data
+  },
+
+  IMPORT_SETTINGS (state, payload) {
+    state.updated = payload.updated
+    state.settings = payload.data
+  },
+
+  IMPORT_PLANTS (state, payload) {
     const data = Array.isArray(payload.data) ? payload.data : [payload.data]
     state.updated = payload.updated
 
