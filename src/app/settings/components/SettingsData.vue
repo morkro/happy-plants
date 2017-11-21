@@ -54,7 +54,7 @@
 
     <div class="download-section">
       <span>
-        Download all your plant data as a JSON file.
+        Download all your plant data as a JSON file (without photos!).
         You might use this little database to import in a different tool,
         or even modify and import it again.
       </span>
