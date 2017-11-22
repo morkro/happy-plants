@@ -64,16 +64,6 @@
       }
     },
 
-    // created () {
-    //   firebase.auth().onAuthStateChanged(user => {
-    //     if (user) {
-    //       this.signInUser(user)
-    //     } else {
-    //       this.signOutUser()
-    //     }
-    //   })
-    // },
-
     mounted () {
       Promise.all([
         this.loadSettings(),
