@@ -13,7 +13,7 @@
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
-    <section>
+    <section :class="{ 'no-categories': !categories.length }">
       <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
           <input required
@@ -28,12 +28,11 @@
       </form>
 
       <section class="categories-list">
-        <h2>Categories</h2>
         <ul v-if="categories.length">
           <li v-for="(category, index) in categories" :key="`category-${index}`">
-            <span>
+            <strong>
               {{ category.label }}
-            </span>
+            </strong>
 
             <div class="categories-actions">
               <button
@@ -51,7 +50,7 @@
             </div>
           </li>
         </ul>
-        <div v-else>
+        <div v-else class="category-empty">
           <p>
             You don't have any categories yet.
           </p>
@@ -150,6 +149,19 @@
     background: $light-grey;
   }
 
+  section.no-categories {
+    display: flex;
+    height: calc(100vh - #{$app-header-size});
+    flex-direction: column;
+
+    .categories-list {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
   .add-category {
     padding: $base-gap;
     display: flex;
@@ -169,8 +181,11 @@
     }
   }
 
-  .categories-list h2 {
-    padding: $base-gap;
+  .category-empty {
+    padding: 0 $base-gap;
+    color: $text-color-secondary;
+    text-align: center;
+    font-weight: 600;
   }
 
   .categories-list ul {
