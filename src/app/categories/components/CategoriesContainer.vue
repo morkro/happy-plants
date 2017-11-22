@@ -22,8 +22,8 @@
             placeholder="Category"
             v-model="categoryName" />
         </label>
-        <button>
-          Add category
+        <button class="circle" aria-label="Add category">
+          <feather-plus />
         </button>
       </form>
 
@@ -72,6 +72,8 @@
     components: {
       'app-header': AppHeader,
       'category-modal': CategoryModal,
+      'feather-plus': () =>
+        import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
       'feather-trash': () =>
