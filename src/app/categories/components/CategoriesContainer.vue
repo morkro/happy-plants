@@ -195,7 +195,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: $base-gap/2 $base-gap;
+      padding: $base-gap;
       border-top: 2px solid $dark-transparency;
     }
 
@@ -208,9 +208,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-left: $base-gap;
 
     button:first-of-type {
-      margin-right: $base-gap/2;
+      margin-right: $base-gap;
     }
   }
 </style>
