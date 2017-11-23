@@ -7,8 +7,8 @@
         <h1 slot="headline">Notebook</h1>
         <div slot="content">
           <textarea
-            @change="emitContentChange"
-            v-model="textContent">
+            @change="updateContent"
+            :value="content">
           </textarea>
         </div>
       </app-modal>
@@ -58,6 +58,10 @@
       closeNotes () {
         this.showNotes = false
         this.emitContentChange()
+      },
+      updateContent (event) {
+        if (!event.target.value) return
+        this.textContent = event.target.value
       },
       emitContentChange () {
         this.$emit('update-plant', { type: 'notes', payload: this.textContent })
