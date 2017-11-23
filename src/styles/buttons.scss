@@ -41,7 +41,8 @@ button {
     stroke: $text-color-button;
 
     rect,
-    path {
+    path,
+    polygon {
       stroke: $text-color-button;
     }
   }
@@ -51,7 +52,8 @@ button {
     stroke: $text-color-base;
 
     rect,
-    path {
+    path,
+    polygon {
       stroke: $text-color-base;
     }
   }

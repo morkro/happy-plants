@@ -36,13 +36,13 @@
 
             <div class="categories-actions">
               <button
-                class="icon"
+                class="icon inverse"
                 aria-label="Edit category"
                 @click="openCategoryModal(category)">
                 <feather-edit />
               </button>
               <button
-                class="icon"
+                class="icon inverse"
                 aria-label="Delete category"
                 @click="requestDeleteCategory(category)">
                 <feather-trash />
@@ -197,6 +197,7 @@
       align-items: center;
       padding: $base-gap;
       border-top: 2px solid $dark-transparency;
+      font-size: $text-size-medium;
     }
 
     svg {
