@@ -15,7 +15,7 @@
           <h1>{{ name }}</h1>
           <button
             aria-label="Edit"
-            class="edit-data icon"
+            class="edit-data icon inverse"
             @click.prevent="openPlantEditModal">
             <feather-edit />
           </button>
