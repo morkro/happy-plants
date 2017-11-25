@@ -317,7 +317,7 @@
     list-style: none;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     position: relative;
     z-index: z($content-index, list);
@@ -327,6 +327,14 @@
       width: calc(50vw - #{$list-gap});
       height: calc(50vw - #{$list-gap});
       margin-bottom: $base-gap;
+
+      &:nth-child(even):not(:last-child) {
+        margin-left: auto;
+      }
+
+      &:nth-child(odd):not(:last-child) {
+        margin-right: auto;
+      }
 
       &:last-child {
         margin-bottom: 0;
