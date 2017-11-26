@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="dialog-backdrop" @click="emitDialogClose">
+  <div v-if="show" class="dialog-backdrop" @click.self="emitDialogClose">
     <section :style="{ backgroundColor }">
       <header class="dialog-header">
         <button
