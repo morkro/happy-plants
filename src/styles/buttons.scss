@@ -12,6 +12,7 @@ $button-circle-size: 40px;
  * Icon only:  <button class="icon"></button>
  *
  * States
+ * Default:   <button class="default"></button>
  * Warning:   <button class="warning"></button>
  * Disabled:  <button class="disabled"></button>
  *            <button disabled></button>
@@ -80,6 +81,12 @@ button {
     background: transparent;
     box-shadow: none;
     padding: 0;
+  }
+
+  &.default {
+    background: white;
+    box-shadow: $plain-shadow;
+    color: $text-color-base;
   }
 
   &.warning {

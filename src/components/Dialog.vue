@@ -1,21 +1,30 @@
 <template>
-  <section v-if="show" :style="{ backgroundColor }">
-    <header class="modal-header">
-      <button
-        aria-label="Close"
-        class="circle inverse"
-        @click.prevent="emitModalClose">
-        <feather-x width="18" height="18" />
-      </button>
-      <slot name="headline"></slot>
-    </header>
-    <slot name="content"></slot>
-  </section>
+  <div v-if="show" class="dialog-backdrop" @click="emitDialogClose">
+    <section :style="{ backgroundColor }">
+      <header class="dialog-header">
+        <button
+          aria-label="Close"
+          class="circle inverse"
+          @click.prevent="emitDialogClose">
+          <feather-x width="18" height="18" />
+        </button>
+        <slot name="headline"></slot>
+      </header>
+
+      <div class="dialog-content">
+        <slot name="content"></slot>
+        <div class="dialog-actions">
+          <slot name="cancel"></slot>
+          <slot name="confirm"></slot>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
   export default {
-    name: 'Modal',
+    name: 'Dialog',
 
     props: {
       show: { type: Boolean, default: false },
@@ -38,8 +47,8 @@
     },
 
     methods: {
-      emitModalClose () {
-        this.$emit('close-modal')
+      emitDialogClose () {
+        this.$emit('close-dialog')
       }
     }
   }
@@ -51,20 +60,30 @@
   @import "~styles/layout";
   @import "~styles/z-index";
 
-  section {
+  .dialog-backdrop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: $background-secondary;
+    background: $dark-transparency;
     position: fixed;
     top: 0;
     left: 0;
-    padding: $base-gap;
     z-index: z($page-elements, modals);
-    overflow-y: scroll;
   }
 
-  .modal-header {
+  section {
+    width: auto;
+    max-width: 85vw;
+    background: $background-secondary;
+    box-shadow: $plain-shadow;
+    padding: $base-gap;
+    border-radius: $border-radius;
+  }
+
+  .dialog-header {
     display: flex;
     align-items: flex-start;
     margin-bottom: $base-gap;
@@ -81,6 +100,15 @@
       font-weight: 600;
       line-height: 115%;
       margin-top: 8px;
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    margin-top: $base-gap;
+
+    button:first-of-type {
+      margin-right: $base-gap*2;
     }
   }
 </style>

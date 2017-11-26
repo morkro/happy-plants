@@ -9,6 +9,23 @@
       @close-modal="closeModal">
     </category-modal>
 
+    <category-dialog
+      backgroundColor="#ef494f"
+      class="category-dialog"
+      :show="showDialog"
+      @close-dialog="closeDialog">
+      <h1 slot="headline">Delete category</h1>
+      <p slot="content">
+        Do you really want to delete <strong>"{{ selectedCategoryLabel }}"</strong>?
+      </p>
+      <button class="default" slot="cancel" @click="closeDialog">
+        Cancel
+      </button>
+      <button class="warning" slot="confirm" @click="confirmDeleteCategory">
+        Delete category
+      </button>
+    </category-dialog>
+
     <app-header :back="true" backPath="settings">
       <h1 slot="title">Manage Categories</h1>
     </app-header>
@@ -44,7 +61,7 @@
               <button
                 class="icon inverse"
                 aria-label="Delete category"
-                @click="requestDeleteCategory(category)">
+                @click="openCategoryDialog(category)">
                 <feather-trash />
               </button>
             </div>
@@ -63,6 +80,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
+  import CategoryDialog from '@/components/Dialog'
   import CategoryModal from './CategoryModal'
 
   export default {
@@ -70,6 +88,7 @@
 
     components: {
       'app-header': AppHeader,
+      'category-dialog': CategoryDialog,
       'category-modal': CategoryModal,
       'feather-plus': () =>
         import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
@@ -81,6 +100,7 @@
 
     data: () => ({
       showModal: false,
+      showDialog: false,
       categoryName: '',
       selectedCategory: null
     }),
@@ -91,6 +111,11 @@
       }),
       hasCategoryName () {
         return this.categoryName !== ''
+      },
+      selectedCategoryLabel () {
+        return this.selectedCategory && this.selectedCategory.label
+          ? this.selectedCategory.label
+          : ''
       }
     },
 
@@ -103,6 +128,11 @@
       ]),
       closeModal () {
         this.showModal = false
+        this.selectedCategory = null
+      },
+      closeDialog () {
+        this.showDialog = false
+        this.selectedCategory = null
       },
       submitNewCategory () {
         if (!this.hasCategoryName) return
@@ -130,10 +160,16 @@
         this.selectedCategory = category
         this.showModal = true
       },
-      requestDeleteCategory (category) {
-        this.deleteCategory(category)
+      openCategoryDialog (category) {
+        this.selectedCategory = category
+        this.showDialog = true
+      },
+      confirmDeleteCategory () {
+        this.deleteCategory(this.selectedCategory)
           .then(() =>
-            this.showNotification({ message: `Category "${category.label}" deleted.` }))
+            this.showNotification({
+              message: `Category "${this.selectedCategory.label}" deleted.`
+            }))
       }
     }
   }
@@ -213,6 +249,20 @@
 
     button:first-of-type {
       margin-right: $base-gap;
+    }
+  }
+
+  .category-dialog {
+    color: $text-color-inverse;
+
+    h1 {
+      color: $text-color-inverse;
+    }
+
+    button.warning {
+      background: $yellow;
+      color: $link-color;
+      box-shadow: $plain-shadow;
     }
   }
 </style>

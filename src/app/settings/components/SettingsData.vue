@@ -295,6 +295,7 @@
       display: block;
       background: $yellow;
       color: $link-color;
+      box-shadow: $plain-shadow;
     }
   }
 

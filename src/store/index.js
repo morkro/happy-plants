@@ -27,7 +27,6 @@ export default new Vuex.Store({
     notification: {
       message: false
     },
-    // TODO: move to respective components and merge here
     settings: {
       filter: 'latest'
     },
