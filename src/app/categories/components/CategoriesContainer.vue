@@ -61,7 +61,7 @@
               <button
                 class="icon inverse"
                 aria-label="Delete category"
-                @click="openCategoryDialog(category)">
+                @click="openCategoryDialog($event, category)">
                 <feather-trash />
               </button>
             </div>
@@ -160,9 +160,13 @@
         this.selectedCategory = category
         this.showModal = true
       },
-      openCategoryDialog (category) {
+      openCategoryDialog (event, category) {
         this.selectedCategory = category
         this.showDialog = true
+
+        if (event.currentTarget) {
+          event.currentTarget.blur()
+        }
       },
       confirmDeleteCategory () {
         this.deleteCategory(this.selectedCategory)
