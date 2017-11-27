@@ -232,7 +232,11 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: 100%;
+    width: calc(100% - #{$base-gap*2});
+
+    @supports (justify-content: space-evenly) {
+      justify-content: space-evenly;
+    }
 
     .add-plant {
       width: $footer-btn-size;
