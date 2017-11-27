@@ -236,7 +236,7 @@
       justify-content: space-between;
       align-items: center;
       padding: $base-gap $base-gap+5;
-      border-top: 2px solid $dark-transparency;
+      border-top: 2px solid $transparency-black-light;
       font-size: $text-size-medium;
     }
 

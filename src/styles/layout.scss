@@ -4,8 +4,8 @@ $border-radius: 6px;
 $base-gap: 15px;
 $icon-size: 20px;
 $icon-size-small: 16px;
-$plain-shadow: 4px 4px 0 $dark-transparency;
-$inset-shadow: inset 1px 1px 0 $dark-transparency;
+$plain-shadow: 4px 4px 0 $transparency-black-light;
+$inset-shadow: inset 1px 1px 0 $transparency-black-light;
 $green-shadow: 4px 4px 0 transparentize($green, 0.8);
 $blue-shadow: 4px 4px 0 transparentize($blue, 0.8);
 $green-shadow-touch: 2px 2px 0 transparentize($green, 0.8);
@@ -23,7 +23,7 @@ $app-header-size: 50px;
   p,
   span {
     color: transparent !important;
-    background: $dark-transparency;
+    background: $transparency-black-light;
     border-radius: $border-radius;
   }
 }

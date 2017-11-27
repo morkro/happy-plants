@@ -12,7 +12,7 @@ input {
   &:focus {
     outline: none;
     box-shadow:
-      0 0 0 2px $dark-transparency,
-      0 0 12px $dark-transparency;
+      0 0 0 2px $transparency-black-light,
+      0 0 12px $transparency-black-light;
   }
 }

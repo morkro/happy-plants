@@ -67,7 +67,7 @@
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: rgba(0, 0, 0, 0.46);
+    background: transparency-black-medium;
     position: fixed;
     top: 0;
     left: 0;

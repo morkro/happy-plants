@@ -16,10 +16,7 @@
     name: 'OverviewFilter',
 
     props: {
-      selected: {
-        type: String,
-        default: 'latest'
-      }
+      selected: { type: String, default: 'latest' }
     },
 
     data () {

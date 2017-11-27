@@ -1,12 +1,18 @@
 <template>
-  <div @click="handleClick"
-    :style="{ backgroundImage: imageURL ? `url(${imageURL})` : '' }"
-    :class="{
-      'plant-preview': true,
-      'no-photo': !this.imageURL,
-      'select-delete': this.deleteMode && this.selected,
-      'select': this.deleteMode
-    }">
+  <div
+    @click="handleClick"
+    :style="background"
+    :class="wrapperClass">
+    <div v-show="deleteMode" :class="getLayerClass('delete')">
+      <feather-trash class="reverse" v-if="deleteMode && selected" />
+      <feather-minus class="reverse" v-else />
+    </div>
+
+    <div v-show="categoriseMode" :class="getLayerClass('category')">
+      <feather-check class="reverse" v-if="categoriseMode && selected" />
+      <feather-plus class="reverse" v-else />
+    </div>
+
     <div class="preview-content">
       <div class="preview-headline">
         <h1>{{ name }}</h1>
@@ -29,13 +35,72 @@
   export default {
     name: 'PlantPreview',
 
-    props: ['deleteMode', 'guid', 'name', 'imageURL'],
+    props: {
+      deleteMode: { type: Boolean, default: false },
+      categoriseMode: { type: Boolean, default: false },
+      guid: { type: String, default: '' },
+      name: { type: String, default: '' },
+      imageURL: { type: String, default: '' }
+    },
+
+    components: {
+      'feather-trash': () =>
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+      'feather-check': () =>
+        import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
+      'feather-plus': () =>
+        import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
+      'feather-minus': () =>
+        import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
+    },
+
+    computed: {
+      frozen () {
+        return this.deleteMode || this.categoriseMode
+      },
+      background () {
+        return this.imageURL
+          ? { backgroundImage: `url(${this.imageURL})` }
+          : ''
+      },
+      wrapperClass () {
+        return {
+          'plant-preview': true,
+          'no-photo': !this.imageURL,
+          'select-delete': this.deleteMode && this.selected,
+          'select-category': this.categoriseMode && this.selected,
+          'select': this.deleteMode || this.categoriseMode
+        }
+      }
+    },
+
+    data () {
+      return {
+        selected: false
+      }
+    },
+
+    updated () {
+      if (!this.frozen) {
+        this.selected = false
+      }
+    },
 
     methods: {
+      getLayerClass (type) {
+        return {
+          'select-layer': true,
+          [type]: true,
+          'selected': (
+            (this.deleteMode && type === 'delete' && this.selected) ||
+            (this.categoriseMode && type === 'category' && this.selected)
+          )
+        }
+      },
       handleClick (event) {
         event.preventDefault()
 
-        if (this.deleteMode) {
+        if (this.frozen) {
           this.toggleSelection()
           this.deleteElement()
           return
@@ -51,18 +116,6 @@
       },
       toggleSelection () {
         this.selected = !this.selected
-      }
-    },
-
-    data () {
-      return {
-        selected: false
-      }
-    },
-
-    updated () {
-      if (!this.deleteMode) {
-        this.selected = false
       }
     }
   }
@@ -85,52 +138,58 @@
     transform-origin: center;
     transition: transform 50ms $ease-out-back;
 
-    &::before,
-    &::after {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      content: "";
-      border-radius: $border-radius;
-      transition: opacity 100ms $ease-out-back;
-    }
-
-    &::before {
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
-      border: 2px dashed white;
-      opacity: 0;
-      z-index: 3;
-      transition: opacity 100ms $ease-out-back;
-    }
-
-    &::after {
-      opacity: 0;
-      background: $red;
-      box-shadow: 0 0 14px $red;
-      z-index: 1;
-    }
-
     &.no-photo {
       /* TODO: Show default image instead */
       background: $grey;
     }
+  }
 
-    &.select::before {
-      opacity: 1;
+  .select-layer {
+    position: absolute;
+    background: $transparency-black-medium;
+    border-radius: $border-radius;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+
+    &.selected::after {
+      content: "";
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      position: absolute;
+      z-index: 0;
+      background: $transparency-black-medium;
     }
 
-    &.select-delete {
-      transform: scale(0.95);
+    &.category.selected {
+      background: transparentize($green, 0.27);
 
       &::after {
-        opacity: 0.85;
+        background: $green;
       }
+    }
 
-      &::before {
-        opacity: 0;
+    &.delete.selected {
+      background: transparentize($red, 0.27);
+
+      &::after {
+        background: $red;
+      }
+    }
+
+    svg {
+      stroke: $text-color-button;
+      position: relative;
+      z-index: 1;
+
+      rect,
+      path,
+      polygon {
+        stroke: $text-color-button;
       }
     }
   }

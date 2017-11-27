@@ -37,7 +37,7 @@
     hr {
       margin: $base-gap 0;
       border: none;
-      border-top: 3px solid $dark-transparency;
+      border-top: 3px solid $transparency-black-light;
     }
   }
 </style>

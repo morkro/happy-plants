@@ -20,6 +20,7 @@
           <plant-preview
             @delete-plant="toggleElementInSelection"
             :deleteMode="deleteMode"
+            :categoriseMode="categoriseMode"
             :guid="plant.guid"
             :name="plant.name"
             :imageURL="plant.imageURL" />
@@ -55,17 +56,17 @@
         </transition>
 
         <transition appear name="footer-appear">
-          <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': sortingMode }">
+          <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': categoriseMode }">
             <button
               aria-label="Cancel sort"
               class="footer-cancel-mode circle inverse"
-              @click="cancelSortingMode">
+              @click="cancelcategoriseMode">
               <feather-x width="18" height="18" />
             </button>
             <button
               aria-label="Sort"
               class="organise-plants circle inverse"
-              @click="toggleSortingMode">
+              @click="togglecategoriseMode">
               <feather-layers width="18" height="18" />
             </button>
           </div>
@@ -104,6 +105,14 @@
       filter: state => state.settings.filter
     }),
 
+    data () {
+      return {
+        selection: [],
+        categoriseMode: false,
+        deleteMode: false
+      }
+    },
+
     methods: {
       ...mapActions([
         'loadPlants',
@@ -125,7 +134,7 @@
         this.selection = []
       },
       activateDeleteMode () {
-        if (this.sortingMode) return
+        if (this.categoriseMode) return
 
         // If the delete mode is already active, the selected elements should
         // be deleted and the mode deactivated again.
@@ -144,27 +153,19 @@
         this.deleteMode = false
         this.clearSelection()
       },
-      toggleSortingMode () {
+      togglecategoriseMode () {
         if (this.deleteMode) return
-        this.sortingMode = !this.sortingMode
+        this.categoriseMode = !this.categoriseMode
 
-        if (!this.sortingMode) {
+        if (!this.categoriseMode) {
           this.clearSelection()
         }
       },
-      cancelSortingMode () {
-        this.sortingMode = false
+      cancelcategoriseMode () {
+        this.categoriseMode = false
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
-      }
-    },
-
-    data () {
-      return {
-        selection: [],
-        sortingMode: false,
-        deleteMode: false
       }
     }
   }

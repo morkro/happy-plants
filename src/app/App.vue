@@ -119,7 +119,7 @@
     @media (min-width: $app-media-max-size) {
       background: $background-primary;
       height: 450px;
-      box-shadow: 0 0 20px $dark-transparency;
+      box-shadow: 0 0 20px $transparency-black-light;
     }
   }
 

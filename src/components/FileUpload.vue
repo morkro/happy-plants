@@ -135,7 +135,7 @@
       overflow: hidden;
 
       &.fallback {
-        background: $dark-transparency;
+        background: $transparency-black-light;
         display: flex;
         justify-content: center;
         align-items: center;
