@@ -2,7 +2,8 @@
   <div
     @click="handleClick"
     :style="background"
-    :class="wrapperClass">
+    :class="wrapperClass"
+    :aria-label="ariaLabel">
     <div v-show="deleteMode" :class="getLayerClass('delete')">
       <feather-trash class="reverse" v-if="deleteMode && selected" />
       <feather-minus class="reverse" v-else />
@@ -57,6 +58,15 @@
     computed: {
       frozen () {
         return this.deleteMode || this.categoriseMode
+      },
+      ariaLabel () {
+        if (this.deleteMode) {
+          return 'Delete'
+        }
+        if (this.categoriseMode) {
+          return 'Add to category'
+        }
+        return ''
       },
       background () {
         return this.imageURL
