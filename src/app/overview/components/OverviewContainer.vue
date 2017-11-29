@@ -4,6 +4,23 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
+    <overview-dialog
+      backgroundColor="#ef494f"
+      class="overview-dialog"
+      :show="showDialog"
+      @close-dialog="cancelDeleteMode">
+      <h1 slot="headline">Are you sure?</h1>
+      <p slot="content">
+        You are about to delete <strong>{{ selection.length }}</strong> plants.
+      </p>
+      <button class="default" slot="cancel" @click="cancelDeleteMode">
+        Cancel
+      </button>
+      <button class="warning" slot="confirm" @click="confirmDeletePlants">
+        Yes, delete plants
+      </button>
+    </overview-dialog>
+
     <section :class="{ 'no-plants': plants.length <= 0 }">
       <plants-intro
         v-if="plants.length <= 0" />
@@ -79,6 +96,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
+  import AppDialog from '@/components/Dialog'
   import PlantPreview from './PlantPreview'
   import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
@@ -89,6 +107,7 @@
 
     components: {
       'app-header': AppHeader,
+      'overview-dialog': AppDialog,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
@@ -109,7 +128,8 @@
       return {
         selection: [],
         categoriseMode: false,
-        deleteMode: false
+        deleteMode: false,
+        showDialog: false
       }
     },
 
@@ -138,20 +158,23 @@
 
         // If the delete mode is already active, the selected elements should
         // be deleted and the mode deactivated again.
-        if (this.deleteMode) {
-          if (this.selection.length) {
-            this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
-            this.deletePlants(this.selection)
-          }
-          this.cancelDeleteMode()
-          return
+        if (this.deleteMode && this.selection.length) {
+          this.showDialog = true
         }
 
         this.deleteMode = true
       },
       cancelDeleteMode () {
+        if (this.showDialog) {
+          this.showDialog = false
+        }
         this.deleteMode = false
         this.clearSelection()
+      },
+      confirmDeletePlants () {
+        this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
+        this.deletePlants(this.selection)
+        this.cancelDeleteMode()
       },
       togglecategoriseMode () {
         if (this.deleteMode) return
@@ -208,6 +231,20 @@
       justify-content: center;
       align-items: center;
       min-height: calc(100vh - #{$app-header-size});
+    }
+  }
+
+  .overview-dialog {
+    color: $text-color-inverse;
+
+    h1 {
+      color: $text-color-inverse;
+    }
+
+    button.warning {
+      background: $yellow;
+      color: $link-color;
+      box-shadow: $plain-shadow;
     }
   }
 
