@@ -5,7 +5,7 @@
     </app-header>
 
     <overview-dialog
-      backgroundColor="#ef494f"
+      type="warning"
       class="overview-dialog"
       :show="showDialog"
       @close-dialog="cancelDeleteMode">
@@ -235,12 +235,6 @@
   }
 
   .overview-dialog {
-    color: $text-color-inverse;
-
-    h1 {
-      color: $text-color-inverse;
-    }
-
     button.warning {
       background: $yellow;
       color: $link-color;

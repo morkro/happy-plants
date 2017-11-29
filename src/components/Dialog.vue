@@ -1,6 +1,8 @@
 <template>
   <div v-if="show" class="dialog-backdrop" @click.self="emitDialogClose">
-    <section :style="{ backgroundColor }">
+    <section
+      :class="{ 'dialog-warning': isWarningDialog }"
+      :style="{ backgroundColor: backgroundColor || '' }">
       <header class="dialog-header">
         <button
           aria-label="Close"
@@ -28,7 +30,8 @@
 
     props: {
       show: { type: Boolean, default: false },
-      backgroundColor: { type: String, default: '#F5F5F5' }
+      backgroundColor: { type: [String, Boolean], default: false },
+      type: { type: String, default: 'normal' }
     },
 
     components: {
@@ -43,6 +46,12 @@
         } else {
           this.$root.$el.parentNode.classList.remove('js-no-scrolling')
         }
+      }
+    },
+
+    computed: {
+      isWarningDialog () {
+        return this.type && this.type === 'warning'
       }
     },
 
@@ -81,6 +90,11 @@
     box-shadow: $plain-shadow;
     padding: $base-gap;
     border-radius: $border-radius;
+
+    &.dialog-warning {
+      background: $red;
+      color: $text-color-inverse;
+    }
   }
 
   .dialog-header {
@@ -100,6 +114,10 @@
       font-weight: 600;
       line-height: 115%;
       margin-top: 8px;
+
+      .dialog-warning & {
+        color: $text-color-inverse;
+      }
     }
   }
 

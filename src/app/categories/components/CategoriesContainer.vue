@@ -10,7 +10,7 @@
     </category-modal>
 
     <category-dialog
-      backgroundColor="#ef494f"
+      type="warning"
       class="category-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
@@ -257,12 +257,6 @@
   }
 
   .category-dialog {
-    color: $text-color-inverse;
-
-    h1 {
-      color: $text-color-inverse;
-    }
-
     button.warning {
       background: $yellow;
       color: $link-color;
