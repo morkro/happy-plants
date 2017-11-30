@@ -4,6 +4,7 @@ import VueSVGIcon from 'vue-svgicon'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
+import computedProperties from '@/utils/computedProperties'
 
 import App from '@/app/App'
 import router from './router'
@@ -23,6 +24,7 @@ localforage.config({
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
+Vue.use(computedProperties)
 Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
 

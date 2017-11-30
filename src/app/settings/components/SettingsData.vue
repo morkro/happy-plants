@@ -140,8 +140,8 @@
     computed: {
       modalColor () {
         return this.isDangerModal()
-          ? '#ef494f'
-          : '#f5f5f5'
+          ? this.$getProperty('brand-red')
+          : this.$getProperty('light-grey')
       },
       modalTitle () {
         return this.isDangerModal()
