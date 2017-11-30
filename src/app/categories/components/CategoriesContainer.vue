@@ -9,22 +9,22 @@
       @close-modal="closeModal">
     </category-modal>
 
-    <category-dialog
+    <category-alert
       type="warning"
-      class="category-dialog"
-      :show="showDialog"
-      @close-dialog="closeDialog">
+      class="category-alert"
+      :show="showAlert"
+      @close-alert="closeAlert">
       <h1 slot="headline">Delete category</h1>
       <p slot="content">
         Do you really want to delete <strong>"{{ selectedCategoryLabel }}"</strong>?
       </p>
-      <button class="default" slot="cancel" @click="closeDialog">
+      <button class="default" slot="cancel" @click="closeAlert">
         Cancel
       </button>
       <button class="warning" slot="confirm" @click="confirmDeleteCategory">
         Delete category
       </button>
-    </category-dialog>
+    </category-alert>
 
     <app-header :back="true" backPath="settings">
       <h1 slot="title">Manage Categories</h1>
@@ -80,7 +80,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
-  import CategoryDialog from '@/components/Dialog'
+  import CategoryAlert from '@/components/Alert'
   import CategoryModal from './CategoryModal'
 
   export default {
@@ -88,7 +88,7 @@
 
     components: {
       'app-header': AppHeader,
-      'category-dialog': CategoryDialog,
+      'category-alert': CategoryAlert,
       'category-modal': CategoryModal,
       'feather-plus': () =>
         import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
@@ -100,7 +100,7 @@
 
     data: () => ({
       showModal: false,
-      showDialog: false,
+      showAlert: false,
       categoryName: '',
       selectedCategory: null
     }),
@@ -130,8 +130,8 @@
         this.showModal = false
         this.selectedCategory = null
       },
-      closeDialog () {
-        this.showDialog = false
+      closeAlert () {
+        this.showAlert = false
         this.selectedCategory = null
       },
       submitNewCategory () {
@@ -162,7 +162,7 @@
       },
       openCategoryDialog (event, category) {
         this.selectedCategory = category
-        this.showDialog = true
+        this.showAlert = true
 
         if (event.currentTarget) {
           event.currentTarget.blur()
@@ -256,7 +256,7 @@
     }
   }
 
-  .category-dialog {
+  .category-alert {
     button.warning {
       background: $yellow;
       color: $link-color;

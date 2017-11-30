@@ -1,21 +1,21 @@
 <template>
-  <div v-if="show" class="dialog-backdrop" @click.self="emitDialogClose">
+  <div v-if="show" class="alert-backdrop" @click.self="emitAlertClose">
     <section
-      :class="{ 'dialog-warning': isWarningDialog }"
+      :class="`alert-${type}`"
       :style="{ backgroundColor: backgroundColor || '' }">
-      <header class="dialog-header">
+      <header class="alert-header">
         <button
           aria-label="Close"
           class="circle inverse"
-          @click.prevent="emitDialogClose">
+          @click.prevent="emitAlertClose">
           <feather-x width="18" height="18" />
         </button>
         <slot name="headline"></slot>
       </header>
 
-      <div class="dialog-content">
+      <div class="alert-content">
         <slot name="content"></slot>
-        <div class="dialog-actions">
+        <div class="alert-actions">
           <slot name="cancel"></slot>
           <slot name="confirm"></slot>
         </div>
@@ -49,15 +49,9 @@
       }
     },
 
-    computed: {
-      isWarningDialog () {
-        return this.type && this.type === 'warning'
-      }
-    },
-
     methods: {
-      emitDialogClose () {
-        this.$emit('close-dialog')
+      emitAlertClose () {
+        this.$emit('close-alert')
       }
     }
   }
@@ -69,7 +63,7 @@
   @import "~styles/layout";
   @import "~styles/z-index";
 
-  .dialog-backdrop {
+  .alert-backdrop {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -91,13 +85,13 @@
     padding: $base-gap;
     border-radius: $border-radius;
 
-    &.dialog-warning {
+    &.alert-warning {
       background: $red;
       color: $text-color-inverse;
     }
   }
 
-  .dialog-header {
+  .alert-header {
     display: flex;
     align-items: flex-start;
     margin-bottom: $base-gap;
@@ -115,13 +109,13 @@
       line-height: 115%;
       margin-top: 8px;
 
-      .dialog-warning & {
+      .alert-warning & {
         color: $text-color-inverse;
       }
     }
   }
 
-  .dialog-actions {
+  .alert-actions {
     display: flex;
     margin-top: $base-gap;
 

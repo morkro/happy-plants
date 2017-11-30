@@ -4,11 +4,11 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
-    <overview-dialog
+    <overview-alert
       type="warning"
-      class="overview-dialog"
-      :show="showDialog"
-      @close-dialog="cancelDeleteMode">
+      class="overview-alert"
+      :show="showAlert"
+      @close-alert="cancelDeleteMode">
       <h1 slot="headline">Are you sure?</h1>
       <p slot="content">
         You are about to delete <strong>{{ selection.length }}</strong> plants.
@@ -19,7 +19,7 @@
       <button class="warning" slot="confirm" @click="confirmDeletePlants">
         Yes, delete plants
       </button>
-    </overview-dialog>
+    </overview-alert>
 
     <section :class="{ 'no-plants': plants.length <= 0 }">
       <plants-intro
@@ -96,7 +96,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
-  import AppDialog from '@/components/Dialog'
+  import OverviewAlert from '@/components/Alert'
   import PlantPreview from './PlantPreview'
   import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
@@ -107,7 +107,7 @@
 
     components: {
       'app-header': AppHeader,
-      'overview-dialog': AppDialog,
+      'overview-alert': OverviewAlert,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
@@ -129,7 +129,7 @@
         selection: [],
         categoriseMode: false,
         deleteMode: false,
-        showDialog: false
+        showAlert: false
       }
     },
 
@@ -159,14 +159,14 @@
         // If the delete mode is already active, the selected elements should
         // be deleted and the mode deactivated again.
         if (this.deleteMode && this.selection.length) {
-          this.showDialog = true
+          this.showAlert = true
         }
 
         this.deleteMode = true
       },
       cancelDeleteMode () {
-        if (this.showDialog) {
-          this.showDialog = false
+        if (this.showAlert) {
+          this.showAlert = false
         }
         this.deleteMode = false
         this.clearSelection()
@@ -234,7 +234,7 @@
     }
   }
 
-  .overview-dialog {
+  .overview-alert {
     button.warning {
       background: $yellow;
       color: $link-color;
