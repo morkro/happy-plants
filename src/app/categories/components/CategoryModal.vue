@@ -70,29 +70,24 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
-  $photo-size: 59px;
-
   .modal-content {
     border-top: 3px solid rgba(0, 0, 0, 0.06);
-    padding-top: $base-gap;
+    padding-top: var(--base-gap);
   }
 
   label {
     display: block;
-    margin-bottom: $base-gap * 2;
+    margin-bottom: calc(var(--base-gap) * 2);
 
     h2 {
-      margin-bottom: $base-gap;
+      margin-bottom: var(--base-gap);
     }
 
     span {
       display: block;
-      color: $text-color-secondary;
-      font-size: $text-size-small;
-      margin-bottom: $base-gap;
+      color: var(--text-color-secondary);
+      font-size: var(--text-size-small);
+      margin-bottom: var(--base-gap);
       padding: 0 1px;
     }
 

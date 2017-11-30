@@ -100,7 +100,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/layout";
   @import "~styles/animations";
 
   $photo-size: 64px;
@@ -122,9 +121,9 @@
 
   .file-upload .upload-preview {
     display: flex;
-    margin-bottom: $base-gap;
-    background: $background-primary;
-    border-radius: $border-radius;
+    margin-bottom: var(--base-gap);
+    background: var(--background-primary);
+    border-radius: var(--border-radius);
     overflow: hidden;
     cursor: pointer;
 
@@ -135,7 +134,7 @@
       overflow: hidden;
 
       &.fallback {
-        background: $transparency-black-light;
+        background: var(--transparency-black-light);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -143,15 +142,15 @@
       }
 
       &.fallback.has-file {
-        background: $green;
+        background: var(--brand-green);
       }
     }
 
     span {
       background: transparent;
       box-shadow: none;
-      color: $text-color-base;
-      padding: $base-gap + 5 $base-gap;
+      color: var(--text-color-base);
+      padding: calc(var(--base-gap) + 5px) var(--base-gap);
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;

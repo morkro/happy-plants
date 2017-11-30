@@ -133,31 +133,28 @@
 
 <style lang="scss" scoped>
   @import "~styles/animations";
-  @import "~styles/layout";
-  @import "~styles/colors";
-  @import "~styles/fonts";
 
   .plant-preview {
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     background-size: cover;
     background-position: center;
-    box-shadow: $plain-shadow;
+    box-shadow: var(--plain-shadow);
     transform-origin: center;
     transition: transform 50ms $ease-out-back;
 
     &.no-photo {
       /* TODO: Show default image instead */
-      background: $grey;
+      background: var(--grey);
     }
   }
 
   .select-layer {
     position: absolute;
-    background: $transparency-black-medium;
-    border-radius: $border-radius;
+    background: var(--transparency-black-medium);
+    border-radius: var(--border-radius);
     width: 100%;
     height: 100%;
     display: flex;
@@ -172,34 +169,34 @@
       border-radius: 50%;
       position: absolute;
       z-index: 0;
-      background: $transparency-black-medium;
+      background: var(--transparency-black-medium);
     }
 
     &.category.selected {
-      background: transparentize($green, 0.27);
+      background: var(--brand-green);
 
       &::after {
-        background: $green;
+        background: var(--brand-green);
       }
     }
 
     &.delete.selected {
-      background: transparentize($red, 0.27);
+      background: var(--brand-red);
 
       &::after {
-        background: $red;
+        background: var(--brand-red);
       }
     }
 
     svg {
-      stroke: $text-color-button;
+      stroke: var(--text-color-button);
       position: relative;
       z-index: 1;
 
       rect,
       path,
       polygon {
-        stroke: $text-color-button;
+        stroke: var(--text-color-button);
       }
     }
   }
@@ -211,7 +208,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     overflow: hidden;
     z-index: 2;
 
@@ -224,12 +221,12 @@
 
   .preview-headline {
     position: absolute;
-    color: $text-color-inverse;
+    color: var(--text-color-inverse);
     width: 100%;
     bottom: 0;
     left: 0;
     padding: 10px;
-    font-size: $text-size-small;
+    font-size: var(--text-size-small);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     z-index: 1;
 
@@ -247,8 +244,8 @@
     }
 
     h1 {
-      color: $text-color-inverse;
-      font-size: $text-size-base;
+      color: var(--text-color-inverse);
+      font-size: var(--text-size-base);
       font-weight: 600;
     }
   }

@@ -46,20 +46,17 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
   @import "~styles/z-index";
 
   section {
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: $background-secondary;
+    background: var(--background-secondary);
     position: fixed;
     top: 0;
     left: 0;
-    padding: $base-gap;
+    padding: var(--base-gap);
     z-index: z($page-elements, modals);
     overflow-y: scroll;
   }
@@ -67,17 +64,17 @@
   .modal-header {
     display: flex;
     align-items: flex-start;
-    margin-bottom: $base-gap;
+    margin-bottom: var(--base-gap);
 
     button {
-      margin-right: $base-gap + 5;
-      background: $background-primary;
-      color: $link-color;
-      box-shadow: $plain-shadow;
+      margin-right: calc(var(--base-gap) + 5px);
+      background: var(--background-primary);
+      color: var(--link-color);
+      box-shadow: var(--plain-shadow);
     }
 
     h1 {
-      font-size: $text-size-large;
+      font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
       margin-top: 8px;

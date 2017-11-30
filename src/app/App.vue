@@ -82,6 +82,7 @@
 
 <style lang="scss">
   @import "~node_modules/normalize.css/normalize";
+  @import "~styles/colors";
   @import "~styles/fonts";
   @import "~styles/typography";
   @import "~styles/forms";
@@ -104,8 +105,8 @@
     }
 
     /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: $app-media-max-size) {
-      background: $green;
+    @media (min-width: var(--app-media-max-size)) {
+      background: var(--brand-green);
     }
   }
 
@@ -116,10 +117,10 @@
     height: 100%;
 
     /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: $app-media-max-size) {
-      background: $background-primary;
+    @media (min-width: var(--app-media-max-size)) {
+      background: var(--background-primary);
       height: 450px;
-      box-shadow: 0 0 20px $transparency-black-light;
+      box-shadow: 0 0 20px var(--transparency-black-light);
     }
   }
 
@@ -134,7 +135,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    padding-top: $app-header-size;
+    padding-top: var(--app-header-size);
   }
 
   .svg-icon {

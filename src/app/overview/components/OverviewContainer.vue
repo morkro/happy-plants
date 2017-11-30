@@ -195,13 +195,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
   @import "~styles/animations";
   @import "~styles/z-index";
 
   $content-index: list, footer;
-  $list-gap: ($base-gap * 2) - $base-gap / 2;
   $footer-btn-size: 60px;
   $footer-btn-size-secondary: 50px;
 
@@ -219,26 +216,27 @@
 
   main {
     min-height: 100vh;
-    background: $light-grey;
+    background: var(--background-secondary);
   }
 
   main > section {
     height: 100%;
-    padding: $base-gap $base-gap ($footer-btn-size + ($base-gap * 2));
+    padding: var(--base-gap);
+    padding-bottom: calc(60px + var(--base-gap) * 2);
 
     &.no-plants {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: calc(100vh - #{$app-header-size});
+      min-height: calc(100vh - var(--app-header-size));
     }
   }
 
   .overview-alert {
     button.warning {
-      background: $yellow;
-      color: $link-color;
-      box-shadow: $plain-shadow;
+      background: var(--brand-yellow);
+      color: var(--link-color);
+      box-shadow: var(--plain-shadow);
     }
   }
 
@@ -246,7 +244,7 @@
     display: flex;
 
     button {
-      margin-right: $base-gap;
+      margin-right: var(--base-gap);
     }
 
     .active svg {
@@ -256,7 +254,7 @@
 
   section footer {
     position: fixed;
-    bottom: $base-gap;
+    bottom: var(--base-gap);
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -264,7 +262,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    width: calc(100% - #{$base-gap*2});
+    width: calc(100% - var(--base-gap) * 2);
 
     @supports (justify-content: space-evenly) {
       justify-content: space-evenly;
@@ -277,8 +275,8 @@
 
     button:not(.add-plant) {
       padding: 0;
-      background: $background-primary;
-      box-shadow: $plain-shadow;
+      background: var(--background-primary);
+      box-shadow: var(--plain-shadow);
       width: $footer-btn-size-secondary;
       height: $footer-btn-size-secondary;
     }
@@ -287,7 +285,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: $link-color;
+      color: var(--link-color);
       position: absolute;
       top: 0;
       transform: scale(0);
@@ -295,8 +293,8 @@
     }
 
     /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: $app-media-max-size) {
-      width: $app-media-max-size;
+    @media (min-width: var(--app-media-max-size)) {
+      width: var(--app-media-max-size);
     }
   }
 
@@ -304,7 +302,7 @@
     position: relative;
 
     &.active .delete-plants {
-      background: $red;
+      background: var(--brand-red);
 
       &::after {
         opacity: 1;
@@ -320,7 +318,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      box-shadow: 0 0 14px 2px $red;
+      box-shadow: 0 0 14px 2px var(--brand-red);
       transition: opacity $base-speed $ease-out-back;
     }
 
@@ -346,7 +344,7 @@
   }
 
   .plant-options {
-    margin-bottom: $base-gap;
+    margin-bottom: var(--base-gap);
   }
 
   .plant-list {
@@ -357,12 +355,12 @@
     flex-wrap: wrap;
     position: relative;
     z-index: z($content-index, list);
-    $list-gap: ($base-gap * 2) - $base-gap / 2;
+    --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
 
     li {
-      width: calc(50vw - #{$list-gap});
-      height: calc(50vw - #{$list-gap});
-      margin-bottom: $base-gap;
+      width: calc(50vw - var(--list-gap));
+      height: calc(50vw - var(--list-gap));
+      margin-bottom: var(--base-gap);
 
       &:nth-child(even):not(:last-child) {
         margin-left: auto;

@@ -1,18 +1,15 @@
-@import "./layout";
-@import "./colors";
-
 input {
   background: white;
-  padding: $base-gap + 5 $base-gap;
-  color: $text-color-base;
+  padding: calc(var(--base-gap) + 5px) var(--base-gap);
+  color: var(--text-color-base);
   border: none;
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
 
   &:active,
   &:focus {
     outline: none;
     box-shadow:
-      0 0 0 2px $transparency-black-light,
-      0 0 12px $transparency-black-light;
+      0 0 0 2px var(--transparency-black-light),
+      0 0 12px var(--transparency-black-light);
   }
 }

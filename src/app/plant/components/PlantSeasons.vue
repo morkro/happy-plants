@@ -98,12 +98,10 @@
 
 <style lang="scss" scoped>
   @import "~styles/animations";
-  @import "~styles/colors";
-  @import "~styles/layout";
 
   p {
-    color: $text-color-secondary;
-    margin-bottom: $base-gap;
+    color: var(--text-color-secondary);
+    margin-bottom: var(--base-gap);
   }
 
   .season-list {
@@ -112,9 +110,9 @@
     justify-content: space-between;
 
     li {
-      color: darken($grey, 30);
-      background: $grey;
-      border-radius: $border-radius;
+      color: var(--dark-grey);
+      background: var(--grey);
+      border-radius: var(--border-radius);
       height: calc(100vw / 12 + 6px);
       width: 100%;
       display: flex;
@@ -129,41 +127,41 @@
       }
 
       &.growth {
-        color: $green;
-        background: lighten($green, 30);
+        color: var(--brand-green);
+        background: var(--brand-green-lighten);
       }
 
       &.growth-transition-to {
-        background: linear-gradient(90deg, $grey, lighten($green, 30));
+        background: linear-gradient(90deg, var(--grey), var(--brand-green-lighten));
       }
 
       &.growth-transition-from {
-        background: linear-gradient(90deg, lighten($green, 30), $grey);
+        background: linear-gradient(90deg, var(--brand-green-lighten), var(--grey));
       }
 
       &.growth.current {
-        color: $text-color-inverse;
-        background: $green;
-        box-shadow: $green-shadow;
+        color: var(--text-color-inverse);
+        background: var(--brand-green);
+        box-shadow: var(--green-shadow);
 
         &::after {
           opacity: 1;
           content: "";
-          border-radius: $border-radius;
+          border-radius: var(--border-radius);
           width: 100%;
           height: 100%;
           display: block;
           position: absolute;
           top: 0;
           left: 0;
-          box-shadow: 0 0 12px 0 rgba($green, 0.7);
+          box-shadow: 0 0 12px 0 var(--brand-green);
           transition: opacity $base-speed $ease-out-back;
         }
       }
 
       &.current {
         font-weight: 600;
-        box-shadow: $plain-shadow;
+        box-shadow: var(--plain-shadow);
         transform: scale(1.2);
       }
     }

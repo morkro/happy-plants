@@ -38,14 +38,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   main {
     min-height: 100vh;
     justify-content: center;
-    background: $light-grey;
+    background: var(--background-secondary);
   }
 
   section {
@@ -53,17 +49,17 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: $base-gap;
+    padding: var(--base-gap);
 
     p {
-      color: $text-color-secondary;
+      color: var(--text-color-secondary);
       text-align: center;
       font-weight: 600;
-      margin-top: $base-gap;
+      margin-top: var(--base-gap);
     }
   }
 
   button {
-    margin-top: $base-gap;
+    margin-top: var(--base-gap);
   }
 </style>

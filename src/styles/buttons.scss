@@ -1,6 +1,3 @@
-@import "./colors";
-@import "./fonts";
-@import "./layout";
 @import "./animations";
 
 $button-circle-size: 40px;
@@ -21,46 +18,46 @@ button {
   display: flex;
   align-items: center;
   cursor: pointer;
-  background: $green;
-  font-size: $text-size-base;
-  color: $text-color-button;
+  background: var(--brand-green);
+  font-size: var(--text-size-base);
+  color: var(--text-color-button);
   border: none;
-  border-radius: $border-radius;
+  border-radius: var(--border-radius);
   padding: 12px 18px;
-  box-shadow: $green-shadow;
+  box-shadow: var(--green-shadow);
   transition: background-color 100ms $ease-out-back;
 
   &:active,
   &:focus {
     outline: none;
-    box-shadow: $green-shadow-touch;
+    box-shadow: var(--brand-green-shadow-touch);
     transform: translateY(2px);
   }
 
   svg {
-    margin-right: $base-gap / 2;
-    stroke: $text-color-button;
+    margin-right: calc(var(--base-gap) / 2);
+    stroke: var(--text-color-button);
 
     rect,
     path,
     polygon {
-      stroke: $text-color-button;
+      stroke: var(--text-color-button);
     }
   }
 
 
   &.inverse svg {
-    stroke: $text-color-base;
+    stroke: var(--text-color-base);
 
     rect,
     path,
     polygon {
-      stroke: $text-color-base;
+      stroke: var(--text-color-base);
     }
   }
 
   &.rounded {
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
   }
 
   &.circle {
@@ -85,21 +82,21 @@ button {
 
   &.default {
     background: white;
-    box-shadow: $plain-shadow;
-    color: $text-color-base;
+    box-shadow: var(--plain-shadow);
+    color: var(--text-color-base);
   }
 
   &.warning {
-    background: $red;
-    box-shadow: $red-shadow;
+    background: var(--brand-red);
+    box-shadow: var(--brand-red)-shadow;
   }
 
   &.disabled,
   &[disabled] {
-    background: $background-primary;
-    color: transparentize($text-color-secondary, 0.3);
+    background: var(--background-primary);
+    color: var(--text-color-secondary);
     cursor: not-allowed;
-    box-shadow: $inset-shadow;
+    box-shadow: var(--inset-shadow);
 
     svg {
       opacity: 0.3;

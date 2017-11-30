@@ -48,19 +48,16 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
   @import "~styles/animations";
 
   .watering-list {
-    margin-top: $base-gap;
+    margin-top: var(--base-gap);
     display: flex;
     list-style: none;
     justify-content: space-between;
 
     li {
-      width: calc(100% / 3 - #{$base-gap} / 2);
+      width: calc(100% / 3 - var(--base-gap) / 2);
     }
 
     button {
@@ -69,14 +66,14 @@
       transition: transform $base-speed * 2 $ease-out-back;
 
       &:not(.active) {
-        background-color: $grey;
+        background-color: var(--grey);
         box-shadow: none;
       }
 
       &.active {
-        background-color: $blue;
-        box-shadow: $blue-shadow;
-        transform: scale(1.1);
+        background-color: var(--brand-blue);
+        box-shadow: var(--blue-shadow);
+        transform: scale(1.05);
       }
     }
   }

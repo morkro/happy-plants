@@ -38,18 +38,14 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   select {
     appearance: none;
     background: rgba(0, 0, 0, 0.05);
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     border: none;
-    color: $text-color-base;
+    color: var(--text-color-base);
     padding: 1.5vh 3vw;
     width: 100%;
-    font-size: $text-size-base;
+    font-size: var(--text-size-base);
   }
 </style>

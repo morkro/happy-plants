@@ -18,21 +18,18 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-
   .notification-wrapper {
     display: flex;
     align-items: center;
     background: rgba(0, 0, 0, 0.8);
-    color: $text-color-inverse;
-    width: calc(100% - #{$base-gap*2});
-    height: $app-header-size;
-    padding: 10px $base-gap;
+    color: var(--text-color-inverse);
+    width: calc(100% - var(--base-gap) * 2);
+    height: var(--app-header-size);
+    padding: 10px var(--base-gap);
     position: fixed;
-    bottom: $base-gap;
+    bottom: var(--base-gap);
     left: 50%;
     transform: translateX(-50%);
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
   }
 </style>

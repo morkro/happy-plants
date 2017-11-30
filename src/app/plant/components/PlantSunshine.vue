@@ -75,9 +75,6 @@
 
 <style lang="scss" scoped>
   @import "~styles/animations";
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
 
   $sunshine-size: 75px;
   $base-sunshine-radius: 40px;
@@ -88,13 +85,13 @@
   }
 
   .sunshine-description {
-    color: $text-color-secondary;
+    color: var(--text-color-secondary);
     width: 50%;
     position: relative;
     z-index: 0;
 
     .description-level {
-      margin-bottom: $base-gap/2;
+      margin-bottom: var(--base-gap) / 2;
     }
   }
 
@@ -116,20 +113,20 @@
       height: var(--base-sunshine-radius);
       border-radius: 50%;
       border: 2px solid white;
-      background-color: $grey;
+      background-color: var(--grey);
       z-index: $max-sunshine-rings;
       transition: background-color $base-speed*2 $ease-out-expo;
 
       &.active {
-        background-color: $yellow;
+        background-color: var(--brand-yellow);
       }
 
       .intensity-1 &.active:first-of-type {
-        box-shadow: 0 0 10px 3px $yellow;
+        box-shadow: 0 0 10px 3px var(--brand-yellow);
       }
 
       &.active:first-of-type {
-        box-shadow: 0 0 30px 3px $yellow;
+        box-shadow: 0 0 30px 3px var(--brand-yellow);
       }
 
       &:nth-of-type(2) {
@@ -138,7 +135,7 @@
         z-index: $max-sunshine-rings - 1;
 
         &.active {
-          box-shadow: 0 0 30px 3px $yellow;
+          box-shadow: 0 0 30px 3px var(--brand-yellow);
         }
       }
 
@@ -149,7 +146,7 @@
         box-shadow: 0 0 0 40px rgba(0, 0, 0, 0.075);
 
         &.active {
-          box-shadow: 0 0 0 40px transparentize($yellow, 0.5);
+          box-shadow: 0 0 0 40px var(--brand-yellow-medium);
         }
       }
     }

@@ -58,9 +58,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
   @import "~styles/z-index";
 
   .alert-backdrop {
@@ -70,7 +67,7 @@
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: $transparency-black-medium;
+    background: var(--transparency-black-medium);
     position: fixed;
     top: 0;
     left: 0;
@@ -80,47 +77,47 @@
   section {
     width: auto;
     max-width: 85vw;
-    background: $background-secondary;
-    box-shadow: $plain-shadow;
-    padding: $base-gap;
-    border-radius: $border-radius;
+    background: var(--background-secondary);
+    box-shadow: var(--plain-shadow);
+    padding: var(--base-gap);
+    border-radius: var(--border-radius);
 
     &.alert-warning {
-      background: $red;
-      color: $text-color-inverse;
+      background: var(--brand-red);
+      color: var(--text-color-inverse);
     }
   }
 
   .alert-header {
     display: flex;
     align-items: flex-start;
-    margin-bottom: $base-gap;
+    margin-bottom: var(--base-gap);
 
     button {
-      margin-right: $base-gap + 5;
-      background: $background-primary;
-      color: $link-color;
-      box-shadow: $plain-shadow;
+      margin-right: calc(var(--base-gap) + 5px);
+      background: var(--background-primary);
+      color: var(--link-color);
+      box-shadow: var(--plain-shadow);
     }
 
     h1 {
-      font-size: $text-size-large;
+      font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
       margin-top: 8px;
 
       .alert-warning & {
-        color: $text-color-inverse;
+        color: var(--text-color-inverse);
       }
     }
   }
 
   .alert-actions {
     display: flex;
-    margin-top: $base-gap;
+    margin-top: var(--base-gap);
 
     button:first-of-type {
-      margin-right: $base-gap*2;
+      margin-right: calc(var(--base-gap) * 2);
     }
   }
 </style>

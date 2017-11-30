@@ -32,30 +32,29 @@
 
 <style lang="scss" scoped>
   @import "~styles/animations";
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
 
   section {
-    background: $background-secondary;
+    background: var(--background-secondary);
     width: 100%;
-    padding: $base-gap/2 $base-gap ($base-gap/2)+3;
-    font-size: $text-size-xsmall;
+    padding:
+      calc(var(--base-gap) / 2) var(--base-gap)
+      calc(var(--base-gap) / 2 + 3px);
+    font-size: var(--text-size-xsmall);
     font-style: italic;
     display: flex;
     justify-content: center;
     align-items: center;
 
     p {
-      color: $text-color-secondary;
+      color: var(--text-color-secondary);
     }
   }
 
   .updates-icon {
-    margin-right: $base-gap/3;
+    margin-right: calc(var(--base-gap) / 3);
     height: 16px;
     width: 16px;
-    stroke: $text-color-secondary;
+    stroke: var(--text-color-secondary);
     opacity: 0.5;
   }
 </style>

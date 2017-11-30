@@ -53,17 +53,15 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
   @import "~styles/z-index";
 
   header {
     box-shadow: 0 0 22px rgba(0, 0, 0, 0.05);
-    background: $background-primary;
+    background: var(--background-primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-height: $app-header-size;
+    max-height: var(--app-header-size);
     width: 100%;
     position: fixed;
     top: 0;
@@ -71,25 +69,25 @@
 
     h1 {
       text-transform: uppercase;
-      color: $text-color-base;
-      margin: 0 $base-gap;
-      padding: $base-gap 0;
+      color: var(--text-color-base);
+      margin: 0 var(--base-gap);
+      padding: var(--base-gap) 0;
     }
 
     /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: $app-media-max-size) {
-      width: $app-media-max-size;
+    @media (min-width: var(--app-media-max-size)) {
+      width: var(--app-media-max-size);
     }
   }
 
   .header-ctrl {
-    width: $app-header-size;
-    min-height: $app-header-size;
+    width: var(--app-header-size);
+    min-height: var(--app-header-size);
     height: 100%;
 
     a {
-      width: $app-header-size;
-      min-height: $app-header-size;
+      width: var(--app-header-size);
+      min-height: var(--app-header-size);
       height: 100%;
       display: flex;
       justify-content: center;
@@ -106,8 +104,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: $icon-size + $base-gap;
-        height: $icon-size + $base-gap;
+        width: calc(var(--icon-size-base) + var(--base-gap));
+        height: calc(var(--icon-size-base) + var(--base-gap));
         transform: translate(-50%, -50%);
         z-index: -1;
       }
@@ -115,7 +113,7 @@
   }
 
   .header-settings-icon {
-    width: $icon-size;
-    height: $icon-size;
+    width: var(--icon-size-base);
+    height: var(--icon-size-base);
   }
 </style>

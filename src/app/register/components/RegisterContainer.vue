@@ -83,15 +83,11 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   main {
-    background: $background-secondary;
+    background: var(--background-secondary);
 
     section {
-      padding: $base-gap 0;
+      padding: var(--base-gap) 0;
       line-height: 150%;
     }
   }
@@ -99,7 +95,7 @@
   form {
     position: relative;
     z-index: 1;
-    padding: 0 $base-gap;
+    padding: 0 var(--base-gap);
     width: 100%;
 
     input {
@@ -111,9 +107,9 @@
     display: flex;
     background: white;
     padding: 0;
-    margin-bottom: $base-gap;
+    margin-bottom: var(--base-gap);
     border: none;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
     width: 100%;
   }
@@ -121,24 +117,24 @@
   .form-label-group {
     display: block;
     width: 100%;
-    margin-bottom: $base-gap * 2;
+    margin-bottom: calc(var(--base-gap) * 2);
   }
 
   label h2 {
-    margin-bottom: $base-gap / 2;
+    margin-bottom: calc(var(--base-gap) / 2);
 
     &.required::after {
-      color: $blue;
+      color: var(--brand-blue);
       content: " *";
-      font-size: $text-size-small;
+      font-size: var(--text-size-small);
     }
   }
 
   label span {
     display: block;
-    color: $text-color-secondary;
-    font-size: $text-size-small;
-    margin-bottom: $base-gap / 2;
+    color: var(--text-color-secondary);
+    font-size: var(--text-size-small);
+    margin-bottom: calc(var(--base-gap) / 2);
     padding: 0 1px;
   }
 </style>

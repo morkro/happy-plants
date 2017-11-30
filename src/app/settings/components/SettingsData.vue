@@ -244,19 +244,15 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   $color-modal-border: rgba(0, 0, 0, 0.06);
 
   section {
-    padding: $base-gap;
+    padding: var(--base-gap);
     line-height: 150%;
 
     span {
       display: inline-block;
-      margin-bottom: $base-gap;
+      margin-bottom: var(--base-gap);
     }
 
     svg {
@@ -267,58 +263,58 @@
   }
 
   .download-section {
-    margin-bottom: $base-gap;
+    margin-bottom: var(--base-gap);
   }
 
   .import-section .note {
-    font-size: $text-size-small;
+    font-size: var(--text-size-small);
     font-style: italic;
-    margin-top: $base-gap;
+    margin-top: var(--base-gap);
     margin-bottom: 0;
     opacity: 0.7;
   }
 
   hr {
-    margin: $base-gap 0;
+    margin: var(--base-gap) 0;
     border: none;
-    border-top: 3px solid $transparency-black-light;
+    border-top: 3px solid var(--transparency-black-light);
   }
 
   .danger-modal {
     h1,
     p {
-      color: $text-color-inverse;
+      color: var(--text-color-inverse);
     }
 
     button {
-      margin-top: $base-gap;
+      margin-top: var(--base-gap);
       display: block;
-      background: $yellow;
-      color: $link-color;
-      box-shadow: $plain-shadow;
+      background: var(--brand-yellow);
+      color: var(--link-color);
+      box-shadow: var(--plain-shadow);
     }
   }
 
   .import-modal-content {
     border-top: 3px solid $color-modal-border;
-    padding-top: $base-gap;
+    padding-top: var(--base-gap);
   }
 
   .import-types {
     list-style: none;
-    margin: $base-gap 0;
+    margin: var(--base-gap) 0;
 
     span {
       margin: 0;
-      font-size: $text-size-small;
-      color: $text-color-secondary;
+      font-size: var(--text-size-small);
+      color: var(--text-color-secondary);
       display: block;
     }
 
     li {
       display: block;
       width: 100%;
-      padding: $base-gap/2 0;
+      padding: var(--base-gap) / 2 0;
 
       &:not(:last-of-type) {
         border-bottom: 2px solid $color-modal-border;

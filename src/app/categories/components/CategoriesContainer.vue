@@ -180,18 +180,14 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   main {
     min-height: 100vh;
-    background: $light-grey;
+    background: var(--background-secondary);
   }
 
   section.no-categories {
     display: flex;
-    height: calc(100vh - #{$app-header-size});
+    height: calc(100vh - var(--app-header-size));
     flex-direction: column;
 
     .categories-list {
@@ -203,7 +199,7 @@
   }
 
   .add-category {
-    padding: $base-gap;
+    padding: var(--base-gap);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -217,13 +213,13 @@
     }
 
     button {
-      margin-left: $base-gap;
+      margin-left: var(--base-gap);
     }
   }
 
   .category-empty {
-    padding: 0 $base-gap;
-    color: $text-color-secondary;
+    padding: 0 var(--base-gap);
+    color: var(--text-color-secondary);
     text-align: center;
     font-weight: 600;
   }
@@ -235,9 +231,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: $base-gap $base-gap+5;
-      border-top: 2px solid $transparency-black-light;
-      font-size: $text-size-medium;
+      padding: var(--base-gap) calc(var(--base-gap) + 5px);
+      border-top: 2px solid var(--transparency-black-light);
+      font-size: var(--text-size-medium);
     }
 
     svg {
@@ -249,18 +245,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: $base-gap;
+    margin-left: var(--base-gap);
 
     button:first-of-type {
-      margin-right: $base-gap;
+      margin-right: var(--base-gap);
     }
   }
 
   .category-alert {
     button.warning {
-      background: $yellow;
-      color: $link-color;
-      box-shadow: $plain-shadow;
+      background: var(--brand-yellow);
+      color: var(--link-color);
+      box-shadow: var(--plain-shadow);
     }
   }
 </style>

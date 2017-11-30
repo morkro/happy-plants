@@ -38,12 +38,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   ul li {
-    padding: $base-gap;
+    padding: var(--base-gap);
     display: flex;
     align-items: center;
 
@@ -61,7 +57,7 @@
 
     &.menu-version {
       font-size: 80%;
-      color: $text-color-secondary;
+      color: var(--text-color-secondary);
     }
 
     svg {

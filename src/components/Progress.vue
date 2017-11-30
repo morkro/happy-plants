@@ -18,9 +18,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/layout";
-  @import "~styles/colors";
-  @import "~styles/fonts";
   @import "~styles/animations";
 
   .progress-container {
@@ -37,21 +34,21 @@
 
     &::-webkit-progress-bar {
       border-radius: 6px;
-      background: $transparency-black-light;
+      background: var(--transparency-black-light);
     }
 
     &::-webkit-progress-value {
-      border-radius: $border-radius;
-      background: $yellow;
-      box-shadow: 0 0 12px $yellow;
+      border-radius: var(--border-radius);
+      background: var(--brand-yellow);
+      box-shadow: 0 0 12px var(--brand-yellow);
       transition: width $base-speed $ease-out-back;
     }
   }
 
   span {
-    font-size: $text-size-xsmall;
+    font-size: var(--text-size-xsmall);
     color: rgba(0, 0, 0, 0.35);
-    margin-left: $base-gap;
+    margin-left: var(--base-gap);
 
     &::before {
       content: attr(data-current) " / ";

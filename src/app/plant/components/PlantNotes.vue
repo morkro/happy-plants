@@ -71,13 +71,11 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/layout";
-  @import "~styles/colors";
   @import "~styles/z-index";
 
   p {
-    color: $text-color-secondary;
-    margin-bottom: $base-gap;
+    color: var(--text-color-secondary);
+    margin-bottom: var(--base-gap);
   }
 
   textarea {
@@ -85,6 +83,6 @@
     width: 100%;
     height: 100%;
     min-height: calc(100vh - 85px);
-    padding: $base-gap;
+    padding: var(--base-gap);
   }
 </style>

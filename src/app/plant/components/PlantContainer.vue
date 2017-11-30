@@ -183,9 +183,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/layout";
   @import "~styles/animations";
 
   .main-wireframe {
@@ -198,23 +195,23 @@
   }
 
   .view-content {
-    background-color: $background-secondary;
+    background-color: var(--background-secondary);
     min-height: 100vh;
 
     h3 {
       font-weight: 600;
-      font-size: $text-size-medium;
+      font-size: var(--text-size-medium);
     }
   }
 
   .view-content header {
     position: relative;
-    color: $text-color-inverse;
+    color: var(--text-color-inverse);
     height: 100vw;
-    background: $grey;
+    background: var(--grey);
 
     .edit-data {
-      padding: $base-gap + 5;
+      padding: calc(var(--base-gap) + 5px);
       z-index: 2;
 
       svg {
@@ -224,10 +221,10 @@
     }
 
     h1 {
-      padding: $base-gap;
-      font-size: $text-size-large;
+      padding: var(--base-gap);
+      font-size: var(--text-size-large);
       font-weight: 600;
-      color: $text-color-inverse;
+      color: var(--text-color-inverse);
       line-height: 115%;
     }
 
@@ -268,11 +265,11 @@
   }
 
   .content-notes {
-    padding: $base-gap;
+    padding: var(--base-gap);
 
     h2,
     p {
-      margin-bottom: $base-gap;
+      margin-bottom: var(--base-gap);
     }
   }
 </style>

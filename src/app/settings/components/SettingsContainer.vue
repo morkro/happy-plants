@@ -45,24 +45,21 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-
   $avatar-size: 20px;
 
   main {
     min-height: 10vh;
     height: 100vh;
-    background: $light-grey;
+    background: var(--background-secondary);
   }
 
   .settings-avatar {
     border-radius: 50%;
     width: $avatar-size;
     height: $avatar-size;
-    margin-right: $base-gap;
+    margin-right: var(--base-gap);
     overflow: hidden;
-    background: $light-grey;
+    background: var(--background-secondary);
     display: flex;
     justify-content: center;
     align-items: center;

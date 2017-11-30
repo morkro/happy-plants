@@ -64,17 +64,15 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/layout";
-
   section {
-    padding: $base-gap;
+    padding: var(--base-gap);
     line-height: 150%;
   }
 
   .account-auth {
     span {
       display: inline-block;
-      margin-bottom: $base-gap;
+      margin-bottom: var(--base-gap);
     }
   }
 
@@ -83,7 +81,7 @@
     justify-content: center;
 
     button {
-      margin: 0 $base-gap;
+      margin: 0 var(--base-gap);
     }
   }
 </style>

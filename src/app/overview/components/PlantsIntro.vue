@@ -28,10 +28,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-  @import "~styles/fonts";
-
   section {
     display: flex;
     align-items: center;
@@ -39,10 +35,10 @@
     flex-direction: column;
 
     p {
-      color: $text-color-secondary;
+      color: var(--text-color-secondary);
       text-align: center;
       font-weight: 600;
-      margin-top: $base-gap;
+      margin-top: var(--base-gap);
     }
   }
 

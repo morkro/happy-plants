@@ -27,17 +27,14 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-
   section {
-    padding: $base-gap;
+    padding: var(--base-gap);
     line-height: 150%;
 
     hr {
-      margin: $base-gap 0;
+      margin: var(--base-gap) 0;
       border: none;
-      border-top: 3px solid $transparency-black-light;
+      border-top: 3px solid var(--transparency-black-light);
     }
   }
 </style>

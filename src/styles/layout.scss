@@ -1,21 +1,32 @@
-@import "~styles/colors";
+:root {
+  --border-radius: 6px;
+  --base-gap: 15px;
+  --icon-size-base: 20px;
+  --icon-size-small: 16px;
 
-$border-radius: 6px;
-$base-gap: 15px;
-$icon-size: 20px;
-$icon-size-small: 16px;
-$plain-shadow: 4px 4px 0 $transparency-black-light;
-$inset-shadow: inset 1px 1px 0 $transparency-black-light;
-$green-shadow: 4px 4px 0 transparentize($green, 0.8);
-$blue-shadow: 4px 4px 0 transparentize($blue, 0.8);
-$green-shadow-touch: 2px 2px 0 transparentize($green, 0.8);
-$red-shadow: 4px 4px 0 transparentize($red, 0.8);
+  --plain-shadow: 4px 4px 0 var(--transparency-black-light);
+  --inset-shadow: inset 1px 1px 0 var(--transparency-black-light);
+  --green-shadow: 4px 4px 0 var(--brand-green-low);
+  --blue-shadow: 4px 4px 0 var(--brand-blue-low);
 
-$app-media-max-size: 600px;
-$app-header-size: 50px;
+  --background-primary: white;
+  --background-secondary: var(--light-grey, #f5f5f5);
+
+  --text-color-base: black;
+  --text-color-secondary: rgba(0, 0, 0, 0.6);
+  --text-color-inverse: white;
+  --text-color-button: white;
+  --link-color: var(--text-color-base, #000);
+
+  --transparency-black-light: rgba(0, 0, 0, 0.12);
+  --transparency-black-medium: rgba(0, 0, 0, 0.46);
+
+  --app-media-max-size: 600px;
+  --app-header-size: 50px;
+}
 
 .is-skeleton {
-  background: $grey !important;
+  background: var(--grey) !important;
   box-shadow: none !important;
 
   h1,
@@ -23,7 +34,7 @@ $app-header-size: 50px;
   p,
   span {
     color: transparent !important;
-    background: $transparency-black-light;
-    border-radius: $border-radius;
+    background: var(--transparency-black-light);
+    border-radius: var(--border-radius);
   }
 }

@@ -33,13 +33,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~styles/colors";
-  @import "~styles/layout";
-
   section.plant-component {
-    background-color: $background-primary;
+    background-color: var(--background-primary);
     width: 100%;
-    padding: $base-gap;
+    padding: var(--base-gap);
     margin-bottom: 4px;
     overflow: hidden;
   }
@@ -48,7 +45,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: $base-gap/1.5;
+    margin-bottom: var(--base-gap) / 1.5;
     position: relative;
     z-index: 2;
 
@@ -57,10 +54,10 @@
       align-items: center;
 
       svg {
-        width: $icon-size-small;
-        height: $icon-size-small;
+        width: var(--icon-size--small);
+        height: var(--icon-size-small);
         opacity: 0.5;
-        margin-right: $base-gap/3;
+        margin-right: calc(var(--base-gap) / 3);
       }
     }
   }

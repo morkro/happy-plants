@@ -1,12 +1,8 @@
-@import "./colors";
-@import "./fonts";
-@import "./layout";
-
 body {
   font-family: $Asap;
-  font-size: $text-size-base;
+  font-size: var(--text-size-base);
   font-weight: 400;
-  color: $text-color-base;
+  color: var(--text-color-base);
   line-height: 120%;
   text-rendering: geometricPrecision;
   // Enable best font rendering
@@ -15,15 +11,15 @@ body {
 }
 
 a {
-  color: $text-color-base;
+  color: var(--text-color-base);
   text-decoration: none;
 
   &[target="_blank"] {
-    color: $text-color-button;
+    color: var(--text-color-button);
     text-decoration: none;
-    background: $green;
-    border-radius: $border-radius;
-    box-shadow: $green-shadow;
+    background: var(--brand-green);
+    border-radius: var(--border-radius);
+    box-shadow: var(--green-shadow);
     padding: 1px 6px;
     margin: 0 2px;
     display: inline-block;
@@ -48,16 +44,16 @@ a {
 h1 {
   margin: 0;
   font-weight: 600;
-  font-size: $text-size-medium;
-  color: $text-color-base;
+  font-size: var(--text-size-medium);
+  color: var(--text-color-base);
 }
 
 h2 {
   font-weight: 600;
-  font-size: $text-size-medium;
+  font-size: var(--text-size-medium);
 }
 
 h3 {
   font-weight: 600;
-  font-size: $text-size-small;
+  font-size: var(--text-size-small);
 }
