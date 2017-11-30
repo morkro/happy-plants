@@ -173,7 +173,7 @@
     }
 
     &.category.selected {
-      background: var(--brand-green);
+      background: var(--brand-green-medium);
 
       &::after {
         background: var(--brand-green);
@@ -181,7 +181,7 @@
     }
 
     &.delete.selected {
-      background: var(--brand-red);
+      background: var(--brand-red-medium);
 
       &::after {
         background: var(--brand-red);

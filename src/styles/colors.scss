@@ -9,6 +9,7 @@ $opacity: 0.2;
 :root {
   --brand-green: $green;
   --brand-green-lighten: lighten($green, 30);
+  --brand-green-medium: rgba($green, $opacity * 3.5);
   --brand-green-low: rgba($green, $opacity);
 
   --brand-yellow: $yellow;
@@ -16,6 +17,7 @@ $opacity: 0.2;
   --brand-yellow-low: rgba($yellow, $opacity);
 
   --brand-red: $red;
+  --brand-red-medium: rgba($red, $opacity * 3.5);
   --brand-red-low: rgba($red, $opacity);
 
   --brand-blue: $blue;
