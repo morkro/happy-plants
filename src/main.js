@@ -4,11 +4,11 @@ import VueSVGIcon from 'vue-svgicon'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
-import computedProperties from '@/utils/computedProperties'
 
 import App from '@/app/App'
-import router from './router'
-import store from './store'
+import router from '@/router'
+import store from '@/store'
+import computedProperties from '@/utils/computedProperties'
 
 /**
  * This is required as Webpack seems to do some static analysis

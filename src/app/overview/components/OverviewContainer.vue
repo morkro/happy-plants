@@ -36,58 +36,48 @@
         <li v-for="plant in plants">
           <plant-preview
             @delete-plant="toggleElementInSelection"
-            :deleteMode="deleteMode"
-            :categoriseMode="categoriseMode"
+            :deleteMode="isDeleteMode"
+            :categoriseMode="isCategoryMode"
             :guid="plant.guid"
             :name="plant.name"
             :imageURL="plant.imageURL" />
         </li>
       </ul>
 
-      <footer>
-        <transition appear name="footer-appear">
-          <div v-if="plants.length" :class="{ 'footer-deletion': true, 'active': deleteMode }">
-            <button
-              aria-label="Trash"
-              class="delete-plants circle inverse"
-              @click="activateDeleteMode">
-              <feather-trash width="18" height="18" :stroke="deleteMode ? '#fff' : '#000'" />
-            </button>
-            <button
-              aria-label="Cancel trash"
-              class="footer-cancel-mode circle inverse"
-              @click="cancelDeleteMode">
-              <feather-x width="18" height="18" />
-            </button>
-          </div>
-        </transition>
+      <footer :class="footerClass">
+        <selection-delete
+          v-if="plants.length && !isCategoryMode"
+          :activeSelection="isDeleteMode"
+          :selected="this.selection.length"
+          @cancel-selection="cancelDeleteMode"
+          @delete-selection="activateDeleteMode">
+        </selection-delete>
 
-        <transition appear name="footer-appear">
-          <router-link
-            tag="button"
-            aria-label="Add plant"
-            class="add-plant circle"
-            :to="{ path: 'add' }">
-            <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
-          </router-link>
-        </transition>
+        <router-link
+          v-if="!editMode"
+          tag="button"
+          aria-label="Add plant"
+          class="add-plant circle"
+          :to="{ path: 'add' }">
+          <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
+        </router-link>
 
-        <transition appear name="footer-appear">
-          <div v-if="plants.length" :class="{ 'footer-sorting': true, 'active': categoriseMode }">
-            <button
-              aria-label="Cancel sort"
-              class="footer-cancel-mode circle inverse"
-              @click="cancelcategoriseMode">
-              <feather-x width="18" height="18" />
-            </button>
-            <button
-              aria-label="Sort"
-              class="organise-plants circle inverse"
-              @click="togglecategoriseMode">
-              <feather-layers width="18" height="18" />
-            </button>
-          </div>
-        </transition>
+        <div
+          v-if="plants.length && !isDeleteMode"
+          :class="{ 'footer-sorting': true, 'active': isCategoryMode }">
+          <button
+            aria-label="Cancel sort"
+            class="footer-cancel-mode circle inverse"
+            @click="cancelCategoriseMode">
+            <feather-x width="18" height="18" />
+          </button>
+          <button
+            aria-label="Sort"
+            class="organise-plants circle inverse"
+            @click="activateCategoriseMode">
+            <feather-layers width="18" height="18" />
+          </button>
+        </div>
       </footer>
     </section>
   </main>
@@ -97,6 +87,7 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import OverviewAlert from '@/components/Alert'
+  import SelectionDelete from './SelectionDelete'
   import PlantPreview from './PlantPreview'
   import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
@@ -108,27 +99,37 @@
     components: {
       'app-header': AppHeader,
       'overview-alert': OverviewAlert,
+      'selection-delete': SelectionDelete,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
       'overview-filter': OverviewFilter,
-      'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-x': () =>
         import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */),
       'feather-layers': () =>
         import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
     },
 
-    computed: mapState({
-      plants: state => state.plants,
-      filter: state => state.settings.filter
-    }),
+    computed: {
+      ...mapState({
+        plants: state => state.plants,
+        filter: state => state.settings.filter
+      }),
+      isCategoryMode () {
+        return this.editMode === 'category'
+      },
+      isDeleteMode () {
+        return this.editMode === 'delete'
+      },
+      footerClass () {
+        if (!this.editMode) return ''
+        return `editmode mode-${this.editMode}`
+      }
+    },
 
     data () {
       return {
         selection: [],
-        categoriseMode: false,
-        deleteMode: false,
+        editMode: false,
         showAlert: false
       }
     },
@@ -140,9 +141,6 @@
         'showNotification',
         'updateFilter'
       ]),
-      toggleFilter () {
-        this.filter = !this.filter
-      },
       toggleElementInSelection (item) {
         if (item.selected) {
           this.selection.push(item)
@@ -154,21 +152,19 @@
         this.selection = []
       },
       activateDeleteMode () {
-        if (this.categoriseMode) return
-
         // If the delete mode is already active, the selected elements should
         // be deleted and the mode deactivated again.
-        if (this.deleteMode && this.selection.length) {
+        if (this.isDeleteMode && this.selection.length) {
           this.showAlert = true
         }
 
-        this.deleteMode = true
+        this.editMode = 'delete'
       },
       cancelDeleteMode () {
         if (this.showAlert) {
           this.showAlert = false
         }
-        this.deleteMode = false
+        this.editMode = false
         this.clearSelection()
       },
       confirmDeletePlants () {
@@ -176,16 +172,15 @@
         this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },
-      togglecategoriseMode () {
-        if (this.deleteMode) return
-        this.categoriseMode = !this.categoriseMode
+      activateCategoriseMode () {
+        this.editMode = 'category'
 
         if (!this.categoriseMode) {
           this.clearSelection()
         }
       },
-      cancelcategoriseMode () {
-        this.categoriseMode = false
+      cancelCategoriseMode () {
+        this.editMode = false
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
@@ -200,19 +195,6 @@
 
   $content-index: list, footer;
   $footer-btn-size: 60px;
-  $footer-btn-size-secondary: 50px;
-
-  .footer-appear-enter-active {
-    transition: transform $base-speed * 2 $ease-out-back;
-  }
-
-  .footer-appear-enter {
-    transform: scale(0);
-  }
-
-  .footer-appear-enter-to {
-    transform: scale(1);
-  }
 
   main {
     min-height: 100vh;
@@ -222,7 +204,7 @@
   main > section {
     height: 100%;
     padding: var(--base-gap);
-    padding-bottom: calc(60px + var(--base-gap) * 2);
+    padding-bottom: calc(#{$footer-btn-size} + var(--base-gap) * 2);
 
     &.no-plants {
       display: flex;
@@ -273,73 +255,9 @@
       height: $footer-btn-size;
     }
 
-    button:not(.add-plant) {
-      padding: 0;
-      background: var(--background-primary);
-      box-shadow: var(--plain-shadow);
-      width: $footer-btn-size-secondary;
-      height: $footer-btn-size-secondary;
-    }
-
-    .footer-cancel-mode {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: var(--link-color);
-      position: absolute;
-      top: 0;
-      transform: scale(0);
-      transition: transform $base-speed $ease-out-back;
-    }
-
     /* TODO: Remove when desktop layout is actually in development. */
     @media (min-width: var(--app-media-max-size)) {
       width: var(--app-media-max-size);
-    }
-  }
-
-  .footer-deletion {
-    position: relative;
-
-    &.active .delete-plants {
-      background: var(--brand-red);
-
-      &::after {
-        opacity: 1;
-      }
-    }
-
-    .delete-plants::after {
-      opacity: 0;
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      box-shadow: 0 0 14px 2px var(--brand-red);
-      transition: opacity $base-speed $ease-out-back;
-    }
-
-    .footer-cancel-mode {
-      transform: translateX(120%) scale(0);
-    }
-
-    &.active .footer-cancel-mode {
-      transform: translateX(120%) scale(1);
-    }
-  }
-
-  .footer-sorting {
-    position: relative;
-
-    .footer-cancel-mode {
-      transform: translateX(-120%) scale(0);
-    }
-
-    &.active .footer-cancel-mode {
-      transform: translateX(-120%) scale(1);
     }
   }
 

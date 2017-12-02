@@ -31,7 +31,6 @@ button {
   &:focus {
     outline: none;
     box-shadow: var(--brand-green-shadow-touch);
-    transform: translateY(2px);
   }
 
   svg {
