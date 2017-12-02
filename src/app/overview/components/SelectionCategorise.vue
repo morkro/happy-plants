@@ -1,58 +1,53 @@
 <template>
-  <div :class="{ 'delete-container': true, 'active': activeSelection }">
+  <div :class="{ 'categorise-container': true, 'active': activeSelection }">
     <button
-      aria-label="Trash"
-      :class="buttonDeleteClass"
+      aria-label="Categorise"
+      :class="buttonCategoriseClass"
       @click="activate($event)">
-      <feather-trash width="18" height="18" />
+      <feather-layers width="18" height="18" />
     </button>
 
-    <div class="deletion-info">
-      <p>{{ selectionCount }}</p>
+    <div class="categorise-content">
+      <p>Feature currently inactive.</p>
     </div>
 
     <button
-      aria-label="Cancel trash"
+      aria-label="Cancel categorisation"
       class="cancel icon"
       @click="cancel($event)">
-      <feather-x width="24" height="24" />
+      <feather-x width="18" height="18" />
     </button>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'SelectionDelete',
+    name: 'SelectionCategorise',
 
     props: {
-      activeSelection: { type: Boolean, default: false },
-      selected: { type: Number, default: 0 }
+      activeSelection: { type: Boolean, default: false }
     },
 
     components: {
-      'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+      'feather-layers': () =>
+        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
       'feather-x': () =>
         import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
     },
 
     computed: {
-      selectionCount () {
-        const term = (this.selected === 1) ? 'plant' : 'plants'
-        return `${this.selected} ${term} selected.`
-      },
-      buttonDeleteClass () {
+      buttonCategoriseClass () {
         if (this.activeSelection) {
-          return 'delete icon'
+          return 'categorise icon'
         }
-        return 'delete circle icon inverse'
+        return 'categorise circle icon inverse'
       }
     },
 
     methods: {
       activate (event) {
         if (event.currentTarget) event.currentTarget.blur()
-        this.$emit('delete-selection')
+        this.$emit('categorise-selection')
       },
       cancel (event) {
         if (event.currentTarget) event.currentTarget.blur()
@@ -65,14 +60,14 @@
 <style lang="scss" scoped>
   $btn-size: 50px;
 
-  .delete-container {
+  .categorise-container {
     button {
       width: $btn-size;
       height: $btn-size;
       flex: 1 0 auto;
     }
 
-    &:not(.active) button.delete {
+    &:not(.active) button.categorise {
       padding: 0;
       background: var(--background-primary);
       box-shadow: var(--plain-shadow);
@@ -83,9 +78,9 @@
     }
   }
 
-  .delete-container.active {
+  .categorise-container.active {
     display: flex;
-    background: var(--brand-red);
+    background: var(--brand-green);
     border-radius: var(--border-radius);
     box-shadow: var(--plain-shadow);
     width: 100%;
@@ -99,12 +94,12 @@
       }
     }
 
-    button.delete {
+    button.categorise {
       background: rgba(0, 0, 0, 0.2);
     }
   }
 
-  .deletion-info {
+  .categorise-content {
     width: 100%;
     display: none;
     align-items: center;
@@ -117,7 +112,6 @@
     }
 
     p {
-      display: inline-block;
       font-weight: 600;
     }
   }

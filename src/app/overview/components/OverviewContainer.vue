@@ -62,22 +62,12 @@
           <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
         </router-link>
 
-        <div
+        <selection-categorise
           v-if="plants.length && !isDeleteMode"
-          :class="{ 'footer-sorting': true, 'active': isCategoryMode }">
-          <button
-            aria-label="Cancel sort"
-            class="footer-cancel-mode circle inverse"
-            @click="cancelCategoriseMode">
-            <feather-x width="18" height="18" />
-          </button>
-          <button
-            aria-label="Sort"
-            class="organise-plants circle inverse"
-            @click="activateCategoriseMode">
-            <feather-layers width="18" height="18" />
-          </button>
-        </div>
+          :activeSelection="isCategoryMode"
+          @cancel-selection="cancelCategoriseMode"
+          @categorise-selection="activateCategoriseMode">
+        </selection-categorise>
       </footer>
     </section>
   </main>
@@ -88,6 +78,7 @@
   import AppHeader from '@/components/AppHeader'
   import OverviewAlert from '@/components/Alert'
   import SelectionDelete from './SelectionDelete'
+  import SelectionCategorise from './SelectionCategorise'
   import PlantPreview from './PlantPreview'
   import PlantsIntro from './PlantsIntro'
   import OverviewFilter from './Filter'
@@ -100,13 +91,10 @@
       'app-header': AppHeader,
       'overview-alert': OverviewAlert,
       'selection-delete': SelectionDelete,
+      'selection-categorise': SelectionCategorise,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
-      'overview-filter': OverviewFilter,
-      'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */),
-      'feather-layers': () =>
-        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
+      'overview-filter': OverviewFilter
     },
 
     computed: {
@@ -181,6 +169,7 @@
       },
       cancelCategoriseMode () {
         this.editMode = false
+        this.clearSelection()
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
