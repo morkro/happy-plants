@@ -2,6 +2,6 @@ export default [
   {
     path: '/',
     name: 'Overview',
-    component: () => import('./components/OverviewContainer' /* webpackChunkName: "overview" */)
+    component: () => import('./Overview' /* webpackChunkName: "overview" */)
   }
 ]

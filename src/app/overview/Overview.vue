@@ -77,11 +77,11 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import OverviewAlert from '@/components/Alert'
-  import SelectionDelete from './SelectionDelete'
-  import SelectionCategorise from './SelectionCategorise'
-  import PlantPreview from './PlantPreview'
-  import PlantsIntro from './PlantsIntro'
-  import OverviewFilter from './Filter'
+  import SelectionDelete from './components/SelectionDelete'
+  import SelectionCategorise from './components/SelectionCategorise'
+  import PlantPreview from './components/PlantPreview'
+  import PlantsIntro from './components/PlantsIntro'
+  import OverviewFilter from './components/OverviewFilter'
   import '@/assets/leaf'
 
   export default {

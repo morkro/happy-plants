@@ -56,12 +56,12 @@
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import getDefaultStructure from '@/utils/getDefaultStructure'
   import AppHeader from '@/components/AppHeader'
-  import PlantModal from './PlantModal'
-  import PlantNotes from './PlantNotes'
-  import PlantSeasons from './PlantSeasons'
-  import PlantWatering from './PlantWatering'
-  import PlantSunshine from './PlantSunshine'
-  import PlantUpdates from './PlantUpdates'
+  import PlantModal from './components/PlantModal'
+  import PlantNotes from './components/PlantNotes'
+  import PlantSeasons from './components/PlantSeasons'
+  import PlantWatering from './components/PlantWatering'
+  import PlantSunshine from './components/PlantSunshine'
+  import PlantUpdates from './components/PlantUpdates'
   import '@/assets/cactus'
 
   const defaultState = getDefaultStructure()

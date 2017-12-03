@@ -81,7 +81,7 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import CategoryAlert from '@/components/Alert'
-  import CategoryModal from './CategoryModal'
+  import CategoryModal from './components/CategoryModal'
 
   export default {
     name: 'Categories',
