@@ -1,5 +1,5 @@
 import blobUtil from 'blob-util'
-import hermiteResize from './hermiteResize'
+import hermiteResize from './hermite-resize'
 
 export const isBase64 = string => {
   try {

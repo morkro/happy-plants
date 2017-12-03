@@ -37,7 +37,7 @@
   import { mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import FileUpload from '@/components/FileUpload'
-  import getDefaultStructure from '@/utils/getDefaultStructure'
+  import getDefaultStructure from '@/utils/get-default-structure'
 
   export default {
     name: 'RegisterPlant',

@@ -1,6 +1,6 @@
 import { updatePlant } from '@/api/plants'
 import { updateStore } from '@/api/store'
-import getDefaultStructure from '@/utils/getDefaultStructure'
+import getDefaultStructure from '@/utils/get-default-structure'
 
 export const resetSelectedState = ({ commit }) => {
   commit('RESET_SELECTED_PLANT', { defaultState: getDefaultStructure() })

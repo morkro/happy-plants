@@ -1,4 +1,4 @@
-import getDefaultStructure from '@/utils/getDefaultStructure'
+import getDefaultStructure from '@/utils/get-default-structure'
 import * as actions from './actions'
 import mutations from './mutations'
 

@@ -54,7 +54,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
-  import getDefaultStructure from '@/utils/getDefaultStructure'
+  import getDefaultStructure from '@/utils/get-default-structure'
   import AppHeader from '@/components/AppHeader'
   import PlantModal from './components/PlantModal'
   import PlantNotes from './components/PlantNotes'
