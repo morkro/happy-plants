@@ -7,7 +7,7 @@
       @close-modal="closeModal">
       <h1 slot="headline">{{ modalTitle }}</h1>
 
-      <div slot="content" v-if="isDangerModal()">
+      <div slot="content" v-if="isDangerModal()" key="modal-warning">
         <p>
           Be aware that once you've done this, your data <strong>cannot</strong> be restored!
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
@@ -17,7 +17,7 @@
         </button>
       </div>
 
-      <div slot="content" v-else class="import-modal-content">
+      <div slot="content" v-else class="import-modal-content" key="modal-normal">
         <form class="import-form" @submit.prevent="importApplicationData">
           <label for="import-data">
             <file-upload

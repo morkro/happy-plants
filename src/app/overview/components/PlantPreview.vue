@@ -5,13 +5,13 @@
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="deleteMode" :class="getLayerClass('delete')">
-      <feather-trash class="reverse" v-if="deleteMode && selected" />
-      <feather-minus class="reverse" v-else />
+      <feather-trash class="reverse" v-if="deleteMode && selected" key="icon-trash" />
+      <feather-minus class="reverse" v-else key="icon-minus"/>
     </div>
 
     <div v-show="categoriseMode" :class="getLayerClass('category')">
-      <feather-check class="reverse" v-if="categoriseMode && selected" />
-      <feather-plus class="reverse" v-else />
+      <feather-check class="reverse" v-if="categoriseMode && selected" key="icon-check" />
+      <feather-plus class="reverse" v-else key="icon-plus" />
     </div>
 
     <div class="preview-content">

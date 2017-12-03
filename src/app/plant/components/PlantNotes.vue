@@ -13,11 +13,11 @@
         </div>
       </app-modal>
 
-      <div v-if="!content">
+      <div v-if="!content" key="notes-empty">
         <p>Seems like you haven't added any notes yet.</p>
         <button @click="toggleNotes">Add notes</button>
       </div>
-      <div v-else>
+      <div v-else key="notes-available">
         <button @click="toggleNotes">Show notes</button>
       </div>
     </div>

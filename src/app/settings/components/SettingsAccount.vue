@@ -1,10 +1,10 @@
 <template>
   <section class="settings-account">
     <div class="account-auth">
-      <span v-if="authenticated">
+      <span v-if="authenticated" key="account-loggedin">
         You are currently logged in with your Google account <em>({{ email }})</em>.
       </span>
-      <span v-else>
+      <span v-else key="account-loggedout">
         You are logged out. Log in with your Google account.
       </span>
       <div class="auth-actions">

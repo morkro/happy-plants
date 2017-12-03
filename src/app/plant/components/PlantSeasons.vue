@@ -3,10 +3,10 @@
     <feather-moon slot="icon" />
     <h2 slot="title">Growing seasons</h2>
     <div slot="content">
-      <p v-if="isEvergreen">
+      <p v-if="isEvergreen" key="seasons-full">
         Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
       </p>
-      <p v-else>
+      <p v-else key="seasons-partial">
         Your plant is currently <strong>{{ getGrowthText() }}</strong>.
       </p>
       <ul class="season-list">
