@@ -170,6 +170,7 @@
       },
       confirmDeleteCategory () {
         this.deleteCategory(this.selectedCategory)
+          .then(() => this.closeAlert())
           .then(() =>
             this.showNotification({
               message: `Category "${this.selectedCategory.label}" deleted.`
