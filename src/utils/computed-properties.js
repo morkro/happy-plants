@@ -1,5 +1,5 @@
 export default (Vue) => {
-  Vue.prototype.$getProperty = property =>
+  Vue.prototype.$getComputedProperty = property =>
     getComputedStyle(document.documentElement)
       .getPropertyValue(`--${property}`)
       .trim()
