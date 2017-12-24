@@ -4,6 +4,7 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
+    <!-- Alert window pops up as confirmation the user is about to delete plants. -->
     <overview-alert
       type="warning"
       class="overview-alert"
@@ -21,9 +22,16 @@
       </button>
     </overview-alert>
 
+    <!-- Backdrop shows when user starts category selection. -->
+    <div v-if="showCategoryBackdrop" class="category-selection-backdrop">
+      <p>Select category</p>
+      <feather-arrow-down />
+    </div>
+
     <section :class="{ 'no-plants': plants.length <= 0 }">
       <plants-intro
-        v-if="plants.length <= 0" />
+        v-if="plants.length <= 0"
+        key="overview-intro" />
 
       <div v-if="plants.length" class="plant-options">
         <overview-filter
@@ -32,17 +40,30 @@
           @update-selection="sortItems" />
       </div>
 
-      <ul v-if="plants.length" class="plant-list">
+      <ul v-if="plants.length && !listByCategory" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
             @delete-plant="toggleElementInSelection"
             :deleteMode="isDeleteMode"
             :categoriseMode="isCategoryMode"
+            :selected="hasCategory(plant)"
             :guid="plant.guid"
             :name="plant.name"
+            :categories="plant.categories"
             :imageURL="plant.imageURL" />
         </li>
       </ul>
+
+      <div v-else-if="plants.length && listByCategory">
+        <div v-for="category in categories">
+          <h2>{{ category.label }}</h2>
+          <ul>
+            <li v-for="">
+              <!-- To be implemented. -->
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <footer :class="footerClass">
         <selection-delete
@@ -50,8 +71,7 @@
           :activeSelection="isDeleteMode"
           :selected="this.selection.length"
           @cancel-selection="cancelDeleteMode"
-          @delete-selection="activateDeleteMode">
-        </selection-delete>
+          @delete-selection="activateDeleteMode" />
 
         <router-link
           v-if="!editMode"
@@ -65,9 +85,11 @@
         <selection-categorise
           v-if="plants.length && !isDeleteMode"
           :activeSelection="isCategoryMode"
+          :categories="categories"
+          @category-selected="updateCategorySelection"
           @cancel-selection="cancelCategoriseMode"
-          @categorise-selection="activateCategoriseMode">
-        </selection-categorise>
+          @categorise-selection="activateCategoriseMode"
+          @save-selection="saveCategories" />
       </footer>
     </section>
   </main>
@@ -94,13 +116,16 @@
       'selection-categorise': SelectionCategorise,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
-      'overview-filter': OverviewFilter
+      'overview-filter': OverviewFilter,
+      'feather-arrow-down': () =>
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
     },
 
     computed: {
       ...mapState({
         plants: state => state.plants,
-        filter: state => state.settings.filter
+        filter: state => state.settings.filter,
+        categories: state => state.categories
       }),
       isCategoryMode () {
         return this.editMode === 'category'
@@ -111,24 +136,33 @@
       footerClass () {
         if (!this.editMode) return ''
         return `editmode mode-${this.editMode}`
+      },
+      listByCategory () {
+        return this.filter === 'categories'
       }
     },
 
     data () {
       return {
         selection: [],
+        selectedCategory: null,
         editMode: false,
-        showAlert: false
+        showAlert: false,
+        showCategoryBackdrop: false
       }
     },
 
     methods: {
       ...mapActions([
         'loadPlants',
+        'updatePlantCategory',
         'deletePlants',
         'showNotification',
         'updateFilter'
       ]),
+      reset () {
+        Object.assign(this.$data, this.$options.data()) // Reset state
+      },
       toggleElementInSelection (item) {
         if (item.selected) {
           this.selection.push(item)
@@ -136,8 +170,9 @@
           this.selection = this.selection.filter(s => s.guid !== item.guid)
         }
       },
-      clearSelection () {
-        this.selection = []
+      hasCategory (plant) {
+        return plant.categories && this.selectedCategory &&
+          plant.categories.some(cat => cat === this.selectedCategory.guid)
       },
       activateDeleteMode () {
         // If the delete mode is already active, the selected elements should
@@ -149,27 +184,40 @@
         this.editMode = 'delete'
       },
       cancelDeleteMode () {
-        if (this.showAlert) {
-          this.showAlert = false
-        }
-        this.editMode = false
-        this.clearSelection()
+        this.reset()
       },
       confirmDeletePlants () {
         this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
         this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },
+      updateCategorySelection (category) {
+        this.showCategoryBackdrop = false
+        this.selectedCategory = category
+      },
       activateCategoriseMode () {
         this.editMode = 'category'
+        this.showCategoryBackdrop = true
 
         if (!this.categoriseMode) {
-          this.clearSelection()
+          this.selection = []
         }
       },
       cancelCategoriseMode () {
-        this.editMode = false
-        this.clearSelection()
+        this.reset()
+      },
+      saveCategories () {
+        this.selection.forEach(selection =>
+          this.updatePlantCategory({
+            guid: selection.guid,
+            category: this.selectedCategory
+          }))
+
+        this.showNotification({
+          message: `Category "${this.selectedCategory.label}" updated.`
+        })
+
+        this.cancelCategoriseMode()
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
@@ -182,7 +230,7 @@
   @import "~styles/animations";
   @import "~styles/z-index";
 
-  $content-index: list, footer;
+  $content-index: list, backdrop, footer;
   $footer-btn-size: 60px;
 
   main {
@@ -220,6 +268,30 @@
 
     .active svg {
       fill: black;
+    }
+  }
+
+  .category-selection-backdrop {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    background: var(--transparency-black-medium);
+    z-index: z($content-index, backdrop);
+    display: flex;
+    justify-content: center;
+    color: var(--text-color-inverse);
+    align-items: center;
+    flex-direction: column;
+
+    p {
+      margin-bottom: var(--base-gap);
+      font-weight: 600;
+    }
+
+    svg,
+    svg rect,
+    svg path {
+      stroke: var(--text-color-button);
     }
   }
 

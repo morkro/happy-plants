@@ -10,8 +10,14 @@
     </div>
 
     <div v-show="categoriseMode" :class="getLayerClass('category')">
-      <feather-check class="reverse" v-if="categoriseMode && selected" key="icon-check" />
-      <feather-plus class="reverse" v-else key="icon-plus" />
+      <feather-check
+        v-if="categoriseMode || selected"
+        class="reverse"
+        key="icon-check" />
+      <feather-plus
+        v-else
+        class="reverse"
+        key="icon-plus" />
     </div>
 
     <div class="preview-content">
@@ -41,7 +47,8 @@
       categoriseMode: { type: Boolean, default: false },
       guid: { type: String, default: '' },
       name: { type: String, default: '' },
-      imageURL: { type: String, default: '' }
+      imageURL: { type: String, default: '' },
+      selected: { type: Boolean, default: false }
     },
 
     components: {
@@ -81,12 +88,6 @@
           'select-category': this.categoriseMode && this.selected,
           'select': this.deleteMode || this.categoriseMode
         }
-      }
-    },
-
-    data () {
-      return {
-        selected: false
       }
     },
 

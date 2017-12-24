@@ -16,14 +16,25 @@
     name: 'OverviewFilter',
 
     props: {
-      selected: { type: String, default: 'latest' }
+      selected: {
+        type: String,
+        default: 'latest',
+        validate (input) {
+          return [
+            'latest',
+            'alphabetical',
+            'categories'
+          ].includes(input)
+        }
+      }
     },
 
     data () {
       return {
         options: [
           { value: 'latest', name: 'Latest' },
-          { value: 'alphabetical', name: 'Alphabetical' }
+          { value: 'alphabetical', name: 'Alphabetical' },
+          { value: 'categories', name: 'Categories' }
         ]
       }
     },

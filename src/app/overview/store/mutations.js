@@ -16,6 +16,21 @@ export default {
     }
   },
 
+  UPDATE_PLANT_CATEGORY (state, payload) {
+    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
+    const plant = state.plants[itemIndex]
+
+    state.updated = Date.now()
+
+    if (plant) {
+      Vue.set(state.plants, itemIndex, Object.assign(plant, {
+        categories: !Array.isArray(plant.categories)
+          ? [payload.item.category.guid]
+          : [...plant.categories, payload.item.category.guid]
+      }))
+    }
+  },
+
   UPDATE_PLANT_OVERVIEW (state, payload) {
     const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
 

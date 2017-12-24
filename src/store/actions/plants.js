@@ -15,7 +15,8 @@ function shrinkPlantObjects (plant) {
     name: plant.name,
     blob: plant.blob,
     created: plant.created,
-    guid: plant.guid
+    guid: plant.guid,
+    categories: plant.categories
   }
 }
 
