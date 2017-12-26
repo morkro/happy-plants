@@ -186,6 +186,9 @@
 
     select {
       color: var(--text-color-inverse);
+      -webkit-appearance: none;
+      background: transparent;
+      border: none;
     }
   }
 </style>

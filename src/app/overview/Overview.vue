@@ -359,6 +359,10 @@
     margin-bottom: var(--base-gap);
   }
 
+  .plant-list {
+    z-index: z($content-index, list);
+  }
+
   .plant-list-category {
     h2 {
       margin-bottom: var(--base-gap);
