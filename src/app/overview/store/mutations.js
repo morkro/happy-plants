@@ -23,10 +23,18 @@ export default {
     state.updated = payload.updated
 
     if (plant) {
+      let list = !Array.isArray(plant.categories) ? [] : plant.categories
+
+      if (payload.item.type === 'add' && !list.includes(payload.item.category.guid)) {
+        list.push(payload.item.category.guid)
+      }
+
+      if (payload.item.type === 'remove') {
+        list = list.filter(cat => cat !== payload.item.category.guid)
+      }
+
       Vue.set(state.plants, itemIndex, Object.assign(plant, {
-        categories: !Array.isArray(plant.categories)
-          ? [payload.item.category.guid]
-          : [...plant.categories, payload.item.category.guid]
+        categories: list
       }))
     }
   },

@@ -40,10 +40,11 @@
           @update-selection="sortItems" />
       </div>
 
-      <ul v-if="plants.length && !listByCategory" class="plant-list">
+      <ul v-if="plants.length && (!listByCategory || isCategoryMode)" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
-            @toggle-selection="toggleElementInSelection"
+            @toggle-delete-selection="toggleElementForDeleteSelection"
+            @toggle-categorise-selection="toggleElementForCategorySelection"
             :deleteMode="isDeleteMode"
             :categoriseMode="isCategoryMode"
             :defaultSelected="hasCategory(plant)"
@@ -54,12 +55,21 @@
         </li>
       </ul>
 
-      <div v-else-if="plants.length && listByCategory">
-        <div v-for="category in categories">
+      <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
+        <div v-for="category in sortedCategoryList" v-if="category.plants.length">
           <h2>{{ category.label }}</h2>
-          <ul>
-            <li v-for="">
-              <!-- To be implemented. -->
+          <ul class="plant-list">
+            <li v-for="plant in category.plants">
+              <plant-preview
+                @toggle-delete-selection="toggleElementForDeleteSelection"
+                @toggle-categorise-selection="toggleElementForCategorySelection"
+                :deleteMode="isDeleteMode"
+                :categoriseMode="isCategoryMode"
+                :defaultSelected="hasCategory(plant)"
+                :guid="plant.guid"
+                :name="plant.name"
+                :categories="plant.categories"
+                :imageURL="plant.imageURL" />
             </li>
           </ul>
         </div>
@@ -139,6 +149,34 @@
       },
       listByCategory () {
         return this.filter === 'categories'
+      },
+      sortedCategoryList () {
+        if (this.selectedCategory) {
+          return this.categories
+        }
+
+        const list = this.categories.map(cat => ({
+          guid: cat.guid,
+          label: cat.label,
+          plants: this.plants.filter(plant => plant.categories.includes(cat.guid))
+        }))
+
+        list.push({
+          label: 'Uncategorised',
+          plants: this.plants.filter(plant => !plant.categories.length)
+        })
+
+        return list
+      }
+    },
+
+    watch: {
+      showCategoryBackdrop (show) {
+        if (show) {
+          this.$root.$el.parentNode.classList.add('js-no-scrolling')
+        } else {
+          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
+        }
       }
     },
 
@@ -163,12 +201,15 @@
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
       },
-      toggleElementInSelection (item) {
+      toggleElementForDeleteSelection (item) {
         if (item.selected) {
           this.selection.push(item)
         } else {
           this.selection = this.selection.filter(s => s.guid !== item.guid)
         }
+      },
+      toggleElementForCategorySelection (item) {
+        this.selection.push(item)
       },
       hasCategory (plant) {
         return plant.categories && !!this.selectedCategory &&
@@ -214,7 +255,8 @@
         this.selection.forEach(selection =>
           this.updatePlantCategory({
             guid: selection.guid,
-            category: this.selectedCategory
+            category: this.selectedCategory,
+            type: selection.type
           }))
 
         this.showNotification({
@@ -278,7 +320,7 @@
   .category-selection-backdrop {
     width: 100%;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     background: var(--transparency-black-medium);
     z-index: z($content-index, backdrop);
     display: flex;
@@ -328,6 +370,20 @@
 
   .plant-options {
     margin-bottom: var(--base-gap);
+  }
+
+  .plant-list-category {
+    h2 {
+      margin-bottom: var(--base-gap);
+    }
+
+    .plant-list {
+      justify-content: flex-start;
+    }
+
+    .plant-list li:last-child {
+      margin-bottom: var(--base-gap);
+    }
   }
 
   .plant-list {

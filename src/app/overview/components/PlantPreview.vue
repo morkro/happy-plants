@@ -137,14 +137,25 @@
 
         if (this.frozen) {
           this.selected = !this.selected
-          this.$emit('toggle-selection', {
-            guid: this.guid,
-            selected: this.selected
-          })
+          this.emitSelection()
           return
         }
 
         router.push(`plant/${this.guid}`)
+      },
+      emitSelection () {
+        let type = 'toggle-delete-selection'
+        const data = {
+          guid: this.guid,
+          selected: this.selected
+        }
+
+        if (this.categoriseMode) {
+          type = 'toggle-categorise-selection'
+          data.type = this.selected ? 'add' : 'remove'
+        }
+
+        this.$emit(type, data)
       }
     }
   }
