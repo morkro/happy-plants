@@ -147,12 +147,14 @@
         const list = this.categories.map(cat => ({
           guid: cat.guid,
           label: cat.label,
-          plants: this.plants.filter(plant => plant.categories.includes(cat.guid))
+          plants: this.plants.filter(plant =>
+            plant.categories && plant.categories.includes(cat.guid))
         }))
 
         list.push({
           label: 'Uncategorised',
-          plants: this.plants.filter(plant => !plant.categories.length)
+          plants: this.plants.filter(plant =>
+            plant.categories && !plant.categories.length)
         })
 
         return list
