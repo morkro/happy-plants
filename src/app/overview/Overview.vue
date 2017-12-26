@@ -40,38 +40,27 @@
           @update-selection="sortItems" />
       </div>
 
-      <ul v-if="plants.length && (!listByCategory || isCategoryMode)" class="plant-list">
-        <li v-for="plant in plants">
-          <plant-preview
-            @toggle-delete-selection="toggleElementForDeleteSelection"
-            @toggle-categorise-selection="toggleElementForCategorySelection"
-            :deleteMode="isDeleteMode"
-            :categoriseMode="isCategoryMode"
-            :defaultSelected="hasCategory(plant)"
-            :guid="plant.guid"
-            :name="plant.name"
-            :categories="plant.categories"
-            :imageURL="plant.imageURL" />
-        </li>
-      </ul>
+      <plants-list
+        v-if="plants.length && (!listByCategory || isCategoryMode)"
+        @delete-selection="toggleDeleteSelection"
+        @categorise-selection="toggleCategorySelection"
+        :plants="plants"
+        :selectedCategory="selectedCategory"
+        :isDeleteMode="isDeleteMode"
+        :isCategoryMode="isCategoryMode"
+      />
 
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
         <div v-for="category in sortedCategoryList" v-if="category.plants.length">
           <h2>{{ category.label }}</h2>
-          <ul class="plant-list">
-            <li v-for="plant in category.plants">
-              <plant-preview
-                @toggle-delete-selection="toggleElementForDeleteSelection"
-                @toggle-categorise-selection="toggleElementForCategorySelection"
-                :deleteMode="isDeleteMode"
-                :categoriseMode="isCategoryMode"
-                :defaultSelected="hasCategory(plant)"
-                :guid="plant.guid"
-                :name="plant.name"
-                :categories="plant.categories"
-                :imageURL="plant.imageURL" />
-            </li>
-          </ul>
+          <plants-list
+            @delete-selection="toggleDeleteSelection"
+            @categorise-selection="toggleCategorySelection"
+            :plants="category.plants"
+            :selectedCategory="selectedCategory"
+            :isDeleteMode="isDeleteMode"
+            :isCategoryMode="isCategoryMode"
+          />
         </div>
       </div>
 
@@ -111,7 +100,7 @@
   import OverviewAlert from '@/components/Alert'
   import SelectionDelete from './components/SelectionDelete'
   import SelectionCategorise from './components/SelectionCategorise'
-  import PlantPreview from './components/PlantPreview'
+  import PlantsList from './components/PlantsList'
   import PlantsIntro from './components/PlantsIntro'
   import OverviewFilter from './components/OverviewFilter'
   import '@/assets/leaf'
@@ -125,7 +114,7 @@
       'selection-delete': SelectionDelete,
       'selection-categorise': SelectionCategorise,
       'plants-intro': PlantsIntro,
-      'plant-preview': PlantPreview,
+      'plants-list': PlantsList,
       'overview-filter': OverviewFilter,
       'feather-arrow-down': () =>
         import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
@@ -201,19 +190,15 @@
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
       },
-      toggleElementForDeleteSelection (item) {
+      toggleDeleteSelection (item) {
         if (item.selected) {
           this.selection.push(item)
         } else {
           this.selection = this.selection.filter(s => s.guid !== item.guid)
         }
       },
-      toggleElementForCategorySelection (item) {
+      toggleCategorySelection (item) {
         this.selection.push(item)
-      },
-      hasCategory (plant) {
-        return plant.categories && !!this.selectedCategory &&
-          plant.categories.some(cat => cat === this.selectedCategory.guid)
       },
       activateDeleteMode () {
         // If the delete mode is already active, the selected elements should
@@ -379,39 +364,6 @@
 
     .plant-list {
       justify-content: flex-start;
-    }
-
-    .plant-list li:last-child {
-      margin-bottom: var(--base-gap);
-    }
-  }
-
-  .plant-list {
-    list-style: none;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: z($content-index, list);
-    --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
-
-    li {
-      width: calc(50vw - var(--list-gap));
-      height: calc(50vw - var(--list-gap));
-      margin-bottom: var(--base-gap);
-
-      &:nth-child(even):not(:last-child) {
-        margin-left: auto;
-      }
-
-      &:nth-child(odd):not(:last-child) {
-        margin-right: auto;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
     }
   }
 </style>
