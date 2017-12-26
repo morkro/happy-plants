@@ -16,6 +16,29 @@ export default {
     }
   },
 
+  UPDATE_PLANT_CATEGORY (state, payload) {
+    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
+    const plant = state.plants[itemIndex]
+
+    state.updated = payload.updated
+
+    if (plant) {
+      let list = !Array.isArray(plant.categories) ? [] : plant.categories
+
+      if (payload.item.type === 'add' && !list.includes(payload.item.category.guid)) {
+        list.push(payload.item.category.guid)
+      }
+
+      if (payload.item.type === 'remove') {
+        list = list.filter(cat => cat !== payload.item.category.guid)
+      }
+
+      Vue.set(state.plants, itemIndex, Object.assign(plant, {
+        categories: list
+      }))
+    }
+  },
+
   UPDATE_PLANT_OVERVIEW (state, payload) {
     const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
 

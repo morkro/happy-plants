@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "🌵 Web application to keep your plants happy",
   "author": "Moritz Kröger <write@morkro.de>",
   "private": true,

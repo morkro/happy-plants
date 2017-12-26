@@ -5,13 +5,25 @@
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="deleteMode" :class="getLayerClass('delete')">
-      <feather-trash class="reverse" v-if="deleteMode && selected" key="icon-trash" />
-      <feather-minus class="reverse" v-else key="icon-minus"/>
+      <feather-trash
+        v-if="isDeleteMode"
+        class="reverse"
+        key="icon-trash" />
+      <feather-minus
+        v-else
+        class="reverse"
+        key="icon-minus" />
     </div>
 
     <div v-show="categoriseMode" :class="getLayerClass('category')">
-      <feather-check class="reverse" v-if="categoriseMode && selected" key="icon-check" />
-      <feather-plus class="reverse" v-else key="icon-plus" />
+      <feather-check
+        v-if="isCategoriseMode"
+        class="reverse"
+        key="icon-check" />
+      <feather-plus
+        v-else
+        class="reverse"
+        key="icon-plus" />
     </div>
 
     <div class="preview-content">
@@ -37,11 +49,12 @@
     name: 'PlantPreview',
 
     props: {
-      deleteMode: { type: Boolean, default: false },
-      categoriseMode: { type: Boolean, default: false },
-      guid: { type: String, default: '' },
-      name: { type: String, default: '' },
-      imageURL: { type: String, default: '' }
+      deleteMode: { type: Boolean, default: false, required: true },
+      categoriseMode: { type: Boolean, default: false, required: true },
+      guid: { type: String, default: '', required: true },
+      name: { type: String, default: '', required: true },
+      imageURL: { type: String, default: '', required: true },
+      defaultSelected: { type: Boolean, default: false, required: true }
     },
 
     components: {
@@ -55,9 +68,21 @@
         import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
     },
 
+    data () {
+      return {
+        selected: this.defaultSelected || false
+      }
+    },
+
     computed: {
       frozen () {
         return this.deleteMode || this.categoriseMode
+      },
+      isDeleteMode () {
+        return this.deleteMode && this.selected
+      },
+      isCategoriseMode () {
+        return this.categoriseMode && this.selected
       },
       ariaLabel () {
         if (this.deleteMode) {
@@ -84,15 +109,15 @@
       }
     },
 
-    data () {
-      return {
-        selected: false
+    updated () {
+      if (this.frozen === false) {
+        Object.assign(this.$data, this.$options.data())
       }
     },
 
-    updated () {
-      if (!this.frozen) {
-        this.selected = false
+    watch: {
+      defaultSelected (value) {
+        this.selected = value
       }
     },
 
@@ -111,21 +136,26 @@
         event.preventDefault()
 
         if (this.frozen) {
-          this.toggleSelection()
-          this.deleteElement()
+          this.selected = !this.selected
+          this.emitSelection()
           return
         }
 
         router.push(`plant/${this.guid}`)
       },
-      deleteElement () {
-        this.$emit('delete-plant', {
+      emitSelection () {
+        let type = 'toggle-delete-selection'
+        const data = {
           guid: this.guid,
           selected: this.selected
-        })
-      },
-      toggleSelection () {
-        this.selected = !this.selected
+        }
+
+        if (this.categoriseMode) {
+          type = 'toggle-categorise-selection'
+          data.type = this.selected ? 'add' : 'remove'
+        }
+
+        this.$emit(type, data)
       }
     }
   }

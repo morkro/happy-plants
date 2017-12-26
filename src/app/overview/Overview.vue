@@ -4,6 +4,7 @@
       <h1 slot="title">Happy Plants</h1>
     </app-header>
 
+    <!-- Alert window pops up as confirmation the user is about to delete plants. -->
     <overview-alert
       type="warning"
       class="overview-alert"
@@ -21,9 +22,16 @@
       </button>
     </overview-alert>
 
+    <!-- Backdrop shows when user starts category selection. -->
+    <div v-if="showCategoryBackdrop" class="category-selection-backdrop">
+      <p>Select category</p>
+      <feather-arrow-down />
+    </div>
+
     <section :class="{ 'no-plants': plants.length <= 0 }">
       <plants-intro
-        v-if="plants.length <= 0" />
+        v-if="plants.length <= 0"
+        key="overview-intro" />
 
       <div v-if="plants.length" class="plant-options">
         <overview-filter
@@ -32,17 +40,40 @@
           @update-selection="sortItems" />
       </div>
 
-      <ul v-if="plants.length" class="plant-list">
+      <ul v-if="plants.length && (!listByCategory || isCategoryMode)" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
-            @delete-plant="toggleElementInSelection"
+            @toggle-delete-selection="toggleElementForDeleteSelection"
+            @toggle-categorise-selection="toggleElementForCategorySelection"
             :deleteMode="isDeleteMode"
             :categoriseMode="isCategoryMode"
+            :defaultSelected="hasCategory(plant)"
             :guid="plant.guid"
             :name="plant.name"
+            :categories="plant.categories"
             :imageURL="plant.imageURL" />
         </li>
       </ul>
+
+      <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
+        <div v-for="category in sortedCategoryList" v-if="category.plants.length">
+          <h2>{{ category.label }}</h2>
+          <ul class="plant-list">
+            <li v-for="plant in category.plants">
+              <plant-preview
+                @toggle-delete-selection="toggleElementForDeleteSelection"
+                @toggle-categorise-selection="toggleElementForCategorySelection"
+                :deleteMode="isDeleteMode"
+                :categoriseMode="isCategoryMode"
+                :defaultSelected="hasCategory(plant)"
+                :guid="plant.guid"
+                :name="plant.name"
+                :categories="plant.categories"
+                :imageURL="plant.imageURL" />
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <footer :class="footerClass">
         <selection-delete
@@ -50,8 +81,7 @@
           :activeSelection="isDeleteMode"
           :selected="this.selection.length"
           @cancel-selection="cancelDeleteMode"
-          @delete-selection="activateDeleteMode">
-        </selection-delete>
+          @delete-selection="activateDeleteMode" />
 
         <router-link
           v-if="!editMode"
@@ -65,9 +95,11 @@
         <selection-categorise
           v-if="plants.length && !isDeleteMode"
           :activeSelection="isCategoryMode"
+          :categories="categories"
+          @category-selected="updateCategorySelection"
           @cancel-selection="cancelCategoriseMode"
-          @categorise-selection="activateCategoriseMode">
-        </selection-categorise>
+          @categorise-selection="activateCategoriseMode"
+          @save-selection="saveCategories" />
       </footer>
     </section>
   </main>
@@ -94,13 +126,16 @@
       'selection-categorise': SelectionCategorise,
       'plants-intro': PlantsIntro,
       'plant-preview': PlantPreview,
-      'overview-filter': OverviewFilter
+      'overview-filter': OverviewFilter,
+      'feather-arrow-down': () =>
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
     },
 
     computed: {
       ...mapState({
         plants: state => state.plants,
-        filter: state => state.settings.filter
+        filter: state => state.settings.filter,
+        categories: state => state.categories
       }),
       isCategoryMode () {
         return this.editMode === 'category'
@@ -111,33 +146,74 @@
       footerClass () {
         if (!this.editMode) return ''
         return `editmode mode-${this.editMode}`
+      },
+      listByCategory () {
+        return this.filter === 'categories'
+      },
+      sortedCategoryList () {
+        if (this.selectedCategory) {
+          return this.categories
+        }
+
+        const list = this.categories.map(cat => ({
+          guid: cat.guid,
+          label: cat.label,
+          plants: this.plants.filter(plant => plant.categories.includes(cat.guid))
+        }))
+
+        list.push({
+          label: 'Uncategorised',
+          plants: this.plants.filter(plant => !plant.categories.length)
+        })
+
+        return list
+      }
+    },
+
+    watch: {
+      showCategoryBackdrop (show) {
+        if (show) {
+          this.$root.$el.parentNode.classList.add('js-no-scrolling')
+        } else {
+          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
+        }
       }
     },
 
     data () {
       return {
         selection: [],
+        selectedCategory: false,
         editMode: false,
-        showAlert: false
+        showAlert: false,
+        showCategoryBackdrop: false
       }
     },
 
     methods: {
       ...mapActions([
         'loadPlants',
+        'updatePlantCategory',
         'deletePlants',
         'showNotification',
         'updateFilter'
       ]),
-      toggleElementInSelection (item) {
+      reset () {
+        Object.assign(this.$data, this.$options.data()) // Reset state
+      },
+      toggleElementForDeleteSelection (item) {
         if (item.selected) {
           this.selection.push(item)
         } else {
           this.selection = this.selection.filter(s => s.guid !== item.guid)
         }
       },
-      clearSelection () {
-        this.selection = []
+      toggleElementForCategorySelection (item) {
+        this.selection.push(item)
+      },
+      hasCategory (plant) {
+        return plant.categories && !!this.selectedCategory &&
+          plant.categories.some(cat => cat === this.selectedCategory.guid)
       },
       activateDeleteMode () {
         // If the delete mode is already active, the selected elements should
@@ -149,27 +225,45 @@
         this.editMode = 'delete'
       },
       cancelDeleteMode () {
-        if (this.showAlert) {
-          this.showAlert = false
-        }
-        this.editMode = false
-        this.clearSelection()
+        this.reset()
       },
       confirmDeletePlants () {
-        this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
+        const message = this.selection.length > 1
+          ? `Deleted ${this.selection.length} plants.`
+          : `Deleted ${this.selection.length} plant.`
+
+        this.showNotification({ message })
         this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },
+      updateCategorySelection (category) {
+        this.showCategoryBackdrop = false
+        this.selectedCategory = category
+      },
       activateCategoriseMode () {
         this.editMode = 'category'
+        this.showCategoryBackdrop = true
 
         if (!this.categoriseMode) {
-          this.clearSelection()
+          this.selection = []
         }
       },
       cancelCategoriseMode () {
-        this.editMode = false
-        this.clearSelection()
+        this.reset()
+      },
+      saveCategories () {
+        this.selection.forEach(selection =>
+          this.updatePlantCategory({
+            guid: selection.guid,
+            category: this.selectedCategory,
+            type: selection.type
+          }))
+
+        this.showNotification({
+          message: `Category "${this.selectedCategory.label}" updated.`
+        })
+
+        this.cancelCategoriseMode()
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
@@ -182,7 +276,7 @@
   @import "~styles/animations";
   @import "~styles/z-index";
 
-  $content-index: list, footer;
+  $content-index: list, backdrop, footer;
   $footer-btn-size: 60px;
 
   main {
@@ -223,6 +317,30 @@
     }
   }
 
+  .category-selection-backdrop {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: var(--transparency-black-medium);
+    z-index: z($content-index, backdrop);
+    display: flex;
+    justify-content: center;
+    color: var(--text-color-inverse);
+    align-items: center;
+    flex-direction: column;
+
+    p {
+      margin-bottom: var(--base-gap);
+      font-weight: 600;
+    }
+
+    svg,
+    svg rect,
+    svg path {
+      stroke: var(--text-color-button);
+    }
+  }
+
   section footer {
     position: fixed;
     bottom: var(--base-gap);
@@ -252,6 +370,20 @@
 
   .plant-options {
     margin-bottom: var(--base-gap);
+  }
+
+  .plant-list-category {
+    h2 {
+      margin-bottom: var(--base-gap);
+    }
+
+    .plant-list {
+      justify-content: flex-start;
+    }
+
+    .plant-list li:last-child {
+      margin-bottom: var(--base-gap);
+    }
   }
 
   .plant-list {
