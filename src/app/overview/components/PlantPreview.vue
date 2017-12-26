@@ -5,13 +5,19 @@
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="deleteMode" :class="getLayerClass('delete')">
-      <feather-trash class="reverse" v-if="deleteMode && selected" key="icon-trash" />
-      <feather-minus class="reverse" v-else key="icon-minus"/>
+      <feather-trash
+        v-if="isDeleteMode"
+        class="reverse"
+        key="icon-trash" />
+      <feather-minus
+        v-else
+        class="reverse"
+        key="icon-minus" />
     </div>
 
     <div v-show="categoriseMode" :class="getLayerClass('category')">
       <feather-check
-        v-if="categoriseMode || selected"
+        v-if="isCategoriseMode"
         class="reverse"
         key="icon-check" />
       <feather-plus
@@ -43,12 +49,12 @@
     name: 'PlantPreview',
 
     props: {
-      deleteMode: { type: Boolean, default: false },
-      categoriseMode: { type: Boolean, default: false },
-      guid: { type: String, default: '' },
-      name: { type: String, default: '' },
-      imageURL: { type: String, default: '' },
-      selected: { type: Boolean, default: false }
+      deleteMode: { type: Boolean, default: false, required: true },
+      categoriseMode: { type: Boolean, default: false, required: true },
+      guid: { type: String, default: '', required: true },
+      name: { type: String, default: '', required: true },
+      imageURL: { type: String, default: '', required: true },
+      defaultSelected: { type: Boolean, default: false, required: true }
     },
 
     components: {
@@ -62,9 +68,21 @@
         import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
     },
 
+    data () {
+      return {
+        selected: this.defaultSelected
+      }
+    },
+
     computed: {
       frozen () {
         return this.deleteMode || this.categoriseMode
+      },
+      isDeleteMode () {
+        return this.deleteMode && this.$data.selected
+      },
+      isCategoriseMode () {
+        return this.categoriseMode && this.$data.selected
       },
       ariaLabel () {
         if (this.deleteMode) {
@@ -84,16 +102,16 @@
         return {
           'plant-preview': true,
           'no-photo': !this.imageURL,
-          'select-delete': this.deleteMode && this.selected,
-          'select-category': this.categoriseMode && this.selected,
+          'select-delete': this.deleteMode && this.$data.selected,
+          'select-category': this.categoriseMode && this.$data.selected,
           'select': this.deleteMode || this.categoriseMode
         }
       }
     },
 
     updated () {
-      if (!this.frozen) {
-        this.selected = false
+      if (this.frozen === false) {
+        Object.assign(this.$data, this.$options.data())
       }
     },
 
@@ -103,8 +121,8 @@
           'select-layer': true,
           [type]: true,
           'selected': (
-            (this.deleteMode && type === 'delete' && this.selected) ||
-            (this.categoriseMode && type === 'category' && this.selected)
+            (this.deleteMode && type === 'delete' && this.$data.selected) ||
+            (this.categoriseMode && type === 'category' && this.$data.selected)
           )
         }
       },
@@ -112,21 +130,15 @@
         event.preventDefault()
 
         if (this.frozen) {
-          this.toggleSelection()
-          this.deleteElement()
+          this.$data.selected = !this.$data.selected
+          this.$emit('toggle-selection', {
+            guid: this.guid,
+            selected: this.$data.selected
+          })
           return
         }
 
         router.push(`plant/${this.guid}`)
-      },
-      deleteElement () {
-        this.$emit('delete-plant', {
-          guid: this.guid,
-          selected: this.selected
-        })
-      },
-      toggleSelection () {
-        this.selected = !this.selected
       }
     }
   }

@@ -43,10 +43,10 @@
       <ul v-if="plants.length && !listByCategory" class="plant-list">
         <li v-for="plant in plants">
           <plant-preview
-            @delete-plant="toggleElementInSelection"
+            @toggle-selection="toggleElementInSelection"
             :deleteMode="isDeleteMode"
             :categoriseMode="isCategoryMode"
-            :selected="hasCategory(plant)"
+            :defaultSelected="hasCategory(plant)"
             :guid="plant.guid"
             :name="plant.name"
             :categories="plant.categories"
@@ -171,7 +171,7 @@
         }
       },
       hasCategory (plant) {
-        return plant.categories && this.selectedCategory &&
+        return plant.categories && !!this.selectedCategory &&
           plant.categories.some(cat => cat === this.selectedCategory.guid)
       },
       activateDeleteMode () {
@@ -187,7 +187,11 @@
         this.reset()
       },
       confirmDeletePlants () {
-        this.showNotification({ message: `Deleted ${this.selection.length} plants.` })
+        const message = this.selection.length > 1
+          ? `Deleted ${this.selection.length} plants.`
+          : `Deleted ${this.selection.length} plant.`
+
+        this.showNotification({ message })
         this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },

@@ -20,7 +20,7 @@ export default {
     const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
     const plant = state.plants[itemIndex]
 
-    state.updated = Date.now()
+    state.updated = payload.updated
 
     if (plant) {
       Vue.set(state.plants, itemIndex, Object.assign(plant, {
