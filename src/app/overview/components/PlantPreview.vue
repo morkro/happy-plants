@@ -70,7 +70,7 @@
 
     data () {
       return {
-        selected: this.defaultSelected
+        selected: this.defaultSelected || false
       }
     },
 
@@ -79,10 +79,10 @@
         return this.deleteMode || this.categoriseMode
       },
       isDeleteMode () {
-        return this.deleteMode && this.$data.selected
+        return this.deleteMode && this.selected
       },
       isCategoriseMode () {
-        return this.categoriseMode && this.$data.selected
+        return this.categoriseMode && this.selected
       },
       ariaLabel () {
         if (this.deleteMode) {
@@ -102,8 +102,8 @@
         return {
           'plant-preview': true,
           'no-photo': !this.imageURL,
-          'select-delete': this.deleteMode && this.$data.selected,
-          'select-category': this.categoriseMode && this.$data.selected,
+          'select-delete': this.deleteMode && this.selected,
+          'select-category': this.categoriseMode && this.selected,
           'select': this.deleteMode || this.categoriseMode
         }
       }
@@ -115,14 +115,20 @@
       }
     },
 
+    watch: {
+      defaultSelected (value) {
+        this.selected = value
+      }
+    },
+
     methods: {
       getLayerClass (type) {
         return {
           'select-layer': true,
           [type]: true,
           'selected': (
-            (this.deleteMode && type === 'delete' && this.$data.selected) ||
-            (this.categoriseMode && type === 'category' && this.$data.selected)
+            (this.deleteMode && type === 'delete' && this.selected) ||
+            (this.categoriseMode && type === 'category' && this.selected)
           )
         }
       },
@@ -130,10 +136,10 @@
         event.preventDefault()
 
         if (this.frozen) {
-          this.$data.selected = !this.$data.selected
+          this.selected = !this.selected
           this.$emit('toggle-selection', {
             guid: this.guid,
-            selected: this.$data.selected
+            selected: this.selected
           })
           return
         }

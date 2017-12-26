@@ -145,7 +145,7 @@
     data () {
       return {
         selection: [],
-        selectedCategory: null,
+        selectedCategory: false,
         editMode: false,
         showAlert: false,
         showCategoryBackdrop: false
