@@ -1,5 +1,6 @@
 <template>
   <main class="main-wireframe">
+    <!-- Modal for editing categories. -->
     <category-modal
       :show="showModal"
       :category="selectedCategory"
@@ -9,6 +10,7 @@
       @close-modal="closeModal">
     </category-modal>
 
+    <!-- Alert as confirmation to delete category. -->
     <category-alert
       type="warning"
       class="category-alert"
@@ -47,9 +49,9 @@
       <section class="categories-list">
         <ul v-if="categories.length">
           <li v-for="(category, index) in categories" :key="`category-${index}`">
-            <strong>
-              {{ category.label }}
-            </strong>
+            <list-description
+              :label="category.label"
+              :count="getCategoryChildrenCount(category)" />
 
             <div class="categories-actions">
               <button
@@ -67,6 +69,7 @@
             </div>
           </li>
         </ul>
+
         <div v-else class="category-empty">
           <p>
             You don't have any categories yet.
@@ -82,6 +85,7 @@
   import AppHeader from '@/components/AppHeader'
   import CategoryAlert from '@/components/Alert'
   import CategoryModal from './components/CategoryModal'
+  import ListDescription from './components/ListDescription'
 
   export default {
     name: 'Categories',
@@ -90,6 +94,7 @@
       'app-header': AppHeader,
       'category-alert': CategoryAlert,
       'category-modal': CategoryModal,
+      'list-description': ListDescription,
       'feather-plus': () =>
         import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
       'feather-edit': () =>
@@ -107,7 +112,8 @@
 
     computed: {
       ...mapState({
-        categories: state => state.categories
+        categories: state => state.categories,
+        plants: state => state.plants
       }),
       hasCategoryName () {
         return this.categoryName !== ''
@@ -169,12 +175,22 @@
         }
       },
       confirmDeleteCategory () {
+        const label = this.selectedCategory.label
         this.deleteCategory(this.selectedCategory)
           .then(() => this.closeAlert())
           .then(() =>
             this.showNotification({
-              message: `Category "${this.selectedCategory.label}" deleted.`
+              message: `Category "${label}" deleted.`
             }))
+      },
+      getCategoryChildrenCount (category) {
+        let count = 0
+        for (const plant of this.plants) {
+          if (plant.categories.includes(category.guid)) {
+            count += 1
+          }
+        }
+        return count
       }
     }
   }
