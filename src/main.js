@@ -22,6 +22,14 @@ localforage.config({
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE]
 })
 
+// Temporary fix to clean up DB.
+localforage.keys()
+  .then(keys => {
+    if (keys.includes('undefined')) {
+      localforage.removeItem('undefined')
+    }
+  })
+
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 Vue.use(computedProperties)
