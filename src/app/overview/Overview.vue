@@ -53,9 +53,17 @@
 
       <!-- List of plants if filter is set to "category". -->
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
-        <div v-for="category in sortedCategoryList" v-if="category.plants.length">
-          <h2>{{ category.label }}</h2>
+        <div v-for="(category, index) in sortedCategoryList" v-if="category.plants.length">
+          <h2 @click="toggleCollapseCategory(index)">
+            {{ category.label }}
+            <feather-maximize v-if="isCollapsed(index)" width="18" height="18" />
+            <feather-minimize v-else width="18" height="18" />
+          </h2>
+
+          <div v-show="isCollapsed(index)" class="list-collapsed-indicator"></div>
+
           <plants-list
+            v-show="!isCollapsed(index)"
             @delete-selection="toggleDeleteSelection"
             @categorise-selection="toggleCategorySelection"
             :plants="category.plants"
@@ -121,7 +129,11 @@
       'plants-list': PlantsList,
       'overview-filter': OverviewFilter,
       'feather-arrow-down': () =>
-        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
+      'feather-minimize': () =>
+        import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
+      'feather-maximize': () =>
+        import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
     },
 
     computed: {
@@ -181,7 +193,8 @@
         selectedCategory: false,
         editMode: false,
         showAlert: false,
-        showCategoryBackdrop: false
+        showCategoryBackdrop: false,
+        collapsedCategories: []
       }
     },
 
@@ -258,6 +271,16 @@
       },
       sortItems (type) {
         this.updateFilter({ filter: type })
+      },
+      toggleCollapseCategory (index) {
+        if (this.collapsedCategories.includes(index)) {
+          this.collapsedCategories.splice(this.collapsedCategories.indexOf(index), 1)
+        } else {
+          this.collapsedCategories.push(index)
+        }
+      },
+      isCollapsed (index) {
+        return this.collapsedCategories.includes(index)
       }
     }
   }
@@ -332,6 +355,53 @@
     }
   }
 
+  .plant-options {
+    margin-bottom: var(--base-gap);
+
+    &.big-gap {
+      margin-bottom: calc(var(--base-gap) * 1.5);
+    }
+  }
+
+  .plant-list {
+    z-index: z($content-index, list);
+  }
+
+  .plant-list-category {
+    h2 {
+      display: flex;
+      align-items: center;
+      margin-bottom: calc(var(--base-gap) * 1.5);
+    }
+
+    h2 svg {
+      stroke: var(--dark-grey);
+      margin-left: calc(var(--base-gap) / 2);
+    }
+
+    .plant-list {
+      justify-content: flex-start;
+      margin-bottom: calc(var(--base-gap) * 0.5);
+    }
+
+    .list-collapsed-indicator {
+      width: 100%;
+      height: 10px;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-100%);
+      --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
+
+      &::after,
+      &::before {
+        content: "";
+        border-radius: var(--border-radius);
+        border: 2px dashed var(--grey);
+        width: calc(50vw - var(--list-gap));
+      }
+    }
+  }
+
   section footer {
     position: fixed;
     bottom: var(--base-gap);
@@ -356,29 +426,6 @@
     /* TODO: Remove when desktop layout is actually in development. */
     @media (min-width: var(--app-media-max-size)) {
       width: var(--app-media-max-size);
-    }
-  }
-
-  .plant-options {
-    margin-bottom: var(--base-gap);
-
-    &.big-gap {
-      margin-bottom: calc(var(--base-gap) * 1.5);
-    }
-  }
-
-  .plant-list {
-    z-index: z($content-index, list);
-  }
-
-  .plant-list-category {
-    h2 {
-      margin-bottom: calc(var(--base-gap) * 1.5);
-    }
-
-    .plant-list {
-      justify-content: flex-start;
-      margin-bottom: calc(var(--base-gap) * 0.5);
     }
   }
 </style>
