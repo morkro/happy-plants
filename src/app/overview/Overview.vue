@@ -410,7 +410,8 @@
       height: 10px;
       display: flex;
       justify-content: space-between;
-      transform: translateY(-100%);
+      transform: translateY(-50%);
+      margin-bottom: var(--base-gap);
       --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
 
       &::after,
