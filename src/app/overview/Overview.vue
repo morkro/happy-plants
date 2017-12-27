@@ -29,17 +29,19 @@
     </div>
 
     <section :class="{ 'no-plants': plants.length <= 0 }">
+      <!-- Simple onboarding instruction if user has no plants yet. -->
       <plants-intro
         v-if="plants.length <= 0"
         key="overview-intro" />
 
-      <div v-if="plants.length" class="plant-options">
+      <div v-if="plants.length" :class="{ 'plant-options': true, 'big-gap': listByCategory}">
         <overview-filter
           class="plant-filter"
           :selected="filter"
           @update-selection="sortItems" />
       </div>
 
+      <!-- List of plants used when filter is either "alphabetical" or "latest". -->
       <plants-list
         v-if="plants.length && (!listByCategory || isCategoryMode)"
         @delete-selection="toggleDeleteSelection"
@@ -47,9 +49,9 @@
         :plants="plants"
         :selectedCategory="selectedCategory"
         :isDeleteMode="isDeleteMode"
-        :isCategoryMode="isCategoryMode"
-      />
+        :isCategoryMode="isCategoryMode" />
 
+      <!-- List of plants if filter is set to "category". -->
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
         <div v-for="category in sortedCategoryList" v-if="category.plants.length">
           <h2>{{ category.label }}</h2>
@@ -59,12 +61,12 @@
             :plants="category.plants"
             :selectedCategory="selectedCategory"
             :isDeleteMode="isDeleteMode"
-            :isCategoryMode="isCategoryMode"
-          />
+            :isCategoryMode="isCategoryMode" />
         </div>
       </div>
 
       <footer :class="footerClass">
+        <!-- Delete button and control element. -->
         <selection-delete
           v-if="plants.length && !isCategoryMode"
           :activeSelection="isDeleteMode"
@@ -72,6 +74,7 @@
           @cancel-selection="cancelDeleteMode"
           @delete-selection="activateDeleteMode" />
 
+        <!-- Button to add new plants. -->
         <router-link
           v-if="!editMode"
           tag="button"
@@ -81,6 +84,7 @@
           <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
         </router-link>
 
+        <!-- Categorisation button and control element. -->
         <selection-categorise
           v-if="plants.length && !isDeleteMode"
           :activeSelection="isCategoryMode"
@@ -357,6 +361,10 @@
 
   .plant-options {
     margin-bottom: var(--base-gap);
+
+    &.big-gap {
+      margin-bottom: calc(var(--base-gap) * 1.5);
+    }
   }
 
   .plant-list {
@@ -365,11 +373,12 @@
 
   .plant-list-category {
     h2 {
-      margin-bottom: var(--base-gap);
+      margin-bottom: calc(var(--base-gap) * 1.5);
     }
 
     .plant-list {
       justify-content: flex-start;
+      margin-bottom: calc(var(--base-gap) * 0.5);
     }
   }
 </style>
