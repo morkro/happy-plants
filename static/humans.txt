@@ -1,5 +1,7 @@
 /* TEAM */
 Developer: Moritz Kröger
+Designer: Moritz Kröger
+Site: https://moritz.berlin
 Contact: write@morkro.de
 Location: Berlin, Germany
 
