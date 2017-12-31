@@ -5,6 +5,7 @@
       :style="{ backgroundColor: backgroundColor || '' }">
       <header class="alert-header">
         <button
+          v-if="close"
           aria-label="Close"
           class="circle inverse"
           @click.prevent="emitAlertClose">
@@ -30,6 +31,7 @@
 
     props: {
       show: { type: Boolean, default: false },
+      close: { type: Boolean, default: false },
       backgroundColor: { type: [String, Boolean], default: false },
       type: { type: String, default: 'normal' }
     },
