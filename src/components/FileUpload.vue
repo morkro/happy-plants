@@ -1,5 +1,11 @@
 <template>
   <div class="file-upload">
+    <input
+      type="file"
+      :id="name"
+      :accept="acceptedFilePattern"
+      @change="emitPhoto" />
+
     <div class="upload-preview">
       <div :class="{
         fallback: disablePreview || imageURL === '',
@@ -22,12 +28,6 @@
         {{ fileName }}
       </span>
     </div>
-
-    <input
-      type="file"
-      :id="name"
-      :accept="acceptedFilePattern"
-      @change="emitPhoto" />
   </div>
 </template>
 
@@ -117,6 +117,14 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+
+    &:active + div,
+    &:focus + div {
+      outline: none;
+      box-shadow:
+        0 0 0 2px var(--transparency-black-light),
+        0 0 12px var(--transparency-black-light);
+    }
   }
 
   .file-upload .upload-preview {

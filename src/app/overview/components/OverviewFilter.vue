@@ -50,13 +50,7 @@
 
 <style lang="scss" scoped>
   select {
-    appearance: none;
     background: rgba(0, 0, 0, 0.05);
-    border-radius: var(--border-radius);
-    border: none;
-    color: var(--text-color-base);
     padding: 1.5vh 3vw;
-    width: 100%;
-    font-size: var(--text-size-base);
   }
 </style>

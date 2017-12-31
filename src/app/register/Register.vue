@@ -16,6 +16,24 @@
             @change="getName" />
         </label>
 
+        <label v-if="categories.length" for="add-category" class="form-label-group">
+          <h2>Add category</h2>
+          <span>Add a category for your plant.</span>
+          <select
+            id="add-category"
+            name="add-category"
+            @change="getCategory">
+            <option selected disabled hidden>
+              Select category
+            </option>
+            <option
+              v-for="category in categories"
+              :value="category.guid">
+              {{ category.label }}
+            </option>
+          </select>
+        </label>
+
         <label for="register-file" class="form-label-group">
           <h2>Upload photo</h2>
           <span>You can either select a photo from your gallery or take one now.</span>
@@ -34,7 +52,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import FileUpload from '@/components/FileUpload'
   import getDefaultStructure from '@/utils/get-default-structure'
@@ -47,11 +65,18 @@
       'file-upload': FileUpload
     },
 
+    computed: {
+      ...mapState({
+        categories: state => state.categories
+      })
+    },
+
     data () {
       return {
         name: '',
         blob: undefined,
-        isUploadingFile: false
+        isUploadingFile: false,
+        selectedCategory: false
       }
     },
 
@@ -69,10 +94,15 @@
         if (!event.target.value) return
         this.name = event.target.value
       },
+      getCategory (event) {
+        const $option = event.target.options[event.target.options.selectedIndex]
+        this.selectedCategory = this.categories.find(cat => cat.guid === $option.value)
+      },
       validateForm () {
         const config = {
           ...getDefaultStructure(),
           blob: this.blob,
+          categories: this.selectedCategory ? [this.selectedCategory.guid] : [],
           name: this.name
         }
         this.addPlant(config).then(guid =>
@@ -100,6 +130,10 @@
 
     input {
       width: 100%;
+    }
+
+    select {
+      padding: calc(var(--base-gap) + 5px) var(--base-gap);
     }
   }
 

@@ -186,9 +186,13 @@
 
     select {
       color: var(--text-color-inverse);
-      -webkit-appearance: none;
       background: transparent;
-      border: none;
+
+      &:active,
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
     }
   }
 </style>

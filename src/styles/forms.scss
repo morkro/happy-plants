@@ -13,3 +13,21 @@ input {
       0 0 12px var(--transparency-black-light);
   }
 }
+
+select {
+  appearance: none;
+  border-radius: var(--border-radius);
+  border: none;
+  background: var(--background-primary);
+  color: var(--text-color-base);
+  width: 100%;
+  font-size: var(--text-size-base);
+
+  &:active,
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--transparency-black-light),
+      0 0 12px var(--transparency-black-light);
+  }
+}
