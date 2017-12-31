@@ -1,7 +1,7 @@
 <template>
   <section>
     <p>
-      Happy Plants is a progressive web application
+      HappyPlants is a progressive web application
       build with Vue.js and other great web technologies by
       <a href="http://moritz.berlin" target="_blank" rel="noopener">Moritz Kröger</a>.
       <br /><br />

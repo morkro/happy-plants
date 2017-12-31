@@ -1,7 +1,7 @@
 {
-  "name": "Happy Plants",
-  "short_name": "Happy Plants",
-  "description": "Happy Plants aims to help you organising and keeping track of your plants.",
+  "name": "HappyPlants",
+  "short_name": "HappyPlants",
+  "description": "HappyPlants aims to help you organising and keeping track of your plants.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/index.html",
@@ -26,7 +26,7 @@
       "sizes": "384x384"
     },
     {
-      "src": "/static/icons/logo-xhdpi-576x576.png",
+      "src": "/static/icons/logo-xxhdpi-576x576.png",
       "type": "image/png",
       "sizes": "576x576"
     }
