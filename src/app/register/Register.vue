@@ -4,8 +4,29 @@
       <h1 slot="title">Add a new friend</h1>
     </app-header>
 
+    <register-alert
+      class="register-alert"
+      :show="showAlert"
+      @close-alert="closeCreateCategoryDialog">
+      <h1 slot="headline">Create category</h1>
+
+      <div slot="content">
+        <input
+          type="text"
+          id="category-name"
+          v-model="categoryName" />
+      </div>
+
+      <button class="default" slot="cancel" @click="closeCreateCategoryDialog">
+        Cancel
+      </button>
+      <button slot="confirm" @click="confirmCreateCategory">
+        Create category
+      </button>
+    </register-alert>
+
     <section>
-      <form @submit.prevent="validateForm">
+      <form @submit.prevent>
         <label for="register-name" class="form-label-group">
           <h2 class="required">What's your friends name?</h2>
           <span></span>
@@ -16,10 +37,18 @@
             @change="getName" />
         </label>
 
-        <label v-if="categories.length" for="add-category" class="form-label-group">
-          <h2>Add category</h2>
-          <span>Add a category for your plant.</span>
+        <label for="add-category" class="form-label-group">
+          <h2>Which category does it belong to?</h2>
+          <span v-if="!categories.length" key="category-create">
+            You don't have any categories created yet, but can just do that now.
+          </span>
+
+          <button v-if="!categories.length" class="default" @click="openCreateCategoryDialog">
+            Create category
+          </button>
+
           <select
+            v-if="categories.length"
             id="add-category"
             name="add-category"
             @change="getCategory">
@@ -43,7 +72,11 @@
             @loading-file="handleLoadingState" />
         </label>
 
-        <button :disabled="isUploadingFile">
+        <button
+          @click="validateForm"
+          :disabled="!canRegisterPlant"
+          type="submit">
+          <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
           Add plant
         </button>
       </form>
@@ -54,21 +87,27 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import AppHeader from '@/components/AppHeader'
+  import Alert from '@/components/Alert'
   import FileUpload from '@/components/FileUpload'
   import getDefaultStructure from '@/utils/get-default-structure'
+  import '@/assets/leaf'
 
   export default {
     name: 'RegisterPlant',
 
     components: {
       'app-header': AppHeader,
+      'register-alert': Alert,
       'file-upload': FileUpload
     },
 
     computed: {
       ...mapState({
         categories: state => state.categories
-      })
+      }),
+      canRegisterPlant () {
+        return this.name !== '' || this.isUploadingFile
+      }
     },
 
     data () {
@@ -76,13 +115,16 @@
         name: '',
         blob: undefined,
         isUploadingFile: false,
-        selectedCategory: false
+        selectedCategory: false,
+        categoryName: '',
+        showAlert: false
       }
     },
 
     methods: {
       ...mapActions([
-        'addPlant'
+        'addPlant',
+        'addCategory'
       ]),
       handleLoadingState ({ loading }) {
         this.isUploadingFile = loading
@@ -97,6 +139,19 @@
       getCategory (event) {
         const $option = event.target.options[event.target.options.selectedIndex]
         this.selectedCategory = this.categories.find(cat => cat.guid === $option.value)
+      },
+      openCreateCategoryDialog () {
+        this.showAlert = true
+      },
+      closeCreateCategoryDialog () {
+        this.showAlert = false
+      },
+      confirmCreateCategory () {
+        if (this.categoryName === '') return
+        this.addCategory({ label: this.categoryName })
+          .then(() => {
+            this.closeCreateCategoryDialog()
+          })
       },
       validateForm () {
         const config = {
@@ -113,6 +168,12 @@
 </script>
 
 <style lang="scss" scoped>
+  .register-alert {
+    input {
+      width: 100%;
+    }
+  }
+
   main {
     background: var(--background-secondary);
 
@@ -158,9 +219,17 @@
     margin-bottom: calc(var(--base-gap) / 2);
 
     &.required::after {
-      color: var(--brand-blue);
-      content: " *";
-      font-size: var(--text-size-small);
+      color: var(--text-color-button);
+      content: "*";
+      font-size: var(--text-size-medium);
+      background: var(--brand-red);
+      border-radius: 50%;
+      width: var(--icon-size-small);
+      height: var(--icon-size-small);
+      display: inline-flex;
+      justify-content: center;
+      align-content: center;
+      margin-left: calc(var(--base-gap) / 2);
     }
   }
 

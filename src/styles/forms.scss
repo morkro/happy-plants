@@ -12,6 +12,13 @@ input {
       0 0 0 2px var(--transparency-black-light),
       0 0 12px var(--transparency-black-light);
   }
+
+  &:valid {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--brand-green-medium),
+      0 0 12px var(--transparency-black-light);
+  }
 }
 
 select {
