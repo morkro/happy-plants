@@ -102,11 +102,14 @@
       box-shadow: var(--plain-shadow);
     }
 
+    button + h1 {
+      margin-top: 8px;
+    }
+
     h1 {
       font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
-      margin-top: 8px;
 
       .alert-warning & {
         color: var(--text-color-inverse);
