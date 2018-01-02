@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
-    "avoriaz": "^6.0.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
@@ -112,6 +111,7 @@
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.4.4",
+    "vue-test-utils": "^1.0.0-beta.9",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
