@@ -1,18 +1,18 @@
-import { mount } from 'avoriaz'
+import { mount } from 'vue-test-utils'
 import AppHeader from '@/components/AppHeader'
 
 describe('AppHeader.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(AppHeader)
-    expect(wrapper.isVueComponent).to.equal(true)
+    expect(wrapper.isVueInstance()).to.equal(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(AppHeader, { propsData: {} })
-    expect(wrapper.vm.$props.backPath).to.equal('/')
-    expect(wrapper.vm.$props.back).to.equal(false)
-    expect(wrapper.vm.$props.settings).to.equal(false)
-    expect(wrapper.vm.$props.color).to.equal('black')
+    const wrapper = mount(AppHeader)
+    expect(wrapper.props().backPath).to.equal('/')
+    expect(wrapper.props().back).to.equal(false)
+    expect(wrapper.props().settings).to.equal(false)
+    expect(wrapper.props().color).to.equal('black')
   })
 
   it('isWhite() works as expected', () => {

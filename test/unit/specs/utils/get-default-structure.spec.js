@@ -1,14 +1,22 @@
-import getDefaultStructure from '@/utils/getDefaultStructure'
+import getDefaultStructure from '@/utils/get-default-structure'
 
 describe('getDefaultStructure()', () => {
   it('returns expected default structure', () => {
     const structure = getDefaultStructure()
-    expect(structure).to.deep.equal({
+    expect(structure).to.deep.to.equal({
       guid: undefined,
       created: 0,
       modified: 0,
       blob: undefined,
+      imageURL: '',
       name: '',
+      categories: [],
+      componentOrder: [
+        'watering',
+        'sunshine',
+        'seasons',
+        'notes'
+      ],
       seasons: [
         { month: 'January', growth: false },
         { month: 'February', growth: false },
@@ -25,12 +33,10 @@ describe('getDefaultStructure()', () => {
       ],
       notes: '',
       watering: {
-        level: 0,
-        notes: ''
+        level: 1
       },
-      sun: {
-        level: 0,
-        notes: ''
+      sunshine: {
+        intensity: 1
       }
     })
   })
