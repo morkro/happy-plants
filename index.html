@@ -32,6 +32,32 @@
     <link rel="icon" href="/static/icons/favicon.ico" type="image/x-icon">
   </head>
   <body>
+    <noscript>
+      <img
+        width="100px"
+        height="100px"
+        src="/static/icons/logo-hdpi-288x288.png"
+        alt="HappyPlants"
+        title="HappyPlants" />
+
+      <h1>Oops, that's awkward.</h1>
+
+      <p>
+        <strong>HappyPlants</strong> is a
+        <a href="https://en.wikipedia.org/wiki/Web_application" target="_blank">web application</a>
+        and therefore requires JavaScript to run. Please consider enabling it.
+      </p>
+
+      <ul>
+        <li>
+          More info: <a href="https://github.com/morkro/happy-plants" target="_blank">HappyPlants on GitHub</a>
+        </li>
+        <li>
+          Developer: <a href="https://moritz.berlin" target="_blank">Moritz Kröger</a>
+        </li>
+      </ul>
+    </noscript>
+
     <div id="app"></div>
     <!-- Todo: only include in production -->
     <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
