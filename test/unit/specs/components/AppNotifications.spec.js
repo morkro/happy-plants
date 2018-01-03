@@ -1,7 +1,7 @@
 import { mount } from 'vue-test-utils'
 import AppNotifications from '@/components/AppNotifications'
 
-describe('AppNotifications.vue', () => {
+describe('components/AppNotifications.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(AppNotifications)
     expect(wrapper.isVueInstance()).to.equal(true)

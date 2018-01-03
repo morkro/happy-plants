@@ -1,7 +1,14 @@
 import { mount } from 'vue-test-utils'
 import AppHeader from '@/components/AppHeader'
 
-describe('AppHeader.vue', () => {
+/**
+ * TODO:
+ * - Test the slots
+ * - Test backPath click with vue-router
+ * - Test settings button
+ */
+
+describe('components/AppHeader.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(AppHeader)
     expect(wrapper.isVueInstance()).to.equal(true)

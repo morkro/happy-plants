@@ -1,7 +1,14 @@
 import { mount } from 'vue-test-utils'
 import FileUpload from '@/components/FileUpload'
 
-describe('FileUpload.vue', () => {
+/**
+ * TODO:
+ * - Test all event emitter
+ * - Test classes on preview
+ * - Test fileName
+ */
+
+describe('components/FileUpload.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(FileUpload)
     expect(wrapper.isVueInstance()).to.to.equal(true)

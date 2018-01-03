@@ -1,7 +1,7 @@
 import getDefaultStructure from '@/utils/get-default-structure'
 
-describe('getDefaultStructure()', () => {
-  it('returns expected default structure', () => {
+describe('utils/get-default-structure.js', () => {
+  it('getDefaultStructure() returns expected default structure', () => {
     const structure = getDefaultStructure()
     expect(structure).to.deep.to.equal({
       guid: undefined,
