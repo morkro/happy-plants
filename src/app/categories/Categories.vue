@@ -130,6 +130,7 @@
         'addCategory',
         'deleteCategory',
         'updateCategory',
+        'updatePlantCategory',
         'showNotification'
       ]),
       closeModal () {
@@ -176,8 +177,17 @@
       },
       confirmDeleteCategory () {
         const label = this.selectedCategory.label
+        // 1. Delete category
         this.deleteCategory(this.selectedCategory)
+          // 2. Delete category from all plants
+          .then(() => Promise.all(this.plants.map(plant => this.updatePlantCategory({
+            guid: plant.guid,
+            category: this.selectedCategory,
+            type: 'remove'
+          }))))
+          // 3. Close alert
           .then(() => this.closeAlert())
+          // 4. Show notification
           .then(() =>
             this.showNotification({
               message: `Category "${label}" deleted.`
