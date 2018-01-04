@@ -4,21 +4,22 @@
       :show="showPlantModal"
       :name="name"
       @content-update="updateFromModal"
-      @close-modal="closePlantEditModal">
-    </plant-modal>
+      @close-modal="closePlantEditModal" />
 
-    <app-header class="app-header" color="white" :back="true"></app-header>
+    <app-header class="app-header" color="white" :back="true">
+      <button
+        slot="custom-action-right"
+        aria-label="Edit"
+        class="edit-data icon"
+        @click.prevent="openPlantEditModal">
+        <feather-edit />
+      </button>
+    </app-header>
 
     <section class="view-content">
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
-          <button
-            aria-label="Edit"
-            class="edit-data icon inverse"
-            @click.prevent="openPlantEditModal">
-            <feather-edit />
-          </button>
         </div>
         <div class="header-background">
           <img v-if="imageURL" :src="imageURL" :alt="name" />
@@ -192,6 +193,39 @@
   .app-header {
     background: transparent;
     box-shadow: none;
+
+    .edit-data {
+      position: relative;
+      width: var(--app-header-size);
+      min-height: var(--app-header-size);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        margin: 0;
+        stroke: var(--text-color-button);
+        width: var(--icon-size-base);
+        height: var(--icon-size-base);
+      }
+
+      svg polygon {
+        stroke: var(--text-color-button);
+      }
+    }
+
+    .edit-data::before {
+      background: rgba(0, 0, 0, 0.22);
+      border-radius: 50%;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: calc(var(--icon-size-base) + var(--base-gap));
+      height: calc(var(--icon-size-base) + var(--base-gap));
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
   }
 
   .view-content {
@@ -209,16 +243,6 @@
     color: var(--text-color-inverse);
     height: 100vw;
     background: var(--grey);
-
-    .edit-data {
-      padding: calc(var(--base-gap) + 5px);
-      z-index: 2;
-
-      svg {
-        margin: 0;
-        filter: invert(1); /* FIXME: Not a good solution, should use color instead. */
-      }
-    }
 
     h1 {
       padding: var(--base-gap);
