@@ -100,6 +100,7 @@
       },
       wrapperClass () {
         return {
+          'box': true,
           'plant-preview': true,
           'no-photo': !this.imageURL,
           'select-delete': this.deleteMode && this.selected,
@@ -168,10 +169,8 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: var(--border-radius);
     background-size: cover;
     background-position: center;
-    box-shadow: var(--plain-shadow);
     transform-origin: center;
     transition: transform 50ms $ease-out-back;
 

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'categorise-container': true, 'active': activeSelection }">
+  <div :class="wrapperClass">
     <button
       aria-label="Categorise"
       :class="buttonCategoriseClass"
@@ -67,6 +67,14 @@
     },
 
     computed: {
+      wrapperClass () {
+        return {
+          'categorise-container': true,
+          'box': this.activeSelection,
+          'green': this.activeSelection,
+          'active': this.activeSelection
+        }
+      },
       buttonCategoriseClass () {
         if (this.activeSelection) {
           return 'categorise icon'
@@ -148,9 +156,6 @@
   }
 
   .categories-active {
-    background: var(--brand-green);
-    border-radius: var(--border-radius);
-    box-shadow: var(--plain-shadow);
     width: 100%;
 
     label {

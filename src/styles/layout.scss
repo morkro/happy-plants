@@ -1,4 +1,7 @@
 :root {
+  --app-media-max-size: 600px;
+  --app-header-size: 50px;
+
   --border-radius: 6px;
   --base-gap: 15px;
   --icon-size-base: 20px;
@@ -21,9 +24,21 @@
 
   --transparency-black-light: rgba(0, 0, 0, 0.12);
   --transparency-black-medium: rgba(0, 0, 0, 0.46);
+}
 
-  --app-media-max-size: 600px;
-  --app-header-size: 50px;
+.box {
+  background: var(--background-primary);
+  border-radius: var(--border-radius);
+  box-shadow: var(--plain-shadow);
+  overflow: hidden;
+
+  &.red {
+    background: var(--brand-red);
+  }
+
+  &.green {
+    background: var(--brand-green);
+  }
 }
 
 .is-skeleton {

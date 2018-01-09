@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="alert-backdrop" @click.self="emitAlertClose">
     <section
-      :class="`alert-${type}`"
+      :class="alertClass"
       :style="{ backgroundColor: backgroundColor || '' }">
       <header class="alert-header">
         <button
@@ -39,6 +39,16 @@
     components: {
       'feather-x': () =>
         import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
+    },
+
+    computed: {
+      alertClass () {
+        return {
+          [`alert-${this.type}`]: true,
+          'box': true,
+          'red': this.type === 'warning'
+        }
+      }
     },
 
     watch: {
@@ -79,13 +89,9 @@
   section {
     width: auto;
     max-width: 85vw;
-    background: var(--background-secondary);
-    box-shadow: var(--plain-shadow);
     padding: var(--base-gap);
-    border-radius: var(--border-radius);
 
     &.alert-warning {
-      background: var(--brand-red);
       color: var(--text-color-inverse);
     }
   }

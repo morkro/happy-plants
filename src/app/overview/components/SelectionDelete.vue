@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'delete-container': true, 'active': activeSelection }">
+  <div :class="wrapperClass">
     <button
       aria-label="Trash"
       :class="buttonDeleteClass"
@@ -40,6 +40,14 @@
       selectionCount () {
         const term = (this.selected === 1) ? 'plant' : 'plants'
         return `${this.selected} ${term} selected.`
+      },
+      wrapperClass () {
+        return {
+          'box': this.activeSelection,
+          'red': this.activeSelection,
+          'delete-container': true,
+          'active': this.activeSelection
+        }
       },
       buttonDeleteClass () {
         if (this.activeSelection) {
@@ -85,9 +93,6 @@
 
   .delete-container.active {
     display: flex;
-    background: var(--brand-red);
-    border-radius: var(--border-radius);
-    box-shadow: var(--plain-shadow);
     width: 100%;
 
     button {
