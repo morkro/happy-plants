@@ -92,6 +92,7 @@
           @save-selection="saveCategories" />
 
         <overview-menu
+          v-if="editMode === false"
           :showViewmode="false"
           :showCategories="!!plants.length"
           :showDelete="!!plants.length"
@@ -146,7 +147,6 @@
       },
       footerClass () {
         return {
-          'box': true,
           'editmode': this.editMode,
           [`mode-${this.editMode}`]: this.editMode
         }

@@ -41,7 +41,7 @@
 
 <script>
   export default {
-    name: 'SelectionCategorise',
+    name: 'CategoriseMenu',
 
     props: {
       categories: { type: Array, default: () => [] }

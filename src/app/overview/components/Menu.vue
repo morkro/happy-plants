@@ -1,5 +1,5 @@
 <template>
-  <div class="overview-menu">
+  <div class="overview-menu box">
     <ul class="menu-left">
       <li v-if="showViewmode">
         <button
@@ -57,8 +57,8 @@
 
     props: {
       showDelete: { type: Boolean, default: true },
-      showViewmode: { type: Boolean, default: false },
-      showCategories: { type: Boolean, default: true }
+      showViewmode: { type: Boolean, default: true },
+      showCategories: { type: Boolean, default: false }
     },
 
     methods: {

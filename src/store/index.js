@@ -1,6 +1,5 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Vue from 'vue'
 import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
@@ -28,6 +27,7 @@ export default new Vuex.Store({
       message: false
     },
     settings: {
+      viewMode: 'list',
       filter: 'latest'
     },
     categories: []

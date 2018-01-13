@@ -22,7 +22,7 @@
 
 <script>
   export default {
-    name: 'SelectionDelete',
+    name: 'DeleteMenu',
 
     props: {
       selected: { type: Number, default: 0 }
