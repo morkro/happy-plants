@@ -1,12 +1,5 @@
 <template>
-  <div :class="wrapperClass">
-    <button
-      aria-label="Categorise"
-      :class="buttonCategoriseClass"
-      @click="activate($event)">
-      <feather-layers width="18" height="18" />
-    </button>
-
+  <div class="box green categorise-container">
     <div class="categories-active">
       <label for="categorise-select">
         <button
@@ -51,7 +44,6 @@
     name: 'SelectionCategorise',
 
     props: {
-      activeSelection: { type: Boolean, default: false },
       categories: { type: Array, default: () => [] }
     },
 
@@ -67,20 +59,6 @@
     },
 
     computed: {
-      wrapperClass () {
-        return {
-          'categorise-container': true,
-          'box': this.activeSelection,
-          'green': this.activeSelection,
-          'active': this.activeSelection
-        }
-      },
-      buttonCategoriseClass () {
-        if (this.activeSelection) {
-          return 'categorise icon'
-        }
-        return 'categorise circle icon inverse'
-      },
       categoryName () {
         return this.selectedCategory && this.selectedCategory.label
       }
@@ -97,10 +75,6 @@
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$refs.select.selectedIndex = 0
-      },
-      activate (event) {
-        if (event.currentTarget) event.currentTarget.blur()
-        this.$emit('categorise-selection')
       },
       cancel (event) {
         if (event.currentTarget) event.currentTarget.blur()
@@ -126,37 +100,23 @@
 </script>
 
 <style lang="scss" scoped>
-  $btn-size: 50px;
-
-  button.categorise {
-    padding: 0;
-    background: var(--background-primary);
-    box-shadow: var(--plain-shadow);
-  }
+  $footer-size: 45px;
 
   .categorise-container {
-    &.active {
-      width: 100%;
-    }
+    height: 100%;
+    width: 100%;
 
     button {
-      width: $btn-size;
-      height: $btn-size;
+      width: $footer-size;
+      height: $footer-size;
       flex: 1 0 auto;
-    }
-
-    .categories-active,
-    &.active button.categorise {
-      display: none;
-    }
-
-    &.active .categories-active {
-      display: flex;
+      justify-content: center;
     }
   }
 
   .categories-active {
     width: 100%;
+    display: flex;
 
     label {
       width: 100%;

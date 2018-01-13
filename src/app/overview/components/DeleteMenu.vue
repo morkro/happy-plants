@@ -1,8 +1,8 @@
 <template>
-  <div :class="wrapperClass">
+  <div class="box red delete-container">
     <button
       aria-label="Trash"
-      :class="buttonDeleteClass"
+      class="delete icon"
       @click="activate($event)">
       <feather-trash width="18" height="18" />
     </button>
@@ -25,7 +25,6 @@
     name: 'SelectionDelete',
 
     props: {
-      activeSelection: { type: Boolean, default: false },
       selected: { type: Number, default: 0 }
     },
 
@@ -40,20 +39,6 @@
       selectionCount () {
         const term = (this.selected === 1) ? 'plant' : 'plants'
         return `${this.selected} ${term} selected.`
-      },
-      wrapperClass () {
-        return {
-          'box': this.activeSelection,
-          'red': this.activeSelection,
-          'delete-container': true,
-          'active': this.activeSelection
-        }
-      },
-      buttonDeleteClass () {
-        if (this.activeSelection) {
-          return 'delete icon'
-        }
-        return 'delete circle icon inverse'
       }
     },
 
@@ -71,33 +56,19 @@
 </script>
 
 <style lang="scss" scoped>
-  $btn-size: 50px;
+  $footer-size: 45px;
 
   .delete-container {
-    button {
-      width: $btn-size;
-      height: $btn-size;
-      flex: 1 0 auto;
-    }
-
-    &:not(.active) button.delete {
-      padding: 0;
-      background: var(--background-primary);
-      box-shadow: var(--plain-shadow);
-    }
-
-    button.cancel {
-      display: none;
-    }
-  }
-
-  .delete-container.active {
     display: flex;
     width: 100%;
+    height: 100%;
 
     button {
+      width: $footer-size;
+      height: $footer-size;
       display: flex;
       justify-content: center;
+      flex: 1 0 auto;
 
       svg {
         margin-right: 0;
@@ -111,15 +82,11 @@
 
   .deletion-info {
     width: 100%;
-    display: none;
+    display: flex;
     align-items: center;
     text-align: left;
     color: var(--text-color-inverse);
     padding: 0 var(--base-gap);
-
-    .active & {
-      display: flex;
-    }
 
     p {
       display: inline-block;

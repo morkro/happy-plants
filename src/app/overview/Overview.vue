@@ -77,32 +77,25 @@
 
       <footer :class="footerClass">
         <!-- Delete button and control element. -->
-        <selection-delete
-          v-if="plants.length && !isCategoryMode"
-          :activeSelection="isDeleteMode"
+        <delete-menu
+          v-if="isDeleteMode"
           :selected="this.selection.length"
           @cancel-selection="cancelDeleteMode"
           @delete-selection="activateDeleteMode" />
 
-        <!-- Button to add new plants. -->
-        <router-link
-          v-if="!editMode"
-          tag="button"
-          aria-label="Add plant"
-          class="add-plant circle"
-          :to="{ path: 'add' }">
-          <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
-        </router-link>
-
         <!-- Categorisation button and control element. -->
-        <selection-categorise
-          v-if="plants.length && !isDeleteMode"
-          :activeSelection="isCategoryMode"
+        <categorise-menu
+          v-if="isCategoryMode"
           :categories="categories"
           @category-selected="updateCategorySelection"
           @cancel-selection="cancelCategoriseMode"
-          @categorise-selection="activateCategoriseMode"
           @save-selection="saveCategories" />
+
+        <overview-menu
+          :showViewmode="false"
+          :showCategories="!!plants.length"
+          :showDelete="!!plants.length"
+          @clicked-item="updateEditMode" />
       </footer>
     </section>
   </main>
@@ -112,12 +105,12 @@
   import { mapState, mapActions } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import OverviewAlert from '@/components/Alert'
-  import SelectionDelete from './components/SelectionDelete'
-  import SelectionCategorise from './components/SelectionCategorise'
+  import OverviewMenu from './components/Menu'
+  import DeleteMenu from './components/DeleteMenu'
+  import CategoriseMenu from './components/CategoriseMenu'
   import PlantsList from './components/PlantsList'
   import PlantsIntro from './components/PlantsIntro'
   import OverviewFilter from './components/OverviewFilter'
-  import '@/assets/leaf'
 
   export default {
     name: 'Overview',
@@ -125,8 +118,9 @@
     components: {
       'app-header': AppHeader,
       'overview-alert': OverviewAlert,
-      'selection-delete': SelectionDelete,
-      'selection-categorise': SelectionCategorise,
+      'overview-menu': OverviewMenu,
+      'delete-menu': DeleteMenu,
+      'categorise-menu': CategoriseMenu,
       'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
       'overview-filter': OverviewFilter,
@@ -151,8 +145,11 @@
         return this.editMode === 'delete'
       },
       footerClass () {
-        if (!this.editMode) return ''
-        return `editmode mode-${this.editMode}`
+        return {
+          'box': true,
+          'editmode': this.editMode,
+          [`mode-${this.editMode}`]: this.editMode
+        }
       },
       listByCategory () {
         return this.filter === 'categories'
@@ -265,14 +262,6 @@
         this.showCategoryBackdrop = false
         this.selectedCategory = category
       },
-      activateCategoriseMode () {
-        this.editMode = 'category'
-        this.showCategoryBackdrop = true
-
-        if (!this.categoriseMode) {
-          this.selection = []
-        }
-      },
       cancelCategoriseMode () {
         this.reset()
       },
@@ -302,6 +291,17 @@
       },
       isCollapsed (index) {
         return this.collapsedCategories.includes(index)
+      },
+      updateEditMode (type) {
+        this.editMode = type
+
+        if (type === 'category') {
+          this.showCategoryBackdrop = true
+
+          if (!this.categoriseMode) {
+            this.selection = []
+          }
+        }
       }
     }
   }
@@ -312,7 +312,7 @@
   @import "~styles/z-index";
 
   $content-index: list, backdrop, footer;
-  $footer-btn-size: 60px;
+  $footer-size: 45px;
 
   main {
     min-height: 100vh;
@@ -322,7 +322,7 @@
   main > section {
     height: 100%;
     padding: var(--base-gap);
-    padding-bottom: calc(#{$footer-btn-size} + var(--base-gap) * 2);
+    padding-bottom: calc(#{$footer-size} + var(--base-gap));
 
     &.no-plants {
       display: flex;
@@ -431,19 +431,8 @@
     transform: translateX(-50%);
     text-align: center;
     z-index: z($content-index, footer);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
     width: calc(100% - var(--base-gap) * 2);
-
-    @supports (justify-content: space-evenly) {
-      justify-content: space-evenly;
-    }
-
-    .add-plant {
-      width: $footer-btn-size;
-      height: $footer-btn-size;
-    }
+    height: $footer-size;
 
     /* TODO: Remove when desktop layout is actually in development. */
     @media (min-width: var(--app-media-max-size)) {
