@@ -47,7 +47,8 @@
       </component>
 
       <plant-updates
-        :modified="modified">
+        :modified="modified"
+        :created="created">
       </plant-updates>
     </section>
   </main>
@@ -100,7 +101,8 @@
       notes: state => state.selected.notes,
       watering: state => state.selected.watering,
       sunshine: state => state.selected.sunshine,
-      modified: state => state.selected.modified
+      modified: state => state.selected.modified,
+      created: state => state.selected.created
     }),
 
     methods: {

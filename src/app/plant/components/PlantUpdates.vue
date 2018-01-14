@@ -1,7 +1,7 @@
 <template>
   <section>
-    <feather-clock class="updates-icon" />
     <p>Last updated: {{ modifiedDate }}</p>
+    <p>Created: {{ createdDate }}</p>
   </section>
 </template>
 
@@ -10,17 +10,22 @@
     name: 'PlantSeasons',
 
     props: {
-      modified: { type: Number, default: Date.now() }
-    },
-
-    components: {
-      'feather-clock': () =>
-        import('vue-feather-icon/components/clock' /* webpackChunkName: "plant" */)
+      modified: { type: Number, default: Date.now() },
+      created: { type: Number, default: Date.now() }
     },
 
     computed: {
       modifiedDate () {
-        const date = new Date(this.modified)
+        return this.formatDate(this.modified)
+      },
+      createdDate () {
+        return this.formatDate(this.created)
+      }
+    },
+
+    methods: {
+      formatDate (dateString) {
+        const date = new Date(dateString)
         const year = date.getFullYear()
         const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
         const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
@@ -42,19 +47,12 @@
     font-size: var(--text-size-xsmall);
     font-style: italic;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-end;
     align-items: center;
 
     p {
       color: var(--text-color-secondary);
     }
-  }
-
-  .updates-icon {
-    margin-right: calc(var(--base-gap) / 3);
-    height: 16px;
-    width: 16px;
-    stroke: var(--text-color-secondary);
-    opacity: 0.5;
   }
 </style>
