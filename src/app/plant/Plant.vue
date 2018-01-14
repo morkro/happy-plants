@@ -4,7 +4,8 @@
       :show="showPlantModal"
       :name="name"
       @content-update="updateFromModal"
-      @close-modal="closePlantEditModal" />
+      @close-modal="closePlantEditModal"
+      @delete-plant="deletePlantFromModal" />
 
     <app-header class="app-header" color="white" :back="true">
       <button
@@ -113,7 +114,9 @@
         'updateName',
         'updatePhoto',
         'resetSelectedState',
-        'updatePlantsList'
+        'updatePlantsList',
+        'deletePlants',
+        'showNotification'
       ]),
       getComponentProps (componentName) {
         switch (componentName) {
@@ -169,6 +172,13 @@
         const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
         this.updateName({ guid: this.guid, name })
         this.updatePhoto({ guid: this.guid, blob, imageURL })
+      },
+      deletePlantFromModal () {
+        this.deletePlants([{ guid: this.guid }])
+          .then(() => this.showNotification({
+            message: 'Plant deleted.'
+          }))
+          .then(() => this.$router.push('/'))
       }
     },
 

@@ -36,6 +36,8 @@ button {
   svg {
     margin-right: calc(var(--base-gap) / 2);
     stroke: var(--text-color-button);
+    width: var(--icon-size-base);
+    height: var(--icon-size-base);
 
     rect,
     path,

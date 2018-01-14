@@ -5,29 +5,38 @@
     @close-modal="emitCloseModal">
     <h1 slot="headline">Update your plant</h1>
 
-    <form slot="content" class="modal-content" @submit.prevent="updatePlant">
-      <label for="modal-name">
-        <h2>Name</h2>
-        <input
-          id="modal-name"
-          type="text"
-          :value="name"
-          @change="updateName" />
-      </label>
+    <div slot="content">
+      <form class="modal-content" @submit.prevent="updatePlant">
+        <label for="modal-name">
+          <h2>Name</h2>
+          <input
+            id="modal-name"
+            type="text"
+            :value="name"
+            @change="updateName" />
+        </label>
 
-      <label for="modal-file">
-        <h2>Upload or change photo</h2>
-        <span>You can either select a photo from your gallery or take one now.</span>
-        <file-upload
-          name="modal-file"
-          @loading-file="handleLoadingState"
-          @file-selected="assignPhoto" />
-      </label>
+        <label for="modal-file">
+          <h2>Upload or change photo</h2>
+          <span>You can either select a photo from your gallery or take one now.</span>
+          <file-upload
+            name="modal-file"
+            @loading-file="handleLoadingState"
+            @file-selected="assignPhoto" />
+        </label>
 
-      <button :disabled="isUploadingFile">
-        Save
-      </button>
-    </form>
+        <button :disabled="isUploadingFile">
+          Save
+        </button>
+      </form>
+
+      <div class="modal-delete">
+        <button class="warning" @click="emitDeletePlant">
+          <feather-trash />
+          Delete plant
+        </button>
+      </div>
+    </div>
   </app-modal>
 </template>
 
@@ -35,6 +44,7 @@
   import { isBlobbable } from '@/utils/blob'
   import Modal from '@/components/Modal'
   import FileUpload from '@/components/FileUpload'
+
   import '@/assets/cactus'
 
   export default {
@@ -47,7 +57,9 @@
 
     components: {
       'app-modal': Modal,
-      'file-upload': FileUpload
+      'file-upload': FileUpload,
+      'feather-trash': () =>
+        import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
     },
 
     data () {
@@ -88,6 +100,10 @@
 
         this.$emit('content-update', data)
         this.emitCloseModal()
+      },
+      emitDeletePlant () {
+        this.$emit('delete-plant')
+        this.emitCloseModal()
       }
     }
   }
@@ -117,6 +133,18 @@
 
     input {
       width: 100%;
+    }
+  }
+
+  .modal-delete {
+    border-top: 3px solid rgba(0, 0, 0, 0.06);
+    padding-top: calc(var(--base-gap) * 2);
+    margin-top: calc(var(--base-gap) * 2);
+
+    button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>
