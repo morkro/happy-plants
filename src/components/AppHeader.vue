@@ -53,6 +53,7 @@
       },
       scrollTop () {
         if (this.scrollUp === false) return
+
         const duration = 222
         const cosParameter = window.scrollY / 2
         let count = 0

@@ -107,8 +107,11 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import { sortByDate, sortByAlphabet } from '@/utils/sort'
+
   import AppHeader from '@/components/AppHeader'
   import OverviewAlert from '@/components/Alert'
+
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import CategoriseMenu from './components/CategoriseMenu'
@@ -122,11 +125,11 @@
     components: {
       'app-header': AppHeader,
       'overview-alert': OverviewAlert,
+      'plants-intro': PlantsIntro,
+      'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
       'categorise-menu': CategoriseMenu,
-      'plants-intro': PlantsIntro,
-      'plants-list': PlantsList,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
         import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
@@ -139,7 +142,6 @@
     computed: {
       ...mapState({
         plants: state => state.plants,
-        filter: state => state.settings.filter,
         viewMode: state => state.settings.viewMode,
         orderBy: state => state.settings.orderBy,
         categories: state => state.categories
@@ -170,14 +172,14 @@
         const list = this.categories.map(cat => ({
           guid: cat.guid,
           label: cat.label,
-          plants: this.plants.filter(plant =>
-            plant.categories && plant.categories.includes(cat.guid))
+          plants: this.sortPlants(this.plants.filter(plant =>
+            plant.categories && plant.categories.includes(cat.guid)))
         }))
 
         list.push({
           label: 'Uncategorised',
-          plants: this.plants.filter(plant =>
-            plant.categories && !plant.categories.length)
+          plants: this.sortPlants(this.plants.filter(plant =>
+            plant.categories && !plant.categories.length))
         })
 
         return list
@@ -215,6 +217,14 @@
       ]),
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
+      },
+      sortPlants (list) {
+        switch (this.orderBy) {
+          case 'latest':
+            return list.sort(sortByDate).reverse()
+          case 'alphabetical':
+            return list.sort(sortByAlphabet)
+        }
       },
       toggleDeleteSelection (item) {
         if (item.selected) {
