@@ -96,7 +96,7 @@
           v-if="editMode === false || isViewMode"
           :noElements="!plants.length"
           :showViewmode="!!plants.length"
-          :showCategories="!!plants.length"
+          :showCategories="viewMode === 'categories'"
           :showDelete="!!plants.length"
           :disableMenu="isViewMode"
           @clicked-item="updateEditMode" />
