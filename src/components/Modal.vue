@@ -1,13 +1,13 @@
 <template>
   <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
+      <slot name="headline"></slot>
       <button
         aria-label="Close"
         class="circle inverse"
         @click.prevent="emitModalClose">
-        <feather-x width="18" height="18" />
+        <feather-x width="24" height="24" />
       </button>
-      <slot name="headline"></slot>
     </header>
     <slot name="content"></slot>
   </section>
@@ -63,21 +63,24 @@
 
   .modal-header {
     display: flex;
+    justify-content: space-between;
     align-items: flex-start;
     margin-bottom: var(--base-gap);
 
     button {
-      margin-right: calc(var(--base-gap) + 5px);
-      background: var(--background-primary);
+      margin-left: calc(var(--base-gap) + 5px);
+      background: var(--grey);
       color: var(--link-color);
-      box-shadow: var(--plain-shadow);
+      box-shadow: none;
+      width: 35px;
+      height: 35px;
     }
 
     h1 {
       font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
-      margin-top: 8px;
+      margin-top: 4px;
     }
   }
 </style>
