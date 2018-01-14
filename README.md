@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://travis-ci.com/morkro/happy-plants">
     <img src="https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)" alt="Build Status" />
-    <img src="https://img.shields.io/maintenance/yes/2017.svg" alt="Maintenance" />
+    <img src="https://img.shields.io/maintenance/yes/2018.svg" alt="Maintenance" />
   </a>
 </p>
 
