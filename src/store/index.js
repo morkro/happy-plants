@@ -27,8 +27,8 @@ export default new Vuex.Store({
       message: false
     },
     settings: {
-      viewMode: 'list',
-      filter: 'latest'
+      viewMode: 'grid',
+      orderBy: 'latest'
     },
     categories: []
   },

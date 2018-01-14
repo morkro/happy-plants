@@ -1,3 +1,5 @@
+@import "~styles/animations";
+
 input {
   background: white;
   padding: calc(var(--base-gap) + 5px) var(--base-gap);
@@ -18,6 +20,22 @@ input {
     box-shadow:
       0 0 0 2px var(--brand-green-medium),
       0 0 12px var(--transparency-black-light);
+  }
+
+  &[type="radio"] {
+    outline: 0;
+    border: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--border-radius);
+    box-shadow: none;
+    background: var(--grey);
+    transition: background $base-speed $ease-out-back;
+
+    &:checked {
+      background: var(--brand-green);
+    }
   }
 }
 

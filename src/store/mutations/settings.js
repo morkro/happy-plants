@@ -3,6 +3,25 @@ export default {
     if (!payload.settings || !Object.keys(payload.settings).length) {
       return
     }
-    state.settings = payload.settings
+
+    // Migration to new data schema.
+    let migrate = {}
+    if (payload.settings.filter) {
+      const filter = payload.settings.filter
+      migrate = {
+        filter: undefined,
+        viewMode: filter === 'categories' ? filter : state.settings.viewMode,
+        orderBy: ['latest', 'alphabetical'].some(item => item === filter)
+          ? filter
+          : state.settings.orderBy
+      }
+    }
+
+    state.settings = Object.assign(
+      {},
+      state.settings,
+      payload.settings,
+      migrate
+    )
   }
 }

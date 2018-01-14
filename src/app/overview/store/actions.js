@@ -2,10 +2,10 @@ import { updatePlant } from '@/api/plants'
 import { updateStore } from '@/api/store'
 import { updateSettings } from '@/api/settings'
 
-export const updateFilter = ({ state, commit }, data) => {
+export const updateViewmode = ({ state, commit }, data) => {
   const config = { ...state.settings, ...data }
   return updateSettings(config)
-    .then(() => commit('UPDATE_FILTER', data))
+    .then(() => commit('UPDATE_VIEWMODE', data))
 }
 
 export const updatePlantCategory = ({ state, commit }, data) => {

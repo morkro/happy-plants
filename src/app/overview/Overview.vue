@@ -24,10 +24,11 @@
       </button>
     </overview-alert>
 
-    <!-- Backdrop shows when user starts category selection. -->
-    <div v-if="showCategoryBackdrop" class="category-selection-backdrop">
-      <p>Select category</p>
-      <feather-arrow-down />
+    <div v-if="showBackdrop" class="overview-backdrop" @click="hideBackdrop">
+      <div v-if="isCategoryMode">
+        <p>Select category</p>
+        <feather-arrow-down />
+      </div>
     </div>
 
     <section :class="{ 'no-plants': plants.length <= 0 }">
@@ -35,13 +36,6 @@
       <plants-intro
         v-if="plants.length <= 0"
         key="overview-intro" />
-
-      <div v-if="plants.length" :class="{ 'plant-options': true, 'big-gap': listByCategory}">
-        <overview-filter
-          class="plant-filter"
-          :selected="filter"
-          @update-selection="sortItems" />
-      </div>
 
       <!-- List of plants used when filter is either "alphabetical" or "latest". -->
       <plants-list
@@ -76,6 +70,13 @@
       </div>
 
       <footer :class="footerClass">
+        <viewmode-menu
+          class="viewmode-menu"
+          v-if="isViewMode"
+          :viewMode="viewMode"
+          :orderBy="orderBy"
+          @update="updateViewmodeFromMenu" />
+
         <!-- Delete button and control element. -->
         <delete-menu
           v-if="isDeleteMode"
@@ -92,10 +93,12 @@
           @save-selection="saveCategories" />
 
         <overview-menu
-          v-if="editMode === false"
-          :showViewmode="false"
+          v-if="editMode === false || isViewMode"
+          :noElements="!plants.length"
+          :showViewmode="!!plants.length"
           :showCategories="!!plants.length"
           :showDelete="!!plants.length"
+          :disableMenu="isViewMode"
           @clicked-item="updateEditMode" />
       </footer>
     </section>
@@ -111,7 +114,7 @@
   import CategoriseMenu from './components/CategoriseMenu'
   import PlantsList from './components/PlantsList'
   import PlantsIntro from './components/PlantsIntro'
-  import OverviewFilter from './components/OverviewFilter'
+  import ViewmodeMenu from './components/ViewmodeMenu'
 
   export default {
     name: 'Overview',
@@ -124,7 +127,7 @@
       'categorise-menu': CategoriseMenu,
       'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
-      'overview-filter': OverviewFilter,
+      'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
         import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
       'feather-minimize': () =>
@@ -137,8 +140,13 @@
       ...mapState({
         plants: state => state.plants,
         filter: state => state.settings.filter,
+        viewMode: state => state.settings.viewMode,
+        orderBy: state => state.settings.orderBy,
         categories: state => state.categories
       }),
+      isViewMode () {
+        return this.editMode === 'view-mode'
+      },
       isCategoryMode () {
         return this.editMode === 'category'
       },
@@ -152,7 +160,7 @@
         }
       },
       listByCategory () {
-        return this.filter === 'categories'
+        return this.viewMode === 'categories'
       },
       sortedCategoryList () {
         if (this.selectedCategory) {
@@ -177,7 +185,7 @@
     },
 
     watch: {
-      showCategoryBackdrop (show) {
+      showBackdrop (show) {
         if (show) {
           this.$root.$el.parentNode.classList.add('js-no-scrolling')
         } else {
@@ -192,7 +200,7 @@
         selectedCategory: false,
         editMode: false,
         showAlert: false,
-        showCategoryBackdrop: false,
+        showBackdrop: false,
         collapsedCategories: []
       }
     },
@@ -203,7 +211,7 @@
         'updatePlantCategory',
         'deletePlants',
         'showNotification',
-        'updateFilter'
+        'updateViewmode'
       ]),
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
@@ -259,7 +267,7 @@
         this.cancelDeleteMode()
       },
       updateCategorySelection (category) {
-        this.showCategoryBackdrop = false
+        this.showBackdrop = false
         this.selectedCategory = category
       },
       cancelCategoriseMode () {
@@ -279,9 +287,6 @@
 
         this.cancelCategoriseMode()
       },
-      sortItems (type) {
-        this.updateFilter({ filter: type })
-      },
       toggleCollapseCategory (index) {
         if (this.collapsedCategories.includes(index)) {
           this.collapsedCategories.splice(this.collapsedCategories.indexOf(index), 1)
@@ -295,13 +300,24 @@
       updateEditMode (type) {
         this.editMode = type
 
-        if (type === 'category') {
-          this.showCategoryBackdrop = true
+        if (type === 'category' || type === 'view-mode') {
+          this.showBackdrop = true
 
           if (!this.categoriseMode) {
             this.selection = []
           }
         }
+      },
+      hideBackdrop () {
+        if (this.isViewMode) {
+          this.showBackdrop = false
+          this.editMode = false
+        }
+      },
+      updateViewmodeFromMenu (data) {
+        this.updateViewmode({
+          [data.section]: data.type
+        })
       }
     }
   }
@@ -352,17 +368,23 @@
     }
   }
 
-  .category-selection-backdrop {
+  .overview-backdrop {
     width: 100%;
     height: 100vh;
     position: fixed;
     background: var(--transparency-black-medium);
     z-index: z($content-index, backdrop);
+    color: var(--text-color-inverse);
     display: flex;
     justify-content: center;
-    color: var(--text-color-inverse);
     align-items: center;
-    flex-direction: column;
+
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
     p {
       margin-bottom: var(--base-gap);
@@ -376,14 +398,6 @@
     }
   }
 
-  .plant-options {
-    margin-bottom: var(--base-gap);
-
-    &.big-gap {
-      margin-bottom: calc(var(--base-gap) * 1.5);
-    }
-  }
-
   .plant-list {
     z-index: z($content-index, list);
   }
@@ -392,7 +406,7 @@
     h2 {
       display: flex;
       align-items: center;
-      margin-bottom: calc(var(--base-gap) * 1.5);
+      margin-bottom: var(--base-gap);
     }
 
     h2 svg {
@@ -410,7 +424,6 @@
       height: 10px;
       display: flex;
       justify-content: space-between;
-      transform: translateY(-50%);
       margin-bottom: var(--base-gap);
       --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
 
@@ -437,6 +450,12 @@
     /* TODO: Remove when desktop layout is actually in development. */
     @media (min-width: var(--app-media-max-size)) {
       width: var(--app-media-max-size);
+    }
+
+    .viewmode-menu {
+      position: absolute;
+      top: 0;
+      transform: translateY(calc(-100% - var(--base-gap)));
     }
   }
 </style>

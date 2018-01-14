@@ -2,11 +2,11 @@ import Vue from 'vue'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
 export default {
-  UPDATE_FILTER (state, payload) {
+  UPDATE_VIEWMODE (state, payload) {
     state.updated = Date.now()
-    state.settings.filter = payload.filter
+    state.settings = Object.assign({}, state.settings, payload)
 
-    switch (state.settings.filter) {
+    switch (state.settings.orderBy) {
       case 'latest':
         state.plants = state.plants.sort(sortByDate).reverse()
         break
