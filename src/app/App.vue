@@ -30,7 +30,6 @@
     },
 
     computed: mapState({
-      authenticated: state => state.user.authenticated,
       message: state => state.notification.message
     }),
 
@@ -39,10 +38,7 @@
         'loadPlants',
         'loadSettings',
         'loadCategories',
-        'hideNotification',
-        'signInUser',
-        'signOutUser',
-        'authError'
+        'hideNotification'
       ]),
       isOverviewRoute () {
         return (

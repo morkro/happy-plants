@@ -2,10 +2,6 @@
   <main class="main-wireframe">
     <app-header :back="true" :backPath="returnRoutePath">
       <h1 slot="title">{{ headline }}</h1>
-      <div v-if="authenticated" slot="custom-action-right" class="settings-avatar">
-        <img v-if="authenticated" :src="avatar" :alt="userName" :title="userName" />
-        <feather-user v-else />
-      </div>
     </app-header>
 
     <router-view></router-view>
@@ -13,24 +9,16 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   import AppHeader from '@/components/AppHeader'
 
   export default {
     name: 'Settings',
 
     components: {
-      'app-header': AppHeader,
-      'feather-user': () =>
-        import('vue-feather-icon/components/user' /* webpackChunkName: "settings" */)
+      'app-header': AppHeader
     },
 
     computed: {
-      ...mapState({
-        authenticated: state => state.user.authenticated,
-        userName: state => state.user.name,
-        avatar: state => state.user.avatar
-      }),
       headline () {
         return this.$route.path.split('/').pop()
       },
