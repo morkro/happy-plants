@@ -8312,10 +8312,6 @@ vue@^2.5.2:
   version "2.5.13"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.13.tgz#95bd31e20efcf7a7f39239c9aa6787ce8cf578e1"
 
-vuefire@^1.4.4:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/vuefire/-/vuefire-1.4.5.tgz#2f31028b18f25e0f581bb68fb94b88302d62ebf8"
-
 vuex-router-sync@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/vuex-router-sync/-/vuex-router-sync-5.0.0.tgz#1a225c17a1dd9e2f74af0a1b2c62072e9492b305"
