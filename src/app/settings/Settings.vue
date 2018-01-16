@@ -33,33 +33,9 @@
 </script>
 
 <style lang="scss" scoped>
-  $avatar-size: 20px;
-
   main {
     min-height: 10vh;
     height: 100vh;
     background: var(--background-secondary);
-  }
-
-  .settings-avatar {
-    border-radius: 50%;
-    width: $avatar-size;
-    height: $avatar-size;
-    margin-right: var(--base-gap);
-    overflow: hidden;
-    background: var(--background-secondary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      object-fit: cover;
-      width: 100%;
-    }
-
-    svg {
-      width: 12px;
-      height: 12px;
-    }
   }
 </style>
