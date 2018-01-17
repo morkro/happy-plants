@@ -55,13 +55,13 @@
 
             <div class="categories-actions">
               <button
-                class="icon inverse"
+                class="icon inverse edit"
                 aria-label="Edit category"
                 @click="openCategoryModal(category)">
                 <feather-edit />
               </button>
               <button
-                class="icon inverse"
+                class="icon inverse delete"
                 aria-label="Delete category"
                 @click="openCategoryDialog($event, category)">
                 <feather-trash />
@@ -274,8 +274,25 @@
     align-items: center;
     margin-left: var(--base-gap);
 
+    button {
+      background: var(--grey);
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      justify-content: center;
+    }
+
     button:first-of-type {
-      margin-right: var(--base-gap);
+      margin-right: calc(var(--base-gap) / 2);
+    }
+
+    button.edit svg {
+      transform: translateY(-1px);
+    }
+
+    button.delete svg {
+      transform: translateX(-1px) translateY(-1px);
     }
   }
 
