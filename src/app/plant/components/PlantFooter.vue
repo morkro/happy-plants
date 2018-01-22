@@ -1,17 +1,28 @@
 <template>
-  <section>
-    <p>Last updated: {{ modifiedDate }}</p>
-    <p>Created: {{ createdDate }}</p>
+  <section class="plant-footer">
+    <button class="icon inverse" @click.prevent="emitButtonClicked">
+      <feather-box />
+      Manage modules
+    </button>
+    <div>
+      <p>Last updated: {{ modifiedDate }}</p>
+      <p>Created: {{ createdDate }}</p>
+    </div>
   </section>
 </template>
 
 <script>
   export default {
-    name: 'PlantSeasons',
+    name: 'PlantFooter',
 
     props: {
       modified: { type: Number, default: Date.now() },
       created: { type: Number, default: Date.now() }
+    },
+
+    components: {
+      'feather-box': () =>
+        import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
     },
 
     computed: {
@@ -30,6 +41,9 @@
         const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
         const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
         return `${day}.${month}.${year}`
+      },
+      emitButtonClicked () {
+        this.$emit('manage-modules')
       }
     }
   }
@@ -38,7 +52,7 @@
 <style lang="scss" scoped>
   @import "~styles/animations";
 
-  section {
+  .plant-footer {
     background: var(--background-secondary);
     width: 100%;
     padding:
@@ -47,12 +61,19 @@
     font-size: var(--text-size-xsmall);
     font-style: italic;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 
     p {
       color: var(--text-color-secondary);
+      text-align: right;
+    }
+
+    button {
+      border: 2px dashed var(--grey);
+      color: var(--text-color-base);
+      padding: 12px;
+      font-size: var(--text-size-base);
     }
   }
 </style>

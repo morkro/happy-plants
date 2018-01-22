@@ -7,6 +7,12 @@
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
 
+    <plant-module-manager
+      :show="showModuleManager"
+      :modules="modules"
+      @toggle-module="toggleModule"
+      @close-module-manager="cancelModuleManager" />
+
     <app-header class="app-header" color="white" :back="true">
       <button
         slot="custom-action-right"
@@ -46,10 +52,11 @@
         @update-plant="getComponentListener">
       </component>
 
-      <plant-updates
+      <plant-footer
         :modified="modified"
-        :created="created">
-      </plant-updates>
+        :created="created"
+        @manage-modules="activateModuleManager">
+      </plant-footer>
     </section>
   </main>
 </template>
@@ -59,12 +66,15 @@
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import getDefaultStructure from '@/utils/get-default-structure'
   import AppHeader from '@/components/AppHeader'
+
+  import PlantModuleManager from './components/PlantModuleManager'
   import PlantModal from './components/PlantModal'
   import PlantNotes from './components/PlantNotes'
   import PlantSeasons from './components/PlantSeasons'
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
-  import PlantUpdates from './components/PlantUpdates'
+  import PlantFooter from './components/PlantFooter'
+  import getPlantModules from './get-modules'
   import '@/assets/cactus'
 
   const defaultState = getDefaultStructure()
@@ -74,18 +84,21 @@
 
     components: {
       'app-header': AppHeader,
+      'plant-module-manager': PlantModuleManager,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
-      'plant-updates': PlantUpdates,
+      'plant-footer': PlantFooter,
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
-      showPlantModal: false
+      showPlantModal: false,
+      showModuleManager: false,
+      modules: getPlantModules()
     }),
 
     computed: mapState({
@@ -181,6 +194,15 @@
             message: 'Plant deleted.'
           }))
           .then(() => this.$router.push('/'))
+      },
+      activateModuleManager () {
+        this.showModuleManager = true
+      },
+      cancelModuleManager () {
+        this.showModuleManager = false
+      },
+      toggleModule (module) {
+        console.log(module)
       }
     },
 

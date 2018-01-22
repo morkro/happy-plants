@@ -4,14 +4,14 @@
       :class="alertClass"
       :style="{ backgroundColor: backgroundColor || '' }">
       <header class="alert-header">
+        <slot name="headline"></slot>
         <button
           v-if="close"
           aria-label="Close"
           class="circle inverse"
           @click.prevent="emitAlertClose">
-          <feather-x width="18" height="18" />
+          <feather-x width="24" height="24" />
         </button>
-        <slot name="headline"></slot>
       </header>
 
       <div class="alert-content">
@@ -88,7 +88,7 @@
 
   section {
     width: auto;
-    max-width: 85vw;
+    max-width: 90vw;
     padding: var(--base-gap);
 
     &.alert-warning {
@@ -102,14 +102,12 @@
     margin-bottom: var(--base-gap);
 
     button {
-      margin-right: calc(var(--base-gap) + 5px);
-      background: var(--background-primary);
+      margin-left: calc(var(--base-gap) + 5px);
+      background: var(--grey);
       color: var(--link-color);
-      box-shadow: var(--plain-shadow);
-    }
-
-    button + h1 {
-      margin-top: 8px;
+      box-shadow: none;
+      width: 35px;
+      height: 35px;
     }
 
     h1 {
