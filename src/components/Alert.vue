@@ -16,7 +16,8 @@
 
       <div class="alert-content">
         <slot name="content"></slot>
-        <div class="alert-actions">
+
+        <div class="alert-actions" v-if="actions">
           <slot name="cancel"></slot>
           <slot name="confirm"></slot>
         </div>
@@ -33,7 +34,8 @@
       show: { type: Boolean, default: false },
       close: { type: Boolean, default: false },
       backgroundColor: { type: [String, Boolean], default: false },
-      type: { type: String, default: 'normal' }
+      type: { type: String, default: 'normal' },
+      actions: { type: Boolean, default: true }
     },
 
     components: {
