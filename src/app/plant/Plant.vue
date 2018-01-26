@@ -9,7 +9,7 @@
 
     <plant-module-manager
       :show="showModuleManager"
-      :modules="modules"
+      :modules="plantModules"
       @toggle-module="toggleModule"
       @close-module-manager="cancelModuleManager" />
 
@@ -41,15 +41,15 @@
       </header>
 
       <!--
-        Components are dynamically rendered since they
+        Plant modules are dynamically rendered since they
         can be added/removed and sorted.
       -->
       <component
-        v-for="component in componentOrder"
-        v-bind="getComponentProps(component)"
-        :key="component"
-        :is="`plant-${component}`"
-        @update-plant="getComponentListener">
+        v-for="module in modules"
+        v-bind="getPlantModuleProps(module.type)"
+        :key="module.type"
+        :is="`plant-${module.type}`"
+        @update-plant="getModuleListener">
       </component>
 
       <plant-footer
@@ -64,7 +64,6 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
-  import getDefaultStructure from '@/utils/get-default-structure'
   import AppHeader from '@/components/AppHeader'
 
   import PlantModuleManager from './components/PlantModuleManager'
@@ -74,10 +73,8 @@
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
   import PlantFooter from './components/PlantFooter'
-  import getPlantModules from './get-modules'
+  import { getPlantModules } from './utils'
   import '@/assets/cactus'
-
-  const defaultState = getDefaultStructure()
 
   export default {
     name: 'PlantView',
@@ -98,7 +95,7 @@
     data: () => ({
       showPlantModal: false,
       showModuleManager: false,
-      modules: getPlantModules()
+      plantModules: getPlantModules()
     }),
 
     computed: mapState({
@@ -106,14 +103,7 @@
       name: state => state.selected.name,
       blob: state => state.selected.blob,
       imageURL: state => state.selected.imageURL,
-      componentOrder: state => (
-        state.selected.componentOrder ||
-        defaultState.componentOrder
-      ),
-      seasons: state => state.selected.seasons,
-      notes: state => state.selected.notes,
-      watering: state => state.selected.watering,
-      sunshine: state => state.selected.sunshine,
+      modules: state => state.selected.modules || [],
       modified: state => state.selected.modified,
       created: state => state.selected.created
     }),
@@ -133,27 +123,28 @@
         'deletePlants',
         'showNotification'
       ]),
-      getComponentProps (componentName) {
-        switch (componentName) {
+      getPlantModuleProps (type) {
+        const module = this.modules.find(mod => mod.type === type).value
+        switch (type) {
           case 'watering':
             return {
-              amount: this.watering && this.watering.level
+              amount: module.watering && module.level
             }
           case 'sunshine':
             return {
-              intensity: this.sunshine && this.sunshine.intensity
+              intensity: module && module.intensity
             }
           case 'seasons':
             return {
-              seasons: this.seasons
+              seasons: module
             }
           case 'notes':
             return {
-              content: this.notes
+              content: module
             }
         }
       },
-      getComponentListener (event) {
+      getModuleListener (event) {
         switch (event.type) {
           case 'watering':
             return this.onWaterLevelUpdate(event.payload)

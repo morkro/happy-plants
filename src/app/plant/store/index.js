@@ -1,9 +1,9 @@
-import getDefaultStructure from '@/utils/get-default-structure'
+import { getPlantStructure } from '../utils'
 import * as actions from './actions'
 import mutations from './mutations'
 
 export default {
-  state: getDefaultStructure(),
+  state: getPlantStructure(),
   actions,
   mutations
 }

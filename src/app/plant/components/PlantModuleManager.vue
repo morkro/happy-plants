@@ -6,13 +6,14 @@
     :actions="false"
     @close-alert="cancel">
     <h1 slot="headline">Manage modules</h1>
+
     <ul slot="content" class="module-list">
       <v-touch
         tag="li"
         v-for="(module, index) in modules"
         :class="{ [`type-${module.type}`]: true, active: module.selected }"
         :key="`module-${index}`"
-        @tap="onToggleModule($event, module)">
+        @tap="onToggleModule(module)">
         <div class="module-icon">
           <feather-check v-if="module.selected" />
           <component v-else :is="`feather-${module.meta.icon}`" />
@@ -55,9 +56,8 @@
       cancel () {
         this.$emit('close-module-manager')
       },
-      onToggleModule (event, module) {
-        event.target.closest('li').classList.toggle('active')
-        this.$emit('toggle-module', module)
+      onToggleModule ({ type, selected }) {
+        this.$emit('toggle-module', { type, selected: !selected })
       }
     }
   }

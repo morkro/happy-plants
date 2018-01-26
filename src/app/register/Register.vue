@@ -89,7 +89,7 @@
   import AppHeader from '@/components/AppHeader'
   import Alert from '@/components/Alert'
   import FileUpload from '@/components/FileUpload'
-  import getDefaultStructure from '@/utils/get-default-structure'
+  import { getPlantStructure } from '@/app/plant/utils'
   import '@/assets/leaf'
 
   export default {
@@ -155,7 +155,7 @@
       },
       validateForm () {
         const config = {
-          ...getDefaultStructure(),
+          ...getPlantStructure(),
           blob: this.blob,
           categories: this.selectedCategory ? [this.selectedCategory.guid] : [],
           name: this.name

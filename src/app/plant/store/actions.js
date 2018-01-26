@@ -1,9 +1,9 @@
 import { updatePlant } from '@/api/plants'
 import { updateStore } from '@/api/store'
-import getDefaultStructure from '@/utils/get-default-structure'
+import { getPlantStructure } from '../utils'
 
 export const resetSelectedState = ({ commit }) => {
-  commit('RESET_SELECTED_PLANT', { defaultState: getDefaultStructure() })
+  commit('RESET_SELECTED_PLANT', { defaultState: getPlantStructure() })
 }
 
 export const updateSeason = ({ state, commit }, data) => {

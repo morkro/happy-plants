@@ -1,11 +1,4 @@
-function getCalendarMonth () {
-  return [
-    'January', 'February', 'March',
-    'April', 'Mai', 'June',
-    'July', 'August', 'September',
-    'October', 'November', 'December'
-  ]
-}
+import getCalendarMonth from './get-calendar-month'
 
 export default function getPlantModules () {
   return [
