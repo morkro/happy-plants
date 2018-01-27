@@ -20,6 +20,25 @@ function shrinkPlantObjects (plant) {
   }
 }
 
+/**
+ * Clean up method to migrate old plant object structure to new system.
+ */
+function cleanUpPlantObject (plant) {
+  const plantCopy = plant
+
+  if (!plantCopy.modules) {
+    plantCopy.modules = []
+  }
+
+  delete plantCopy.componentOrder
+  delete plantCopy.notes
+  delete plantCopy.seasons
+  delete plantCopy.sunshine
+  delete plantCopy.watering
+
+  return plantCopy
+}
+
 export const loadPlants = ({ state, commit }, data = {}) => {
   if (!state.plants || state.plants.length === 0 || !!data.force) {
     return fetchPlants()
@@ -33,6 +52,7 @@ export const loadPlants = ({ state, commit }, data = {}) => {
 export const loadPlantItem = ({ state, commit }, guid) => {
   getPlant(guid)
     .then(convertToBlob)
+    .then(cleanUpPlantObject)
     .then(item => commit('LOAD_PLANT_ITEM', { item }))
 }
 
