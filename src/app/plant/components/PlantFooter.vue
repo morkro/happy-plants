@@ -4,7 +4,7 @@
       <feather-box />
       Manage modules
     </button>
-    <p>
+    <p v-if="noModules">
       Modules let you keep track of the individual requirements and needs of your plant.
     </p>
     <div>
@@ -80,6 +80,7 @@
     span {
       color: var(--text-color-secondary);
       text-align: right;
+      display: block;
     }
 
     button {
