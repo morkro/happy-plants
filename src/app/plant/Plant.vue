@@ -94,24 +94,32 @@
 
     data: () => ({
       showPlantModal: false,
-      showModuleManager: false,
-      plantModules: getPlantModules()
+      showModuleManager: false
     }),
 
-    computed: mapState({
-      guid: state => state.selected.guid,
-      name: state => state.selected.name,
-      blob: state => state.selected.blob,
-      imageURL: state => state.selected.imageURL,
-      modules: state => state.selected.modules || [],
-      modified: state => state.selected.modified,
-      created: state => state.selected.created
-    }),
+    computed: {
+      ...mapState({
+        guid: state => state.selected.guid,
+        name: state => state.selected.name,
+        blob: state => state.selected.blob,
+        imageURL: state => state.selected.imageURL,
+        modules: state => state.selected.modules || [],
+        modified: state => state.selected.modified,
+        created: state => state.selected.created
+      }),
+      plantModules () {
+        return getPlantModules().map(module =>
+          Object.assign(module, {
+            selected: !!this.modules.find(m => m.type === module.type)
+          }))
+      }
+    },
 
     methods: {
       ...mapActions([
         'loadPlantItem',
         'loadPlants',
+        'updatePlantModule',
         'updateSeason',
         'updateNotes',
         'updateSunshine',
@@ -128,19 +136,19 @@
         switch (type) {
           case 'watering':
             return {
-              amount: module.watering && module.level
+              amount: module && module.level
             }
           case 'sunshine':
             return {
-              intensity: module && module.intensity
+              intensity: module && module.level
             }
           case 'seasons':
             return {
-              seasons: module
+              seasons: module.seasons
             }
           case 'notes':
             return {
-              content: module
+              content: module.notes
             }
         }
       },
@@ -193,7 +201,11 @@
         this.showModuleManager = false
       },
       toggleModule (module) {
-        console.log(module)
+        this.updatePlantModule({
+          ...module,
+          value: this.plantModules.find(mod => mod.type === module.type).value,
+          guid: this.guid
+        })
       }
     },
 

@@ -23,7 +23,7 @@ export default function getPlantModules () {
         icon: 'sun'
       },
       value: {
-        intensity: 1
+        level: 1
       }
     },
     {

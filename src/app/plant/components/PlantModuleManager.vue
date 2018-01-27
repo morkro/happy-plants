@@ -73,7 +73,7 @@
     header {
       justify-content: space-between;
       align-items: center !important;
-      border-bottom: 4px solid var(--grey);
+      border-bottom: 2px solid var(--grey);
       margin-bottom: 0 !important;
       padding: calc(var(--base-gap) / 2) var(--base-gap);
     }
