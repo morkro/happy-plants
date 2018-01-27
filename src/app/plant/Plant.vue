@@ -7,6 +7,12 @@
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
 
+    <plant-module-manager
+      :show="showModuleManager"
+      :modules="plantModules"
+      @toggle-module="toggleModule"
+      @close-module-manager="cancelModuleManager" />
+
     <app-header class="app-header" color="white" :back="true">
       <button
         slot="custom-action-right"
@@ -17,7 +23,7 @@
       </button>
     </app-header>
 
-    <section class="view-content">
+    <section :class="{ 'view-content': true, 'no-modules': !modules.length }">
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
@@ -35,21 +41,24 @@
       </header>
 
       <!--
-        Components are dynamically rendered since they
+        Plant modules are dynamically rendered since they
         can be added/removed and sorted.
       -->
       <component
-        v-for="component in componentOrder"
-        v-bind="getComponentProps(component)"
-        :key="component"
-        :is="`plant-${component}`"
-        @update-plant="getComponentListener">
+        v-if="modules.length"
+        v-for="module in modules"
+        v-bind="getPlantModuleProps(module.type)"
+        :key="module.type"
+        :is="`plant-${module.type}`"
+        @update-plant="getModuleListener">
       </component>
 
-      <plant-updates
+      <plant-footer
+        :noModules="!modules.length"
         :modified="modified"
-        :created="created">
-      </plant-updates>
+        :created="created"
+        @manage-modules="activateModuleManager">
+      </plant-footer>
     </section>
   </main>
 </template>
@@ -57,58 +66,62 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
-  import getDefaultStructure from '@/utils/get-default-structure'
   import AppHeader from '@/components/AppHeader'
+
+  import PlantModuleManager from './components/PlantModuleManager'
   import PlantModal from './components/PlantModal'
   import PlantNotes from './components/PlantNotes'
   import PlantSeasons from './components/PlantSeasons'
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
-  import PlantUpdates from './components/PlantUpdates'
+  import PlantFooter from './components/PlantFooter'
+  import { getPlantModules } from './utils'
   import '@/assets/cactus'
-
-  const defaultState = getDefaultStructure()
 
   export default {
     name: 'PlantView',
 
     components: {
       'app-header': AppHeader,
+      'plant-module-manager': PlantModuleManager,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
-      'plant-updates': PlantUpdates,
+      'plant-footer': PlantFooter,
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
-      showPlantModal: false
+      showPlantModal: false,
+      showModuleManager: false
     }),
 
-    computed: mapState({
-      guid: state => state.selected.guid,
-      name: state => state.selected.name,
-      blob: state => state.selected.blob,
-      imageURL: state => state.selected.imageURL,
-      componentOrder: state => (
-        state.selected.componentOrder ||
-        defaultState.componentOrder
-      ),
-      seasons: state => state.selected.seasons,
-      notes: state => state.selected.notes,
-      watering: state => state.selected.watering,
-      sunshine: state => state.selected.sunshine,
-      modified: state => state.selected.modified,
-      created: state => state.selected.created
-    }),
+    computed: {
+      ...mapState({
+        guid: state => state.selected.guid,
+        name: state => state.selected.name,
+        blob: state => state.selected.blob,
+        imageURL: state => state.selected.imageURL,
+        modules: state => state.selected.modules || [],
+        modified: state => state.selected.modified,
+        created: state => state.selected.created
+      }),
+      plantModules () {
+        return getPlantModules().map(module =>
+          Object.assign(module, {
+            selected: !!this.modules.find(m => m.type === module.type)
+          }))
+      }
+    },
 
     methods: {
       ...mapActions([
         'loadPlantItem',
         'loadPlants',
+        'updatePlantModule',
         'updateSeason',
         'updateNotes',
         'updateSunshine',
@@ -120,27 +133,28 @@
         'deletePlants',
         'showNotification'
       ]),
-      getComponentProps (componentName) {
-        switch (componentName) {
+      getPlantModuleProps (type) {
+        const module = this.modules.find(mod => mod.type === type).value
+        switch (type) {
           case 'watering':
             return {
-              amount: this.watering && this.watering.level
+              amount: module && module.level
             }
           case 'sunshine':
             return {
-              intensity: this.sunshine && this.sunshine.intensity
+              intensity: module && module.level
             }
           case 'seasons':
             return {
-              seasons: this.seasons
+              seasons: module.seasons
             }
           case 'notes':
             return {
-              content: this.notes
+              content: module.notes
             }
         }
       },
-      getComponentListener (event) {
+      getModuleListener (event) {
         switch (event.type) {
           case 'watering':
             return this.onWaterLevelUpdate(event.payload)
@@ -181,6 +195,19 @@
             message: 'Plant deleted.'
           }))
           .then(() => this.$router.push('/'))
+      },
+      activateModuleManager () {
+        this.showModuleManager = true
+      },
+      cancelModuleManager () {
+        this.showModuleManager = false
+      },
+      toggleModule (module) {
+        this.updatePlantModule({
+          ...module,
+          value: this.plantModules.find(mod => mod.type === module.type).value,
+          guid: this.guid
+        })
       }
     },
 
@@ -243,6 +270,11 @@
   .view-content {
     background-color: var(--background-secondary);
     min-height: 100vh;
+
+    &.no-modules {
+      display: flex;
+      flex-direction: column;
+    }
 
     h3 {
       font-weight: 600;

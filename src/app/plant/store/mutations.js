@@ -1,36 +1,72 @@
+import Vue from 'vue'
 // https://vuejs.org/v2/guide/list.html#Caveats
+
+function updatePlantModule (moduleName, valueType, state, payload) {
+  const moduleIndex = state.selected.modules.findIndex(m => m.type === moduleName)
+  const module = state.selected.modules[moduleIndex]
+
+  state.updated = payload.updated
+  state.selected.modified = payload.updated
+
+  state.selected.modules.splice(moduleIndex, 1, {
+    type: module.type,
+    value: {
+      [valueType]: payload.item[moduleName][valueType]
+    }
+  })
+}
 
 export default {
   RESET_SELECTED_PLANT (state, payload) {
     state.selected = Object.assign({}, state.selected, payload.defaultState)
   },
 
+  UPDATE_PLANT_MODULE (state, payload) {
+    state.updated = payload.updated
+    state.selected.modified = payload.updated
+
+    if (payload.item.selected) {
+      state.selected.modules.push({
+        type: payload.item.type,
+        value: payload.item.value
+      })
+    } else {
+      Vue.delete(
+        state.selected.modules,
+        state.selected.modules.findIndex(m => m.type === payload.item.type)
+      )
+    }
+  },
+
   UPDATE_SEASON (state, payload) {
-    const index = state.selected.seasons.findIndex(s => s.month === payload.item.month)
-    const season = state.selected.seasons[index]
+    const moduleIndex = state.selected.modules.findIndex(m => m.type === 'seasons')
+    const module = state.selected.modules[moduleIndex]
+    const seasonIndex = module.value.seasons.findIndex(s => s.month === payload.item.month)
+    const season = module.value.seasons[seasonIndex]
+
     season.growth = !season.growth
-
     state.selected.modified = payload.updated
-    state.selected.seasons.splice(index, 1, season)
     state.updated = payload.updated
+
+    module.value.seasons.splice(seasonIndex, 1, season)
+    state.selected.modules.splice(moduleIndex, 1, {
+      type: module.type,
+      value: {
+        seasons: module.value.seasons
+      }
+    })
   },
 
-  UPDATE_NOTES (state, payload) {
-    state.updated = payload.updated
-    state.selected.modified = payload.updated
-    state.selected.notes = payload.item.notes
+  UPDATE_NOTES (...args) {
+    updatePlantModule('notes', 'notes', ...args)
   },
 
-  UPDATE_WATERING (state, payload) {
-    state.updated = payload.updated
-    state.selected.modified = payload.updated
-    state.selected.watering.level = payload.item.watering.level
+  UPDATE_WATERING (...args) {
+    updatePlantModule('watering', 'level', ...args)
   },
 
-  UPDATE_SUNSHINE (state, payload) {
-    state.updated = payload.updated
-    state.selected.modified = payload.updated
-    state.selected.sunshine.intensity = payload.item.sunshine.level
+  UPDATE_SUNSHINE (...args) {
+    updatePlantModule('sunshine', 'level', ...args)
   },
 
   UPDATE_NAME (state, payload) {

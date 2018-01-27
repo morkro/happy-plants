@@ -1,50 +1,35 @@
-import { updatePlant } from '@/api/plants'
+import { updatePlant as updatePlantFromAPI } from '@/api/plants'
 import { updateStore } from '@/api/store'
-import getDefaultStructure from '@/utils/get-default-structure'
+import { getPlantStructure } from '../utils'
+
+const updatePlant = (action, { state, commit }, data) => {
+  updateStore(data)
+    .then(config =>
+      commit(action, { item: config.data, updated: config.updated }))
+    .then(() => updatePlantFromAPI(state.selected))
+}
 
 export const resetSelectedState = ({ commit }) => {
-  commit('RESET_SELECTED_PLANT', { defaultState: getDefaultStructure() })
+  commit('RESET_SELECTED_PLANT', { defaultState: getPlantStructure() })
 }
 
-export const updateSeason = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config =>
-      commit('UPDATE_SEASON', { item: config.data, updated: config.updated }))
-    .then(() => updatePlant(state.selected))
-}
+export const updatePlantModule = (...args) =>
+  updatePlant('UPDATE_PLANT_MODULE', ...args)
 
-export const updateNotes = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config =>
-      commit('UPDATE_NOTES', { item: config.data, updated: config.updated }))
-    .then(() => updatePlant(state.selected))
-}
+export const updateSeason = (...args) =>
+  updatePlant('UPDATE_SEASON', ...args)
 
-export const updateWatering = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config => {
-      commit('UPDATE_WATERING', { item: config.data, updated: config.updated })
-    })
-    .then(() => updatePlant(state.selected))
-}
+export const updateNotes = (...args) =>
+  updatePlant('UPDATE_NOTES', ...args)
 
-export const updateSunshine = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config =>
-      commit('UPDATE_SUNSHINE', { item: config.data, updated: config.updated }))
-    .then(() => updatePlant(state.selected))
-}
+export const updateWatering = (...args) =>
+  updatePlant('UPDATE_WATERING', ...args)
 
-export const updateName = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config =>
-      commit('UPDATE_NAME', { item: config.data, updated: config.updated }))
-    .then(() => updatePlant(state.selected))
-}
+export const updateSunshine = (...args) =>
+  updatePlant('UPDATE_SUNSHINE', ...args)
 
-export const updatePhoto = ({ state, commit }, data) => {
-  updateStore(data)
-    .then(config =>
-      commit('UPDATE_PHOTO', { item: config.data, updated: config.updated }))
-    .then(() => updatePlant(state.selected))
-}
+export const updateName = (...args) =>
+  updatePlant('UPDATE_NAME', ...args)
+
+export const updatePhoto = (...args) =>
+  updatePlant('UPDATE_PHOTO', ...args)
