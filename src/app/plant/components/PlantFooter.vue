@@ -1,12 +1,15 @@
 <template>
-  <section class="plant-footer">
+  <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
     <button class="icon inverse" @click.prevent="emitButtonClicked">
       <feather-box />
       Manage modules
     </button>
+    <p>
+      Modules let you keep track of the individual requirements and needs of your plant.
+    </p>
     <div>
-      <p>Last updated: {{ modifiedDate }}</p>
-      <p>Created: {{ createdDate }}</p>
+      <span>Last updated: {{ modifiedDate }}</span>
+      <span>Created: {{ createdDate }}</span>
     </div>
   </section>
 </template>
@@ -17,7 +20,8 @@
 
     props: {
       modified: { type: Number, default: Date.now() },
-      created: { type: Number, default: Date.now() }
+      created: { type: Number, default: Date.now() },
+      noModules: { type: Boolean, default: true }
     },
 
     components: {
@@ -64,7 +68,16 @@
     justify-content: space-between;
     align-items: center;
 
-    p {
+    &.no-modules {
+      font-size: var(--text-size-base);
+      font-style: normal;
+      padding: var(--base-gap);
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+
+    span {
       color: var(--text-color-secondary);
       text-align: right;
     }
@@ -74,6 +87,23 @@
       color: var(--text-color-base);
       padding: 12px;
       font-size: var(--text-size-base);
+    }
+  }
+
+  .no-modules {
+    p,
+    span {
+      text-align: center;
+    }
+
+    p {
+      margin: calc(var(--base-gap) * 1.5) 0;
+    }
+
+    span {
+      font-size: var(--text-size-xsmall);
+      font-style: italic;
+      display: block;
     }
   }
 </style>

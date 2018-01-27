@@ -40,13 +40,6 @@
         </div>
       </header>
 
-      <plant-intro
-        v-if="!modules.length"
-        :modified="modified"
-        :created="created"
-        @manage-modules="activateModuleManager">
-      </plant-intro>
-
       <!--
         Plant modules are dynamically rendered since they
         can be added/removed and sorted.
@@ -61,7 +54,7 @@
       </component>
 
       <plant-footer
-        v-if="modules.length"
+        :noModules="!modules.length"
         :modified="modified"
         :created="created"
         @manage-modules="activateModuleManager">
@@ -82,7 +75,6 @@
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
   import PlantFooter from './components/PlantFooter'
-  import PlantIntro from './components/PlantIntro'
   import { getPlantModules } from './utils'
   import '@/assets/cactus'
 
@@ -98,7 +90,6 @@
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
       'plant-footer': PlantFooter,
-      'plant-intro': PlantIntro,
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
