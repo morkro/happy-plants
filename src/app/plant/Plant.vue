@@ -23,7 +23,7 @@
       </button>
     </app-header>
 
-    <section class="view-content">
+    <section :class="{ 'view-content': true, 'no-modules': !modules.length }">
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
@@ -40,11 +40,19 @@
         </div>
       </header>
 
+      <plant-intro
+        v-if="!modules.length"
+        :modified="modified"
+        :created="created"
+        @manage-modules="activateModuleManager">
+      </plant-intro>
+
       <!--
         Plant modules are dynamically rendered since they
         can be added/removed and sorted.
       -->
       <component
+        v-if="modules.length"
         v-for="module in modules"
         v-bind="getPlantModuleProps(module.type)"
         :key="module.type"
@@ -53,6 +61,7 @@
       </component>
 
       <plant-footer
+        v-if="modules.length"
         :modified="modified"
         :created="created"
         @manage-modules="activateModuleManager">
@@ -73,6 +82,7 @@
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
   import PlantFooter from './components/PlantFooter'
+  import PlantIntro from './components/PlantIntro'
   import { getPlantModules } from './utils'
   import '@/assets/cactus'
 
@@ -88,6 +98,7 @@
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
       'plant-footer': PlantFooter,
+      'plant-intro': PlantIntro,
       'feather-edit': () =>
         import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
@@ -268,6 +279,11 @@
   .view-content {
     background-color: var(--background-secondary);
     min-height: 100vh;
+
+    &.no-modules {
+      display: flex;
+      flex-direction: column;
+    }
 
     h3 {
       font-weight: 600;
