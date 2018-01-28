@@ -56,16 +56,15 @@
 </script>
 
 <style lang="scss" scoped>
-  $footer-size: 45px;
-
   .delete-container {
     display: flex;
+    border-radius: 0;
     width: 100%;
     height: 100%;
 
     button {
-      width: $footer-size;
-      height: $footer-size;
+      width: var(--app-footer-size);
+      height: var(--app-footer-size);
       display: flex;
       justify-content: center;
       flex: 1 0 auto;

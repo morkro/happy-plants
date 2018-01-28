@@ -100,15 +100,14 @@
 </script>
 
 <style lang="scss" scoped>
-  $footer-size: 45px;
-
   .categorise-container {
+    border-radius: 0;
     height: 100%;
     width: 100%;
 
     button {
-      width: $footer-size;
-      height: $footer-size;
+      width: var(--app-footer-size);
+      height: var(--app-footer-size);
       flex: 1 0 auto;
       justify-content: center;
     }

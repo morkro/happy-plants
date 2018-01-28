@@ -11,6 +11,7 @@
       :show="showModuleManager"
       :modules="plantModules"
       @toggle-module="toggleModule"
+      @updated-modules="updatePlantModules"
       @close-module-manager="cancelModuleManager" />
 
     <app-header class="app-header" color="white" :back="true">
@@ -202,6 +203,15 @@
       cancelModuleManager () {
         this.showModuleManager = false
       },
+      updatePlantModules (updatedModules) {
+        for (const plantModule of updatedModules) {
+          this.updatePlantModule({
+            ...plantModule,
+            value: this.plantModules.find(mod => mod.type === plantModule.type).value,
+            guid: this.guid
+          })
+        }
+      },
       toggleModule (module) {
         this.updatePlantModule({
           ...module,
@@ -260,8 +270,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: calc(var(--icon-size-base) + var(--base-gap));
-      height: calc(var(--icon-size-base) + var(--base-gap));
+      width: calc(var(--icon-size-base) * 2.5);
+      height: calc(var(--icon-size-base) * 2.5);
       transform: translate(-50%, -50%);
       z-index: -1;
     }

@@ -68,7 +68,6 @@
       wrapperClass () {
         return {
           'overview-menu': true,
-          'box': true,
           'single': this.noElements,
           'disabled': this.disableMenu
         }
@@ -85,17 +84,17 @@
 </script>
 
 <style lang="scss" scoped>
-  $menu-size: 45px;
-
   .overview-menu {
     display: flex;
     align-items: center;
     justify-content: space-around;
     width: 100%;
-    height: $menu-size;
+    height: var(--app-footer-size);
+    background: var(--background-primary);
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
 
     &.single {
-      width: $menu-size;
+      width: var(--app-footer-size);
       margin: 0 auto;
     }
 
@@ -105,8 +104,8 @@
 
     li,
     li button {
-      width: $menu-size;
-      height: $menu-size;
+      width: var(--app-footer-size);
+      height: var(--app-footer-size);
     }
 
     ul li button {
@@ -141,16 +140,26 @@
 
   .menu-left {
     justify-content: flex-start;
+
+    li:first-child button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 
   .menu-right {
     justify-content: flex-end;
+
+    li:last-child button {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
   .add-plant {
     box-shadow: none;
-    height: $menu-size;
-    width: $menu-size;
+    height: var(--app-footer-size);
+    width: var(--app-footer-size);
     padding: 0;
     justify-content: center;
 

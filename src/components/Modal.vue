@@ -72,15 +72,13 @@
       background: var(--grey);
       color: var(--link-color);
       box-shadow: none;
-      width: 35px;
-      height: 35px;
     }
 
     h1 {
       font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
-      margin-top: 4px;
+      margin-top: 12px;
     }
   }
 </style>

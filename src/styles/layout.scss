@@ -1,6 +1,7 @@
 :root {
   --app-media-max-size: 600px;
-  --app-header-size: 50px;
+  --app-header-size: 60px;
+  --app-footer-size: calc(var(--app-header-size) / 1.2);
 
   --border-radius: 6px;
   --base-gap: 15px;

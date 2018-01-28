@@ -319,7 +319,6 @@
   @import "~styles/z-index";
 
   $content-index: list, backdrop, footer;
-  $footer-size: 45px;
 
   main {
     min-height: 100vh;
@@ -329,7 +328,7 @@
   main > section {
     height: 100%;
     padding: var(--base-gap);
-    padding-bottom: calc(#{$footer-size} + var(--base-gap));
+    padding-bottom: calc(var(--app-footer-size) * 1.2);
 
     &.no-plants {
       display: flex;
@@ -430,13 +429,13 @@
 
   section footer {
     position: fixed;
-    bottom: var(--base-gap);
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     z-index: z($content-index, footer);
-    width: calc(100% - var(--base-gap) * 2);
-    height: $footer-size;
+    width: 100%;
+    height: var(--app-footer-size);
 
     /* TODO: Remove when desktop layout is actually in development. */
     @media (min-width: var(--app-media-max-size)) {
@@ -444,9 +443,12 @@
     }
 
     .viewmode-menu {
+      width: calc(100% - var(--base-gap) * 2);
       position: absolute;
       top: 0;
-      transform: translateY(calc(-100% - var(--base-gap)));
+      transform:
+        translateY(calc(-100% - var(--base-gap)))
+        translateX(var(--base-gap));
     }
   }
 </style>

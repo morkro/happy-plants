@@ -26,10 +26,19 @@ export default {
     state.selected.modified = payload.updated
 
     if (payload.item.selected) {
-      state.selected.modules.push({
-        type: payload.item.type,
-        value: payload.item.value
-      })
+      const itemIndex = state.selected.modules.findIndex(mod => mod.type === payload.item.type)
+
+      if (itemIndex > -1) {
+        state.selected.modules.splice(itemIndex, 1, {
+          type: payload.item.type,
+          value: payload.item.value
+        })
+      } else {
+        state.selected.modules.push({
+          type: payload.item.type,
+          value: payload.item.value
+        })
+      }
     } else {
       Vue.delete(
         state.selected.modules,

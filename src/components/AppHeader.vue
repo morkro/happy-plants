@@ -128,8 +128,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: calc(var(--icon-size-base) + var(--base-gap));
-        height: calc(var(--icon-size-base) + var(--base-gap));
+        width: calc(var(--icon-size-base) * 2.5);
+        height: calc(var(--icon-size-base) * 2.5);
         transform: translate(-50%, -50%);
         z-index: -1;
       }

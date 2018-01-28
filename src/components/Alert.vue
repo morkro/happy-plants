@@ -79,7 +79,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 100vh;
     height: 100%;
     background: var(--transparency-black-medium);
     position: fixed;
@@ -91,6 +90,7 @@
   section {
     width: auto;
     max-width: 90vw;
+    max-height: 95vh;
     padding: var(--base-gap);
 
     &.alert-warning {
@@ -108,8 +108,6 @@
       background: var(--grey);
       color: var(--link-color);
       box-shadow: none;
-      width: 35px;
-      height: 35px;
     }
 
     h1 {
