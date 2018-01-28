@@ -4,14 +4,7 @@
  * @see https://stackoverflow.com/a/19223362/1724106
  */
 
-export default function hermiteResize (canvas, W, H, W2 = W / 2, H2 = H / 2) {
-  if (!canvas) return
-
-  let time1 = Date.now()
-  let img = canvas.getContext('2d').getImageData(0, 0, W, H)
-  let img2 = canvas.getContext('2d').getImageData(0, 0, W2, H2)
-  let data = img.data
-  let data2 = img2.data
+export function resize ({ data, data2, W, W2, H, H2 } = {}) {
   let ratioWidth = W / W2
   let ratioHeight = H / H2
   let ratioWidthHalf = Math.ceil(ratioWidth / 2)
@@ -60,11 +53,5 @@ export default function hermiteResize (canvas, W, H, W2 = W / 2, H2 = H / 2) {
     }
   }
 
-  console.log('hermite = ' + Math.round(Date.now() - time1) / 1000 + ' s')
-
-  canvas.width = W2
-  canvas.height = H2
-  canvas.getContext('2d').putImageData(img2, 0, 0)
-
-  return canvas
+  return data2
 }
