@@ -17,6 +17,9 @@
 
 _HappyPlants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants. See the list of [features](#features) for more information.
 
+This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code. Please report unacceptable behavior.
+
 #### Usage
 _HappyPlants_ is available at [happy-plants.netlify.com](https://happy-plants.netlify.com). You can either add it to your bookmarks on desktop, or save it to your homescreens on mobile devices.
 
