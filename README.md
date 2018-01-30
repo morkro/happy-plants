@@ -190,5 +190,7 @@ The logo is a combination of existing illustrations by [Vitaly Gorbachev](https:
 ### Icons
 Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
 
+---
+
 ## License
 [MIT](https:/github.com/morkro/happy-plants/LICENSE)
