@@ -15,80 +15,153 @@
 
 ---
 
-_HappyPlants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants. See the list of [features](#features) for more information.
+[_HappyPlants_](https://happy-plants.netlify.com) is all about organising, collecting all sorts of information and trivia, and adding notes on your little friends. Basically, creating your own plant database. You can either add it to your bookmarks on desktop, or save it to your homescreens on mobile devices.
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior.
 
-#### Usage
-_HappyPlants_ is available at [happy-plants.netlify.com](https://happy-plants.netlify.com). You can either add it to your bookmarks on desktop, or save it to your homescreens on mobile devices.
-
--   [About](#about)
--   [Features](#features)
--   [Data structure](#data-structure)
--   [Development](#development)
+-   [🌵 About](#about)
+-   [✨ Features](#features)
+-   [🎛 Data structure](#data-structure)
+-   [⌨️ Development](#development)
 
 ---
 
 ## About
 If your hobby is collecting (and growing) plants, you maybe also like to gather all the information about them and keep an organised overview about your little home garden.
 
-**_HappyPlants_ is all about organising, collecting all sorts of information and trivia, and adding notes on your little friends.** Basically, creating your own plant database.
+_HappyPlants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants. See the list of
+
+---
 
 ## Features
-This project is currently still very early in development right now and only supports a bare minimum set of features.
+This project is currently still in `alpha` development and only supports a bare minimum set of features.
 
-#### Adding plants
-Add a name and photo to your plant. This can always be updated in the detailed plant view.
+### Overview page
 
-#### Overview
-An overview of all your plants. Currently, you can only filter them by date or name.
+| Feature | Description |
+| ------- | ----------- |
+| View mode | Choose between grid and category view. |
+| Sort by | The overview can be sorted by date (latest first) and alphabetical. |
 
-#### Detailed plant profile
--   Maintain a growth calendar to know if your plant is currently in a growth or dormant phase.
--   Add notes.
+### Add plant
 
-### Planned features
-Keeping track of planned features here. This is the minimum of features to move the project out of `alpha` state.
+| Feature | Description |
+| ------- | ----------- |
+| Name and photo | Add a name and upload an additional, optional photo of the plant. |
+| Add or create category | When adding a new plant, you can either add an existing category to it or create a new one. |
 
--   Integrate Firebase.
--   Add more basic information (scientific name, location of your plant, pruning, how much sun, ...) to plants.
--   Add gallery.
--   Create custom categories and sorting in overview.
--   Highlight specific plants in overview.
+### Plant profile
+
+| Feature | Description |
+| ------- | ----------- |
+| Edit basic data | Edit your plants name or photo. |
+| Manage modules | Add/remove plant modules |
+| Watering module | Manage the required watering of a plant. |
+| Sunshine module | Manage the amount of sunlight the plant needs. |
+| Seasons module | Lets you define the seasons in which a plant is in growth/ dormant. |
+| Notes | Add notes to a plant. |
+| Delete plant | Deletes your plant. |
+
+### Categories
+
+| Feature | Description |
+| ------- | ----------- |
+| Category | Create categories to which plants can be added. |
+
+### Settings
+
+| Feature | Description |
+| ------- | ----------- |
+| Import/export | Import or export plant data. |
+| Delete all | Delete all plant data. This is permanent and lost data can't be restored. |
+
+---
 
 ## Data structure
-In the application settings, you can download all your plant data and as well as importing data. If you want to create the plant data yourself, it has to be a valid JSON array/object structured as follows:
+In the application settings, you can download and import your plant data.
 
+### Basic plant data
+This is the minimum required data of a single plant. If you want to import the data, it should be an Array of objects.
+
+```typescript
+{
+  "guid": String, // [required] A random, version 4 GUID
+  "created": Date, // [required] Date when the plant has been created
+  "modified": Date, // [required] Date when plant has been modified, defaults to created date
+  "name": String, // [required] Name of the plant
+  "blob": Blob | Base64 | undefined, // [optional] A base64 encoded or Blob of the plant photo
+  "categories": Array<Category> // [optional] Array of categories, defaults to []
+  "modules": Array<PlantModule> // [optional] Array of plant modules, should default to []
+}
 ```
-[
-  {
-    "guid": String,
-    "created": Date,
-    "modified": Date,
-    "blob": Blob|base64,
-    "name": String,
+
+### Category data
+A plant can be assigned to various, user created, categories. A category object should be defined as follows:
+
+```typescript
+{
+  "guid": String, // [required] A random, version 4 GUID
+  "created": Date, // [required] Date when the plant has been created
+  "modified": Date, // [required] Date when plant has been modified, defaults to created date
+  "name": String, // [required] Name of the category
+}
+```
+
+### Plant Modules
+Modules have all the same structure with a module-specific `value` definition.
+
+#### Watering module
+
+```typescript
+{
+  "type": "watering",
+  "value": {
+    "level": 1 | 2 | 3
+  }
+}
+```
+
+#### Sunshine module
+
+```typescript
+{
+  "type": "sunshine",
+  "value": {
+    "insensity": 1 | 2 | 3
+  }
+}
+```
+
+#### Seasons module
+
+```typescript
+{
+  "type": "seasons",
+  "value": {
     "seasons": [
       {
-        "month": String,
+        "month": "January",
         "growth": Boolean
-      }
-    ],
-    "notes": String,
-    "watering": {
-      "level": Number
-    },
-    "sunshine": {
-      "intensity": Number
-    }
+      },
+      ...
+    ]
   }
-]
+}
 ```
 
--   `watering.level`: Can range from `1` to `3`.
--   `sunshine.intensity`: Can range from `1` to `3`.
--   `seasons`: Should be an array containing each month.
-    -   If the plant is in a growth phase during that month, set `growth` to `true`.
+#### Notes module
+
+```typescript
+{
+  "type": "notes",
+  "value": {
+    "notes": String
+  }
+}
+```
+
+---
 
 ## Development
 This project supports Yarn, so you can either use `yarn` or `npm` to run tasks.
@@ -107,6 +180,8 @@ This project supports Yarn, so you can either use `yarn` or `npm` to run tasks.
 This is an Vue.js progressive web application, bootstrapped with [`vue-init pwa`](https://github.com/vuejs-templates/pwa). For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+
+---
 
 ## Credits
 ### Logo
