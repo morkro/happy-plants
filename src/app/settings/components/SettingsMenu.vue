@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="item in menu">
+    <li v-for="(item, index) in menu" :key="index">
       <router-link :to="{ name: item.name }">
         <h2>{{ item.label }}</h2>
         <feather-arrow-right />
@@ -20,7 +20,7 @@
 
     components: {
       'feather-arrow-right': () =>
-        import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "settings" */)
+          import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "settings" */)
     },
 
     data () {
@@ -37,7 +37,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   ul li {
     padding: var(--base-gap);
     display: flex;
@@ -47,7 +47,7 @@
       border-bottom: 3px solid rgba(0, 0, 0, 0.05);
     }
 
-    a,
+    & a,
     &.menu-version {
       width: 100%;
       display: flex;
@@ -60,7 +60,7 @@
       color: var(--text-color-secondary);
     }
 
-    svg {
+    & svg {
       transform: scale(0.8);
     }
   }

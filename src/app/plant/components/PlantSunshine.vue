@@ -73,13 +73,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
-  $sunshine-size: 75px;
-  $base-sunshine-radius: 40px;
-  $max-sunshine-rings: 3;
-
+<style lang="postcss" scoped>
   section {
     position: relative;
   }
@@ -90,8 +84,8 @@
     position: relative;
     z-index: 0;
 
-    .description-level {
-      margin-bottom: var(--base-gap) / 2;
+    & .description-level {
+      margin-bottom: calc(var(--base-gap) / 2);
     }
   }
 
@@ -103,8 +97,11 @@
     top: 0;
     right: 0;
 
-    > div {
-      --base-sunshine-radius: $base-sunshine-radius;
+    & > div {
+      --base-sunshine-value: 40px;
+      --base-sunshine-radius: var(--base-sunshine-value);
+      --max-sunshine-rings: 3;
+
       position: absolute;
       left: 50%;
       top: 50%;
@@ -114,14 +111,14 @@
       border-radius: 50%;
       border: 2px solid white;
       background-color: var(--grey);
-      z-index: $max-sunshine-rings;
-      transition: background-color $base-speed*2 $ease-out-expo;
+      z-index: var(--max-sunshine-rings);
+      transition: background-color calc(var(--base-speed) * 2) var(--ease-out-expo);
 
       &.active {
         background-color: var(--brand-yellow);
       }
 
-      .intensity-1 &.active:first-of-type {
+      @nest .intensity-1 &.active:first-of-type {
         box-shadow: 0 0 10px 3px var(--brand-yellow);
       }
 
@@ -130,9 +127,9 @@
       }
 
       &:nth-of-type(2) {
-        --base-sunshine-radius: $base-sunshine-radius * 3;
+        --base-sunshine-radius: calc(var(--base-sunshine-value) * 3);
         opacity: 0.5;
-        z-index: $max-sunshine-rings - 1;
+        z-index: calc(var(--max-sunshine-rings) - 1);
 
         &.active {
           box-shadow: 0 0 30px 3px var(--brand-yellow);
@@ -140,9 +137,9 @@
       }
 
       &:nth-of-type(3) {
-        --base-sunshine-radius: $base-sunshine-radius * 5;
+        --base-sunshine-radius: calc(var(--base-sunshine-value) * 5);
         opacity: 0.33;
-        z-index: $max-sunshine-rings - 2;
+        z-index: calc(var(--max-sunshine-rings) - 2);
         box-shadow: 0 0 0 40px rgba(0, 0, 0, 0.075);
 
         &.active {

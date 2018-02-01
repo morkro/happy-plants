@@ -4,7 +4,7 @@
       <h1 slot="title">{{ headline }}</h1>
     </app-header>
 
-    <router-view></router-view>
+    <router-view class="app-content"></router-view>
   </main>
 </template>
 
@@ -32,7 +32,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   main {
     min-height: 10vh;
     height: 100vh;

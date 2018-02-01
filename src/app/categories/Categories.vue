@@ -32,7 +32,7 @@
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
-    <section :class="{ 'no-categories': !categories.length }">
+    <section :class="{ 'no-categories': !categories.length, 'app-content': true }">
       <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
           <input required
@@ -96,11 +96,11 @@
       'category-modal': CategoryModal,
       'list-description': ListDescription,
       'feather-plus': () =>
-        import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
+          import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
       'feather-edit': () =>
-        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
+          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash' /* webpackChunkName: "categories" */)
+          import('vue-feather-icon/components/trash' /* webpackChunkName: "categories" */)
     },
 
     data: () => ({
@@ -151,7 +151,7 @@
         }
 
         this.addCategory({ label: this.categoryName })
-          // Reset state
+        // Reset state
           .then(() => Object.assign(this.$data, this.$options.data()))
       },
       showCategoryUpdateError (category) {
@@ -179,15 +179,15 @@
         const label = this.selectedCategory.label
         // 1. Delete category
         this.deleteCategory(this.selectedCategory)
-          // 2. Delete category from all plants
+        // 2. Delete category from all plants
           .then(() => Promise.all(this.plants.map(plant => this.updatePlantCategory({
             guid: plant.guid,
             category: this.selectedCategory,
             type: 'remove'
           }))))
-          // 3. Close alert
+        // 3. Close alert
           .then(() => this.closeAlert())
-          // 4. Show notification
+        // 4. Show notification
           .then(() =>
             this.showNotification({
               message: `Category "${label}" deleted.`
@@ -206,7 +206,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   main {
     min-height: 100vh;
     background: var(--background-secondary);
@@ -217,7 +217,7 @@
     height: calc(100vh - var(--app-header-size));
     flex-direction: column;
 
-    .categories-list {
+    & .categories-list {
       height: 100%;
       display: flex;
       justify-content: center;
@@ -231,15 +231,15 @@
     justify-content: space-between;
     align-items: center;
 
-    label {
+    & label {
       flex: 1 0 auto;
     }
 
-    input {
+    & input {
       width: 100%;
     }
 
-    button {
+    & button {
       margin-left: var(--base-gap);
     }
   }
@@ -254,7 +254,7 @@
   .categories-list ul {
     list-style: none;
 
-    li {
+    & li {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -263,7 +263,7 @@
       font-size: var(--text-size-medium);
     }
 
-    svg {
+    & svg {
       margin: 0;
     }
   }
@@ -274,7 +274,7 @@
     align-items: center;
     margin-left: var(--base-gap);
 
-    button {
+    & button {
       background: var(--grey);
       border-radius: 50%;
       width: 35px;
@@ -283,24 +283,22 @@
       justify-content: center;
     }
 
-    button:first-of-type {
+    & button:first-of-type {
       margin-right: calc(var(--base-gap) / 2);
     }
 
-    button.edit svg {
+    & button.edit svg {
       transform: translateY(-1px);
     }
 
-    button.delete svg {
+    & button.delete svg {
       transform: translateX(-1px) translateY(-1px);
     }
   }
 
-  .category-alert {
-    button.warning {
-      background: var(--brand-yellow);
-      color: var(--link-color);
-      box-shadow: var(--plain-shadow);
-    }
+  .category-alert button.warning {
+    background: var(--brand-yellow);
+    color: var(--link-color);
+    box-shadow: var(--plain-shadow);
   }
 </style>

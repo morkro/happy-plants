@@ -4,7 +4,7 @@
       <h1 slot="title">Oops!</h1>
     </app-header>
 
-    <section>
+    <section class="app-content">
       <p>
         Well, this is awkward.
         How about we pretend this didn't happen and go back to
@@ -26,7 +26,7 @@
     components: {
       'app-header': AppHeader,
       'feather-home': () =>
-        import('vue-feather-icon/components/home' /* webpackChunkName: "404" */)
+          import('vue-feather-icon/components/home' /* webpackChunkName: "404" */)
     },
 
     methods: {
@@ -37,7 +37,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   main {
     min-height: 100vh;
     justify-content: center;
@@ -51,7 +51,7 @@
     flex-direction: column;
     padding: var(--base-gap);
 
-    p {
+    & p {
       color: var(--text-color-secondary);
       text-align: center;
       font-weight: 600;

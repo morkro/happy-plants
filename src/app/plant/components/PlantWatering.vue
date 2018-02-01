@@ -25,7 +25,7 @@
     components: {
       'plant-component': PlantComponent,
       'feather-droplet': () =>
-        import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -47,23 +47,21 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
+<style lang="postcss" scoped>
   .watering-list {
     margin-top: var(--base-gap);
     display: flex;
     list-style: none;
     justify-content: space-between;
 
-    li {
+    & li {
       width: calc(100% / 3 - var(--base-gap) / 2);
     }
 
-    button {
+    & button {
       width: 100%;
       height: 44px;
-      transition: transform $base-speed * 2 $ease-out-back;
+      transition: transform var(--base-speed) * 2 var(--ease-out-back);
 
       &:not(.active) {
         background-color: var(--grey);

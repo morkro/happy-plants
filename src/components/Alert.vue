@@ -40,7 +40,7 @@
 
     components: {
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
+          import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
     },
 
     computed: {
@@ -71,9 +71,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/z-index";
-
+<style lang="postcss" scoped>
   .alert-backdrop {
     display: flex;
     justify-content: center;
@@ -84,7 +82,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: z($page-elements, modals);
+    z-index: 3;
   }
 
   section {
@@ -103,19 +101,19 @@
     align-items: flex-start;
     margin-bottom: var(--base-gap);
 
-    button {
+    & button {
       margin-left: calc(var(--base-gap) + 5px);
       background: var(--grey);
       color: var(--link-color);
       box-shadow: none;
     }
 
-    h1 {
+    & h1 {
       font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;
 
-      .alert-warning & {
+      @nest .alert-warning & {
         color: var(--text-color-inverse);
       }
     }
@@ -125,7 +123,7 @@
     display: flex;
     margin-top: var(--base-gap);
 
-    button:first-of-type {
+    & button:first-of-type {
       margin-right: calc(var(--base-gap) * 2);
     }
   }

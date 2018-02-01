@@ -25,7 +25,7 @@
       </button>
     </register-alert>
 
-    <section>
+    <section class="app-content">
       <form @submit.prevent>
         <label for="register-name" class="form-label-group">
           <h2 class="required">What's your friends name?</h2>
@@ -57,7 +57,8 @@
             </option>
             <option
               v-for="category in categories"
-              :value="category.guid">
+              :value="category.guid"
+              :key="category.guid">
               {{ category.label }}
             </option>
           </select>
@@ -167,9 +168,9 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .register-alert {
-    input {
+    & input {
       width: 100%;
     }
   }
@@ -177,7 +178,7 @@
   main {
     background: var(--background-secondary);
 
-    section {
+    & section {
       padding: var(--base-gap) 0;
       line-height: 150%;
     }
@@ -189,11 +190,11 @@
     padding: 0 var(--base-gap);
     width: 100%;
 
-    input {
+    & input {
       width: 100%;
     }
 
-    select {
+    & select {
       padding: calc(var(--base-gap) + 5px) var(--base-gap);
     }
   }

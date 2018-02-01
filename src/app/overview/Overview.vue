@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <section :class="{ 'no-plants': plants.length <= 0 }">
+    <section :class="{ 'no-plants': plants.length <= 0, 'app-content': true }">
       <!-- Simple onboarding instruction if user has no plants yet. -->
       <plants-intro
         v-if="plants.length <= 0"
@@ -49,7 +49,10 @@
 
       <!-- List of plants if filter is set to "category". -->
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
-        <div v-for="(category, index) in sortedCategoryList" v-if="category.plants.length">
+        <div
+          v-for="(category, index) in sortedCategoryList"
+          v-if="category.plants.length"
+          :key="index">
           <h2 @click="toggleCollapseCategory(index)">
             {{ category.label }}
             <feather-maximize v-if="isCollapsed(index)" width="18" height="18" />
@@ -132,11 +135,11 @@
       'categorise-menu': CategoriseMenu,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
-        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
       'feather-minimize': () =>
-        import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
       'feather-maximize': () =>
-        import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
     },
 
     computed: {
@@ -314,12 +317,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-  @import "~styles/z-index";
-
-  $content-index: list, backdrop, footer;
-
+<style lang="postcss" scoped>
   main {
     min-height: 100vh;
     background: var(--background-secondary);
@@ -339,7 +337,7 @@
   }
 
   .overview-alert {
-    button.warning {
+    & button.warning {
       background: var(--brand-yellow);
       color: var(--link-color);
       box-shadow: var(--plain-shadow);
@@ -349,11 +347,11 @@
   .header-controls {
     display: flex;
 
-    button {
+    & button {
       margin-right: var(--base-gap);
     }
 
-    .active svg {
+    & .active svg {
       fill: black;
     }
   }
@@ -363,53 +361,53 @@
     height: 100vh;
     position: fixed;
     background: var(--transparency-black-medium);
-    z-index: z($content-index, backdrop);
+    z-index: 2;
     color: var(--text-color-inverse);
     display: flex;
     justify-content: center;
     align-items: center;
 
-    > div {
+    & > div {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
 
-    p {
+    & p {
       margin-bottom: var(--base-gap);
       font-weight: 600;
     }
 
-    svg,
-    svg rect,
-    svg path {
+    & svg,
+    & svg rect,
+    & svg path {
       stroke: var(--text-color-button);
     }
   }
 
   .plant-list {
-    z-index: z($content-index, list);
+    z-index: 1;
   }
 
   .plant-list-category {
-    h2 {
+    & h2 {
       display: flex;
       align-items: center;
       margin-bottom: var(--base-gap);
     }
 
-    h2 svg {
+    & h2 svg {
       stroke: var(--dark-grey);
       margin-left: calc(var(--base-gap) / 2);
     }
 
-    .plant-list {
+    & .plant-list {
       justify-content: flex-start;
       margin-bottom: calc(var(--base-gap) * 0.5);
     }
 
-    .list-collapsed-indicator {
+    & .list-collapsed-indicator {
       width: 100%;
       height: 10px;
       display: flex;
@@ -433,16 +431,11 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    z-index: z($content-index, footer);
+    z-index: 3;
     width: 100%;
     height: var(--app-footer-size);
 
-    /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: var(--app-media-max-size)) {
-      width: var(--app-media-max-size);
-    }
-
-    .viewmode-menu {
+    & .viewmode-menu {
       width: calc(100% - var(--base-gap) * 2);
       position: absolute;
       top: 0;

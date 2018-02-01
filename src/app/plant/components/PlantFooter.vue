@@ -26,7 +26,7 @@
 
     components: {
       'feather-box': () =>
-        import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
     },
 
     computed: {
@@ -53,9 +53,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
+<style lang="postcss" scoped>
   .plant-footer {
     background: var(--background-secondary);
     width: 100%;
@@ -77,13 +75,13 @@
       flex: 1;
     }
 
-    span {
+    & span {
       color: var(--text-color-secondary);
       text-align: right;
       display: block;
     }
 
-    button {
+    & button {
       border: 2px dashed var(--grey);
       color: var(--text-color-base);
       padding: 12px;
@@ -92,16 +90,16 @@
   }
 
   .no-modules {
-    p,
-    span {
+    & p,
+    & span {
       text-align: center;
     }
 
-    p {
+    & p {
       margin: calc(var(--base-gap) * 1.5) 0;
     }
 
-    span {
+    & span {
       font-size: var(--text-size-xsmall);
       font-style: italic;
       display: block;

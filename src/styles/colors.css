@@ -1,0 +1,23 @@
+:root {
+  --brand-green: rgb(23, 195, 123);
+  --brand-green-lighten: color(rgb(23, 195, 123) tint(70%));
+  --brand-green-medium: color(rgb(23, 195, 123) a(70%));
+  --brand-green-low: color(rgb(23, 195, 123) a(20%));
+
+  --brand-yellow: rgb(250, 202, 12);
+  --brand-yellow-medium: color(rgb(250, 202, 12) a(50%));
+  --brand-yellow-low: color(rgb(250, 202, 12) a(20%));
+
+  --brand-red: rgb(229, 75, 75);
+  --brand-red-medium: color(rgb(229, 75, 75) a(70%));
+  --brand-red-low: color(rgb(229, 75, 75) a(20%));
+
+  --brand-blue: rgb(14, 56, 177);
+  --brand-blue-low: color(rgb(14, 56, 177) a(20%));
+
+  --light-grey: #f5f5f5;
+  --grey: rgb(216, 216, 216);
+  --dark-grey: color(rgb(216, 216, 216) b(+30%));
+
+  --custom-black: #1a1e1f;
+}

@@ -59,13 +59,13 @@
 
     components: {
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
       'feather-plus': () =>
-        import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
       'feather-minus': () =>
-        import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
     },
 
     data () {
@@ -129,7 +129,7 @@
           [type]: true,
           'selected': (
             (this.deleteMode && type === 'delete' && this.selected) ||
-            (this.categoriseMode && type === 'category' && this.selected)
+              (this.categoriseMode && type === 'category' && this.selected)
           )
         }
       },
@@ -162,9 +162,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
+<style lang="postcss" scoped>
   .plant-preview {
     width: 100%;
     height: 100%;
@@ -172,7 +170,7 @@
     background-size: cover;
     background-position: center;
     transform-origin: center;
-    transition: transform 50ms $ease-out-back;
+    transition: transform 50ms var(--ease-out-back);
 
     &.no-photo {
       /* TODO: Show default image instead */
@@ -217,14 +215,14 @@
       }
     }
 
-    svg {
+    & svg {
       stroke: var(--text-color-button);
       position: relative;
       z-index: 1;
 
-      rect,
-      path,
-      polygon {
+      & rect,
+      & path,
+      & polygon {
         stroke: var(--text-color-button);
       }
     }
@@ -241,7 +239,7 @@
     overflow: hidden;
     z-index: 2;
 
-    svg {
+    & svg {
       width: 65% !important;
       height: auto !important;
       opacity: 0.12;
@@ -259,11 +257,11 @@
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     z-index: 1;
 
-    .select-delete & {
+    @nest .select-delete & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
     }
 
-    .no-photo & {
+    @nest .no-photo & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
     }
 
@@ -272,7 +270,7 @@
       color: rgba(255, 255, 255, 0.75);
     }
 
-    h1 {
+    & h1 {
       color: var(--text-color-inverse);
       font-size: var(--text-size-base);
       font-weight: 600;

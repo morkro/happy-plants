@@ -1,5 +1,3 @@
-@import "~styles/animations";
-
 input {
   background: white;
   padding: calc(var(--base-gap) + 5px) var(--base-gap);
@@ -31,7 +29,7 @@ input {
     border-radius: var(--border-radius);
     box-shadow: none;
     background: var(--grey);
-    transition: background $base-speed $ease-out-back;
+    transition: background var(--base-speed) var(--ease-out-back);
 
     &:checked {
       background: var(--brand-green);

@@ -43,15 +43,15 @@
     components: {
       'plant-alert': AppAlert,
       'feather-droplet': () =>
-        import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
+          import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
       'feather-sun': () =>
-        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */),
+          import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */),
       'feather-moon': () =>
-        import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
+          import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
       'feather-book': () =>
-        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
+          import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/check' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -91,14 +91,14 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="postcss">
   .module-manager {
-    .box {
+    & .box {
       padding: 0;
       width: 100%;
     }
 
-    header {
+    & header {
       justify-content: space-between;
       align-items: center !important;
       border-bottom: 2px solid var(--grey);
@@ -106,7 +106,7 @@
       padding: var(--base-gap);
     }
 
-    .alert-actions {
+    & .alert-actions {
       background: var(--grey);
       margin-top: 0 !important;
       padding: calc(var(--base-gap) / 2) var(--base-gap);
@@ -119,32 +119,32 @@
     max-height: 80vh;
     overflow: scroll;
 
-    li {
+    & li {
       display: flex;
       align-items: center;
       padding: var(--base-gap);
     }
 
-    .active {
+    & .active {
       background: var(--light-grey);
       box-shadow: inset 0 0 7px 0 var(--grey);
 
-      .module-icon svg {
+      & .module-icon svg {
         stroke: var(--text-color-button);
 
-        rect,
-        path,
-        polygon {
+        & rect,
+        & path,
+        & polygon {
           stroke: var(--text-color-button);
         }
       }
     }
 
-    li:not(:last-child) {
+    & li:not(:last-child) {
       border-bottom: 2px solid var(--grey);
     }
 
-    .module-icon {
+    & .module-icon {
       border-radius: 50%;
       background: var(--grey);
       margin-right: var(--base-gap);
@@ -156,19 +156,19 @@
       flex: 0 0 auto;
     }
 
-    .active .module-icon {
+    & .active .module-icon {
       background: var(--brand-green);
     }
   }
 
   .module-description {
-    h2 {
+    & h2 {
       margin-bottom: calc(var(--base-gap) / 4);
       display: flex;
       align-items: center;
     }
 
-    svg {
+    & svg {
       width: var(--icon-size-small);
       height: var(--icon-size-small);
       margin-right: calc(var(--base-gap) / 2);

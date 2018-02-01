@@ -24,7 +24,7 @@
       </button>
     </app-header>
 
-    <section :class="{ 'view-content': true, 'no-modules': !modules.length }">
+    <section :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
       <header>
         <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
           <h1>{{ name }}</h1>
@@ -92,7 +92,7 @@
       'plant-sunshine': PlantSunshine,
       'plant-footer': PlantFooter,
       'feather-edit': () =>
-        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
@@ -232,9 +232,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
+<style lang="postcss" scoped>
   .main-wireframe {
     padding-top: 0;
   }
@@ -243,7 +241,7 @@
     background: transparent;
     box-shadow: none;
 
-    .edit-data {
+    & .edit-data {
       position: relative;
       width: var(--app-header-size);
       min-height: var(--app-header-size);
@@ -251,19 +249,19 @@
       justify-content: center;
       align-items: center;
 
-      svg {
+      & svg {
         margin: 0;
         stroke: var(--text-color-button);
         width: var(--icon-size-base);
         height: var(--icon-size-base);
       }
 
-      svg polygon {
+      & svg polygon {
         stroke: var(--text-color-button);
       }
     }
 
-    .edit-data::before {
+    & .edit-data::before {
       background: rgba(0, 0, 0, 0.22);
       border-radius: 50%;
       content: "";
@@ -286,7 +284,7 @@
       flex-direction: column;
     }
 
-    h3 {
+    & h3 {
       font-weight: 600;
       font-size: var(--text-size-medium);
     }
@@ -298,7 +296,7 @@
     height: 100vw;
     background: var(--grey);
 
-    h1 {
+    & h1 {
       padding: var(--base-gap);
       font-size: var(--text-size-large);
       font-weight: 600;
@@ -306,7 +304,7 @@
       line-height: 115%;
     }
 
-    .header-content {
+    & .header-content {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
@@ -321,20 +319,20 @@
       }
     }
 
-    img {
+    & img {
       object-fit: cover;
       width: 100%;
       height: 100%;
     }
 
-    .header-background {
+    & .header-background {
       width: 100%;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      svg {
+      & svg {
         width: 65% !important;
         height: auto !important;
         opacity: 0.12;
@@ -345,8 +343,8 @@
   .content-notes {
     padding: var(--base-gap);
 
-    h2,
-    p {
+    & h2,
+    & p {
       margin-bottom: var(--base-gap);
     }
   }

@@ -26,12 +26,12 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   section {
     padding: var(--base-gap);
     line-height: 150%;
 
-    hr {
+    & hr {
       margin: var(--base-gap) 0;
       border: none;
       border-top: 3px solid var(--transparency-black-light);
