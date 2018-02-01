@@ -1,6 +1,6 @@
 :root {
   --brand-green: rgb(23, 195, 123);
-  --brand-green-lighten: color(rgb(23, 195, 123) tint(30%));
+  --brand-green-lighten: color(rgb(23, 195, 123) tint(70%));
   --brand-green-medium: color(rgb(23, 195, 123) a(70%));
   --brand-green-low: color(rgb(23, 195, 123) a(20%));
 

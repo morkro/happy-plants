@@ -79,6 +79,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../styles/media-queries";
+
   header {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     background: var(--background-primary);

@@ -12,8 +12,10 @@ module.exports = {
       }
     },
     'postcss-reporter': {},
-    'cssnano': {},
     // to edit target browsers: use 'browserslist' field in package.json
-    'autoprefixer': {}
+    'autoprefixer': {},
+    'cssnano': {
+      zindex: false
+    }
   }
 }

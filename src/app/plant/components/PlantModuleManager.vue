@@ -91,14 +91,14 @@
   }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .module-manager {
     & .box {
       padding: 0;
       width: 100%;
     }
 
-    &.alert-header {
+    & header {
       justify-content: space-between;
       align-items: center !important;
       border-bottom: 2px solid var(--grey);
