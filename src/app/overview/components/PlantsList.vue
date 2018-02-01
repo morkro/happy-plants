@@ -47,6 +47,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .plant-list {
     list-style: none;
     width: 100%;
@@ -67,6 +69,13 @@
 
       &:nth-child(odd):not(:last-child) {
         margin-right: auto;
+      }
+    }
+
+    @media (--min-desktop-viewport) {
+      & li {
+        width: calc(var(--app-desktop-max-width) / 2 - var(--list-gap));
+        height: calc(var(--app-desktop-max-width) / 2 - var(--list-gap));
       }
     }
   }

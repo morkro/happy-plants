@@ -84,6 +84,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .overview-menu {
     display: flex;
     align-items: center;
@@ -92,6 +94,11 @@
     height: var(--app-footer-size);
     background: var(--background-primary);
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+
+    @media (--min-desktop-viewport) {
+      width: var(--app-desktop-max-width);
+      margin: 0 auto;
+    }
 
     &.single {
       width: var(--app-footer-size);
