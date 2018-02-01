@@ -25,21 +25,10 @@
     </app-header>
 
     <section :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
-      <header>
-        <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
-          <h1>{{ name }}</h1>
-        </div>
-        <div class="header-background">
-          <img v-if="imageURL" :src="imageURL" :alt="name" />
-          <svgicon
-            v-else
-            icon="cactus"
-            width="50"
-            height="50"
-            color="#000">
-          </svgicon>
-        </div>
-      </header>
+      <plant-header
+        :name="name"
+        :imageURL="imageURL"
+        :editMode="false" />
 
       <!--
         Plant modules are dynamically rendered since they
@@ -71,19 +60,20 @@
 
   import PlantModuleManager from './components/PlantModuleManager'
   import PlantModal from './components/PlantModal'
+  import PlantHeader from './components/PlantHeader'
   import PlantNotes from './components/PlantNotes'
   import PlantSeasons from './components/PlantSeasons'
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
   import PlantFooter from './components/PlantFooter'
   import { getPlantModules } from './utils'
-  import '@/assets/cactus'
 
   export default {
     name: 'PlantView',
 
     components: {
       'app-header': AppHeader,
+      'plant-header': PlantHeader,
       'plant-module-manager': PlantModuleManager,
       'plant-modal': PlantModal,
       'plant-notes': PlantNotes,
@@ -92,7 +82,7 @@
       'plant-sunshine': PlantSunshine,
       'plant-footer': PlantFooter,
       'feather-edit': () =>
-          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
     },
 
     data: () => ({
@@ -287,56 +277,6 @@
     & h3 {
       font-weight: 600;
       font-size: var(--text-size-medium);
-    }
-  }
-
-  .view-content header {
-    position: relative;
-    color: var(--text-color-inverse);
-    height: 100vw;
-    background: var(--grey);
-
-    & h1 {
-      padding: var(--base-gap);
-      font-size: var(--text-size-large);
-      font-weight: 600;
-      color: var(--text-color-inverse);
-      line-height: 115%;
-    }
-
-    & .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-      z-index: 1;
-
-      &.no-photo {
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
-      }
-    }
-
-    & img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-    }
-
-    & .header-background {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      & svg {
-        width: 65% !important;
-        height: auto !important;
-        opacity: 0.12;
-      }
     }
   }
 
