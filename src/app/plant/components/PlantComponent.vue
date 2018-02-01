@@ -27,12 +27,12 @@
 
     components: {
       'feather-more-horizontal': () =>
-        import('vue-feather-icon/components/more-horizontal' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/more-horizontal' /* webpackChunkName: "plant" */)
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   section.plant-component {
     background-color: var(--background-primary);
     width: 100%;
@@ -49,11 +49,11 @@
     position: relative;
     z-index: 2;
 
-    .component-title {
+    & .component-title {
       display: flex;
       align-items: center;
 
-      svg {
+      & svg {
         width: var(--icon-size--small);
         height: var(--icon-size-small);
         opacity: 0.5;

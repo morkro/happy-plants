@@ -59,7 +59,7 @@
       'app-modal': Modal,
       'file-upload': FileUpload,
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
     },
 
     data () {
@@ -109,7 +109,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .modal-content {
     border-top: 3px solid rgba(0, 0, 0, 0.06);
     padding-top: var(--base-gap);
@@ -119,11 +119,11 @@
     display: block;
     margin-bottom: calc(var(--base-gap) * 2);
 
-    h2 {
+    & h2 {
       margin-bottom: var(--base-gap);
     }
 
-    span {
+    & span {
       display: block;
       color: var(--text-color-secondary);
       font-size: var(--text-size-small);
@@ -131,7 +131,7 @@
       padding: 0 1px;
     }
 
-    input {
+    & input {
       width: 100%;
     }
   }
@@ -141,7 +141,7 @@
     padding-top: calc(var(--base-gap) * 2);
     margin-top: calc(var(--base-gap) * 2);
 
-    button {
+    & button {
       width: 100%;
       display: flex;
       justify-content: center;

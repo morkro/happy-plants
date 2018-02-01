@@ -1,6 +1,6 @@
 <template>
   <ul class="plant-list">
-    <li v-for="plant in plants">
+    <li v-for="(plant, index) in plants" :key="index">
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-categorise-selection="emitCategoriseSelection"
@@ -21,7 +21,7 @@
     name: 'PlantsList',
 
     props: {
-      plants: { type: Array, default: [], required: true },
+      plants: { type: Array, default: () => [], required: true },
       selectedCategory: { type: [Boolean, Object], default: false },
       isDeleteMode: { type: Boolean, default: false, required: true },
       isCategoryMode: { type: Boolean, default: false, required: true }
@@ -34,7 +34,7 @@
     methods: {
       hasCategory (plant) {
         return plant.categories && !!this.selectedCategory &&
-          plant.categories.some(cat => cat === this.selectedCategory.guid)
+            plant.categories.some(cat => cat === this.selectedCategory.guid)
       },
       emitDeleteSelection (item) {
         this.$emit('delete-selection', item)
@@ -46,7 +46,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .plant-list {
     list-style: none;
     width: 100%;
@@ -56,7 +56,7 @@
     position: relative;
     --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
 
-    li {
+    & li {
       width: calc(50vw - var(--list-gap));
       height: calc(50vw - var(--list-gap));
       margin-bottom: var(--base-gap);

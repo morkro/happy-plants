@@ -32,7 +32,7 @@
           </p>
 
           <ul class="import-types">
-            <li v-for="type of importTypes">
+            <li v-for="(type, index) of importTypes" :key="index">
               <input
                 type="radio"
                 name="import-type"
@@ -107,11 +107,11 @@
       'app-modal': Modal,
       'file-upload': FileUpload,
       'feather-download': () =>
-        import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
+          import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
       'feather-delete': () =>
-        import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
+          import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
       'feather-copy': () =>
-        import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
+          import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
     },
 
     data () {
@@ -243,19 +243,20 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  $color-modal-border: rgba(0, 0, 0, 0.06);
+<style lang="postcss" scoped>
 
   section {
+    --color-modal-border: rgba(0, 0, 0, 0.06);
+
     padding: var(--base-gap);
     line-height: 150%;
 
-    span {
+    & span {
       display: inline-block;
       margin-bottom: var(--base-gap);
     }
 
-    svg {
+    & svg {
       height: 18px;
       width: 18px;
       filter: none;
@@ -281,12 +282,12 @@
   }
 
   .danger-modal {
-    h1,
-    p {
+    & h1,
+    & p {
       color: var(--text-color-inverse);
     }
 
-    button {
+    & button {
       margin-top: var(--base-gap);
       display: block;
       background: var(--brand-yellow);
@@ -296,7 +297,7 @@
   }
 
   .import-modal-content {
-    border-top: 3px solid $color-modal-border;
+    border-top: 3px solid var(--color-modal-border);
     padding-top: var(--base-gap);
   }
 
@@ -304,20 +305,20 @@
     list-style: none;
     margin: var(--base-gap) 0;
 
-    span {
+    & span {
       margin: 0;
       font-size: var(--text-size-small);
       color: var(--text-color-secondary);
       display: block;
     }
 
-    li {
+    & li {
       display: block;
       width: 100%;
       padding: var(--base-gap) / 2 0;
 
       &:not(:last-of-type) {
-        border-bottom: 2px solid $color-modal-border;
+        border-bottom: 2px solid var(--color-modal-border);
       }
     }
   }

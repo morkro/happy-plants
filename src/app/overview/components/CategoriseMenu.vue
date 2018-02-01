@@ -22,7 +22,8 @@
             <option
               v-for="category in categories"
               :selected="category.guid === selectedCategory.guid"
-              :value="category.guid">
+              :value="category.guid"
+              :key="category.guid">
               {{ category.label }}
             </option>
           </select>
@@ -49,13 +50,13 @@
 
     components: {
       'feather-layers': () =>
-        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
       'feather-menu': () =>
-        import('vue-feather-icon/components/menu' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/menu' /* webpackChunkName: "overview" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
     },
 
     computed: {
@@ -99,13 +100,13 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .categorise-container {
     border-radius: 0;
     height: 100%;
     width: 100%;
 
-    button {
+    & button {
       width: var(--app-footer-size);
       height: var(--app-footer-size);
       flex: 1 0 auto;
@@ -117,21 +118,21 @@
     width: 100%;
     display: flex;
 
-    label {
+    & label {
       width: 100%;
       display: flex;
     }
 
-    button {
+    & button {
       display: flex;
       justify-content: center;
 
-      svg {
+      & svg {
         margin-right: 0;
       }
     }
 
-    button.select {
+    & button.select {
       background: rgba(0, 0, 0, 0.2);
     }
   }
@@ -144,11 +145,11 @@
     color: var(--text-color-inverse);
     padding: 0 var(--base-gap);
 
-    p {
+    & p {
       font-weight: 600;
     }
 
-    select {
+    & select {
       color: var(--text-color-inverse);
       background: transparent;
 

@@ -1,9 +1,12 @@
 <template>
   <div class="viewmode-container box">
-    <div class="viewmode-section" v-for="section in settings">
+    <div class="viewmode-section" v-for="(section, index) in settings" :key="index">
       <h2>{{ section.title }}</h2>
       <ul class="viewmode-select">
-        <li v-for="item in section.options" :class="{ selected: item.selected }">
+        <li
+          v-for="(item, index) in section.options"
+          :class="{ selected: item.selected }"
+          :key="index">
           <label :for="item.type">
             <div>
               <input
@@ -30,13 +33,13 @@
 
     components: {
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
       'feather-layers': () =>
-        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
       'feather-bold': () =>
-        import('vue-feather-icon/components/bold' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/bold' /* webpackChunkName: "overview" */),
       'feather-clock': () =>
-        import('vue-feather-icon/components/clock' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/clock' /* webpackChunkName: "overview" */)
     },
 
     props: {
@@ -95,7 +98,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .viewmode-container {
     width: 100%;
     display: flex;
@@ -115,7 +118,7 @@
       border-left: 2px solid var(--grey);
     }
 
-    h2 {
+    & h2 {
       margin-bottom: var(--base-gap);
     }
   }
@@ -123,26 +126,26 @@
   .viewmode-select {
     list-style: none;
 
-    li:not(:last-child) {
+    & li:not(:last-child) {
       margin-bottom: calc(var(--base-gap) / 2);
     }
 
-    label {
+    & label {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    label > div {
+    & label > div {
       display: flex;
       align-items: center;
     }
 
-    input {
+    & input {
       margin-right: calc(var(--base-gap) / 2);
     }
 
-    input:checked + span {
+    & input:checked + span {
       font-weight: 600;
       color: var(--brand-green);
     }

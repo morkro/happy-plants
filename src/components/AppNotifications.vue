@@ -17,7 +17,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .notification-wrapper {
     display: flex;
     align-items: center;

@@ -24,12 +24,12 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .categories-description {
     display: flex;
     flex-direction: column;
 
-    span {
+    & span {
       color: var(--dark-grey);
       font-size: var(--text-size-xsmall);
       margin-top: calc(var(--base-gap) / 3);

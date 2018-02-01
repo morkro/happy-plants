@@ -43,7 +43,7 @@
       isOverviewRoute () {
         return (
           this.$route.name === 'Overview' ||
-          this.$route.path === '/'
+            this.$route.path === '/'
         )
       },
       onSwipeRight () {
@@ -76,15 +76,16 @@
   }
 </script>
 
-<style lang="scss">
-  @import "~node_modules/normalize.css/normalize";
-  @import "~styles/colors";
-  @import "~styles/fonts";
-  @import "~styles/typography";
-  @import "~styles/forms";
-  @import "~styles/buttons";
-  @import "~styles/layout";
-  @import "~styles/z-index";
+<style lang="postcss">
+  @import "../../node_modules/normalize.css/normalize";
+  @import "../styles/colors";
+  @import "../styles/animations";
+  @import "../styles/media-queries";
+  @import "../styles/fonts";
+  @import "../styles/typography";
+  @import "../styles/forms";
+  @import "../styles/buttons";
+  @import "../styles/layout";
 
   * {
     padding: 0;
@@ -99,29 +100,16 @@
     &.js-no-scrolling {
       overflow: hidden;
     }
-
-    /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: var(--app-media-max-size)) {
-      background: var(--brand-green);
-    }
   }
 
   #app {
     width: 100vw;
-    max-width: 600px;
     min-height: 100vh;
     height: 100%;
-
-    /* TODO: Remove when desktop layout is actually in development. */
-    @media (min-width: var(--app-media-max-size)) {
-      background: var(--background-primary);
-      height: 450px;
-      box-shadow: 0 0 20px var(--transparency-black-light);
-    }
   }
 
   .notifications {
-    z-index: z($page-elements, notifications);
+    z-index: 4;
   }
 
   .main-wireframe {
@@ -134,6 +122,16 @@
     padding-top: var(--app-header-size);
   }
 
+  .app-content {
+    width: 100%;
+    max-width: var(--app-mobile-max-size);
+    margin: 0 auto;
+
+    @media (--min-desktop-viewport) {
+      max-width: var(--app-desktop-max-width);
+    }
+  }
+
   .svg-icon {
     display: inline-block;
     width: 16px;
@@ -143,7 +141,7 @@
     fill: none;
     stroke: currentColor;
 
-    path {
+    & path {
       fill: currentColor;
     }
   }

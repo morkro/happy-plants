@@ -49,11 +49,11 @@
 
     components: {
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
       'feather-layers': () =>
-        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
     },
 
     props: {
@@ -83,7 +83,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .overview-menu {
     display: flex;
     align-items: center;
@@ -98,21 +98,21 @@
       margin: 0 auto;
     }
 
-    ul {
+    & ul {
       list-style: none;
     }
 
-    li,
-    li button {
+    & li,
+    & li button {
       width: var(--app-footer-size);
       height: var(--app-footer-size);
     }
 
-    ul li button {
+    & ul li button {
       display: flex;
       justify-content: center;
 
-      svg {
+      & svg {
         margin-right: 0;
       }
     }
@@ -125,15 +125,15 @@
     display: flex;
     align-items: center;
 
-    .single & {
+    @nest .single & {
       display: none;
     }
 
-    .disabled & li button:not(.view-mode) {
+    @nest .disabled & li button:not(.view-mode) {
       opacity: 0.3;
     }
 
-    .disabled & li .view-mode {
+    @nest .disabled & li .view-mode {
       background: var(--brand-green);
     }
   }
@@ -141,7 +141,7 @@
   .menu-left {
     justify-content: flex-start;
 
-    li:first-child button {
+    & li:first-child button {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
@@ -150,7 +150,7 @@
   .menu-right {
     justify-content: flex-end;
 
-    li:last-child button {
+    & li:last-child button {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -163,11 +163,11 @@
     padding: 0;
     justify-content: center;
 
-    .disabled & {
+    @nest .disabled & {
       background: var(--grey);
     }
 
-    svg {
+    & svg {
       margin: 0;
     }
   }

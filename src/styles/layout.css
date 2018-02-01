@@ -1,5 +1,7 @@
 :root {
-  --app-media-max-size: 600px;
+  --app-mobile-max-size: 600px;
+  --app-desktop-min-size: 1100px;
+  --app-desktop-max-width: 1000px;
   --app-header-size: 60px;
   --app-footer-size: calc(var(--app-header-size) / 1.2);
 
@@ -46,10 +48,10 @@
   background: var(--grey) !important;
   box-shadow: none !important;
 
-  h1,
-  h2,
-  p,
-  span {
+  & h1,
+  & h2,
+  & p,
+  & span {
     color: transparent !important;
     background: var(--transparency-black-light);
     border-radius: var(--border-radius);

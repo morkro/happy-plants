@@ -27,14 +27,14 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   section {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 
-    p {
+    & p {
       color: var(--text-color-secondary);
       text-align: center;
       font-weight: 600;

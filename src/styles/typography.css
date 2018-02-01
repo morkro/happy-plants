@@ -5,7 +5,8 @@ body {
   color: var(--text-color-base);
   line-height: 120%;
   text-rendering: geometricPrecision;
-  // Enable best font rendering
+
+  /* Enable best font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

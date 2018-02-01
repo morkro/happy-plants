@@ -34,7 +34,7 @@
       'app-modal': Modal,
       'plant-component': PlantComponent,
       'feather-book': () =>
-        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -70,9 +70,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/z-index";
-
+<style lang="postcss" scoped>
   p {
     color: var(--text-color-secondary);
     margin-bottom: var(--base-gap);

@@ -27,7 +27,7 @@
     props: {
       show: { type: Boolean, default: false },
       category: { type: Object, default: () => {} },
-      categoryNames: { type: Array, default: [] }
+      categoryNames: { type: Array, default: () => [] }
     },
 
     components: {
@@ -69,7 +69,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .modal-content {
     border-top: 3px solid rgba(0, 0, 0, 0.06);
     padding-top: var(--base-gap);
@@ -79,11 +79,11 @@
     display: block;
     margin-bottom: calc(var(--base-gap) * 2);
 
-    h2 {
+    & h2 {
       margin-bottom: var(--base-gap);
     }
 
-    span {
+    & span {
       display: block;
       color: var(--text-color-secondary);
       font-size: var(--text-size-small);
@@ -91,7 +91,7 @@
       padding: 0 1px;
     }
 
-    input {
+    & input {
       width: 100%;
     }
   }

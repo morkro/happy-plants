@@ -46,7 +46,7 @@
 
     components: {
       'feather-aperture': () =>
-        import('vue-feather-icon/components/aperture' /* webpackChunkName: "general" */)
+          import('vue-feather-icon/components/aperture' /* webpackChunkName: "general" */)
     },
 
     data () {
@@ -99,15 +99,15 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
-  $photo-size: 64px;
-
+<style lang="postcss" scoped>
   @keyframes rotate {
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  .file-upload {
+    --photo-size: 64px;
   }
 
   .file-upload input[type="file"] {
@@ -135,9 +135,9 @@
     overflow: hidden;
     cursor: pointer;
 
-    > div {
-      width: $photo-size;
-      height: $photo-size;
+    & > div {
+      width: var(--photo-size);
+      height: var(--photo-size);
       flex-shrink: 0;
       overflow: hidden;
 
@@ -146,7 +146,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: background-color $base-speed ease-in-out;
+        transition: background-color var(--base-speed) ease-in-out;
       }
 
       &.fallback.has-file {
@@ -154,7 +154,7 @@
       }
     }
 
-    span {
+    & span {
       background: transparent;
       box-shadow: none;
       color: var(--text-color-base);
@@ -164,24 +164,24 @@
       white-space: nowrap;
     }
 
-    img {
-      width: $photo-size;
+    & img {
+      width: var(--photo-size);
       height: 100%;
       object-fit: cover;
     }
 
-    svg.svg-icon {
+    & svg.svg-icon {
       height: 80%;
       opacity: 0.22;
     }
 
-    .loading-icon {
+    & .loading-icon {
       display: flex;
       align-items: center;
       transform-origin: 50% 50%;
       animation: rotate 2s linear infinite;
 
-      svg {
+      & svg {
         width: 18px;
         height: 18px;
         margin: 3px;

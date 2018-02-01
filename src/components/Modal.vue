@@ -24,7 +24,7 @@
 
     components: {
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
+          import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
     },
 
     watch: {
@@ -45,9 +45,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/z-index";
-
+<style lang="postcss" scoped>
   section {
     width: 100%;
     min-height: 100vh;
@@ -57,7 +55,7 @@
     top: 0;
     left: 0;
     padding: var(--base-gap);
-    z-index: z($page-elements, modals);
+    z-index: 3;
     overflow-y: scroll;
   }
 
@@ -67,14 +65,14 @@
     align-items: flex-start;
     margin-bottom: var(--base-gap);
 
-    button {
+    & button {
       margin-left: calc(var(--base-gap) + 5px);
       background: var(--grey);
       color: var(--link-color);
       box-shadow: none;
     }
 
-    h1 {
+    & h1 {
       font-size: var(--text-size-large);
       font-weight: 600;
       line-height: 115%;

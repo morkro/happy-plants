@@ -30,9 +30,9 @@
 
     components: {
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
     },
 
     computed: {
@@ -55,26 +55,26 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
   .delete-container {
     display: flex;
     border-radius: 0;
     width: 100%;
     height: 100%;
 
-    button {
+    & button {
       width: var(--app-footer-size);
       height: var(--app-footer-size);
       display: flex;
       justify-content: center;
       flex: 1 0 auto;
 
-      svg {
+      & svg {
         margin-right: 0;
       }
     }
 
-    button.delete {
+    & button.delete {
       background: rgba(0, 0, 0, 0.2);
     }
   }
@@ -87,7 +87,7 @@
     color: var(--text-color-inverse);
     padding: 0 var(--base-gap);
 
-    p {
+    & p {
       display: inline-block;
       font-weight: 600;
     }

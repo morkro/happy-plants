@@ -18,7 +18,8 @@
             growth: season.growth,
             'growth-transition-from': isTransitioning('from', index),
             'growth-transition-to': isTransitioning('to', index),
-          }">
+          }"
+          :key="index">
           {{ season.month[0] }}
         </li>
       </ul>
@@ -34,7 +35,7 @@
     components: {
       'plant-component': PlantComponent,
       'feather-moon': () =>
-        import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */)
+          import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -67,13 +68,13 @@
         return (
           (
             type === 'to' &&
-            !currentGrowth &&
-            nextMonth && nextMonth.growth
+              !currentGrowth &&
+              nextMonth && nextMonth.growth
           ) || (
             type === 'from' &&
-            !currentGrowth &&
-            nextMonth && !nextMonth.growth &&
-            prevMonth && prevMonth.growth
+              !currentGrowth &&
+              nextMonth && !nextMonth.growth &&
+              prevMonth && prevMonth.growth
           )
         )
       },
@@ -96,9 +97,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import "~styles/animations";
-
+<style lang="postcss" scoped>
   p {
     color: var(--text-color-secondary);
     margin-bottom: var(--base-gap);
@@ -109,7 +108,7 @@
     display: flex;
     justify-content: space-between;
 
-    li {
+    & li {
       color: var(--dark-grey);
       background: var(--grey);
       border-radius: var(--border-radius);
@@ -119,8 +118,8 @@
       align-items: center;
       justify-content: center;
       transition:
-        background $base-speed $ease-out-back,
-        color $base-speed $ease-out-back;
+        background var(--base-speed) var(--ease-out-back),
+        color var(--base-speed) var(--ease-out-back);
 
       &:not(:last-child) {
         margin-right: 1px;
@@ -155,7 +154,7 @@
           top: 0;
           left: 0;
           box-shadow: 0 0 12px 0 var(--brand-green);
-          transition: opacity $base-speed $ease-out-back;
+          transition: opacity var(--base-speed) var(--ease-out-back);
         }
       }
 
