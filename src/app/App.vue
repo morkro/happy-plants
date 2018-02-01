@@ -77,7 +77,7 @@
 </script>
 
 <style lang="postcss">
-  @import "../../node_modules/normalize.css/normalize";
+  @import "normalize.css";
   @import "../styles/colors";
   @import "../styles/animations";
   @import "../styles/media-queries";
