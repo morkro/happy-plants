@@ -8,7 +8,7 @@ module.exports = {
       features: {
         customProperties: false,
         calc: false,
-        autoprefixer: false,
+        autoprefixer: false
       }
     },
     'postcss-reporter': {},
