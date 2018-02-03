@@ -44,6 +44,8 @@
   }
 
   .plant-header-view {
+    height: 100%;
+
     & h1 {
       padding: var(--base-gap);
       font-size: var(--text-size-large);
