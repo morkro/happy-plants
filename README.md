@@ -9,7 +9,10 @@
 <p align="center">
   <a href="https://travis-ci.com/morkro/happy-plants">
     <img src="https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)" alt="Build Status" />
-    <img src="https://img.shields.io/maintenance/yes/2018.svg" alt="Maintenance" />
+  </a>
+  <img src="https://img.shields.io/maintenance/yes/2018.svg" alt="Maintenance" />
+  <a href="http://makeapullrequest.com" target="_blank">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
   </a>
 </p>
 
