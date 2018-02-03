@@ -9,6 +9,7 @@ import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
 import computedProperties from '@/utils/computed-properties'
+import observeVisibility from '@/utils/observe-visibility'
 
 /**
  * This is required as Webpack seems to do some static analysis
@@ -33,6 +34,7 @@ localforage.keys()
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 Vue.use(computedProperties)
+Vue.use(observeVisibility)
 Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
 

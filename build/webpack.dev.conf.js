@@ -75,9 +75,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       files: ['**/*.vue']
     }),
     new Dotenv(),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static'
-    })
+    new BundleAnalyzerPlugin()
   ]
 })
 

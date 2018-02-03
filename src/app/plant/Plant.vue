@@ -14,11 +14,14 @@
       @updated-modules="updatePlantModules"
       @close-module-manager="cancelModuleManager" />
 
-    <app-header class="app-header" color="white" :back="true">
+    <app-header
+      :class="{ 'app-header': true, 'transparent': headerinView }"
+      :color="headerinView ? 'white' : 'black'"
+      :back="true">
       <button
         slot="custom-action-right"
         aria-label="Edit"
-        class="edit-data icon"
+        :class="{ 'edit-data': true, 'icon': true, 'inverse': !headerinView }"
         @click.prevent="openPlantEditModal">
         <feather-edit />
       </button>
@@ -28,7 +31,8 @@
       <plant-header
         :name="name"
         :imageURL="imageURL"
-        :editMode="false" />
+        :editMode="false"
+        v-observe-visibility.60="observeVisibility" />
 
       <!--
         Plant modules are dynamically rendered since they
@@ -86,6 +90,7 @@
     },
 
     data: () => ({
+      headerinView: true,
       showPlantModal: false,
       showModuleManager: false
     }),
@@ -208,6 +213,9 @@
           value: this.plantModules.find(mod => mod.type === module.type).value,
           guid: this.guid
         })
+      },
+      observeVisibility (visible) {
+        this.headerinView = visible
       }
     },
 
@@ -228,8 +236,17 @@
   }
 
   .app-header {
-    background: transparent;
-    box-shadow: none;
+    transition:
+      background calc(var(--base-speed) * 2) var(--ease-out-back),
+      box-shadow var(--base-speed) var(--ease-out-back);
+
+    &.transparent {
+      background: transparent;
+      box-shadow: none;
+      transition:
+        background calc(var(--base-speed) * 2) var(--ease-out-back),
+        box-shadow var(--base-speed) var(--ease-out-back);
+    }
 
     & .edit-data {
       position: relative;
@@ -241,9 +258,9 @@
 
       & svg {
         margin: 0;
-        stroke: var(--text-color-button);
         width: var(--icon-size-base);
         height: var(--icon-size-base);
+        stroke: var(--text-color-button);
       }
 
       & svg polygon {
@@ -251,7 +268,7 @@
       }
     }
 
-    & .edit-data::before {
+    &.transparent .edit-data::before {
       background: rgba(0, 0, 0, 0.22);
       border-radius: 50%;
       content: "";
@@ -268,6 +285,7 @@
   .view-content {
     background-color: var(--background-secondary);
     min-height: 100vh;
+    z-index: 0;
 
     &.no-modules {
       display: flex;
