@@ -72,7 +72,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     new StylelintPlugin({
-      files: ['**/*.vue']
+      files: ['src/**/*.vue', 'src/**/*.css']
     }),
     new Dotenv(),
     new BundleAnalyzerPlugin()

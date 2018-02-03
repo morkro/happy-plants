@@ -58,7 +58,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import AppHeader from '@/components/AppHeader'
 
@@ -102,8 +102,12 @@
         blob: state => state.selected.blob,
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
+        categories: state => state.selected.categories,
         modified: state => state.selected.modified,
         created: state => state.selected.created
+      }),
+      ...mapGetters({
+        getCategories: 'getPlantCategories'
       }),
       plantModules () {
         return getPlantModules().map(module =>
