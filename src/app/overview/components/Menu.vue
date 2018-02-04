@@ -100,11 +100,6 @@
       margin: 0 auto;
     }
 
-    &.single {
-      width: var(--app-footer-size);
-      margin: 0 auto;
-    }
-
     & ul {
       list-style: none;
     }
