@@ -99,6 +99,7 @@
   .alert-header {
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     margin-bottom: var(--base-gap);
 
     & button {
@@ -106,6 +107,7 @@
       background: var(--grey);
       color: var(--link-color);
       box-shadow: none;
+      flex: 0 0 auto;
     }
 
     & h1 {

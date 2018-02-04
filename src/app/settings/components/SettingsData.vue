@@ -1,24 +1,26 @@
 <template>
   <section>
-    <app-modal
-      :class="{ 'danger-modal': isDangerModal() }"
+    <settings-alert
+      :class="{ 'danger-alert': isDangerModal, 'import-alert': !isDangerModal }"
       :backgroundColor="modalColor"
       :show="showModal"
-      @close-modal="closeModal">
+      :close="isDangerModal"
+      @close-alert="closeModal">
       <h1 slot="headline">{{ modalTitle }}</h1>
 
-      <div slot="content" v-if="isDangerModal()" key="modal-warning">
+      <div slot="content" v-if="isDangerModal" key="modal-warning">
         <p>
           Be aware that once you've done this, your data <strong>cannot</strong> be restored!
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
-        <button @click="deleteApplicationData">
-          I understand, delete my data
-        </button>
       </div>
 
-      <div slot="content" v-else class="import-modal-content" key="modal-normal">
-        <form class="import-form" @submit.prevent="importApplicationData">
+      <button slot="confirm" v-if="isDangerModal" @click="deleteApplicationData">
+        I understand, delete my data
+      </button>
+
+      <div slot="content" v-if="!isDangerModal" class="import-modal-content" key="modal-normal">
+        <form class="import-form">
           <label for="import-data">
             <file-upload
               name="import-data"
@@ -44,13 +46,21 @@
               </label>
             </li>
           </ul>
-
-          <button :disabled="file === null || selectedImportType === false">
-            Import
-          </button>
         </form>
       </div>
-    </app-modal>
+
+      <button v-if="!isDangerModal" class="default" slot="cancel" @click="closeModal">
+        Cancel
+      </button>
+
+      <button
+        slot="confirm"
+        v-if="!isDangerModal"
+        :disabled="file === null || selectedImportType === false"
+        @click.prevent="importApplicationData">
+        Import
+      </button>
+    </settings-alert>
 
     <div class="download-section">
       <span>
@@ -78,7 +88,10 @@
       </button>
 
       <span class="note">
-        <strong>Note:</strong> More info for custom plant <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">data structure</a>.
+        More info for custom plant
+        <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">
+          data structure
+        </a>.
       </span>
     </div>
 
@@ -97,14 +110,14 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import Modal from '@/components/Modal'
+  import Alert from '@/components/Alert'
   import FileUpload from '@/components/FileUpload'
 
   export default {
     name: 'SettingsData',
 
     components: {
-      'app-modal': Modal,
+      'settings-alert': Alert,
       'file-upload': FileUpload,
       'feather-download': () =>
           import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
@@ -139,14 +152,17 @@
 
     computed: {
       modalColor () {
-        return this.isDangerModal()
+        return this.isDangerModal
           ? this.$getComputedProperty('brand-red')
           : this.$getComputedProperty('light-grey')
       },
       modalTitle () {
-        return this.isDangerModal()
+        return this.isDangerModal
           ? this.dangerModalTitle
           : this.importModalTitle
+      },
+      isDangerModal () {
+        return this.modalType === 'danger'
       }
     },
 
@@ -159,10 +175,6 @@
         'importSettings',
         'importPlants'
       ]),
-
-      isDangerModal () {
-        return this.modalType === 'danger'
-      },
 
       triggerDownload (data = { message: 'No data!' }) {
         const dataString = JSON.stringify(data, null, 2)
@@ -244,7 +256,6 @@
 </script>
 
 <style lang="postcss" scoped>
-
   section {
     --color-modal-border: rgba(0, 0, 0, 0.06);
 
@@ -273,6 +284,10 @@
     margin-top: var(--base-gap);
     margin-bottom: 0;
     opacity: 0.7;
+
+    & a {
+      font-weight: 600;
+    }
   }
 
   hr {
@@ -281,14 +296,18 @@
     border-top: 3px solid var(--transparency-black-light);
   }
 
-  .danger-modal {
+  .danger-zone h2 {
+    color: var(--brand-red);
+    margin-bottom: calc(var(--base-gap) / 2);
+  }
+
+  .danger-alert {
     & h1,
     & p {
       color: var(--text-color-inverse);
     }
 
     & button {
-      margin-top: var(--base-gap);
       display: block;
       background: var(--brand-yellow);
       color: var(--link-color);
@@ -297,13 +316,16 @@
   }
 
   .import-modal-content {
-    border-top: 3px solid var(--color-modal-border);
-    padding-top: var(--base-gap);
+    min-width: 80vw;
   }
 
   .import-types {
     list-style: none;
     margin: var(--base-gap) 0;
+
+    & input {
+      margin-right: calc(var(--base-gap) / 2);
+    }
 
     & span {
       margin: 0;
@@ -319,6 +341,8 @@
 
       &:not(:last-of-type) {
         border-bottom: 2px solid var(--color-modal-border);
+        padding-bottom: calc(var(--base-gap) / 2);
+        margin-bottom: calc(var(--base-gap) / 2);
       }
     }
   }

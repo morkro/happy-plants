@@ -16,13 +16,7 @@ a {
   text-decoration: none;
 
   &[target="_blank"] {
-    color: var(--text-color-button);
     text-decoration: none;
-    background: var(--brand-green);
-    border-radius: var(--border-radius);
-    box-shadow: var(--green-shadow);
-    padding: 1px 6px;
-    margin: 0 2px;
     display: inline-block;
   }
 
