@@ -16,10 +16,12 @@
     </p>
 
     <div class="contrubtion-section">
+      <h2>I want to make this better</h2>
       <em>
-        Bugs? Feature requests? Any other issues?
-        Please reach out to me (Email, GitHub, ...).<br />
-        <feather-heart /> Any contribution is very welcome!
+        Please, yes! Bugs? Feature requests? Any other issues?<br />
+        <a href="https://github.com/morkro/happy-plants" target="_blank" rel="noopener">
+          <feather-heart /> Any contribution is very welcome!
+        </a>
       </em>
     </div>
 
@@ -61,7 +63,7 @@
     line-height: 150%;
 
     & h2 {
-      margin-bottom: var(--base-gap);
+      margin-bottom: calc(var(--base-gap) / 2);
     }
 
     & hr {
