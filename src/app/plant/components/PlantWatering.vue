@@ -11,7 +11,7 @@
         :min="minLevel"
         :max="maxLevel"
         step="5"
-        :style="`--min: ${minLevel}; --max: ${maxLevel}; --val: ${actualLevel}`" />
+        :style="defaultInputProperties" />
     </div>
   </plant-component>
 </template>
@@ -31,16 +31,23 @@
       amount: { type: Number, default: 5 }
     },
 
+    computed: {
+      defaultInputProperties () {
+        return `--min: ${this.minLevel}; --max: ${this.maxLevel}; --val: ${this.actualLevel}`
+      }
+    },
+
     data () {
       return {
         maxLevel: 100,
         minLevel: 5,
-        actualLevel: this.amount,
+        actualLevel: this.amount
       }
     },
 
     methods: {
       updateRangeValue (event) {
+        if (!(event && event.target)) return
         event.target.style.setProperty('--val', +event.target.value)
         this.$emit('update-plant', {
           type: 'watering',

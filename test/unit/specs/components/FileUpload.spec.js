@@ -11,14 +11,14 @@ import FileUpload from '@/components/FileUpload'
 describe('components/FileUpload.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(FileUpload)
-    expect(wrapper.isVueInstance()).to.to.equal(true)
+    expect(wrapper.isVueInstance()).to.equal(true)
   })
 
   it('has correct default props data', () => {
     const wrapper = mount(FileUpload)
-    expect(wrapper.props().name).to.to.equal(undefined)
-    expect(wrapper.props().accepts).to.deep.to.equal(['.png', '.jpg', '.jpeg'])
-    expect(wrapper.props().disablePreview).to.to.equal(false)
+    expect(wrapper.props().name).to.equal(undefined)
+    expect(wrapper.props().accepts).to.deep.equal(['.png', '.jpg', '.jpeg'])
+    expect(wrapper.props().disablePreview).to.equal(false)
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {
