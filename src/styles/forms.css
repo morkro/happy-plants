@@ -5,15 +5,15 @@ input {
   border: none;
   border-radius: var(--border-radius);
 
-  &:active,
-  &:focus {
+  &:not([type="range"]):active,
+  &:not([type="range"]):focus {
     outline: none;
     box-shadow:
       0 0 0 2px var(--transparency-black-light),
       0 0 12px var(--transparency-black-light);
   }
 
-  &:valid {
+  &:not([type="range"]):valid {
     outline: none;
     box-shadow:
       0 0 0 2px var(--brand-green-medium),

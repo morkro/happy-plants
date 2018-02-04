@@ -120,7 +120,7 @@ Modules have all the same structure with a module-specific `value` definition.
 {
   "type": "watering",
   "value": {
-    "level": 1 | 2 | 3
+    "level": 5
   }
 }
 ```
