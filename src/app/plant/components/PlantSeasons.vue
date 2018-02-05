@@ -12,15 +12,11 @@
       <ul class="season-list">
         <li
           v-for="(season, index) of seasons"
-          @click.self="emitSeasonToggle(season)"
-          :class="{
-            current: isCurrentMonth(index),
-            growth: season.growth,
-            'growth-transition-from': isTransitioning('from', index),
-            'growth-transition-to': isTransitioning('to', index),
-          }"
+          :class="getSeasonListClass(season, index)"
           :key="index">
-          {{ season.month[0] }}
+          <button @click.self="emitSeasonToggle(season)">
+            {{ season.month[0] }}
+          </button>
         </li>
       </ul>
     </div>
@@ -78,6 +74,14 @@
           )
         )
       },
+      getSeasonListClass (season, index) {
+        return {
+          current: this.isCurrentMonth(index),
+          growth: season.growth,
+          'growth-transition-from': this.isTransitioning('from', index),
+          'growth-transition-to': this.isTransitioning('to', index)
+        }
+      },
       getGrowthText () {
         const currentMonth = new Date().getMonth()
         if (this.currentMonth.growth) {
@@ -109,36 +113,27 @@
     justify-content: space-between;
 
     & li {
-      color: var(--dark-grey);
-      background: var(--grey);
-      border-radius: var(--border-radius);
       height: calc(100vw / 12 + 6px);
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        background var(--base-speed) var(--ease-out-back),
-        color var(--base-speed) var(--ease-out-back);
 
       &:not(:last-child) {
         margin-right: 1px;
       }
 
-      &.growth {
+      &.growth button {
         color: var(--brand-green);
         background: var(--brand-green-lighten);
       }
 
-      &.growth-transition-to {
+      &.growth-transition-to button {
         background: linear-gradient(90deg, var(--grey), var(--brand-green-lighten));
       }
 
-      &.growth-transition-from {
+      &.growth-transition-from button {
         background: linear-gradient(90deg, var(--brand-green-lighten), var(--grey));
       }
 
-      &.growth.current {
+      &.growth.current button {
         color: var(--text-color-inverse);
         background: var(--brand-green);
         box-shadow: var(--green-shadow);
@@ -158,11 +153,28 @@
         }
       }
 
-      &.current {
+      &.current button {
         font-weight: 600;
         box-shadow: var(--plain-shadow);
-        transform: scale(1.2);
+        transform: scale(1.15);
+        border: 1px solid var(--text-color-button);
       }
+    }
+
+    & button {
+      color: var(--dark-grey);
+      background: var(--grey);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition:
+        background var(--base-speed) var(--ease-out-back),
+        color var(--base-speed) var(--ease-out-back);
+      padding: 0;
+      box-shadow: none;
+      width: 100%;
+      height: 100%;
     }
   }
 </style>
