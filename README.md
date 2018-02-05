@@ -18,7 +18,9 @@
 
 ---
 
-[_HappyPlants_](https://happy-plants.netlify.com) is all about organising, collecting all sorts of information and trivia, and adding notes on your little friends. Basically, creating your own plant database. You can either add it to your bookmarks on desktop, or save it to your homescreens on mobile devices.
+<img src="resources/happyplants-phone-presentation.png" align="left" width="180px" alt="HappyPlants App" />
+
+[_HappyPlants_](https://happy-plants.netlify.com) is all about organising and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop.
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior.
@@ -27,6 +29,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 -   [✨ Features](#features)
 -   [🎛 Data structure](#data-structure)
 -   [⌨️ Development](#development)
+-   [🎉 Credits](#credits)
 
 ---
 
