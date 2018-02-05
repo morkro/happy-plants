@@ -81,7 +81,7 @@
 
       <button @click="downloadData">
         <feather-download />
-        Download plant data
+        Export plant data
       </button>
     </div>
 
@@ -94,7 +94,7 @@
 
       <button @click="openImportModal">
         <feather-copy />
-        Import data
+        Import plant data
       </button>
 
       <span class="note">
