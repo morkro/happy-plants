@@ -16,10 +16,16 @@
           <p>Tap on the bottom button to add your first plant.</p>
         </li>
         <li>
-          <p>Later on, you can update the sorting by clicking on the view button (<feather-grid />) in the lower menu</p>
+          <p>
+            Later on, you can update the sorting by clicking on the view button
+            <span aria-hidden="true">(<feather-grid />)</span> in the lower menu
+          </p>
         </li>
         <li>
-          <p>In the settings (<feather-settings />) you can manage categories.</p>
+          <p>
+            In the settings <span aria-hidden="true">(<feather-settings />)</span>
+            you can manage categories.
+          </p>
         </li>
       </ul>
       <p>Happy organising!</p>
