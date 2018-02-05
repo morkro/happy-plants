@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header role="banner">
     <div class="header-inner">
       <div class="header-ctrl">
         <router-link
