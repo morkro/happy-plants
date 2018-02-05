@@ -1,6 +1,6 @@
 <template>
   <main class="main-wireframe">
-    <app-header :back="true">
+    <app-header :back-button="true">
       <h1 slot="title">Oops!</h1>
     </app-header>
 

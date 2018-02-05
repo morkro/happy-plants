@@ -1,6 +1,6 @@
 <template>
   <main class="main-wireframe">
-    <app-header :back="true">
+    <app-header :back-button="true">
       <h1 slot="title">Add a new friend</h1>
     </app-header>
 
@@ -14,10 +14,12 @@
         <input
           type="text"
           id="category-name"
-          v-model="categoryName" />
+          v-model="categoryName">
       </div>
 
-      <button class="default" slot="cancel" @click="closeCreateCategoryDialog">
+      <button class="default"
+        slot="cancel"
+        @click="closeCreateCategoryDialog">
         Cancel
       </button>
       <button slot="confirm" @click="confirmCreateCategory">
@@ -29,12 +31,12 @@
       <form @submit.prevent>
         <label for="register-name" class="form-label-group">
           <h2 class="required">What's your friends name?</h2>
-          <span></span>
+          <span />
           <input required
             type="text"
             id="register-name"
             placeholder="Name"
-            @change="getName" />
+            @change="getName">
         </label>
 
         <label for="add-category" class="form-label-group">
@@ -43,7 +45,9 @@
             You don't have any categories created yet, but can just do that now.
           </span>
 
-          <button v-if="!categories.length" class="default" @click="openCreateCategoryDialog">
+          <button v-if="!categories.length"
+            class="default"
+            @click="openCreateCategoryDialog">
             Create category
           </button>
 
@@ -52,7 +56,10 @@
             id="add-category"
             name="add-category"
             @change="getCategory">
-            <option selected disabled hidden>
+            <option
+              selected
+              disabled
+              hidden>
               Select category
             </option>
             <option
@@ -77,7 +84,11 @@
           @click="validateForm"
           :disabled="!canRegisterPlant"
           type="submit">
-          <svgicon icon="leaf" width="16" height="24" color="#000"></svgicon>
+          <svgicon
+            icon="leaf"
+            width="16"
+            height="24"
+            color="#000" />
           Add plant
         </button>
       </form>

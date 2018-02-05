@@ -2,30 +2,37 @@
   <section>
     <settings-alert
       :class="{ 'danger-alert': isDangerModal, 'import-alert': !isDangerModal }"
-      :backgroundColor="modalColor"
+      :background-color="modalColor"
       :show="showModal"
       :close="isDangerModal"
       @close-alert="closeModal">
       <h1 slot="headline">{{ modalTitle }}</h1>
 
-      <div slot="content" v-if="isDangerModal" key="modal-warning">
+      <div slot="content"
+        v-if="isDangerModal"
+        key="modal-warning">
         <p>
           Be aware that once you've done this, your data <strong>cannot</strong> be restored!
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
       </div>
 
-      <button slot="confirm" v-if="isDangerModal" @click="deleteApplicationData">
+      <button slot="confirm"
+        v-if="isDangerModal"
+        @click="deleteApplicationData">
         I understand, delete my data
       </button>
 
-      <div slot="content" v-if="!isDangerModal" class="import-modal-content" key="modal-normal">
+      <div slot="content"
+        v-if="!isDangerModal"
+        class="import-modal-content"
+        key="modal-normal">
         <form class="import-form">
           <label for="import-data">
             <file-upload
               name="import-data"
               accepts=".json"
-              :disablePreview="true"
+              :disable-preview="true"
               @file-selected="getImportFile" />
           </label>
 
@@ -39,7 +46,7 @@
                 type="radio"
                 name="import-type"
                 :id="type.id"
-                @change="updateImportType(type.id)" />
+                @change="updateImportType(type.id)">
               <label :for="type.id">
                 {{ type.label }}
                 <span>{{ type.description }}</span>
@@ -49,7 +56,10 @@
         </form>
       </div>
 
-      <button v-if="!isDangerModal" class="default" slot="cancel" @click="closeModal">
+      <button slot="cancel"
+        v-if="!isDangerModal"
+        class="default"
+        @click="closeModal">
         Cancel
       </button>
 
@@ -95,7 +105,7 @@
       </span>
     </div>
 
-    <hr />
+    <hr>
 
     <div class="danger-zone">
       <h2>Danger Zone</h2>

@@ -3,7 +3,9 @@
     class="module-manager"
     :show="show"
     @close-alert="cancel">
-    <h1 slot="headline">Manage modules</h1>
+    <h1 slot="headline">
+      Manage modules
+    </h1>
 
     <ul slot="content" class="module-list">
       <v-touch
@@ -25,9 +27,12 @@
       </v-touch>
     </ul>
 
-    <button class="default" slot="cancel" @click="cancel">
+    <button slot="cancel"
+      class="default"
+      @click="cancel">
       Cancel
     </button>
+
     <button slot="confirm" @click="confirmModuleUpdates">
       Update modules
     </button>
@@ -81,7 +86,6 @@
         const module = this.updatedModules[updatedIndex]
 
         this.updatedModules.splice(updatedIndex, 1, { ...module, selected: !module.selected })
-        // this.$emit('toggle-module', { type, selected: !selected })
       },
       confirmModuleUpdates () {
         this.$emit('updated-modules', this.updatedModules)

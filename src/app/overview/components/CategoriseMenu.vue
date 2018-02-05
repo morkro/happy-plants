@@ -6,8 +6,14 @@
           aria-label="Select category"
           class="select icon"
           @click="addToCategory">
-          <feather-menu v-if="isCategorySelection" width="18" height="18" />
-          <feather-check v-else width="18" height="18" />
+          <feather-menu
+            v-if="isCategorySelection"
+            width="18"
+            height="18" />
+          <feather-check
+            v-else
+            width="18"
+            height="18" />
         </button>
 
         <div class="categorise-content">
@@ -16,7 +22,10 @@
             ref="select"
             name="categorise-select"
             id="categorise-select">
-            <option selected disabled hidden>
+            <option
+              selected
+              disabled
+              hidden>
               Select category
             </option>
             <option

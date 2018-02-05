@@ -4,14 +4,16 @@
     @close-modal="emitCloseModal">
     <h1 slot="headline">Edit category</h1>
 
-    <form slot="content" class="modal-content" @submit.prevent="updateCategory">
+    <form slot="content"
+      class="modal-content"
+      @submit.prevent="updateCategory">
       <label for="modal-name">
         <h2>Name</h2>
         <input
           id="modal-name"
           type="text"
           :value="categoryLabel"
-          @change="updateLabelName" />
+          @change="updateLabelName">
       </label>
 
       <button>Update name</button>

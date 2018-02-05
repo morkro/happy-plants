@@ -4,13 +4,13 @@
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-categorise-selection="emitCategoriseSelection"
-        :deleteMode="isDeleteMode"
-        :categoriseMode="isCategoryMode"
-        :defaultSelected="hasCategory(plant)"
+        :delete-mode="isDeleteMode"
+        :categorise-mode="isCategoryMode"
+        :default-selected="hasCategory(plant)"
         :guid="plant.guid"
         :name="plant.name"
         :categories="plant.categories"
-        :imageURL="plant.imageURL" />
+        :image-url="plant.imageURL" />
     </li>
   </ul>
 </template>

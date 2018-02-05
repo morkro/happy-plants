@@ -1,6 +1,8 @@
 <template>
   <div class="viewmode-container box">
-    <div class="viewmode-section" v-for="(section, index) in settings" :key="index">
+    <div class="viewmode-section"
+      v-for="(section, index) in settings"
+      :key="index">
       <h2>{{ section.title }}</h2>
       <ul class="viewmode-select">
         <li
@@ -15,11 +17,14 @@
                 :name="section.type"
                 :value="item.type"
                 :checked="item.selected"
-                @click="emitViewmodeUpdate(section.type, item.type)" />
+                @click="emitViewmodeUpdate(section.type, item.type)">
               <span>{{ item.label }}</span>
             </div>
 
-            <component :is="`feather-${item.icon}`" width="16" heigth="16" />
+            <component
+              :is="`feather-${item.icon}`"
+              width="16"
+              height="16" />
           </label>
         </li>
       </ul>
@@ -43,8 +48,8 @@
     },
 
     props: {
-      viewMode: { type: String },
-      orderBy: { type: String }
+      viewMode: { type: String, default: '' },
+      orderBy: { type: String, default: '' }
     },
 
     data () {

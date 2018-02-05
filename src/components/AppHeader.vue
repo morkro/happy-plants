@@ -3,17 +3,17 @@
     <div class="header-inner">
       <div class="header-ctrl">
         <router-link
-          v-if="back"
+          v-if="backButton"
           :to="backPath"
           :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
           <span hidden>Back</span>
           <feather-arrow-left :stroke="color" />
         </router-link>
-        <slot name="custom-action-left"></slot>
+        <slot name="custom-action-left" />
       </div>
 
       <div @click="scrollTop">
-        <slot name="title"></slot>
+        <slot name="title" />
       </div>
 
       <div class="header-ctrl">
@@ -24,7 +24,7 @@
           <span hidden>Settings</span>
           <feather-settings class="header-settings-icon" />
         </router-link>
-        <slot name="custom-action-right"></slot>
+        <slot name="custom-action-right" />
       </div>
     </div>
   </header>
@@ -36,7 +36,7 @@
 
     props: {
       backPath: { type: [String, Object], default: '/' },
-      back: { type: Boolean, default: false },
+      backButton: { type: Boolean, default: false },
       settings: { type: Boolean, default: false },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' }

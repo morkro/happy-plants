@@ -1,6 +1,6 @@
 <template>
   <main class="main-wireframe">
-    <app-header :settings="true" :scrollUp="true">
+    <app-header :settings="true" :scroll-up="true">
       <h1 slot="title">
         Happy Plants
       </h1>
@@ -16,15 +16,21 @@
       <p slot="content">
         You are about to delete <strong>{{ selection.length }}</strong> plants.
       </p>
-      <button class="default" slot="cancel" @click="cancelDeleteMode">
+      <button slot="cancel"
+        class="default"
+        @click="cancelDeleteMode">
         Cancel
       </button>
-      <button class="warning" slot="confirm" @click="confirmDeletePlants">
+      <button slot="confirm"
+        class="warning"
+        @click="confirmDeletePlants">
         Yes, delete plants
       </button>
     </overview-alert>
 
-    <div v-if="showBackdrop" class="overview-backdrop" @click="hideBackdrop">
+    <div v-if="showBackdrop"
+      class="overview-backdrop"
+      @click="hideBackdrop">
       <div v-if="isCategoryMode">
         <p>Select category</p>
         <feather-arrow-down />
@@ -43,9 +49,9 @@
         @delete-selection="toggleDeleteSelection"
         @categorise-selection="toggleCategorySelection"
         :plants="plants"
-        :selectedCategory="selectedCategory"
-        :isDeleteMode="isDeleteMode"
-        :isCategoryMode="isCategoryMode" />
+        :selected-category="selectedCategory"
+        :is-delete-mode="isDeleteMode"
+        :is-category-mode="isCategoryMode" />
 
       <!-- List of plants if filter is set to "category". -->
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
@@ -55,20 +61,24 @@
           :key="index">
           <h2 @click="toggleCollapseCategory(index)">
             {{ category.label }}
-            <feather-maximize v-if="isCollapsed(index)" width="18" height="18" />
-            <feather-minimize v-else width="18" height="18" />
+            <feather-maximize v-if="isCollapsed(index)"
+              width="18"
+              height="18" />
+            <feather-minimize v-else
+              width="18"
+              height="18" />
           </h2>
 
-          <div v-show="isCollapsed(index)" class="list-collapsed-indicator"></div>
+          <div v-show="isCollapsed(index)" class="list-collapsed-indicator" />
 
           <plants-list
             v-show="!isCollapsed(index)"
             @delete-selection="toggleDeleteSelection"
             @categorise-selection="toggleCategorySelection"
             :plants="category.plants"
-            :selectedCategory="selectedCategory"
-            :isDeleteMode="isDeleteMode"
-            :isCategoryMode="isCategoryMode" />
+            :selected-category="selectedCategory"
+            :is-delete-mode="isDeleteMode"
+            :is-category-mode="isCategoryMode" />
         </div>
       </div>
 
@@ -76,8 +86,8 @@
         <viewmode-menu
           class="viewmode-menu"
           v-if="isViewMode"
-          :viewMode="viewMode"
-          :orderBy="orderBy"
+          :view-mode="viewMode"
+          :order-by="orderBy"
           @update="updateViewmodeFromMenu" />
 
         <!-- Delete button and control element. -->
@@ -97,11 +107,11 @@
 
         <overview-menu
           v-if="editMode === false || isViewMode"
-          :noElements="!plants.length"
-          :showViewmode="!!plants.length"
-          :showCategories="viewMode === 'categories'"
-          :showDelete="!!plants.length"
-          :disableMenu="isViewMode"
+          :no-elements="!plants.length"
+          :show-viewmode="!!plants.length"
+          :show-categories="viewMode === 'categories'"
+          :show-delete="!!plants.length"
+          :disable-menu="isViewMode"
           @clicked-item="updateEditMode" />
       </footer>
     </section>

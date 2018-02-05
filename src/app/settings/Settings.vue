@@ -1,10 +1,10 @@
 <template>
   <main class="main-wireframe">
-    <app-header :back="true" :backPath="returnRoutePath">
+    <app-header :back-button="true" :back-path="returnRoutePath">
       <h1 slot="title">{{ headline }}</h1>
     </app-header>
 
-    <router-view class="app-content"></router-view>
+    <router-view class="app-content" />
   </main>
 </template>
 

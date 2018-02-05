@@ -2,8 +2,8 @@
   <section class="plant-component">
     <header>
       <div class="component-title">
-        <slot name="icon"></slot>
-        <slot name="title"></slot>
+        <slot name="icon" />
+        <slot name="title" />
       </div>
 
       <div class="component-settings" v-if="settings">
@@ -13,7 +13,7 @@
       </div>
     </header>
 
-    <slot class="component-content" name="content"></slot>
+    <slot class="component-content" name="content" />
   </section>
 </template>
 

@@ -4,21 +4,20 @@
       type="file"
       :id="name"
       :accept="acceptedFilePattern"
-      @change="emitPhoto" />
+      @change="emitPhoto">
 
     <div class="upload-preview">
-      <div :class="{
-        fallback: disablePreview || imageURL === '',
-        'has-file': disablePreview && newPhoto !== '' }">
-        <img v-if="disablePreview == false && imageURL !== ''"
+      <div :class="getWrapperClass">
+        <img
+          v-if="disablePreview === false && imageURL !== ''"
           :src="imageURL"
-          :alt="name" />
-        <svgicon v-else
+          :alt="name">
+        <svgicon
+          v-else
           icon="cactus"
           width="30"
           height="30"
-          color="#000">
-        </svgicon>
+          color="#000" />
       </div>
 
       <span v-if="loading" class="loading-icon">
@@ -39,7 +38,7 @@
     name: 'FileUpload',
 
     props: {
-      name: { type: String },
+      name: { type: String, default: '' },
       accepts: { type: [Array, String], default: () => ['.png', '.jpg', '.jpeg'] },
       disablePreview: { type: Boolean, default: false }
     },
@@ -60,6 +59,12 @@
     },
 
     computed: {
+      getWrapperClass () {
+        return {
+          fallback: this.disablePreview || this.imageURL === '',
+          'has-file': this.disablePreview && this.newPhoto !== ''
+        }
+      },
       acceptedFilePattern () {
         return Array.isArray(this.accepts)
           ? this.accepts.join(', ')

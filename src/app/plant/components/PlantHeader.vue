@@ -5,18 +5,20 @@
     </div>
 
     <div class="plant-header-view" v-else>
-      <div :class="{ 'is-skeleton': !name, 'no-photo': !imageURL, 'header-content': true }">
+      <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
         <h1>{{ name }}</h1>
       </div>
       <div class="header-background">
-        <img v-if="imageURL" :src="imageURL" :alt="name" />
+        <img
+          v-if="imageUrl"
+          :src="imageUrl"
+          :alt="name">
         <svgicon
           v-else
           icon="cactus"
           width="50"
           height="50"
-          color="#000">
-        </svgicon>
+          color="#000" />
       </div>
     </div>
   </header>
@@ -29,7 +31,7 @@
 
     props: {
       name: { type: [String, Boolean], default: false },
-      imageURL: { type: [String, Boolean], default: false },
+      imageUrl: { type: [String, Boolean], default: false },
       editMode: { type: Boolean, default: false }
     }
   }

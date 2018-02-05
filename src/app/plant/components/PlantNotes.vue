@@ -8,8 +8,7 @@
         <div slot="content">
           <textarea
             @change="updateContent"
-            :value="content">
-          </textarea>
+            :value="content" />
         </div>
       </app-modal>
 

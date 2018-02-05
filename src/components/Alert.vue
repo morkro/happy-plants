@@ -1,10 +1,13 @@
 <template>
-  <div v-if="show" class="alert-backdrop" @click.self="emitAlertClose">
+  <div
+    v-if="show"
+    class="alert-backdrop"
+    @click.self="emitAlertClose">
     <section
       :class="alertClass"
       :style="{ backgroundColor: backgroundColor || '' }">
       <header class="alert-header">
-        <slot name="headline"></slot>
+        <slot name="headline" />
         <button
           v-if="close"
           aria-label="Close"
@@ -15,11 +18,11 @@
       </header>
 
       <div class="alert-content">
-        <slot name="content"></slot>
+        <slot name="content" />
 
         <div class="alert-actions" v-if="actions">
-          <slot name="cancel"></slot>
-          <slot name="confirm"></slot>
+          <slot name="cancel" />
+          <slot name="confirm" />
         </div>
       </div>
     </section>

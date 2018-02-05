@@ -11,7 +11,7 @@
         :min="minLevel"
         :max="maxLevel"
         step="5"
-        :style="defaultInputProperties" />
+        :style="defaultInputProperties">
     </div>
   </plant-component>
 </template>

@@ -31,12 +31,11 @@
         <h1>{{ name }}</h1>
       </div>
       <svgicon
-        v-if="!this.imageURL"
+        v-if="!this.imageUrl"
         icon="cactus"
         width="40"
         height="40"
-        color="#000">
-      </svgicon>
+        color="#000" />
     </div>
   </div>
 </template>
@@ -53,7 +52,7 @@
       categoriseMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
-      imageURL: { type: String, default: '', required: true },
+      imageUrl: { type: String, default: '', required: true },
       defaultSelected: { type: Boolean, default: false, required: true }
     },
 
@@ -94,15 +93,15 @@
         return ''
       },
       background () {
-        return this.imageURL
-          ? { backgroundImage: `url(${this.imageURL})` }
+        return this.imageUrl
+          ? { backgroundImage: `url(${this.imageUrl})` }
           : ''
       },
       wrapperClass () {
         return {
           'box': true,
           'plant-preview': true,
-          'no-photo': !this.imageURL,
+          'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-category': this.categoriseMode && this.selected,
           'select': this.deleteMode || this.categoriseMode

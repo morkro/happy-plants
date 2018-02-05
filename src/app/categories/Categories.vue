@@ -4,11 +4,10 @@
     <category-modal
       :show="showModal"
       :category="selectedCategory"
-      :categoryNames="categories.map(c => c.label)"
+      :category-names="categories.map(c => c.label)"
       @content-update="editCategoryLabel"
       @content-error="showCategoryUpdateError"
-      @close-modal="closeModal">
-    </category-modal>
+      @close-modal="closeModal" />
 
     <!-- Alert as confirmation to delete category. -->
     <category-alert
@@ -17,18 +16,24 @@
       :show="showAlert"
       @close-alert="closeAlert">
       <h1 slot="headline">Delete category</h1>
+
       <p slot="content">
         Do you really want to delete <strong>"{{ selectedCategoryLabel }}"</strong>?
       </p>
-      <button class="default" slot="cancel" @click="closeAlert">
+
+      <button class="default"
+        slot="cancel"
+        @click="closeAlert">
         Cancel
       </button>
-      <button class="warning" slot="confirm" @click="confirmDeleteCategory">
+      <button class="warning"
+        slot="confirm"
+        @click="confirmDeleteCategory">
         Delete category
       </button>
     </category-alert>
 
-    <app-header :back="true" backPath="settings">
+    <app-header :back-button="true" back-path="settings">
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
@@ -39,7 +44,7 @@
             type="text"
             id="category-name"
             placeholder="Category"
-            v-model="categoryName" />
+            v-model="categoryName">
         </label>
         <button class="circle" aria-label="Add category">
           <feather-plus />

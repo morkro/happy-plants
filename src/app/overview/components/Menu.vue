@@ -25,7 +25,10 @@
       class="add-plant"
       :to="{ path: 'add' }"
       :event="disableMenu ? '' : 'click'">
-      <svgicon icon="leaf" width="20" height="28" color="#000" />
+      <svgicon icon="leaf"
+        width="20"
+        height="28"
+        color="#000" />
     </router-link>
 
     <ul class="menu-right">

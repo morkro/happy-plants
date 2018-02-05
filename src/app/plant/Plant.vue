@@ -10,14 +10,13 @@
     <plant-module-manager
       :show="showModuleManager"
       :modules="plantModules"
-      @toggle-module="toggleModule"
       @updated-modules="updatePlantModules"
       @close-module-manager="cancelModuleManager" />
 
     <app-header
       :class="{ 'app-header': true, 'transparent': headerinView }"
       :color="headerinView ? 'white' : 'black'"
-      :back="true">
+      :back-button="true">
       <button
         slot="custom-action-right"
         aria-label="Edit"
@@ -30,8 +29,8 @@
     <section :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
       <plant-header
         :name="name"
-        :imageURL="imageURL"
-        :editMode="false"
+        :image-url="imageURL"
+        :edit-mode="false"
         v-observe-visibility.60="observeVisibility" />
 
       <!--
@@ -44,15 +43,13 @@
         v-bind="getPlantModuleProps(module.type)"
         :key="module.type"
         :is="`plant-${module.type}`"
-        @update-plant="getModuleListener">
-      </component>
+        @update-plant="getModuleListener" />
 
       <plant-footer
-        :noModules="!modules.length"
+        :no-modules="!modules.length"
         :modified="modified"
         :created="created"
-        @manage-modules="activateModuleManager">
-      </plant-footer>
+        @manage-modules="activateModuleManager" />
     </section>
   </main>
 </template>
@@ -206,17 +203,10 @@
         for (const plantModule of updatedModules) {
           this.updatePlantModule({
             ...plantModule,
-            value: this.plantModules.find(mod => mod.type === plantModule.type).value,
-            guid: this.guid
+            guid: this.guid,
+            value: this.plantModules.find(mod => mod.type === plantModule.type).value
           })
         }
-      },
-      toggleModule (module) {
-        this.updatePlantModule({
-          ...module,
-          value: this.plantModules.find(mod => mod.type === module.type).value,
-          guid: this.guid
-        })
       },
       observeVisibility (visible) {
         this.headerinView = visible

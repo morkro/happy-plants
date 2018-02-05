@@ -9,7 +9,7 @@
     <div class="intro-content">
       <h2>Welcome to HappyPlants!</h2>
       <p>
-        Looks like you haven't added any friends yet!<br />
+        Looks like you haven't added any friends yet!<br>
       </p>
       <ul>
         <li>
@@ -36,7 +36,7 @@
       'feather-settings': () =>
         import('vue-feather-icon/components/settings' /* webpackChunkName: "general" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */)
     },
 
     data () {

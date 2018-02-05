@@ -13,7 +13,7 @@
             id="modal-name"
             type="text"
             :value="name"
-            @change="updateName" />
+            @change="updateName">
         </label>
 
         <label for="modal-file">
@@ -52,7 +52,7 @@
 
     props: {
       show: { type: Boolean, default: false },
-      name: { type: String }
+      name: { type: String, default: '' }
     },
 
     components: {

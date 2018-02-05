@@ -13,7 +13,7 @@ input {
       0 0 12px var(--transparency-black-light);
   }
 
-  &:not([type="range"]):valid {
+  &:not([type="range"]):not([type="radio"]):valid {
     outline: none;
     box-shadow:
       0 0 0 2px var(--brand-green-medium),

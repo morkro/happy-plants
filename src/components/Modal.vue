@@ -1,7 +1,7 @@
 <template>
   <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
-      <slot name="headline"></slot>
+      <slot name="headline" />
       <button
         aria-label="Close"
         class="circle inverse"
@@ -9,7 +9,7 @@
         <feather-x width="24" height="24" />
       </button>
     </header>
-    <slot name="content"></slot>
+    <slot name="content" />
   </section>
 </template>
 
@@ -24,7 +24,7 @@
 
     components: {
       'feather-x': () =>
-          import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
+        import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
     },
 
     watch: {
