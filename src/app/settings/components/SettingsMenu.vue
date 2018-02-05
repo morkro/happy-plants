@@ -2,7 +2,7 @@
   <ul>
     <li v-for="(item, index) in menu" :key="index">
       <router-link :to="{ name: item.name }">
-        <h2>{{ item.label }}</h2>
+        <span>{{ item.label }}</span>
         <feather-arrow-right />
       </router-link>
     </li>
@@ -45,6 +45,11 @@
 
     &:not(:last-child) {
       border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+    }
+
+    & a {
+      font-weight: 600;
+      font-size: var(--text-size-medium);
     }
 
     & a,
