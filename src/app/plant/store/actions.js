@@ -13,8 +13,8 @@ export const resetSelectedState = ({ commit }) => {
   commit('RESET_SELECTED_PLANT', { defaultState: getPlantStructure() })
 }
 
-export const updatePlantModule = (...args) =>
-  updatePlant('UPDATE_PLANT_MODULE', ...args)
+export const updatePlantModules = (...args) =>
+  updatePlant('UPDATE_PLANT_MODULES', ...args)
 
 export const updateSeason = (...args) =>
   updatePlant('UPDATE_SEASON', ...args)

@@ -88,7 +88,8 @@
         this.updatedModules.splice(updatedIndex, 1, { ...module, selected: !module.selected })
       },
       confirmModuleUpdates () {
-        this.$emit('updated-modules', this.updatedModules)
+        this.$emit('updated-modules',
+          this.updatedModules.map(({ type, selected }) => ({ type, selected })))
         this.cancel()
       }
     }

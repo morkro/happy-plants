@@ -10,7 +10,7 @@
     <plant-module-manager
       :show="showModuleManager"
       :modules="plantModules"
-      @updated-modules="updatePlantModules"
+      @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
     <app-header
@@ -118,7 +118,7 @@
       ...mapActions([
         'loadPlantItem',
         'loadPlants',
-        'updatePlantModule',
+        'updatePlantModules',
         'updateSeason',
         'updateNotes',
         'updateSunshine',
@@ -199,14 +199,15 @@
       cancelModuleManager () {
         this.showModuleManager = false
       },
-      updatePlantModules (updatedModules) {
-        for (const plantModule of updatedModules) {
-          this.updatePlantModule({
-            ...plantModule,
-            guid: this.guid,
-            value: this.plantModules.find(mod => mod.type === plantModule.type).value
-          })
-        }
+      updateModules (updatedModules) {
+          this.updatePlantModules(updatedModules.map(m => {
+            const activateModule = this.modules.find(mod => mod.type === m.type)
+            const defaultModule = this.plantModules.find(mod => mod.type === m.type)
+            return {
+              ...m,
+              value: activateModule ? activateModule.value : defaultModule.value
+            }
+          }))
       },
       observeVisibility (visible) {
         this.headerinView = visible

@@ -1,4 +1,3 @@
-import Vue from 'vue'
 // https://vuejs.org/v2/guide/list.html#Caveats
 
 function updatePlantModule (moduleName, valueType, state, payload) {
@@ -21,30 +20,13 @@ export default {
     state.selected = Object.assign({}, state.selected, payload.defaultState)
   },
 
-  UPDATE_PLANT_MODULE (state, payload) {
+  UPDATE_PLANT_MODULES (state, payload) {
     state.updated = payload.updated
     state.selected.modified = payload.updated
 
-    if (payload.item.selected) {
-      const itemIndex = state.selected.modules.findIndex(mod => mod.type === payload.item.type)
-
-      if (itemIndex > -1) {
-        state.selected.modules.splice(itemIndex, 1, {
-          type: payload.item.type,
-          value: payload.item.value
-        })
-      } else {
-        state.selected.modules.push({
-          type: payload.item.type,
-          value: payload.item.value
-        })
-      }
-    } else {
-      Vue.delete(
-        state.selected.modules,
-        state.selected.modules.findIndex(m => m.type === payload.item.type)
-      )
-    }
+    state.selected.modules = payload.item
+      .filter(m => m.selected)
+      .map(({ selected, ...rest }) => rest)
   },
 
   UPDATE_SEASON (state, payload) {
