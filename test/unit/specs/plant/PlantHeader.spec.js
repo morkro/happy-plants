@@ -10,7 +10,7 @@ describe('app/plant/PlantHeader.vue', () => {
   it('has correct default props data', () => {
     const wrapper = mount(PlantHeader)
     expect(wrapper.props().name).to.equal(false)
-    expect(wrapper.props().imageURL).to.equal(false)
+    expect(wrapper.props().imageUrl).to.equal(false)
     expect(wrapper.props().editMode).to.equal(false)
   })
 })

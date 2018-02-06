@@ -16,7 +16,7 @@ describe('components/FileUpload.vue', () => {
 
   it('has correct default props data', () => {
     const wrapper = mount(FileUpload)
-    expect(wrapper.props().name).to.equal(undefined)
+    expect(wrapper.props().name).to.equal('')
     expect(wrapper.props().accepts).to.deep.equal(['.png', '.jpg', '.jpeg'])
     expect(wrapper.props().disablePreview).to.equal(false)
   })

@@ -17,7 +17,7 @@ describe('components/AppHeader.vue', () => {
   it('has correct default props data', () => {
     const wrapper = mount(AppHeader)
     expect(wrapper.props().backPath).to.equal('/')
-    expect(wrapper.props().back).to.equal(false)
+    expect(wrapper.props().backButton).to.equal(false)
     expect(wrapper.props().settings).to.equal(false)
     expect(wrapper.props().color).to.equal('black')
   })
