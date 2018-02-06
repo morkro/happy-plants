@@ -16,6 +16,10 @@
   export default {
     name: 'Settings',
 
+    meta: {
+      title: 'Settings'
+    },
+
     components: {
       'app-header': AppHeader
     },

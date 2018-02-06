@@ -63,6 +63,10 @@
   export default {
     name: 'SettingsAbout',
 
+    meta: {
+      title: 'About'
+    },
+
     components: {
       'feather-github': () =>
         import('vue-feather-icon/components/github' /* webpackChunkName: "settings" */),

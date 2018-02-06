@@ -72,6 +72,12 @@
   export default {
     name: 'PlantView',
 
+    meta () {
+      return {
+        title: this.name
+      }
+    },
+
     components: {
       'app-header': AppHeader,
       'plant-header': PlantHeader,

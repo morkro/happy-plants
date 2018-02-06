@@ -107,6 +107,10 @@
   export default {
     name: 'RegisterPlant',
 
+    meta: {
+      title: 'Add a new friend'
+    },
+
     components: {
       'app-header': AppHeader,
       'register-alert': Alert,

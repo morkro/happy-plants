@@ -95,6 +95,10 @@
   export default {
     name: 'Categories',
 
+    meta: {
+      title: 'Categories'
+    },
+
     components: {
       'app-header': AppHeader,
       'category-alert': CategoryAlert,

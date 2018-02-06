@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Meta from 'vue-meta'
 
 import { routes as overview } from '@/app/overview'
 import { routes as categories } from '@/app/categories'
@@ -9,6 +10,7 @@ import { routes as settings } from '@/app/settings'
 import { routes as notfound } from '@/app/not-found'
 
 Vue.use(Router)
+Vue.use(Meta, { keyName: 'meta' })
 
 export default new Router({
   // FIXME: Work-around for Netlify. Revert when history mode can be resolved on server side.

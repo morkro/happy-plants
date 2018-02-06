@@ -17,6 +17,10 @@
   export default {
     name: 'HappyPlants',
 
+    meta: {
+      title: 'Happy Plants'
+    },
+
     components: {
       'app-notifications': AppNotifications
     },

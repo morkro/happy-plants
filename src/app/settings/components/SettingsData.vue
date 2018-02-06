@@ -128,6 +128,10 @@
   export default {
     name: 'SettingsData',
 
+    meta: {
+      title: 'Data'
+    },
+
     components: {
       'settings-alert': Alert,
       'file-upload': FileUpload,

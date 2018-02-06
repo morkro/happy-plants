@@ -8,8 +8,8 @@ import { extendPrototype } from 'localforage-startswith'
 import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
-import computedProperties from '@/utils/computed-properties'
-import observeVisibility from '@/utils/observe-visibility'
+import computedProperties from '@/utils/vue-computed-properties'
+import observeVisibility from '@/utils/vue-observe-visibility'
 
 /**
  * This is required as Webpack seems to do some static analysis

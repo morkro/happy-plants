@@ -23,6 +23,10 @@
   export default {
     name: 'NotFound',
 
+    meta: {
+      title: 'Not found!'
+    },
+
     components: {
       'app-header': AppHeader,
       'feather-home': () =>
