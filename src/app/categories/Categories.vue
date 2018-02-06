@@ -1,5 +1,5 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <!-- Modal for editing categories. -->
     <category-modal
       :show="showModal"
@@ -37,7 +37,7 @@
       <h1 slot="title">Manage Categories</h1>
     </app-header>
 
-    <section :class="{ 'no-categories': !categories.length, 'app-content': true }">
+    <main :class="{ 'no-categories': !categories.length, 'app-content': true }">
       <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
           <input required
@@ -81,8 +81,8 @@
           </p>
         </div>
       </section>
-    </section>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -212,7 +212,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  main {
+  .main-wireframe {
     min-height: 100vh;
     background: var(--background-secondary);
   }

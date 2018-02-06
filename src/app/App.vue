@@ -1,6 +1,5 @@
 <template>
-  <v-touch
-    id="app"
+  <v-touch id="app"
     @swiperight="onSwipeRight"
     @swipeleft="onSwipeLeft"
     :swipe-options="{ direction: 'horizontal' }">
@@ -42,7 +41,7 @@
       isOverviewRoute () {
         return (
           this.$route.name === 'Overview' ||
-            this.$route.path === '/'
+          this.$route.path === '/'
         )
       },
       onSwipeRight () {

@@ -1,5 +1,5 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <app-header :back-button="true">
       <h1 slot="title">Add a new friend</h1>
     </app-header>
@@ -27,7 +27,7 @@
       </button>
     </register-alert>
 
-    <section class="app-content">
+    <main class="app-content">
       <form @submit.prevent>
         <label for="register-name" class="form-label-group">
           <h2 class="required">What's your friends name?</h2>
@@ -92,8 +92,8 @@
           Add plant
         </button>
       </form>
-    </section>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -186,10 +186,10 @@
     }
   }
 
-  main {
+  .main-wireframe {
     background: var(--background-secondary);
 
-    & section {
+    & .app-content {
       padding: var(--base-gap) 0;
       line-height: 150%;
     }

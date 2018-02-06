@@ -1,20 +1,20 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <app-header :back-button="true">
       <h1 slot="title">Oops!</h1>
     </app-header>
 
-    <section class="app-content">
+    <main class="app-content">
+      <h2>Well, this is awkward.</h2>
       <p>
-        Well, this is awkward.
         How about we pretend this didn't happen and go back to
       </p>
       <button @click="pushToSafety">
         <feather-home />
         Overview
       </button>
-    </section>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -38,13 +38,13 @@
 </script>
 
 <style lang="postcss" scoped>
-  main {
+  .main-wireframe {
     min-height: 100vh;
     justify-content: center;
     background: var(--background-secondary);
   }
 
-  section {
+  .app-content {
     display: flex;
     align-items: center;
     justify-content: center;

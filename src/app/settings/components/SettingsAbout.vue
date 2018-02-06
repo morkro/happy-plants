@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div class="settings-about">
     <p>
       <strong>HappyPlants</strong> is all about organising,
       collecting all sorts of information and trivia,
@@ -21,7 +21,7 @@
       </a>.
     </p>
 
-    <div class="contrubtion-section">
+    <section class="contrubtion-section">
       <h2>I want to make this better</h2>
       <em>
         Please, yes! Bugs? Feature requests? Any other issues?<br>
@@ -31,27 +31,32 @@
           <feather-heart /> Any contribution is very welcome!
         </a>
       </em>
-    </div>
+    </section>
 
-    <h2>Credits</h2>
-    <p>
-      Plant icons made by
-      <a href="http://www.flaticon.com/authors/dimitry-miroliubov"
-        target="_blank"
-        rel="noopener">
-        Dimitry Miroliubov
-      </a>,
-      licensed under CC 3.0.
-    </p>
+    <section>
+      <h2>Credits</h2>
+      <p>
+        Plant icons made by
+        <a href="http://www.flaticon.com/authors/dimitry-miroliubov"
+          target="_blank"
+          rel="noopener">
+          Dimitry Miroliubov
+        </a>,
+        licensed under CC 3.0.
+      </p>
+    </section>
+
     <hr>
 
-    <h2>License</h2>
-    <a href="https://github.com/morkro/happy-plants/blob/master/LICENSE"
-      target="_blank"
-      rel="noopener">
-      MIT
-    </a>
-  </section>
+    <section>
+      <h2>License</h2>
+      <a href="https://github.com/morkro/happy-plants/blob/master/LICENSE"
+        target="_blank"
+        rel="noopener">
+        MIT
+      </a>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -70,7 +75,7 @@
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
 
-  section {
+  .settings-about {
     padding: var(--base-gap);
     line-height: 150%;
 

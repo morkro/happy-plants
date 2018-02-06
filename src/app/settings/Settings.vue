@@ -1,11 +1,13 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <app-header :back-button="true" :back-path="returnRoutePath">
       <h1 slot="title">{{ headline }}</h1>
     </app-header>
 
-    <router-view class="app-content" />
-  </main>
+    <main>
+      <router-view class="app-content" />
+    </main>
+  </div>
 </template>
 
 <script>
@@ -33,9 +35,9 @@
 </script>
 
 <style lang="postcss" scoped>
-  main {
-    min-height: 10vh;
-    height: 100vh;
+  .main-wireframe {
+    min-height: 100vh;
+    height: auto;
     background: var(--background-secondary);
   }
 </style>

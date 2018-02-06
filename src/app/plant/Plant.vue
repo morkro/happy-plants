@@ -1,5 +1,5 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <plant-modal
       :show="showPlantModal"
       :name="name"
@@ -26,7 +26,7 @@
       </button>
     </app-header>
 
-    <section :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
+    <main :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
       <plant-header
         :name="name"
         :image-url="imageURL"
@@ -50,8 +50,8 @@
         :modified="modified"
         :created="created"
         @manage-modules="activateModuleManager" />
-    </section>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script>

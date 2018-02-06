@@ -1,5 +1,5 @@
 <template>
-  <main class="main-wireframe">
+  <div class="main-wireframe">
     <app-header :settings="true" :scroll-up="true">
       <h1 slot="title">
         Happy Plants
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <section :class="{ 'no-plants': plants.length <= 0, 'app-content': true }">
+    <main :class="{ 'no-plants': plants.length <= 0, 'app-content': true }">
       <!-- Simple onboarding instruction if user has no plants yet. -->
       <plants-intro
         v-if="plants.length <= 0"
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <footer :class="footerClass">
+      <div :class="footerClass">
         <viewmode-menu
           class="viewmode-menu"
           v-if="isViewMode"
@@ -113,9 +113,9 @@
           :show-delete="!!plants.length"
           :disable-menu="isViewMode"
           @clicked-item="updateEditMode" />
-      </footer>
-    </section>
-  </main>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -170,6 +170,7 @@
       },
       footerClass () {
         return {
+          'overview-footer-menu': true,
           'editmode': this.editMode,
           [`mode-${this.editMode}`]: this.editMode
         }
@@ -328,12 +329,12 @@
 </script>
 
 <style lang="postcss" scoped>
-  main {
+  .main-wireframe {
     min-height: 100vh;
     background: var(--background-secondary);
   }
 
-  main > section {
+  .main-wireframe > .app-content {
     height: 100%;
     padding: var(--base-gap);
     padding-bottom: calc(var(--app-footer-size) * 1.2);
@@ -435,7 +436,7 @@
     }
   }
 
-  section footer {
+  .overview-footer-menu {
     position: fixed;
     bottom: 0;
     left: 50%;

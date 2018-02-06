@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div class="settings-data">
     <settings-alert
       :class="{ 'danger-alert': isDangerModal, 'import-alert': !isDangerModal }"
       :background-color="modalColor"
@@ -72,7 +72,9 @@
       </button>
     </settings-alert>
 
-    <div class="download-section">
+    <section class="download-section">
+      <h2>Export plant data</h2>
+
       <span>
         Download all your plant data as a JSON file (without photos!).
         You might use this little database to import in a different tool,
@@ -83,9 +85,11 @@
         <feather-download />
         Export plant data
       </button>
-    </div>
+    </section>
 
-    <div class="import-section">
+    <section class="import-section">
+      <h2>Import plant data</h2>
+
       <span>
         Import existing plant data. You can choose
         between overwriting your current database, merging, or adding new data
@@ -103,19 +107,17 @@
           data structure
         </a>.
       </span>
-    </div>
+    </section>
 
-    <hr>
-
-    <div class="danger-zone">
+    <section class="danger-zone">
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
       <button class="warning" @click="openDangerModal">
         <feather-delete />
         Delete application data
       </button>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -266,7 +268,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  section {
+  .settings-data {
     --color-modal-border: rgba(0, 0, 0, 0.06);
 
     padding: var(--base-gap);
@@ -282,33 +284,39 @@
       width: 18px;
       filter: none;
     }
-  }
 
-  .download-section {
-    margin-bottom: var(--base-gap);
-  }
+    & section:not(:last-of-type) {
+      margin-bottom: calc(var(--base-gap) * 2);
+    }
 
-  .import-section .note {
-    font-size: var(--text-size-small);
-    font-style: italic;
-    margin-top: var(--base-gap);
-    margin-bottom: 0;
-    opacity: 0.7;
-
-    & a {
-      font-weight: 600;
+    & section h2 {
+      margin-bottom: calc(var(--base-gap) / 2);
     }
   }
 
-  hr {
-    margin: var(--base-gap) 0;
-    border: none;
-    border-top: 3px solid var(--transparency-black-light);
+  .import-section {
+    margin-bottom: var(--base-gap) !important;
+
+    & .note {
+      font-size: var(--text-size-small);
+      font-style: italic;
+      margin-top: var(--base-gap);
+      margin-bottom: 0;
+      opacity: 0.7;
+
+      & a {
+        font-weight: 600;
+      }
+    }
   }
 
-  .danger-zone h2 {
-    color: var(--brand-red);
-    margin-bottom: calc(var(--base-gap) / 2);
+  .danger-zone {
+    border-top: 3px solid var(--transparency-black-light);
+    padding-top: var(--base-gap);
+
+    & h2 {
+      color: var(--brand-red);
+    }
   }
 
   .danger-alert {
