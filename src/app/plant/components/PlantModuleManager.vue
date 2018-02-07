@@ -15,15 +15,22 @@
         :key="`module-${index}`"
         @tap="onToggleModule(module)">
         <div class="module-icon">
-          <feather-check v-if="module.selected" />
+          <input type="radio"
+            :id="`module-${module.type}`"
+            :name="`module-${module.type}`"
+            :value="module.type"
+            :checked="module.selected">
+          <span aria-hidden="true">
+            <feather-check />
+          </span>
         </div>
-        <div class="module-description">
+        <label class="module-description" :for="`module-${module.type}`">
           <h2>
             <component :is="`feather-${module.meta.icon}`" />
             {{ module.meta.title }}
           </h2>
           <span>{{ module.meta.description }}</span>
-        </div>
+        </label>
       </v-touch>
     </ul>
 
@@ -143,6 +150,10 @@
           stroke: var(--text-color-button);
         }
       }
+
+      & .module-icon span {
+        display: block;
+      }
     }
 
     & li:not(:last-child) {
@@ -159,6 +170,17 @@
       justify-content: center;
       align-items: center;
       flex: 0 0 auto;
+      position: relative;
+
+      & input {
+        opacity: 0;
+      }
+
+      & span {
+        display: none;
+        position: absolute;
+        transform: translateY(2px) translateX(1px);
+      }
     }
 
     & .active .module-icon {
