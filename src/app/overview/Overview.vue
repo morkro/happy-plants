@@ -17,7 +17,7 @@
         You are about to delete <strong>{{ selection.length }}</strong> plants.
       </p>
       <button slot="cancel"
-        class="default"
+        class="plain"
         @click="cancelDeleteMode">
         Cancel
       </button>
@@ -351,7 +351,6 @@
     & button.warning {
       background: var(--brand-yellow);
       color: var(--link-color);
-      box-shadow: var(--plain-shadow);
     }
   }
 

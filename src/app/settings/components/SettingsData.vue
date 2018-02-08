@@ -4,7 +4,6 @@
       :class="{ 'danger-alert': isDangerModal, 'import-alert': !isDangerModal }"
       :background-color="modalColor"
       :show="showModal"
-      :close="isDangerModal"
       @close-alert="closeModal">
       <h1 slot="headline">{{ modalTitle }}</h1>
 
@@ -17,10 +16,18 @@
         </p>
       </div>
 
+      <button slot="cancel"
+        class="plain"
+        v-if="isDangerModal"
+        @click="closeModal">
+        Cancel
+      </button>
+
       <button slot="confirm"
+        class="delete-data-button"
         v-if="isDangerModal"
         @click="deleteApplicationData">
-        I understand, delete my data
+        Delete my data
       </button>
 
       <div slot="content"
@@ -58,7 +65,7 @@
 
       <button slot="cancel"
         v-if="!isDangerModal"
-        class="default"
+        class="plain"
         @click="closeModal">
         Cancel
       </button>
@@ -329,11 +336,10 @@
       color: var(--text-color-inverse);
     }
 
-    & button {
+    & button.delete-data-button {
       display: block;
       background: var(--brand-yellow);
       color: var(--link-color);
-      box-shadow: var(--plain-shadow);
     }
   }
 

@@ -17,7 +17,7 @@
           v-model="categoryName">
       </div>
 
-      <button class="default"
+      <button class="plain"
         slot="cancel"
         @click="closeCreateCategoryDialog">
         Cancel
@@ -46,7 +46,7 @@
           </span>
 
           <button v-if="!categories.length"
-            class="default"
+            class="plain"
             @click="openCreateCategoryDialog">
             Create category
           </button>

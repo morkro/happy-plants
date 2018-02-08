@@ -1,6 +1,6 @@
 <template>
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
-    <button class="icon inverse" @click.prevent="emitButtonClicked">
+    <button class="plain" @click.prevent="emitButtonClicked">
       <feather-box />
       Manage modules
     </button>
@@ -79,13 +79,6 @@
       color: var(--text-color-secondary);
       text-align: right;
       display: block;
-    }
-
-    & button {
-      border: 2px dashed var(--grey);
-      color: var(--text-color-base);
-      padding: 12px;
-      font-size: var(--text-size-base);
     }
   }
 

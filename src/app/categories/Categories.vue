@@ -21,7 +21,7 @@
         Do you really want to delete <strong>"{{ selectedCategoryLabel }}"</strong>?
       </p>
 
-      <button class="default"
+      <button class="plain"
         slot="cancel"
         @click="closeAlert">
         Cancel
@@ -293,7 +293,7 @@
     }
 
     & button:first-of-type {
-      margin-right: calc(var(--base-gap) / 2);
+      margin-right: var(--base-gap);
     }
 
     & button.edit svg {
@@ -308,6 +308,5 @@
   .category-alert button.warning {
     background: var(--brand-yellow);
     color: var(--link-color);
-    box-shadow: var(--plain-shadow);
   }
 </style>

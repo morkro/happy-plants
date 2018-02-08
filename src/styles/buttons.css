@@ -1,62 +1,64 @@
 /**
  * Types
- * Rounded:    <button class="rounded"></button>
  * Circle:     <button class="circle"></button>
  * Icon only:  <button class="icon"></button>
  *
  * States
- * Default:   <button class="default"></button>
+ * Default:   <button></button>
+ * Plain:     <button class="plain"></button>
  * Warning:   <button class="warning"></button>
  * Disabled:  <button class="disabled"></button>
  *            <button disabled></button>
  */
 button {
   --button-circle-size: 50px;
+  --button-background: var(--brand-green);
+  --button-outline: var(--brand-green-low);
+  --button-icon: var(--text-color-button);
 
   display: flex;
   align-items: center;
   cursor: pointer;
-  background: var(--brand-green);
+  background: var(--button-background);
   font-size: var(--text-size-base);
   color: var(--text-color-button);
   border: none;
   border-radius: var(--border-radius);
   padding: 12px 18px;
-  box-shadow: var(--green-shadow);
   transition: background-color 100ms var(--ease-out-back);
 
   &:active,
   &:focus {
     outline: none;
-    box-shadow: var(--brand-green-shadow-touch);
+    border: 4px solid var(--button-outline);
   }
 
   & svg {
     margin-right: calc(var(--base-gap) / 2);
-    stroke: var(--text-color-button);
+    stroke: var(--button-icon);
     width: var(--icon-size-base);
     height: var(--icon-size-base);
 
     & rect,
     & path,
-    & polygon {
-      stroke: var(--text-color-button);
+    & line,
+    & polygon,
+    & polyline {
+      stroke: var(--button-icon);
     }
   }
 
 
   &.inverse svg {
-    stroke: var(--text-color-base);
+    --button-icon: var(--text-color-base);
 
     & rect,
     & path,
-    & polygon {
-      stroke: var(--text-color-base);
+    & line,
+    & polygon,
+    & polyline {
+      --button-icon: var(--text-color-base);
     }
-  }
-
-  &.rounded {
-    border-radius: var(--border-radius);
   }
 
   &.circle {
@@ -75,27 +77,24 @@ button {
 
   &.icon {
     background: transparent;
-    box-shadow: none;
     padding: 0;
   }
 
-  &.default {
-    background: var(--background-primary);
-    box-shadow: var(--plain-shadow);
-    color: var(--text-color-base);
+  &.warning {
+    --button-background: var(--brand-red);
+    --button-outline: var(--brand-red-low);
   }
 
-  &.warning {
-    background: var(--brand-red);
-    box-shadow: var(--red-shadow);
+  &.plain {
+    --button-background: var(--dark-grey);
+    --button-outline: var(--grey);
   }
 
   &.disabled,
   &[disabled] {
-    background: var(--background-primary);
-    color: var(--text-color-secondary);
+    --button-background: var(--grey);
+    color: var(--dark-grey);
     cursor: not-allowed;
-    box-shadow: var(--inset-shadow);
 
     & svg {
       opacity: 0.3;

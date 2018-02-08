@@ -35,7 +35,7 @@
     </ul>
 
     <button slot="cancel"
-      class="default"
+      class="plain"
       @click="cancel">
       Cancel
     </button>
