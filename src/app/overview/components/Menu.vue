@@ -120,6 +120,11 @@
       & svg {
         margin-right: 0;
       }
+
+      &:active::after,
+      &:focus::after {
+        opacity: 0;
+      }
     }
   }
 
