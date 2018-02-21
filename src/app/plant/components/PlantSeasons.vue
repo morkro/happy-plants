@@ -115,9 +115,14 @@
     & li {
       height: calc(100vw / 12 + 6px);
       width: 100%;
+      position: relative;
 
       &:not(:last-child) {
         margin-right: 1px;
+      }
+
+      &.current {
+        z-index: 1;
       }
 
       &.growth button {
@@ -136,12 +141,13 @@
       &.growth.current button {
         color: var(--text-color-inverse);
         background: var(--brand-green);
-        box-shadow: var(--green-shadow);
+        box-shadow: none;
 
         &::after {
           opacity: 1;
           content: "";
           border-radius: var(--border-radius);
+          border: none;
           width: 100%;
           height: 100%;
           display: block;
@@ -149,6 +155,7 @@
           top: 0;
           left: 0;
           box-shadow: 0 0 12px 0 var(--brand-green);
+          transform: none;
           transition: opacity var(--base-speed) var(--ease-out-back);
         }
       }
