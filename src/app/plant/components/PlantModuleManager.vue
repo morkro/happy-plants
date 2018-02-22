@@ -139,7 +139,6 @@
 
     & .active {
       background: var(--light-grey);
-      box-shadow: inset 0 0 7px 0 var(--grey);
 
       & .module-icon svg {
         stroke: var(--text-color-button);
