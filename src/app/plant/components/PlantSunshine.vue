@@ -5,7 +5,9 @@
 
     <div slot="content">
       <div class="sunshine-description">
-        <p class="description-level"><strong>Intensity: {{ intensity }}</strong></p>
+        <p class="description-level">
+          <strong>Intensity: {{ intensityLevel }}</strong>
+        </p>
         <p>{{ intensityDescription }}</p>
       </div>
       <div :class="`sunshine-canvas intensity-${intensity}`">
@@ -41,6 +43,11 @@
       return {
         insenityLevels: [{ level: 1 }, { level: 2 }, { level: 3 }],
         defaultMessages: {
+          level: [
+            'Shade-friendly',
+            'Partial shade',
+            'Full sun'
+          ],
           intensity: [
             'This plant doesn\'t require a lot of sun, shade is also fine.',
             'This plant needs bright, indirect, or filtered light but no direct sun.',
@@ -52,11 +59,10 @@
 
     computed: {
       intensityDescription () {
-        const messages = this.messages
-          ? this.messages.intensity
-          : this.defaultMessages.intensity
-
-        return messages[this.intensity - 1]
+        return this.getIntensityText('intensity')
+      },
+      intensityLevel () {
+        return this.getIntensityText('level')
       }
     },
 
@@ -67,6 +73,12 @@
       onEmitIntensityChange (event, level) {
         this.$emit('update-plant', { type: 'sunshine', payload: level })
         event.target && event.target.blur()
+      },
+      getIntensityText (type) {
+        const messages = this.messages
+          ? this.messages[type]
+          : this.defaultMessages[type]
+        return messages[this.intensity - 1]
       }
     }
   }
