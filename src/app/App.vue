@@ -6,12 +6,25 @@
     <app-notifications
       class="notifications"
       :message="message" />
+    <app-header :scroll-up="true"
+      :transparent="transparent"
+      :color="iconColor"
+      :settings="settingsBtn"
+      :settings-icon="settingsIcon"
+      :settings-on-click="settingsBtnOnClick"
+      :back-button="backBtn"
+      :back-path="backBtnPath">
+      <h1 v-if="!!pageTitle" slot="title">
+        {{ pageTitle }}
+      </h1>
+    </app-header>
     <router-view />
   </v-touch>
 </template>
 
 <script>
   import { mapActions, mapState } from 'vuex'
+  import AppHeader from '@/components/AppHeader'
   import AppNotifications from '@/components/AppNotifications'
 
   export default {
@@ -22,7 +35,8 @@
     },
 
     components: {
-      'app-notifications': AppNotifications
+      'app-notifications': AppNotifications,
+      'app-header': AppHeader
     },
 
     data () {
@@ -32,7 +46,15 @@
     },
 
     computed: mapState({
-      message: state => state.notification.message
+      message: state => state.notification.message,
+      pageTitle: state => state.appheader.title,
+      transparent: state => state.appheader.transparent,
+      iconColor: state => state.appheader.iconColor,
+      backBtn: state => state.appheader.backBtn,
+      backBtnPath: state => state.appheader.backBtnPath,
+      settingsBtn: state => state.appheader.settingsBtn,
+      settingsIcon: state => state.appheader.settingsIcon,
+      settingsBtnOnClick: state => state.appheader.settingsBtnOnClick
     }),
 
     methods: {

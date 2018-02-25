@@ -1,11 +1,5 @@
 <template>
   <div class="main-wireframe">
-    <app-header :settings="true" :scroll-up="true">
-      <h1 slot="title">
-        Happy Plants
-      </h1>
-    </app-header>
-
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
     <overview-alert
       type="warning"
@@ -221,13 +215,22 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: 'Happy Plants',
+        backBtn: false,
+        settingsBtn: true
+      })
+    },
+
     methods: {
       ...mapActions([
         'loadPlants',
         'updatePlantCategory',
         'deletePlants',
         'showNotification',
-        'updateViewmode'
+        'updateViewmode',
+        'updateAppHeader'
       ]),
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state

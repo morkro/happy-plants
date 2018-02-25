@@ -13,19 +13,6 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <app-header
-      :class="{ 'app-header': true, 'transparent': headerinView }"
-      :color="headerinView ? 'white' : 'black'"
-      :back-button="true">
-      <button
-        slot="custom-action-right"
-        aria-label="Edit"
-        :class="{ 'edit-data': true, 'icon': true, 'inverse': !headerinView }"
-        @click.prevent="openPlantEditModal">
-        <feather-edit />
-      </button>
-    </app-header>
-
     <main :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
       <plant-header
         :name="name"
@@ -57,7 +44,6 @@
 <script>
   import { mapState, mapGetters, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
-  import AppHeader from '@/components/AppHeader'
 
   import PlantModuleManager from './components/PlantModuleManager'
   import PlantModal from './components/PlantModal'
@@ -79,7 +65,6 @@
     },
 
     components: {
-      'app-header': AppHeader,
       'plant-header': PlantHeader,
       'plant-module-manager': PlantModuleManager,
       'plant-modal': PlantModal,
@@ -87,13 +72,11 @@
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
-      'plant-footer': PlantFooter,
-      'feather-edit': () =>
-        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
+      'plant-footer': PlantFooter
     },
 
     data: () => ({
-      headerinView: true,
+      headerInView: true,
       showPlantModal: false,
       showModuleManager: false
     }),
@@ -120,6 +103,15 @@
       }
     },
 
+    watch: {
+      headerInView (show) {
+        this.updateAppHeader({
+          transparent: show,
+          iconColor: this.headerInView ? 'white' : 'black'
+        })
+      }
+    },
+
     methods: {
       ...mapActions([
         'loadPlantItem',
@@ -134,7 +126,8 @@
         'resetSelectedState',
         'updatePlantsList',
         'deletePlants',
-        'showNotification'
+        'showNotification',
+        'updateAppHeader'
       ]),
       getPlantModuleProps (type) {
         const module = this.modules.find(mod => mod.type === type).value
@@ -216,15 +209,38 @@
           }))
       },
       observeVisibility (visible) {
-        this.headerinView = visible
+        this.headerInView = visible
       }
+    },
+
+    created () {
+      this.updateAppHeader({
+        transparent: true,
+        title: false,
+        backBtn: true,
+        settingsIcon: 'edit',
+        settingsBtn: 'edit',
+        settingsBtnOnClick: this.openPlantEditModal,
+        iconColor: this.headerInView ? 'white' : 'black'
+      })
     },
 
     mounted () {
       this.loadPlantItem(this.$route.params.id)
     },
 
+    updated () {
+      this.updateAppHeader({
+        iconColor: this.headerInView ? 'white' : 'black'
+      })
+    },
+
     beforeDestroy () {
+      this.updateAppHeader({
+        transparent: false,
+        iconColor: 'black',
+        settingsIcon: 'settings'
+      })
       this.updatePlantsList({ guid: this.guid, name: this.name, imageURL: this.imageURL })
         .then(() => this.resetSelectedState())
     }
@@ -234,53 +250,6 @@
 <style lang="postcss" scoped>
   .main-wireframe {
     padding-top: 0;
-  }
-
-  .app-header {
-    transition:
-      background calc(var(--base-speed) * 2) var(--ease-out-back),
-      box-shadow var(--base-speed) var(--ease-out-back);
-
-    &.transparent {
-      background: transparent;
-      box-shadow: none;
-      transition:
-        background calc(var(--base-speed) * 2) var(--ease-out-back),
-        box-shadow var(--base-speed) var(--ease-out-back);
-    }
-
-    & .edit-data {
-      position: relative;
-      width: var(--app-header-size);
-      min-height: var(--app-header-size);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      & svg {
-        margin: 0;
-        width: var(--icon-size-base);
-        height: var(--icon-size-base);
-        stroke: var(--text-color-button);
-      }
-
-      & svg polygon {
-        stroke: var(--text-color-button);
-      }
-    }
-
-    &.transparent .edit-data::before {
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 50%;
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: calc(var(--icon-size-base) * 2.5);
-      height: calc(var(--icon-size-base) * 2.5);
-      transform: translate(-50%, -50%);
-      z-index: -1;
-    }
   }
 
   .view-content {

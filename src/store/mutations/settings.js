@@ -17,6 +17,7 @@ export default {
       }
     }
 
+    state.updated = Date.now()
     state.settings = Object.assign(
       {},
       state.settings,

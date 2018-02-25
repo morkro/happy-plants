@@ -1,9 +1,5 @@
 <template>
   <div class="main-wireframe">
-    <app-header :back-button="true">
-      <h1 slot="title">Add a new friend</h1>
-    </app-header>
-
     <register-alert
       class="register-alert"
       :show="showAlert"
@@ -98,7 +94,6 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import AppHeader from '@/components/AppHeader'
   import Alert from '@/components/Alert'
   import FileUpload from '@/components/FileUpload'
   import { getPlantStructure } from '@/app/plant/utils'
@@ -112,7 +107,6 @@
     },
 
     components: {
-      'app-header': AppHeader,
       'register-alert': Alert,
       'file-upload': FileUpload
     },
@@ -137,10 +131,19 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: 'Add a new friend',
+        backBtn: true,
+        backBtnPath: this.returnRoutePath
+      })
+    },
+
     methods: {
       ...mapActions([
         'addPlant',
-        'addCategory'
+        'addCategory',
+        'updateAppHeader'
       ]),
       handleLoadingState ({ loading }) {
         this.isUploadingFile = loading

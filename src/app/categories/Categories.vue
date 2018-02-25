@@ -33,10 +33,6 @@
       </button>
     </category-alert>
 
-    <app-header :back-button="true" back-path="settings">
-      <h1 slot="title">Manage Categories</h1>
-    </app-header>
-
     <main :class="{ 'no-categories': !categories.length, 'app-content': true }">
       <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
@@ -87,7 +83,6 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import AppHeader from '@/components/AppHeader'
   import CategoryAlert from '@/components/Alert'
   import CategoryModal from './components/CategoryModal'
   import ListDescription from './components/ListDescription'
@@ -100,7 +95,6 @@
     },
 
     components: {
-      'app-header': AppHeader,
       'category-alert': CategoryAlert,
       'category-modal': CategoryModal,
       'list-description': ListDescription,
@@ -134,13 +128,23 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: 'Manage Categories',
+        backBtn: true,
+        backBtnPath: 'settings',
+        settingsBtn: false
+      })
+    },
+
     methods: {
       ...mapActions([
         'addCategory',
         'deleteCategory',
         'updateCategory',
         'updatePlantCategory',
-        'showNotification'
+        'showNotification',
+        'updateAppHeader'
       ]),
       closeModal () {
         this.showModal = false

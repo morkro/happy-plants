@@ -1,9 +1,5 @@
 <template>
   <div class="main-wireframe">
-    <app-header :back-button="true">
-      <h1 slot="title">Oops!</h1>
-    </app-header>
-
     <main class="app-content">
       <h2>Well, this is awkward.</h2>
       <p>
@@ -18,7 +14,7 @@
 </template>
 
 <script>
-  import AppHeader from '@/components/AppHeader'
+  import { mapActions } from 'vuex'
 
   export default {
     name: 'NotFound',
@@ -28,12 +24,21 @@
     },
 
     components: {
-      'app-header': AppHeader,
       'feather-home': () =>
-          import('vue-feather-icon/components/home' /* webpackChunkName: "404" */)
+        import('vue-feather-icon/components/home' /* webpackChunkName: "404" */)
+    },
+
+    created () {
+      this.updateAppHeader({
+        title: 'Oops!',
+        backBtn: true
+      })
     },
 
     methods: {
+      ...mapActions([
+        'updateAppHeader'
+      ]),
       pushToSafety () {
         this.$router.push('/')
       }

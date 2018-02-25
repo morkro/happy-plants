@@ -1,9 +1,5 @@
 <template>
   <div class="main-wireframe">
-    <app-header :back-button="true" :back-path="returnRoutePath">
-      <h1 slot="title">{{ headline }}</h1>
-    </app-header>
-
     <main>
       <router-view class="app-content" />
     </main>
@@ -11,17 +7,12 @@
 </template>
 
 <script>
-  import AppHeader from '@/components/AppHeader'
-
+  import { mapActions } from 'vuex'
   export default {
     name: 'Settings',
 
     meta: {
       title: 'Settings'
-    },
-
-    components: {
-      'app-header': AppHeader
     },
 
     computed: {
@@ -34,6 +25,28 @@
           ? '/'
           : `/${routes[routes.length - 2]}`
       }
+    },
+
+    watch: {
+      '$route' () {
+        this.updateAppHeader({
+          title: this.headline,
+          backBtnPath: this.returnRoutePath
+        })
+      }
+    },
+
+    methods: mapActions([
+      'updateAppHeader'
+    ]),
+
+    created () {
+      this.updateAppHeader({
+        title: this.headline,
+        backBtn: true,
+        backBtnPath: this.returnRoutePath,
+        settingsBtn: false
+      })
     }
   }
 </script>

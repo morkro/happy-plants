@@ -17,6 +17,16 @@ export default new Vuex.Store({
     updated: Date.now(),
     plants: [],
     selected: plant.state,
+    appheader: {
+      transparent: false,
+      iconColor: 'black',
+      title: '',
+      backBtn: true,
+      backBtnPath: '/',
+      settingsBtn: true,
+      settingsIcon: 'settings',
+      settingsBtnOnClick: () => {}
+    },
     notification: {
       message: false
     },
