@@ -18,7 +18,7 @@
 
       <div class="header-ctrl">
         <router-link
-          v-if="settings"
+          v-if="settings === true"
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
           <span hidden>Settings</span>
