@@ -3,9 +3,11 @@
     @swiperight="onSwipeRight"
     @swipeleft="onSwipeLeft"
     :swipe-options="{ direction: 'horizontal' }">
+
     <app-notifications
       class="notifications"
       :message="message" />
+
     <app-header :scroll-up="true"
       :transparent="transparent"
       :color="iconColor"
@@ -18,6 +20,7 @@
         {{ pageTitle }}
       </h1>
     </app-header>
+
     <router-view />
   </v-touch>
 </template>

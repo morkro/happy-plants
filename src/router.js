@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import Meta from 'vue-meta'
 
 import { routes as overview } from '@/app/overview'
-import { routes as categories } from '@/app/categories'
 import { routes as register } from '@/app/register'
 import { routes as plant } from '@/app/plant'
 import { routes as settings } from '@/app/settings'
@@ -25,7 +24,6 @@ export default new Router({
 
   routes: [
     ...overview,
-    ...categories,
     ...register,
     ...plant,
     ...settings,

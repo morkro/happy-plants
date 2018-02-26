@@ -15,7 +15,7 @@
 
 <script>
   export default {
-    name: 'ListDescription',
+    name: 'CategoryListDescription',
 
     props: {
       count: { type: Number, default: 0 },

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-wireframe">
+  <div class="settings-categories">
     <!-- Modal for editing categories. -->
     <category-modal
       :show="showModal"
@@ -33,7 +33,7 @@
       </button>
     </category-alert>
 
-    <main :class="{ 'no-categories': !categories.length, 'app-content': true }">
+    <div :class="{ 'no-categories': !categories.length, 'app-content': true }">
       <form class="add-category" @submit.prevent="submitNewCategory">
         <label for="category-name" class="form-label-group">
           <input required
@@ -77,18 +77,18 @@
           </p>
         </div>
       </section>
-    </main>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
   import CategoryAlert from '@/components/Alert'
-  import CategoryModal from './components/CategoryModal'
-  import ListDescription from './components/ListDescription'
+  import CategoryModal from './CategoryModal'
+  import CategoryListDescription from './CategoryListDescription'
 
   export default {
-    name: 'Categories',
+    name: 'SettingsCategories',
 
     meta: {
       title: 'Categories'
@@ -97,13 +97,13 @@
     components: {
       'category-alert': CategoryAlert,
       'category-modal': CategoryModal,
-      'list-description': ListDescription,
+      'list-description': CategoryListDescription,
       'feather-plus': () =>
-          import('vue-feather-icon/components/plus' /* webpackChunkName: "categories" */),
+          import('vue-feather-icon/components/plus' /* webpackChunkName: "settings" */),
       'feather-edit': () =>
-          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "categories" */),
+          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "settings" */),
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash' /* webpackChunkName: "categories" */)
+          import('vue-feather-icon/components/trash' /* webpackChunkName: "settings" */)
     },
 
     data: () => ({
@@ -132,7 +132,6 @@
       this.updateAppHeader({
         title: 'Manage Categories',
         backBtn: true,
-        backBtnPath: 'settings',
         settingsBtn: false
       })
     },
@@ -220,7 +219,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  .main-wireframe {
+  .settings-categories {
     min-height: 100vh;
     background: var(--background-secondary);
   }
