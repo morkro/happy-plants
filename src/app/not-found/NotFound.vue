@@ -3,11 +3,11 @@
     <main class="app-content">
       <h2>Well, this is awkward.</h2>
       <p>
-        How about we pretend this didn't happen and go back to
+        How about we pretend this didn't happen?
       </p>
       <button @click="pushToSafety">
         <feather-home />
-        Overview
+        Back to overview
       </button>
     </main>
   </div>
