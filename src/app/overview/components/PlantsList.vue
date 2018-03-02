@@ -4,6 +4,7 @@
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-categorise-selection="emitCategoriseSelection"
+        @toggle-pressed-selection="emitPressedSelection"
         :delete-mode="isDeleteMode"
         :categorise-mode="isCategoryMode"
         :default-selected="hasCategory(plant)"
@@ -41,6 +42,9 @@
       },
       emitCategoriseSelection (item) {
         this.$emit('categorise-selection', item)
+      },
+      emitPressedSelection (item) {
+        console.log('pressed', item)
       }
     }
   }

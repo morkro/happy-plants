@@ -1,9 +1,14 @@
 <template>
-  <div
-    @click="handleClick"
+  <v-touch
+    @tap="handleTap"
+    @press="handlePress"
     :style="background"
     :class="wrapperClass"
     :aria-label="ariaLabel">
+    <div v-if="pressed" :class="getLayerClass('pressed')">
+      <feather-maximize />
+    </div>
+
     <div v-show="deleteMode" :class="getLayerClass('delete')">
       <feather-trash
         v-if="isDeleteMode"
@@ -37,7 +42,7 @@
         height="40"
         color="#000" />
     </div>
-  </div>
+  </v-touch>
 </template>
 
 <script>
@@ -64,12 +69,15 @@
       'feather-plus': () =>
           import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
       'feather-minus': () =>
-          import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */)
+          import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */),
+      'feather-maximize': () =>
+          import('vue-feather-icon/components/maximize' /* webpackChunkName: "overview" */)
     },
 
     data () {
       return {
-        selected: this.defaultSelected || false
+        selected: this.defaultSelected || false,
+        pressed: false
       }
     },
 
@@ -104,13 +112,14 @@
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-category': this.categoriseMode && this.selected,
-          'select': this.deleteMode || this.categoriseMode
+          'select-pressed': this.pressed,
+          'select': this.pressed || this.deleteMode || this.categoriseMode
         }
       }
     },
 
     updated () {
-      if (this.frozen === false) {
+      if (this.frozen === false && !this.pressed) {
         Object.assign(this.$data, this.$options.data())
       }
     },
@@ -127,12 +136,13 @@
           'select-layer': true,
           [type]: true,
           'selected': (
+            this.pressed ||
             (this.deleteMode && type === 'delete' && this.selected) ||
-              (this.categoriseMode && type === 'category' && this.selected)
+            (this.categoriseMode && type === 'category' && this.selected)
           )
         }
       },
-      handleClick (event) {
+      handleTap (event) {
         event.preventDefault()
 
         if (this.frozen) {
@@ -142,6 +152,15 @@
         }
 
         router.push(`plant/${this.guid}`)
+      },
+      handlePress (event) {
+        event.preventDefault()
+
+        this.pressed = !this.pressed
+        this.$emit('toggle-pressed-selection', {
+          guid: this.guid,
+          pressed: this.pressed
+        })
       },
       emitSelection () {
         let type = 'toggle-delete-selection'
