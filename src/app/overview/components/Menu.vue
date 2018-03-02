@@ -22,7 +22,7 @@
     <router-link
       tag="button"
       aria-label="Add plant"
-      class="add-plant"
+      class="add-plant icon"
       :to="{ path: 'add' }"
       :event="disableMenu ? '' : 'click'">
       <svgicon icon="leaf"
@@ -173,12 +173,13 @@
     padding: 0;
     justify-content: center;
 
-    @nest .disabled & {
-      background: var(--grey);
-    }
-
     & svg {
       margin: 0;
+      filter: invert(1);
+    }
+
+    @nest .disabled & {
+      opacity: 0.3;
     }
   }
 </style>
