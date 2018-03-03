@@ -123,6 +123,7 @@
   body {
     display: flex;
     justify-content: center;
+    background: var(--background-secondary);
 
     &.js-no-scrolling {
       overflow: hidden;
