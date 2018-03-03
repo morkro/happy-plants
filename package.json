@@ -76,6 +76,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
+    "html-critical-webpack-plugin": "^1.1.0",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
     "karma": "^1.7.1",
