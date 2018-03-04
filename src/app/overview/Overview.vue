@@ -45,7 +45,8 @@
         :plants="plants"
         :selected-category="selectedCategory"
         :is-delete-mode="isDeleteMode"
-        :is-category-mode="isCategoryMode" />
+        :is-category-mode="isCategoryMode"
+        :is-pressed-mode="isPressedMode" />
 
       <!-- List of plants if filter is set to "category". -->
       <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
@@ -69,10 +70,12 @@
             v-show="!isCollapsed(index)"
             @delete-selection="toggleDeleteSelection"
             @categorise-selection="toggleCategorySelection"
+            @pressed-selection="togglePressedSelection"
             :plants="category.plants"
             :selected-category="selectedCategory"
             :is-delete-mode="isDeleteMode"
-            :is-category-mode="isCategoryMode" />
+            :is-category-mode="isCategoryMode"
+            :is-pressed-mode="isPressedMode" />
         </div>
       </div>
 
@@ -100,7 +103,7 @@
           @save-selection="saveCategories" />
 
         <overview-menu
-          v-if="editMode === false || isViewMode"
+          v-if="showMenu"
           :no-elements="!plants.length"
           :show-viewmode="!!plants.length"
           :show-categories="viewMode === 'categories'"
@@ -162,6 +165,9 @@
       isDeleteMode () {
         return this.editMode === 'delete'
       },
+      isPressedMode () {
+        return this.editMode === 'pressed'
+      },
       footerClass () {
         return {
           'overview-footer-menu': true,
@@ -191,6 +197,13 @@
         })
 
         return list
+      },
+      showMenu () {
+        return (
+          this.editMode === false ||
+          this.editMode === 'pressed' ||
+          this.isViewMode
+        )
       }
     },
 
@@ -252,6 +265,14 @@
       },
       toggleCategorySelection (item) {
         this.selection.push(item)
+      },
+      togglePressedSelection (item) {
+        this.editMode = 'pressed'
+        if (item.pressed) {
+          this.selection.push(item)
+        } else {
+          this.selection = this.selection.filter(s => s.guid !== item.guid)
+        }
       },
       activateDeleteMode () {
         // If the delete mode is already active, the selected elements should

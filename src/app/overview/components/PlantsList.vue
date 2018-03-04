@@ -7,6 +7,7 @@
         @toggle-pressed-selection="emitPressedSelection"
         :delete-mode="isDeleteMode"
         :categorise-mode="isCategoryMode"
+        :pressed-mode="isPressedMode"
         :default-selected="hasCategory(plant)"
         :guid="plant.guid"
         :name="plant.name"
@@ -25,7 +26,8 @@
       plants: { type: Array, default: () => [], required: true },
       selectedCategory: { type: [Boolean, Object], default: false },
       isDeleteMode: { type: Boolean, default: false, required: true },
-      isCategoryMode: { type: Boolean, default: false, required: true }
+      isCategoryMode: { type: Boolean, default: false, required: true },
+      isPressedMode: { type: Boolean, default: false, required: true }
     },
 
     components: {
@@ -34,8 +36,11 @@
 
     methods: {
       hasCategory (plant) {
-        return plant.categories && !!this.selectedCategory &&
-            plant.categories.some(cat => cat === this.selectedCategory.guid)
+        return (
+          plant.categories &&
+          !!this.selectedCategory &&
+          plant.categories.some(cat => cat === this.selectedCategory.guid)
+        )
       },
       emitDeleteSelection (item) {
         this.$emit('delete-selection', item)
@@ -44,7 +49,7 @@
         this.$emit('categorise-selection', item)
       },
       emitPressedSelection (item) {
-        console.log('pressed', item)
+        this.$emit('pressed-selection', item)
       }
     }
   }

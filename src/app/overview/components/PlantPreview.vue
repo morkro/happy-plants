@@ -1,12 +1,12 @@
 <template>
   <v-touch
-    @tap="handleTap"
-    @press="handlePress"
+    @tap="handleInteraction"
+    @press="handleInteraction"
     :style="background"
     :class="wrapperClass"
     :aria-label="ariaLabel">
-    <div v-if="pressed" :class="getLayerClass('pressed')">
-      <feather-maximize />
+    <div v-show="pressedMode" :class="getLayerClass('pressed')">
+      <feather-maximize v-if="isPressedMode" />
     </div>
 
     <div v-show="deleteMode" :class="getLayerClass('delete')">
@@ -55,6 +55,7 @@
     props: {
       deleteMode: { type: Boolean, default: false, required: true },
       categoriseMode: { type: Boolean, default: false, required: true },
+      pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
       imageUrl: { type: String, default: '', required: true },
@@ -83,13 +84,16 @@
 
     computed: {
       frozen () {
-        return this.deleteMode || this.categoriseMode
+        return this.deleteMode || this.categoriseMode || this.pressedMode
       },
       isDeleteMode () {
         return this.deleteMode && this.selected
       },
       isCategoriseMode () {
         return this.categoriseMode && this.selected
+      },
+      isPressedMode () {
+        return this.pressedMode && (this.pressed || this.selected)
       },
       ariaLabel () {
         if (this.deleteMode) {
@@ -112,14 +116,17 @@
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-category': this.categoriseMode && this.selected,
-          'select-pressed': this.pressed,
-          'select': this.pressed || this.deleteMode || this.categoriseMode
+          'select-pressed': this.pressedMode && this.pressed && this.selected,
+          'select': (
+            this.pressedMode ||
+            this.deleteMode ||
+            this.categoriseMode)
         }
       }
     },
 
     updated () {
-      if (this.frozen === false && !this.pressed) {
+      if (this.frozen === false) {
         Object.assign(this.$data, this.$options.data())
       }
     },
@@ -142,21 +149,32 @@
           )
         }
       },
-      handleTap (event) {
+      handleInteraction (event) {
         event.preventDefault()
+
+        if (event.type === 'press') {
+          this.pressed = !this.pressed
+          this.selected = !this.selected
+          this.emitPressedSelection()
+          return
+        }
 
         if (this.frozen) {
           this.selected = !this.selected
-          this.emitSelection()
+
+          if (this.isPressedMode) {
+            this.pressed = !this.pressed
+            this.emitPressedSelection()
+          } else {
+            this.emitSelection()
+          }
+
           return
         }
 
         router.push(`plant/${this.guid}`)
       },
-      handlePress (event) {
-        event.preventDefault()
-
-        this.pressed = !this.pressed
+      emitPressedSelection () {
         this.$emit('toggle-pressed-selection', {
           guid: this.guid,
           pressed: this.pressed
