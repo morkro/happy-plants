@@ -143,7 +143,7 @@
           'select-layer': true,
           [type]: true,
           'selected': (
-            this.pressed ||
+            (this.pressed && type === 'pressed') ||
             (this.deleteMode && type === 'delete' && this.selected) ||
             (this.categoriseMode && type === 'category' && this.selected)
           )
