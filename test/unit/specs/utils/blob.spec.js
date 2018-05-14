@@ -12,29 +12,29 @@ describe('utils/blob.js', () => {
   const blob = blobUtil.createBlob(['hello world'], { type: 'text/plain' })
   let base64 = null
 
-  before(async () => {
+  beforeAll(async () => {
     base64 = await blobUtil.blobToBase64String(blob)
   })
 
   it('isBase64() works as expected', () => {
-    expect(isBase64(base64)).to.equal(true)
-    expect(isBase64()).to.equal(false)
+    expect(isBase64(base64)).toEqual(true)
+    expect(isBase64()).toEqual(false)
   })
 
   it('isBlobbable() works as expected', () => {
-    expect(isBlobbable(blob)).to.equal(true)
-    expect(isBlobbable('foo')).to.equal(false)
+    expect(isBlobbable(blob)).toEqual(true)
+    expect(isBlobbable('foo')).toEqual(false)
   })
 
   it('getUrlFromBlob() works as expected', () => {
-    expect(getUrlFromBlob()).to.equal('')
+    expect(getUrlFromBlob()).toEqual('')
   })
 
   it('convertToBlob() works as expected', async () => {
     const config = { blob: base64 }
-    expect(await convertToBlob(config)).to.deep.equal({
+    expect(await convertToBlob(config)).toEqual({
       blob: await blobUtil.base64StringToBlob(config.blob)
     })
-    expect(convertToBlob({})).to.deep.equal({})
+    expect(convertToBlob({})).toEqual({})
   })
 })

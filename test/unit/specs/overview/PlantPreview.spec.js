@@ -1,19 +1,19 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import PlantPreview from '@/app/overview/components/PlantPreview'
 
 describe('app/overview/PlantPreview.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(PlantPreview)
-    expect(wrapper.isVueInstance()).to.equal(true)
+    expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
     const wrapper = mount(PlantPreview)
-    expect(wrapper.props().deleteMode).to.equal(false)
-    expect(wrapper.props().categoriseMode).to.equal(false)
-    expect(wrapper.props().guid).to.equal('')
-    expect(wrapper.props().name).to.equal('')
-    expect(wrapper.props().imageUrl).to.equal('')
-    expect(wrapper.props().defaultSelected).to.equal(false)
+    expect(wrapper.props().deleteMode).toEqual(false)
+    expect(wrapper.props().categoriseMode).toEqual(false)
+    expect(wrapper.props().guid).toEqual('')
+    expect(wrapper.props().name).toEqual('')
+    expect(wrapper.props().imageUrl).toEqual('')
+    expect(wrapper.props().defaultSelected).toEqual(false)
   })
 })
