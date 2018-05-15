@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run svg && webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "build": "node build/build.js",
+    "build": "npm run svg && node build/build.js",
     "prod": "npm run build && node index.js",
     "start": "npm run build && node index.js",
     "unit": "cross-env jest --config test/unit/jest.conf.js --coverage",
