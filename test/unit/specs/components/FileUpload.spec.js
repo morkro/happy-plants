@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import FileUpload from '@/components/FileUpload'
 
 /**
@@ -11,21 +11,21 @@ import FileUpload from '@/components/FileUpload'
 describe('components/FileUpload.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(FileUpload)
-    expect(wrapper.isVueInstance()).to.equal(true)
+    expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
     const wrapper = mount(FileUpload)
-    expect(wrapper.props().name).to.equal('')
-    expect(wrapper.props().accepts).to.deep.equal(['.png', '.jpg', '.jpeg'])
-    expect(wrapper.props().disablePreview).to.equal(false)
+    expect(wrapper.props().name).toEqual('')
+    expect(wrapper.props().accepts).toEqual(['.png', '.jpg', '.jpeg'])
+    expect(wrapper.props().disablePreview).toEqual(false)
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {
     const wrapper = mount(FileUpload, { propsData: {
       accepts: ['.foo', '.bar']
     } })
-    expect(wrapper.props().accepts).to.deep.equal(['.foo', '.bar'])
-    expect(wrapper.vm.acceptedFilePattern).to.equal('.foo, .bar')
+    expect(wrapper.props().accepts).toEqual(['.foo', '.bar'])
+    expect(wrapper.vm.acceptedFilePattern).toEqual('.foo, .bar')
   })
 })

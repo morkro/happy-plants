@@ -7,6 +7,6 @@ import hermiteResize from '@/utils/hermite-resize'
 
 describe('utils/hermite-resize.js', () => {
   it('should return undefined without parameters', () => {
-    expect(hermiteResize()).to.equal(undefined)
+    expect(hermiteResize()).toEqual(undefined)
   })
 })

@@ -1,4 +1,4 @@
-import { mount } from 'vue-test-utils'
+import { mount } from '@vue/test-utils'
 import AppHeader from '@/components/AppHeader'
 
 /**
@@ -11,21 +11,21 @@ import AppHeader from '@/components/AppHeader'
 describe('components/AppHeader.vue', () => {
   it('is a Vue component', () => {
     const wrapper = mount(AppHeader)
-    expect(wrapper.isVueInstance()).to.equal(true)
+    expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
     const wrapper = mount(AppHeader)
-    expect(wrapper.props().backPath).to.equal('/')
-    expect(wrapper.props().backButton).to.equal(false)
-    expect(wrapper.props().settings).to.equal(false)
-    expect(wrapper.props().color).to.equal('black')
+    expect(wrapper.props().backPath).toEqual('/')
+    expect(wrapper.props().backButton).toEqual(false)
+    expect(wrapper.props().settings).toEqual(false)
+    expect(wrapper.props().color).toEqual('black')
   })
 
   it('isWhite() works as expected', () => {
     const wrapper = mount(AppHeader)
-    expect(typeof wrapper.vm.isWhite).to.equal('function')
-    expect(wrapper.vm.isWhite('foo')).to.equal(false)
-    expect(wrapper.vm.isWhite('white')).to.equal(true)
+    expect(typeof wrapper.vm.isWhite).toEqual('function')
+    expect(wrapper.vm.isWhite('foo')).toEqual(false)
+    expect(wrapper.vm.isWhite('white')).toEqual(true)
   })
 })

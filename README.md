@@ -29,7 +29,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 -   [✨ Features](#features)
 -   [🎛 Data structure](#data-structure)
 -   [⌨️ Development](#development)
--   [🎉 Credits](#credits)
+-   [🎉 Credits](#credits)
 
 ---
 
@@ -96,7 +96,7 @@ This is the minimum required data of a single plant. If you want to import the d
   "created": Date, // [required] Date when the plant has been created
   "modified": Date, // [required] Date when plant has been modified, defaults to created date
   "name": String, // [required] Name of the plant
-  "blob": Blob | Base64 | undefined, // [optional] A base64 encoded or Blob of the plant photo
+  "blob": Blob | Base64 | undefined, // [optional] A base64 encoded or Blob of the plant photo
   "categories": Array<Category> // [optional] Array of categories, defaults to []
   "modules": Array<PlantModule> // [optional] Array of plant modules, should default to []
 }
@@ -134,7 +134,7 @@ Modules have all the same structure with a module-specific `value` definition.
 {
   "type": "sunshine",
   "value": {
-    "insensity": 1 | 2 | 3
+    "insensity": 1 | 2 | 3
   }
 }
 ```

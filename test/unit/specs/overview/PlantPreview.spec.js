@@ -1,19 +1,30 @@
-import { mount } from 'vue-test-utils'
+import { shallowMount } from '@vue/test-utils'
 import PlantPreview from '@/app/overview/components/PlantPreview'
 
 describe('app/overview/PlantPreview.vue', () => {
+  const defaultProps = {
+    deleteMode: false,
+    categoriseMode: false,
+    pressedMode: false,
+    guid: '',
+    name: '',
+    imageUrl: '',
+    defaultSelected: false
+  }
+
   it('is a Vue component', () => {
-    const wrapper = mount(PlantPreview)
-    expect(wrapper.isVueInstance()).to.equal(true)
+    const wrapper = shallowMount(PlantPreview, { propsData: defaultProps })
+    expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(PlantPreview)
-    expect(wrapper.props().deleteMode).to.equal(false)
-    expect(wrapper.props().categoriseMode).to.equal(false)
-    expect(wrapper.props().guid).to.equal('')
-    expect(wrapper.props().name).to.equal('')
-    expect(wrapper.props().imageUrl).to.equal('')
-    expect(wrapper.props().defaultSelected).to.equal(false)
+    const wrapper = shallowMount(PlantPreview, { propsData: defaultProps })
+    expect(wrapper.props().deleteMode).toEqual(false)
+    expect(wrapper.props().categoriseMode).toEqual(false)
+    expect(wrapper.props().pressedMode).toEqual(false)
+    expect(wrapper.props().guid).toEqual('')
+    expect(wrapper.props().name).toEqual('')
+    expect(wrapper.props().imageUrl).toEqual('')
+    expect(wrapper.props().defaultSelected).toEqual(false)
   })
 })
