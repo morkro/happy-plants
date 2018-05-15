@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Alert from '@/components/Alert'
 
 /**
@@ -9,12 +9,12 @@ import Alert from '@/components/Alert'
 
 describe('components/Alert.vue', () => {
   it('is a Vue component', () => {
-    const wrapper = mount(Alert)
+    const wrapper = shallowMount(Alert)
     expect(wrapper.isVueInstance()).toBe(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(Alert)
+    const wrapper = shallowMount(Alert)
     expect(wrapper.props().show).toBe(false)
     expect(wrapper.props().close).toBe(false)
     expect(wrapper.props().backgroundColor).toBe(false)
@@ -22,12 +22,12 @@ describe('components/Alert.vue', () => {
   })
 
   it(`is an empty element when 'show' props is false`, () => {
-    const wrapper = mount(Alert)
+    const wrapper = shallowMount(Alert)
     expect(wrapper.isEmpty()).toBe(true)
   })
 
   it('sets correct type class', () => {
-    const wrapper = mount(Alert, { propsData: { show: true } })
+    const wrapper = shallowMount(Alert, { propsData: { show: true } })
     expect(wrapper.find('.alert-normal').exists()).toBe(true)
 
     wrapper.setProps({ show: true, type: 'super-type' })
@@ -35,7 +35,7 @@ describe('components/Alert.vue', () => {
   })
 
   it(`emits event when calling 'emitAlertClose' method`, () => {
-    const wrapper = mount(Alert)
+    const wrapper = shallowMount(Alert)
     wrapper.vm.emitAlertClose()
 
     expect(wrapper.emitted('close-alert')).toEqual([[]])
@@ -44,7 +44,7 @@ describe('components/Alert.vue', () => {
 
   it(`click on wrapper should call 'emitAlertClose'`, () => {
     const emitAlertClose = jest.fn()
-    const wrapper = mount(Alert, {
+    const wrapper = shallowMount(Alert, {
       propsData: { show: true },
       methods: { emitAlertClose }
     })
@@ -54,7 +54,7 @@ describe('components/Alert.vue', () => {
 
   it(`close button should be rendered and call 'emitAlertClose'`, () => {
     const emitAlertClose = jest.fn()
-    const wrapper = mount(Alert, {
+    const wrapper = shallowMount(Alert, {
       propsData: { show: true, close: true },
       methods: { emitAlertClose }
     })

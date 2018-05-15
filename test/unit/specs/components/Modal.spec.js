@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal'
 
 /**
@@ -8,23 +8,23 @@ import Modal from '@/components/Modal'
 
 describe('components/Modal.vue', () => {
   it('is a Vue component', () => {
-    const wrapper = mount(Modal)
+    const wrapper = shallowMount(Modal)
     expect(wrapper.isVueInstance()).toBe(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(Modal)
+    const wrapper = shallowMount(Modal)
     expect(wrapper.props().show).toBe(false)
     expect(wrapper.props().backgroundColor).toBe('#F5F5F5')
   })
 
   it(`is an empty element when 'show' props is false`, () => {
-    const wrapper = mount(Modal)
+    const wrapper = shallowMount(Modal)
     expect(wrapper.isEmpty()).toBe(true)
   })
 
   it(`emits event when calling 'emitModalClose' method`, () => {
-    const wrapper = mount(Modal)
+    const wrapper = shallowMount(Modal)
     wrapper.vm.emitModalClose()
 
     expect(wrapper.emitted('close-modal')).toEqual([[]])
@@ -33,7 +33,7 @@ describe('components/Modal.vue', () => {
 
   it(`click on wrapper should call 'emitModalClose'`, () => {
     const emitModalClose = jest.fn()
-    const wrapper = mount(Modal, {
+    const wrapper = shallowMount(Modal, {
       propsData: { show: true },
       methods: { emitModalClose }
     })
