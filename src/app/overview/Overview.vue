@@ -214,6 +214,11 @@
         } else {
           this.$root.$el.parentNode.classList.remove('js-no-scrolling')
         }
+      },
+      selection () {
+        if (this.selection.length === 0) {
+          this.editMode = false
+        }
       }
     },
 

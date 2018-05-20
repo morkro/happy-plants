@@ -17,6 +17,7 @@ export default new Vuex.Store({
     updated: Date.now(),
     plants: [],
     selected: plant.state,
+
     appheader: {
       transparent: false,
       iconColor: 'black',
@@ -27,13 +28,16 @@ export default new Vuex.Store({
       settingsIcon: 'settings',
       settingsBtnOnClick: () => {}
     },
+
     notification: {
       message: false
     },
+
     settings: {
       viewMode: 'grid',
       orderBy: 'latest'
     },
+
     categories: []
   },
 
