@@ -4,7 +4,7 @@
   "description": "HappyPlants aims to help you organising and keeping track of your plants.",
   "lang": "en",
   "dir": "ltr",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#17c37b",
