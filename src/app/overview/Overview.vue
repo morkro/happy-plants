@@ -142,11 +142,11 @@
       'categorise-menu': CategoriseMenu,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
-          import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
       'feather-minimize': () =>
-          import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
       'feather-maximize': () =>
-          import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
     },
 
     computed: {
@@ -216,7 +216,7 @@
         }
       },
       selection () {
-        if (this.selection.length === 0) {
+        if (this.editMode === 'pressed' && this.selection.length === 0) {
           this.editMode = false
         }
       }
