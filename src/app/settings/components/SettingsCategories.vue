@@ -7,7 +7,7 @@
       :category-names="categories.map(c => c.label)"
       @content-update="editCategoryLabel"
       @content-error="showCategoryUpdateError"
-      @close-modal="closeModal" />
+      @close-dialog="closeModal" />
 
     <!-- Alert as confirmation to delete category. -->
     <category-dialog

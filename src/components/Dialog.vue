@@ -89,7 +89,7 @@
   }
 
   section {
-    width: auto;
+    width: 100%;
     max-width: 90vw;
     max-height: 95vh;
     padding: var(--base-gap);

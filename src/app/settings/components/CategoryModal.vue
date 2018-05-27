@@ -1,28 +1,30 @@
 <template>
-  <app-modal
+  <app-dialog
     :show="show"
-    @close-modal="emitCloseModal">
+    :close="true"
+    @close-dialog="emitCloseDialog">
     <h1 slot="headline">Edit category</h1>
 
     <form slot="content"
-      class="modal-content"
-      @submit.prevent="updateCategory">
-      <label for="modal-name">
+      class="dialog-content">
+      <label for="dialog-name">
         <h2>Name</h2>
         <input
-          id="modal-name"
+          id="dialog-name"
           type="text"
           :value="categoryLabel"
           @change="updateLabelName">
       </label>
-
-      <button>Update name</button>
     </form>
-  </app-modal>
+
+    <button slot="confirm" @click="updateCategory">
+      Update name
+    </button>
+  </app-dialog>
 </template>
 
 <script>
-  import Modal from '@/components/Modal'
+  import Dialog from '@/components/Dialog'
   export default {
     name: 'CategoryModal',
 
@@ -33,7 +35,7 @@
     },
 
     components: {
-      'app-modal': Modal
+      'app-dialog': Dialog
     },
 
     data: () => ({
@@ -53,26 +55,31 @@
         if (!event.target.value) return
         this.newLabelName = event.target.value
       },
-      emitCloseModal () {
+      emitCloseDialog () {
         Object.assign(this.$data, this.$options.data()) // Reset state
-        this.$emit('close-modal')
+        this.$emit('close-dialog')
       },
       updateCategory () {
-        const data = { ...this.category, label: this.newLabelName }
+        const data = {
+          ...this.category,
+          label: this.newLabelName === ''
+            ? this.category.label
+            : this.newLabelName
+        }
 
         if (this.categoryNames.includes(this.newLabelName)) {
           return this.$emit('content-error', data)
         }
 
         this.$emit('content-update', data)
-        this.emitCloseModal()
+        this.emitCloseDialog()
       }
     }
   }
 </script>
 
 <style lang="postcss" scoped>
-  .modal-content {
+  .dialog-content {
     border-top: 3px solid rgba(0, 0, 0, 0.06);
     padding-top: var(--base-gap);
   }
