@@ -1,9 +1,5 @@
 <template>
-  <v-touch id="app"
-    @swiperight="onSwipeRight"
-    @swipeleft="onSwipeLeft"
-    :swipe-options="{ direction: 'horizontal' }">
-
+  <div id="app">
     <app-notifications
       class="notifications"
       :message="message" />
@@ -22,7 +18,7 @@
     </app-header>
 
     <router-view />
-  </v-touch>
+  </div>
 </template>
 
 <script>
@@ -66,25 +62,7 @@
         'loadSettings',
         'loadCategories',
         'hideNotification'
-      ]),
-      isOverviewRoute () {
-        return (
-          this.$route.name === 'Overview' ||
-          this.$route.path === '/'
-        )
-      },
-      onSwipeRight () {
-        if (this.isOverviewRoute()) {
-          return
-        }
-        this.$router.back()
-      },
-      onSwipeLeft () {
-        if (!this.isOverviewRoute()) {
-          return
-        }
-        this.$router.push('/add')
-      }
+      ])
     },
 
     mounted () {
