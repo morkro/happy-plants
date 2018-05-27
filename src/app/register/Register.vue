@@ -1,9 +1,9 @@
 <template>
   <div class="main-wireframe">
-    <register-alert
-      class="register-alert"
-      :show="showAlert"
-      @close-alert="closeCreateCategoryDialog">
+    <register-dialog
+      class="register-dialog"
+      :show="showDialog"
+      @close-dialog="closeCreateCategoryDialog">
       <h1 slot="headline">Create category</h1>
 
       <div slot="content">
@@ -21,7 +21,7 @@
       <button slot="confirm" @click="confirmCreateCategory">
         Create category
       </button>
-    </register-alert>
+    </register-dialog>
 
     <main class="app-content">
       <form @submit.prevent>
@@ -94,7 +94,7 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import Alert from '@/components/Alert'
+  import Dialog from '@/components/Dialog'
   import FileUpload from '@/components/FileUpload'
   import { getPlantStructure } from '@/app/plant/utils'
   import '@/assets/leaf'
@@ -107,7 +107,7 @@
     },
 
     components: {
-      'register-alert': Alert,
+      'register-dialog': Dialog,
       'file-upload': FileUpload
     },
 
@@ -127,7 +127,7 @@
         isUploadingFile: false,
         selectedCategory: false,
         categoryName: '',
-        showAlert: false
+        showDialog: false
       }
     },
 
@@ -160,10 +160,10 @@
         this.selectedCategory = this.categories.find(cat => cat.guid === $option.value)
       },
       openCreateCategoryDialog () {
-        this.showAlert = true
+        this.showDialog = true
       },
       closeCreateCategoryDialog () {
-        this.showAlert = false
+        this.showDialog = false
       },
       confirmCreateCategory () {
         if (this.categoryName === '') return
@@ -187,7 +187,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  .register-alert {
+  .register-dialog {
     & input {
       width: 100%;
     }

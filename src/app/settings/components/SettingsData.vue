@@ -1,14 +1,14 @@
 <template>
   <div class="settings-data">
-    <settings-alert
-      :class="{ 'danger-alert': isDangerModal, 'import-alert': !isDangerModal }"
-      :background-color="modalColor"
-      :show="showModal"
-      @close-alert="closeModal">
+    <settings-dialog
+      :class="{ 'danger-alert': isDangerDialog, 'import-alert': !isDangerDialog }"
+      :background-color="dialogColor"
+      :show="showDialog"
+      @close-dialog="closeDialog">
       <h1 slot="headline">{{ modalTitle }}</h1>
 
       <div slot="content"
-        v-if="isDangerModal"
+        v-if="isDangerDialog"
         key="modal-warning">
         <p>
           Be aware that once you've done this, your data <strong>cannot</strong> be restored!
@@ -18,20 +18,20 @@
 
       <button slot="cancel"
         class="plain"
-        v-if="isDangerModal"
-        @click="closeModal">
+        v-if="isDangerDialog"
+        @click="closeDialog">
         Cancel
       </button>
 
       <button slot="confirm"
         class="delete-data-button"
-        v-if="isDangerModal"
+        v-if="isDangerDialog"
         @click="deleteApplicationData">
         Delete my data
       </button>
 
       <div slot="content"
-        v-if="!isDangerModal"
+        v-if="!isDangerDialog"
         class="import-modal-content"
         key="modal-normal">
         <form class="import-form">
@@ -64,20 +64,20 @@
       </div>
 
       <button slot="cancel"
-        v-if="!isDangerModal"
+        v-if="!isDangerDialog"
         class="plain"
-        @click="closeModal">
+        @click="closeDialog">
         Cancel
       </button>
 
       <button
         slot="confirm"
-        v-if="!isDangerModal"
+        v-if="!isDangerDialog"
         :disabled="file === null || selectedImportType === false"
         @click.prevent="importApplicationData">
         Import
       </button>
-    </settings-alert>
+    </settings-dialog>
 
     <section class="download-section">
       <h2>Export plant data</h2>
@@ -129,7 +129,7 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import Alert from '@/components/Alert'
+  import Dialog from '@/components/Dialog'
   import FileUpload from '@/components/FileUpload'
 
   export default {
@@ -140,23 +140,23 @@
     },
 
     components: {
-      'settings-alert': Alert,
+      'settings-dialog': Dialog,
       'file-upload': FileUpload,
       'feather-download': () =>
-          import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
       'feather-delete': () =>
-          import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/delete' /* webpackChunkName: "settings" */),
       'feather-copy': () =>
-          import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
+        import('vue-feather-icon/components/copy' /* webpackChunkName: "settings" */)
     },
 
     data () {
       return {
         file: null,
-        showModal: false,
+        showDialog: false,
         modalType: null,
-        dangerModalTitle: 'Deleting application data',
-        importModalTitle: 'Import plant data',
+        dangerDialogTitle: 'Deleting application data',
+        importDialogTitle: 'Import plant data',
         selectedImportType: false,
         importTypes: [
           {
@@ -174,17 +174,17 @@
     },
 
     computed: {
-      modalColor () {
-        return this.isDangerModal
+      dialogColor () {
+        return this.isDangerDialog
           ? this.$getComputedProperty('brand-red')
           : this.$getComputedProperty('light-grey')
       },
       modalTitle () {
-        return this.isDangerModal
-          ? this.dangerModalTitle
-          : this.importModalTitle
+        return this.isDangerDialog
+          ? this.dangerDialogTitle
+          : this.importDialogTitle
       },
-      isDangerModal () {
+      isDangerDialog () {
         return this.modalType === 'danger'
       }
     },
@@ -228,17 +228,17 @@
       },
 
       openDangerModal () {
-        this.showModal = true
+        this.showDialog = true
         this.modalType = 'danger'
       },
 
       openImportModal () {
-        this.showModal = true
+        this.showDialog = true
         this.modalType = 'import'
       },
 
-      closeModal () {
-        this.showModal = false
+      closeDialog () {
+        this.showDialog = false
         this.modalType = null
       },
 
@@ -259,7 +259,7 @@
       importApplicationData () {
         Promise.resolve(Object.keys(this.file))
           .then(keys => Promise.all(keys.map(this.selectImportType)))
-          .then(() => this.closeModal())
+          .then(() => this.closeDialog())
           .then(() => this.showNotification({
             message: 'Successfully imported your plant data!'
           }))
@@ -268,7 +268,7 @@
 
       deleteApplicationData () {
         this.deleteAllData()
-          .then(() => this.closeModal())
+          .then(() => this.closeDialog())
           .then(() => this.showNotification({
             message: 'Successfully deleted all your data.'
           }))

@@ -2,7 +2,8 @@
   <app-dialog
     class="app-dialog"
     :show="show"
-    @close-alert="emitCloseModal">
+    :close="true"
+    @close-dialog="emitCloseDialog">
     <h1 slot="headline">Update your plant</h1>
 
     <div slot="content">
@@ -42,7 +43,7 @@
 
 <script>
   import { isBlobbable } from '@/utils/blob'
-  import Alert from '@/components/Alert'
+  import Dialog from '@/components/Dialog'
   import FileUpload from '@/components/FileUpload'
 
   import '@/assets/cactus'
@@ -56,7 +57,7 @@
     },
 
     components: {
-      'app-dialog': Alert,
+      'app-dialog': Dialog,
       'file-upload': FileUpload,
       'feather-trash': () =>
         import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
@@ -78,7 +79,7 @@
         if (!event.target.value) return
         this.newName = event.target.value
       },
-      emitCloseModal () {
+      emitCloseDialog () {
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-modal')
       },
@@ -99,11 +100,11 @@
         }
 
         this.$emit('content-update', data)
-        this.emitCloseModal()
+        this.emitCloseDialog()
       },
       emitDeletePlant () {
         this.$emit('delete-plant')
-        this.emitCloseModal()
+        this.emitCloseDialog()
       }
     }
   }

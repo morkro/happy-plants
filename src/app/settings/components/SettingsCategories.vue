@@ -10,11 +10,11 @@
       @close-modal="closeModal" />
 
     <!-- Alert as confirmation to delete category. -->
-    <category-alert
+    <category-dialog
       type="warning"
-      class="category-alert"
-      :show="showAlert"
-      @close-alert="closeAlert">
+      class="category-dialog"
+      :show="showDialog"
+      @close-dialog="closeDialog">
       <h1 slot="headline">Delete category</h1>
 
       <p slot="content">
@@ -23,7 +23,7 @@
 
       <button class="plain"
         slot="cancel"
-        @click="closeAlert">
+        @click="closeDialog">
         Cancel
       </button>
       <button class="warning"
@@ -31,7 +31,7 @@
         @click="confirmDeleteCategory">
         Delete category
       </button>
-    </category-alert>
+    </category-dialog>
 
     <div :class="{ 'no-categories': !categories.length, 'app-content': true }">
       <form class="add-category" @submit.prevent="submitNewCategory">
@@ -83,7 +83,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import CategoryAlert from '@/components/Alert'
+  import CategoryDialog from '@/components/Dialog'
   import CategoryModal from './CategoryModal'
   import CategoryListDescription from './CategoryListDescription'
 
@@ -95,20 +95,20 @@
     },
 
     components: {
-      'category-alert': CategoryAlert,
+      'category-dialog': CategoryDialog,
       'category-modal': CategoryModal,
       'list-description': CategoryListDescription,
       'feather-plus': () =>
-          import('vue-feather-icon/components/plus' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/plus' /* webpackChunkName: "settings" */),
       'feather-edit': () =>
-          import('vue-feather-icon/components/edit-2' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "settings" */),
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash' /* webpackChunkName: "settings" */)
+        import('vue-feather-icon/components/trash' /* webpackChunkName: "settings" */)
     },
 
     data: () => ({
       showModal: false,
-      showAlert: false,
+      showDialog: false,
       categoryName: '',
       selectedCategory: null
     }),
@@ -149,8 +149,8 @@
         this.showModal = false
         this.selectedCategory = null
       },
-      closeAlert () {
-        this.showAlert = false
+      closeDialog () {
+        this.showDialog = false
         this.selectedCategory = null
       },
       submitNewCategory () {
@@ -181,7 +181,7 @@
       },
       openCategoryDialog (event, category) {
         this.selectedCategory = category
-        this.showAlert = true
+        this.showDialog = true
 
         if (event.currentTarget) {
           event.currentTarget.blur()
@@ -198,7 +198,7 @@
             type: 'remove'
           }))))
         // 3. Close alert
-          .then(() => this.closeAlert())
+          .then(() => this.closeDialog())
         // 4. Show notification
           .then(() =>
             this.showNotification({
@@ -308,7 +308,7 @@
     }
   }
 
-  .category-alert button.warning {
+  .category-dialog button.warning {
     background: var(--brand-yellow);
     color: var(--link-color);
   }

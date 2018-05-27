@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Alert from '@/components/Alert'
+import Alert from '@/components/Dialog'
 
 /**
  * TODO:

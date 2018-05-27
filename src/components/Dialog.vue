@@ -1,26 +1,26 @@
 <template>
   <div
     v-if="show"
-    class="alert-backdrop"
-    @click.self="emitAlertClose">
+    class="dialog-backdrop"
+    @click.self="emitDialogClose">
     <section
-      :class="alertClass"
+      :class="dialogClass"
       :style="{ backgroundColor: backgroundColor || '' }">
-      <header class="alert-header">
+      <header class="dialog-header">
         <slot name="headline" />
         <button
           v-if="close"
           aria-label="Close"
           class="circle inverse"
-          @click.prevent="emitAlertClose">
+          @click.prevent="emitDialogClose">
           <feather-x width="24" height="24" />
         </button>
       </header>
 
-      <div class="alert-content">
+      <div class="dialog-content">
         <slot name="content" />
 
-        <div class="alert-actions" v-if="actions">
+        <div class="dialog-actions" v-if="actions">
           <slot name="cancel" />
           <slot name="confirm" />
         </div>
@@ -47,9 +47,9 @@
     },
 
     computed: {
-      alertClass () {
+      dialogClass () {
         return {
-          [`alert-${this.type}`]: true,
+          [`dialog-${this.type}`]: true,
           'box': true,
           'red': this.type === 'warning'
         }
@@ -67,15 +67,15 @@
     },
 
     methods: {
-      emitAlertClose () {
-        this.$emit('close-alert')
+      emitDialogClose () {
+        this.$emit('close-dialog')
       }
     }
   }
 </script>
 
 <style lang="postcss" scoped>
-  .alert-backdrop {
+  .dialog-backdrop {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,12 +94,12 @@
     max-height: 95vh;
     padding: var(--base-gap);
 
-    &.alert-warning {
+    &.dialog-warning {
       color: var(--text-color-inverse);
     }
   }
 
-  .alert-header {
+  .dialog-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -118,13 +118,13 @@
       font-weight: 600;
       line-height: 115%;
 
-      @nest .alert-warning & {
+      @nest .dialog-warning & {
         color: var(--text-color-inverse);
       }
     }
   }
 
-  .alert-actions {
+  .dialog-actions {
     display: flex;
     margin-top: var(--base-gap);
 

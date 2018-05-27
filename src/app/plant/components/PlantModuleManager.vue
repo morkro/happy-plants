@@ -1,8 +1,8 @@
 <template>
-  <plant-alert
+  <plant-dialog
     class="module-manager"
     :show="show"
-    @close-alert="cancel">
+    @close-dialog="cancel">
     <h1 slot="headline">
       Manage modules
     </h1>
@@ -43,17 +43,17 @@
     <button slot="confirm" @click="confirmModuleUpdates">
       Update modules
     </button>
-  </plant-alert>
+  </plant-dialog>
 </template>
 
 <script>
-  import AppAlert from '@/components/Alert'
+  import Dialog from '@/components/Dialog'
 
   export default {
     name: 'PlantModuleManager',
 
     components: {
-      'plant-alert': AppAlert,
+      'plant-dialog': Dialog,
       'feather-droplet': () =>
           import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
       'feather-sun': () =>
@@ -118,7 +118,7 @@
       padding: var(--base-gap);
     }
 
-    & .alert-actions {
+    & .dialog-actions {
       background: var(--grey);
       margin-top: 0 !important;
       padding: calc(var(--base-gap) / 2) var(--base-gap);

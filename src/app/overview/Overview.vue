@@ -1,11 +1,11 @@
 <template>
   <div class="main-wireframe">
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
-    <overview-alert
+    <overview-dialog
       type="warning"
-      class="overview-alert"
-      :show="showAlert"
-      @close-alert="cancelDeleteMode">
+      class="overview-dialog"
+      :show="showDialog"
+      @close-dialog="cancelDeleteMode">
       <h1 slot="headline">Are you sure?</h1>
       <p slot="content">
         You are about to delete <strong>{{ selection.length }}</strong> plants.
@@ -20,7 +20,7 @@
         @click="confirmDeletePlants">
         Yes, delete plants
       </button>
-    </overview-alert>
+    </overview-dialog>
 
     <div v-if="showBackdrop"
       class="overview-backdrop"
@@ -120,7 +120,7 @@
   import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
   import AppHeader from '@/components/AppHeader'
-  import OverviewAlert from '@/components/Alert'
+  import OverviewDialog from '@/components/Dialog'
 
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
@@ -134,7 +134,7 @@
 
     components: {
       'app-header': AppHeader,
-      'overview-alert': OverviewAlert,
+      'overview-dialog': OverviewDialog,
       'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
@@ -227,7 +227,7 @@
         selection: [],
         selectedCategory: false,
         editMode: false,
-        showAlert: false,
+        showDialog: false,
         showBackdrop: false,
         collapsedCategories: []
       }
@@ -283,7 +283,7 @@
         // If the delete mode is already active, the selected elements should
         // be deleted and the mode deactivated again.
         if (this.isDeleteMode && this.selection.length) {
-          this.showAlert = true
+          this.showDialog = true
         }
 
         this.editMode = 'delete'
@@ -376,7 +376,7 @@
     }
   }
 
-  .overview-alert {
+  .overview-dialog {
     & button.warning {
       background: var(--brand-yellow);
       color: var(--link-color);

@@ -3,7 +3,7 @@
     <feather-book slot="icon" />
     <h2 slot="title">Notebook</h2>
     <div slot="content">
-      <app-dialog :show="showNotes" @close-alert="closeNotes">
+      <app-dialog :show="showNotes" @close-dialog="closeNotes">
         <h1 slot="headline">Notebook</h1>
 
         <div slot="content">
@@ -35,13 +35,13 @@
 </template>
 
 <script>
-  import Alert from '@/components/Alert'
+  import Dialog from '@/components/Dialog'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
 
     components: {
-      'app-dialog': Alert,
+      'app-dialog': Dialog,
       'plant-component': PlantComponent,
       'feather-book': () =>
         import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
