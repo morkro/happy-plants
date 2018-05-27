@@ -62,7 +62,6 @@
     list-style: none;
     width: 100%;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     position: relative;
     --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
