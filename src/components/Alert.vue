@@ -43,7 +43,7 @@
 
     components: {
       'feather-x': () =>
-          import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
+        import('vue-feather-icon/components/x' /* webpackChunkName: "general" */)
     },
 
     computed: {

@@ -3,14 +3,25 @@
     <feather-book slot="icon" />
     <h2 slot="title">Notebook</h2>
     <div slot="content">
-      <app-modal :show="showNotes" @close-modal="closeNotes">
+      <app-dialog :show="showNotes" @close-alert="closeNotes">
         <h1 slot="headline">Notebook</h1>
+
         <div slot="content">
           <textarea
             @change="updateContent"
             :value="content" />
         </div>
-      </app-modal>
+
+        <button
+          slot="cancel"
+          class="plain"
+          @click="closeNotes">
+          Cancel
+        </button>
+        <button slot="confirm" @click="closeAndSaveNotes">
+          Save
+        </button>
+      </app-dialog>
 
       <div v-if="!content" key="notes-empty">
         <p>Seems like you haven't added any notes yet.</p>
@@ -24,16 +35,16 @@
 </template>
 
 <script>
-  import Modal from '@/components/Modal'
+  import Alert from '@/components/Alert'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
 
     components: {
-      'app-modal': Modal,
+      'app-dialog': Alert,
       'plant-component': PlantComponent,
       'feather-book': () =>
-          import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -56,6 +67,9 @@
       },
       closeNotes () {
         this.showNotes = false
+      },
+      closeAndSaveNotes () {
+        this.closeNotes()
         this.emitContentChange()
       },
       updateContent (event) {
@@ -63,7 +77,10 @@
         this.textContent = event.target.value
       },
       emitContentChange () {
-        this.$emit('update-plant', { type: 'notes', payload: this.textContent })
+        this.$emit('update-plant', {
+          type: 'notes',
+          payload: { notes: this.textContent }
+        })
       }
     }
   }
@@ -77,9 +94,10 @@
 
   textarea {
     border: none;
-    width: 100%;
-    height: 100%;
-    min-height: calc(100vh - 85px);
+    width: 80vw;
+    height: 45vh;
     padding: var(--base-gap);
+    background: var(--light-grey);
+    border-radius: var(--border-radius);
   }
 </style>

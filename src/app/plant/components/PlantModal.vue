@@ -1,8 +1,8 @@
 <template>
-  <app-modal
-    class="app-modal"
+  <app-dialog
+    class="app-dialog"
     :show="show"
-    @close-modal="emitCloseModal">
+    @close-alert="emitCloseModal">
     <h1 slot="headline">Update your plant</h1>
 
     <div slot="content">
@@ -37,12 +37,12 @@
         </button>
       </div>
     </div>
-  </app-modal>
+  </app-dialog>
 </template>
 
 <script>
   import { isBlobbable } from '@/utils/blob'
-  import Modal from '@/components/Modal'
+  import Alert from '@/components/Alert'
   import FileUpload from '@/components/FileUpload'
 
   import '@/assets/cactus'
@@ -56,10 +56,10 @@
     },
 
     components: {
-      'app-modal': Modal,
+      'app-dialog': Alert,
       'file-upload': FileUpload,
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
     },
 
     data () {
