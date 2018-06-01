@@ -1,6 +1,6 @@
 <template>
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
-    <button class="plain" @click.prevent="emitButtonClicked">
+    <button class="plain" @click.prevent="emitShowModules">
       <feather-box />
       <span>Manage modules</span>
     </button>
@@ -8,6 +8,13 @@
     <p v-if="noModules">
       Modules let you keep track of the individual requirements and needs of your plant.
     </p>
+
+    <button v-if="showTagButton"
+      class="plain"
+      @click.prevent="emitShowTags">
+      <feather-hash />
+      <span>Add tags</span>
+    </button>
   </section>
 </template>
 
@@ -16,17 +23,23 @@
     name: 'PlantFooter',
 
     props: {
-      noModules: { type: Boolean, default: true }
+      noModules: { type: Boolean, default: true },
+      showTagButton: { type: Boolean, default: false }
     },
 
     components: {
       'feather-box': () =>
-        import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */),
+      'feather-hash': () =>
+        import('vue-feather-icon/components/hash' /* webpackChunkName: "plant" */)
     },
 
     methods: {
-      emitButtonClicked () {
+      emitShowModules () {
         this.$emit('manage-modules')
+      },
+      emitShowTags () {
+        this.$emit('show-tags')
       }
     }
   }
@@ -63,12 +76,6 @@
 
     & p {
       margin: calc(var(--base-gap) * 1.5) 0;
-    }
-
-    & span {
-      font-size: var(--text-size-xsmall);
-      font-style: italic;
-      display: block;
     }
   }
 </style>

@@ -92,6 +92,12 @@ export default {
         )
         break
       }
+      case 'hidden':
+        state.selected.tags = false
+        break
+      case 'show':
+        state.selected.tags = []
+        break
       default:
         break
     }
