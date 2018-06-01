@@ -16,7 +16,8 @@ function shrinkPlantObjects (plant) {
     blob: plant.blob,
     created: plant.created,
     guid: plant.guid,
-    categories: plant.categories
+    categories: plant.categories,
+    tags: plant.tags
   }
 }
 
@@ -30,7 +31,7 @@ function cleanUpPlantObject (plant) {
     plantCopy.modules = []
   }
 
-  if (!plantCopy.tags) {
+  if (plantCopy.tags === undefined) {
     plantCopy.tags = []
   }
 
