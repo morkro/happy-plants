@@ -38,10 +38,14 @@
             </li>
           </ul>
 
-          <div class="tags-empty" v-else>
-            <span>
+          <div v-else class="tags-empty">
+            <span @click="toggleNewTagInput">
               Add a tag to your plant!
             </span>
+
+            <button class="plain small" @click.prevent="hideTagModule">
+              Hide
+            </button>
           </div>
         </div>
       </div>
@@ -107,6 +111,10 @@
 
       toggleRemovable (tag) {
         this.$emit('remove-tag', tag)
+      },
+
+      hideTagModule () {
+        this.$emit('hide-module')
       }
     }
   }
@@ -232,6 +240,11 @@
   }
 
   .tags-empty {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     & span {
       font-size: var(--text-size-small);
       color: var(--text-color-secondary);

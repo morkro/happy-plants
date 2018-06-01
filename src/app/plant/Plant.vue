@@ -3,6 +3,8 @@
     <plant-modal
       :show="showPlantModal"
       :name="name"
+      :modified="modified"
+      :created="created"
       @content-update="updateFromModal"
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
@@ -21,9 +23,11 @@
         v-observe-visibility.60="observeVisibility" />
 
       <plant-tags
+        v-if="Array.isArray(tags)"
         :tags="tags"
         @new-tag="addNewPlantTag"
-        @remove-tag="removePlantTag" />
+        @remove-tag="removePlantTag"
+        @hide-module="hidePlantTags" />
 
       <!--
         Plant modules are dynamically rendered since they
@@ -39,9 +43,9 @@
 
       <plant-footer
         :no-modules="!modules.length"
-        :modified="modified"
-        :created="created"
-        @manage-modules="activateModuleManager" />
+        :show-tag-button="tags === false"
+        @manage-modules="activateModuleManager"
+        @show-tags="showPlantTags" />
     </main>
   </div>
 </template>
@@ -95,7 +99,7 @@
         blob: state => state.selected.blob,
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
-        tags: state => state.selected.tags || [],
+        tags: state => state.selected.tags,
         modified: state => state.selected.modified,
         created: state => state.selected.created
       }),
@@ -228,6 +232,12 @@
       },
       removePlantTag (tag) {
         this.updateTag({ tag, type: 'remove' })
+      },
+      hidePlantTags () {
+        this.updateTag({ type: 'hidden' })
+      },
+      showPlantTags () {
+        this.updateTag({ type: 'show' })
       }
     },
 

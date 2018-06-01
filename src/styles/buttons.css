@@ -11,6 +11,7 @@
  *            <button disabled></button>
  */
 button {
+  --button-padding: 6px;
   --button-circle-size: 50px;
   --button-background: var(--brand-green);
   --button-focus: var(--brand-green-low);
@@ -25,7 +26,7 @@ button {
   color: var(--text-color-button);
   border: none;
   border-radius: var(--border-radius);
-  padding: 12px 18px;
+  padding: calc(2 * var(--button-padding)) calc(3 * var(--button-padding));
   transition: background-color 100ms var(--ease-out-back);
 
   &::after {
@@ -85,6 +86,10 @@ button {
     & polyline {
       --button-icon: var(--text-color-base);
     }
+  }
+
+  &.small {
+    --button-padding: 4px;
   }
 
   &.circle {
