@@ -26,16 +26,21 @@
             @file-selected="assignPhoto" />
         </label>
 
-        <button :disabled="isUploadingFile">
-          Save
-        </button>
+        <div class="modal-actions">
+          <button :disabled="isUploadingFile">
+            Save
+          </button>
+
+          <button class="warning" @click="emitDeletePlant">
+            <feather-trash />
+            Delete plant
+          </button>
+        </div>
       </form>
 
-      <div class="modal-delete">
-        <button class="warning" @click="emitDeletePlant">
-          <feather-trash />
-          Delete plant
-        </button>
+      <div class="modal-meta">
+        <span>Last updated: {{ modified | formatDate }}</span>
+        <span>Created: {{ created | formatDate }}</span>
       </div>
     </div>
   </app-dialog>
@@ -53,7 +58,9 @@
 
     props: {
       show: { type: Boolean, default: false },
-      name: { type: String, default: '' }
+      name: { type: String, default: '' },
+      modified: { type: Number, default: Date.now() },
+      created: { type: Number, default: Date.now() }
     },
 
     components: {
@@ -137,6 +144,11 @@
     }
   }
 
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .modal-delete {
     border-top: 3px solid rgba(0, 0, 0, 0.06);
     padding-top: calc(var(--base-gap) * 2);
@@ -146,6 +158,21 @@
       width: 100%;
       display: flex;
       justify-content: center;
+    }
+  }
+
+  .modal-meta {
+    margin-top: var(--base-gap);
+    margin-bottom: calc(-1 * var(--base-gap)); /* @FIXME Ugly spacings hack. */
+    background: var(--background-secondary);
+    border-radius: var(--border-radius);
+    padding: var(--base-gap) 0;
+
+    & span {
+      font-size: var(--text-size-small);
+      color: var(--text-color-secondary);
+      text-align: center;
+      display: block;
     }
   }
 </style>

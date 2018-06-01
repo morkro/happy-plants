@@ -8,11 +8,6 @@
     <p v-if="noModules">
       Modules let you keep track of the individual requirements and needs of your plant.
     </p>
-
-    <div class="plant-meta">
-      <span>Last updated: {{ modifiedDate }}</span>
-      <span>Created: {{ createdDate }}</span>
-    </div>
   </section>
 </template>
 
@@ -21,33 +16,15 @@
     name: 'PlantFooter',
 
     props: {
-      modified: { type: Number, default: Date.now() },
-      created: { type: Number, default: Date.now() },
       noModules: { type: Boolean, default: true }
     },
 
     components: {
       'feather-box': () =>
-          import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
-    },
-
-    computed: {
-      modifiedDate () {
-        return this.formatDate(this.modified)
-      },
-      createdDate () {
-        return this.formatDate(this.created)
-      }
+        import('vue-feather-icon/components/box' /* webpackChunkName: "plant" */)
     },
 
     methods: {
-      formatDate (dateString) {
-        const date = new Date(dateString)
-        const year = date.getFullYear()
-        const month = (date.getMonth() + 1) < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
-        const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-        return `${day}.${month}.${year}`
-      },
       emitButtonClicked () {
         this.$emit('manage-modules')
       }
@@ -75,14 +52,6 @@
       flex-direction: column;
       justify-content: center;
       flex: 1;
-    }
-  }
-
-  .plant-meta {
-    & span {
-      color: var(--text-color-secondary);
-      text-align: right;
-      display: block;
     }
   }
 
