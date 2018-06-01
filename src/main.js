@@ -10,6 +10,7 @@ import router from '@/router'
 import store from '@/store'
 import computedProperties from '@/utils/vue-computed-properties'
 import observeVisibility from '@/utils/vue-observe-visibility'
+import formatDateFilter from '@/utils/vue-format-date'
 
 /**
  * This is required as Webpack seems to do some static analysis
@@ -35,6 +36,7 @@ Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
 Vue.use(computedProperties)
 Vue.use(observeVisibility)
+Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
 
