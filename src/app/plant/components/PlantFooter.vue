@@ -2,12 +2,14 @@
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
     <button class="plain" @click.prevent="emitButtonClicked">
       <feather-box />
-      Manage modules
+      <span>Manage modules</span>
     </button>
+
     <p v-if="noModules">
       Modules let you keep track of the individual requirements and needs of your plant.
     </p>
-    <div>
+
+    <div class="plant-meta">
       <span>Last updated: {{ modifiedDate }}</span>
       <span>Created: {{ createdDate }}</span>
     </div>
@@ -74,7 +76,9 @@
       justify-content: center;
       flex: 1;
     }
+  }
 
+  .plant-meta {
     & span {
       color: var(--text-color-secondary);
       text-align: right;
