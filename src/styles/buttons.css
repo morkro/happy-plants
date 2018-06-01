@@ -53,11 +53,18 @@ button {
     opacity: 1;
   }
 
+  & span {
+    color: var(--text-color-button);
+  }
+
   & svg {
-    margin-right: calc(var(--base-gap) / 2);
     stroke: var(--button-icon);
     width: var(--icon-size-base);
     height: var(--icon-size-base);
+
+    & + * {
+      margin-left: calc(var(--base-gap) / 2);
+    }
 
     & rect,
     & path,
@@ -67,7 +74,6 @@ button {
       stroke: var(--button-icon);
     }
   }
-
 
   &.inverse svg {
     --button-icon: var(--text-color-base);
@@ -96,7 +102,7 @@ button {
   }
 
   &.icon {
-    background: transparent;
+    --button-background: transparent;
     padding: 0;
   }
 

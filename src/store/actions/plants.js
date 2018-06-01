@@ -30,6 +30,10 @@ function cleanUpPlantObject (plant) {
     plantCopy.modules = []
   }
 
+  if (!plantCopy.tags) {
+    plantCopy.tags = []
+  }
+
   delete plantCopy.componentOrder
   delete plantCopy.notes
   delete plantCopy.seasons

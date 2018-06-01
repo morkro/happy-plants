@@ -20,6 +20,11 @@
         :edit-mode="false"
         v-observe-visibility.60="observeVisibility" />
 
+      <plant-tags
+        :tags="tags"
+        @new-tag="addNewPlantTag"
+        @remove-tag="removePlantTag" />
+
       <!--
         Plant modules are dynamically rendered since they
         can be added/removed and sorted.
@@ -48,6 +53,7 @@
   import PlantModuleManager from './components/PlantModuleManager'
   import PlantModal from './components/PlantModal'
   import PlantHeader from './components/PlantHeader'
+  import PlantTags from './components/PlantTags'
   import PlantNotes from './components/PlantNotes'
   import PlantSeasons from './components/PlantSeasons'
   import PlantWatering from './components/PlantWatering'
@@ -68,6 +74,7 @@
       'plant-header': PlantHeader,
       'plant-module-manager': PlantModuleManager,
       'plant-modal': PlantModal,
+      'plant-tags': PlantTags,
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
@@ -88,7 +95,7 @@
         blob: state => state.selected.blob,
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
-        categories: state => state.selected.categories,
+        tags: state => state.selected.tags || [],
         modified: state => state.selected.modified,
         created: state => state.selected.created
       }),
@@ -123,6 +130,7 @@
         'updateWatering',
         'updateName',
         'updatePhoto',
+        'updateTag',
         'resetSelectedState',
         'updatePlantsList',
         'deletePlants',
@@ -210,6 +218,16 @@
       },
       observeVisibility (visible) {
         this.headerInView = visible
+      },
+      addNewPlantTag (tag) {
+        const tagExists = this.tags
+          .find(t => t.label.toLowerCase() === tag.label.toLowerCase())
+        if (tagExists) return
+
+        this.updateTag({ tag, type: 'add' })
+      },
+      removePlantTag (tag) {
+        this.updateTag({ tag, type: 'remove' })
       }
     },
 

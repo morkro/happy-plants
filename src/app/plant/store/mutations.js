@@ -1,4 +1,5 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
+import Vue from 'vue'
 
 function updatePlantModule (moduleName, valueType, state, payload) {
   const moduleIndex = state.selected.modules.findIndex(m => m.type === moduleName)
@@ -73,6 +74,26 @@ export default {
 
     if (payload.item.blob) {
       state.selected.blob = payload.item.blob
+    }
+  },
+
+  UPDATE_TAG (state, payload) {
+    state.updated = payload.updated
+
+    switch (payload.item.type) {
+      case 'add':
+        state.selected.tags.push(payload.item.tag)
+        break
+      case 'remove': {
+        Vue.delete(
+          state.selected.tags,
+          state.selected.tags
+            .findIndex(t => t.label.toLowerCase() === payload.item.tag.label.toLowerCase())
+        )
+        break
+      }
+      default:
+        break
     }
   }
 }
