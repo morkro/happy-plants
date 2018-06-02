@@ -14,6 +14,11 @@ export default [
         component: () => import('./components/SettingsCategories' /* webpackChunkName: "settings" */)
       },
       {
+        path: 'tags',
+        name: 'SettingsTags',
+        component: () => import('./components/SettingsTags' /* webpackChunkName: "settings" */)
+      },
+      {
         path: 'about',
         name: 'SettingsAbout',
         component: () => import('./components/SettingsAbout' /* webpackChunkName: "settings" */)

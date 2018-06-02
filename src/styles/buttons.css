@@ -10,7 +10,8 @@
  * Disabled:  <button class="disabled"></button>
  *            <button disabled></button>
  */
-button {
+button,
+.btn {
   --button-padding: 6px;
   --button-circle-size: 50px;
   --button-background: var(--brand-green);
