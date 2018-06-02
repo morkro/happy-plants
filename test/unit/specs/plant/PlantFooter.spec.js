@@ -9,8 +9,7 @@ describe('app/plant/PlantFooter.vue', () => {
 
   it('has correct default props data', () => {
     const wrapper = shallowMount(PlantFooter)
-    expect(typeof wrapper.props().modified).toEqual('number')
-    expect(typeof wrapper.props().created).toEqual('number')
     expect(wrapper.props().noModules).toEqual(true)
+    expect(wrapper.props().showTagButton).toEqual(false)
   })
 })

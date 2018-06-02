@@ -11,6 +11,7 @@ describe('app/plant/utils/get-default-structure.js', () => {
       imageURL: '',
       name: '',
       categories: [],
+      tags: [],
       modules: []
     })
   })
