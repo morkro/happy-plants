@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters, mapActions } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
   import PlantModuleManager from './components/PlantModuleManager'
@@ -102,9 +102,6 @@
         tags: state => state.selected.tags,
         modified: state => state.selected.modified,
         created: state => state.selected.created
-      }),
-      ...mapGetters({
-        getCategories: 'getPlantCategories'
       }),
       plantModules () {
         return getPlantModules().map(module =>
@@ -269,8 +266,12 @@
         iconColor: 'black',
         settingsIcon: 'settings'
       })
-      this.updatePlantsList({ guid: this.guid, name: this.name, imageURL: this.imageURL })
-        .then(() => this.resetSelectedState())
+      this.updatePlantsList({
+        guid: this.guid,
+        name: this.name,
+        imageURL: this.imageURL,
+        tags: this.tags
+      }).then(() => this.resetSelectedState())
     }
   }
 </script>
