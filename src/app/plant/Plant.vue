@@ -280,7 +280,8 @@
       this.updatePlantsList({
         guid: this.guid,
         name: this.name,
-        imageURL: this.imageURL
+        imageURL: this.imageURL,
+        tags: this.tags
       }).then(() => this.resetSelectedState())
     }
   }

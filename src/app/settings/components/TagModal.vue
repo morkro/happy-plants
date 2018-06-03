@@ -3,7 +3,7 @@
     :show="show"
     :close="true"
     @close-dialog="emitCloseDialog">
-    <h1 slot="headline">Edit category</h1>
+    <h1 slot="headline">Edit tag</h1>
 
     <form slot="content"
       class="dialog-content">
@@ -12,12 +12,12 @@
         <input
           id="dialog-name"
           type="text"
-          :value="categoryLabel"
+          :value="tagLabel"
           @change="updateLabelName">
       </label>
     </form>
 
-    <button slot="confirm" @click="updateCategory">
+    <button slot="confirm" @click="updateTag">
       Update name
     </button>
   </app-dialog>
@@ -26,12 +26,12 @@
 <script>
   import Dialog from '@/components/Dialog'
   export default {
-    name: 'CategoryModal',
+    name: 'TagModal',
 
     props: {
       show: { type: Boolean, default: false },
-      category: { type: Object, default: () => {} },
-      categoryNames: { type: Array, default: () => [] }
+      tag: { type: Object, default: () => {} },
+      tagNames: { type: Array, default: () => [] }
     },
 
     components: {
@@ -43,9 +43,9 @@
     }),
 
     computed: {
-      categoryLabel () {
-        return this.category && this.category.label
-          ? this.category.label
+      tagLabel () {
+        return this.tag && this.tag.label
+          ? this.tag.label
           : ''
       }
     },
@@ -59,15 +59,15 @@
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-dialog')
       },
-      updateCategory () {
+      updatetag () {
         const data = {
-          ...this.category,
+          ...this.tag,
           label: this.newLabelName === ''
-            ? this.category.label
+            ? this.tag.label
             : this.newLabelName
         }
 
-        if (this.categoryNames.includes(this.newLabelName)) {
+        if (this.tagNames.includes(this.newLabelName)) {
           return this.$emit('content-error', data)
         }
 
