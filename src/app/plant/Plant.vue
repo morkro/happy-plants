@@ -23,8 +23,8 @@
         v-observe-visibility.60="observeVisibility" />
 
       <plant-tags
-        v-if="Array.isArray(tags)"
-        :tags="tags"
+        v-if="Array.isArray(allTags)"
+        :tags="allTags"
         @new-tag="addNewPlantTag"
         @remove-tag="removePlantTag"
         @hide-module="hidePlantTags" />
@@ -43,7 +43,7 @@
 
       <plant-footer
         :no-modules="!modules.length"
-        :show-tag-button="tags === false"
+        :show-tag-button="allTags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
     </main>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapGetters } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
   import PlantModuleManager from './components/PlantModuleManager'
@@ -99,10 +99,15 @@
         blob: state => state.selected.blob,
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
-        tags: state => state.selected.tags,
         modified: state => state.selected.modified,
         created: state => state.selected.created
       }),
+      ...mapGetters({
+        plantTags: 'getPlantTags'
+      }),
+      allTags () {
+        return this.plantTags(this.guid)
+      },
       plantModules () {
         return getPlantModules().map(module =>
           Object.assign(module, {
@@ -132,6 +137,8 @@
         'updateName',
         'updatePhoto',
         'updateTag',
+        'addTag',
+        'deleteTag',
         'resetSelectedState',
         'updatePlantsList',
         'deletePlants',
@@ -221,14 +228,17 @@
         this.headerInView = visible
       },
       addNewPlantTag (tag) {
-        const tagExists = this.tags
-          .find(t => t.label.toLowerCase() === tag.label.toLowerCase())
-        if (tagExists) return
-
-        this.updateTag({ tag, type: 'add' })
+        this.addTag({
+          label: tag.label,
+          name: tag.label.toLowerCase().replace(/\s/g, '-'),
+          plants: [this.guid]
+        })
       },
       removePlantTag (tag) {
-        this.updateTag({ tag, type: 'remove' })
+        this.deleteTag({
+          tag: tag.guid,
+          plant: this.guid
+        })
       },
       hidePlantTags () {
         this.updateTag({ type: 'hidden' })
@@ -269,8 +279,7 @@
       this.updatePlantsList({
         guid: this.guid,
         name: this.name,
-        imageURL: this.imageURL,
-        tags: this.tags
+        imageURL: this.imageURL
       }).then(() => this.resetSelectedState())
     }
   }

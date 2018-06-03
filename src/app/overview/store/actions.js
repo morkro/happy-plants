@@ -1,5 +1,5 @@
 import { updatePlant } from '@/api/plants'
-import { updateStore } from '@/api/store'
+import { updateStoreTimestamp } from '@/api/store'
 import { updateSettings } from '@/api/settings'
 
 export const updateViewmode = ({ state, commit }, data) => {
@@ -9,7 +9,7 @@ export const updateViewmode = ({ state, commit }, data) => {
 }
 
 export const updatePlantCategory = ({ state, commit }, data) => {
-  updateStore(data)
+  updateStoreTimestamp(data)
     .then(config => {
       commit('UPDATE_PLANT_CATEGORY', { item: config.data, updated: config.updated })
       return config

@@ -61,6 +61,7 @@
         'loadPlants',
         'loadSettings',
         'loadCategories',
+        'loadTags',
         'hideNotification'
       ])
     },
@@ -69,7 +70,8 @@
       Promise.all([
         this.loadSettings(),
         this.loadPlants(),
-        this.loadCategories()
+        this.loadCategories(),
+        this.loadTags()
       ])
     },
 
