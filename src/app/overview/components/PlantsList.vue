@@ -56,7 +56,7 @@
 
     &.type-list {
       --item-size-width: 100%;
-      --item-size-height: 10vh;
+      --item-size-height: 15vh;
       flex-direction: column;
     }
 

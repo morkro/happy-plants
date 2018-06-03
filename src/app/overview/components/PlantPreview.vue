@@ -25,6 +25,7 @@
         class="box preview-image"
         :style="background">
         <svgicon
+          v-if="!imageUrl"
           icon="cactus"
           width="40"
           height="40"
@@ -313,13 +314,17 @@
 
     @nest .type-list & {
       position: static;
-      background: var(--background-primary);
+      background: transparent;
+      padding: 0;
       color: var(--text-color-base);
-      border-radius: var(--border-radius);
 
       & h1 {
         color: var(--text-color-base);
         font-size: var(--text-size-medium);
+        display: inline-block;
+        background: var(--background-primary);
+        border-radius: var(--border-radius);
+        padding: calc(var(--base-gap) / 1.5);
       }
     }
 
