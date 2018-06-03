@@ -36,6 +36,7 @@
       <plants-list
         v-if="plants.length"
         @delete-selection="toggleDeleteSelection"
+        @pressed-selection="togglePressedSelection"
         :plants="plants"
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
