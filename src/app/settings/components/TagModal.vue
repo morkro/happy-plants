@@ -59,7 +59,7 @@
         Object.assign(this.$data, this.$options.data()) // Reset state
         this.$emit('close-dialog')
       },
-      updatetag () {
+      updateTag () {
         const data = {
           ...this.tag,
           label: this.newLabelName === ''
