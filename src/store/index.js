@@ -15,8 +15,6 @@ export default new Vuex.Store({
 
   state: {
     updated: Date.now(),
-    plants: [],
-    selected: plant.state,
 
     appheader: {
       transparent: false,
@@ -38,7 +36,10 @@ export default new Vuex.Store({
       orderBy: 'latest'
     },
 
-    categories: []
+    plants: [],
+    selected: plant.state,
+    categories: [],
+    tags: []
   },
 
   actions: {
@@ -48,7 +49,9 @@ export default new Vuex.Store({
     ...settings.actions
   },
 
-  getters,
+  getters: {
+    ...getters
+  },
 
   mutations: {
     ...mutations,

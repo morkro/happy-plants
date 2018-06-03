@@ -1,9 +1,9 @@
 import { updatePlant as updatePlantFromAPI } from '@/api/plants'
-import { updateStore } from '@/api/store'
+import { updateStoreTimestamp } from '@/api/store'
 import { getPlantStructure } from '../utils'
 
 const updatePlant = (action, { state, commit }, data) => {
-  updateStore(data)
+  updateStoreTimestamp(data)
     .then(config =>
       commit(action, { item: config.data, updated: config.updated }))
     .then(() => updatePlantFromAPI(state.selected))
@@ -33,6 +33,3 @@ export const updateName = (...args) =>
 
 export const updatePhoto = (...args) =>
   updatePlant('UPDATE_PHOTO', ...args)
-
-export const updateTag = (...args) =>
-  updatePlant('UPDATE_TAG', ...args)

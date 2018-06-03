@@ -14,12 +14,12 @@ export default {
   DELETE_ALL_DATA (state, payload) {
     state.updated = payload.updated
     state.plants = []
-    state.categories = []
+    state.tags = []
   },
 
   IMPORT_CATEGORIES (state, payload) {
     state.updated = payload.updated
-    state.categories = payload.data
+    state.tags = payload.data
   },
 
   IMPORT_SETTINGS (state, payload) {
