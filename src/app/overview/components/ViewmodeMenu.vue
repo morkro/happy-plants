@@ -38,13 +38,17 @@
 
     components: {
       'feather-grid': () =>
-          import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
+      'feather-list': () =>
+        import('vue-feather-icon/components/list' /* webpackChunkName: "overview" */),
       'feather-layers': () =>
-          import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */),
+      'feather-hash': () =>
+        import('vue-feather-icon/components/hash' /* webpackChunkName: "overview" */),
       'feather-bold': () =>
-          import('vue-feather-icon/components/bold' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/bold' /* webpackChunkName: "overview" */),
       'feather-clock': () =>
-          import('vue-feather-icon/components/clock' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/clock' /* webpackChunkName: "overview" */)
     },
 
     props: {
@@ -66,10 +70,10 @@
                 selected: this.viewMode === 'grid'
               },
               {
-                type: 'categories',
-                icon: 'layers',
-                label: 'Category',
-                selected: this.viewMode === 'categories'
+                type: 'list',
+                icon: 'list',
+                label: 'List',
+                selected: this.viewMode === 'list'
               }
             ]
           },
@@ -107,20 +111,17 @@
   .viewmode-container {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
   }
 
   .viewmode-section {
     width: 50%;
-    flex: 1;
+    flex: 0 1 auto;
     padding: var(--base-gap);
     text-align: left;
 
-    &:first-of-type {
-      border-right: 2px solid var(--grey);
-    }
-
-    &:last-of-type {
-      border-left: 2px solid var(--grey);
+    &:not(:nth-of-type(even)) {
+      border-right: 4px solid var(--grey);
     }
 
     & h2 {
