@@ -33,3 +33,6 @@ export const updateName = (...args) =>
 
 export const updatePhoto = (...args) =>
   updatePlant('UPDATE_PHOTO', ...args)
+
+export const toggleTags = (...args) =>
+  updatePlant('UPDATE_PLANT_TAGS', ...args)
