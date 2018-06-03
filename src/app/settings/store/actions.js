@@ -14,7 +14,7 @@ export const deleteAllData = ({ commit }) => {
     .then(() => Promise.all([deleteAllPlants(), deleteAllTags()]))
 }
 
-export const importCategories = ({ state, commit }, data) => {
+export const importTags = ({ state, commit }, data) => {
   return updateStoreTimestamp(data)
     .then(config =>
       commit('IMPORT_TAGS', { data: config.data, updated: config.updated }))

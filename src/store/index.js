@@ -38,7 +38,6 @@ export default new Vuex.Store({
 
     plants: [],
     selected: plant.state,
-    categories: [],
     tags: []
   },
 

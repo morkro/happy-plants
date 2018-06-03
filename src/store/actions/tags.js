@@ -5,7 +5,7 @@ import { updateStoreTimestamp } from '@/api/store'
 export const loadTags = ({ state, commit }, data = {}) => {
   if (!state.plants || state.plants.length === 0 || !!data.force) {
     return fetchTags()
-      .then(categories => commit('LOAD_TAGS', categories))
+      .then(tags => commit('LOAD_TAGS', tags))
   }
   return Promise.resolve()
 }
