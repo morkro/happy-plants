@@ -2,7 +2,7 @@
   <v-touch
     @tap="handleInteraction"
     @press="handleInteraction"
-    :style="background"
+    :style="type === 'grid' && background"
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="pressedMode" :class="getLayerClass('pressed')">
@@ -21,11 +21,22 @@
     </div>
 
     <div class="preview-content">
+      <div v-if="type === 'list'"
+        class="box preview-image"
+        :style="background">
+        <svgicon
+          icon="cactus"
+          width="40"
+          height="40"
+          color="#000" />
+      </div>
+
       <div class="preview-headline">
         <h1>{{ name }}</h1>
       </div>
+
       <svgicon
-        v-if="!this.imageUrl"
+        v-if="!imageUrl && type === 'grid'"
         icon="cactus"
         width="40"
         height="40"
@@ -186,6 +197,42 @@
       /* TODO: Show default image instead */
       background: var(--grey);
     }
+
+    &.type-list {
+      background-color: transparent;
+      display: flex;
+      box-shadow: none;
+      overflow: visible;
+    }
+  }
+
+  .preview-image {
+    position: relative;
+    width: var(--item-size-height);
+    height: var(--item-size-height);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: var(--base-gap);
+
+    @nest .no-photo & {
+      /* TODO: Show default image instead */
+      background: var(--grey);
+    }
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 50%;
+      display: block;
+      position: absolute;
+      z-index: 1;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+    }
   }
 
   .select-layer {
@@ -241,6 +288,10 @@
     overflow: hidden;
     z-index: 2;
 
+    @nest .type-list & {
+      overflow: visible;
+    }
+
     & svg {
       width: 65% !important;
       height: auto !important;
@@ -254,16 +305,29 @@
     width: 100%;
     bottom: 0;
     left: 0;
-    padding: 10px;
+    padding: calc(var(--base-gap) / 1.5);
     font-size: var(--text-size-small);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     z-index: 1;
+    flex: 1;
+
+    @nest .type-list & {
+      position: static;
+      background: var(--background-primary);
+      color: var(--text-color-base);
+      border-radius: var(--border-radius);
+
+      & h1 {
+        color: var(--text-color-base);
+        font-size: var(--text-size-medium);
+      }
+    }
 
     @nest .select-delete & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
     }
 
-    @nest .no-photo & {
+    @nest .no-photo:not(.type-list) & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
     }
 
