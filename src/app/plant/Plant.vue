@@ -100,13 +100,14 @@
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
         modified: state => state.selected.modified,
-        created: state => state.selected.created
+        created: state => state.selected.created,
+        tags: state => state.selected.tags
       }),
       ...mapGetters({
         plantTags: 'getPlantTags'
       }),
       allTags () {
-        return this.plantTags(this.guid)
+        return this.tags && this.plantTags(this.guid)
       },
       plantModules () {
         return getPlantModules().map(module =>
@@ -136,7 +137,7 @@
         'updateWatering',
         'updateName',
         'updatePhoto',
-        'updateTag',
+        'toggleTags',
         'addTag',
         'deleteTag',
         'resetSelectedState',
@@ -241,10 +242,10 @@
         })
       },
       hidePlantTags () {
-        this.updateTag({ type: 'hidden' })
+        this.toggleTags({ show: false })
       },
       showPlantTags () {
-        this.updateTag({ type: 'show' })
+        this.toggleTags({ show: true })
       }
     },
 
