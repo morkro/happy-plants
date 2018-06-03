@@ -20,17 +20,6 @@
         key="icon-minus" />
     </div>
 
-    <div v-show="categoriseMode" :class="getLayerClass('category')">
-      <feather-check
-        v-if="isCategoriseMode"
-        class="reverse"
-        key="icon-check" />
-      <feather-plus
-        v-else
-        class="reverse"
-        key="icon-plus" />
-    </div>
-
     <div class="preview-content">
       <div class="preview-headline">
         <h1>{{ name }}</h1>
@@ -53,26 +42,25 @@
     name: 'PlantPreview',
 
     props: {
+      type: { type: String, default: 'grid' },
       deleteMode: { type: Boolean, default: false, required: true },
-      categoriseMode: { type: Boolean, default: false, required: true },
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
-      imageUrl: { type: String, default: '', required: true },
-      defaultSelected: { type: Boolean, default: false, required: true }
+      imageUrl: { type: String, default: '', required: true }
     },
 
     components: {
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-check': () =>
-          import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
       'feather-plus': () =>
-          import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
       'feather-minus': () =>
-          import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */),
       'feather-maximize': () =>
-          import('vue-feather-icon/components/maximize' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/maximize' /* webpackChunkName: "overview" */)
     },
 
     data () {
@@ -89,18 +77,12 @@
       isDeleteMode () {
         return this.deleteMode && this.selected
       },
-      isCategoriseMode () {
-        return this.categoriseMode && this.selected
-      },
       isPressedMode () {
         return this.pressedMode && (this.pressed || this.selected)
       },
       ariaLabel () {
         if (this.deleteMode) {
           return 'Delete'
-        }
-        if (this.categoriseMode) {
-          return 'Add to category'
         }
         return ''
       },
@@ -111,16 +93,13 @@
       },
       wrapperClass () {
         return {
+          [`type-${this.type}`]: true,
           'box': true,
           'plant-preview': true,
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
-          'select-category': this.categoriseMode && this.selected,
           'select-pressed': this.pressedMode && this.pressed && this.selected,
-          'select': (
-            this.pressedMode ||
-            this.deleteMode ||
-            this.categoriseMode)
+          'select': (this.pressedMode || this.deleteMode)
         }
       }
     },
@@ -187,11 +166,6 @@
           selected: this.selected
         }
 
-        if (this.categoriseMode) {
-          type = 'toggle-categorise-selection'
-          data.type = this.selected ? 'add' : 'remove'
-        }
-
         this.$emit(type, data)
       }
     }
@@ -233,14 +207,6 @@
       position: absolute;
       z-index: 0;
       background: var(--transparency-black-medium);
-    }
-
-    &.category.selected {
-      background: var(--brand-green-medium);
-
-      &::after {
-        background: var(--brand-green);
-      }
     }
 
     &.delete.selected {

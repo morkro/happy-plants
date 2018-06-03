@@ -1,28 +1,5 @@
 <template>
   <div class="main-wireframe">
-    <register-dialog
-      class="register-dialog"
-      :show="showDialog"
-      @close-dialog="closeCreateCategoryDialog">
-      <h1 slot="headline">Create category</h1>
-
-      <div slot="content">
-        <input
-          type="text"
-          id="category-name"
-          v-model="categoryName">
-      </div>
-
-      <button class="plain"
-        slot="cancel"
-        @click="closeCreateCategoryDialog">
-        Cancel
-      </button>
-      <button slot="confirm" @click="confirmCreateCategory">
-        Create category
-      </button>
-    </register-dialog>
-
     <main class="app-content">
       <form @submit.prevent>
         <label for="register-name" class="form-label-group">
@@ -33,38 +10,6 @@
             id="register-name"
             placeholder="Name"
             @change="getName">
-        </label>
-
-        <label for="add-category" class="form-label-group">
-          <h2>Which category does it belong to?</h2>
-          <span v-if="!categories.length" key="category-create">
-            You don't have any categories created yet, but can just do that now.
-          </span>
-
-          <button v-if="!categories.length"
-            class="plain"
-            @click="openCreateCategoryDialog">
-            Create category
-          </button>
-
-          <select
-            v-if="categories.length"
-            id="add-category"
-            name="add-category"
-            @change="getCategory">
-            <option
-              selected
-              disabled
-              hidden>
-              Select category
-            </option>
-            <option
-              v-for="category in categories"
-              :value="category.guid"
-              :key="category.guid">
-              {{ category.label }}
-            </option>
-          </select>
         </label>
 
         <label for="register-file" class="form-label-group">
@@ -85,7 +30,7 @@
             width="16"
             height="24"
             color="#000" />
-          Add plant
+          <span>Add plant</span>
         </button>
       </form>
     </main>
@@ -93,8 +38,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
-  import Dialog from '@/components/Dialog'
+  import { mapActions } from 'vuex'
   import FileUpload from '@/components/FileUpload'
   import { getPlantStructure } from '@/app/plant/utils'
   import '@/assets/leaf'
@@ -107,14 +51,10 @@
     },
 
     components: {
-      'register-dialog': Dialog,
       'file-upload': FileUpload
     },
 
     computed: {
-      ...mapState({
-        categories: state => state.categories
-      }),
       canRegisterPlant () {
         return this.name !== '' || this.isUploadingFile
       }
@@ -125,8 +65,6 @@
         name: '',
         blob: undefined,
         isUploadingFile: false,
-        selectedCategory: false,
-        categoryName: '',
         showDialog: false
       }
     },
@@ -142,7 +80,6 @@
     methods: {
       ...mapActions([
         'addPlant',
-        'addCategory',
         'updateAppHeader'
       ]),
       handleLoadingState ({ loading }) {
@@ -155,32 +92,14 @@
         if (!event.target.value) return
         this.name = event.target.value
       },
-      getCategory (event) {
-        const $option = event.target.options[event.target.options.selectedIndex]
-        this.selectedCategory = this.categories.find(cat => cat.guid === $option.value)
-      },
-      openCreateCategoryDialog () {
-        this.showDialog = true
-      },
-      closeCreateCategoryDialog () {
-        this.showDialog = false
-      },
-      confirmCreateCategory () {
-        if (this.categoryName === '') return
-        this.addCategory({ label: this.categoryName })
-          .then(() => {
-            this.closeCreateCategoryDialog()
-          })
-      },
       validateForm () {
         const config = {
           ...getPlantStructure(),
           blob: this.blob,
-          categories: this.selectedCategory ? [this.selectedCategory.guid] : [],
           name: this.name
         }
-        this.addPlant(config).then(guid =>
-          this.$router.push(`/plant/${guid}`))
+        this.addPlant(config)
+          .then(guid => this.$router.push(`/plant/${guid}`))
       }
     }
   }

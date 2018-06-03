@@ -1,17 +1,14 @@
 <template>
-  <ul class="plant-list">
+  <ul :class="['plant-list', `type-${type}`]">
     <li v-for="(plant, index) in plants" :key="index">
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
-        @toggle-categorise-selection="emitCategoriseSelection"
         @toggle-pressed-selection="emitPressedSelection"
+        :type="type"
         :delete-mode="isDeleteMode"
-        :categorise-mode="isCategoryMode"
         :pressed-mode="isPressedMode"
-        :default-selected="hasCategory(plant)"
         :guid="plant.guid"
         :name="plant.name"
-        :categories="plant.categories"
         :image-url="plant.imageURL" />
     </li>
   </ul>
@@ -23,10 +20,9 @@
     name: 'PlantsList',
 
     props: {
+      type: { type: String, default: 'grid' },
       plants: { type: Array, default: () => [], required: true },
-      selectedCategory: { type: [Boolean, Object], default: false },
       isDeleteMode: { type: Boolean, default: false, required: true },
-      isCategoryMode: { type: Boolean, default: false, required: true },
       isPressedMode: { type: Boolean, default: false, required: true }
     },
 
@@ -35,18 +31,8 @@
     },
 
     methods: {
-      hasCategory (plant) {
-        return (
-          plant.categories &&
-          !!this.selectedCategory &&
-          plant.categories.some(cat => cat === this.selectedCategory.guid)
-        )
-      },
       emitDeleteSelection (item) {
         this.$emit('delete-selection', item)
-      },
-      emitCategoriseSelection (item) {
-        this.$emit('categorise-selection', item)
       },
       emitPressedSelection (item) {
         this.$emit('pressed-selection', item)
@@ -65,10 +51,18 @@
     flex-wrap: wrap;
     position: relative;
     --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
+    --item-size-width: calc(50vw - var(--list-gap));
+    --item-size-height: var(--item-size-width);
+
+    &.type-list {
+      --item-size-width: 100%;
+      --item-size-height: 10vh;
+      flex-direction: column;
+    }
 
     & li {
-      width: calc(50vw - var(--list-gap));
-      height: calc(50vw - var(--list-gap));
+      width: var(--item-size-width);
+      height: var(--item-size-height);
       margin-bottom: var(--base-gap);
 
       &:nth-child(even):not(:last-child) {

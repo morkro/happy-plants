@@ -24,12 +24,7 @@
 
     <div v-if="showBackdrop"
       class="overview-backdrop"
-      @click="hideBackdrop">
-      <div v-if="isCategoryMode">
-        <p>Select category</p>
-        <feather-arrow-down />
-      </div>
-    </div>
+      @click="hideBackdrop" />
 
     <main :class="{ 'no-plants': plants.length <= 0, 'app-content': true }">
       <!-- Simple onboarding instruction if user has no plants yet. -->
@@ -39,45 +34,12 @@
 
       <!-- List of plants used when filter is either "alphabetical" or "latest". -->
       <plants-list
-        v-if="plants.length && (!listByCategory || isCategoryMode)"
+        v-if="plants.length"
         @delete-selection="toggleDeleteSelection"
-        @categorise-selection="toggleCategorySelection"
         :plants="plants"
-        :selected-category="selectedCategory"
+        :type="viewMode"
         :is-delete-mode="isDeleteMode"
-        :is-category-mode="isCategoryMode"
         :is-pressed-mode="isPressedMode" />
-
-      <!-- List of plants if filter is set to "category". -->
-      <div v-else-if="plants.length && (listByCategory || !isCategoryMode)" class="plant-list-category">
-        <div
-          v-for="(category, index) in sortedCategoryList"
-          v-if="category.plants.length"
-          :key="index">
-          <h2 @click="toggleCollapseCategory(index)">
-            {{ category.label }}
-            <feather-maximize v-if="isCollapsed(index)"
-              width="18"
-              height="18" />
-            <feather-minimize v-else
-              width="18"
-              height="18" />
-          </h2>
-
-          <div v-show="isCollapsed(index)" class="list-collapsed-indicator" />
-
-          <plants-list
-            v-show="!isCollapsed(index)"
-            @delete-selection="toggleDeleteSelection"
-            @categorise-selection="toggleCategorySelection"
-            @pressed-selection="togglePressedSelection"
-            :plants="category.plants"
-            :selected-category="selectedCategory"
-            :is-delete-mode="isDeleteMode"
-            :is-category-mode="isCategoryMode"
-            :is-pressed-mode="isPressedMode" />
-        </div>
-      </div>
 
       <div :class="footerClass">
         <viewmode-menu
@@ -94,19 +56,10 @@
           @cancel-selection="cancelDeleteMode"
           @delete-selection="activateDeleteMode" />
 
-        <!-- Categorisation button and control element. -->
-        <categorise-menu
-          v-if="isCategoryMode"
-          :categories="categories"
-          @category-selected="updateCategorySelection"
-          @cancel-selection="cancelCategoriseMode"
-          @save-selection="saveCategories" />
-
         <overview-menu
           v-if="showMenu"
           :no-elements="!plants.length"
           :show-viewmode="!!plants.length"
-          :show-categories="viewMode === 'categories'"
           :show-delete="!!plants.length"
           :disable-menu="isViewMode"
           @clicked-item="updateEditMode" />
@@ -121,10 +74,8 @@
 
   import AppHeader from '@/components/AppHeader'
   import OverviewDialog from '@/components/Dialog'
-
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
-  import CategoriseMenu from './components/CategoriseMenu'
   import PlantsList from './components/PlantsList'
   import PlantsIntro from './components/PlantsIntro'
   import ViewmodeMenu from './components/ViewmodeMenu'
@@ -139,28 +90,19 @@
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
-      'categorise-menu': CategoriseMenu,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
-        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
-      'feather-minimize': () =>
-        import('vue-feather-icon/components/minimize-2' /* webpackChunkName: "overview" */),
-      'feather-maximize': () =>
-        import('vue-feather-icon/components/maximize-2' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
     },
 
     computed: {
       ...mapState({
         plants: state => state.plants,
         viewMode: state => state.settings.viewMode,
-        orderBy: state => state.settings.orderBy,
-        categories: state => state.categories
+        orderBy: state => state.settings.orderBy
       }),
       isViewMode () {
         return this.editMode === 'view-mode'
-      },
-      isCategoryMode () {
-        return this.editMode === 'category'
       },
       isDeleteMode () {
         return this.editMode === 'delete'
@@ -174,29 +116,6 @@
           'editmode': this.editMode,
           [`mode-${this.editMode}`]: this.editMode
         }
-      },
-      listByCategory () {
-        return this.viewMode === 'categories'
-      },
-      sortedCategoryList () {
-        if (this.selectedCategory) {
-          return this.categories
-        }
-
-        const list = this.categories.map(cat => ({
-          guid: cat.guid,
-          label: cat.label,
-          plants: this.sortPlants(this.plants.filter(plant =>
-            plant.categories && plant.categories.includes(cat.guid)))
-        }))
-
-        list.push({
-          label: 'Uncategorised',
-          plants: this.sortPlants(this.plants.filter(plant =>
-            plant.categories && !plant.categories.length))
-        })
-
-        return list
       },
       showMenu () {
         return (
@@ -225,11 +144,9 @@
     data () {
       return {
         selection: [],
-        selectedCategory: false,
         editMode: false,
         showDialog: false,
-        showBackdrop: false,
-        collapsedCategories: []
+        showBackdrop: false
       }
     },
 
@@ -244,7 +161,6 @@
     methods: {
       ...mapActions([
         'loadPlants',
-        'updatePlantCategory',
         'deletePlants',
         'showNotification',
         'updateViewmode',
@@ -267,9 +183,6 @@
         } else {
           this.selection = this.selection.filter(s => s.guid !== item.guid)
         }
-      },
-      toggleCategorySelection (item) {
-        this.selection.push(item)
       },
       togglePressedSelection (item) {
         this.editMode = 'pressed'
@@ -299,37 +212,6 @@
         this.showNotification({ message })
         this.deletePlants(this.selection)
         this.cancelDeleteMode()
-      },
-      updateCategorySelection (category) {
-        this.showBackdrop = false
-        this.selectedCategory = category
-      },
-      cancelCategoriseMode () {
-        this.reset()
-      },
-      saveCategories () {
-        this.selection.forEach(selection =>
-          this.updatePlantCategory({
-            guid: selection.guid,
-            category: this.selectedCategory,
-            type: selection.type
-          }))
-
-        this.showNotification({
-          message: `Category "${this.selectedCategory.label}" updated.`
-        })
-
-        this.cancelCategoriseMode()
-      },
-      toggleCollapseCategory (index) {
-        if (this.collapsedCategories.includes(index)) {
-          this.collapsedCategories.splice(this.collapsedCategories.indexOf(index), 1)
-        } else {
-          this.collapsedCategories.push(index)
-        }
-      },
-      isCollapsed (index) {
-        return this.collapsedCategories.includes(index)
       },
       updateEditMode (type) {
         this.editMode = type
@@ -427,41 +309,6 @@
 
   .plant-list {
     z-index: 1;
-  }
-
-  .plant-list-category {
-    & h2 {
-      display: flex;
-      align-items: center;
-      margin-bottom: var(--base-gap);
-    }
-
-    & h2 svg {
-      stroke: var(--dark-grey);
-      margin-left: calc(var(--base-gap) / 2);
-    }
-
-    & .plant-list {
-      justify-content: flex-start;
-      margin-bottom: calc(var(--base-gap) * 0.5);
-    }
-
-    & .list-collapsed-indicator {
-      width: 100%;
-      height: 10px;
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: var(--base-gap);
-      --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2);
-
-      &::after,
-      &::before {
-        content: "";
-        border-radius: var(--border-radius);
-        border: 2px dashed var(--grey);
-        width: calc(50vw - var(--list-gap));
-      }
-    }
   }
 
   .overview-footer-menu {

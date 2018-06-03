@@ -9,14 +9,6 @@
           <feather-grid width="18" height="18" />
         </button>
       </li>
-      <li v-if="showCategories">
-        <button
-          aria-label="Categorise"
-          class="categorise icon inverse"
-          @click.prevent="emitMenuAction('category')">
-          <feather-layers width="18" height="18" />
-        </button>
-      </li>
     </ul>
 
     <router-link
@@ -52,18 +44,15 @@
 
     components: {
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
       'feather-grid': () =>
-          import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */),
-      'feather-layers': () =>
-          import('vue-feather-icon/components/layers' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */)
     },
 
     props: {
       noElements: { type: Boolean, default: false },
       showDelete: { type: Boolean, default: true },
       showViewmode: { type: Boolean, default: true },
-      showCategories: { type: Boolean, default: false },
       disableMenu: { type: Boolean, default: false }
     },
 

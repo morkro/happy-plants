@@ -6,7 +6,6 @@ export default function getPlantStructure () {
     blob: undefined,
     imageURL: '',
     name: '',
-    categories: [],
     tags: [],
     modules: []
   }

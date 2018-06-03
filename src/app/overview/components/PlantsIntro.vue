@@ -21,12 +21,6 @@
             <span aria-hidden="true">(<feather-grid />)</span> in the lower menu
           </p>
         </li>
-        <li>
-          <p>
-            In the settings <span aria-hidden="true">(<feather-settings />)</span>
-            you can manage categories.
-          </p>
-        </li>
       </ul>
       <p>Happy organising!</p>
     </div>

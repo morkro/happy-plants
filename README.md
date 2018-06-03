@@ -62,6 +62,7 @@ This project is currently still in `alpha` development and only supports a bare 
 | Feature | Description |
 | ------- | ----------- |
 | Edit basic data | Edit your plants name or photo. |
+| Add tags | / |
 | Manage modules | Add/remove plant modules |
 | Watering module | Manage the required watering of a plant. |
 | Sunshine module | Manage the amount of sunlight the plant needs. |
@@ -69,16 +70,11 @@ This project is currently still in `alpha` development and only supports a bare 
 | Notes | Add notes to a plant. |
 | Delete plant | Deletes your plant. |
 
-### Categories
-
-| Feature | Description |
-| ------- | ----------- |
-| Category | Create categories to which plants can be added. |
-
 ### Settings
 
 | Feature | Description |
 | ------- | ----------- |
+| Tags | Delete or rename tags. |
 | Import/export | Import or export plant data. |
 | Delete all | Delete all plant data. This is permanent and lost data can't be restored. |
 
@@ -97,20 +93,22 @@ This is the minimum required data of a single plant. If you want to import the d
   "modified": Date, // [required] Date when plant has been modified, defaults to created date
   "name": String, // [required] Name of the plant
   "blob": Blob | Base64 | undefined, // [optional] A base64 encoded or Blob of the plant photo
-  "categories": Array<Category> // [optional] Array of categories, defaults to []
+  "tags": Array<Tag> // [optional] Array of tags, defaults to []
   "modules": Array<PlantModule> // [optional] Array of plant modules, should default to []
 }
 ```
 
-### Category data
-A plant can be assigned to various, user created, categories. A category object should be defined as follows:
+### Tag data
+A plant can be assigned to various, user created, tags. A tag object should be defined as follows:
 
 ```typescript
 {
   "guid": String, // [required] A random, version 4 GUID
   "created": Date, // [required] Date when the plant has been created
   "modified": Date, // [required] Date when plant has been modified, defaults to created date
-  "name": String, // [required] Name of the category
+  "name": String, // [required] Identifier name of the tag
+  "label": String, [required]
+  "plants": Array<guid> // [required] A list of plants associated with the tag
 }
 ```
 
