@@ -137,7 +137,6 @@
       ...mapActions([
         'deleteTag',
         'updateTag',
-        'updatePlantTag',
         'showNotification',
         'updateAppHeader'
       ]),
@@ -192,19 +191,6 @@
     background: var(--background-secondary);
   }
 
-  section.no-tags {
-    display: flex;
-    height: calc(100vh - var(--app-header-size));
-    flex-direction: column;
-
-    & .tags-list {
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-
   .tags-empty {
     padding: calc(2 * var(--base-gap)) var(--base-gap);
     color: var(--text-color-secondary);
@@ -244,8 +230,11 @@
       justify-content: space-between;
       align-items: center;
       padding: var(--base-gap) calc(var(--base-gap) + 5px);
-      border-top: 2px solid var(--transparency-black-light);
       font-size: var(--text-size-medium);
+
+      &:not(:last-child) {
+        border-bottom: 2px solid var(--transparency-black-light);
+      }
     }
 
     & svg {
