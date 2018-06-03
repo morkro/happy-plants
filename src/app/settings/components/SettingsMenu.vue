@@ -27,7 +27,6 @@
       return {
         version: pkg.version,
         menu: [
-          { label: 'Categories', name: 'SettingsCategories' },
           { label: 'Tags', name: 'SettingsTags' },
           { label: 'Plant Data', name: 'SettingsData' },
           { label: 'About', name: 'SettingsAbout' }

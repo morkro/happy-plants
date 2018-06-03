@@ -28,6 +28,11 @@ export default {
     const index = state.tags.findIndex(tag => tag.guid === payload.item.tag)
     const tag = state.tags[index]
 
+    if (payload.item.forceDelete) {
+      Vue.delete(state.tags, index)
+      return
+    }
+
     if (tag.plants.includes(payload.item.plant)) {
       if (tag.plants.length === 1) {
         Vue.delete(state.tags, index)
