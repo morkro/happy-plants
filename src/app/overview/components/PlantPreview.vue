@@ -6,7 +6,8 @@
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="pressedMode" :class="getLayerClass('pressed')">
-      <feather-maximize v-if="isPressedMode" />
+      <feather-check v-if="isPressedMode" />
+      <feather-circle v-else />
     </div>
 
     <div v-show="deleteMode" :class="getLayerClass('delete')">
@@ -14,7 +15,7 @@
         v-if="isDeleteMode"
         class="reverse"
         key="icon-trash" />
-      <feather-minus
+      <feather-circle
         v-else
         class="reverse"
         key="icon-minus" />
@@ -65,14 +66,12 @@
     components: {
       'feather-trash': () =>
         import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
-      'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "overview" */),
       'feather-plus': () =>
         import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
-      'feather-minus': () =>
-        import('vue-feather-icon/components/minus-square' /* webpackChunkName: "overview" */),
-      'feather-maximize': () =>
-        import('vue-feather-icon/components/maximize' /* webpackChunkName: "overview" */)
+      'feather-circle': () =>
+        import('vue-feather-icon/components/circle' /* webpackChunkName: "overview" */),
+      'feather-check': () =>
+        import('vue-feather-icon/components/check-circle' /* webpackChunkName: "overview" */)
     },
 
     data () {
@@ -246,6 +245,10 @@
     justify-content: center;
     align-items: center;
     z-index: 3;
+
+    @nest .type-list & {
+      width: var(--item-size-height);
+    }
 
     &.selected::after {
       content: "";
