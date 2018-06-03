@@ -17,7 +17,7 @@ export default {
     state.tags = []
   },
 
-  IMPORT_CATEGORIES (state, payload) {
+  IMPORT_TAGS (state, payload) {
     state.updated = payload.updated
     state.tags = payload.data
   },

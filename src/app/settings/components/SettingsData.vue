@@ -90,7 +90,7 @@
 
       <button @click="downloadData">
         <feather-download />
-        Export plant data
+        <span>Export plant data</span>
       </button>
     </section>
 
@@ -105,7 +105,7 @@
 
       <button @click="openImportModal">
         <feather-copy />
-        Import plant data
+        <span>Import plant data</span>
       </button>
 
       <span class="note">
@@ -121,7 +121,7 @@
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
       <button class="warning" @click="openDangerModal">
         <feather-delete />
-        Delete application data
+        <span>Delete application data</span>
       </button>
     </section>
   </div>
@@ -194,7 +194,7 @@
         'showNotification',
         'getAllData',
         'deleteAllData',
-        'importCategories',
+        'importTags',
         'importSettings',
         'importPlants'
       ]),
@@ -245,8 +245,8 @@
       selectImportType (key) {
         const data = this.file[key]
 
-        if (key === 'categories') {
-          return this.importCategories(data)
+        if (key === 'tags') {
+          return this.importTags(data)
         } else if (key === 'settings') {
           return this.importSettings(data)
         } else if (key.startsWith('plant-')) {
@@ -285,7 +285,7 @@
     padding: var(--base-gap);
     line-height: 150%;
 
-    & span {
+    & section > span {
       display: inline-block;
       margin-bottom: var(--base-gap);
     }
