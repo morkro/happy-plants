@@ -3,6 +3,7 @@ import PlantPreview from '@/app/overview/components/PlantPreview'
 
 describe('app/overview/PlantPreview.vue', () => {
   const defaultProps = {
+    type: 'grid',
     deleteMode: false,
     categoriseMode: false,
     pressedMode: false,
@@ -19,6 +20,7 @@ describe('app/overview/PlantPreview.vue', () => {
 
   it('has correct default props data', () => {
     const wrapper = shallowMount(PlantPreview, { propsData: defaultProps })
+    expect(wrapper.props().type).toEqual('grid')
     expect(wrapper.props().deleteMode).toEqual(false)
     expect(wrapper.props().categoriseMode).toEqual(false)
     expect(wrapper.props().pressedMode).toEqual(false)
