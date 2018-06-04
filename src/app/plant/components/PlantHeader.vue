@@ -6,7 +6,13 @@
 
     <div class="plant-header-view" v-else>
       <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
-        <h1>{{ name }}</h1>
+        <v-touch tag="h1"
+          @tap="updateTitle"
+          :tap-options="{ taps: 2 }"
+          :contenteditable="editTitle"
+          @blur.native="emitTitleUpdate">
+          {{ name }}
+        </v-touch>
       </div>
       <div class="header-background">
         <img
@@ -33,6 +39,26 @@
       name: { type: [String, Boolean], default: false },
       imageUrl: { type: [String, Boolean], default: false },
       editMode: { type: Boolean, default: false }
+    },
+
+    data: () => ({
+      editTitle: false
+    }),
+
+    methods: {
+      updateTitle () {
+        this.editTitle = true
+      },
+
+      emitTitleUpdate (event) {
+        this.editTitle = false
+        if (event.target && event.target.textContent) {
+          this.$emit(
+            'update-name',
+            event.target.textContent.trim().replace(/\s\s+/g, ' ')
+          )
+        }
+      }
     }
   }
 </script>
@@ -54,6 +80,13 @@
       font-weight: 600;
       color: var(--text-color-inverse);
       line-height: 115%;
+      position: relative;
+
+      &[contenteditable="true"] {
+        outline: none;
+        background: var(--transparency-black-medium);
+        width: 100%;
+      }
     }
 
     & .header-content {

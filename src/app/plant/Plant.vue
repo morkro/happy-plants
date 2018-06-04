@@ -20,7 +20,8 @@
         :name="name"
         :image-url="imageURL"
         :edit-mode="false"
-        v-observe-visibility.60="observeVisibility" />
+        v-observe-visibility.60="observeVisibility"
+        @update-name="updatePlantName"/>
 
       <plant-tags
         v-if="Array.isArray(allTags)"
@@ -246,6 +247,9 @@
       },
       showPlantTags () {
         this.toggleTags({ show: true })
+      },
+      updatePlantName (name) {
+        this.updateName({ guid: this.guid, name })
       }
     },
 
