@@ -8,7 +8,6 @@
       <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
         <v-touch tag="h1"
           @tap="updateTitle"
-          :tap-options="{ taps: 2 }"
           :contenteditable="editTitle"
           @blur.native="emitTitleUpdate">
           {{ name }}
@@ -81,11 +80,11 @@
       color: var(--text-color-inverse);
       line-height: 115%;
       position: relative;
+      width: 100%;
 
       &[contenteditable="true"] {
         outline: none;
         background: var(--transparency-black-medium);
-        width: 100%;
       }
     }
 
