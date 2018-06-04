@@ -294,6 +294,7 @@
 
     @nest .type-list & {
       overflow: visible;
+      align-items: flex-start;
     }
 
     & svg {
@@ -328,6 +329,7 @@
         background: var(--background-primary);
         border-radius: var(--border-radius);
         padding: calc(var(--base-gap) / 1.5);
+        width: 100%;
       }
     }
 
