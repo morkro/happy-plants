@@ -1,13 +1,14 @@
 <template>
   <section :class="{ 'plant-tags': true, 'edit-mode': showInput }">
     <div class="plant-tags-module">
-      <button class="tags-add icon inverse" @click="toggleNewTagInput">
+      <button
+        class="tags-add icon inverse"
+        @click="toggleNewTagInput"
+        :aria-label="ariaLabelToggle">
         <div v-if="!showInput">
-          <span hidden>Add tag</span>
           <feather-plus />
         </div>
         <div v-else>
-          <span hidden>Close input</span>
           <feather-x />
         </div>
       </button>
@@ -82,6 +83,11 @@
     computed: {
       hasTags () {
         return this.tags.length
+      },
+      ariaLabelToggle () {
+        return !this.showInput
+          ? 'Add tag'
+          : 'Close input'
       }
     },
 
