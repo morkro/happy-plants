@@ -24,15 +24,24 @@ input {
     outline: 0;
     border: none;
     appearance: none;
-    width: 14px;
-    height: 14px;
-    border-radius: var(--border-radius);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
     box-shadow: none;
     background: var(--grey);
     transition: background var(--base-speed) var(--ease-out-back);
 
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px var(--dark-grey);
+    }
+
     &:checked {
       background: var(--brand-green);
+
+      &:focus {
+        box-shadow: 0 0 0 4px var(--brand-green-low);
+      }
     }
   }
 }

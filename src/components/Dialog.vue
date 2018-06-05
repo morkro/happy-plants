@@ -111,6 +111,10 @@
       color: var(--link-color);
       box-shadow: none;
       flex: 0 0 auto;
+
+      &:focus {
+        --button-focus: var(--dark-grey);
+      }
     }
 
     & h1 {
@@ -130,6 +134,10 @@
 
     & button:first-of-type {
       margin-right: calc(var(--base-gap) * 2);
+    }
+
+    @nest .dialog-warning & .warning:focus {
+      --button-focus: var(--brand-yellow-medium);
     }
   }
 </style>

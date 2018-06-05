@@ -64,7 +64,7 @@
     name: 'SettingsAbout',
 
     meta: {
-      title: 'About'
+      title: 'About HappyPlants'
     },
 
     components: {

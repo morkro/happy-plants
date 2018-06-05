@@ -105,6 +105,10 @@ button,
     & svg {
       margin: 0 auto;
     }
+
+    &::after {
+      border-radius: 50%;
+    }
   }
 
   &.icon {

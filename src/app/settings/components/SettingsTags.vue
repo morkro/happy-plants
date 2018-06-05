@@ -86,7 +86,7 @@
     name: 'SettingsTags',
 
     meta: {
-      title: 'tags'
+      title: 'Manage Tags'
     },
 
     components: {
@@ -255,6 +255,17 @@
       height: 35px;
       display: flex;
       justify-content: center;
+
+      &:hover,
+      &:focus {
+        --button-focus: transparent;
+        background: var(--brand-green);
+      }
+
+      &:hover svg,
+      &:focus svg {
+        filter: invert(100%);
+      }
     }
 
     & button:first-of-type {

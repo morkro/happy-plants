@@ -5,8 +5,8 @@
         <router-link
           v-if="backButton"
           :to="backPath"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
-          <span hidden>Back</span>
+          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          aria-label="Back">
           <feather-arrow-left :stroke="color" />
         </router-link>
         <slot name="custom-action-left" />
@@ -20,8 +20,8 @@
         <router-link
           v-if="settings === true"
           :to="{ path: '/settings' }"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }">
-          <span hidden>Settings</span>
+          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          aria-label="Settings">
           <component :is="`feather-${settingsIcon}`" class="header-settings-icon" />
         </router-link>
         <button
@@ -169,6 +169,23 @@
     min-height: var(--app-header-size);
     height: 100%;
 
+    & .backdrop::before,
+    & a:focus::before {
+      border-radius: 50%;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: calc(var(--icon-size-base) * 2.5);
+      height: calc(var(--icon-size-base) * 2.5);
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    & .backdrop::before {
+      background: rgba(0, 0, 0, 0.4);
+    }
+
     & a {
       width: var(--app-header-size);
       min-height: var(--app-header-size);
@@ -176,22 +193,14 @@
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    & .backdrop {
       position: relative;
 
-      &::before {
-        background: rgba(0, 0, 0, 0.22);
-        border-radius: 50%;
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: calc(var(--icon-size-base) * 2.5);
-        height: calc(var(--icon-size-base) * 2.5);
-        transform: translate(-50%, -50%);
-        z-index: -1;
+      &:focus {
+        outline: none;
+      }
+
+      &:focus::before {
+        background: var(--transparency-black-light);
       }
     }
   }

@@ -43,7 +43,7 @@
               Add a tag to your plant!
             </span>
 
-            <button class="plain small" @click.prevent="hideTagModule">
+            <button class="plain small hide-module" @click.prevent="hideTagModule">
               Hide
             </button>
           </div>
@@ -122,9 +122,10 @@
 
 <style lang="postcss" scoped>
   .plant-tags {
-    --module-gap: 4px;
+    --tag-module-gap: 4px;
+    --tag-module-height: 64px;
     background: transparent;
-    margin-bottom: var(--module-gap);
+    margin-bottom: var(--tag-module-gap);
 
     &.edit-mode {
       position: relative;
@@ -134,9 +135,16 @@
     & .plant-tags-module {
       display: flex;
       min-height: 58px;
-      height: 64px;
+      height: var(--tag-module-height);
       position: relative;
       z-index: 2;
+    }
+
+    & button:not(.hide-module) {
+      height: 100%;
+      width: var(--tag-module-height);
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -153,6 +161,12 @@
     --button-background: var(--background-secondary);
     padding: calc(var(--base-gap) / 2) var(--base-gap);
     border-radius: 0;
+
+    &:active,
+    &:focus {
+      --button-focus: transparent;
+      --button-background: var(--grey);
+    }
   }
 
   .tags-list-wrapper {

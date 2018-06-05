@@ -1,6 +1,7 @@
 <template>
   <v-touch
-    @tap="handleInteraction"
+    tag="a"
+    @tap.prevent="handleInteraction"
     @press="handleInteraction"
     :style="type === 'grid' && background"
     :class="wrapperClass"
@@ -185,6 +186,7 @@
 
 <style lang="postcss" scoped>
   .plant-preview {
+    display: block;
     width: 100%;
     height: 100%;
     position: relative;
@@ -192,6 +194,11 @@
     background-position: center;
     transform-origin: center;
     transition: transform 50ms var(--ease-out-back);
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--brand-green);
+    }
 
     &.no-photo {
       /* TODO: Show default image instead */

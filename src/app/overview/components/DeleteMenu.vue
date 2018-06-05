@@ -72,10 +72,23 @@
       & svg {
         margin-right: 0;
       }
+
+      &.delete:focus,
+      &:focus {
+        --button-focus: transparent;
+        --button-background: var(--brand-yellow);
+      }
     }
 
     & button.delete {
-      background: rgba(0, 0, 0, 0.2);
+      --button-background: rgba(0, 0, 0, 0.2);
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    & button.cancel {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 

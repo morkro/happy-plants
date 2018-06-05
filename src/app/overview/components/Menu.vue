@@ -115,6 +115,11 @@
         opacity: 0;
       }
     }
+
+    & button:focus {
+      --button-focus: transparent;
+      --button-background: var(--grey);
+    }
   }
 
   .menu-left,

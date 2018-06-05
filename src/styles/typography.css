@@ -15,9 +15,18 @@ a {
   color: var(--text-color-base);
   text-decoration: none;
 
+  &:focus {
+    outline: none;
+    text-decoration: underline;
+  }
+
   &[target="_blank"] {
     text-decoration: none;
     display: inline-block;
+
+    &:focus {
+      text-decoration: underline;
+    }
   }
 
   &[target="_blank"]::after {

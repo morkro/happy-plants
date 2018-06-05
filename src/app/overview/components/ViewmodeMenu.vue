@@ -133,7 +133,7 @@
     list-style: none;
 
     & li:not(:last-child) {
-      margin-bottom: calc(var(--base-gap) / 2);
+      margin-bottom: calc(var(--base-gap) / 1.5);
     }
 
     & label {

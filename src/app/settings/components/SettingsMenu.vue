@@ -38,7 +38,6 @@
 
 <style lang="postcss" scoped>
   ul li {
-    padding: var(--base-gap);
     display: flex;
     align-items: center;
 
@@ -49,6 +48,17 @@
     & a {
       font-weight: 600;
       font-size: var(--text-size-medium);
+      padding: var(--base-gap);
+
+      &:focus {
+        outline: none;
+        background: var(--brand-green);
+        color: var(--text-color-inverse);
+      }
+
+      &:focus svg {
+        filter: invert(100%);
+      }
     }
 
     & a,
@@ -62,6 +72,7 @@
     &.menu-version {
       font-size: 80%;
       color: var(--text-color-secondary);
+      padding: var(--base-gap);
     }
 
     & svg {
