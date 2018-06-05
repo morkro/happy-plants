@@ -1,6 +1,8 @@
 <template>
   <section :class="{ 'plant-tags': true, 'edit-mode': showInput }">
-    <div class="plant-tags-module">
+    <div
+      :class="{ 'plant-tags-module': true, 'show-tooltip': showTooltip }"
+      data-tooltip="Double tap to remove">
       <button
         class="tags-add icon inverse"
         @click="toggleNewTagInput"
@@ -32,8 +34,8 @@
             <li v-for="tag in tags" :key="tag.label">
               <v-touch tag="span"
                 class="tag"
-                @tap="toggleRemovable(tag)"
-                :tap-options="{ taps: 2 }">
+                @doubletap="toggleRemovable(tag)"
+                @tap="showRemovalNote">
                 {{ tag.label }}
               </v-touch>
             </li>
@@ -77,7 +79,8 @@
 
     data: () => ({
       newTagName: '',
-      showInput: false
+      showInput: false,
+      showTooltip: false
     }),
 
     computed: {
@@ -121,6 +124,13 @@
 
       hideTagModule () {
         this.$emit('hide-module')
+      },
+
+      showRemovalNote () {
+        this.showTooltip = true
+        setTimeout(() => {
+          this.showTooltip = false
+        }, 2000)
       }
     }
   }
@@ -144,6 +154,24 @@
       height: var(--tag-module-height);
       position: relative;
       z-index: 2;
+
+      &.show-tooltip::after {
+        display: block;
+      }
+
+      &::after {
+        display: none;
+        content: attr(data-tooltip) " ";
+        position: absolute;
+        top: 0;
+        background: var(--transparency-black-medium);
+        border-radius: var(--border-radius);
+        transform: translateY(calc(-100% - var(--base-gap) / 2)) translateX(-50%);
+        font-size: var(--text-size-xsmall);
+        color: var(--text-color-button);
+        padding: calc(var(--base-gap) / 2) var(--base-gap);
+        left: 50%;
+      }
     }
 
     & button:not(.hide-module) {

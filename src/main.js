@@ -34,6 +34,11 @@ localforage.keys()
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
+VueTouch.registerCustomEvent('doubletap', {
+  type: 'tap',
+  taps: 2
+})
+
 Vue.use(computedProperties)
 Vue.use(observeVisibility)
 Vue.use(formatDateFilter)
