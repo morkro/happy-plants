@@ -3,7 +3,7 @@ import { getUrlFromBlob } from '@/utils/blob'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
 function sortPlants (state, array = state.plants) {
-  switch (state.settings && state.settings.filter) {
+  switch (state.settings && state.settings.orderBy) {
     case 'alphabetical':
       return array.sort(sortByAlphabet)
     case 'latest':

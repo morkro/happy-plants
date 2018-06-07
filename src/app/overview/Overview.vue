@@ -71,7 +71,6 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
   import AppHeader from '@/components/AppHeader'
   import OverviewDialog from '@/components/Dialog'
@@ -169,14 +168,6 @@
       ]),
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
-      },
-      sortPlants (list) {
-        switch (this.orderBy) {
-          case 'latest':
-            return list.sort(sortByDate).reverse()
-          case 'alphabetical':
-            return list.sort(sortByAlphabet)
-        }
       },
       toggleDeleteSelection (item) {
         if (item.selected) {
