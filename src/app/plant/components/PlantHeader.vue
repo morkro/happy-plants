@@ -93,6 +93,12 @@
           return
         }
 
+        // If the user cancels the input selection, their will be left
+        // with a showUploadInfo state. On another tap on the element, we reset it.
+        if (this.showUploadInfo && this.triggerUpload) {
+          return this.clearState()
+        }
+
         this.triggerUpload = true
       },
 
@@ -100,11 +106,14 @@
         this.photoLoading = loading
       },
 
-      assignNewPhoto (data) {
-        console.log('ASSIGN PHOTO', data)
+      clearState () {
         this.showUploadInfo = false
         this.photoLoading = false
         this.triggerUpload = false
+      },
+
+      assignNewPhoto (data) {
+        this.clearState()
 
         if (!data.blob) {
           return
