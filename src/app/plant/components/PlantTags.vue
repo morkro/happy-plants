@@ -277,6 +277,11 @@
     & li {
       flex-shrink: 0;
       margin-right: calc(var(--base-gap) / 2);
+
+      &:last-child {
+        /* Workaround */
+        padding-right: calc(var(--base-gap) / 2);
+      }
     }
 
     & span {
