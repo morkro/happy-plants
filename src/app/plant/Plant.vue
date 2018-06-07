@@ -5,7 +5,6 @@
       :name="name"
       :modified="modified"
       :created="created"
-      @content-update="updateFromModal"
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
 
@@ -19,9 +18,9 @@
       <plant-header
         :name="name"
         :image-url="imageURL"
-        :edit-mode="false"
         v-observe-visibility.60="observeVisibility"
-        @update-name="updatePlantName"/>
+        @update-name="updatePlantName"
+        @update-photo="updatePlantPhoto" />
 
       <plant-tags
         v-if="Array.isArray(allTags)"
@@ -198,11 +197,6 @@
       onSunshineUpdate (sunshine) {
         this.updateSunshine({ guid: this.guid, sunshine })
       },
-      updateFromModal ({ name, blob }) {
-        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
-        this.updateName({ guid: this.guid, name })
-        this.updatePhoto({ guid: this.guid, blob, imageURL })
-      },
       deletePlantFromModal () {
         this.deletePlants([{ guid: this.guid }])
           .then(() => this.showNotification({
@@ -217,14 +211,14 @@
         this.showModuleManager = false
       },
       updateModules (updatedModules) {
-          this.updatePlantModules(updatedModules.map(m => {
-            const activateModule = this.modules.find(mod => mod.type === m.type)
-            const defaultModule = this.plantModules.find(mod => mod.type === m.type)
-            return {
-              ...m,
-              value: activateModule ? activateModule.value : defaultModule.value
-            }
-          }))
+        this.updatePlantModules(updatedModules.map(m => {
+          const activateModule = this.modules.find(mod => mod.type === m.type)
+          const defaultModule = this.plantModules.find(mod => mod.type === m.type)
+          return {
+            ...m,
+            value: activateModule ? activateModule.value : defaultModule.value
+          }
+        }))
       },
       observeVisibility (visible) {
         this.headerInView = visible
@@ -250,6 +244,10 @@
       },
       updatePlantName (name) {
         this.updateName({ guid: this.guid, name })
+      },
+      updatePlantPhoto (blob) {
+        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
+        this.updatePhoto({ guid: this.guid, blob, imageURL })
       }
     },
 

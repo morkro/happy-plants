@@ -11,6 +11,5 @@ describe('app/plant/PlantHeader.vue', () => {
     const wrapper = mount(PlantHeader)
     expect(wrapper.props().name).toEqual(false)
     expect(wrapper.props().imageUrl).toEqual(false)
-    expect(wrapper.props().editMode).toEqual(false)
   })
 })

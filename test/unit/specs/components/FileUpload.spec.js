@@ -19,6 +19,7 @@ describe('components/FileUpload.vue', () => {
     expect(wrapper.props().name).toEqual('')
     expect(wrapper.props().accepts).toEqual(['.png', '.jpg', '.jpeg'])
     expect(wrapper.props().disablePreview).toEqual(false)
+    expect(wrapper.props().triggerUpload).toEqual(false)
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {

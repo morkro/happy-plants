@@ -1,6 +1,7 @@
 <template>
   <div class="file-upload">
     <input
+      ref="fileInput"
       type="file"
       :id="name"
       :accept="acceptedFilePattern"
@@ -40,12 +41,13 @@
     props: {
       name: { type: String, default: '' },
       accepts: { type: [Array, String], default: () => ['.png', '.jpg', '.jpeg'] },
-      disablePreview: { type: Boolean, default: false }
+      disablePreview: { type: Boolean, default: false },
+      triggerUpload: { type: Boolean, default: false }
     },
 
     components: {
       'feather-aperture': () =>
-          import('vue-feather-icon/components/aperture' /* webpackChunkName: "general" */)
+        import('vue-feather-icon/components/aperture' /* webpackChunkName: "general" */)
     },
 
     data () {
@@ -69,6 +71,14 @@
         return Array.isArray(this.accepts)
           ? this.accepts.join(', ')
           : this.accepts
+      }
+    },
+
+    watch: {
+      triggerUpload (trigger) {
+        if (trigger) {
+          this.$refs.fileInput.click()
+        }
       }
     },
 
