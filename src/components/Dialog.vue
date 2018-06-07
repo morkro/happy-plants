@@ -7,7 +7,9 @@
       :class="dialogClass"
       :style="{ backgroundColor: backgroundColor || '' }">
       <header class="dialog-header">
-        <slot name="headline" />
+        <div class="dialog-headline">
+          <slot name="headline" />
+        </div>
         <button
           v-if="close"
           aria-label="Close"
@@ -115,6 +117,13 @@
       &:focus {
         --button-focus: var(--dark-grey);
       }
+    }
+
+    & .dialog-headline {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
     }
 
     & h1 {
