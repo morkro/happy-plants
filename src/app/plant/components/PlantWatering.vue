@@ -45,6 +45,7 @@
           :key="item.level"
           v-for="(item, index) in amountLevels"
           @tap="onEmitAmountChange($event, item)" />
+        <div :class="{ 'droplet-background': true, 'active': amount >= 3 }"/>
       </div>
     </div>
   </plant-component>
@@ -158,9 +159,10 @@
   .watering-routine {
     --button-background: var(--brand-blue-low);
     --button-focus: var(--brand-blue);
-    padding: calc(var(--base-gap) / 6) calc(var(--base-gap) / 2);
+    padding: calc(var(--base-gap) / 2) calc(var(--base-gap) / 2);
     margin-top: calc(var(--base-gap) / 4);
     color: var(--brand-blue);
+    font-weight: 600;
   }
 
   .watering-selection {
@@ -193,40 +195,75 @@
     min-height: 65px;
     z-index: 1;
 
-    & .droplet {
+    & .droplet-background {
+      --droplet-color: var(--grey);
       position: absolute;
-      width: 42px;
-      height: 42px;
-      left: 50%;
-      top: 50%;
+      z-index: 0;
+      background: var(--droplet-color);
+      opacity: 0.33;
+      right: 50%;
+      top: 0;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      transform: translate(166%, -150%);
+
+      &.active {
+        --droplet-color: var(--brand-blue);
+      }
+
+      &::after,
+      &::before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: var(--droplet-color);
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      &::after {
+        transform: scale(0.7) translate(90%, 155%);
+      }
+
+      &::before {
+        transform: scale(0.3) translateY(42vh);
+      }
+    }
+
+    & .droplet {
+      --droplet-size: 42px;
+      position: absolute;
+      width: var(--droplet-size);
+      height: var(--droplet-size);
+      left: 0;
+      bottom: 0;
       background: var(--grey);
       border-radius: 4% 50% 50% 50%;
       border: 2px solid var(--background-primary);
-      transform: rotate(45deg) translate(-50%, -50%);
-      transform-origin: 0 0;
+      transform: rotate(45deg);
 
       &.active {
         background: var(--brand-blue);
-
-        &:nth-of-type(2) {
-          background: var(--brand-blue-low);
-        }
       }
 
       &:nth-of-type(1) {
         z-index: 3;
+        top: 50%;
+        transform: rotate(45deg) translateX(-50%);
       }
 
       &:nth-of-type(2) {
-        width: 100px;
-        height: 100px;
+        --droplet-size: 80px;
+        transform: rotate(45deg) translate(-12%, 21%);
+        opacity: 0.5;
         z-index: 2;
       }
 
       &:nth-of-type(3) {
-        width: 145px;
-        height: 145px;
-        opacity: 0.1;
+        --droplet-size: 125px;
+        transform: rotate(45deg) translate(-1%, 22%);
+        opacity: 0.33;
         z-index: 1;
       }
     }
