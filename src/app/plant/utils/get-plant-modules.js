@@ -11,7 +11,7 @@ export default function getPlantModules () {
         icon: 'droplet'
       },
       value: {
-        level: 5
+        level: 1
       }
     },
     {
