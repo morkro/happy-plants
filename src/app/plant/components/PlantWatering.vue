@@ -117,6 +117,7 @@
       },
 
       onEmitFrequencyChange (frequency) {
+        this.showRoutineSelection = false
         this.$emit('update-plant', {
           type: 'watering',
           payload: {
@@ -144,12 +145,45 @@
   }
 
   .watering-description {
+    color: var(--text-color-secondary);
     width: 100%;
     flex: 1;
 
     & .watering-routine,
     & .watering-amount {
       display: inline-block;
+    }
+  }
+
+  .watering-routine {
+    --button-background: var(--brand-blue-low);
+    --button-focus: var(--brand-blue);
+    padding: calc(var(--base-gap) / 6) calc(var(--base-gap) / 2);
+    margin-top: calc(var(--base-gap) / 4);
+    color: var(--brand-blue);
+  }
+
+  .watering-selection {
+    & ul {
+      list-style: none;
+    }
+
+    & li:not(:last-child) {
+      margin-bottom: var(--base-gap);
+    }
+
+    & label {
+      display: flex;
+      align-items: center;
+    }
+
+    & input {
+      margin-right: var(--base-gap);
+    }
+
+    & span {
+      font-weight: 600;
+      font-size: var(--text-size-medium);
     }
   }
 
