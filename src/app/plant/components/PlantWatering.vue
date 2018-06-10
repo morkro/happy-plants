@@ -15,10 +15,11 @@
             <label :for="type">
               <input
                 type="radio"
+                name="watering-frequency"
                 :id="type"
-                :name="type"
                 :value="type"
-                :checked="false">
+                :checked="type === frequency"
+                @change="onEmitFrequencyChange(type)">
               <span>{{ type }}</span>
             </label>
           </li>
@@ -29,7 +30,7 @@
         <p>
           This plant has to be watered
           <button class="watering-routine" @click="selectRoutine">
-            weekly
+            {{ frequency }}
           </button>
           and
           <strong class="watering-amount">
@@ -63,13 +64,11 @@
     },
 
     props: {
-      amount: { type: Number, default: 5 }
+      amount: { type: Number, default: 1 },
+      frequency: { type: String, default: 'weekly' }
     },
 
     computed: {
-      defaultInputProperties () {
-        return `--min: ${this.minLevel}; --max: ${this.maxLevel}; --val: ${this.actualLevel}`
-      },
       selectedAmount () {
         let index = this.amount - 1
 
@@ -86,9 +85,6 @@
 
     data () {
       return {
-        maxLevel: 100,
-        minLevel: 5,
-        actualLevel: this.amount,
         showRoutineSelection: false,
         amountLevels: [{ amount: 1 }, { amount: 2 }, { amount: 3 }],
         messages: {
@@ -109,23 +105,25 @@
     },
 
     methods: {
-      updateRangeValue (event) {
-        if (!(event && event.target)) return
-        event.target.style.setProperty('--val', +event.target.value)
-        this.$emit('update-plant', {
-          type: 'watering',
-          payload: { level: +event.target.value }
-        })
-      },
-
       onEmitAmountChange (event, { amount }) {
         this.$emit('update-plant', {
           type: 'watering',
           payload: {
-            amount
+            amount,
+            frequency: this.frequency
           }
         })
         event.target && event.target.blur()
+      },
+
+      onEmitFrequencyChange (frequency) {
+        this.$emit('update-plant', {
+          type: 'watering',
+          payload: {
+            amount: this.amount,
+            frequency
+          }
+        })
       },
 
       selectRoutine () {
@@ -197,87 +195,6 @@
         opacity: 0.1;
         z-index: 1;
       }
-    }
-  }
-
-  /**
-   * This slider magic is taken from:
-   * https://css-tricks.com/sliding-nightmare-understanding-range-input/
-   * All kudos to Ana Tudor.
-   */
-  .watering-slider input[type=range] {
-    --range: calc(var(--max) - var(--min));
-    --ratio: calc((var(--val) - var(--min)) / var(--range));
-    --sx: calc(22.5px + var(--ratio) * (100% - 45px));
-
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 37px;
-    border-radius: var(--border-radius);
-    background: var(--grey);
-
-    &,
-    &::-webkit-slider-thumb {
-      -webkit-appearance: none;
-    }
-
-    &::-webkit-slider-runnable-track {
-      box-sizing: border-box;
-      border: none;
-      width: 100%;
-      height: 45px;
-      border-radius: var(--border-radius);
-      background: var(--grey);
-      background:
-        linear-gradient(var(--brand-blue), var(--brand-blue))
-        0/ var(--sx) 100% no-repeat transparent;
-    }
-
-    &::-moz-range-track,
-    &::-ms-track {
-      box-sizing: border-box;
-      border: none;
-      width: 100%;
-      height: 45px;
-      background: var(--grey);
-    }
-
-    &::-moz-range-progress,
-    &::-ms-fill-lower {
-      height: 45px;
-      background: var(--grey);
-    }
-
-    &::-webkit-slider-thumb {
-      box-sizing: border-box;
-      border: none;
-      width: 45px;
-      height: 45px;
-      background: var(--brand-blue);
-      border-radius: var(--border-radius);
-    }
-
-    &::-moz-range-thumb {
-      box-sizing: border-box;
-      border: none;
-      width: 45px;
-      height: 45px;
-      background: var(--brand-blue);
-      border-radius: var(--border-radius);
-    }
-
-    &::-ms-thumb {
-      margin-top: 0;
-      box-sizing: border-box;
-      border: none;
-      width: 45px;
-      height: 45px;
-      background: var(--brand-blue);
-    }
-
-    &::-ms-tooltip {
-      display: none;
     }
   }
 </style>
