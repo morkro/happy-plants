@@ -151,7 +151,8 @@
         switch (type) {
           case 'watering':
             return {
-              amount: module && module.level
+              amount: module && (module.level || module.amount),
+              frequency: module && module.frequency
             }
           case 'sunshine':
             return {
@@ -170,7 +171,7 @@
       getModuleListener (event) {
         switch (event.type) {
           case 'watering':
-            return this.onWaterLevelUpdate(event.payload)
+            return this.onWateringUpdate(event.payload)
           case 'sunshine':
             return this.onSunshineUpdate(event.payload)
           case 'seasons':
@@ -191,7 +192,7 @@
       onSeasonUpdate (month) {
         this.updateSeason({ guid: this.guid, month })
       },
-      onWaterLevelUpdate (watering) {
+      onWateringUpdate (watering) {
         this.updateWatering({ guid: this.guid, watering })
       },
       onSunshineUpdate (sunshine) {

@@ -6,7 +6,7 @@
     <section
       :class="dialogClass"
       :style="{ backgroundColor: backgroundColor || '' }">
-      <header class="dialog-header">
+      <header class="dialog-header" v-if="contentOnly === false">
         <div class="dialog-headline">
           <slot name="headline" />
         </div>
@@ -37,6 +37,7 @@
 
     props: {
       show: { type: Boolean, default: false },
+      contentOnly: { type: Boolean, default: false },
       close: { type: Boolean, default: false },
       backgroundColor: { type: [String, Boolean], default: false },
       type: { type: String, default: 'normal' },

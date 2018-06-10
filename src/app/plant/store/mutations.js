@@ -1,6 +1,6 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
 
-function updatePlantModule (moduleName, valueType, state, payload) {
+function updatePlantModule (moduleName, valueTypes, state, payload) {
   const moduleIndex = state.selected.modules.findIndex(m => m.type === moduleName)
   const module = state.selected.modules[moduleIndex]
 
@@ -9,9 +9,10 @@ function updatePlantModule (moduleName, valueType, state, payload) {
 
   state.selected.modules.splice(moduleIndex, 1, {
     type: module.type,
-    value: {
-      [valueType]: payload.item[moduleName][valueType]
-    }
+    value: valueTypes.reduce((acc, current) => {
+      acc[current] = payload.item[moduleName][current]
+      return acc
+    }, {})
   })
 }
 
@@ -49,15 +50,15 @@ export default {
   },
 
   UPDATE_NOTES (...args) {
-    updatePlantModule('notes', 'notes', ...args)
+    updatePlantModule('notes', ['notes'], ...args)
   },
 
   UPDATE_WATERING (...args) {
-    updatePlantModule('watering', 'level', ...args)
+    updatePlantModule('watering', ['amount', 'frequency'], ...args)
   },
 
   UPDATE_SUNSHINE (...args) {
-    updatePlantModule('sunshine', 'level', ...args)
+    updatePlantModule('sunshine', ['level'], ...args)
   },
 
   UPDATE_NAME (state, payload) {
