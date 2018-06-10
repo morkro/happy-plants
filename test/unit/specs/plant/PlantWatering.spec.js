@@ -9,13 +9,14 @@ describe('app/plant/PlantWatering.vue', () => {
 
   it('has correct default props data', () => {
     const wrapper = shallowMount(PlantWatering)
-    expect(wrapper.props().amount).toEqual(5)
+    expect(wrapper.props().amount).toEqual(1)
+    expect(wrapper.props().frequency).toEqual('weekly')
   })
 
-  it('computed property defaultInputProperties() works as expected', () => {
+  it('computed property selectedAmount() works as expected', () => {
     const wrapper = shallowMount(PlantWatering)
-    expect(wrapper.vm.defaultInputProperties).toEqual('--min: 5; --max: 100; --val: 5')
-    wrapper.setData({ actualLevel: 70 })
-    expect(wrapper.vm.defaultInputProperties).toEqual('--min: 5; --max: 100; --val: 70')
+    expect(wrapper.vm.selectedAmount).toEqual('just a bit')
+    wrapper.setData({ amount: 70 })
+    expect(wrapper.vm.selectedAmount).toEqual('a lot')
   })
 })
