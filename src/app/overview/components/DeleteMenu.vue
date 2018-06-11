@@ -1,6 +1,6 @@
 <template>
   <div class="box red delete-container">
-    <button
+    <button type="button"
       aria-label="Trash"
       class="delete icon"
       @click="activate($event)">
@@ -11,7 +11,7 @@
       <p>{{ selectionCount }}</p>
     </div>
 
-    <button
+    <button type="button"
       aria-label="Cancel trash"
       class="cancel icon"
       @click="cancel($event)">

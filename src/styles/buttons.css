@@ -1,14 +1,14 @@
 /**
  * Types
- * Circle:     <button class="circle"></button>
- * Icon only:  <button class="icon"></button>
+ * Circle:     <button type="button" class="circle"></button>
+ * Icon only:  <button type="button" class="icon"></button>
  *
  * States
- * Default:   <button></button>
- * Plain:     <button class="plain"></button>
- * Warning:   <button class="warning"></button>
- * Disabled:  <button class="disabled"></button>
- *            <button disabled></button>
+ * Default:   <button type="button"></button>
+ * Plain:     <button type="button" class="plain"></button>
+ * Warning:   <button type="button" class="warning"></button>
+ * Disabled:  <button type="button" class="disabled"></button>
+ *            <button type="button" disabled></button>
  */
 button,
 .btn {

@@ -12,13 +12,15 @@
             :value="content" />
         </div>
 
-        <button
+        <button type="button"
           slot="cancel"
           class="plain"
           @click="closeNotes">
           Cancel
         </button>
-        <button slot="confirm" @click="closeAndSaveNotes">
+        <button slot="confirm"
+          type="button"
+          @click="closeAndSaveNotes">
           Save
         </button>
       </app-dialog>
@@ -27,7 +29,7 @@
         key="notes-empty"
         class="notes-empty">
         <p>Seems like you haven't added any notes yet.</p>
-        <button @click="toggleNotes">Add notes</button>
+        <button type="button" @click="toggleNotes">Add notes</button>
       </div>
 
       <div v-else
@@ -37,11 +39,14 @@
           <p>{{ content }}</p>
         </div>
         <div class="notes-actions">
-          <button @click="togglePreview">
+          <button type="button" @click="togglePreview">
             <span v-if="!showAllNotes">Show all</span>
             <span v-else>Hide all</span>
           </button>
-          <button v-if="!showAllNotes" @click="toggleNotes">
+          <button
+            type="button"
+            v-if="!showAllNotes"
+            @click="toggleNotes">
             Edit notes
           </button>
         </div>
@@ -194,6 +199,10 @@
       position: absolute;
       right: 0;
       top: 0;
+    }
+
+    & button {
+      justify-content: center;
     }
 
     & button:first-of-type {

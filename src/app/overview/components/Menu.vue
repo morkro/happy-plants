@@ -2,7 +2,7 @@
   <div :class="wrapperClass">
     <ul class="menu-left">
       <li v-if="showViewmode">
-        <button
+        <button type="button"
           aria-label="View mode"
           :class="`view-mode icon ${disableMenu ? '' : 'inverse'}`"
           @click.prevent="emitMenuAction('view-mode')">
@@ -25,7 +25,7 @@
 
     <ul class="menu-right">
       <li v-if="showDelete">
-        <button
+        <button type="button"
           aria-label="Trash"
           class="delete icon inverse"
           @click.prevent="emitMenuAction('delete')">

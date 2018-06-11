@@ -35,12 +35,15 @@
     </ul>
 
     <button slot="cancel"
+      type="button"
       class="plain"
       @click="cancel">
       Cancel
     </button>
 
-    <button slot="confirm" @click="confirmModuleUpdates">
+    <button slot="confirm"
+      type="button"
+      @click="confirmModuleUpdates">
       Update modules
     </button>
   </plant-dialog>

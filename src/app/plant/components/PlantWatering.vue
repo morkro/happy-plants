@@ -29,7 +29,10 @@
       <div class="watering-description">
         <p>
           This plant has to be watered
-          <button class="watering-routine" @click="selectRoutine">
+          <button
+            type="button"
+            class="watering-routine"
+            @click="selectRoutine">
             {{ frequency }}
           </button>
           and

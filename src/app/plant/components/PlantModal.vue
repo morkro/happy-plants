@@ -7,7 +7,10 @@
     <h1 slot="headline">Delete plant</h1>
 
     <div slot="content">
-      <button class="warning" @click="emitDeletePlant">
+      <button
+        type="button"
+        class="warning"
+        @click="emitDeletePlant">
         <feather-trash />
         <span>Yes, delete this plant</span>
       </button>

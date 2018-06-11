@@ -5,7 +5,7 @@
       <p>
         How about we pretend this didn't happen?
       </p>
-      <button @click="pushToSafety">
+      <button type="button" @click="pushToSafety">
         <feather-home />
         Back to overview
       </button>

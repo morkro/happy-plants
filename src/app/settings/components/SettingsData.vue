@@ -17,6 +17,7 @@
       </div>
 
       <button slot="cancel"
+        type="button"
         class="plain"
         v-if="isDangerDialog"
         @click="closeDialog">
@@ -24,6 +25,7 @@
       </button>
 
       <button slot="confirm"
+        type="button"
         class="delete-data-button"
         v-if="isDangerDialog"
         @click="deleteApplicationData">
@@ -66,12 +68,13 @@
       <button slot="cancel"
         v-if="!isDangerDialog"
         class="plain"
+        type="button"
         @click="closeDialog">
         Cancel
       </button>
 
-      <button
-        slot="confirm"
+      <button slot="confirm"
+        type="button"
         v-if="!isDangerDialog"
         :disabled="file === null || selectedImportType === false"
         @click.prevent="importApplicationData">
@@ -88,7 +91,9 @@
         or even modify and import it again.
       </span>
 
-      <button @click="downloadData">
+      <button
+        type="button"
+        @click="downloadData">
         <feather-download />
         <span>Export plant data</span>
       </button>
@@ -103,7 +108,9 @@
         to your current data.
       </span>
 
-      <button @click="openImportModal">
+      <button
+        type="button"
+        @click="openImportModal">
         <feather-copy />
         <span>Import plant data</span>
       </button>
@@ -119,7 +126,10 @@
     <section class="danger-zone">
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
-      <button class="warning" @click="openDangerModal">
+      <button
+        type="button"
+        class="warning"
+        @click="openDangerModal">
         <feather-delete />
         <span>Delete application data</span>
       </button>

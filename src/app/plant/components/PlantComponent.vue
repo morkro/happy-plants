@@ -7,7 +7,10 @@
       </div>
 
       <div class="component-settings" v-if="settings">
-        <button class="icon" aria-role="Options">
+        <button
+          type="button"
+          class="icon"
+          aria-role="Options">
           <feather-more-horizontal />
         </button>
       </div>

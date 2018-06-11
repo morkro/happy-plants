@@ -10,7 +10,7 @@
         <div class="dialog-headline">
           <slot name="headline" />
         </div>
-        <button
+        <button type="button"
           v-if="close"
           aria-label="Close"
           class="circle inverse"

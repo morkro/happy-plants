@@ -24,7 +24,7 @@
           aria-label="Settings">
           <component :is="`feather-${settingsIcon}`" class="header-settings-icon" />
         </router-link>
-        <button
+        <button type="button"
           v-else-if="settings === 'edit'"
           aria-label="Edit"
           :class="settingsClass"

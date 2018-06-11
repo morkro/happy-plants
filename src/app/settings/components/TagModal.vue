@@ -17,7 +17,9 @@
       </label>
     </form>
 
-    <button slot="confirm" @click="updateTag">
+    <button slot="confirm"
+      type="button"
+      @click="updateTag">
       Update name
     </button>
   </app-dialog>

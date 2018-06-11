@@ -11,11 +11,13 @@
         You are about to delete <strong>{{ selection.length }}</strong> plants.
       </p>
       <button slot="cancel"
+        type="button"
         class="plain"
         @click="cancelDeleteMode">
         Cancel
       </button>
       <button slot="confirm"
+        type="button"
         class="warning"
         @click="confirmDeletePlants">
         Yes, delete plants

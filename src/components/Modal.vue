@@ -2,7 +2,7 @@
   <section v-if="show" :style="{ backgroundColor }">
     <header class="modal-header">
       <slot name="headline" />
-      <button
+      <button type="button"
         aria-label="Close"
         class="circle inverse"
         @click.prevent="emitModalClose">

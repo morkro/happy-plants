@@ -3,7 +3,7 @@
     <div
       :class="{ 'plant-tags-module': true, 'show-tooltip': showTooltip }"
       data-tooltip="Double tap to remove">
-      <button
+      <button type="button"
         class="tags-add icon inverse"
         @click="toggleNewTagInput"
         :aria-label="ariaLabelToggle">
@@ -24,7 +24,7 @@
             id="tag-new-name"
             ref="tagInput"
             @change="getTagName">
-          <button>
+          <button type="button">
             <feather-check />
           </button>
         </form>
@@ -46,7 +46,10 @@
               Add a tag to your plant!
             </span>
 
-            <button class="plain small hide-module" @click.prevent="hideTagModule">
+            <button
+              type="button"
+              class="plain small hide-module"
+              @click.prevent="hideTagModule">
               Hide
             </button>
           </div>

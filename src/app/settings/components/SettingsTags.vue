@@ -22,12 +22,14 @@
         This will remove it from all plants!
       </p>
 
-      <button class="plain"
+      <button type="button"
+        class="plain"
         slot="cancel"
         @click="closeDialog">
         Cancel
       </button>
-      <button class="warning"
+      <button type="button"
+        class="warning"
         slot="confirm"
         @click="confirmDeleteTag">
         Delete tag
@@ -56,13 +58,13 @@
               :count="tag.plants.length" />
 
             <div class="tags-actions">
-              <button
+              <button type="button"
                 class="icon inverse edit"
                 aria-label="Edit tag"
                 @click="openTagModal(tag)">
                 <feather-edit />
               </button>
-              <button
+              <button type="button"
                 class="icon inverse delete"
                 aria-label="Delete tag"
                 @click="openTagDialog($event, tag)">

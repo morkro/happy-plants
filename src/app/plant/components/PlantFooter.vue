@@ -1,6 +1,9 @@
 <template>
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
-    <button class="plain" @click.prevent="emitShowModules">
+    <button
+      type="button"
+      class="plain"
+      @click.prevent="emitShowModules">
       <feather-box />
       <span>Manage modules</span>
     </button>
@@ -9,7 +12,8 @@
       Modules let you keep track of the individual requirements and needs of your plant.
     </p>
 
-    <button v-if="showTagButton"
+    <button type="button"
+      v-if="showTagButton"
       class="plain"
       @click.prevent="emitShowTags">
       <feather-hash />
