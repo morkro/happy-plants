@@ -280,6 +280,7 @@
         iconColor: 'black',
         settingsIcon: 'settings'
       })
+
       this.updatePlantsList({
         guid: this.guid,
         name: this.name,

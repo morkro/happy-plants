@@ -73,6 +73,13 @@
       emitDialogClose () {
         this.$emit('close-dialog')
       }
+    },
+
+    beforeDestroy () {
+      const domRoot = this.$root.$el.parentNode
+      if (domRoot.classList.contains('js-no-scrolling')) {
+        domRoot.classList.remove('js-no-scrolling')
+      }
     }
   }
 </script>

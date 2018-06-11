@@ -1,10 +1,11 @@
 <template>
-  <header class="plant-header">
+  <section class="plant-header">
     <div class="plant-header-view">
       <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
         <v-touch tag="h1"
           @tap="updateTitle"
           :contenteditable="editTitle"
+          @change.native="emitTitleUpdate"
           @blur.native="emitTitleUpdate">
           {{ name }}
         </v-touch>
@@ -40,7 +41,7 @@
           color="#000" />
       </v-touch>
     </div>
-  </header>
+  </section>
 </template>
 
 <script>
