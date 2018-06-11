@@ -152,6 +152,7 @@
     color: var(--text-color-secondary);
     width: 100%;
     flex: 1;
+    padding-right: var(--base-gap);
 
     & .watering-routine,
     & .watering-amount {
