@@ -5,7 +5,6 @@
         <v-touch tag="h1"
           @tap="updateTitle"
           :contenteditable="editTitle"
-          @change.native="emitTitleUpdate"
           @blur.native="emitTitleUpdate">
           {{ name }}
         </v-touch>

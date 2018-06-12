@@ -4,6 +4,11 @@ const namespace = 'plant-'
 
 export const fetchPlants = () => {
   return localforage.startsWith(namespace)
+    .then(data => {
+      const copy = data
+      delete copy[namespace + 'undefined']
+      return copy
+    })
     .then(Object.values)
 }
 
