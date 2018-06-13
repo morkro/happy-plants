@@ -24,7 +24,7 @@
             id="tag-new-name"
             ref="tagInput"
             @change="getTagName">
-          <button type="button">
+          <button type="submit">
             <feather-check />
           </button>
         </form>
@@ -117,6 +117,7 @@
       },
 
       addNewTag () {
+        console.log('new tag')
         this.$emit('new-tag', { label: this.newTagName.trim() })
         Object.assign(this.$data, this.$options.data()) // Reset state
       },
