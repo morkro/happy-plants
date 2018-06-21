@@ -30,6 +30,7 @@
     "normalize.css": "^8.0.0",
     "uuid": "^3.0.1",
     "vue": "^2.5.16",
+    "vue-a11y-dialog": "^0.2.0",
     "vue-feather-icon": "^1.2.0",
     "vue-meta": "^1.5.0",
     "vue-router": "^3.0.1",

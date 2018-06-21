@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
+import VueA11yDialog from 'vue-a11y-dialog'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
@@ -44,6 +45,7 @@ Vue.use(observeVisibility)
 Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
+Vue.use(VueA11yDialog)
 
 sync(store, router)
 

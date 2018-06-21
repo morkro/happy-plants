@@ -1,41 +1,28 @@
 <template>
   <div class="settings-data">
     <settings-dialog
-      :class="{ 'danger-alert': isDangerDialog, 'import-alert': !isDangerDialog }"
-      :background-color="dialogColor"
+      id="settings-dialog"
+      app-root=".settings-data"
+      :type="this.modalType"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <h1 slot="headline">{{ modalTitle }}</h1>
+      <span slot="headline">{{ modalTitle }}</span>
 
-      <div slot="content"
-        v-if="isDangerDialog"
-        key="modal-warning">
+      <div v-if="isDangerDialog" key="modal-warning">
         <p>
           Be aware that once you've done this, your data <strong>cannot</strong> be restored!
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
+
+        <button
+          type="button"
+          class="delete-data-button"
+          @click="deleteApplicationData">
+          Delete my data
+        </button>
       </div>
 
-      <button slot="cancel"
-        type="button"
-        class="plain"
-        v-if="isDangerDialog"
-        @click="closeDialog">
-        Cancel
-      </button>
-
-      <button slot="confirm"
-        type="button"
-        class="delete-data-button"
-        v-if="isDangerDialog"
-        @click="deleteApplicationData">
-        Delete my data
-      </button>
-
-      <div slot="content"
-        v-if="!isDangerDialog"
-        class="import-modal-content"
-        key="modal-normal">
+      <div v-if="!isDangerDialog" key="modal-normal">
         <form class="import-form">
           <label for="import-data">
             <file-upload
@@ -63,23 +50,14 @@
             </li>
           </ul>
         </form>
+
+        <button
+          type="button"
+          :disabled="file === null || selectedImportType === false"
+          @click.prevent="importApplicationData">
+          Import
+        </button>
       </div>
-
-      <button slot="cancel"
-        v-if="!isDangerDialog"
-        class="plain"
-        type="button"
-        @click="closeDialog">
-        Cancel
-      </button>
-
-      <button slot="confirm"
-        type="button"
-        v-if="!isDangerDialog"
-        :disabled="file === null || selectedImportType === false"
-        @click.prevent="importApplicationData">
-        Import
-      </button>
     </settings-dialog>
 
     <section class="download-section">
@@ -139,7 +117,7 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import FileUpload from '@/components/FileUpload'
 
   export default {
@@ -150,7 +128,7 @@
     },
 
     components: {
-      'settings-dialog': Dialog,
+      'settings-dialog': HappyDialog,
       'file-upload': FileUpload,
       'feather-download': () =>
         import('vue-feather-icon/components/download' /* webpackChunkName: "settings" */),
@@ -184,11 +162,6 @@
     },
 
     computed: {
-      dialogColor () {
-        return this.isDangerDialog
-          ? this.$getComputedProperty('brand-red')
-          : this.$getComputedProperty('light-grey')
-      },
       modalTitle () {
         return this.isDangerDialog
           ? this.dangerDialogTitle
@@ -338,23 +311,6 @@
     & h2 {
       color: var(--brand-red);
     }
-  }
-
-  .danger-alert {
-    & h1,
-    & p {
-      color: var(--text-color-inverse);
-    }
-
-    & button.delete-data-button {
-      display: block;
-      background: var(--brand-yellow);
-      color: var(--link-color);
-    }
-  }
-
-  .import-modal-content {
-    min-width: 80vw;
   }
 
   .import-types {

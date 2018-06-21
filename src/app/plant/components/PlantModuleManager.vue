@@ -1,13 +1,12 @@
 <template>
   <plant-dialog
-    class="module-manager"
+    id="plant-module-manager-dialog"
+    app-root=".main-wireframe"
     :show="show"
     @close-dialog="cancel">
-    <h1 slot="headline">
-      Manage modules
-    </h1>
+    <span slot="headline">Manage modules</span>
 
-    <ul slot="content" class="module-list">
+    <ul class="module-list">
       <v-touch
         tag="li"
         v-for="(module, index) in updatedModules"
@@ -34,39 +33,34 @@
       </v-touch>
     </ul>
 
-    <button slot="cancel"
-      type="button"
-      class="plain"
-      @click="cancel">
-      Cancel
-    </button>
-
-    <button slot="confirm"
-      type="button"
-      @click="confirmModuleUpdates">
-      Update modules
-    </button>
+    <div class="dialog-actions">
+      <button
+        type="button"
+        @click="confirmModuleUpdates">
+        Update modules
+      </button>
+    </div>
   </plant-dialog>
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
 
   export default {
     name: 'PlantModuleManager',
 
     components: {
-      'plant-dialog': Dialog,
+      'plant-dialog': HappyDialog,
       'feather-droplet': () =>
-          import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
       'feather-sun': () =>
-          import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */),
       'feather-moon': () =>
-          import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
       'feather-book': () =>
-          import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
       'feather-check': () =>
-          import('vue-feather-icon/components/check' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/check' /* webpackChunkName: "plant" */)
     },
 
     props: {
@@ -107,25 +101,11 @@
 </script>
 
 <style lang="postcss">
-  .module-manager {
-    & .box {
-      padding: 0;
-      width: 100%;
-    }
-
-    & header {
-      justify-content: space-between;
-      align-items: center !important;
-      border-bottom: 2px solid var(--grey);
-      margin-bottom: 0 !important;
-      padding: var(--base-gap);
-    }
-
+  #plant-module-manager-dialog .happy-dialog-element {
     & .dialog-actions {
       background: var(--grey);
-      margin-top: 0 !important;
-      padding: calc(var(--base-gap) / 2) var(--base-gap);
-      justify-content: space-between;
+      margin: calc(-1 * var(--base-gap));
+      padding: var(--base-gap);
     }
   }
 
@@ -133,6 +113,7 @@
     list-style: none;
     max-height: 80vh;
     overflow: scroll;
+    margin: 0 calc(-1 * var(--base-gap));
 
     & li {
       display: flex;

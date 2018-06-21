@@ -5,12 +5,12 @@
 
     <div slot="content" class="watering-content">
       <plant-dialog
-        class="watering-selection"
+        id="plant-watering-dialog"
+        app-root=".main-wireframe"
         :show="showRoutineSelection"
-        :content-only="true"
-        :actions="false"
         @close-dialog="closeRoutineDialog">
-        <ul slot="content">
+        <span slot="headline">Choose frequency</span>
+        <ul>
           <li v-for="type in messages.frequency" :key="type">
             <label :for="type">
               <input
@@ -55,13 +55,13 @@
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantWatering',
 
     components: {
-      'plant-dialog': Dialog,
+      'plant-dialog': HappyDialog,
       'plant-component': PlantComponent,
       'feather-droplet': () =>
         import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */)
@@ -169,7 +169,7 @@
     font-weight: 600;
   }
 
-  .watering-selection {
+  #plant-watering-dialog .happy-dialog-content {
     & ul {
       list-style: none;
     }
