@@ -11,29 +11,25 @@
 
     <!-- Alert as confirmation to delete tag. -->
     <tag-dialog
-      type="warning"
-      class="tag-dialog"
+      id="settings-tags-delete"
+      app-root=".settings-tags"
+      type="danger"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <h1 slot="headline">Delete tag</h1>
+      <span slot="headline">Delete tag</span>
 
-      <p slot="content">
-        Do you really want to delete <span class="tag">{{ selectedTagLabel }}</span>?
-        This will remove it from all plants!
-      </p>
+      <div>
+        <p>
+          Do you really want to delete <span class="tag">{{ selectedTagLabel }}</span>?
+          This will remove it from all plants!
+        </p>
 
-      <button type="button"
-        class="plain"
-        slot="cancel"
-        @click="closeDialog">
-        Cancel
-      </button>
-      <button type="button"
-        class="warning"
-        slot="confirm"
-        @click="confirmDeleteTag">
-        Delete tag
-      </button>
+        <button type="button"
+          class="warning"
+          @click="confirmDeleteTag">
+          Delete tag
+        </button>
+      </div>
     </tag-dialog>
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
@@ -80,7 +76,7 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import TagDialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import TagModal from './TagModal'
   import TagItem from './TagItem'
 
@@ -92,7 +88,7 @@
     },
 
     components: {
-      'tag-dialog': TagDialog,
+      'tag-dialog': HappyDialog,
       'tag-modal': TagModal,
       'tag-item': TagItem,
       'feather-plus': () =>
@@ -280,22 +276,6 @@
 
     & button.delete svg {
       transform: translateX(-1px) translateY(-1px);
-    }
-  }
-
-  .tag-dialog {
-    & .tag {
-      font-weight: 600;
-      background: var(--background-primary);
-      color: var(--brand-red);
-      padding: calc(var(--base-gap) / 3) calc(var(--base-gap) / 2);
-      display: inline-block;
-      border-radius: var(--border-radius);
-    }
-
-    & button.warning {
-      background: var(--brand-yellow);
-      color: var(--link-color);
     }
   }
 </style>

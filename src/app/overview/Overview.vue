@@ -2,26 +2,23 @@
   <div class="main-wireframe">
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
     <overview-dialog
-      type="warning"
-      class="overview-dialog"
+      id="overview-dialog"
+      app-root=".main-wireframe"
+      type="danger"
       :show="showDialog"
       @close-dialog="cancelDeleteMode">
-      <h1 slot="headline">Are you sure?</h1>
-      <p slot="content">
-        You are about to delete <strong>{{ selection.length }}</strong> plants.
-      </p>
-      <button slot="cancel"
-        type="button"
-        class="plain"
-        @click="cancelDeleteMode">
-        Cancel
-      </button>
-      <button slot="confirm"
-        type="button"
-        class="warning"
-        @click="confirmDeletePlants">
-        Yes, delete plants
-      </button>
+      <span slot="headline">Are you sure?</span>
+      <div>
+        <p>
+          You are about to delete <strong>{{ selection.length }}</strong> plants.
+        </p>
+        <button
+          type="button"
+          class="warning"
+          @click="confirmDeletePlants">
+          Yes, delete plants
+        </button>
+      </div>
     </overview-dialog>
 
     <div v-if="showBackdrop"
@@ -75,7 +72,7 @@
   import { mapState, mapActions } from 'vuex'
 
   import AppHeader from '@/components/AppHeader'
-  import OverviewDialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
@@ -87,7 +84,7 @@
 
     components: {
       'app-header': AppHeader,
-      'overview-dialog': OverviewDialog,
+      'overview-dialog': HappyDialog,
       'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
@@ -249,13 +246,6 @@
       justify-content: center;
       align-items: center;
       min-height: calc(100vh - var(--app-header-size));
-    }
-  }
-
-  .overview-dialog {
-    & button.warning {
-      background: var(--brand-yellow);
-      color: var(--link-color);
     }
   }
 

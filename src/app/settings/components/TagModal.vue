@@ -1,12 +1,12 @@
 <template>
   <app-dialog
+    id="settings-tags-dialog"
+    app-root=".settings-tags"
     :show="show"
-    :close="true"
     @close-dialog="emitCloseDialog">
-    <h1 slot="headline">Edit tag</h1>
+    <span slot="headline">Edit tag</span>
 
-    <form slot="content"
-      class="dialog-content">
+    <form class="dialog-content">
       <label for="dialog-name">
         <h2>Name</h2>
         <input
@@ -15,18 +15,16 @@
           :value="tagLabel"
           @change="updateLabelName">
       </label>
-    </form>
 
-    <button slot="confirm"
-      type="button"
-      @click="updateTag">
-      Update name
-    </button>
+      <button type="button" @click="updateTag">
+        Update name
+      </button>
+    </form>
   </app-dialog>
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   export default {
     name: 'TagModal',
 
@@ -37,7 +35,7 @@
     },
 
     components: {
-      'app-dialog': Dialog
+      'app-dialog': HappyDialog
     },
 
     data: () => ({

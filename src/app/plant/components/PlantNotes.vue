@@ -3,24 +3,18 @@
     <feather-book slot="icon" />
     <h2 slot="title">Notebook</h2>
     <div slot="content">
-      <app-dialog :show="showNotes" @close-dialog="closeNotes">
-        <h1 slot="headline">Notebook</h1>
+      <app-dialog
+        id="plant-notes-dialog"
+        app-root=".main-wireframe"
+        :show="showNotes"
+        @close-dialog="closeNotes">
+        <span slot="headline">Notebook</span>
 
-        <div slot="content">
-          <textarea
-            @change="updateContent"
-            :value="content" />
-        </div>
+        <textarea
+          @change="updateContent"
+          :value="content" />
 
-        <button type="button"
-          slot="cancel"
-          class="plain"
-          @click="closeNotes">
-          Cancel
-        </button>
-        <button slot="confirm"
-          type="button"
-          @click="closeAndSaveNotes">
+        <button type="button" @click="closeAndSaveNotes">
           Save
         </button>
       </app-dialog>
@@ -56,13 +50,13 @@
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
 
     components: {
-      'app-dialog': Dialog,
+      'app-dialog': HappyDialog,
       'plant-component': PlantComponent,
       'feather-book': () =>
         import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */)
@@ -112,6 +106,10 @@
 </script>
 
 <style lang="postcss" scoped>
+  #plant-notes-dialog .happy-dialog-element {
+    background-color: var(--background-primary);
+  }
+
   p {
     color: var(--text-color-secondary);
   }

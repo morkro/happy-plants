@@ -1,30 +1,29 @@
 <template>
   <app-dialog
+    id="plant-edit-dialog"
+    app-root=".main-wireframe"
     class="app-dialog"
     :show="show"
-    :close="true"
     @close-dialog="emitCloseDialog">
-    <h1 slot="headline">Delete plant</h1>
+    <span slot="headline">Delete plant</span>
 
-    <div slot="content">
-      <button
-        type="button"
-        class="warning"
-        @click="emitDeletePlant">
-        <feather-trash />
-        <span>Yes, delete this plant</span>
-      </button>
+    <button
+      type="button"
+      class="warning"
+      @click="emitDeletePlant">
+      <feather-trash />
+      <span>Yes, delete this plant</span>
+    </button>
 
-      <div class="modal-meta">
-        <span>Last updated: {{ modified | formatDate }}</span>
-        <span>Created: {{ created | formatDate }}</span>
-      </div>
+    <div class="modal-meta">
+      <span>Last updated: {{ modified | formatDate }}</span>
+      <span>Created: {{ created | formatDate }}</span>
     </div>
   </app-dialog>
 </template>
 
 <script>
-  import Dialog from '@/components/Dialog'
+  import HappyDialog from '@/components/HappyDialog'
   import '@/assets/cactus'
 
   export default {
@@ -38,7 +37,7 @@
     },
 
     components: {
-      'app-dialog': Dialog,
+      'app-dialog': HappyDialog,
       'feather-trash': () =>
         import('vue-feather-icon/components/trash' /* webpackChunkName: "plant" */)
     },
@@ -64,8 +63,7 @@
 
   .modal-meta {
     margin-top: var(--base-gap);
-    margin-bottom: calc(-1 * var(--base-gap)); /* @FIXME Ugly spacings hack. */
-    background: var(--background-secondary);
+    background: var(--background-primary);
     border-radius: var(--border-radius);
     padding: var(--base-gap) 0;
 
