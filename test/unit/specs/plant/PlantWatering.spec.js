@@ -16,7 +16,7 @@ describe('app/plant/PlantWatering.vue', () => {
   it('computed property selectedAmount() works as expected', () => {
     const wrapper = shallowMount(PlantWatering)
     expect(wrapper.vm.selectedAmount).toEqual('just a bit')
-    wrapper.setData({ amount: 70 })
+    wrapper.setProps({ amount: 70 })
     expect(wrapper.vm.selectedAmount).toEqual('a lot')
   })
 })

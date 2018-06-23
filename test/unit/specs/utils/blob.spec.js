@@ -1,4 +1,4 @@
-import blobUtil from 'blob-util'
+import * as blobUtil from 'blob-util'
 import { isBase64, isBlobbable, getUrlFromBlob, convertToBlob } from '@/utils/blob'
 
 /**

@@ -1,4 +1,4 @@
-import blobUtil from 'blob-util'
+import * as blobUtil from 'blob-util'
 import hermiteResize from './hermite-resize'
 
 export const isBase64 = string => {
@@ -30,8 +30,9 @@ export function convertToBlob (config) {
     return config
   }
 
-  return blobUtil.base64StringToBlob(config.blob)
-    .then(blob => Object.assign({}, config, { blob }))
+  return Object.assign({}, config, {
+    blob: blobUtil.base64StringToBlob(config.blob)
+  })
 }
 
 export function resizeBlob (file, options = {}) {
