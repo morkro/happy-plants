@@ -117,8 +117,9 @@
       },
 
       addNewTag () {
-        console.log('new tag')
-        this.$emit('new-tag', { label: this.newTagName.trim() })
+        if (this.newTagName !== '') {
+          this.$emit('new-tag', { label: this.newTagName.trim() })
+        }
         Object.assign(this.$data, this.$options.data()) // Reset state
       },
 
