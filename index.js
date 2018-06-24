@@ -9,5 +9,5 @@ middleware.register(app)
 app.use(express.static('./dist'))
 app.listen(port, () => {
   console.log('🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵 🌵')
-  console.log(`Happy Plants enjoying the sun at port ${port} 🌐`)
+  console.log(`HappyPlants enjoying the sun at port ${port} 🌐`)
 })
