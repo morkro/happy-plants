@@ -2,7 +2,7 @@
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
     <button
       type="button"
-      class="plain"
+      class="footer-modules plain"
       @click.prevent="emitShowModules">
       <feather-box />
       <span>Manage modules</span>
@@ -14,7 +14,7 @@
 
     <button type="button"
       v-if="showTagButton"
-      class="plain"
+      class="footer-tags plain"
       @click.prevent="emitShowTags">
       <feather-hash />
       <span>Add tags</span>

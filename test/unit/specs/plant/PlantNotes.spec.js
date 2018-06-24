@@ -10,5 +10,6 @@ describe('app/plant/PlantNotes.vue', () => {
   it('has correct default props data', () => {
     const wrapper = shallowMount(PlantNotes)
     expect(wrapper.props().content).toEqual('Add your notes here!')
+    expect(wrapper.vm.textContent).toEqual('Add your notes here!')
   })
 })
