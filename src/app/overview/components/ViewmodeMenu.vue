@@ -84,7 +84,7 @@
               {
                 type: 'latest',
                 icon: 'clock',
-                label: 'Date',
+                label: 'Latest',
                 selected: this.orderBy === 'latest'
               },
               {

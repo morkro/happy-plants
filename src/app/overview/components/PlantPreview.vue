@@ -325,17 +325,16 @@
 
     @nest .type-list & {
       position: static;
-      background: transparent;
-      padding: 0;
+      background: var(--background-primary);
+      border-radius: var(--border-radius);
+      padding: calc(var(--base-gap) / 1.5);
+      height: 100%;
       color: var(--text-color-base);
 
       & h1 {
         color: var(--text-color-base);
         font-size: var(--text-size-medium);
         display: inline-block;
-        background: var(--background-primary);
-        border-radius: var(--border-radius);
-        padding: calc(var(--base-gap) / 1.5);
         width: 100%;
       }
     }
