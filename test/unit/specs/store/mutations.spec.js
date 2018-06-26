@@ -66,4 +66,55 @@ describe('store/mutations/tags.js', () => {
     expect(state.tags.length).toBeGreaterThan(1)
     expect(state.tags).toEqual(expect.arrayContaining([1, 2, 3]))
   })
+
+  it('ADD_TAG', () => {
+    const state = {
+      tags: []
+    }
+    const name = 'Foo tag'
+
+    // Adding a new tag works as expected
+    mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })
+    expect(state.tags).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
+
+    // Adding the exact same tag again just returns and doesn't mutate
+    expect(mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })).toBe(undefined)
+    expect(state.tags).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
+
+    // Adding a new plant ID to the same tag works
+    mutations.ADD_TAG(state, { item: { name, plants: ['guid 2'] } })
+    expect(state.tags).toEqual(expect.arrayContaining([
+      { name, plants: ['guid', 'guid 2'] }
+    ]))
+  })
+
+  it('DELETE_TAG', () => {
+    const state = {
+      tags: []
+    }
+    mutations.DELETE_TAG(state)
+    expect()
+  })
+
+  it('UPDATE_TAG', () => {
+    const state = {
+      tags: [{
+        name: 'super-tag',
+        label: 'Super tag',
+        guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d'
+      }]
+    }
+    mutations.UPDATE_TAG(state, {
+      item: {
+        guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d',
+        name: 'awesome-tag',
+        label: 'Awesome tag'
+      }
+    })
+    expect(state.tags).toEqual(expect.arrayContaining([{
+      name: 'awesome-tag',
+      label: 'Awesome tag',
+      guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d'
+    }]))
+  })
 })
