@@ -104,8 +104,15 @@
   #plant-module-manager-dialog .happy-dialog-element {
     & .dialog-actions {
       background: var(--grey);
-      margin: calc(-1 * var(--base-gap));
+      margin:
+        0
+        calc(-1 * var(--base-gap))
+        calc(-1 * var(--base-gap));
       padding: var(--base-gap);
+    }
+
+    & button {
+      margin-top: 0;
     }
   }
 
@@ -114,6 +121,7 @@
     max-height: 80vh;
     overflow: scroll;
     margin: 0 calc(-1 * var(--base-gap));
+    border-top: 2px solid var(--grey);
 
     & li {
       display: flex;
