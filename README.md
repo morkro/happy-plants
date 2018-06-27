@@ -121,7 +121,8 @@ Modules have all the same structure with a module-specific `value` definition.
 {
   "type": "watering",
   "value": {
-    "level": 5
+    "amount": 1 | 2 | 3,
+    "frequency": String
   }
 }
 ```

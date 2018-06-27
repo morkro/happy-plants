@@ -1,6 +1,6 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
 
-function updatePlantModule (moduleName, valueTypes, state, payload) {
+export function updatePlantModule (moduleName, valueTypes, state, payload) {
   const moduleIndex = state.selected.modules.findIndex(m => m.type === moduleName)
   const module = state.selected.modules[moduleIndex]
 

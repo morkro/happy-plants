@@ -11,7 +11,8 @@ export default function getPlantModules () {
         icon: 'droplet'
       },
       value: {
-        level: 1
+        amount: 1,
+        frequency: 'weekly'
       }
     },
     {
