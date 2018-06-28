@@ -186,7 +186,8 @@
       background: rgba(0, 0, 0, 0.4);
     }
 
-    & a {
+    & a,
+    & button {
       width: var(--app-header-size);
       min-height: var(--app-header-size);
       height: 100%;
@@ -202,6 +203,10 @@
       &:focus::before {
         background: var(--transparency-black-light);
       }
+    }
+
+    & button:focus::after {
+      opacity: 0;
     }
   }
 
