@@ -223,7 +223,12 @@
       width: calc(var(--base-gap) / 2);
       height: 100%;
       top: 0;
-      background: linear-gradient(var(--gradient-direction), transparent, var(--background-secondary));
+      background:
+        linear-gradient(
+          var(--gradient-direction),
+          rgba(245, 245, 245, 0), /* Safari needs the same color with alpha 0% */
+          var(--background-secondary)
+        );
       z-index: 1;
     }
 
