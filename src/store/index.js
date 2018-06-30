@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+
 import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
@@ -32,8 +33,9 @@ export default new Vuex.Store({
     },
 
     settings: {
-      viewMode: 'grid',
-      orderBy: 'latest'
+      orderBy: 'alphabetical',
+      viewMode: 'list',
+      filterBy: 'all'
     },
 
     plants: [],

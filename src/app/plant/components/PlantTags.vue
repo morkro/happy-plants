@@ -187,15 +187,6 @@
     }
   }
 
-  .tag {
-    --label-background: var(--grey);
-    font-weight: 600;
-    background: var(--label-background);
-    padding: calc(var(--base-gap) / 2) var(--base-gap);
-    display: block;
-    border-radius: var(--border-radius);
-  }
-
   .tags-add {
     --button-background: var(--background-secondary);
     padding: calc(var(--base-gap) / 2) var(--base-gap);

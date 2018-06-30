@@ -1,23 +1,26 @@
 import Vue from 'vue'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
-const sortPlants = (state) => {
-  switch (state.settings.orderBy) {
+const sortPlants = (settings, plants) => {
+  let sortedPlants = plants
+
+  switch (settings.orderBy) {
     case 'latest':
-      state.plants = state.plants.sort(sortByDate).reverse()
+      sortedPlants = sortedPlants.sort(sortByDate).reverse()
       break
     case 'alphabetical':
-      state.plants = state.plants.sort(sortByAlphabet)
+      sortedPlants = sortedPlants.sort(sortByAlphabet)
       break
   }
+
+  return sortedPlants
 }
 
 export default {
   UPDATE_VIEWMODE (state, payload) {
     state.updated = Date.now()
     state.settings = Object.assign({}, state.settings, payload)
-
-    sortPlants(state)
+    state.plants = sortPlants(state.settings, state.plants)
   },
 
   UPDATE_PLANT_OVERVIEW (state, payload) {
@@ -27,7 +30,7 @@ export default {
 
     if (state.plants[itemIndex]) {
       Vue.set(state.plants, itemIndex, Object.assign(state.plants[itemIndex], payload.item))
-      sortPlants(state)
+      state.plants = sortPlants(state.settings, state.plants)
     }
   }
 }

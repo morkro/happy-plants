@@ -10,7 +10,6 @@ describe('app/plant/utils/get-default-structure.js', () => {
       blob: undefined,
       imageURL: '',
       name: '',
-      tags: [],
       modules: []
     })
   })

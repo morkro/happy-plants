@@ -1,6 +1,6 @@
 <template>
-  <div class="viewmode-container box">
-    <div class="viewmode-section"
+  <div :class="['viewmode-container', 'box', { 'filter-view': tags.length }]">
+    <div :class="['viewmode-section', section.type]"
       v-for="(section, index) in settings"
       :key="index">
       <h2>{{ section.title }}</h2>
@@ -29,6 +29,38 @@
         </li>
       </ul>
     </div>
+
+    <div class="viewmode-filter" v-if="tags.length">
+      <h2>Filter by tags</h2>
+
+      <ul class="viewmode-select">
+        <li>
+          <label for="show-all">
+            <input
+              type="radio"
+              name="viewmode-filter-tag"
+              id="show-all"
+              value="show-all"
+              :checked="filterBy === 'all'"
+              @change="emitViewmodeUpdate('filterBy', 'all')">
+            <span>Show All</span>
+          </label>
+        </li>
+
+        <li v-for="(tag, index) in tags" :key="index">
+          <label :for="tag.name">
+            <input
+              type="radio"
+              name="viewmode-filter-tag"
+              :id="tag.name"
+              :value="tag.name"
+              :checked="isCheckedTag(tag.guid)"
+              @change="emitViewmodeUpdate('filterBy', tag.guid)">
+            <span>{{ tag.label }}</span>
+          </label>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -53,7 +85,9 @@
 
     props: {
       viewMode: { type: String, default: '' },
-      orderBy: { type: String, default: '' }
+      orderBy: { type: String, default: '' },
+      filterBy: { type: String, default: 'all' },
+      tags: { type: Array, default: () => [] }
     },
 
     data () {
@@ -100,8 +134,11 @@
     },
 
     methods: {
+      isCheckedTag (guid) {
+        return this.filterBy !== 'all' && this.filterBy === guid
+      },
       emitViewmodeUpdate (section, type) {
-        this.$emit('update', { section, type })
+        this.$emit('update-mode', { section, type })
       }
     }
   }
@@ -110,8 +147,22 @@
 <style lang="postcss" scoped>
   .viewmode-container {
     width: 100%;
+    max-height: 35vh;
     display: flex;
     flex-wrap: wrap;
+
+    &.filter-view {
+      display: grid;
+      grid-template-areas:
+        "viewmode filter"
+        "orderby filter";
+      grid-template-columns: 50% 50%;
+      grid-template-rows: auto 1fr;
+    }
+
+    & h2 {
+      margin-bottom: var(--base-gap);
+    }
   }
 
   .viewmode-section {
@@ -124,8 +175,17 @@
       border-right: 4px solid var(--grey);
     }
 
-    & h2 {
-      margin-bottom: var(--base-gap);
+    @nest .filter-view & {
+      border: none;
+      width: 100%;
+    }
+
+    @nest .filter-view &.viewMode {
+      grid-area: viewmode;
+    }
+
+    @nest .filter-view &.orderBy {
+      grid-area: orderby;
     }
   }
 
@@ -154,6 +214,20 @@
     & input:checked + span {
       font-weight: 600;
       color: var(--brand-green);
+    }
+  }
+
+  .viewmode-filter {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    background: var(--background-secondary);
+    grid-area: filter;
+    padding: var(--base-gap);
+    text-align: left;
+
+    & label {
+      justify-content: flex-start;
     }
   }
 </style>

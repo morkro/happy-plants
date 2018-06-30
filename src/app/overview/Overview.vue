@@ -25,18 +25,28 @@
       class="overview-backdrop"
       @click="hideBackdrop" />
 
-    <main :class="{ 'no-plants': plants.length <= 0, 'app-content': true }">
+    <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
       <!-- Simple onboarding instruction if user has no plants yet. -->
       <plants-intro
         v-if="plants.length <= 0"
         key="overview-intro" />
 
-      <!-- List of plants used when filter is either "alphabetical" or "latest". -->
+      <div v-if="plants.length && filterBy !== 'all'" class="plants-filtered-headline">
+        <h2>Filtered by <span class="tag">{{ filteredTag }}</span></h2>
+        <button
+          type="button"
+          class="icon circle inverse"
+          aria-label="Clear filter"
+          @click="clearFilter">
+          <feather-x />
+        </button>
+      </div>
+
       <plants-list
         v-if="plants.length"
         @delete-selection="toggleDeleteSelection"
         @pressed-selection="togglePressedSelection"
-        :plants="plants"
+        :plants="filteredPlants"
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
         :is-pressed-mode="isPressedMode" />
@@ -47,7 +57,9 @@
           v-if="isViewMode"
           :view-mode="viewMode"
           :order-by="orderBy"
-          @update="updateViewmodeFromMenu" />
+          :filter-by="filterBy"
+          :tags="tags"
+          @update-mode="updateViewmodeFromMenu" />
 
         <!-- Delete button and control element. -->
         <delete-menu
@@ -91,14 +103,18 @@
       'delete-menu': DeleteMenu,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
-        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
+      'feather-x': () =>
+        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
     },
 
     computed: {
       ...mapState({
         plants: state => state.plants,
         viewMode: state => state.settings.viewMode,
-        orderBy: state => state.settings.orderBy
+        orderBy: state => state.settings.orderBy,
+        filterBy: state => state.settings.filterBy,
+        tags: state => state.tags
       }),
       isViewMode () {
         return this.editMode === 'view-mode'
@@ -110,17 +126,30 @@
         return this.editMode === 'pressed'
       },
       footerClass () {
-        return {
-          'overview-footer-menu': true,
+        return ['overview-footer-menu', {
           'editmode': this.editMode,
           [`mode-${this.editMode}`]: this.editMode
-        }
+        }]
       },
       showMenu () {
         return (
           this.editMode === false ||
           this.editMode === 'pressed' ||
           this.isViewMode
+        )
+      },
+      filteredPlants () {
+        if (this.filterBy === 'all') {
+          return this.plants
+        }
+
+        const tag = this.tags.find(tag => tag.guid === this.filterBy)
+        return tag && this.plants.filter(plant => tag.plants.includes(plant.guid))
+      },
+      filteredTag () {
+        return (
+          this.tags.length &&
+          this.tags.find(tag => tag.guid === this.filterBy).label
         )
       }
     },
@@ -225,6 +254,11 @@
         this.updateViewmode({
           [data.section]: data.type
         })
+      },
+      clearFilter () {
+        this.updateViewmode({
+          filterBy: 'all'
+        })
       }
     }
   }
@@ -293,6 +327,34 @@
 
   .plant-list {
     z-index: 1;
+  }
+
+  .plants-filtered-headline {
+    margin-bottom: var(--base-gap);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & h2 {
+      color: var(--text-color-secondary);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    & .tag {
+      margin-left: calc(var(--base-gap) / 3);
+      font-size: var(--text-size-small);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 200px;
+    }
+
+    & button {
+      background: var(--grey);
+      width: 35px;
+      height: 35px;
+    }
   }
 
   .overview-footer-menu {
