@@ -30,9 +30,9 @@
 
     components: {
       'feather-trash': () =>
-          import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "icons" */),
       'feather-x': () =>
-          import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/x' /* webpackChunkName: "icons" */)
     },
 
     computed: {

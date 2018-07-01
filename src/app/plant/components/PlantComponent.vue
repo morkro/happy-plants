@@ -30,7 +30,7 @@
 
     components: {
       'feather-more-horizontal': () =>
-        import('vue-feather-icon/components/more-horizontal' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/more-horizontal' /* webpackChunkName: "icons" */)
     }
   }
 </script>

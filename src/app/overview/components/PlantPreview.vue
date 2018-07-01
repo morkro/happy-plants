@@ -80,15 +80,15 @@
 
     components: {
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "icons" */),
       'feather-plus': () =>
-        import('vue-feather-icon/components/plus-square' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/plus-square' /* webpackChunkName: "icons" */),
       'feather-circle': () =>
-        import('vue-feather-icon/components/circle' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/circle' /* webpackChunkName: "icons" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check-circle' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/check-circle' /* webpackChunkName: "icons" */),
       'feather-hash': () =>
-        import('vue-feather-icon/components/hash' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/hash' /* webpackChunkName: "icons" */)
     },
 
     data () {

@@ -104,9 +104,9 @@
       'delete-menu': DeleteMenu,
       'viewmode-menu': ViewmodeMenu,
       'feather-arrow-down': () =>
-        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "overview" */),
+        import('vue-feather-icon/components/arrow-down' /* webpackChunkName: "icons" */),
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/x' /* webpackChunkName: "icons" */)
     },
 
     computed: {

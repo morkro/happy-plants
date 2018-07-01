@@ -34,9 +34,9 @@
 
     components: {
       'feather-settings': () =>
-        import('vue-feather-icon/components/settings' /* webpackChunkName: "general" */),
+        import('vue-feather-icon/components/settings' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */)
     },
 
     data () {

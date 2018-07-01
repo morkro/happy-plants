@@ -92,13 +92,13 @@
       'tag-modal': TagModal,
       'tag-item': TagItem,
       'feather-plus': () =>
-        import('vue-feather-icon/components/plus' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/plus' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
-        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "icons" */),
       'feather-hash': () =>
-        import('vue-feather-icon/components/hash' /* webpackChunkName: "settings" */),
+        import('vue-feather-icon/components/hash' /* webpackChunkName: "icons" */),
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash' /* webpackChunkName: "settings" */)
+        import('vue-feather-icon/components/trash' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({

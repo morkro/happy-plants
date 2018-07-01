@@ -54,11 +54,11 @@
 
     components: {
       'feather-arrow-left': () =>
-          import('vue-feather-icon/components/arrow-left' /* webpackChunkName: "general" */),
+          import('vue-feather-icon/components/arrow-left' /* webpackChunkName: "icons" */),
       'feather-settings': () =>
-          import('vue-feather-icon/components/settings' /* webpackChunkName: "general" */),
+          import('vue-feather-icon/components/settings' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
-        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/edit-2' /* webpackChunkName: "icons" */)
     },
 
     computed: {

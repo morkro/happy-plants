@@ -31,7 +31,7 @@
     components: {
       'plant-component': PlantComponent,
       'feather-sun': () =>
-        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/sun' /* webpackChunkName: "icons" */)
     },
 
     props: {

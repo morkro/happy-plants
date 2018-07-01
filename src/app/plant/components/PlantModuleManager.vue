@@ -52,15 +52,15 @@
     components: {
       'plant-dialog': HappyDialog,
       'feather-droplet': () =>
-        import('vue-feather-icon/components/droplet' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/droplet' /* webpackChunkName: "icons" */),
       'feather-sun': () =>
-        import('vue-feather-icon/components/sun' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/sun' /* webpackChunkName: "icons" */),
       'feather-moon': () =>
-        import('vue-feather-icon/components/moon' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/moon' /* webpackChunkName: "icons" */),
       'feather-book': () =>
-        import('vue-feather-icon/components/book' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/book' /* webpackChunkName: "icons" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/check' /* webpackChunkName: "icons" */)
     },
 
     props: {

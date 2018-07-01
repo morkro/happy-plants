@@ -20,7 +20,7 @@
 
     components: {
       'feather-arrow-right': () =>
-          import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "settings" */)
+          import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "icons" */)
     },
 
     data () {

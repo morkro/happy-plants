@@ -57,9 +57,9 @@
     components: {
       'file-upload': FileUpload,
       'feather-image': () =>
-        import('vue-feather-icon/components/image' /* webpackChunkName: "plant" */),
+        import('vue-feather-icon/components/image' /* webpackChunkName: "icons" */),
       'feather-aperture': () =>
-        import('vue-feather-icon/components/aperture' /* webpackChunkName: "plant" */)
+        import('vue-feather-icon/components/aperture' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({

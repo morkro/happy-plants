@@ -33,8 +33,8 @@ export default new Vuex.Store({
     },
 
     settings: {
-      orderBy: 'alphabetical',
-      viewMode: 'list',
+      orderBy: 'latest',
+      viewMode: 'grid',
       filterBy: 'all'
     },
 
