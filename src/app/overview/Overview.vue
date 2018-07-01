@@ -47,6 +47,7 @@
         @delete-selection="toggleDeleteSelection"
         @pressed-selection="togglePressedSelection"
         :plants="filteredPlants"
+        :tags="tags"
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
         :is-pressed-mode="isPressedMode" />

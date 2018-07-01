@@ -5,6 +5,7 @@ describe('app/overview/PlantsList.vue', () => {
   const defaultProps = {
     type: 'grid',
     plants: [],
+    tags: [],
     isDeleteMode: false,
     isPressedMode: false
   }

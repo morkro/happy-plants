@@ -23,7 +23,7 @@
     </div>
 
     <div class="preview-content">
-      <div v-if="type === 'list'"
+      <div v-if="isListView"
         class="box preview-image"
         :style="background">
         <svgicon
@@ -34,8 +34,21 @@
           color="#000" />
       </div>
 
-      <div class="preview-headline">
-        <h1>{{ name }}</h1>
+      <div class="preview-content-inner">
+        <div class="preview-headline">
+          <h1 :class="{ 'ellipsis': name.length > oneLineHeadlineCount }">
+            {{ name }}
+          </h1>
+        </div>
+
+        <ul v-if="isListView && tags.length" class="preview-tags">
+          <li>
+            <span class="tag">
+              <feather-hash height="16" width="16" />
+              {{ tags.length }}
+            </span>
+          </li>
+        </ul>
       </div>
 
       <svgicon
@@ -57,6 +70,7 @@
 
     props: {
       type: { type: String, default: 'grid' },
+      tags: { type: Array, default: () => [] },
       deleteMode: { type: Boolean, default: false, required: true },
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
@@ -72,13 +86,16 @@
       'feather-circle': () =>
         import('vue-feather-icon/components/circle' /* webpackChunkName: "overview" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check-circle' /* webpackChunkName: "overview" */)
+        import('vue-feather-icon/components/check-circle' /* webpackChunkName: "overview" */),
+      'feather-hash': () =>
+        import('vue-feather-icon/components/hash' /* webpackChunkName: "overview" */)
     },
 
     data () {
       return {
         selected: this.defaultSelected || false,
-        pressed: false
+        pressed: false,
+        oneLineHeadlineCount: 22
       }
     },
 
@@ -92,6 +109,9 @@
       isPressedMode () {
         return this.pressedMode && (this.pressed || this.selected)
       },
+      isListView () {
+        return this.type === 'list'
+      },
       ariaLabel () {
         if (this.deleteMode) {
           return 'Delete'
@@ -104,15 +124,12 @@
           : ''
       },
       wrapperClass () {
-        return {
-          [`type-${this.type}`]: true,
-          'box': true,
-          'plant-preview': true,
+        return [`type-${this.type}`, 'box', 'plant-preview', {
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-pressed': this.pressedMode && this.pressed && this.selected,
           'select': (this.pressedMode || this.deleteMode)
-        }
+        }]
       }
     },
 
@@ -130,15 +147,13 @@
 
     methods: {
       getLayerClass (type) {
-        return {
-          'select-layer': true,
-          [type]: true,
+        return ['select-layer', type, {
           'selected': (
             (this.pressed && type === 'pressed') ||
             (this.deleteMode && type === 'delete' && this.selected) ||
             (this.categoriseMode && type === 'category' && this.selected)
           )
-        }
+        }]
       },
       handleInteraction (event) {
         event.preventDefault()
@@ -311,7 +326,7 @@
     }
   }
 
-  .preview-headline {
+  .preview-content-inner {
     position: absolute;
     color: var(--text-color-inverse);
     width: 100%;
@@ -321,6 +336,7 @@
     font-size: var(--text-size-small);
     background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
     z-index: 1;
+    overflow: hidden;
     flex: 1;
 
     @nest .type-list & {
@@ -335,7 +351,26 @@
         color: var(--text-color-base);
         font-size: var(--text-size-medium);
         display: inline-block;
+        position: relative;
         width: 100%;
+        max-height: 2.28em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.ellipsis::after {
+          content: "";
+          height: 1em;
+          width: 20%;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          background:
+            linear-gradient(
+              to right,
+              rgba(0, 0, 0, 0),
+              var(--background-primary) 60%
+            );
+        }
       }
     }
 
@@ -356,6 +391,31 @@
       color: var(--text-color-inverse);
       font-size: var(--text-size-base);
       font-weight: 600;
+    }
+  }
+
+  .preview-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    & li {
+      margin-bottom: calc(var(--base-gap) / 2);
+    }
+
+    & li:not(:last-child) {
+      margin-right: calc(var(--base-gap) / 2);
+    }
+
+    & .tag {
+      padding: calc(var(--base-gap) / 4) calc(var(--base-gap) / 2);
+      display: flex;
+      align-items: center;
+    }
+
+    & .tag svg {
+      margin-right: calc(var(--base-gap) / 4);
+      opacity: 1;
     }
   }
 </style>

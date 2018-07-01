@@ -4,6 +4,7 @@
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-pressed-selection="emitPressedSelection"
+        :tags="plantTags(plant.guid)"
         :type="type"
         :delete-mode="isDeleteMode"
         :pressed-mode="isPressedMode"
@@ -15,19 +16,28 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   import PlantPreview from './PlantPreview'
+
   export default {
     name: 'PlantsList',
 
     props: {
       type: { type: String, default: 'grid' },
       plants: { type: Array, default: () => [], required: true },
+      tags: { type: Array, default: () => [], required: true },
       isDeleteMode: { type: Boolean, default: false, required: true },
       isPressedMode: { type: Boolean, default: false, required: true }
     },
 
     components: {
       'plant-preview': PlantPreview
+    },
+
+    computed: {
+      ...mapGetters({
+        plantTags: 'getPlantTags'
+      })
     },
 
     methods: {
