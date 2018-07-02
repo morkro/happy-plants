@@ -47,7 +47,7 @@
           </label>
         </li>
 
-        <li v-for="(tag, index) in tags" :key="index">
+        <li v-for="(tag, index) in sortedTags" :key="index">
           <label :for="tag.name">
             <input
               type="radio"
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+  import { sortByAlphabet } from '@/utils/sort'
   export default {
     name: 'ViewmodeMenu',
 
@@ -88,6 +89,13 @@
       orderBy: { type: String, default: '' },
       filterBy: { type: String, default: 'all' },
       tags: { type: Array, default: () => [] }
+    },
+
+    computed: {
+      sortedTags () {
+        const tags = this.tags
+        return tags.sort(sortByAlphabet)
+      }
     },
 
     data () {
