@@ -164,7 +164,7 @@
         }
       },
       selection () {
-        if (this.editMode === 'pressed' && this.selection.length === 0) {
+        if ((this.isDeleteMode || this.isPressedMode) && this.selection.length === 0) {
           this.editMode = false
         }
       }
@@ -206,7 +206,8 @@
         }
       },
       togglePressedSelection (item) {
-        this.editMode = 'pressed'
+        // this.editMode = 'pressed'
+        this.editMode = 'delete'
         if (item.pressed) {
           this.selection.push(item)
         } else {
