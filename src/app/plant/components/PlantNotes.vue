@@ -116,10 +116,10 @@
 
   textarea {
     border: none;
-    width: 80vw;
+    width: 100%;
     height: 45vh;
     padding: var(--base-gap);
-    background: var(--light-grey);
+    background: var(--grey);
     border-radius: var(--border-radius);
   }
 
