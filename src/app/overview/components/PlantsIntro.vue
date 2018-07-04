@@ -3,7 +3,7 @@
     <div class="intro-header">
       <h2>Welcome to</h2>
       <img
-        src="@/assets/happyplants-logo.svg"
+        src="/static/img/happyplants-logo.svg"
         alt="Happy Plants Logo"
         title="Happy Plants Logo"
         width="100%">
