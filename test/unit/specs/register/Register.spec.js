@@ -7,13 +7,15 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe('app/register/Register.vue', () => {
+  const options = { localVue, store }
+
   it('is a Vue component', () => {
-    const wrapper = mount(Register, { localVue, store })
+    const wrapper = mount(Register, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('computed prop canRegisterPlant()', () => {
-    const wrapper = mount(Register, { localVue, store })
+    const wrapper = mount(Register, options)
     expect(wrapper.vm.canRegisterPlant).toBe(false)
 
     const input = wrapper.find('input#register-name')
@@ -23,7 +25,7 @@ describe('app/register/Register.vue', () => {
   })
 
   it('getName() works', () => {
-    const wrapper = mount(Register, { localVue, store })
+    const wrapper = mount(Register, options)
     expect(wrapper.vm.name).toEqual('')
 
     const input = wrapper.find('input#register-name')

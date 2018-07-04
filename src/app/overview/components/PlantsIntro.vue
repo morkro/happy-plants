@@ -1,34 +1,44 @@
 <template>
   <section class="plants-intro">
-    <svgicon
-      class="preview-icon"
-      icon="cactus"
-      :width="iconSize"
-      :height="iconSize"
-      color="#fff" />
-    <div class="intro-content">
-      <h2>Welcome to HappyPlants!</h2>
+    <div class="intro-header">
+      <h2>Welcome to</h2>
+      <img
+        src="@/assets/happyplants-logo.svg"
+        alt="Happy Plants Logo"
+        title="Happy Plants Logo"
+        width="100%">
+    </div>
+
+    <div class="intro-content box">
       <p>
-        Looks like you haven't added any friends yet!<br>
+        Looks like you haven't added any friends yet — here are some first steps to get you started!<br>
       </p>
-      <ul>
+      <ol>
         <li>
           <p>Tap on the bottom button to add your first plant.</p>
         </li>
         <li>
           <p>
-            Later on, you can update the sorting by clicking on the view button
-            <span aria-hidden="true">(<feather-grid />)</span> in the lower menu
+            Now you can add different modules <span aria-hidden="true"><feather-box /></span>
+            to keep track of your plant, as well as using tags to help you group them better.
           </p>
         </li>
-      </ul>
-      <p>Happy organising!</p>
+        <li>
+          <p>
+            Later on, you can change the list view, filter by tags, or sorting by clicking on the view button
+            <span aria-hidden="true"><feather-grid /></span> in the lower menu.
+          </p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="intro-footer">
+      <h3>Happy organising!</h3>
     </div>
   </section>
 </template>
 
 <script>
-  import '@/assets/cactus'
   export default {
     name: 'PlantsIntro',
 
@@ -36,13 +46,9 @@
       'feather-settings': () =>
         import('vue-feather-icon/components/settings' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */)
-    },
-
-    data () {
-      return {
-        iconSize: '100'
-      }
+        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */),
+      'feather-box': () =>
+        import('vue-feather-icon/components/box' /* webpackChunkName: "icons" */)
     }
   }
 </script>
@@ -54,29 +60,38 @@
     justify-content: center;
     flex-direction: column;
     width: 95%;
+
+    & p {
+      font-weight: 600;
+    }
+  }
+
+  .intro-header {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    color: var(--text-color-inverse);
+    margin-bottom: calc(var(--base-gap) / 2);
+
+    & h2 {
+      font-size: var(--text-size-large);
+      margin-bottom: calc(-1 * var(--base-gap) / 2);
+    }
   }
 
   .intro-content {
-    padding-top: var(--base-gap);
+    padding: var(--base-gap);
 
-    & h2 {
-      margin-bottom: var(--base-gap);
-    }
-
-    & p {
-      color: var(--text-color-secondary);
-      font-weight: 600;
-    }
-
-    & ul {
-      margin: var(--base-gap) 0;
+    & ol {
+      margin-top: var(--base-gap);
     }
 
     & li {
       margin-left: var(--base-gap);
 
       &:not(:last-child) {
-        margin-bottom: calc(var(--base-gap) / 2);
+        margin-bottom: var(--base-gap);
       }
     }
 
@@ -88,7 +103,12 @@
     }
   }
 
-  .preview-icon {
-    opacity: 0.2;
+  .intro-footer {
+    margin-top: calc(2 * var(--base-gap));
+    color: var(--text-color-inverse);
+
+    & h3 {
+      font-size: var(--text-size-medium);
+    }
   }
 </style>

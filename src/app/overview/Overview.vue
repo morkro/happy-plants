@@ -282,6 +282,7 @@
       justify-content: center;
       align-items: center;
       min-height: calc(100vh - var(--app-header-size));
+      background: var(--brand-green);
     }
   }
 
