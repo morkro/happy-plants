@@ -169,18 +169,16 @@ Modules have all the same structure with a module-specific `value` definition.
 ---
 
 ## Development
-This project supports Yarn, so you can either use `yarn` or `npm` to run tasks.
 
 | Command | Description |
 | ------- | ----------- |
-| `yarn` / `npm install` | Installs dependencies |
-| `yarn/npm run dev` | Serve with hot reload at localhost:8080 |
-| `yarn/npm run build` | Build for production with minification |
-| `yarn/npm run build --report` | Build for production and view the bundle analyzer report |
-| `yarn/npm run unit` | Run unit tests |
-| `yarn/npm run e2e` | Run end-to-end tests |
-| `yarn/npm test` | Run all tests |
-| `yarn/npm lint` | Runs `Standard` over all `.js` files |
+| `npm install` | Installs dependencies |
+| `npm run dev` | Serve with hot reload at localhost:8080 |
+| `npm run build` | Build for production with minification |
+| `npm run build --report` | Build for production and view the bundle analyzer report |
+| `npm run unit` | Run unit tests |
+| `npm test` | Run all tests |
+| `npm lint` | Runs `Standard` over all `.js` and `.vue` files |
 
 This is an Vue.js progressive web application, bootstrapped with [`vue-init pwa`](https://github.com/vuejs-templates/pwa). For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
