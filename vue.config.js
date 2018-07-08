@@ -7,5 +7,12 @@ function resolve (dir) {
 module.exports = {
   configureWebpack: config => {
     config.resolve.alias['#'] = resolve('')
+  },
+
+  pluginOptions: {
+    lintStyleOnBuild: true,
+    stylelint: {
+      fix: false
+    }
   }
 }

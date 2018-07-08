@@ -1,15 +1,14 @@
 {
   "name": "happy-plants",
   "version": "1.0.0-alpha",
-  "description": "🌵 Web application to keep your plants happy",
-  "author": "Moritz Kröger <write@morkro.de>",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
     "build": "npm run svg && vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "svg": "vsvg -s ./public/icons -t ./src/assets/icons"
+    "svg": "vsvg -s ./public/icons -t ./src/assets/icons",
+    "lint:style": "vue-cli-service lint:style"
   },
   "dependencies": {
     "blob-util": "^2.0.2",
@@ -30,6 +29,7 @@
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
+    "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.0",
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
     "@vue/cli-plugin-pwa": "^3.0.0-beta.15",
@@ -39,12 +39,15 @@
     "@vue/test-utils": "^1.0.0-beta.16",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
+    "commitizen": "^2.10.1",
     "lint-staged": "^6.0.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
     "postcss-reporter": "^5.0.0",
     "postcss-url": "^7.3.2",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-processor-html": "^1.0.0",
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [
@@ -52,6 +55,8 @@
     "last 2 versions",
     "not ie <= 8"
   ],
+  "author": "Moritz Kröger <write@morkro.de>",
+  "description": "🌵 Web application to keep your plants happy",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
@@ -62,6 +67,10 @@
     ],
     "*.vue": [
       "vue-cli-service lint",
+      "git add"
+    ],
+    "*.{vue,htm,html,css,sss,less,scss}": [
+      "vue-cli-service lint:style",
       "git add"
     ]
   }
