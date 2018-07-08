@@ -1,7 +1,5 @@
-// https://github.com/michael-ciniawsky/postcss-load-config
-
 module.exports = {
-  'plugins': {
+  plugins: {
     'postcss-import': {},
     'postcss-url': {},
     'postcss-cssnext': {
@@ -13,8 +11,8 @@ module.exports = {
     },
     'postcss-reporter': {},
     // to edit target browsers: use 'browserslist' field in package.json
-    'autoprefixer': {},
-    'cssnano': {
+    autoprefixer: {},
+    cssnano: {
       zindex: false
     }
   }

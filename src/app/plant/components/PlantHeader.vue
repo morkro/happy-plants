@@ -45,7 +45,7 @@
 
 <script>
   import FileUpload from '@/components/FileUpload'
-  import '@/assets/cactus'
+  import '@/assets/icons/cactus'
   export default {
     name: 'PlantHeader',
 

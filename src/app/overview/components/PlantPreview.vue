@@ -63,7 +63,7 @@
 
 <script>
   import router from '@/router'
-  import '@/assets/cactus'
+  import '@/assets/icons/cactus'
 
   export default {
     name: 'PlantPreview',

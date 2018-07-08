@@ -1,3 +1,7 @@
-export { default as routes } from './routes'
-export { actions } from './store'
-export { utils } from './utils'
+import routes from './routes'
+import store from './store'
+import * as utils from './utils'
+
+const { actions } = store
+
+export { routes, actions, utils }

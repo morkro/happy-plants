@@ -24,7 +24,7 @@
 
 <script>
   import HappyDialog from '@/components/HappyDialog'
-  import '@/assets/cactus'
+  import '@/assets/icons/cactus'
 
   export default {
     name: 'PlantModal',

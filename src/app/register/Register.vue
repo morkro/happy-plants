@@ -41,7 +41,7 @@
   import { mapActions } from 'vuex'
   import FileUpload from '@/components/FileUpload'
   import { getPlantStructure } from '@/app/plant/utils'
-  import '@/assets/leaf'
+  import '@/assets/icons/leaf'
 
   export default {
     name: 'RegisterPlant',
