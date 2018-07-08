@@ -1,5 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
+import VueSVGIcon from 'vue-svgicon'
 import FileUpload from '@/components/FileUpload'
+
+const localVue = createLocalVue()
+localVue.use(VueSVGIcon)
 
 /**
  * TODO:
@@ -9,13 +13,17 @@ import FileUpload from '@/components/FileUpload'
  */
 
 describe('components/FileUpload.vue', () => {
+  const options = {
+    localVue
+  }
+
   it('is a Vue component', () => {
-    const wrapper = mount(FileUpload)
+    const wrapper = mount(FileUpload, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(FileUpload)
+    const wrapper = mount(FileUpload, options)
     expect(wrapper.props().name).toEqual('')
     expect(wrapper.props().accepts).toEqual(['.png', '.jpg', '.jpeg'])
     expect(wrapper.props().disablePreview).toEqual(false)
@@ -23,9 +31,9 @@ describe('components/FileUpload.vue', () => {
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {
-    const wrapper = mount(FileUpload, { propsData: {
+    const wrapper = mount(FileUpload, Object.assign({}, options, { propsData: {
       accepts: ['.foo', '.bar']
-    } })
+    } }))
     expect(wrapper.props().accepts).toEqual(['.foo', '.bar'])
     expect(wrapper.vm.acceptedFilePattern).toEqual('.foo, .bar')
   })

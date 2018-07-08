@@ -1,10 +1,12 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import VueSVGIcon from 'vue-svgicon'
 import Register from '@/app/register/Register'
 import store from '@/store'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
+localVue.use(VueSVGIcon)
 
 describe('app/register/Register.vue', () => {
   const options = { localVue, store }

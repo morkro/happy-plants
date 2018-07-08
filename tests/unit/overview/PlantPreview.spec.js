@@ -1,23 +1,35 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
+import VueSVGIcon from 'vue-svgicon'
+import VueTouch from 'vue-touch'
 import PlantPreview from '@/app/overview/components/PlantPreview'
 
+const localVue = createLocalVue()
+localVue.use(VueSVGIcon)
+localVue.use(VueTouch)
+
 describe('app/overview/PlantPreview.vue', () => {
-  const defaultProps = {
-    type: 'grid',
-    deleteMode: false,
-    pressedMode: false,
-    guid: '',
-    name: '',
-    imageUrl: ''
+  const options = {
+    localVue,
+    stubs: {
+      'feather-circle': '<svg />'
+    },
+    propsData: {
+      type: 'grid',
+      deleteMode: false,
+      pressedMode: false,
+      guid: '',
+      name: '',
+      imageUrl: ''
+    }
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(PlantPreview, { propsData: defaultProps })
+    const wrapper = mount(PlantPreview, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = shallowMount(PlantPreview, { propsData: defaultProps })
+    const wrapper = mount(PlantPreview, options)
     expect(wrapper.props().type).toEqual('grid')
     expect(wrapper.props().deleteMode).toEqual(false)
     expect(wrapper.props().pressedMode).toEqual(false)

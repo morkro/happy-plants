@@ -1,6 +1,8 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
+import VueTouch from 'vue-touch'
+import VueSVGIcon from 'vue-svgicon'
 
 import Plant from '@/app/plant/Plant'
 import computedProperties from '@/utils/vue-computed-properties'
@@ -12,6 +14,8 @@ import router from '@/router'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(Router)
+localVue.use(VueTouch)
+localVue.use(VueSVGIcon)
 localVue.use(computedProperties)
 localVue.use(observeVisibility)
 localVue.use(formatDateFilter)
