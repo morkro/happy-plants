@@ -5,6 +5,7 @@ import VueA11yDialog from 'vue-a11y-dialog'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
+import './registerServiceWorker'
 
 import App from '@/app/App'
 import router from '@/router'
