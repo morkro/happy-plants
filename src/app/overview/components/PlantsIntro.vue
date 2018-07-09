@@ -3,7 +3,7 @@
     <div class="intro-header">
       <h2>Welcome to</h2>
       <img
-        src="/static/img/happyplants-logo.svg"
+        src="@/assets/happyplants-logo.svg"
         alt="Happy Plants Logo"
         title="Happy Plants Logo"
         width="100%">
@@ -62,7 +62,7 @@
     width: 95%;
 
     & p {
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 

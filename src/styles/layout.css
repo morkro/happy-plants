@@ -57,7 +57,7 @@
 
 .tag {
   --label-background: var(--grey);
-  font-weight: 600;
+  font-weight: 500;
   background: var(--label-background);
   padding: calc(var(--base-gap) / 2) var(--base-gap);
   display: inline-block;

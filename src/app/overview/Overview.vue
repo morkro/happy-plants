@@ -318,7 +318,7 @@
 
     & p {
       margin-bottom: var(--base-gap);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     & svg,

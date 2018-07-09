@@ -11,15 +11,31 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url(/static/fonts/Asap-Regular.ttf) format('truetype');
+  src: url('/public/fonts/Asap-Regular.eot');
+  src:
+    local('Asap Regular'),
+    local('Asap-Regular'),
+    url('/public/fonts/Asap-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/public/fonts/Asap-Regular.woff2') format('woff2'),
+    url('/public/fonts/Asap-Regular.woff') format('woff'),
+    url('/public/fonts/Asap-Regular.ttf') format('truetype'),
+    url('/public/fonts/Asap-Regular.svg#Asap-Regular') format('svg');
 }
 
 @font-face {
   font-family: 'Asap';
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url(/static/fonts/Asap-Medium.ttf) format('truetype');
+  src: url('/public/fonts/Asap-Medium.eot');
+  src:
+    local('Asap Medium'),
+    local('Asap-Medium'),
+    url('/public/fonts/Asap-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/public/fonts/Asap-Medium.woff2') format('woff2'),
+    url('/public/fonts/Asap-Medium.woff') format('woff'),
+    url('/public/fonts/Asap-Medium.ttf') format('truetype'),
+    url('/public/fonts/Asap-Medium.svg#Asap-Medium') format('svg');
 }
 
 @font-face {
@@ -27,5 +43,13 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url(/static/fonts/Asap-Bold.ttf) format('truetype');
+  src: url('/public/fonts/Asap-Bold.eot');
+  src:
+    local('Asap Bold'),
+    local('Asap-Bold'),
+    url('/public/fonts/Asap-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/public/fonts/Asap-Bold.woff2') format('woff2'),
+    url('/public/fonts/Asap-Bold.woff') format('woff'),
+    url('/public/fonts/Asap-Bold.ttf') format('truetype'),
+    url('/public/fonts/Asap-Bold.svg#Asap-Bold') format('svg');
 }

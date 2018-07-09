@@ -166,7 +166,7 @@
     padding: calc(var(--base-gap) / 2) calc(var(--base-gap) / 2);
     margin-top: calc(var(--base-gap) / 4);
     color: var(--brand-blue);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   #plant-watering-dialog .happy-dialog-content {
@@ -188,7 +188,7 @@
     }
 
     & span {
-      font-weight: 600;
+      font-weight: 500;
       font-size: var(--text-size-medium);
     }
   }

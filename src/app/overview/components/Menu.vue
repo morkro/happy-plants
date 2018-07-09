@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import '@/assets/leaf'
+  import '@/assets/icons/leaf'
 
   export default {
     name: 'OverviewMenu',

@@ -307,7 +307,7 @@
     }
 
     & h3 {
-      font-weight: 600;
+      font-weight: 500;
       font-size: var(--text-size-medium);
     }
   }

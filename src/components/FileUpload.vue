@@ -33,7 +33,7 @@
 
 <script>
   import { getUrlFromBlob, resizeBlob } from '@/utils/blob'
-  import '@/assets/cactus'
+  import '@/assets/icons/cactus'
 
   export default {
     name: 'FileUpload',

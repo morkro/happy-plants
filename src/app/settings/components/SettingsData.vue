@@ -299,7 +299,7 @@
       opacity: 0.7;
 
       & a {
-        font-weight: 600;
+        font-weight: 500;
       }
     }
   }

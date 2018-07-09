@@ -217,7 +217,7 @@
     padding: 0 var(--base-gap);
     color: var(--text-color-secondary);
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .tags-list ul {
