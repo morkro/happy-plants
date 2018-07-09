@@ -11,22 +11,22 @@
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/static/icons/logo-mdpi-192x192.png",
+      "src": "/icons/logo-mdpi-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/static/icons/logo-hdpi-288x288.png",
+      "src": "/icons/logo-hdpi-288x288.png",
       "type": "image/png",
       "sizes": "228x288"
     },
     {
-      "src": "/static/icons/logo-xhdpi-384x384.png",
+      "src": "/icons/logo-xhdpi-384x384.png",
       "type": "image/png",
       "sizes": "384x384"
     },
     {
-      "src": "/static/icons/logo-xxhdpi-576x576.png",
+      "src": "/icons/logo-xxhdpi-576x576.png",
       "type": "image/png",
       "sizes": "576x576"
     }

@@ -220,7 +220,7 @@
     }
 
     & input:checked + span {
-      font-weight: 600;
+      font-weight: 500;
       color: var(--brand-green);
     }
   }

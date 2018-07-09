@@ -390,7 +390,7 @@
     & h1 {
       color: var(--text-color-inverse);
       font-size: var(--text-size-base);
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 

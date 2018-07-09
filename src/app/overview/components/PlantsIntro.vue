@@ -62,7 +62,7 @@
     width: 95%;
 
     & p {
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 

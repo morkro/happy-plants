@@ -144,7 +144,7 @@
     grid-area: title;
     align-self: center;
     font-size: var(--text-size-large);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 115%;
 
     @nest .danger & {

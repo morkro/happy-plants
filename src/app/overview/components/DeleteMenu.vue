@@ -102,7 +102,7 @@
 
     & p {
       display: inline-block;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 </style>

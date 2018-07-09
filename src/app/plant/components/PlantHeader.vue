@@ -140,7 +140,7 @@
     & h1 {
       padding: var(--base-gap);
       font-size: var(--text-size-large);
-      font-weight: 600;
+      font-weight: 500;
       color: var(--text-color-inverse);
       line-height: 115%;
       position: relative;

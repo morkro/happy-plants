@@ -161,7 +161,7 @@
       }
 
       &.current button {
-        font-weight: 600;
+        font-weight: 500;
         box-shadow: var(--plain-shadow);
         transform: scale(1.15);
         border: 1px solid var(--text-color-button);

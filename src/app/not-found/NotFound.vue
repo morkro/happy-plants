@@ -63,7 +63,7 @@
     & p {
       color: var(--text-color-secondary);
       text-align: center;
-      font-weight: 600;
+      font-weight: 500;
       margin-top: var(--base-gap);
     }
   }
