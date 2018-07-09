@@ -19,12 +19,14 @@ module.exports = {
   testMatch: [
     '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
   ],
+  collectCoverage: true,
   coverageDirectory: '<rootDir>/tests/coverage',
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/assets/**',
     '!src/main.js',
     '!src/router.js',
+    '!src/registerServiceWorker.js',
     '!src/**/routes.js',
     '!**/node_modules/**'
   ]
