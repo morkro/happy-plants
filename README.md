@@ -38,6 +38,16 @@ _HappyPlants_ is a mobile-first, progressive web application which helps organis
 ## Features
 This project is currently still in `alpha` development and only supports a bare minimum set of features.
 
+### Planned
+
+| Feature | Status |
+| ------- | ------ |
+| Firebase integration | Not started |
+| Better onboarding | Not started |
+| Skeleton views | Not started |
+| Growth progress gallery | Not started |
+| Desktop layout | Not started |
+
 ### Overview page
 
 | Feature | Description |
