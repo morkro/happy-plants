@@ -7,9 +7,6 @@
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.com/morkro/happy-plants">
-    <img src="https://travis-ci.com/morkro/happy-plants.svg?token=jraMM7KwaR9EEq8wiKZk&branch=master)" alt="Build Status" />
-  </a>
   <img src="https://img.shields.io/maintenance/yes/2018.svg" alt="Maintenance" />
   <a href="http://makeapullrequest.com" target="_blank">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
@@ -18,7 +15,7 @@
 
 ---
 
-<img src="resources/happyplants-phone-presentation.png" align="left" width="180px" alt="HappyPlants App" />
+<img src="resources/web-app.png" align="left" width="180px" alt="HappyPlants App" />
 
 [_HappyPlants_](https://happyplants.garden) is all about organising and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop.
 
@@ -36,9 +33,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 ## About
 If your hobby is collecting (and growing) plants, you maybe also like to gather all the information about them and keep an organised overview about your little home garden.
 
-_HappyPlants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants. See the list of
-
----
+_HappyPlants_ is a mobile-first, progressive web application which helps organising and keeping track of your plants.
 
 ## Features
 This project is currently still in `alpha` development and only supports a bare minimum set of features.
@@ -47,15 +42,15 @@ This project is currently still in `alpha` development and only supports a bare 
 
 | Feature | Description |
 | ------- | ----------- |
-| View mode | Choose between grid and category view. |
-| Sort by | The overview can be sorted by date (latest first) and alphabetical. |
+| View mode | Choose between grid and list view. |
+| Order by | The overview can be sorted by date (latest first) and alphabetical. |
+| Filter | Filter view by tags. |
 
 ### Add plant
 
 | Feature | Description |
 | ------- | ----------- |
 | Name and photo | Add a name and upload an additional, optional photo of the plant. |
-| Add or create category | When adding a new plant, you can either add an existing category to it or create a new one. |
 
 ### Plant profile
 
@@ -78,8 +73,6 @@ This project is currently still in `alpha` development and only supports a bare 
 | Import/export | Import or export plant data. |
 | Delete all | Delete all plant data. This is permanent and lost data can't be restored. |
 
----
-
 ## Data structure
 In the application settings, you can download and import your plant data.
 
@@ -93,7 +86,6 @@ This is the minimum required data of a single plant. If you want to import the d
   "modified": Date, // [required] Date when plant has been modified, defaults to created date
   "name": String, // [required] Name of the plant
   "blob": Blob | Base64 | undefined, // [optional] A base64 encoded or Blob of the plant photo
-  "tags": Array<Tag> // [optional] Array of tags, defaults to []
   "modules": Array<PlantModule> // [optional] Array of plant modules, should default to []
 }
 ```
@@ -166,8 +158,6 @@ Modules have all the same structure with a module-specific `value` definition.
 }
 ```
 
----
-
 ## Development
 
 | Command | Description |
@@ -180,11 +170,9 @@ Modules have all the same structure with a module-specific `value` definition.
 | `npm test` | Run all tests |
 | `npm lint` | Runs `Standard` over all `.js` and `.vue` files |
 
-This is an Vue.js progressive web application, bootstrapped with [`vue-init pwa`](https://github.com/vuejs-templates/pwa). For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+This is an Vue.js progressive web application, developed with [`@vue/cli`](https://github.com/vuejs/vue-cli).
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
----
 
 ## Credits
 ### Logo
@@ -192,8 +180,6 @@ The logo is a combination of existing illustrations by [Vitaly Gorbachev](https:
 
 ### Icons
 Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
-
----
 
 ## License
 [MIT](https:/github.com/morkro/happy-plants/LICENSE)
