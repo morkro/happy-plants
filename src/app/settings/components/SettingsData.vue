@@ -264,9 +264,11 @@
 <style lang="postcss" scoped>
   .settings-data {
     --color-modal-border: rgba(0, 0, 0, 0.06);
-
-    padding: var(--base-gap);
     line-height: 150%;
+
+    & section {
+      padding: var(--base-gap);
+    }
 
     & section > span {
       display: inline-block;
@@ -277,10 +279,6 @@
       height: 18px;
       width: 18px;
       filter: none;
-    }
-
-    & section:not(:last-of-type) {
-      margin-bottom: calc(var(--base-gap) * 2);
     }
 
     & section h2 {
@@ -304,12 +302,26 @@
     }
   }
 
-  .danger-zone {
-    border-top: 3px solid var(--transparency-black-light);
-    padding-top: var(--base-gap);
+  section.danger-zone {
+    padding-top: calc(var(--base-gap) * 1.5);
+    padding-bottom: calc(var(--base-gap) * 1.5);
+    background: var(--brand-red);
+    color: var(--text-color-inverse);
 
     & h2 {
-      color: var(--brand-red);
+      color: var(--text-color-inverse);
+    }
+
+    & button {
+      --button-background: var(--brand-yellow);
+
+      & span {
+        color: var(--link-color);
+      }
+
+      & svg {
+        filter: invert(100%);
+      }
     }
   }
 
