@@ -102,6 +102,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   p {
     color: var(--text-color-secondary);
     margin-bottom: var(--base-gap);
@@ -116,6 +118,10 @@
       height: calc(100vw / 12 + 6px);
       width: 100%;
       position: relative;
+
+      @media (--min-desktop-viewport) {
+        height: 40px;
+      }
 
       &:not(:last-child) {
         margin-right: 1px;

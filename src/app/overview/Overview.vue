@@ -267,6 +267,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../styles/media-queries";
+
   .main-wireframe {
     min-height: 100vh;
     background: var(--background-secondary);
@@ -377,6 +379,14 @@
       transform:
         translateY(calc(-100% - var(--base-gap)))
         translateX(var(--base-gap));
+
+      @media (--min-desktop-viewport) {
+        width: var(--app-desktop-max-width);
+        left: 50%;
+        transform:
+          translateY(calc(-100% - var(--base-gap)))
+          translateX(-50%);
+      }
     }
   }
 </style>

@@ -89,6 +89,8 @@
 </script>
 
 <style lang="postcss">
+  @import "../styles/media-queries";
+
   .happy-dialog-base {
     display: flex;
     justify-content: center;
@@ -124,6 +126,10 @@
     border: none;
     position: relative;
     background: var(--background-secondary);
+
+    @media (--min-desktop-viewport) {
+      width: var(--app-desktop-max-width);
+    }
 
     &.danger {
       background: var(--brand-red);

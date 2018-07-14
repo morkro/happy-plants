@@ -90,6 +90,8 @@
     @media (--min-desktop-viewport) {
       width: var(--app-desktop-max-width);
       margin: 0 auto;
+      border-top-left-radius: var(--border-radius);
+      border-top-right-radius: var(--border-radius);
     }
 
     & ul {

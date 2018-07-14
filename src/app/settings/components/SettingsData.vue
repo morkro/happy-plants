@@ -262,9 +262,17 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .settings-data {
     --color-modal-border: rgba(0, 0, 0, 0.06);
     line-height: 150%;
+
+    @media (--min-desktop-viewport) {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
     & section {
       padding: var(--base-gap);
@@ -283,6 +291,13 @@
 
     & section h2 {
       margin-bottom: calc(var(--base-gap) / 2);
+    }
+  }
+
+  @media (--min-desktop-viewport) {
+    .download-section,
+    .import-section {
+      width: 50%;
     }
   }
 
@@ -307,6 +322,11 @@
     padding-bottom: calc(var(--base-gap) * 1.5);
     background: var(--brand-red);
     color: var(--text-color-inverse);
+
+    @media (--min-desktop-viewport) {
+      border-radius: var(--border-radius);
+      width: 50%;
+    }
 
     & h2 {
       color: var(--text-color-inverse);

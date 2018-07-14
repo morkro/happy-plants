@@ -126,12 +126,18 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .plant-header {
     position: relative;
     color: var(--text-color-inverse);
     height: 100vw;
     background: var(--grey);
     z-index: 1;
+
+    @media (--min-desktop-viewport) {
+      height: 50vh;
+    }
   }
 
   .plant-header-view {
