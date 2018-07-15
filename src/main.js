@@ -10,7 +10,6 @@ import './registerServiceWorker'
 import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
-import computedProperties from '@/utils/vue-computed-properties'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 
@@ -41,7 +40,6 @@ VueTouch.registerCustomEvent('doubletap', {
   taps: 2
 })
 
-Vue.use(computedProperties)
 Vue.use(observeVisibility)
 Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)
