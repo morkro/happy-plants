@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.0.1-alpha</code>
+  Current version: <code>1.0.2-alpha</code>
 </p>
 
 <p align="center">

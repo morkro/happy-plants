@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.0.1-alpha",
+  "version": "1.0.2-alpha",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
