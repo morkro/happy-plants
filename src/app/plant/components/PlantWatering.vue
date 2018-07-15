@@ -64,7 +64,7 @@
       'plant-dialog': HappyDialog,
       'plant-component': PlantComponent,
       'feather-droplet': () =>
-        import('vue-feather-icon/components/droplet' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/DropletIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {

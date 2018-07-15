@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.0.0-alpha",
+  "version": "1.0.1-alpha",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
@@ -20,7 +20,7 @@
     "uuid": "^3.3.2",
     "vue": "^2.5.16",
     "vue-a11y-dialog": "^0.2.0",
-    "vue-feather-icon": "^1.2.0",
+    "vue-feather-icons": "^4.7.1",
     "vue-meta": "^1.5.2",
     "vue-router": "^3.0.1",
     "vue-svgicon": "^3.0.2",

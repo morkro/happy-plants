@@ -33,9 +33,9 @@
 
     components: {
       'feather-box': () =>
-        import('vue-feather-icon/components/box' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/BoxIcon' /* webpackChunkName: "icons" */),
       'feather-hash': () =>
-        import('vue-feather-icon/components/hash' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */)
     },
 
     methods: {

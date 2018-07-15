@@ -3,7 +3,7 @@
     <li v-for="(item, index) in menu" :key="index">
       <router-link :to="{ name: item.name }">
         <span>{{ item.label }}</span>
-        <feather-arrow-right />
+        <component :is="`feather-${item.icon}`" />
       </router-link>
     </li>
     <li class="menu-version">
@@ -19,22 +19,26 @@
     name: 'SettingsMenu',
 
     components: {
-      'feather-arrow-right': () =>
-          import('vue-feather-icon/components/arrow-right' /* webpackChunkName: "icons" */)
+      'feather-hash': () =>
+        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
+      'feather-database': () =>
+        import('vue-feather-icons/icons/DatabaseIcon' /* webpackChunkName: "icons" */),
+      'feather-users': () =>
+        import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
       return {
         version: pkg.version,
         menu: [
-          { label: 'Tags', name: 'SettingsTags' },
-          { label: 'Plant Data', name: 'SettingsData' },
-          { label: 'About', name: 'SettingsAbout' }
+          { label: 'Tags', name: 'SettingsTags', icon: 'hash' },
+          { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
+          { label: 'About', name: 'SettingsAbout', icon: 'users' }
         ]
       }
     }
   }
-</script>
+</script>—
 
 <style lang="postcss" scoped>
   ul li {
@@ -77,6 +81,16 @@
 
     & svg {
       transform: scale(0.8);
+    }
+
+    & span {
+      display: flex;
+      align-items: center;
+
+      & svg {
+        margin-right: var(--base-gap);
+        opacity: 0.5;
+      }
     }
   }
 </style>

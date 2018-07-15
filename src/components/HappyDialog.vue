@@ -30,7 +30,7 @@
 
     components: {
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({

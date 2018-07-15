@@ -69,11 +69,11 @@
 
     components: {
       'feather-plus': () =>
-        import('vue-feather-icon/components/plus' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
-        import('vue-feather-icon/components/x' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
       'feather-check': () =>
-        import('vue-feather-icon/components/check' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/CheckIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {

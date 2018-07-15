@@ -47,7 +47,7 @@
 
     components: {
       'feather-aperture': () =>
-        import('vue-feather-icon/components/aperture' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {

@@ -59,7 +59,7 @@
       'app-dialog': HappyDialog,
       'plant-component': PlantComponent,
       'feather-book': () =>
-        import('vue-feather-icon/components/book' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/BookIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {

@@ -39,7 +39,7 @@
     components: {
       'app-dialog': HappyDialog,
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },
 
     methods: {

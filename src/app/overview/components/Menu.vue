@@ -44,9 +44,9 @@
 
     components: {
       'feather-trash': () =>
-        import('vue-feather-icon/components/trash-2' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {

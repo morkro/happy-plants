@@ -69,9 +69,9 @@
 
     components: {
       'feather-github': () =>
-        import('vue-feather-icon/components/github' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/GithubIcon' /* webpackChunkName: "icons" */),
       'feather-heart': () =>
-        import('vue-feather-icon/components/heart' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/HeartIcon' /* webpackChunkName: "icons" */)
     }
   }
 </script>

@@ -25,7 +25,7 @@
 
     components: {
       'feather-home': () =>
-        import('vue-feather-icon/components/home' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/HomeIcon' /* webpackChunkName: "icons" */)
     },
 
     created () {

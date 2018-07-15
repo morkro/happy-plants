@@ -44,11 +44,11 @@
 
     components: {
       'feather-settings': () =>
-        import('vue-feather-icon/components/settings' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/SettingsIcon' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */),
       'feather-box': () =>
-        import('vue-feather-icon/components/box' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/BoxIcon' /* webpackChunkName: "icons" */)
     }
   }
 </script>

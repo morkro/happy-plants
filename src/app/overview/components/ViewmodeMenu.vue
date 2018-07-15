@@ -71,17 +71,17 @@
 
     components: {
       'feather-grid': () =>
-        import('vue-feather-icon/components/grid' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */),
       'feather-list': () =>
-        import('vue-feather-icon/components/list' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/ListIcon' /* webpackChunkName: "icons" */),
       'feather-layers': () =>
-        import('vue-feather-icon/components/layers' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/LayersIcon' /* webpackChunkName: "icons" */),
       'feather-hash': () =>
-        import('vue-feather-icon/components/hash' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
       'feather-bold': () =>
-        import('vue-feather-icon/components/bold' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/BoldIcon' /* webpackChunkName: "icons" */),
       'feather-clock': () =>
-        import('vue-feather-icon/components/clock' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ClockIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {

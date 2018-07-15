@@ -131,11 +131,11 @@
       'settings-dialog': HappyDialog,
       'file-upload': FileUpload,
       'feather-download': () =>
-        import('vue-feather-icon/components/download' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/DownloadIcon' /* webpackChunkName: "icons" */),
       'feather-delete': () =>
-        import('vue-feather-icon/components/delete' /* webpackChunkName: "icons" */),
+        import('vue-feather-icons/icons/DeleteIcon' /* webpackChunkName: "icons" */),
       'feather-copy': () =>
-        import('vue-feather-icon/components/copy' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/CopyIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
