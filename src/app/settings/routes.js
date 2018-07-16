@@ -22,6 +22,11 @@ export default [
         path: 'data',
         name: 'SettingsData',
         component: () => import('./components/SettingsData' /* webpackChunkName: "settings" */)
+      },
+      {
+        path: 'changelog',
+        name: 'SettingsChangelog',
+        component: () => import('./components/SettingsChangelog' /* webpackChunkName: "settings" */)
       }
     ]
   }
