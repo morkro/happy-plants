@@ -24,7 +24,9 @@
       'feather-database': () =>
         import('vue-feather-icons/icons/DatabaseIcon' /* webpackChunkName: "icons" */),
       'feather-users': () =>
-        import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */),
+      'feather-file-text': () =>
+        import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
@@ -33,7 +35,8 @@
         menu: [
           { label: 'Tags', name: 'SettingsTags', icon: 'hash' },
           { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
-          { label: 'About', name: 'SettingsAbout', icon: 'users' }
+          { label: 'About', name: 'SettingsAbout', icon: 'users' },
+          { label: 'Changelog', name: 'SettingsChangelog', icon: 'file-text' }
         ]
       }
     }

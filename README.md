@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.0.3-alpha</code>
+  Current version: <code>1.1.0</code> [(Changelog)](CHANGELOG.md)
 </p>
 
 <p align="center">

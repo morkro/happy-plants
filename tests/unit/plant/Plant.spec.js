@@ -5,7 +5,6 @@ import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
 
 import Plant from '@/app/plant/Plant'
-import computedProperties from '@/utils/vue-computed-properties'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 import store from '@/store'
@@ -16,7 +15,6 @@ localVue.use(Vuex)
 localVue.use(Router)
 localVue.use(VueTouch)
 localVue.use(VueSVGIcon)
-localVue.use(computedProperties)
 localVue.use(observeVisibility)
 localVue.use(formatDateFilter)
 
