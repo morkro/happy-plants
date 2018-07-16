@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added a CHANGELOG to the repository and application.
 
+### Fixed
+- One test was broken due to the removed file in the previous release.
+
 ## [1.0.3-alpha] - 2018-07-15
 
 ### Removed
