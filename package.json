@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.0.3-alpha",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
@@ -48,6 +48,7 @@
     "postcss-url": "^7.3.2",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-processor-html": "^1.0.0",
+    "vue-markdown-loader": "^2.4.1",
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [
