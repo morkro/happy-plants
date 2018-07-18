@@ -16,7 +16,7 @@
       v-if="showTagButton"
       class="footer-tags plain"
       @click.prevent="emitShowTags">
-      <feather-hash />
+      <feather-tag />
       <span>Add tags</span>
     </button>
   </section>
@@ -34,8 +34,8 @@
     components: {
       'feather-box': () =>
         import('vue-feather-icons/icons/BoxIcon' /* webpackChunkName: "icons" */),
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */)
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */)
     },
 
     methods: {

@@ -13,14 +13,14 @@
 </template>
 
 <script>
-  import pkg from '#/package.json'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'SettingsMenu',
 
     components: {
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
         import('vue-feather-icons/icons/DatabaseIcon' /* webpackChunkName: "icons" */),
       'feather-users': () =>
@@ -31,15 +31,18 @@
 
     data () {
       return {
-        version: pkg.version,
         menu: [
-          { label: 'Tags', name: 'SettingsTags', icon: 'hash' },
+          { label: 'Tags', name: 'SettingsTags', icon: 'tag' },
           { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
           { label: 'About', name: 'SettingsAbout', icon: 'users' },
           { label: 'Changelog', name: 'SettingsChangelog', icon: 'file-text' }
         ]
       }
-    }
+    },
+
+    computed: mapState({
+      version: state => state.version
+    })
   }
 </script>—
 
