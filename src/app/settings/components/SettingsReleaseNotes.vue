@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-changelog">
+  <div class="settings-release-notes">
     <md-changelog ref="changelog" />
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script>
   import Changelog from '#/CHANGELOG.md'
   export default {
-    name: 'SettingsChangelog',
+    name: 'SettingsReleaseNotes',
 
     components: {
       'md-changelog': Changelog
@@ -25,7 +25,7 @@
 </script>
 
 <style lang="postcss">
-  .settings-changelog {
+  .settings-release-notes {
     padding: var(--base-gap) 0;
     line-height: 150%;
 

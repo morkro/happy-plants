@@ -35,7 +35,7 @@
           { label: 'Tags', name: 'SettingsTags', icon: 'tag' },
           { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
           { label: 'About', name: 'SettingsAbout', icon: 'users' },
-          { label: 'Changelog', name: 'SettingsChangelog', icon: 'file-text' }
+          { label: 'Release Notes', name: 'SettingsReleaseNotes', icon: 'file-text' }
         ]
       }
     },
