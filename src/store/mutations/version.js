@@ -4,9 +4,6 @@ export default {
   LOAD_VERSION (state, payload) {
     const versionIsValid = typeof payload.version === 'string'
 
-    console.log(payload.version, state.version)
-    console.log(compareVersion(payload.version, state.version))
-
     if (versionIsValid && !compareVersion(payload.version, state.version, false)) {
       state.version = payload.version
     } else {
