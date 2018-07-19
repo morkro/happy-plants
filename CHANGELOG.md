@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+- Notification system to let users know a new version of the app has been released and downloaded.
+
 ### Changed
 - Renamed Changelog to Release Notes in Settings.
 - Updated icon for tags to be more clear.

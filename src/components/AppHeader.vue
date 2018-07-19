@@ -22,7 +22,9 @@
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
           aria-label="Settings">
-          <component :is="`feather-${settingsIcon}`" class="header-settings-icon" />
+          <div :class="['header-settings-icon', { 'highlight': showNotification }]">
+            <component :is="`feather-${settingsIcon}`"/>
+          </div>
         </router-link>
         <button type="button"
           v-else-if="settings === 'edit'"
@@ -49,7 +51,8 @@
       settingsOnClick: { type: Function, default: () => {} },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
-      transparent: { type: Boolean, default: false }
+      transparent: { type: Boolean, default: false },
+      showNotification: { type: Boolean, default: false }
     },
 
     components: {
@@ -129,6 +132,10 @@
       transition:
         background calc(var(--base-speed) * 2) var(--ease-out-back),
         box-shadow var(--base-speed) var(--ease-out-back);
+
+      & h1 {
+        color: var(--text-color-inverse);
+      }
     }
 
     & .edit-data {
@@ -211,7 +218,25 @@
   }
 
   .app-header .header-settings-icon {
+    position: relative;
     width: var(--icon-size-base);
     height: var(--icon-size-base);
+
+    &.highlight::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand-red);
+      box-shadow: 0 0 6px var(--brand-red);
+      position: absolute;
+      top: -3px;
+      right: -1px;
+    }
+
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>

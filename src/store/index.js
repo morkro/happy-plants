@@ -9,12 +9,15 @@ import overview from '@/app/overview/store'
 import plant from '@/app/plant/store'
 import settings from '@/app/settings/store'
 
+import pkg from '#/package.json'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
 
   state: {
+    version: pkg.version,
     updated: Date.now(),
 
     appheader: {
@@ -35,7 +38,8 @@ export default new Vuex.Store({
     settings: {
       orderBy: 'latest',
       viewMode: 'grid',
-      filterBy: 'all'
+      filterBy: 'all',
+      hasNewRelease: false
     },
 
     plants: [],

@@ -4,7 +4,9 @@
       class="notifications"
       :message="message" />
 
-    <app-header :scroll-up="true"
+    <app-header
+      :show-notification="hasNewRelease"
+      :scroll-up="true"
       :transparent="transparent"
       :color="iconColor"
       :settings="settingsBtn"
@@ -45,6 +47,7 @@
     },
 
     computed: mapState({
+      hasNewRelease: state => state.settings.hasNewRelease,
       message: state => state.notification.message,
       pageTitle: state => state.appheader.title,
       transparent: state => state.appheader.transparent,
@@ -58,19 +61,23 @@
 
     methods: {
       ...mapActions([
-        'loadPlants',
+        'loadVersion',
+        'updateVersion',
         'loadSettings',
+        'loadPlants',
         'loadTags',
         'hideNotification'
       ])
     },
 
     mounted () {
-      Promise.all([
-        this.loadSettings(),
-        this.loadPlants(),
-        this.loadTags()
-      ])
+      this.loadVersion()
+        .then(() => this.updateVersion())
+        .then(() => this.loadSettings())
+        .then(() => Promise.all([
+          this.loadPlants(),
+          this.loadTags()
+        ]))
     },
 
     updated () {
