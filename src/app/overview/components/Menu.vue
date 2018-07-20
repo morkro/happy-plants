@@ -2,19 +2,20 @@
   <div :class="wrapperClass">
     <ul class="menu-left">
       <li v-if="showViewmode">
-        <button type="button"
+        <v-button
+          color="transparent"
           aria-label="View mode"
           :class="`view-mode icon ${disableMenu ? '' : 'inverse'}`"
-          @click.prevent="emitMenuAction('view-mode')">
-          <feather-grid width="18" height="18" />
-        </button>
+          @click.native.prevent="emitMenuAction('view-mode')">
+          <feather-grid slot="icon" />
+        </v-button>
       </li>
     </ul>
 
     <router-link
       tag="button"
       aria-label="Add plant"
-      class="add-plant icon"
+      class="add-plant transparent"
       :to="{ path: 'add' }"
       :event="disableMenu ? '' : 'click'">
       <svgicon icon="leaf"
@@ -25,24 +26,27 @@
 
     <ul class="menu-right">
       <li v-if="showDelete">
-        <button type="button"
+        <v-button
+          color="transparent"
           aria-label="Trash"
-          class="delete icon inverse"
-          @click.prevent="emitMenuAction('delete')">
-          <feather-trash width="18" height="18" />
-        </button>
+          class="delete"
+          @click.native.prevent="emitMenuAction('delete')">
+          <feather-trash slot="icon" />
+        </v-button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+  import Button from '@/components/Button'
   import '@/assets/icons/leaf'
 
   export default {
     name: 'OverviewMenu',
 
     components: {
+      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
@@ -117,11 +121,6 @@
         opacity: 0;
       }
     }
-
-    & button:focus {
-      --button-focus: transparent;
-      --button-background: var(--grey);
-    }
   }
 
   .menu-left,
@@ -141,6 +140,10 @@
 
     @nest .disabled & li .view-mode {
       background: var(--brand-green);
+
+      & svg {
+        filter: none;
+      }
     }
   }
 

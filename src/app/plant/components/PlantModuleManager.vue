@@ -34,23 +34,23 @@
     </ul>
 
     <div class="dialog-actions">
-      <button
-        type="button"
-        @click="confirmModuleUpdates">
+      <v-button @click.native="confirmModuleUpdates">
         Update modules
-      </button>
+      </v-button>
     </div>
   </plant-dialog>
 </template>
 
 <script>
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
 
   export default {
     name: 'PlantModuleManager',
 
     components: {
       'plant-dialog': HappyDialog,
+      'v-button': Button,
       'feather-droplet': () =>
         import('vue-feather-icons/icons/DropletIcon' /* webpackChunkName: "icons" */),
       'feather-sun': () =>

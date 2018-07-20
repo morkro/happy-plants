@@ -35,27 +35,14 @@
 
     & h2 {
       padding: var(--base-gap);
+      margin-top: calc(3 * var(--base-gap));
       margin-bottom: var(--base-gap);
       background: var(--background-primary);
       position: relative;
 
       &:nth-of-type(2) {
-        margin-top: calc(2 * var(--base-gap));
-        padding-top: calc(1.5 * var(--base-gap));
-        color: var(--brand-green);
-
-        &::before {
-          content: "Latest release";
-          position: absolute;
-          top: 0;
-          font-size: var(--text-size-xsmall);
-          font-weight: 400;
-          border-radius: var(--border-radius);
-          background: var(--brand-green);
-          color: var(--text-color-inverse);
-          transform: translateY(-50%);
-          padding: 0 calc(var(--base-gap) / 2);
-        }
+        background: var(--brand-green);
+        color: var(--text-color-inverse);
       }
     }
 

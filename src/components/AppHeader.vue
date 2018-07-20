@@ -26,13 +26,13 @@
             <component :is="`feather-${settingsIcon}`"/>
           </div>
         </router-link>
-        <button type="button"
+        <v-button
           v-else-if="settings === 'edit'"
           aria-label="Edit"
           :class="settingsClass"
-          @click.prevent="settingsOnClick">
-          <component :is="`feather-${settingsIcon}`" />
-        </button>
+          @click.native.prevent="settingsOnClick">
+          <component :is="`feather-${settingsIcon}`" slot="icon" />
+        </v-button>
         <slot name="custom-action-right" />
       </div>
     </div>
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import Button from '@/components/Button'
   export default {
     name: 'AppHeader',
 
@@ -56,6 +57,7 @@
     },
 
     components: {
+      'v-button': Button,
       'feather-arrow-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-settings': () =>
@@ -202,6 +204,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      background: transparent;
 
       &:focus {
         outline: none;

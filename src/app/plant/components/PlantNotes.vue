@@ -14,16 +14,18 @@
           @change="updateContent"
           :value="content" />
 
-        <button type="button" @click="closeAndSaveNotes">
+        <v-button @click.native="closeAndSaveNotes">
           Save
-        </button>
+        </v-button>
       </app-dialog>
 
       <div v-if="!content"
         key="notes-empty"
         class="notes-empty">
         <p>Seems like you haven't added any notes yet.</p>
-        <button type="button" @click="toggleNotes">Add notes</button>
+        <v-button @click.native="toggleNotes">
+          Add notes
+        </v-button>
       </div>
 
       <div v-else
@@ -33,16 +35,13 @@
           <p>{{ content }}</p>
         </div>
         <div class="notes-actions">
-          <button type="button" @click="togglePreview">
+          <v-button @click.native="togglePreview">
             <span v-if="!showAllNotes">Show all</span>
             <span v-else>Hide all</span>
-          </button>
-          <button
-            type="button"
-            v-if="!showAllNotes"
-            @click="toggleNotes">
+          </v-button>
+          <v-button v-if="!showAllNotes" @click.native="toggleNotes">
             Edit notes
-          </button>
+          </v-button>
         </div>
       </div>
     </div>
@@ -51,12 +50,14 @@
 
 <script>
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
 
     components: {
       'app-dialog': HappyDialog,
+      'v-button': Button,
       'plant-component': PlantComponent,
       'feather-book': () =>
         import('vue-feather-icons/icons/BookIcon' /* webpackChunkName: "icons" */)

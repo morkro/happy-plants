@@ -16,15 +16,16 @@
           @change="updateLabelName">
       </label>
 
-      <button type="button" @click="updateTag">
+      <v-button @click.native="updateTag">
         Update name
-      </button>
+      </v-button>
     </form>
   </app-dialog>
 </template>
 
 <script>
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   export default {
     name: 'TagModal',
 
@@ -35,7 +36,8 @@
     },
 
     components: {
-      'app-dialog': HappyDialog
+      'app-dialog': HappyDialog,
+      'v-button': Button
     },
 
     data: () => ({

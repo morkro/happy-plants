@@ -7,13 +7,10 @@
     @close-dialog="emitCloseDialog">
     <span slot="headline">Delete plant</span>
 
-    <button
-      type="button"
-      class="warning"
-      @click="emitDeletePlant">
-      <feather-trash />
-      <span>Yes, delete this plant</span>
-    </button>
+    <v-button color="red" @click.native="emitDeletePlant">
+      <feather-trash slot="icon" />
+      Yes, delete this plant
+    </v-button>
 
     <div class="modal-meta">
       <span>Last updated: {{ modified | formatDate }}</span>
@@ -24,6 +21,7 @@
 
 <script>
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   import '@/assets/icons/cactus'
 
   export default {
@@ -38,6 +36,7 @@
 
     components: {
       'app-dialog': HappyDialog,
+      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },

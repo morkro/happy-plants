@@ -96,7 +96,6 @@
   @import "../styles/fonts";
   @import "../styles/typography";
   @import "../styles/forms";
-  @import "../styles/buttons";
   @import "../styles/layout";
 
   * {

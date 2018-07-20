@@ -12,12 +12,9 @@
         <p>
           You are about to delete <strong>{{ selection.length }}</strong> plants.
         </p>
-        <button
-          type="button"
-          class="warning"
-          @click="confirmDeletePlants">
+        <v-button color="yellow" @click.native="confirmDeletePlants">
           Yes, delete plants
-        </button>
+        </v-button>
       </div>
     </overview-dialog>
 
@@ -86,6 +83,7 @@
 
   import AppHeader from '@/components/AppHeader'
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
@@ -98,6 +96,7 @@
     components: {
       'app-header': AppHeader,
       'overview-dialog': HappyDialog,
+      'v-button': Button,
       'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,

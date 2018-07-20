@@ -3,30 +3,25 @@
     <div
       :class="{ 'plant-tags-module': true, 'show-tooltip': showTooltip }"
       data-tooltip="Double tap to remove">
-      <button type="button"
-        class="tags-add icon inverse"
-        @click="toggleNewTagInput"
+      <v-button
+        color="plain"
+        class="tags-add"
+        @click.native="toggleNewTagInput"
         :aria-label="ariaLabelToggle">
-        <div v-if="!showInput">
-          <feather-plus />
-        </div>
-        <div v-else>
-          <feather-x />
-        </div>
-      </button>
+        <feather-plus v-if="!showInput" slot="icon" />
+        <feather-x v-else slot="icon" />
+      </v-button>
 
       <div :class="{ 'tags-list-wrapper': true, 'show-input': showInput }">
-        <form v-if="showInput"
-          class="tags-new"
-          @submit.prevent="addNewTag">
+        <form v-if="showInput" class="tags-new">
           <input
             type="text"
             id="tag-new-name"
             ref="tagInput"
             @change="getTagName">
-          <button type="submit">
-            <feather-check />
-          </button>
+          <v-button @click.native="addNewTag">
+            <feather-check slot="icon" />
+          </v-button>
         </form>
 
         <div class="tags-list-inner" v-else>
@@ -46,12 +41,13 @@
               Add a tag to your plant!
             </span>
 
-            <button
-              type="button"
-              class="plain small hide-module"
-              @click.prevent="hideTagModule">
+            <v-button
+              type="small"
+              color="plain"
+              class="hide-module"
+              @click.native.prevent="hideTagModule">
               Hide
-            </button>
+            </v-button>
           </div>
         </div>
       </div>
@@ -64,10 +60,12 @@
 </template>
 
 <script>
+  import Button from '@/components/Button'
   export default {
     name: 'PlantTag',
 
     components: {
+      'v-button': Button,
       'feather-plus': () =>
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
