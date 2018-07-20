@@ -1,4 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
+import Button from '@/components/Button'
 import PlantFooter from '@/app/plant/components/PlantFooter'
 
 describe('app/plant/PlantFooter.vue', () => {
@@ -22,19 +23,19 @@ describe('app/plant/PlantFooter.vue', () => {
 
   it('shows the tag button if prop is set', () => {
     const wrapper = shallowMount(PlantFooter)
-    let TagButton = wrapper.find('button.footer-tags')
+    let TagButton = wrapper.find('v-button.footer-tags')
 
     expect(TagButton.exists()).toBe(false)
     wrapper.setProps({ showTagButton: true })
 
-    TagButton = wrapper.find('button.footer-tags')
+    TagButton = wrapper.find('.footer-tags')
     expect(TagButton.exists()).toBe(true)
-    expect(TagButton.is('button')).toBe(true)
+    expect(TagButton.is(Button)).toBe(true)
   })
 
   it('emits event when tag button is tapped', () => {
     const wrapper = shallowMount(PlantFooter, { propsData: { showTagButton: true } })
-    const TagButton = wrapper.find('button.footer-tags')
+    const TagButton = wrapper.find('.footer-tags')
     expect(TagButton.exists()).toBe(true)
     TagButton.trigger('click')
     expect(wrapper.emitted('show-tags')).toBeTruthy()
@@ -42,7 +43,7 @@ describe('app/plant/PlantFooter.vue', () => {
 
   it('emits event when modules button is tapped', () => {
     const wrapper = shallowMount(PlantFooter)
-    const ModulesButton = wrapper.find('button.footer-modules')
+    const ModulesButton = wrapper.find('.footer-modules')
     expect(ModulesButton.exists()).toBe(true)
     ModulesButton.trigger('click')
     expect(wrapper.emitted('manage-modules')).toBeTruthy()

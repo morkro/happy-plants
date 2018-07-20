@@ -40,7 +40,7 @@ describe('app/plant/PlantTags.vue', () => {
     wrapper.setData({ showInput: true })
 
     const input = wrapper.find({ ref: 'tagInput' })
-    const form = wrapper.find('.tags-new')
+    const button = wrapper.find('.tags-new-button')
 
     // Add tag name and trigger change
     input.element.value = 'foo'
@@ -48,7 +48,7 @@ describe('app/plant/PlantTags.vue', () => {
     expect(wrapper.vm.newTagName).toEqual('foo')
 
     // Click submit button
-    form.trigger('submit')
+    button.trigger('click')
     expect(wrapper.emitted('new-tag')).toBeTruthy()
     expect(wrapper.emitted('new-tag')).toEqual([[{ label: 'foo' }]])
   })

@@ -19,7 +19,7 @@
             id="tag-new-name"
             ref="tagInput"
             @change="getTagName">
-          <v-button @click.native="addNewTag">
+          <v-button class="tags-new-button" @click.native="addNewTag">
             <feather-check slot="icon" />
           </v-button>
         </form>
