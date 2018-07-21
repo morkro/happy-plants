@@ -32,7 +32,7 @@
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
       <div v-if="!tags.length" class="tags-empty">
-        <feather-hash />
+        <feather-tag />
         <h1>You haven't added tags to your plants yet</h1>
         <p>
           Tagging is a system to help organise your plants better.
@@ -99,8 +99,8 @@
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
         import('vue-feather-icons/icons/Edit2Icon' /* webpackChunkName: "icons" */),
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-trash': () =>
         import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },

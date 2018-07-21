@@ -6,11 +6,18 @@
 
 <script>
   import Changelog from '#/CHANGELOG.md'
+  import { mapActions } from 'vuex'
   export default {
     name: 'SettingsReleaseNotes',
 
     components: {
       'md-changelog': Changelog
+    },
+
+    created () {
+      this.updateAppHeader({
+        title: 'Release Notes'
+      })
     },
 
     mounted () {
@@ -20,7 +27,11 @@
           $link.setAttribute('target', '_blank')
         }
       }
-    }
+    },
+
+    methods: mapActions([
+      'updateAppHeader'
+    ])
   }
 </script>
 

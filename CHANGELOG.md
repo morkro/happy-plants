@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Renamed Changelog to Release Notes in Settings.
 - Updated icon for tags to be more clear.
 
+### Fixed
+- Some minor fixes with the button component and icons.
+
 ## [1.1.0] - 2018-07-16
 
 ### Added
