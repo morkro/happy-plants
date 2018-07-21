@@ -174,7 +174,6 @@
 
     & svg {
       margin: 0;
-      filter: invert(1);
     }
 
     @nest .disabled & {
