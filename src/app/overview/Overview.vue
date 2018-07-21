@@ -23,12 +23,7 @@
       @click="hideBackdrop" />
 
     <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
-      <!-- Simple onboarding instruction if user has no plants yet. -->
-      <plants-intro
-        v-if="plants.length <= 0"
-        key="overview-intro" />
-
-      <div v-if="plants.length && filterBy !== 'all'" class="plants-filtered-headline">
+      <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
         <h2>Filtered by <span class="tag">{{ filteredTag }}</span></h2>
         <button
           type="button"
@@ -87,7 +82,6 @@
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
-  import PlantsIntro from './components/PlantsIntro'
   import ViewmodeMenu from './components/ViewmodeMenu'
 
   export default {
@@ -97,7 +91,6 @@
       'app-header': AppHeader,
       'overview-dialog': HappyDialog,
       'v-button': Button,
-      'plants-intro': PlantsIntro,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
@@ -178,12 +171,24 @@
       }
     },
 
+    updated () {
+      if (this.plants && this.plants.length === 0) {
+        this.$router.push('/intro')
+      }
+    },
+
     created () {
       this.updateAppHeader({
         title: 'Happy Plants',
         backBtn: false,
         settingsBtn: true
       })
+    },
+
+    mounted () {
+      if (this.plants && this.plants.length === 0) {
+        this.$router.push('/intro')
+      }
     },
 
     methods: {

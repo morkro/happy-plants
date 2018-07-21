@@ -42,7 +42,7 @@ export default new Vuex.Store({
       hasNewRelease: false
     },
 
-    plants: [],
+    plants: false,
     selected: plant.state,
     tags: []
   },

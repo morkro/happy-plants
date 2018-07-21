@@ -1,0 +1,29 @@
+import { mount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+import Router from 'vue-router'
+
+import Intro from '@/app/intro/Intro'
+import store from '@/store'
+import router from '@/router'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
+localVue.use(Router)
+
+describe('app/not-found/NotFound.vue', () => {
+  const options = {
+    localVue,
+    store,
+    router,
+    stubs: {
+      'feather-settings': '<svg />',
+      'feather-grid': '<svg />',
+      'feather-box': '<svg />'
+    }
+  }
+
+  it('is a Vue component', () => {
+    const wrapper = mount(Intro, options)
+    expect(wrapper.isVueInstance()).toEqual(true)
+  })
+})
