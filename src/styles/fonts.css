@@ -18,8 +18,7 @@
     url('/fonts/Asap-Regular.eot?#iefix') format('embedded-opentype'),
     url('/fonts/Asap-Regular.woff2') format('woff2'),
     url('/fonts/Asap-Regular.woff') format('woff'),
-    url('/fonts/Asap-Regular.ttf') format('truetype'),
-    url('/fonts/Asap-Regular.svg#Asap-Regular') format('svg');
+    url('/fonts/Asap-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -34,8 +33,7 @@
     url('/fonts/Asap-Medium.eot?#iefix') format('embedded-opentype'),
     url('/fonts/Asap-Medium.woff2') format('woff2'),
     url('/fonts/Asap-Medium.woff') format('woff'),
-    url('/fonts/Asap-Medium.ttf') format('truetype'),
-    url('/fonts/Asap-Medium.svg#Asap-Medium') format('svg');
+    url('/fonts/Asap-Medium.ttf') format('truetype');
 }
 
 @font-face {
@@ -50,6 +48,5 @@
     url('/fonts/Asap-Bold.eot?#iefix') format('embedded-opentype'),
     url('/fonts/Asap-Bold.woff2') format('woff2'),
     url('/fonts/Asap-Bold.woff') format('woff'),
-    url('/fonts/Asap-Bold.ttf') format('truetype'),
-    url('/fonts/Asap-Bold.svg#Asap-Bold') format('svg');
+    url('/fonts/Asap-Bold.ttf') format('truetype');
 }
