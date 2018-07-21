@@ -1,6 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
+import VueSVGIcon from 'vue-svgicon'
 
 import Intro from '@/app/intro/Intro'
 import store from '@/store'
@@ -9,6 +10,7 @@ import router from '@/router'
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(Router)
+localVue.use(VueSVGIcon)
 
 describe('app/not-found/NotFound.vue', () => {
   const options = {
