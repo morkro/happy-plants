@@ -135,7 +135,7 @@
       padding: calc(var(--base-gap) + 5px) var(--base-gap);
     }
 
-    & button[disabled] svg {
+    & button:not([disabled]) svg {
       filter: invert(100%) !important;
     }
   }

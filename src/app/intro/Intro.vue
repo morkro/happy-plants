@@ -141,11 +141,6 @@
 
     & .btn .button-icon svg {
       filter: none;
-
-      & * {
-        stroke: var(--text-color-base) !important;
-        fill: var(--text-color-base) !important;
-      }
     }
   }
 </style>

@@ -102,13 +102,13 @@
 
     & .button-icon svg,
     & svg {
-      stroke: var(--button-icon);
+      /* stroke: var(--button-icon); */
       width: var(--icon-size-base);
       height: var(--icon-size-base);
 
-      & * {
+      /* & * {
         stroke: var(--button-icon);
-      }
+      } */
     }
   }
 
@@ -150,8 +150,7 @@
     cursor: not-allowed;
 
     & .button-icon svg {
-      opacity: 0.3;
-      filter: invert(0);
+      filter: invert(100%);
     }
   }
 
@@ -160,21 +159,12 @@
     --button-background: var(--grey);
     --button-focus: var(--dark-grey);
     --text-color: var(--link-color);
-
-    & .button-icon svg,
-    & svg {
-      filter: invert(100%);
-    }
   }
 
   button.yellow,
   .btn.yellow {
     --button-background: var(--brand-yellow);
     --text-color: var(--link-color);
-
-    & .button-icon svg {
-      filter: invert(100%);
-    }
   }
 
   button.red,

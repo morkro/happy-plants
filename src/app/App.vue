@@ -150,16 +150,5 @@
     height: 16px;
     color: inherit;
     vertical-align: middle;
-    fill: none;
-    stroke: currentColor;
-
-    & path {
-      fill: currentColor;
-    }
-  }
-
-  .svg-fill {
-    fill: currentColor;
-    stroke: none;
   }
 </style>
