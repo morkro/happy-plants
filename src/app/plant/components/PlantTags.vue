@@ -13,7 +13,10 @@
       </v-button>
 
       <div :class="{ 'tags-list-wrapper': true, 'show-input': showInput }">
-        <form v-if="showInput" class="tags-new">
+        <form
+          v-if="showInput"
+          class="tags-new"
+          @submit.prevent>
           <input
             type="text"
             id="tag-new-name"
