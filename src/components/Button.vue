@@ -102,13 +102,8 @@
 
     & .button-icon svg,
     & svg {
-      /* stroke: var(--button-icon); */
       width: var(--icon-size-base);
       height: var(--icon-size-base);
-
-      /* & * {
-        stroke: var(--button-icon);
-      } */
     }
   }
 
