@@ -1,11 +1,11 @@
-import localforage from 'localforage'
+import { getEntry, updateEntry } from './localforage'
 
 const namespace = 'version'
 
-export const fetchVersion = (data) => {
-  return localforage.startsWith(namespace)
+export const fetchVersion = () => {
+  return getEntry(namespace)
 }
 
 export const updateVersion = (data) => {
-  return localforage.setItem(namespace, data)
+  return updateEntry(namespace, data)
 }

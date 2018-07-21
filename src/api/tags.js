@@ -1,15 +1,15 @@
-import localforage from 'localforage'
+import { getEntry, deleteEntry, updateEntry } from './localforage'
 
 const namespace = 'tags'
 
 export const fetchTags = () => {
-  return localforage.startsWith(namespace)
+  return getEntry(namespace)
 }
 
 export const updateTags = data => {
-  return localforage.setItem(namespace, data)
+  return updateEntry(namespace, data)
 }
 
 export const deleteAllTags = () => {
-  return localforage.removeItem(namespace)
+  return deleteEntry(namespace)
 }

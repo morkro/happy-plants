@@ -1,13 +1,13 @@
-import localforage from 'localforage'
+import { getEntry, getEntryWN, updateEntry, getAllEntries } from './localforage'
 
 const namespace = 'settings'
 
 export const fetchSettings = () => {
-  return localforage.startsWith(namespace)
+  return getEntry(namespace)
 }
 
 export const updateSettings = data => {
-  return localforage.setItem(namespace, data)
+  return updateEntry(namespace, data)
 }
 
 /**
@@ -20,11 +20,12 @@ export const updateSettings = data => {
  */
 export const getAllData = () => {
   const blackList = ['updated']
+  const loadEach = false
 
-  return localforage.keys()
+  return getAllEntries(loadEach)
     .then(keys => keys.filter(k => !blackList.includes(k)))
     .then(keys => Promise.all(keys.map(key =>
-      localforage.getItem(key).then(values => ({ key, values })))))
+      getEntryWN(key).then(values => ({ key, values })))))
     .then(list => Promise.all(list.map(item => {
       if (item.key.startsWith('plant-')) {
         item.values.imageURL = ''
