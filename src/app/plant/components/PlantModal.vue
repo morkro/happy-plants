@@ -54,7 +54,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  button.warning {
+  #plant-edit-dialog button {
     width: 100%;
     display: flex;
     justify-content: center;
