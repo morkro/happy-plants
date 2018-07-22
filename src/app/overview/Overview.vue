@@ -12,12 +12,9 @@
         <p>
           You are about to delete <strong>{{ selection.length }}</strong> plants.
         </p>
-        <button
-          type="button"
-          class="warning"
-          @click="confirmDeletePlants">
+        <v-button color="yellow" @click.native="confirmDeletePlants">
           Yes, delete plants
-        </button>
+        </v-button>
       </div>
     </overview-dialog>
 
@@ -26,12 +23,7 @@
       @click="hideBackdrop" />
 
     <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
-      <!-- Simple onboarding instruction if user has no plants yet. -->
-      <plants-intro
-        v-if="plants.length <= 0"
-        key="overview-intro" />
-
-      <div v-if="plants.length && filterBy !== 'all'" class="plants-filtered-headline">
+      <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
         <h2>Filtered by <span class="tag">{{ filteredTag }}</span></h2>
         <button
           type="button"
@@ -86,10 +78,10 @@
 
   import AppHeader from '@/components/AppHeader'
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
-  import PlantsIntro from './components/PlantsIntro'
   import ViewmodeMenu from './components/ViewmodeMenu'
 
   export default {
@@ -98,7 +90,7 @@
     components: {
       'app-header': AppHeader,
       'overview-dialog': HappyDialog,
-      'plants-intro': PlantsIntro,
+      'v-button': Button,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
@@ -179,12 +171,24 @@
       }
     },
 
+    updated () {
+      if (this.plants && this.plants.length === 0) {
+        this.$router.push('/intro')
+      }
+    },
+
     created () {
       this.updateAppHeader({
         title: 'Happy Plants',
         backBtn: false,
         settingsBtn: true
       })
+    },
+
+    mounted () {
+      if (this.plants && this.plants.length === 0) {
+        this.$router.push('/intro')
+      }
     },
 
     methods: {

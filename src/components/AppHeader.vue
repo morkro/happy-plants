@@ -22,15 +22,17 @@
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
           aria-label="Settings">
-          <component :is="`feather-${settingsIcon}`" class="header-settings-icon" />
+          <div :class="['header-settings-icon', { 'highlight': showNotification }]">
+            <component :is="`feather-${settingsIcon}`"/>
+          </div>
         </router-link>
-        <button type="button"
+        <v-button
           v-else-if="settings === 'edit'"
           aria-label="Edit"
           :class="settingsClass"
-          @click.prevent="settingsOnClick">
-          <component :is="`feather-${settingsIcon}`" />
-        </button>
+          @click.native.prevent="settingsOnClick">
+          <component :is="`feather-${settingsIcon}`" slot="icon" />
+        </v-button>
         <slot name="custom-action-right" />
       </div>
     </div>
@@ -38,6 +40,7 @@
 </template>
 
 <script>
+  import Button from '@/components/Button'
   export default {
     name: 'AppHeader',
 
@@ -49,10 +52,12 @@
       settingsOnClick: { type: Function, default: () => {} },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
-      transparent: { type: Boolean, default: false }
+      transparent: { type: Boolean, default: false },
+      showNotification: { type: Boolean, default: false }
     },
 
     components: {
+      'v-button': Button,
       'feather-arrow-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-settings': () =>
@@ -129,6 +134,10 @@
       transition:
         background calc(var(--base-speed) * 2) var(--ease-out-back),
         box-shadow var(--base-speed) var(--ease-out-back);
+
+      & h1 {
+        color: var(--text-color-inverse);
+      }
     }
 
     & .edit-data {
@@ -195,6 +204,7 @@
       justify-content: center;
       align-items: center;
       position: relative;
+      background: transparent;
 
       &:focus {
         outline: none;
@@ -211,7 +221,25 @@
   }
 
   .app-header .header-settings-icon {
+    position: relative;
     width: var(--icon-size-base);
     height: var(--icon-size-base);
+
+    &.highlight::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand-red);
+      box-shadow: 0 0 6px var(--brand-red);
+      position: absolute;
+      top: -3px;
+      right: -1px;
+    }
+
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 </style>

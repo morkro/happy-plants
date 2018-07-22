@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
+import { routes as intro } from '@/app/intro'
 import { routes as overview } from '@/app/overview'
 import { routes as register } from '@/app/register'
 import { routes as plant } from '@/app/plant'
@@ -23,6 +24,7 @@ export default new Router({
   },
 
   routes: [
+    ...intro,
     ...overview,
     ...register,
     ...plant,

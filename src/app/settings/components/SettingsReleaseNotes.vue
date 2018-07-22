@@ -1,16 +1,23 @@
 <template>
-  <div class="settings-changelog">
+  <div class="settings-release-notes">
     <md-changelog ref="changelog" />
   </div>
 </template>
 
 <script>
   import Changelog from '#/CHANGELOG.md'
+  import { mapActions } from 'vuex'
   export default {
-    name: 'SettingsChangelog',
+    name: 'SettingsReleaseNotes',
 
     components: {
       'md-changelog': Changelog
+    },
+
+    created () {
+      this.updateAppHeader({
+        title: 'Release Notes'
+      })
     },
 
     mounted () {
@@ -20,12 +27,16 @@
           $link.setAttribute('target', '_blank')
         }
       }
-    }
+    },
+
+    methods: mapActions([
+      'updateAppHeader'
+    ])
   }
 </script>
 
 <style lang="postcss">
-  .settings-changelog {
+  .settings-release-notes {
     padding: var(--base-gap) 0;
     line-height: 150%;
 
@@ -35,8 +46,15 @@
 
     & h2 {
       padding: var(--base-gap);
+      margin-top: calc(3 * var(--base-gap));
       margin-bottom: var(--base-gap);
       background: var(--background-primary);
+      position: relative;
+
+      &:nth-of-type(1) {
+        background: var(--brand-green);
+        color: var(--text-color-inverse);
+      }
     }
 
     & h3 {

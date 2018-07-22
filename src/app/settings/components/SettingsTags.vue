@@ -24,17 +24,15 @@
           This will remove it from all plants!
         </p>
 
-        <button type="button"
-          class="warning"
-          @click="confirmDeleteTag">
+        <v-button color="yellow" @click.native="confirmDeleteTag">
           Delete tag
-        </button>
+        </v-button>
       </div>
     </tag-dialog>
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
       <div v-if="!tags.length" class="tags-empty">
-        <feather-hash />
+        <feather-tag />
         <h1>You haven't added tags to your plants yet</h1>
         <p>
           Tagging is a system to help organise your plants better.
@@ -54,18 +52,22 @@
               :count="tag.plants.length" />
 
             <div class="tags-actions">
-              <button type="button"
-                class="icon inverse edit"
+              <v-button
+                :type="['small', 'circle']"
+                color="plain"
+                class="edit"
                 aria-label="Edit tag"
-                @click="openTagModal(tag)">
-                <feather-edit />
-              </button>
-              <button type="button"
-                class="icon inverse delete"
+                @click.native="openTagModal(tag)">
+                <feather-edit slot="icon" />
+              </v-button>
+              <v-button
+                :type="['small', 'circle']"
+                color="plain"
+                class="delete"
                 aria-label="Delete tag"
-                @click="openTagDialog($event, tag)">
-                <feather-trash />
-              </button>
+                @click.native="openTagDialog($event, tag)">
+                <feather-trash slot="icon" />
+              </v-button>
             </div>
           </li>
         </ul>
@@ -77,6 +79,7 @@
 <script>
   import { mapState, mapActions } from 'vuex'
   import HappyDialog from '@/components/HappyDialog'
+  import Button from '@/components/Button'
   import TagModal from './TagModal'
   import TagItem from './TagItem'
 
@@ -88,6 +91,7 @@
     },
 
     components: {
+      'v-button': Button,
       'tag-dialog': HappyDialog,
       'tag-modal': TagModal,
       'tag-item': TagItem,
@@ -95,8 +99,8 @@
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
         import('vue-feather-icons/icons/Edit2Icon' /* webpackChunkName: "icons" */),
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-trash': () =>
         import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },
@@ -246,26 +250,6 @@
     align-items: center;
     margin-left: var(--base-gap);
 
-    & button {
-      background: var(--grey);
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      display: flex;
-      justify-content: center;
-
-      &:hover,
-      &:focus {
-        --button-focus: transparent;
-        background: var(--brand-green);
-      }
-
-      &:hover svg,
-      &:focus svg {
-        filter: invert(100%);
-      }
-    }
-
     & button:first-of-type {
       margin-right: var(--base-gap);
     }
@@ -277,5 +261,10 @@
     & button.delete svg {
       transform: translateX(-1px) translateY(-1px);
     }
+  }
+
+  #settings-tags-delete .tag {
+    margin-right: calc(var(--base-gap) / 2);
+    color: var(--text-color-base);
   }
 </style>

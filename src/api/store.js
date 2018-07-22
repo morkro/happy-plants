@@ -1,9 +1,8 @@
-import localforage from 'localforage'
+import { setEntry } from './localforage'
 
 const namespace = 'updated'
 
 export const updateStoreTimestamp = (data = {}) => {
-  return localforage
-    .setItem(namespace, Date.now())
+  return setEntry(namespace, Date.now())
     .then(updated => ({ data, updated }))
 }

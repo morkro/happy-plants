@@ -1,26 +1,28 @@
 <template>
   <div class="box red delete-container">
-    <button type="button"
+    <v-button
       aria-label="Trash"
       class="delete icon"
-      @click="activate($event)">
-      <feather-trash width="18" height="18" />
-    </button>
+      @click.native="activate($event)">
+      <feather-trash slot="icon" />
+    </v-button>
 
     <div class="deletion-info">
       <p>{{ selectionCount }}</p>
     </div>
 
-    <button type="button"
+    <v-button
+      color="red"
       aria-label="Cancel trash"
       class="cancel icon"
-      @click="cancel($event)">
-      <feather-x width="24" height="24" />
-    </button>
+      @click.native="cancel($event)">
+      <feather-x slot="icon" />
+    </v-button>
   </div>
 </template>
 
 <script>
+  import Button from '@/components/Button'
   export default {
     name: 'DeleteMenu',
 
@@ -29,6 +31,7 @@
     },
 
     components: {
+      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-x': () =>

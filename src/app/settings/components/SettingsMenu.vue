@@ -2,8 +2,15 @@
   <ul>
     <li v-for="(item, index) in menu" :key="index">
       <router-link :to="{ name: item.name }">
-        <span>{{ item.label }}</span>
-        <component :is="`feather-${item.icon}`" />
+        <div class="menu-item-text">
+          <span>{{ item.label }}</span>
+          <span v-if="hasReleaseUpdates(item)" class="description">
+            {{ item.description }}
+          </span>
+        </div>
+        <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
+          <component :is="`feather-${item.icon}`" />
+        </div>
       </router-link>
     </li>
     <li class="menu-version">
@@ -13,14 +20,14 @@
 </template>
 
 <script>
-  import pkg from '#/package.json'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'SettingsMenu',
 
     components: {
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */),
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
         import('vue-feather-icons/icons/DatabaseIcon' /* webpackChunkName: "icons" */),
       'feather-users': () =>
@@ -31,13 +38,39 @@
 
     data () {
       return {
-        version: pkg.version,
         menu: [
-          { label: 'Tags', name: 'SettingsTags', icon: 'hash' },
+          { label: 'Tags', name: 'SettingsTags', icon: 'tag' },
           { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
           { label: 'About', name: 'SettingsAbout', icon: 'users' },
-          { label: 'Changelog', name: 'SettingsChangelog', icon: 'file-text' }
+          {
+            label: 'Release Notes',
+            description: 'A new version has been released!',
+            name: 'SettingsReleaseNotes',
+            icon: 'file-text'
+          }
         ]
+      }
+    },
+
+    computed: mapState({
+      version: state => state.version,
+      hasNewRelease: state => state.settings.hasNewRelease
+    }),
+
+    methods: {
+      ...mapActions(['hasSeenNewRelease']),
+      hasReleaseUpdates (item) {
+        return (
+          item.name === 'SettingsReleaseNotes' &&
+          item.description &&
+          this.hasNewRelease
+        )
+      }
+    },
+
+    beforeDestroy () {
+      if (this.hasNewRelease) {
+        this.hasSeenNewRelease()
       }
     }
   }
@@ -86,14 +119,34 @@
       transform: scale(0.8);
     }
 
-    & span {
+    & .menu-item-text {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+      flex-direction: column;
 
-      & svg {
-        margin-right: var(--base-gap);
-        opacity: 0.5;
+      & .description {
+        font-size: var(--text-size-xsmall);
+        font-weight: 400;
+        display: block;
+        margin-top: calc(var(--base-gap) / 3);
+        color: var(--text-color-secondary);
       }
+    }
+
+    & .menu-icon {
+      position: relative;
+    }
+
+    & .menu-icon.highlight::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand-red);
+      box-shadow: 0 0 6px var(--brand-red);
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 </style>

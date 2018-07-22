@@ -5,16 +5,17 @@
       <p>
         How about we pretend this didn't happen?
       </p>
-      <button type="button" @click="pushToSafety">
-        <feather-home />
+      <v-button @click.native="pushToSafety">
+        <feather-home slot="icon" />
         Back to overview
-      </button>
+      </v-button>
     </main>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
+  import Button from '@/components/Button'
 
   export default {
     name: 'NotFound',
@@ -24,6 +25,7 @@
     },
 
     components: {
+      'v-button': Button,
       'feather-home': () =>
         import('vue-feather-icons/icons/HomeIcon' /* webpackChunkName: "icons" */)
     },

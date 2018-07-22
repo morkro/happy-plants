@@ -45,7 +45,7 @@
           element: `happy-dialog-element box ${this.type}`,
           document: 'happy-dialog-document',
           title: 'happy-dialog-title',
-          closeButton: 'happy-dialog-close-button circle inverse'
+          closeButton: 'happy-dialog-close-button circle plain'
         }
       }
     },

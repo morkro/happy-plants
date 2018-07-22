@@ -14,12 +14,9 @@
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
 
-        <button
-          type="button"
-          class="delete-data-button"
-          @click="deleteApplicationData">
+        <v-button color="yellow" @click.native="deleteApplicationData">
           Delete my data
-        </button>
+        </v-button>
       </div>
 
       <div v-if="!isDangerDialog" key="modal-normal">
@@ -51,12 +48,11 @@
           </ul>
         </form>
 
-        <button
-          type="button"
+        <v-button
           :disabled="file === null || selectedImportType === false"
-          @click.prevent="importApplicationData">
+          @click.native.prevent="importApplicationData">
           Import
-        </button>
+        </v-button>
       </div>
     </settings-dialog>
 
@@ -69,12 +65,10 @@
         or even modify and import it again.
       </span>
 
-      <button
-        type="button"
-        @click="downloadData">
-        <feather-download />
-        <span>Export plant data</span>
-      </button>
+      <v-button @click.native="downloadData">
+        <feather-download slot="icon" />
+        Export plant data
+      </v-button>
     </section>
 
     <section class="import-section">
@@ -86,12 +80,10 @@
         to your current data.
       </span>
 
-      <button
-        type="button"
-        @click="openImportModal">
-        <feather-copy />
-        <span>Import plant data</span>
-      </button>
+      <v-button @click.native="openImportModal">
+        <feather-copy slot="icon" />
+        Import plant data
+      </v-button>
 
       <span class="note">
         More info for custom plant
@@ -104,13 +96,10 @@
     <section class="danger-zone">
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
-      <button
-        type="button"
-        class="warning"
-        @click="openDangerModal">
-        <feather-delete />
-        <span>Delete application data</span>
-      </button>
+      <v-button color="yellow" @click.native="openDangerModal">
+        <feather-delete slot="icon" />
+        Delete application data
+      </v-button>
     </section>
   </div>
 </template>
@@ -119,6 +108,7 @@
   import { mapActions } from 'vuex'
   import HappyDialog from '@/components/HappyDialog'
   import FileUpload from '@/components/FileUpload'
+  import Button from '@/components/Button'
 
   export default {
     name: 'SettingsData',
@@ -130,6 +120,7 @@
     components: {
       'settings-dialog': HappyDialog,
       'file-upload': FileUpload,
+      'v-button': Button,
       'feather-download': () =>
         import('vue-feather-icons/icons/DownloadIcon' /* webpackChunkName: "icons" */),
       'feather-delete': () =>
@@ -330,18 +321,6 @@
 
     & h2 {
       color: var(--text-color-inverse);
-    }
-
-    & button {
-      --button-background: var(--brand-yellow);
-
-      & span {
-        color: var(--link-color);
-      }
-
-      & svg {
-        filter: invert(100%);
-      }
     }
   }
 

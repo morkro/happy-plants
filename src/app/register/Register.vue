@@ -21,17 +21,15 @@
             @loading-file="handleLoadingState" />
         </label>
 
-        <button
-          @click="validateForm"
-          :disabled="!canRegisterPlant"
-          type="submit">
+        <v-button @click.native="validateForm" :disabled="!canRegisterPlant">
           <svgicon
             icon="leaf"
             width="16"
             height="24"
-            color="#000" />
-          <span>Add plant</span>
-        </button>
+            color="#000"
+            slot="icon" />
+          Add plant
+        </v-button>
       </form>
     </main>
   </div>
@@ -40,6 +38,7 @@
 <script>
   import { mapActions } from 'vuex'
   import FileUpload from '@/components/FileUpload'
+  import Button from '@/components/Button'
   import { getPlantStructure } from '@/app/plant/utils'
   import '@/assets/icons/leaf'
 
@@ -51,7 +50,8 @@
     },
 
     components: {
-      'file-upload': FileUpload
+      'file-upload': FileUpload,
+      'v-button': Button
     },
 
     computed: {
@@ -133,6 +133,10 @@
 
     & select {
       padding: calc(var(--base-gap) + 5px) var(--base-gap);
+    }
+
+    & button:not([disabled]) svg {
+      filter: invert(100%) !important;
     }
   }
 

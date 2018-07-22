@@ -1,9 +1,16 @@
-import localforage from 'localforage'
+import {
+  getEntry,
+  getEntryWN,
+  deleteEntry,
+  addEntry,
+  updateEntry,
+  getAllEntries
+} from './localforage'
 
 const namespace = 'plant-'
 
 export const fetchPlants = () => {
-  return localforage.startsWith(namespace)
+  return getEntry(namespace)
     .then(data => {
       const copy = data
       delete copy[namespace + 'undefined']
@@ -13,11 +20,11 @@ export const fetchPlants = () => {
 }
 
 export const addPlant = data => {
-  return localforage.setItem(namespace + data.guid, data)
+  return addEntry(namespace + data.guid, data)
 }
 
 export const deletePlant = data => {
-  return localforage.removeItem(namespace + data.guid)
+  return deleteEntry(namespace + data.guid)
 }
 
 export const deletePlants = data => {
@@ -25,16 +32,15 @@ export const deletePlants = data => {
 }
 
 export const updatePlant = data => {
-  return localforage.setItem(namespace + data.guid, data)
+  return updateEntry(namespace + data.guid, data)
 }
 
 export const getPlant = guid => {
-  return localforage.getItem(namespace + guid)
+  return getEntryWN(namespace + guid)
 }
 
 export const getAllPlants = () => {
-  return localforage.keys()
-    .then(keys => Promise.all(keys.map(k => localforage.getItem(k))))
+  return getAllEntries()
 }
 
 export const deleteAllPlants = () => {

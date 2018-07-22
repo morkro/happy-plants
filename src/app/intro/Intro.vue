@@ -1,7 +1,6 @@
 <template>
-  <section class="plants-intro">
-    <div class="intro-header">
-      <h2>Welcome to</h2>
+  <div class="main-wireframe">
+    <div class="intro-header box">
       <img
         src="@/assets/happyplants-logo.svg"
         alt="Happy Plants Logo"
@@ -33,14 +32,29 @@
     </div>
 
     <div class="intro-footer">
-      <h3>Happy organising!</h3>
+      <router-link to="/add" class="btn yellow">
+        <div class="button-icon">
+          <svgicon
+            icon="leaf"
+            width="20"
+            height="28" />
+        </div>
+        <span>Add your first plant</span>
+      </router-link>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import '@/assets/icons/leaf'
+
   export default {
-    name: 'PlantsIntro',
+    name: 'Intro',
+
+    meta: {
+      title: 'Welcome to Happy Plants!'
+    },
 
     components: {
       'feather-settings': () =>
@@ -49,17 +63,41 @@
         import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */),
       'feather-box': () =>
         import('vue-feather-icons/icons/BoxIcon' /* webpackChunkName: "icons" */)
+    },
+
+    methods: mapActions([
+      'updateAppHeader'
+    ]),
+
+    created () {
+      this.updateAppHeader({
+        title: 'Welcome to',
+        transparent: true,
+        backBtn: false,
+        settingsBtn: true
+      })
+    },
+
+    beforeDestroy () {
+      this.updateAppHeader({ transparent: false })
     }
   }
 </script>
 
 <style lang="postcss" scoped>
-  section {
+  .main-wireframe {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    align-content: flex-start;
     justify-content: center;
-    flex-direction: column;
-    width: 95%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 100vh;
+    background: var(--brand-green);
+    padding-left: var(--base-gap);
+    padding-right: var(--base-gap);
+    padding-bottom: var(--base-gap);
 
     & p {
       font-weight: 500;
@@ -71,13 +109,7 @@
     justify-content: center;
     flex-wrap: wrap;
     align-items: center;
-    color: var(--text-color-inverse);
-    margin-bottom: calc(var(--base-gap) / 2);
-
-    & h2 {
-      font-size: var(--text-size-large);
-      margin-bottom: calc(-1 * var(--base-gap) / 2);
-    }
+    margin-bottom: calc(var(--base-gap) * 2);
   }
 
   .intro-content {
@@ -107,8 +139,8 @@
     margin-top: calc(2 * var(--base-gap));
     color: var(--text-color-inverse);
 
-    & h3 {
-      font-size: var(--text-size-medium);
+    & .btn .button-icon svg {
+      filter: none;
     }
   }
 </style>
