@@ -16,7 +16,7 @@
         <form
           v-if="showInput"
           class="tags-new"
-          @submit.prevent>
+          @submit.prevent="addNewTag">
           <input
             type="text"
             id="tag-new-name"

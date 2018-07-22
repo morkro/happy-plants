@@ -1,4 +1,11 @@
-import { getEntry, deleteEntry, addEntry, updateEntry, getAllEntries } from './localforage'
+import {
+  getEntry,
+  getEntryWN,
+  deleteEntry,
+  addEntry,
+  updateEntry,
+  getAllEntries
+} from './localforage'
 
 const namespace = 'plant-'
 
@@ -29,7 +36,7 @@ export const updatePlant = data => {
 }
 
 export const getPlant = guid => {
-  return getEntry(namespace + guid)
+  return getEntryWN(namespace + guid)
 }
 
 export const getAllPlants = () => {

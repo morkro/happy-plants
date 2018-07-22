@@ -19,7 +19,7 @@ export const getEntryWN = data => {
 }
 
 export const setEntry = (namespace, data) => {
-  return localforage.setItem(namespace + data.guid, data)
+  return localforage.setItem(namespace, data)
 }
 
 export const addEntry = setEntry
