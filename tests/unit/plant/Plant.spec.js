@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
+import 'localforage-startswith'
 
 import Plant from '@/app/plant/Plant'
 import observeVisibility from '@/utils/vue-observe-visibility'
