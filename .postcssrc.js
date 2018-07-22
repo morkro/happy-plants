@@ -2,6 +2,7 @@ module.exports = {
   plugins: {
     'postcss-import': {},
     'postcss-url': {},
+    'postcss-calc': { preserve: true },
     'postcss-preset-env': {
       stage: 2,
       features: {
@@ -13,12 +14,11 @@ module.exports = {
     'postcss-reporter': {},
     // to edit target browsers: use 'browserslist' field in package.json
     autoprefixer: {},
-    // cssnano causes calc() to behave inconsistent. Committing out  for further investigation.
-    // cssnano: {
-    //   preset: ['default', {
-    //     calc: false,
-    //     zindex: false
-    //   }]
-    // }
+    cssnano: {
+      preset: ['default', {
+        calc: false,
+        zindex: false
+      }]
+    }
   }
 }
