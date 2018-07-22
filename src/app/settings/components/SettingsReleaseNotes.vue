@@ -51,7 +51,7 @@
       background: var(--background-primary);
       position: relative;
 
-      &:nth-of-type(2) {
+      &:nth-of-type(1) {
         background: var(--brand-green);
         color: var(--text-color-inverse);
       }
