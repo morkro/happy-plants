@@ -44,7 +44,7 @@
         <ul v-if="isListView && tags.length" class="preview-tags">
           <li>
             <span class="tag">
-              <feather-hash height="16" width="16" />
+              <feather-tag height="16" width="16" />
               {{ tags.length }}
             </span>
           </li>
@@ -87,8 +87,8 @@
         import('vue-feather-icons/icons/CircleIcon' /* webpackChunkName: "icons" */),
       'feather-check': () =>
         import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
-      'feather-hash': () =>
-        import('vue-feather-icons/icons/HashIcon' /* webpackChunkName: "icons" */)
+      'feather-tag': () =>
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
