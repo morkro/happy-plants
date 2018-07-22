@@ -5,7 +5,7 @@ All notable changes to this project will be documented here.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] - 2018-07-22
+## [1.2.2] - 2018-07-22
 
 ### Fixed
 - Fixes an issue with elements on overview to not be aligned in a grid anymore.
