@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
@@ -40,7 +40,9 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
     "commitizen": "^2.10.1",
+    "cssnano": "^4.0.3",
     "lint-staged": "^6.0.0",
+    "postcss-calc": "^6.0.1",
     "postcss-custom-properties": "^7.0.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
