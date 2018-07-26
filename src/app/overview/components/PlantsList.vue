@@ -61,10 +61,7 @@
     flex-wrap: wrap;
     position: relative;
 
-    /* --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2); */
-
-    /* Temporary fix */
-    --list-gap: 22.5px;
+    --list-gap: 1.5 * var(--base-gap);
     --item-size-width: calc(50vw - var(--list-gap));
     --item-size-height: var(--item-size-width);
 
