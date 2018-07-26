@@ -143,6 +143,7 @@
       },
       filteredTag () {
         return (
+          this.filterBy !== 'all' &&
           this.tags.length &&
           this.tags.find(tag => tag.guid === this.filterBy).label
         )
