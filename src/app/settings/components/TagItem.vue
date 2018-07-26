@@ -1,6 +1,6 @@
 <template>
   <div class="tag-description">
-    <strong class="tag">{{ label }}</strong>
+    <v-tag>{{ label }}</v-tag>
     <span v-if="count > 1" key="description-has-items">
       {{ count }} plants tagged.
     </span>
@@ -11,12 +11,17 @@
 </template>
 
 <script>
+  import Tag from '@/components/Tag'
   export default {
     name: 'TagItem',
 
     props: {
       count: { type: Number, default: 0 },
       label: { type: String, required: true }
+    },
+
+    components: {
+      'v-tag': Tag
     }
   }
 </script>
@@ -25,16 +30,12 @@
   .tag-description {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 
     & span {
       color: var(--text-color-secondary);
       font-size: var(--text-size-small);
       margin-top: calc(var(--base-gap) / 2);
-    }
-
-    & .tag {
-      align-self: flex-start;
-      display: inline-block;
     }
   }
 </style>

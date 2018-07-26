@@ -43,10 +43,10 @@
 
         <ul v-if="isListView && tags.length" class="preview-tags">
           <li>
-            <span class="tag">
+            <v-tag size="small">
               <feather-tag height="16" width="16" />
               {{ tags.length }}
-            </span>
+            </v-tag>
           </li>
         </ul>
       </div>
@@ -63,6 +63,8 @@
 
 <script>
   import router from '@/router'
+  import Tag from '@/components/Tag'
+
   import '@/assets/icons/cactus'
 
   export default {
@@ -79,6 +81,7 @@
     },
 
     components: {
+      'v-tag': Tag,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-plus': () =>

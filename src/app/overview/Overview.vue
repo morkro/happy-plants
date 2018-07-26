@@ -24,14 +24,14 @@
 
     <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
       <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
-        <h2>Filtered by <span class="tag">{{ filteredTag }}</span></h2>
-        <button
-          type="button"
-          class="icon circle inverse"
+        <h2>Filtered by <v-tag size="small">{{ filteredTag }}</v-tag></h2>
+        <v-button
+          type="circle"
+          color="plain"
           aria-label="Clear filter"
-          @click="clearFilter">
-          <feather-x />
-        </button>
+          @click.native="clearFilter">
+          <feather-x slot="icon" />
+        </v-button>
       </div>
 
       <plants-list
@@ -79,6 +79,7 @@
   import AppHeader from '@/components/AppHeader'
   import HappyDialog from '@/components/HappyDialog'
   import Button from '@/components/Button'
+  import Tag from '@/components/Tag'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
@@ -91,6 +92,7 @@
       'app-header': AppHeader,
       'overview-dialog': HappyDialog,
       'v-button': Button,
+      'v-tag': Tag,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
@@ -352,7 +354,6 @@
 
     & .tag {
       margin-left: calc(var(--base-gap) / 3);
-      font-size: var(--text-size-small);
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
@@ -360,7 +361,6 @@
     }
 
     & button {
-      background: var(--grey);
       width: 35px;
       height: 35px;
     }

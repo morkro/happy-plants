@@ -20,7 +20,7 @@
 
       <div>
         <p>
-          Do you really want to delete <span class="tag">{{ selectedTagLabel }}</span>?
+          Do you really want to delete <v-tag>{{ selectedTagLabel }}</v-tag>?
           This will remove it from all plants!
         </p>
 
@@ -80,6 +80,7 @@
   import { mapState, mapActions } from 'vuex'
   import HappyDialog from '@/components/HappyDialog'
   import Button from '@/components/Button'
+  import Tag from '@/components/Tag'
   import TagModal from './TagModal'
   import TagItem from './TagItem'
 
@@ -92,6 +93,7 @@
 
     components: {
       'v-button': Button,
+      'v-tag': Tag,
       'tag-dialog': HappyDialog,
       'tag-modal': TagModal,
       'tag-item': TagItem,

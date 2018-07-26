@@ -30,11 +30,10 @@
         <div class="tags-list-inner" v-else>
           <ul class="tags-list" v-if="hasTags">
             <li v-for="tag in tags" :key="tag.label">
-              <v-touch tag="span"
-                class="tag"
+              <v-touch tag="div"
                 @doubletap="toggleRemovable(tag)"
                 @tap="showRemovalNote">
-                {{ tag.label }}
+                <v-tag>{{ tag.label }}</v-tag>
               </v-touch>
             </li>
           </ul>
@@ -64,11 +63,13 @@
 
 <script>
   import Button from '@/components/Button'
+  import Tag from '@/components/Tag'
   export default {
     name: 'PlantTag',
 
     components: {
       'v-button': Button,
+      'v-tag': Tag,
       'feather-plus': () =>
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
@@ -284,13 +285,6 @@
         /* Workaround */
         padding-right: calc(var(--base-gap) / 2);
       }
-    }
-
-    & span {
-      background: var(--label-background);
-      padding: calc(var(--base-gap) / 2) var(--base-gap);
-      display: block;
-      border-radius: var(--border-radius);
     }
   }
 
