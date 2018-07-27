@@ -28,4 +28,11 @@ describe('app/not-found/NotFound.vue', () => {
     const wrapper = mount(Intro, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
+
+  it('lifecycle hook beforeDestroy is correctly fired', () => {
+    const wrapper = mount(Intro, options)
+    wrapper.setMethods({ updateAppHeader: jest.fn() })
+    wrapper.destroy()
+    expect(wrapper.vm.updateAppHeader).toHaveBeenCalled()
+  })
 })

@@ -29,6 +29,7 @@ module.exports = {
     '!src/router.js',
     '!src/registerServiceWorker.js',
     '!src/**/routes.js',
+    '!src/**/index.js',
     '!**/node_modules/**'
   ]
 }

@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import AppHeader from '@/components/AppHeader'
+
+const localVue = createLocalVue()
 
 /**
  * TODO:
@@ -9,7 +11,12 @@ import AppHeader from '@/components/AppHeader'
  */
 
 describe('components/AppHeader.vue', () => {
-  const options = {}
+  const options = {
+    localVue,
+    slots: {
+      default: '<h1>Title</h1>'
+    }
+  }
 
   it('is a Vue component', () => {
     const wrapper = mount(AppHeader, options)
@@ -17,11 +24,13 @@ describe('components/AppHeader.vue', () => {
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(AppHeader, options)
+    const settingsOnClick = jest.fn()
+    const wrapper = mount(AppHeader, { ...options, propsData: { settingsOnClick } })
     expect(wrapper.props().backPath).toEqual('/')
     expect(wrapper.props().backButton).toEqual(false)
     expect(wrapper.props().settings).toEqual(false)
     expect(wrapper.props().color).toEqual('black')
+    expect(wrapper.props().settingsOnClick).toEqual(settingsOnClick)
   })
 
   it('isWhite() works as expected', () => {
@@ -29,5 +38,11 @@ describe('components/AppHeader.vue', () => {
     expect(typeof wrapper.vm.isWhite).toEqual('function')
     expect(wrapper.vm.isWhite('foo')).toEqual(false)
     expect(wrapper.vm.isWhite('white')).toEqual(true)
+  })
+
+  it('scrollTop()', () => {
+    const wrapper = mount(AppHeader, options)
+    wrapper.setProps({ scrollUp: false })
+    expect(wrapper.vm.scrollTop()).toEqual(undefined)
   })
 })
