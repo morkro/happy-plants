@@ -10,10 +10,10 @@
       :transparent="transparent"
       :color="iconColor"
       :settings="settingsBtn"
-      :settings-icon="settingsIcon"
       :settings-on-click="settingsBtnOnClick"
       :back-button="backBtn"
-      :back-path="backBtnPath">
+      :back-path="backBtnPath"
+      :show-icon-backdrop="showIconBackdrop">
       <h1 v-if="!!pageTitle" slot="title">
         {{ pageTitle }}
       </h1>
@@ -31,8 +31,13 @@
   export default {
     name: 'HappyPlants',
 
-    meta: {
-      title: 'Happy Plants'
+    meta () {
+      return {
+        title: 'HappyPlants',
+        htmlAttrs: {
+          'data-theme': this.theme
+        }
+      }
     },
 
     components: {
@@ -48,6 +53,7 @@
 
     computed: mapState({
       hasNewRelease: state => state.settings.hasNewRelease,
+      theme: state => state.settings.theme,
       message: state => state.notification.message,
       pageTitle: state => state.appheader.title,
       transparent: state => state.appheader.transparent,
@@ -55,8 +61,8 @@
       backBtn: state => state.appheader.backBtn,
       backBtnPath: state => state.appheader.backBtnPath,
       settingsBtn: state => state.appheader.settingsBtn,
-      settingsIcon: state => state.appheader.settingsIcon,
-      settingsBtnOnClick: state => state.appheader.settingsBtnOnClick
+      settingsBtnOnClick: state => state.appheader.settingsBtnOnClick,
+      showIconBackdrop: state => state.appheader.showIconBackdrop
     }),
 
     methods: {
@@ -66,7 +72,8 @@
         'loadSettings',
         'loadPlants',
         'loadTags',
-        'hideNotification'
+        'hideNotification',
+        'updateAppHeader'
       ])
     },
 
@@ -78,6 +85,11 @@
           this.loadPlants(),
           this.loadTags()
         ]))
+        .then(() => {
+          if (this.theme === 'dark') {
+            this.updateAppHeader({ iconColor: 'white' })
+          }
+        })
     },
 
     updated () {

@@ -154,6 +154,12 @@
     --button-background: var(--grey);
     --button-focus: var(--dark-grey);
     --text-color: var(--link-color);
+
+    @nest html[data-theme="dark"] & {
+      --button-background: var(--dark-grey);
+      --button-focus: var(--grey);
+      --text-color: white;
+    }
   }
 
   button.yellow,
@@ -179,6 +185,10 @@
 
     & .button-icon svg {
       filter: invert(100%);
+
+      @nest html[data-theme="dark"] & {
+        filter: invert(0);
+      }
     }
   }
 </style>

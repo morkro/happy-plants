@@ -129,11 +129,19 @@
   @import "../../../styles/media-queries";
 
   .plant-header {
+    --header-background: var(--grey);
+    --header-color: var(--text-color-inverse);
+
     position: relative;
     color: var(--text-color-inverse);
     height: 100vw;
-    background: var(--grey);
+    background: var(--header-background);
     z-index: 1;
+
+    @nest html[data-theme="dark"] & {
+      --header-background: var(--dark-grey);
+      --header-color: white;
+    }
 
     @media (--min-desktop-viewport) {
       height: 50vh;
@@ -147,7 +155,7 @@
       padding: var(--base-gap);
       font-size: var(--text-size-large);
       font-weight: 500;
-      color: var(--text-color-inverse);
+      color: var(--header-color);
       line-height: 115%;
       position: relative;
       width: 100%;

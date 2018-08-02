@@ -94,6 +94,7 @@
 
     computed: {
       ...mapState({
+        theme: state => state.settings.theme,
         guid: state => state.selected.guid,
         name: state => state.selected.name,
         blob: state => state.selected.blob,
@@ -106,6 +107,9 @@
       ...mapGetters({
         plantTags: 'getPlantTags'
       }),
+      defaultIconColor () {
+        return this.theme === 'light' ? 'black' : 'white'
+      },
       allTags () {
         return this.tags && this.plantTags(this.guid)
       },
@@ -121,7 +125,8 @@
       headerInView (show) {
         this.updateAppHeader({
           transparent: show,
-          iconColor: this.headerInView ? 'white' : 'black'
+          iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+          showIconBackdrop: this.headerInView
         })
       }
     },
@@ -257,10 +262,10 @@
         transparent: true,
         title: false,
         backBtn: true,
-        settingsIcon: 'edit',
         settingsBtn: 'edit',
         settingsBtnOnClick: this.openPlantEditModal,
-        iconColor: this.headerInView ? 'white' : 'black'
+        iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+        showIconBackdrop: true
       })
     },
 
@@ -270,15 +275,16 @@
 
     updated () {
       this.updateAppHeader({
-        iconColor: this.headerInView ? 'white' : 'black'
+        iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+        showIconBackdrop: this.headerInView
       })
     },
 
     beforeDestroy () {
       this.updateAppHeader({
         transparent: false,
-        iconColor: 'black',
-        settingsIcon: 'settings'
+        iconColor: this.defaultIconColor,
+        showIconBackdrop: false
       })
 
       this.updatePlantsList({

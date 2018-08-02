@@ -309,10 +309,16 @@
   }
 
   section.danger-zone {
+    --danger-zone-color: var(--text-color-inverse);
+
     padding-top: calc(var(--base-gap) * 1.5);
     padding-bottom: calc(var(--base-gap) * 1.5);
     background: var(--brand-red);
-    color: var(--text-color-inverse);
+    color: var(--danger-zone-color);
+
+    @nest html[data-theme="dark"] & {
+      --danger-zone-color: var(--text-color-base);
+    }
 
     @media (--min-desktop-viewport) {
       border-radius: var(--border-radius);
@@ -320,7 +326,7 @@
     }
 
     & h2 {
-      color: var(--text-color-inverse);
+      color: var(--danger-zone-color);
     }
   }
 

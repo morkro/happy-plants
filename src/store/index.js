@@ -22,12 +22,11 @@ export default new Vuex.Store({
 
     appheader: {
       transparent: false,
-      iconColor: 'black',
+      iconColor: undefined,
       title: '',
       backBtn: true,
       backBtnPath: '/',
       settingsBtn: true,
-      settingsIcon: 'settings',
       settingsBtnOnClick: () => {}
     },
 
@@ -39,7 +38,8 @@ export default new Vuex.Store({
       orderBy: 'latest',
       viewMode: 'grid',
       filterBy: 'all',
-      hasNewRelease: false
+      hasNewRelease: false,
+      theme: 'light'
     },
 
     plants: false,

@@ -9,6 +9,10 @@ body {
   /* Enable best font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @nest html[data-theme="dark"] & {
+    color: var(--text-color-secondary);
+  }
 }
 
 a {
@@ -42,6 +46,10 @@ a {
     margin: 0 3px;
     transform: translateY(-2px);
     opacity: 0.4;
+  }
+
+  @nest html[data-theme="dark"] &[target="_blank"]::after {
+    filter: invert(1);
   }
 }
 

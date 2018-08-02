@@ -237,7 +237,7 @@
       font-size: var(--text-size-medium);
 
       &:not(:last-child) {
-        border-bottom: 2px solid var(--transparency-black-light);
+        border-bottom: 2px solid var(--border-color);
       }
     }
 

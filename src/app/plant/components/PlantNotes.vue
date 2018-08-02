@@ -116,12 +116,14 @@
   }
 
   textarea {
+    --form-color: var(--background-secondary);
     border: none;
     width: 100%;
     height: 45vh;
     padding: var(--base-gap);
-    background: var(--grey);
+    background: var(--form-color);
     border-radius: var(--border-radius);
+    color: var(--text-color-base);
   }
 
   .notes-available,

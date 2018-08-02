@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="settings-menu">
     <li v-for="(item, index) in menu" :key="index">
       <router-link :to="{ name: item.name }">
         <div class="menu-item-text">
@@ -13,6 +13,23 @@
         </div>
       </router-link>
     </li>
+    <li class="menu-theme">
+      <span>Theme</span>
+      <div>
+        <v-button
+          :color="getThemeButtonColor('light')"
+          :class="getThemeButtonClass('light')"
+          @click.native="emitThemeChange('light')">
+          Light
+        </v-button>
+        <v-button
+          :color="getThemeButtonColor('dark')"
+          :class="getThemeButtonClass('dark')"
+          @click.native="emitThemeChange('dark')">
+          Dark
+        </v-button>
+      </div>
+    </li>
     <li class="menu-version">
       <span>Version</span><span>{{ version }}</span>
     </li>
@@ -21,11 +38,13 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import Button from '@/components/Button'
 
   export default {
     name: 'SettingsMenu',
 
     components: {
+      'v-button': Button,
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
@@ -54,11 +73,37 @@
 
     computed: mapState({
       version: state => state.version,
-      hasNewRelease: state => state.settings.hasNewRelease
+      hasNewRelease: state => state.settings.hasNewRelease,
+      theme: state => state.settings.theme
     }),
 
     methods: {
-      ...mapActions(['hasSeenNewRelease']),
+      ...mapActions([
+        'hasSeenNewRelease',
+        'updateTheme',
+        'updateAppHeader'
+      ]),
+      getThemeButtonColor (type) {
+        if (this.theme !== type) {
+          return 'plain'
+        }
+      },
+      getThemeButtonClass (type) {
+        return { active: this.theme === type }
+      },
+      emitThemeChange (theme) {
+        const $html = document.documentElement
+        $html.classList.add('js-theme-in-transition')
+        this.updateTheme({ theme })
+          .then(() => setTimeout(() =>
+            $html.classList.remove('js-theme-in-transition'),
+            1000
+          ))
+
+        this.updateAppHeader({
+          iconColor: theme === 'light' ? 'black' : 'white'
+        })
+      },
       hasReleaseUpdates (item) {
         return (
           item.name === 'SettingsReleaseNotes' &&
@@ -82,7 +127,7 @@
     align-items: center;
 
     &:not(:last-child) {
-      border-bottom: 3px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 2px solid var(--border-color);
     }
 
     & a {
@@ -102,14 +147,16 @@
     }
 
     & a,
-    &.menu-version {
+    &.menu-version,
+    &.menu-theme {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    &.menu-version {
+    &.menu-version,
+    &.menu-theme {
       font-size: 80%;
       color: var(--text-color-secondary);
       padding: var(--base-gap);
@@ -147,6 +194,29 @@
       position: absolute;
       top: 0;
       left: 0;
+    }
+  }
+
+  ul li.menu-theme {
+    border-bottom: none;
+    padding-bottom: 0;
+
+    & div {
+      display: flex;
+    }
+
+    & button.active {
+      font-weight: 500;
+    }
+
+    & button:first-of-type {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    & button:last-of-type {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
     }
   }
 </style>

@@ -31,7 +31,7 @@
     components: {
       'plant-component': PlantComponent,
       'feather-moon': () =>
-          import('vue-feather-icons/icons/MoonIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/MoonIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {
@@ -132,22 +132,31 @@
       }
 
       &.growth button {
-        color: var(--brand-green);
-        background: var(--brand-green-lighten);
+        --button-background: var(--brand-green-lighten);
+        --button-color: var(--brand-green);
+
+        @nest html[data-theme="dark"] & {
+          --button-background: var(--brand-green-lighten);
+          --button-color: var(--brand-green);
+        }
       }
 
       &.growth-transition-to button {
-        background: linear-gradient(90deg, var(--grey), var(--brand-green-lighten));
+        background: linear-gradient(90deg, var(--button-background), var(--brand-green-lighten));
       }
 
       &.growth-transition-from button {
-        background: linear-gradient(90deg, var(--brand-green-lighten), var(--grey));
+        background: linear-gradient(90deg, var(--brand-green-lighten), var(--button-background));
       }
 
       &.growth.current button {
-        color: var(--text-color-inverse);
+        --button-color: var(--text-color-inverse);
         background: var(--brand-green);
         box-shadow: none;
+
+        @nest html[data-theme="dark"] & {
+          --button-color: var(--text-color);
+        }
 
         &::after {
           opacity: 1;
@@ -173,21 +182,29 @@
         border: 1px solid var(--text-color-button);
       }
     }
+  }
 
-    & button {
-      color: var(--dark-grey);
-      background: var(--grey);
-      border-radius: var(--border-radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition:
-        background var(--base-speed) var(--ease-out-back),
-        color var(--base-speed) var(--ease-out-back);
-      padding: 0;
-      box-shadow: none;
-      width: 100%;
-      height: 100%;
+  .season-list button {
+    color: var(--button-color);
+    background: var(--button-background);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background var(--base-speed) var(--ease-out-back),
+      color var(--base-speed) var(--ease-out-back);
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+    height: 100%;
+
+    --button-background: var(--grey);
+    --button-color: var(--dark-grey);
+
+    @nest html[data-theme="dark"] & {
+      --button-background: var(--dark-grey);
+      --button-color: var(--grey);
     }
   }
 </style>

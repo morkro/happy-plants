@@ -13,5 +13,10 @@ export default {
   HAS_SEEN_NEW_RELEASE (state) {
     state.updated = Date.now()
     state.settings.hasNewRelease = false
+  },
+
+  UPDATE_THEME (state, payload) {
+    state.updated = Date.now()
+    state.settings.theme = payload.theme
   }
 }

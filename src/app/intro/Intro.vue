@@ -3,8 +3,8 @@
     <div class="intro-header box">
       <img
         src="@/assets/happyplants-logo.svg"
-        alt="Happy Plants Logo"
-        title="Happy Plants Logo"
+        alt="HappyPlants Logo"
+        title="HappyPlants Logo"
         width="100%">
     </div>
 
@@ -53,7 +53,7 @@
     name: 'Intro',
 
     meta: {
-      title: 'Welcome to Happy Plants!'
+      title: 'Welcome to HappyPlants!'
     },
 
     components: {

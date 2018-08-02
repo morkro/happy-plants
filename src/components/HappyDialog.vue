@@ -127,6 +127,10 @@
     position: relative;
     background: var(--background-secondary);
 
+    @nest html[data-theme="dark"] & {
+      background: var(--background-primary);
+    }
+
     @media (--min-desktop-viewport) {
       width: var(--app-desktop-max-width);
     }

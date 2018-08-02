@@ -112,6 +112,11 @@
       --base-sunshine-value: 40px;
       --base-sunshine-radius: var(--base-sunshine-value);
       --max-sunshine-rings: 3;
+      --base-sunshine-background: var(--grey);
+
+      @nest html[data-theme="dark"] & {
+        --base-sunshine-background: var(--dark-grey);
+      }
 
       position: absolute;
       left: 50%;
@@ -120,8 +125,8 @@
       width: var(--base-sunshine-radius);
       height: var(--base-sunshine-radius);
       border-radius: 50%;
-      border: 2px solid white;
-      background-color: var(--grey);
+      border: 2px solid var(--background-primary);
+      background-color: var(--base-sunshine-background);
       z-index: var(--max-sunshine-rings);
       transition: background-color calc(var(--base-speed) * 2) var(--ease-out-expo);
 

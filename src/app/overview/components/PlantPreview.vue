@@ -203,6 +203,7 @@
 </script>
 
 <style lang="postcss" scoped>
+
   .plant-preview {
     display: block;
     width: 100%;
@@ -212,6 +213,13 @@
     background-position: center;
     transform-origin: center;
     transition: transform 50ms var(--ease-out-back);
+    --preview-background: var(--grey);
+    --preview-color: var(--text-color-inverse);
+
+    @nest html[data-theme="dark"] & {
+      --preview-background: var(--dark-grey);
+      --preview-color: white;
+    }
 
     &:focus {
       outline: none;
@@ -220,7 +228,7 @@
 
     &.no-photo {
       /* TODO: Show default image instead */
-      background: var(--grey);
+      background: var(--preview-background);
     }
 
     &.type-list {
@@ -244,7 +252,7 @@
 
     @nest .no-photo & {
       /* TODO: Show default image instead */
-      background: var(--grey);
+      background: var(--preview-background);
     }
 
     &::after {
@@ -331,7 +339,7 @@
 
   .preview-content-inner {
     position: absolute;
-    color: var(--text-color-inverse);
+    color: var(--preview-color);
     width: 100%;
     bottom: 0;
     left: 0;
@@ -351,7 +359,7 @@
       color: var(--text-color-base);
 
       & h1 {
-        color: var(--text-color-base);
+        color: var(--preview-color);
         font-size: var(--text-size-medium);
         display: inline-block;
         position: relative;
@@ -391,7 +399,7 @@
     }
 
     & h1 {
-      color: var(--text-color-inverse);
+      color: var(--preview-color);
       font-size: var(--text-size-base);
       font-weight: 500;
     }

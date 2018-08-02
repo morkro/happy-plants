@@ -194,13 +194,18 @@
   }
 
   .droplet-canvas {
+    --droplet-color: var(--grey);
+
     position: relative;
     width: 30vw;
     min-height: 65px;
     z-index: 1;
 
+    @nest html[data-theme="dark"] & {
+      --droplet-color: var(--dark-grey);
+    }
+
     & .droplet-background {
-      --droplet-color: var(--grey);
       position: absolute;
       z-index: 0;
       background: var(--droplet-color);

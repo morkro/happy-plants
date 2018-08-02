@@ -103,7 +103,7 @@
 <style lang="postcss">
   #plant-module-manager-dialog .happy-dialog-element {
     & .dialog-actions {
-      background: var(--grey);
+      background: var(--border-color);
       margin:
         0
         calc(-1 * var(--base-gap))
@@ -121,16 +121,33 @@
     max-height: 80vh;
     overflow: scroll;
     margin: 0 calc(-1 * var(--base-gap));
-    border-top: 2px solid var(--grey);
+    border-top: 2px solid var(--border-color);
+
+    @nest html[data-theme="dark"] & {
+      border-top: 2px solid var(--background-secondary);
+      border-bottom: 2px solid var(--background-secondary);
+    }
 
     & li {
       display: flex;
       align-items: center;
       padding: var(--base-gap);
+
+      @nest html[data-theme="dark"] & {
+        background: var(--background-secondary);
+      }
     }
 
     & .active {
-      background: var(--light-grey);
+      background: var(--background-secondary);
+
+      @nest html[data-theme="dark"] & {
+        background: var(--background-main);
+
+        &:not(:last-child) {
+          border-bottom: 2px solid var(--background-secondary);
+        }
+      }
 
       & .module-icon svg {
         stroke: var(--text-color-button);
@@ -148,12 +165,12 @@
     }
 
     & li:not(:last-child) {
-      border-bottom: 2px solid var(--grey);
+      border-bottom: 2px solid var(--border-color);
     }
 
     & .module-icon {
       border-radius: 50%;
-      background: var(--grey);
+      background: var(--border-color);
       margin-right: var(--base-gap);
       width: calc(var(--icon-size-base) * 2);
       height: calc(var(--icon-size-base) * 2);

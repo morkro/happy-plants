@@ -9,7 +9,9 @@
   --base-gap: 15px;
   --icon-size-base: 20px;
   --icon-size-small: 16px;
+}
 
+html {
   --plain-shadow: 4px 4px 0 var(--transparency-black-light);
   --green-shadow: 4px 4px 0 var(--brand-green-low);
 
@@ -20,10 +22,33 @@
   --text-color-secondary: rgba(0, 0, 0, 0.6);
   --text-color-inverse: white;
   --text-color-button: white;
-  --link-color: var(--text-color-base, #000);
+  --link-color: var(--text-color-base, black);
+
+  --border-color: var(--grey);
+  --form-color: var(--background-primary);
 
   --transparency-black-light: rgba(0, 0, 0, 0.12);
   --transparency-black-medium: rgba(0, 0, 0, 0.66);
+
+  &[data-theme="dark"] {
+    --background-primary: var(--custom-black);
+    --background-secondary: black;
+
+    --text-color-base: var(--custom-white);
+    --text-color-secondary: rgba(255, 255, 255, 0.6);
+    --text-color-inverse: black;
+    --link-color: var(--text-color-base, white);
+
+    --border-color: var(--custom-black);
+  }
+
+  &.js-theme-in-transition,
+  &.js-theme-in-transition *,
+  &.js-theme-in-transition *::before,
+  &.js-theme-in-transition *::after {
+    transition: all 750ms !important;
+    transition-delay: 0 !important;
+  }
 }
 
 .box {
@@ -38,19 +63,5 @@
 
   &.green {
     background: var(--brand-green);
-  }
-}
-
-.is-skeleton {
-  background: var(--grey) !important;
-  box-shadow: none !important;
-
-  & h1,
-  & h2,
-  & p,
-  & span {
-    color: transparent !important;
-    background: var(--transparency-black-light);
-    border-radius: var(--border-radius);
   }
 }

@@ -5,7 +5,7 @@
         <router-link
           v-if="backButton"
           :to="backPath"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Back">
           <feather-arrow-left :stroke="color" />
         </router-link>
@@ -20,7 +20,7 @@
         <router-link
           v-if="settings === true"
           :to="{ path: '/settings' }"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Settings">
           <div :class="['header-settings-icon', { 'highlight': showNotification }]">
             <component :is="`feather-${settingsIcon}`"/>
@@ -48,8 +48,8 @@
       backPath: { type: [String, Object], default: '/' },
       backButton: { type: Boolean, default: false },
       settings: { type: [Boolean, String], default: false },
-      settingsIcon: { type: String, default: 'settings' },
       settingsOnClick: { type: Function, default: () => {} },
+      showIconBackdrop: { type: Boolean, default: false },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
       transparent: { type: Boolean, default: false },
@@ -67,12 +67,17 @@
     },
 
     computed: {
+      settingsIcon () {
+        return this.settings === true
+          ? 'settings'
+          : this.settings
+      },
       settingsClass () {
         return {
           'edit-data': true,
           'icon': true,
           'inverse': !this.isWhite(this.color),
-          'backdrop': this.isWhite(this.color)
+          'backdrop': this.showIconBackdrop
         }
       }
     },

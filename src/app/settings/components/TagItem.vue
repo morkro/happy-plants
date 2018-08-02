@@ -32,7 +32,7 @@
     flex-direction: column;
     align-items: flex-start;
 
-    & span {
+    & span:not(.tag) {
       color: var(--text-color-secondary);
       font-size: var(--text-size-small);
       margin-top: calc(var(--base-gap) / 2);

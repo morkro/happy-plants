@@ -16,7 +16,7 @@
     },
 
     computed: {
-      headline () {
+      currentRoute () {
         return this.$route.path.split('/').pop()
       },
       returnRoutePath () {
@@ -30,7 +30,7 @@
     watch: {
       '$route' () {
         this.updateAppHeader({
-          title: this.headline,
+          title: this.currentRoute,
           backBtnPath: this.returnRoutePath
         })
       }
@@ -42,7 +42,7 @@
 
     created () {
       this.updateAppHeader({
-        title: this.headline,
+        title: this.currentRoute,
         backBtn: true,
         backBtnPath: this.returnRoutePath,
         settingsBtn: false
