@@ -251,9 +251,24 @@
       border-radius: 4% 50% 50% 50%;
       border: 2px solid var(--background-primary);
       transform: rotate(45deg);
+      overflow: hidden;
 
-      &.active {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 4% 50% 50% 50%;
         background: var(--brand-blue);
+        transform: scale(0);
+        transform-origin: 100% 100%;
+        transition: transform calc(2.5 * var(--base-speed)) var(--ease-out-back);
+      }
+
+      &.active::after {
+        transform: scaleY(1);
       }
 
       &:nth-of-type(1) {
