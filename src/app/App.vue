@@ -67,6 +67,7 @@
 
     methods: {
       ...mapActions([
+        'authenticateUser',
         'loadVersion',
         'updateVersion',
         'loadSettings',
@@ -82,6 +83,7 @@
       this.loadVersion()
         .then(() => this.updateVersion())
         .then(() => this.loadStorage())
+        .then(() => this.authenticateUser())
         .then(() => this.loadSettings())
         .then(() => Promise.all([
           this.loadPlants(),

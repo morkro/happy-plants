@@ -1,35 +1,70 @@
 <template>
   <ul class="settings-menu">
-    <li v-for="(item, index) in menu" :key="index">
-      <router-link :to="{ name: item.name }">
-        <div class="menu-item-text">
-          <span>{{ item.label }}</span>
-          <span v-if="hasReleaseUpdates(item)" class="description">
-            {{ item.description }}
-          </span>
-        </div>
-        <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
-          <component :is="`feather-${item.icon}`" />
-        </div>
-      </router-link>
+    <li
+      v-for="category in menu"
+      :key="category.label">
+      <h3>{{ category.label }}</h3>
+
+      <ul class="settings-submenu">
+        <li
+          v-for="(item, index) in category.children"
+          :key="index"
+          :class="`menu-${item.label.toLowerCase()}`">
+          <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
+            <div class="menu-item-text">
+              <span>{{ item.label }}</span>
+              <span v-if="hasReleaseUpdates(item)" class="description">
+                {{ item.description }}
+              </span>
+            </div>
+            <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
+              <component :is="`feather-${item.icon}`" />
+            </div>
+          </router-link>
+
+          <div v-else-if="item.type === 'button'">
+            <span>{{ item.label }}</span>
+            <div v-if="item.buttons">
+              <v-button
+                v-for="(option, index) in item.buttons"
+                :key="index"
+                type="small"
+                :color="getThemeButtonColor(option.option)"
+                :class="getThemeButtonClass(option.option)"
+                @click.native="emitThemeChange(option.option)">
+                {{ option.label }}
+              </v-button>
+            </div>
+          </div>
+        </li>
+      </ul>
     </li>
-    <li class="menu-theme">
-      <span>Theme</span>
-      <div>
-        <v-button
-          :color="getThemeButtonColor('light')"
-          :class="getThemeButtonClass('light')"
-          @click.native="emitThemeChange('light')">
-          Light
-        </v-button>
-        <v-button
-          :color="getThemeButtonColor('dark')"
-          :class="getThemeButtonClass('dark')"
-          @click.native="emitThemeChange('dark')">
-          Dark
-        </v-button>
-      </div>
+
+    <li v-if="storageType === 'cloud'">
+      <h3>User</h3>
+
+      <ul class="settings-submenu">
+        <li class="menu-user">
+          <div v-if="authenticated">
+            <span>{{ userName }}</span>
+            <div>
+              <v-button type="small" @click.native="logOutUser">
+              Logout
+              </v-button>
+            </div>
+          </div>
+          <div v-else class="user-logged-out">
+            <span>You're logged out.</span>
+            <div>
+              <v-button type="small" @click.native="logInUser">
+              Login
+              </v-button>
+            </div>
+          </div>
+        </li>
+      </ul>
     </li>
+
     <li class="menu-version">
       <span>Version</span><span>{{ version }}</span>
     </li>
@@ -58,20 +93,57 @@
     data () {
       return {
         menu: [
-          { label: 'Tags', name: 'SettingsTags', icon: 'tag' },
-          { label: 'Plant Data', name: 'SettingsData', icon: 'database' },
-          { label: 'About', name: 'SettingsAbout', icon: 'users' },
           {
-            label: 'Release Notes',
-            description: 'A new version has been released!',
-            name: 'SettingsReleaseNotes',
-            icon: 'file-text'
+            label: 'Data',
+            children: [
+              {
+                label: 'Plant Data',
+                name: 'SettingsData',
+                icon: 'database',
+                type: 'link'
+              },
+              {
+                label: 'Tags',
+                name: 'SettingsTags',
+                icon: 'tag',
+                type: 'link'
+              }
+            ]
+          },
+          {
+            label: 'Application',
+            children: [
+              {
+                label: 'Theme',
+                type: 'button',
+                buttons: [
+                  { label: 'Light', option: 'light' },
+                  { label: 'Dark', option: 'dark' }
+                ]
+              },
+              {
+                label: 'About',
+                name: 'SettingsAbout',
+                icon: 'users',
+                type: 'link'
+              },
+              {
+                label: 'Release Notes',
+                description: 'A new version has been released!',
+                name: 'SettingsReleaseNotes',
+                icon: 'file-text',
+                type: 'link'
+              }
+            ]
           }
         ]
       }
     },
 
     computed: mapState({
+      storageType: state => state.storage.type,
+      authenticated: state => state.user.authenticated,
+      userName: state => state.user.name,
       version: state => state.version,
       hasNewRelease: state => state.settings.hasNewRelease,
       theme: state => state.settings.theme
@@ -81,7 +153,9 @@
       ...mapActions([
         'hasSeenNewRelease',
         'updateTheme',
-        'updateAppHeader'
+        'updateAppHeader',
+        'signOutUser',
+        'signInUser'
       ]),
       getThemeButtonColor (type) {
         if (this.theme !== type) {
@@ -110,6 +184,12 @@
           item.description &&
           this.hasNewRelease
         )
+      },
+      logOutUser () {
+        this.signOutUser()
+      },
+      logInUser () {
+        this.signInUser()
       }
     },
 
@@ -122,18 +202,41 @@
 </script>
 
 <style lang="postcss" scoped>
-  ul li {
+  .settings-menu > li {
+    & h3 {
+      padding: calc(var(--base-gap) / 2) var(--base-gap);
+      color: var(--text-color-secondary);
+    }
+
+    &.menu-version {
+      font-size: var(--text-size-xsmall);
+      color: var(--text-color-secondary);
+      padding: var(--base-gap);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .settings-submenu li {
     display: flex;
     align-items: center;
+    background: var(--background-primary);
 
     &:not(:last-child) {
       border-bottom: 2px solid var(--border-color);
     }
 
-    & a {
+    & a,
+    & > div {
       font-weight: 500;
       font-size: var(--text-size-medium);
       padding: var(--base-gap);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       &:focus {
         outline: none;
@@ -144,22 +247,6 @@
       &:focus svg {
         filter: invert(100%);
       }
-    }
-
-    & a,
-    &.menu-version,
-    &.menu-theme {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    &.menu-version,
-    &.menu-theme {
-      font-size: 80%;
-      color: var(--text-color-secondary);
-      padding: var(--base-gap);
     }
 
     & svg {
@@ -197,14 +284,18 @@
     }
   }
 
-  ul li.menu-theme {
+  .menu-theme,
+  .menu-user {
     border-bottom: none;
     padding-bottom: 0;
 
     & div {
       display: flex;
+      font-size: var(--text-size-xsmall);
     }
+  }
 
+  .menu-theme {
     & button.active {
       font-weight: 500;
     }
@@ -218,5 +309,11 @@
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
+  }
+
+  .menu-user span {
+    font-size: var(--text-size-xsmall);
+    word-break: break-all;
+    padding-right: var(--base-gap);
   }
 </style>
