@@ -119,7 +119,7 @@
       }
     }
   }
-</script>—
+</script>
 
 <style lang="postcss" scoped>
   ul li {

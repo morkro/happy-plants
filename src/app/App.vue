@@ -70,6 +70,7 @@
         'loadVersion',
         'updateVersion',
         'loadSettings',
+        'loadStorage',
         'loadPlants',
         'loadTags',
         'hideNotification',
@@ -80,6 +81,7 @@
     mounted () {
       this.loadVersion()
         .then(() => this.updateVersion())
+        .then(() => this.loadStorage())
         .then(() => this.loadSettings())
         .then(() => Promise.all([
           this.loadPlants(),

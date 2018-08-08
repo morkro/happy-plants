@@ -42,6 +42,16 @@ export default new Vuex.Store({
       theme: 'light'
     },
 
+    storage: {
+      type: 'local'
+    },
+
+    user: {
+      authenticated: false,
+      error: false,
+      name: null
+    },
+
     plants: false,
     selected: plant.state,
     tags: []
