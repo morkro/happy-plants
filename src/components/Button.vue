@@ -44,6 +44,7 @@
     --button-background: var(--brand-green);
     --button-focus: var(--brand-green-low);
     --button-icon: var(--text-color-button);
+    --button-shadow: var(--brand-green-medium);
     --text-color: var(--text-color-button);
 
     position: relative;
@@ -58,6 +59,7 @@
     border-radius: var(--border-radius);
     padding: calc(2 * var(--button-padding)) calc(3 * var(--button-padding));
     transition: background-color 100ms var(--ease-out-back);
+    box-shadow: 0 2px 9px var(--button-shadow);
 
     &::after {
       opacity: 0;
@@ -141,6 +143,7 @@
   button[disabled],
   .btn[disabled] {
     --button-background: var(--grey);
+    --button-shadow: var(--grey);
     color: var(--dark-grey);
     cursor: not-allowed;
 
@@ -153,6 +156,7 @@
   .btn.plain {
     --button-background: var(--grey);
     --button-focus: var(--dark-grey);
+    --button-shadow: var(--grey);
     --text-color: var(--link-color);
 
     @nest html[data-theme="dark"] & {
@@ -165,23 +169,30 @@
   button.yellow,
   .btn.yellow {
     --button-background: var(--brand-yellow);
+    --button-focus: var(--brand-yellow-low);
+    --button-shadow: var(--brand-yellow-medium);
     --text-color: var(--link-color);
   }
 
   button.red,
   .btn.red {
     --button-background: var(--brand-red);
+    --button-focus: var(--brand-red-low);
+    --button-shadow: var(--brand-red-medium);
   }
 
   button.grey,
   .btn.grey {
     --button-background: var(--dark-grey);
     --button-focus: var(--grey);
+    --button-shadow: var(--dark-grey);
   }
 
   button.transparent,
   .btn.transparent {
     --button-background: transparent;
+    --button-focus: transparent;
+    --button-shadow: transparent;
 
     & .button-icon svg {
       filter: invert(100%);
