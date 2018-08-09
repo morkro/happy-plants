@@ -84,6 +84,8 @@
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
         import('vue-feather-icons/icons/DatabaseIcon' /* webpackChunkName: "icons" */),
+      'feather-save': () =>
+        import('vue-feather-icons/icons/SaveIcon' /* webpackChunkName: "icons" */),
       'feather-users': () =>
         import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */),
       'feather-file-text': () =>
@@ -97,8 +99,14 @@
             label: 'Data',
             children: [
               {
-                label: 'Plant Data',
+                label: 'Import/ Export',
                 name: 'SettingsData',
+                icon: 'save',
+                type: 'link'
+              },
+              {
+                label: 'Storage',
+                name: 'SettingsStorage',
                 icon: 'database',
                 type: 'link'
               },

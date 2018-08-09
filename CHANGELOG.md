@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Added a dark theme in settings section.
 
+### Changed
+- Added a nice but subtle shadow to buttons.
+
 ### Fixed
 - A production-only bug with build tools and styling.
 
