@@ -14,33 +14,46 @@ export const app = firebase.initializeApp(firebaseConfig)
 export const db = app.firestore()
 
 db.settings({ timestampsInSnapshots: true })
-
 console.log(db)
 
-function getDoc ({ base = 'users', userId, folder, fileName }) {
-  return db.collection(base)
-    .doc(userId)
-    .collection(folder)
-    .doc(fileName)
+function firestoreQuery (commands = []) {
+  let query = db
+
+  for (const [collection, doc] of commands) {
+    if (collection === undefined) {
+      query = query.doc(doc)
+    } else if (doc === undefined) {
+      query = query.collection(collection)
+    } else {
+      query = query.collection(collection).doc(doc)
+    }
+  }
+
+  return query
 }
 
-export const addEntry = ({ base = 'users', userId, folder, fileName, data }) => {
-  return getDoc({ base, userId, folder, fileName })
+export const getEntry = (commands = [], data) => {
+  return firestoreQuery(commands)
+    .get()
+}
+
+export const addEntry = (commands = [], data) => {
+  return firestoreQuery(commands)
     .set(data)
 }
 
-export const updateEntry = ({ base = 'users', userId, folder, fileName, data }) => {
-  const ref = getDoc({ base, userId, folder, fileName })
+export const updateEntry = (commands = [], data) => {
+  const ref = firestoreQuery(commands)
   return ref.get().then(doc => {
     if (doc.exists) {
       ref.set({ ...doc.data(), ...data })
     } else {
-      ref.set(data)
+      ref.add(data)
     }
   })
 }
 
-export const deleteEntry = ({ base = 'users', userId, folder, fileName }) => {
-  return getDoc({ base, userId, folder, fileName })
+export const deleteEntry = (commands = []) => {
+  return firestoreQuery(commands)
     .delete()
 }

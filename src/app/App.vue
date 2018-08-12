@@ -79,21 +79,20 @@
       ])
     },
 
-    mounted () {
-      this.loadVersion()
-        .then(() => this.updateVersion())
-        .then(() => this.loadStorage())
-        .then(() => this.authenticateUser())
-        .then(() => this.loadSettings())
-        .then(() => Promise.all([
-          this.loadPlants(),
-          this.loadTags()
-        ]))
-        .then(() => {
-          if (this.theme === 'dark') {
-            this.updateAppHeader({ iconColor: 'white' })
-          }
-        })
+    async mounted () {
+      await this.loadVersion()
+      await this.updateVersion()
+      await this.loadStorage()
+      await this.authenticateUser()
+      await this.loadSettings()
+      await Promise.all([
+        this.loadPlants(),
+        this.loadTags()
+      ])
+
+      if (this.theme === 'dark') {
+        this.updateAppHeader({ iconColor: 'white' })
+      }
     },
 
     updated () {

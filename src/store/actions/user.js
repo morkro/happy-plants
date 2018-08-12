@@ -20,12 +20,15 @@ export const signOutUser = ({ commit }) => {
 export const authenticateUser = ({ commit, state }) => {
   if (state.storage.type === 'cloud') {
     commit('USER_SIGNIN_PROGRESS')
-    return firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        commit('USER_SIGNIN_SUCCESS', { user })
-      } else {
-        commit('USER_SIGNIN_FAILED')
-      }
+
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          resolve(commit('USER_SIGNIN_SUCCESS', { user }))
+        } else {
+          reject(commit('USER_SIGNIN_FAILED'))
+        }
+      })
     })
   }
 }

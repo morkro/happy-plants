@@ -9,11 +9,13 @@ import {
 
 import {
   addEntry as addEntryLF,
+  updateEntry as updateEntryLF,
   deleteEntry as deleteEntryLF
 } from '@/api/localforage'
 
 import {
   addEntry as addEntryFire,
+  updateEntry as updateEntryFire,
   deleteEntry as deleteEntryFire
 } from '@/api/firebase'
 
@@ -79,12 +81,10 @@ export async function addPlant ({ state, commit }, data) {
   const payload = { item: meta }
 
   if (state.storage.type === 'cloud') {
-    await addEntryFire({
-      userId: state.user.id,
-      folder,
-      fileName: meta.guid,
-      data: meta
-    })
+    await addEntryFire([
+      ['users', state.user.id],
+      [folder, meta.guid]
+    ], meta)
   }
 
   // FIXME: This is generally a bad idea. Use feature detection instead.
@@ -106,13 +106,28 @@ export async function addPlant ({ state, commit }, data) {
   return meta.guid
 }
 
+export async function updatePlant (action, { state, commit }, data) {
+  const updated = Date.now()
+  await updateEntryLF('updated', updated)
+
+  commit(action, { item: data, updated })
+
+  if (state.storage.type === 'cloud') {
+    await updateEntryFire([
+      ['users', state.user.id],
+      [folder, state.selected.guid]
+    ], state.selected)
+  }
+
+  await updateEntryLF(namespace + state.selected.guid, state.selected)
+}
+
 export async function deletePlants ({ state, commit }, items) {
   if (state.storage.type === 'cloud') {
-    await Promise.all(items.map(item => deleteEntryFire({
-      userId: state.user.id,
-      folder,
-      fileName: item.guid
-    })))
+    await Promise.all(items.map(item => deleteEntryFire([
+      ['users', state.user.id],
+      [folder, item.guid]
+    ])))
   }
 
   await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
