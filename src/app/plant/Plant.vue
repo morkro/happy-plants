@@ -5,6 +5,7 @@
       :name="name"
       :modified="modified"
       :created="created"
+      :loading="deletePlantProgress"
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
 
@@ -89,7 +90,8 @@
     data: () => ({
       headerInView: true,
       showPlantModal: false,
-      showModuleManager: false
+      showModuleManager: false,
+      deletePlantProgress: false
     }),
 
     computed: {
@@ -101,8 +103,7 @@
         imageURL: state => state.selected.imageURL,
         modules: state => state.selected.modules || [],
         modified: state => state.selected.modified,
-        created: state => state.selected.created,
-        tags: state => state.selected.tags
+        created: state => state.selected.created
       }),
       ...mapGetters({
         plantTags: 'getPlantTags'
@@ -111,7 +112,7 @@
         return this.theme === 'light' ? 'black' : 'white'
       },
       allTags () {
-        return this.tags && this.plantTags(this.guid)
+        return this.plantTags(this.guid)
       },
       plantModules () {
         return getPlantModules().map(module =>
@@ -203,12 +204,13 @@
       onSunshineUpdate (sunshine) {
         this.updateSunshine({ guid: this.guid, sunshine })
       },
-      deletePlantFromModal () {
-        this.deletePlants([{ guid: this.guid }])
-          .then(() => this.showNotification({
-            message: 'Plant deleted.'
-          }))
-          .then(() => this.$router.push('/'))
+      async deletePlantFromModal () {
+        this.deletePlantProgress = true
+        await this.deletePlants([{ guid: this.guid }])
+        this.deletePlantProgress = false
+
+        this.showNotification({ message: 'Plant deleted.' })
+        this.$router.push('/')
       },
       activateModuleManager () {
         this.showModuleManager = true

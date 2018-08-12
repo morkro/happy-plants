@@ -12,7 +12,10 @@
         <p>
           You are about to delete <strong>{{ selection.length }}</strong> plants.
         </p>
-        <v-button color="yellow" @click.native="confirmDeletePlants">
+        <v-button
+          color="yellow"
+          :loading="deletePlantsProgress"
+          @click.native="confirmDeletePlants">
           Yes, delete plants
         </v-button>
       </div>
@@ -170,7 +173,8 @@
         selection: [],
         editMode: false,
         showDialog: false,
-        showBackdrop: false
+        showBackdrop: false,
+        deletePlantsProgress: false
       }
     },
 
@@ -233,13 +237,16 @@
       cancelDeleteMode () {
         this.reset()
       },
-      confirmDeletePlants () {
+      async confirmDeletePlants () {
         const message = this.selection.length > 1
           ? `Deleted ${this.selection.length} plants.`
           : `Deleted ${this.selection.length} plant.`
 
+        this.deletePlantsProgress = true
+        await this.deletePlants(this.selection)
+        this.deletePlantsProgress = false
+
         this.showNotification({ message })
-        this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },
       updateEditMode (type) {

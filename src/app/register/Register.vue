@@ -21,7 +21,10 @@
             @loading-file="handleLoadingState" />
         </label>
 
-        <v-button @click.native="validateForm" :disabled="!canRegisterPlant">
+        <v-button
+          @click.native="validateForm"
+          :disabled="!canRegisterPlant"
+          :loading="addPlantProgress">
           <svgicon
             icon="leaf"
             width="16"
@@ -63,9 +66,10 @@
     data () {
       return {
         name: '',
-        blob: undefined,
+        blob: null,
         isUploadingFile: false,
-        showDialog: false
+        showDialog: false,
+        addPlantProgress: false
       }
     },
 
@@ -92,14 +96,16 @@
         if (!event.target.value) return
         this.name = event.target.value
       },
-      validateForm () {
-        const config = {
+      async validateForm () {
+        this.addPlantProgress = true
+        const guid = await this.addPlant({
           ...getPlantStructure(),
           blob: this.blob,
           name: this.name
-        }
-        this.addPlant(config)
-          .then(guid => this.$router.push(`/plant/${guid}`))
+        })
+        this.addPlantProgress = false
+
+        this.$router.push(`/plant/${guid}`)
       }
     }
   }

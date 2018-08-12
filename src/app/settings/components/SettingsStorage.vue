@@ -9,7 +9,7 @@
       <div class="storage-local box">
         <h3>
           <feather-smartphone />
-          Switch to local
+          Use local only
         </h3>
         <p>
           Description
@@ -22,7 +22,7 @@
       <div class="storage-cloud box">
         <h3>
           <feather-cloud />
-          Switch to cloud
+          Backup in cloud
         </h3>
         <p>
           Description
@@ -104,7 +104,7 @@
     }
 
     & svg {
-      margin-right: var(--base-gap);
+      margin-right: calc(var(--base-gap) / 2);
     }
 
     & p {

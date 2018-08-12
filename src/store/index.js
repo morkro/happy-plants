@@ -49,7 +49,9 @@ export default new Vuex.Store({
     user: {
       authenticated: false,
       error: false,
-      name: null
+      loading: false,
+      name: null,
+      id: null
     },
 
     plants: false,

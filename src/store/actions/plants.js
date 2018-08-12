@@ -4,11 +4,21 @@ import { convertToBlob } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
 import {
   fetchPlants,
-  getPlant,
-  addPlant as addPlantFromAPI,
-  deletePlants as deletePlantsFromAPI,
-  updatePlant as updatePlantFromAPI
+  getPlant
 } from '@/api/plants'
+
+import {
+  addEntry as addEntryLF,
+  deleteEntry as deleteEntryLF
+} from '@/api/localforage'
+
+import {
+  addEntry as addEntryFire,
+  deleteEntry as deleteEntryFire
+} from '@/api/firebase'
+
+const namespace = 'plant-'
+const folder = 'plants'
 
 function shrinkPlantObjects (plant) {
   return {
@@ -59,49 +69,23 @@ export const loadPlantItem = ({ state, commit }, guid) => {
     .then(item => commit('LOAD_PLANT_ITEM', { item }))
 }
 
-export const addPlant = ({ commit }, data) => {
+export async function addPlant ({ state, commit }, data) {
   const meta = {
     ...data,
     guid: uuid(),
     created: Date.now(),
     modified: Date.now()
   }
+  const payload = { item: meta }
 
-  // FIXME: This is generally a bad idea. Use feature detection instead.
-  // However, I could not find a reliable way to test if IndexedDB supports blobs,
-  // as it fails silently. We have to convert the blob to base64,
-  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-  if (iOS && !!data.blob) {
-    // 1. Turn blob into base64 string (only needed for storage)
-    return blobToBase64String(data.blob)
-      // 2. Take the base64 string and add it to the data object
-      .then(base64String => Object.assign({}, meta, { blob: base64String }))
-      // 3. Add data to IndexedDB and return it
-      .then(config => addPlantFromAPI(config).then(() => config))
-      // 4. Add the blob back to the object
-      .then(config => Object.assign({}, config, { blob: data.blob }))
-      // 5. Add new data to Vuex
-      .then(data => {
-        commit('ADD_PLANT', { item: data })
-        return data.guid
-      })
-  }
-
-  return addPlantFromAPI(meta)
-    .then(data => {
-      commit('ADD_PLANT', { item: meta })
-      return data.guid
+  if (state.storage.type === 'cloud') {
+    await addEntryFire({
+      userId: state.user.id,
+      folder,
+      fileName: meta.guid,
+      data: meta
     })
-}
-
-export const deletePlants = ({ commit }, items) => {
-  return deletePlantsFromAPI(items)
-    .then(() => commit('DELETE_PLANTS', { items }))
-}
-
-export const updatePlant = ({ state, commit }, data) => {
-  const item = state.plants.find(p => p.guid === data.guid)
-  const meta = { ...item, ...data, modified: Date.now() }
+  }
 
   // FIXME: This is generally a bad idea. Use feature detection instead.
   // However, I could not find a reliable way to test if IndexedDB supports blobs,
@@ -109,20 +93,29 @@ export const updatePlant = ({ state, commit }, data) => {
   // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
   if (iOS && !!data.blob) {
     // 1. Turn blob into base64 string (only needed for storage)
-    return blobToBase64String(data.blob)
-      // 2. Take the base64 string and add it to the data object
-      .then(base64String => Object.assign({}, meta, { blob: base64String }))
-      // 3. Add data to IndexedDB and return it
-      .then(config => addPlantFromAPI(config).then(() => config))
-      // 4. Add the blob back to the object
-      .then(config => Object.assign({}, config, { blob: data.blob }))
-      // 5. Add new data to Vuex
-      .then(data => {
-        commit('ADD_PLANT', { item: data })
-        return data.guid
-      })
+    const base64String = await blobToBase64String(data.blob)
+    const config = Object.assign({}, meta, { blob: base64String })
+
+    await addEntryLF(namespace + config.guid, config)
+    payload.item = Object.assign({}, config, { blob: data.blob })
+  } else {
+    await addEntryLF(namespace + meta.guid, meta)
   }
 
-  return updatePlantFromAPI(meta)
-    .then(() => commit('UPDATE_PLANT', { config: meta }))
+  commit('ADD_PLANT', payload)
+  return meta.guid
+}
+
+export async function deletePlants ({ state, commit }, items) {
+  if (state.storage.type === 'cloud') {
+    await Promise.all(items.map(item => deleteEntryFire({
+      userId: state.user.id,
+      folder,
+      fileName: item.guid
+    })))
+  }
+
+  await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
+
+  commit('DELETE_PLANTS', { items })
 }

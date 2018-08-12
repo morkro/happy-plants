@@ -1,12 +1,26 @@
-import { updatePlant as updatePlantFromAPI } from '@/api/plants'
-import { updateStoreTimestamp } from '@/api/store'
+import { updateEntry as updateEntryLF } from '@/api/localforage'
+import { updateEntry as updateEntryFire } from '@/api/firebase'
 import { getPlantStructure } from '../utils'
 
-const updatePlant = (action, { state, commit }, data) => {
-  updateStoreTimestamp(data)
-    .then(config =>
-      commit(action, { item: config.data, updated: config.updated }))
-    .then(() => updatePlantFromAPI(state.selected))
+const namespace = 'plant-'
+const folder = 'plants'
+
+async function updatePlant (action, { state, commit }, data) {
+  const updated = Date.now()
+  await updateEntryLF('updated', updated)
+
+  commit(action, { item: data, updated })
+
+  if (state.storage.type === 'cloud') {
+    await updateEntryFire({
+      userId: state.user.id,
+      folder,
+      fileName: state.selected.guid,
+      data: state.selected
+    })
+  }
+
+  await updateEntryLF(namespace + state.selected.guid, state.selected)
 }
 
 export const resetSelectedState = ({ commit }) => {
