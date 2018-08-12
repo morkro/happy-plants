@@ -1,7 +1,8 @@
 <template>
   <button type="button" :class="[color, type]">
-    <div v-if="!!$slots.icon" :class="['button-icon', { single: !$slots.default }]">
-      <slot name="icon" />
+    <div v-if="loading || !!$slots.icon" :class="getIconClass()">
+      <feather-loader v-if="loading" />
+      <slot v-else name="icon" />
     </div>
 
     <span v-if="!!$slots.default">
@@ -18,6 +19,10 @@
     name: 'Button',
 
     props: {
+      loading: {
+        type: Boolean,
+        default: false
+      },
       color: {
         type: String,
         default: 'default',
@@ -32,11 +37,31 @@
             : types.includes(value)
         }
       }
+    },
+
+    components: {
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
+    },
+
+    methods: {
+      getIconClass () {
+        return ['button-icon', {
+          single: !this.$slots.default,
+          rotate: this.loading
+        }]
+      }
     }
   }
 </script>
 
 <style lang="postcss">
+  @keyframes rotate360 {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
   button,
   .btn {
     --button-padding: 6px;
@@ -99,6 +124,11 @@
 
       &:not(.single) {
         margin-right: calc(var(--base-gap) / 2);
+      }
+
+      &.rotate svg {
+        transform-origin: center center;
+        animation: rotate360 4s linear infinite;
       }
     }
 
