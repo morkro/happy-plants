@@ -169,7 +169,7 @@
           position: absolute;
           top: 0;
           left: 0;
-          box-shadow: 0 0 12px 0 var(--brand-green);
+          box-shadow: 0 2px 7px 0 var(--brand-green);
           transform: none;
           transition: opacity var(--base-speed) var(--ease-out-back);
         }
@@ -177,9 +177,8 @@
 
       &.current button {
         font-weight: 500;
-        box-shadow: var(--plain-shadow);
+        box-shadow: var(--dark-shadow);
         transform: scale(1.15);
-        border: 1px solid var(--text-color-button);
       }
     }
   }

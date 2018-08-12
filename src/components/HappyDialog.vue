@@ -138,6 +138,7 @@
     &.danger {
       background: var(--brand-red);
       color: var(--text-color-inverse);
+      box-shadow: 0 2px 7px var(--brand-red-medium);
     }
   }
 

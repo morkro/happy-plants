@@ -162,6 +162,7 @@
 
   .watering-routine {
     --button-background: var(--brand-blue-low);
+    --button-shadow: var(--brand-blue-low);
     --button-focus: var(--brand-blue);
     padding: calc(var(--base-gap) / 2) calc(var(--base-gap) / 2);
     margin-top: calc(var(--base-gap) / 4);

@@ -12,8 +12,8 @@
 }
 
 html {
-  --plain-shadow: 4px 4px 0 var(--transparency-black-light);
-  --green-shadow: 4px 4px 0 var(--brand-green-low);
+  --plain-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+  --dark-shadow: 0 2px 7px rgba(151, 151, 151, 1);
 
   --background-primary: white;
   --background-secondary: var(--light-grey, #f5f5f5);
