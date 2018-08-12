@@ -186,6 +186,7 @@
       width: var(--tag-module-height);
       display: flex;
       justify-content: center;
+      box-shadow: none;
     }
   }
 

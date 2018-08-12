@@ -210,6 +210,7 @@
       align-items: center;
       position: relative;
       background: transparent;
+      box-shadow: none;
 
       &:focus {
         outline: none;
