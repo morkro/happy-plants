@@ -54,9 +54,17 @@ export default new Vuex.Store({
       id: null
     },
 
-    plants: false,
+    plants: {
+      loading: false,
+      data: []
+    },
+
     selected: plant.state,
-    tags: []
+
+    tags: {
+      loading: false,
+      data: []
+    }
   },
 
   actions: {

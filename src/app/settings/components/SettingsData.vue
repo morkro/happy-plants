@@ -14,8 +14,11 @@
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
 
-        <v-button color="yellow" @click.native="deleteApplicationData">
-          Delete my data
+        <v-button
+          color="yellow"
+          :loading="deleteAllDataProgress"
+          @click.native="deleteApplicationData">
+          I understand, delete my data
         </v-button>
       </div>
 
@@ -114,7 +117,7 @@
     name: 'SettingsData',
 
     meta: {
-      title: 'Data'
+      title: 'Import/ Export'
     },
 
     components: {
@@ -137,6 +140,7 @@
         dangerDialogTitle: 'Deleting application data',
         importDialogTitle: 'Import plant data',
         selectedImportType: false,
+        deleteAllDataProgress: false,
         importTypes: [
           {
             label: 'Overwrite',
@@ -163,6 +167,14 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: 'Import/ Export',
+        backBtn: true,
+        settingsBtn: false
+      })
+    },
+
     methods: {
       ...mapActions([
         'showNotification',
@@ -170,7 +182,8 @@
         'deleteAllData',
         'importTags',
         'importSettings',
-        'importPlants'
+        'importPlants',
+        'updateAppHeader'
       ]),
 
       triggerDownload (data = { message: 'No data!' }) {
@@ -240,13 +253,16 @@
           .then(() => this.$router.push('/'))
       },
 
-      deleteApplicationData () {
-        this.deleteAllData()
-          .then(() => this.closeDialog())
-          .then(() => this.showNotification({
-            message: 'Successfully deleted all your data.'
-          }))
-          .then(() => this.$router.push('/'))
+      async deleteApplicationData () {
+        this.deleteAllDataProgress = true
+        await this.deleteAllData()
+        this.deleteAllDataProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: 'Successfully deleted all your data.'
+        })
+        this.$router.push('/')
       }
     }
   }

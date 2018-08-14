@@ -5,6 +5,7 @@
       :show="showModal"
       :tag="selectedTag"
       :tag-names="tags.map(c => c.label)"
+      :loading="deleteTagProgress"
       @content-update="editTagLabel"
       @content-error="showTagUpdateError"
       @close-dialog="closeModal" />
@@ -32,7 +33,7 @@
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
       <div v-if="!tags.length" class="tags-empty">
-        <feather-tag />
+        <feather-tag class="tags-header" />
         <h1>You haven't added tags to your plants yet</h1>
         <p>
           Tagging is a system to help organise your plants better.
@@ -40,6 +41,7 @@
           they will appear here and you can rename or delete them.
         </p>
         <router-link class="btn" to="/">
+          <feather-grid class="button-icon" />
           Overview
         </router-link>
       </div>
@@ -104,20 +106,23 @@
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-trash': () =>
-        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */),
+      'feather-grid': () =>
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
       showModal: false,
       showDialog: false,
       tagName: '',
-      selectedTag: null
+      selectedTag: null,
+      deleteTagProgress: false
     }),
 
     computed: {
       ...mapState({
-        tags: state => state.tags,
-        plants: state => state.plants
+        tags: state => state.tags.data,
+        plants: state => state.plants.data
       }),
       hasTagName () {
         return this.tagName !== ''
@@ -173,17 +178,17 @@
           event.currentTarget.blur()
         }
       },
-      confirmDeleteTag () {
+      async confirmDeleteTag () {
         const { label, guid } = this.selectedTag
-        // 1. Delete tag
-        this.deleteTag({ tag: guid, forceDelete: true })
-          // 2. Close alert
-          .then(() => this.closeDialog())
-          // 3. Show notification
-          .then(() =>
-            this.showNotification({
-              message: `Tag "${label}" deleted.`
-            }))
+
+        this.deleteTagProgress = true
+        await this.deleteTag({ tag: guid, forceDelete: true })
+        this.deleteTagProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: `Tag "${label}" deleted.`
+        })
       }
     }
   }
@@ -202,7 +207,7 @@
     flex-direction: column;
     text-align: center;
 
-    & svg {
+    & .tags-header {
       align-self: center;
       width: 10%;
       height: 10%;

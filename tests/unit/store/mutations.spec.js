@@ -85,16 +85,16 @@ describe('store/mutations/plants.js', () => {
 
     // Add and sort alphabetical
     mutations.ADD_PLANT(state, { item: { name: 'Foo', created: now } })
-    expect(state.plants).toEqual(expect.arrayContaining([
+    expect(state.plants.data).toEqual(expect.arrayContaining([
       { name: 'Bar', created: then },
       { name: 'Foo', created: now }
     ]))
 
     // Add and sort by date (latest)
     state.settings.orderBy = 'latest'
-    state.plants = [{ name: 'Bar', created: then }]
+    state.plants.data = [{ name: 'Bar', created: then }]
     mutations.ADD_PLANT(state, { item: { name: 'Foo', created: now } })
-    expect(state.plants).toEqual(expect.arrayContaining([
+    expect(state.plants.data).toEqual(expect.arrayContaining([
       { name: 'Foo', created: now },
       { name: 'Bar', created: then }
     ]))
@@ -113,7 +113,7 @@ describe('store/mutations/plants.js', () => {
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
       { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
     ]})
-    expect(state.plants).toEqual(expect.arrayContaining([
+    expect(state.plants.data).toEqual(expect.arrayContaining([
       { guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
       { guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' }
     ]))
@@ -130,7 +130,7 @@ describe('store/mutations/plants.js', () => {
       name: 'New name',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
     } })
-    expect(state.plants).toEqual(expect.arrayContaining([{
+    expect(state.plants.data).toEqual(expect.arrayContaining([{
       name: 'New name',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
     }]))
@@ -144,8 +144,8 @@ describe('store/mutations/tags.js', () => {
     }
     expect(mutations.LOAD_TAGS(state, {})).toBeUndefined()
     mutations.LOAD_TAGS(state, { tags: [1, 2, 3] })
-    expect(state.tags.length).toBeGreaterThan(1)
-    expect(state.tags).toEqual(expect.arrayContaining([1, 2, 3]))
+    expect(state.tags.data.length).toBeGreaterThan(1)
+    expect(state.tags.data).toEqual(expect.arrayContaining([1, 2, 3]))
   })
 
   it('ADD_TAG', () => {
@@ -156,15 +156,15 @@ describe('store/mutations/tags.js', () => {
 
     // Adding a new tag works as expected
     mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })
-    expect(state.tags).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
+    expect(state.tags.data).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
 
     // Adding the exact same tag again just returns and doesn't mutate
     expect(mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })).toBe(undefined)
-    expect(state.tags).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
+    expect(state.tags.data).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
 
     // Adding a new plant ID to the same tag works
     mutations.ADD_TAG(state, { item: { name, plants: ['guid 2'] } })
-    expect(state.tags).toEqual(expect.arrayContaining([
+    expect(state.tags.data).toEqual(expect.arrayContaining([
       { name, plants: ['guid', 'guid 2'] }
     ]))
   })
@@ -192,8 +192,8 @@ describe('store/mutations/tags.js', () => {
       tag: '6e7e20bc-436e-4267-ae59-07e6686b6a2d',
       forceDelete: true
     } })
-    expect(state.tags.length).toEqual(1)
-    expect(state.tags.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
+    expect(state.tags.data.length).toEqual(1)
+    expect(state.tags.data.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
       .toBeUndefined()
 
     // Delete just the plant
@@ -201,7 +201,7 @@ describe('store/mutations/tags.js', () => {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid'
     } })
-    expect(state.tags).toEqual(expect.arrayContaining([{
+    expect(state.tags.data).toEqual(expect.arrayContaining([{
       name: 'awesome-tag',
       label: 'Awesome tag',
       guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
@@ -213,8 +213,8 @@ describe('store/mutations/tags.js', () => {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid2'
     } })
-    expect(state.tags.length).toEqual(0)
-    expect(state.tags.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
+    expect(state.tags.data.length).toEqual(0)
+    expect(state.tags.data.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
       .toBeUndefined()
   })
 
@@ -233,7 +233,7 @@ describe('store/mutations/tags.js', () => {
         label: 'Awesome tag'
       }
     })
-    expect(state.tags).toEqual(expect.arrayContaining([{
+    expect(state.tags.data).toEqual(expect.arrayContaining([{
       name: 'awesome-tag',
       label: 'Awesome tag',
       guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d'

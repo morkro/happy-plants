@@ -85,10 +85,8 @@
       await this.loadStorage()
       await this.authenticateUser()
       await this.loadSettings()
-      await Promise.all([
-        this.loadPlants(),
-        this.loadTags()
-      ])
+      await this.loadPlants()
+      await this.loadTags()
 
       if (this.theme === 'dark') {
         this.updateAppHeader({ iconColor: 'white' })

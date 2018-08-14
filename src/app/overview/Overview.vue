@@ -108,11 +108,13 @@
 
     computed: {
       ...mapState({
-        plants: state => state.plants,
+        storage: state => state.storage.type,
+        plantsLoading: state => state.plants.loading,
+        plants: state => state.plants.data,
         viewMode: state => state.settings.viewMode,
         orderBy: state => state.settings.orderBy,
         filterBy: state => state.settings.filterBy,
-        tags: state => state.tags
+        tags: state => state.tags.data
       }),
       isViewMode () {
         return this.editMode === 'view-mode'
@@ -179,7 +181,8 @@
     },
 
     updated () {
-      if (this.plants && this.plants.length === 0) {
+      if (this.storage === 'cloud') return
+      if (!this.plantsLoading && this.plants && this.plants.length === 0) {
         this.$router.push('/intro')
       }
     },
@@ -193,9 +196,9 @@
     },
 
     mounted () {
-      if (this.plants && this.plants.length === 0) {
-        this.$router.push('/intro')
-      }
+      // if (!this.plantsLoading && this.plants && this.plants.length === 0) {
+      //   this.$router.push('/intro')
+      // }
     },
 
     methods: {

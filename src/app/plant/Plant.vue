@@ -2,9 +2,9 @@
   <div class="main-wireframe">
     <plant-modal
       :show="showPlantModal"
-      :name="name"
-      :modified="modified"
-      :created="created"
+      :name="plant.name"
+      :modified="plant.modified"
+      :created="plant.created"
       :loading="deletePlantProgress"
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
@@ -15,10 +15,10 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <main :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
+    <main :class="{ 'view-content': true, 'no-modules': !plant.modules.length, 'app-content': true }">
       <plant-header
-        :name="name"
-        :image-url="imageURL"
+        :name="plant.name"
+        :image-url="plant.imageURL"
         v-observe-visibility.60="observeVisibility"
         @update-name="updatePlantName"
         @update-photo="updatePlantPhoto" />
@@ -35,15 +35,15 @@
         can be added/removed and sorted.
       -->
       <component
-        v-if="modules.length"
-        v-for="module in modules"
+        v-if="plant.modules.length"
+        v-for="module in plant.modules"
         v-bind="getPlantModuleProps(module.type)"
         :key="module.type"
         :is="`plant-${module.type}`"
         @update-plant="getModuleListener" />
 
       <plant-footer
-        :no-modules="!modules.length"
+        :no-modules="!plant.modules.length"
         :show-tag-button="allTags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
@@ -71,7 +71,7 @@
 
     meta () {
       return {
-        title: this.name
+        title: this.plant.name
       }
     },
 
@@ -106,13 +106,17 @@
         created: state => state.selected.created
       }),
       ...mapGetters({
-        plantTags: 'getPlantTags'
+        plantTags: 'getPlantTags',
+        getPlantItem: 'getPlantItem'
       }),
+      plant () {
+        return this.getPlantItem(this.$route.params.id)
+      },
       defaultIconColor () {
         return this.theme === 'light' ? 'black' : 'white'
       },
       allTags () {
-        return this.plantTags(this.guid)
+        return this.plantTags(this.plant.guid)
       },
       plantModules () {
         return getPlantModules().map(module =>
@@ -153,7 +157,7 @@
         'updateAppHeader'
       ]),
       getPlantModuleProps (type) {
-        const module = this.modules.find(mod => mod.type === type).value
+        const module = this.plant.modules.find(mod => mod.type === type).value
         switch (type) {
           case 'watering':
             return {
@@ -193,20 +197,20 @@
         this.showPlantModal = false
       },
       onNotesUpdate (notes) {
-        this.updateNotes({ guid: this.guid, notes })
+        this.updateNotes({ guid: this.plant.guid, notes })
       },
       onSeasonUpdate (month) {
-        this.updateSeason({ guid: this.guid, month })
+        this.updateSeason({ guid: this.plant.guid, month })
       },
       onWateringUpdate (watering) {
-        this.updateWatering({ guid: this.guid, watering })
+        this.updateWatering({ guid: this.plant.guid, watering })
       },
       onSunshineUpdate (sunshine) {
-        this.updateSunshine({ guid: this.guid, sunshine })
+        this.updateSunshine({ guid: this.plant.guid, sunshine })
       },
       async deletePlantFromModal () {
         this.deletePlantProgress = true
-        await this.deletePlants([{ guid: this.guid }])
+        await this.deletePlants([{ guid: this.plant.guid }])
         this.deletePlantProgress = false
 
         this.showNotification({ message: 'Plant deleted.' })
@@ -235,13 +239,13 @@
         this.addTag({
           label: tag.label,
           name: tag.label.toLowerCase().replace(/\s/g, '-'),
-          plants: [this.guid]
+          plants: [this.plant.guid]
         })
       },
       removePlantTag (tag) {
         this.deleteTag({
           tag: tag.guid,
-          plant: this.guid
+          plant: this.plant.guid
         })
       },
       hidePlantTags () {
@@ -251,11 +255,11 @@
         this.toggleTags({ show: true })
       },
       updatePlantName (name) {
-        this.updateName({ guid: this.guid, name })
+        this.updateName({ guid: this.plant.guid, name })
       },
       updatePlantPhoto (blob) {
-        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
-        this.updatePhoto({ guid: this.guid, blob, imageURL })
+        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.plant.imageURL
+        this.updatePhoto({ guid: this.plant.guid, blob, imageURL })
       }
     },
 
@@ -269,10 +273,6 @@
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
-    },
-
-    mounted () {
-      this.loadPlantItem(this.$route.params.id)
     },
 
     updated () {
@@ -290,10 +290,10 @@
       })
 
       this.updatePlantsList({
-        guid: this.guid,
-        name: this.name,
-        imageURL: this.imageURL,
-        tags: this.tags
+        guid: this.plant.guid,
+        name: this.plant.name,
+        imageURL: this.plant.imageURL,
+        tags: this.plant.tags
       }).then(() => this.resetSelectedState())
     }
   }

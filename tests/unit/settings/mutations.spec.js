@@ -17,8 +17,8 @@ describe('app/settings/mutations.js', () => {
 
     mutations.DELETE_ALL_DATA(state, { updated: now })
     expect(state.updated).toEqual(now)
-    expect(state.tags).toEqual([])
-    expect(state.plants).toEqual([])
+    expect(state.tags.data).toEqual([])
+    expect(state.plants.data).toEqual([])
   })
 
   it('IMPORT_TAGS', () => {
@@ -36,7 +36,7 @@ describe('app/settings/mutations.js', () => {
       ]
     })
     expect(state.updated).toEqual(now)
-    expect(state.tags).toEqual(expect.arrayContaining([
+    expect(state.tags.data).toEqual(expect.arrayContaining([
       { label: 'tag' },
       { label: 'super-tag' }
     ]))
@@ -79,13 +79,13 @@ describe('app/settings/mutations.js', () => {
         { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
       ]
     })
-    expect(state.plants).toEqual([
+    expect(state.plants.data).toEqual([
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
       { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
     ])
 
     // Import type 'merge'
-    state.plants = [
+    state.plants.data = [
       { guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' }
     ]
@@ -96,7 +96,7 @@ describe('app/settings/mutations.js', () => {
         { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
       ]
     })
-    expect(state.plants).toEqual(expect.arrayContaining([
+    expect(state.plants.data).toEqual(expect.arrayContaining([
       { guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
       { guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' },

@@ -8,13 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 ### Added
+- It's now possible to backup your data in the cloud _(using Google Firebase)_ and login from different devices.
 - Added a dark theme in settings section.
 
 ### Changed
-- Added a nice but subtle shadow to buttons.
+- Restructured the Settings view.
+- A couple of more or less subtle design updates including buttons and general design elements.
 
 ### Fixed
-- A production-only bug with build tools and styling.
+- A production-only bug related build tools and styling.
 
 ## [1.2.2] - 2018-07-22
 

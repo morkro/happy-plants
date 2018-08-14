@@ -1,12 +1,14 @@
-import { updateStorage as updateStorageFromAPI, fetchStorage } from '@/api/storage'
+import { getEntry, updateEntry } from '@/api/localforage'
+
+const namespace = 'storage'
 
 export const loadStorage = ({ commit }) => {
-  return fetchStorage()
+  return getEntry(namespace)
     .then(storage => commit('LOAD_STORAGE', storage))
 }
 
 export const updateStorage = ({ state, commit }, data) => {
   const config = { ...state.storage, ...data }
-  return updateStorageFromAPI(config)
+  return updateEntry(namespace, config)
     .then(() => commit('UPDATE_STORAGE', data))
 }

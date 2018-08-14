@@ -13,13 +13,13 @@ function mergeObectArray (arr1 = [], arr2 = []) {
 export default {
   DELETE_ALL_DATA (state, payload) {
     state.updated = payload.updated
-    state.plants = []
-    state.tags = []
+    state.plants.data = []
+    state.tags.data = []
   },
 
   IMPORT_TAGS (state, payload) {
     state.updated = payload.updated
-    state.tags = payload.data
+    state.tags.data = payload.data
   },
 
   IMPORT_SETTINGS (state, payload) {
@@ -33,11 +33,11 @@ export default {
 
     switch (payload.importType) {
       case 'overwrite':
-        state.plants = data.filter(values => Object.keys(values).length)
+        state.plants.data = data.filter(values => Object.keys(values).length)
         break
       case 'merge':
       default:
-        state.plants = mergeObectArray(state.plants, data)
+        state.plants.data = mergeObectArray(state.plants.data, data)
         break
     }
   }

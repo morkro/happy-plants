@@ -16,7 +16,7 @@ export const db = app.firestore()
 db.settings({ timestampsInSnapshots: true })
 console.log(db)
 
-function firestoreQuery (commands = []) {
+export function firestoreQuery (commands = []) {
   let query = db
 
   for (const [collection, doc] of commands) {
@@ -32,7 +32,7 @@ function firestoreQuery (commands = []) {
   return query
 }
 
-export const getEntry = (commands = [], data) => {
+export const getEntry = (commands = []) => {
   return firestoreQuery(commands)
     .get()
 }
@@ -46,7 +46,7 @@ export const updateEntry = (commands = [], data) => {
   const ref = firestoreQuery(commands)
   return ref.get().then(doc => {
     if (doc.exists) {
-      ref.set({ ...doc.data(), ...data })
+      ref.set({ data }, { merge: true })
     } else {
       ref.add(data)
     }

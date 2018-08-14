@@ -1,19 +1,17 @@
 import uuid from 'uuid/v4'
 import { blobToBase64String } from 'blob-util'
-import { convertToBlob } from '@/utils/blob'
+// import { convertToBlob } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
-import {
-  fetchPlants,
-  getPlant
-} from '@/api/plants'
 
 import {
+  getEntry as getEntryLF,
   addEntry as addEntryLF,
   updateEntry as updateEntryLF,
   deleteEntry as deleteEntryLF
 } from '@/api/localforage'
 
 import {
+  firestoreQuery,
   addEntry as addEntryFire,
   updateEntry as updateEntryFire,
   deleteEntry as deleteEntryFire
@@ -22,53 +20,56 @@ import {
 const namespace = 'plant-'
 const folder = 'plants'
 
-function shrinkPlantObjects (plant) {
-  return {
-    name: plant.name,
-    blob: plant.blob,
-    created: plant.created,
-    guid: plant.guid
-  }
-}
-
 /**
  * Clean up method to migrate old plant object structure to new system.
  */
-function cleanUpPlantObject (plant) {
-  const plantCopy = plant
+// function cleanUpPlantObject (plant) {
+//   const plantCopy = plant
+//
+//   if (!plantCopy.modules) {
+//     plantCopy.modules = []
+//   }
+//
+//   if (plantCopy.tags === undefined) {
+//     plantCopy.tags = []
+//   }
+//
+//   delete plantCopy.componentOrder
+//   delete plantCopy.notes
+//   delete plantCopy.seasons
+//   delete plantCopy.sunshine
+//   delete plantCopy.watering
+//
+//   return plantCopy
+// }
 
-  if (!plantCopy.modules) {
-    plantCopy.modules = []
+export async function loadPlants ({ state, commit }, data = {}) {
+  let plants = []
+  commit('LOAD_PLANTS_PROGRESS')
+
+  if (state.storage.type === 'cloud') {
+    const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
+    for (const doc of snapshot.docs) {
+      const plant = await firestoreQuery([
+        ['users', state.user.id],
+        [folder, doc.id]
+      ]).get()
+      plants.push(plant.data())
+    }
+  } else {
+    const values = await getEntryLF(namespace)
+      .then(data => {
+        const copy = data
+        delete copy[namespace + 'undefined']
+        return copy
+      })
+      .then(Object.values)
+    for (const item of values) {
+      plants.push((item))
+    }
   }
 
-  if (plantCopy.tags === undefined) {
-    plantCopy.tags = []
-  }
-
-  delete plantCopy.componentOrder
-  delete plantCopy.notes
-  delete plantCopy.seasons
-  delete plantCopy.sunshine
-  delete plantCopy.watering
-
-  return plantCopy
-}
-
-export const loadPlants = ({ state, commit }, data = {}) => {
-  if (!state.plants || state.plants.length === 0 || !!data.force) {
-    return fetchPlants()
-      .then(data => Promise.all(data.map(shrinkPlantObjects).map(convertToBlob)))
-      .then(plants => commit('LOAD_PLANTS', { plants }))
-  }
-
-  return Promise.resolve()
-}
-
-export const loadPlantItem = ({ state, commit }, guid) => {
-  getPlant(guid)
-    .then(convertToBlob)
-    .then(cleanUpPlantObject)
-    .then(item => commit('LOAD_PLANT_ITEM', { item }))
+  return commit('LOAD_PLANTS_SUCCESS', { plants })
 }
 
 export async function addPlant ({ state, commit }, data) {

@@ -1,8 +1,10 @@
-import { updateSettings } from '@/api/settings'
+import { updateEntry } from '@/api/localforage'
+
+const namespace = 'settings'
 
 export const updateViewmode = ({ state, commit }, data) => {
   const config = { ...state.settings, ...data }
-  return updateSettings(config)
+  return updateEntry(namespace, config)
     .then(() => commit('UPDATE_VIEWMODE', data))
 }
 

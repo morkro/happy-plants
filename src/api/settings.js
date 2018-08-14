@@ -1,10 +1,6 @@
-import { getEntry, getEntryWN, updateEntry, getAllEntries } from './localforage'
+import { getEntryWN, updateEntry, getAllEntries } from './localforage'
 
 const namespace = 'settings'
-
-export const fetchSettings = () => {
-  return getEntry(namespace)
-}
 
 export const updateSettings = data => {
   return updateEntry(namespace, data)
