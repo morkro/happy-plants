@@ -43,9 +43,9 @@ export async function addTag ({ state, commit }, data) {
 
   if (state.storage.type === 'cloud') {
     await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+  } else {
+    await addEntryLF(namespace, state.tags)
   }
-
-  await addEntryLF(namespace, state.tags)
 }
 
 export async function deleteTag ({ state, commit }, data) {
@@ -56,9 +56,9 @@ export async function deleteTag ({ state, commit }, data) {
 
   if (state.storage.type === 'cloud') {
     await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+  } else {
+    await addEntryLF(namespace, state.tags)
   }
-
-  await addEntryLF(namespace, state.tags)
 }
 
 export async function updateTag ({ state, commit }, data) {
@@ -71,7 +71,7 @@ export async function updateTag ({ state, commit }, data) {
 
   if (state.storage.type === 'cloud') {
     await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+  } else {
+    await addEntryLF(namespace, state.tags)
   }
-
-  await addEntryLF(namespace, state.tags)
 }

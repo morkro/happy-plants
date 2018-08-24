@@ -86,21 +86,21 @@ export async function addPlant ({ state, commit }, data) {
       ['users', state.user.id],
       [folder, meta.guid]
     ], meta)
-  }
-
-  // FIXME: This is generally a bad idea. Use feature detection instead.
-  // However, I could not find a reliable way to test if IndexedDB supports blobs,
-  // as it fails silently. We have to convert the blob to base64,
-  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-  if (iOS && !!data.blob) {
-    // 1. Turn blob into base64 string (only needed for storage)
-    const base64String = await blobToBase64String(data.blob)
-    const config = Object.assign({}, meta, { blob: base64String })
-
-    await addEntryLF(namespace + config.guid, config)
-    payload.item = Object.assign({}, config, { blob: data.blob })
   } else {
-    await addEntryLF(namespace + meta.guid, meta)
+    // FIXME: This is generally a bad idea. Use feature detection instead.
+    // However, I could not find a reliable way to test if IndexedDB supports blobs,
+    // as it fails silently. We have to convert the blob to base64,
+    // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
+    if (iOS && !!data.blob) {
+      // 1. Turn blob into base64 string (only needed for storage)
+      const base64String = await blobToBase64String(data.blob)
+      const config = Object.assign({}, meta, { blob: base64String })
+
+      await addEntryLF(namespace + config.guid, config)
+      payload.item = Object.assign({}, config, { blob: data.blob })
+    } else {
+      await addEntryLF(namespace + meta.guid, meta)
+    }
   }
 
   commit('ADD_PLANT', payload)
@@ -118,9 +118,9 @@ export async function updatePlant (action, { state, commit }, data) {
       ['users', state.user.id],
       [folder, state.selected.guid]
     ], state.selected)
+  } else {
+    await updateEntryLF(namespace + state.selected.guid, state.selected)
   }
-
-  await updateEntryLF(namespace + state.selected.guid, state.selected)
 }
 
 export async function deletePlants ({ state, commit }, items) {
@@ -129,9 +129,9 @@ export async function deletePlants ({ state, commit }, items) {
       ['users', state.user.id],
       [folder, item.guid]
     ])))
+  } else {
+    await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
   }
-
-  await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
 
   commit('DELETE_PLANTS', { items })
 }

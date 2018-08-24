@@ -3,21 +3,21 @@ import 'firebase/firestore'
 
 export const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  authDomain: 'happy-plants-172715.firebaseapp.com',
-  databaseURL: 'https://happy-plants-172715.firebaseio.com',
-  projectId: 'happy-plants-172715',
-  storageBucket: 'happy-plants-172715.appspot.com',
+  authDomain: 'happy-plants-app.firebaseapp.com',
+  databaseURL: 'https://happy-plants-app.firebaseio.com',
+  projectId: 'happy-plants-app',
+  storageBucket: 'happy-plants-app.appspot.com',
   messagingSenderId: process.env.VUE_APP_FIREBASE_MESSENGER_ID
 }
 
 export const app = firebase.initializeApp(firebaseConfig)
-export const db = app.firestore()
+export const firestore = app.firestore()
+// export const storage = firebase.storage()
 
-db.settings({ timestampsInSnapshots: true })
-console.log(db)
+firestore.settings({ timestampsInSnapshots: true })
 
 export function firestoreQuery (commands = []) {
-  let query = db
+  let query = firestore
 
   for (const [collection, doc] of commands) {
     if (collection === undefined) {
