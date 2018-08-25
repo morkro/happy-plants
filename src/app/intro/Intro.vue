@@ -1,6 +1,6 @@
 <template>
   <div class="main-wireframe">
-    <div class="intro-header box">
+    <div class="intro-header">
       <img
         src="@/assets/happyplants-logo.svg"
         alt="HappyPlants Logo"
@@ -29,10 +29,11 @@
 
     created () {
       this.updateAppHeader({
-        title: 'Welcome to',
+        title: false,
         transparent: true,
         backBtn: false,
-        settingsBtn: true
+        settingsBtn: false,
+        color: 'black'
       })
     },
 
@@ -52,7 +53,6 @@
     flex-wrap: wrap;
     width: 100%;
     min-height: 100vh;
-    background: var(--brand-green);
     padding-left: var(--base-gap);
     padding-right: var(--base-gap);
     padding-bottom: var(--base-gap);

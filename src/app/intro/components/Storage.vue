@@ -44,7 +44,13 @@
     </div>
 
     <div class="intro-footer">
-      <router-link to="/intro/howto" class="btn yellow">
+      <router-link to="/intro" class="btn plain">
+        <div class="button-icon">
+          <feather-left />
+        </div>
+        <span>Back</span>
+      </router-link>
+      <router-link to="/intro/howto" class="btn">
         <div class="button-icon">
           <feather-right />
         </div>
@@ -67,6 +73,8 @@
       'v-button': Button,
       'feather-right': () =>
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
+      'feather-left': () =>
+        import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-cloud': () =>
         import('vue-feather-icons/icons/CloudIcon' /* webpackChunkName: "icons" */),
       'feather-smartphone': () =>
@@ -165,7 +173,7 @@
   .intro-footer {
     margin-top: calc(2 * var(--base-gap));
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 
     & .btn .button-icon svg {
       filter: none;

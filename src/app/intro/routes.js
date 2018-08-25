@@ -6,6 +6,11 @@ export default [
       {
         path: '',
         name: 'Intro',
+        component: () => import('./components/Start' /* webpackChunkName: "intro" */)
+      },
+      {
+        path: 'storage',
+        name: 'IntroStorage',
         component: () => import('./components/Storage' /* webpackChunkName: "intro" */)
       },
       {

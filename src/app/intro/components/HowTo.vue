@@ -1,8 +1,11 @@
 <template>
   <div class="intro-wrapper">
     <div class="intro-content box">
+      <h2>
+        Looks like you haven't added any friends yet
+      </h2>
       <p>
-        Looks like you haven't added any friends yet — here are some first steps to get you started!<br>
+        Here are some first steps to get you started!
       </p>
       <ol>
         <li>
@@ -24,14 +27,14 @@
     </div>
 
     <div class="intro-footer">
-      <router-link to="/intro" class="btn yellow">
+      <router-link to="/intro/storage" class="btn plain">
         <div class="button-icon">
           <feather-left />
         </div>
         <span>Back</span>
       </router-link>
 
-      <router-link to="/add" class="btn yellow">
+      <router-link to="/add" class="btn">
         <div class="button-icon">
           <svgicon
             icon="leaf"
