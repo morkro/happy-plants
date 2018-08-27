@@ -108,6 +108,7 @@
 
     computed: {
       ...mapState({
+        authenticated: state => state.user.authenticated,
         storage: state => state.storage.type,
         plantsLoading: state => state.plants.loading,
         plants: state => state.plants.data,
@@ -193,12 +194,6 @@
         backBtn: false,
         settingsBtn: true
       })
-    },
-
-    mounted () {
-      // if (!this.plantsLoading && this.plants && this.plants.length === 0) {
-      //   this.$router.push('/intro')
-      // }
     },
 
     methods: {

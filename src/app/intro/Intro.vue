@@ -23,6 +23,10 @@
       title: 'Welcome to HappyPlants!'
     },
 
+    data: () => ({
+      authenticated: state => state.user.authenticated
+    }),
+
     methods: mapActions([
       'updateAppHeader'
     ]),
@@ -39,6 +43,12 @@
 
     beforeDestroy () {
       this.updateAppHeader({ transparent: false })
+    },
+
+    mounted () {
+      if (this.authenticated === true) {
+        this.$router.push('/')
+      }
     }
   }
 </script>

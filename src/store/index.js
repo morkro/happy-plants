@@ -51,7 +51,8 @@ export default new Vuex.Store({
       error: false,
       loading: false,
       name: null,
-      id: null
+      id: null,
+      authFromRedirect: false
     },
 
     plants: {

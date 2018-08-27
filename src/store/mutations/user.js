@@ -15,6 +15,7 @@ export default {
   },
 
   USER_SIGNIN_FAILED (state, payload) {
+    if (state.user.authenticated === true) return
     state.updated = Date.now()
     state.user.authenticated = false
     state.user.error = true

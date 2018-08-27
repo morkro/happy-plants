@@ -1,16 +1,18 @@
 <template>
   <div class="start-wrapper">
-    <router-link to="/intro/storage" class="btn">
-      <div class="button-icon">
-        <feather-right />
-      </div>
+    <v-button @click="nextStep" :disabled="signInProgress">
+      <feather-right slot="icon" />
       <span>Start introduction</span>
-    </router-link>
+    </v-button>
 
     <div class="start-login">
       <p>Already have an account?</p>
 
-      <v-button @click.native="loginUser" color="plain">
+      <v-button
+        color="plain"
+        :loading="signInProgress"
+        :disabled="signInProgress"
+        @click.native="loginUser">
         <feather-login slot="icon" />
         <span>Login</span>
       </v-button>
@@ -34,33 +36,54 @@
     },
 
     computed: mapState({
-      authenticated: state => state.user.authenticated,
       plants: state => state.plants.data
+    }),
+
+    data: () => ({
+      signInProgress: false
     }),
 
     methods: {
       ...mapActions([
-        'signInUser'
+        'signInUser',
+        'loadPlants',
+        'loadTags'
       ]),
 
-      loginUser () {
-        this.signInUser()
-          .then(() => {
-            // @TODO Implement failed login behaviour.
-            if (!this.authenticated) return
+      nextStep () {
+        if (this.signInProgress) return
+        this.$router.push('/intro/storage')
+      },
 
-            if (!this.plants.length) {
-              this.$router.push('/intro/howto')
-            } else {
-              this.$router.push('/')
-            }
-          })
+      async loginUser () {
+        this.signInProgress = true
+        try {
+          await this.signInUser()
+        } catch (error) {
+          // @TODO Implement failed login behaviour.
+          return
+        }
+        this.signInProgress = false
+
+        await this.loadPlants()
+        await this.loadTags()
+
+        if (!this.plants.length) {
+          this.$router.push('/intro/howto')
+        } else {
+          this.$router.push('/')
+        }
       }
     }
   }
 </script>
 
 <style lang="postcss" scoped>
+  .start-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
   .start-login {
     margin-top: calc(2 * var(--base-gap));
     display: flex;

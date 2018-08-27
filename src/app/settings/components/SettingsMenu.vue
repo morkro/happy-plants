@@ -193,8 +193,9 @@
           this.hasNewRelease
         )
       },
-      logOutUser () {
-        this.signOutUser()
+      async logOutUser () {
+        await this.signOutUser()
+        this.$router.push('/intro')
       },
       logInUser () {
         this.signInUser()

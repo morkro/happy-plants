@@ -52,6 +52,7 @@
     },
 
     computed: mapState({
+      authenticated: state => state.user.authenticated,
       hasNewRelease: state => state.settings.hasNewRelease,
       theme: state => state.settings.theme,
       message: state => state.notification.message,
@@ -67,6 +68,7 @@
 
     methods: {
       ...mapActions([
+        'authRedirectResults',
         'authenticateUser',
         'loadVersion',
         'updateVersion',
@@ -74,6 +76,7 @@
         'loadStorage',
         'loadPlants',
         'loadTags',
+        'showNotification',
         'hideNotification',
         'updateAppHeader'
       ])
@@ -83,10 +86,26 @@
       await this.loadVersion()
       await this.updateVersion()
       await this.loadStorage()
-      await this.authenticateUser()
       await this.loadSettings()
-      await this.loadPlants()
-      await this.loadTags()
+
+      try {
+        await this.authenticateUser()
+      } catch (error) {
+        this.$router.push('/intro')
+      }
+
+      try {
+        await this.authRedirectResults()
+        this.$router.push('/')
+      } catch (error) {
+        this.$router.push('/intro')
+        this.showNotification({ message: 'Something went wrong. Please try again.' })
+      }
+
+      if (this.authenticated) {
+        await this.loadPlants()
+        await this.loadTags()
+      }
 
       if (this.theme === 'dark') {
         this.updateAppHeader({ iconColor: 'white' })

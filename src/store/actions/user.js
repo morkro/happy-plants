@@ -4,10 +4,7 @@ import 'firebase/auth'
 export const signInUser = ({ commit }) => {
   commit('USER_SIGNIN_PROGRESS')
   const provider = new firebase.auth.GoogleAuthProvider()
-
-  return firebase.auth().signInWithPopup(provider)
-    .then(user => commit('USER_SIGNIN_SUCCESS', user))
-    .catch(error => commit('USER_SIGNIN_FAILED', error))
+  return firebase.auth().signInWithRedirect(provider)
 }
 
 export const signOutUser = ({ commit }) => {
@@ -15,6 +12,15 @@ export const signOutUser = ({ commit }) => {
   return firebase.auth().signOut()
     .then(() => commit('USER_SIGNOUT_SUCCESS'))
     .catch(error => commit('USER_SIGNOUT_FAILED', error))
+}
+
+export const authRedirectResults = async ({ commit, state }) => {
+  firebase.auth().getRedirectResult()
+    .then(result => commit('USER_SIGNIN_SUCCESS', result.user))
+    .catch(error => {
+      if (state.user.authenticated) return
+      commit('USER_SIGNIN_FAILED', error)
+    })
 }
 
 export const authenticateUser = ({ commit, state }) => {
