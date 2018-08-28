@@ -102,10 +102,8 @@
         this.showNotification({ message: 'Something went wrong. Please try again.' })
       }
 
-      if (this.authenticated) {
-        await this.loadPlants()
-        await this.loadTags()
-      }
+      await this.loadPlants()
+      await this.loadTags()
 
       if (this.theme === 'dark') {
         this.updateAppHeader({ iconColor: 'white' })
