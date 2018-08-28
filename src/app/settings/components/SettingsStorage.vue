@@ -12,23 +12,25 @@
           Use local only
         </h3>
         <p>
-          Description
+          Using the local storage option saves all your data on your device only.
         </p>
         <v-button :disabled="isStorageType('local')" @click.native="switchStorageType('local')">
-          Activate local
+          <span v-if="isStorageType('local')">Currently activated</span>
+          <span v-else>Activate local</span>
         </v-button>
       </div>
 
       <div class="storage-cloud box">
         <h3>
           <feather-cloud />
-          Backup in cloud
+          Use cloud storage
         </h3>
         <p>
-          Description
+          The cloud storage saves all your data in <strong>Firebase Cloud Firestore</strong> by Google.
         </p>
         <v-button :disabled="isStorageType('cloud')" @click.native="switchStorageType('cloud')">
-          Activate cloud
+          <span v-if="isStorageType('cloud')">Currently activated</span>
+          <span v-else>Activate cloud</span>
         </v-button>
       </div>
     </div>
@@ -89,13 +91,12 @@
 
   .storage-switch {
     margin-top: var(--base-gap);
-    display: flex;
-    justify-content: space-between;
     width: 100%;
 
     & > div {
-      width: calc(50vw - (1.5 * var(--base-gap)));
+      width: 100%;
       padding: var(--base-gap);
+      margin-bottom: calc(2 * var(--base-gap));
     }
 
     & h3 {

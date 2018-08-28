@@ -25,7 +25,7 @@
       class="overview-backdrop"
       @click="hideBackdrop" />
 
-    <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
+    <main :class="['app-content', { 'loading': plantsLoading }]">
       <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
         <h2>Filtered by <v-tag size="small">{{ filteredTag }}</v-tag></h2>
         <v-button
@@ -192,7 +192,8 @@
       this.updateAppHeader({
         title: 'Happy Plants',
         backBtn: false,
-        settingsBtn: true
+        settingsBtn: true,
+        showIconBackdrop: false
       })
     },
 
@@ -290,14 +291,6 @@
     height: 100%;
     padding: var(--base-gap);
     padding-bottom: calc(var(--app-footer-size) * 1.2);
-
-    &.no-plants {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: calc(100vh - var(--app-header-size));
-      background: var(--brand-green);
-    }
   }
 
   .header-controls {

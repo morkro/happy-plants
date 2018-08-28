@@ -43,12 +43,6 @@
 
     beforeDestroy () {
       this.updateAppHeader({ transparent: false })
-    },
-
-    mounted () {
-      if (this.authenticated === true) {
-        this.$router.push('/')
-      }
     }
   }
 </script>

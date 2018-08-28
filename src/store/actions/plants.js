@@ -47,7 +47,7 @@ export async function loadPlants ({ state, commit }, data = {}) {
   let plants = []
   commit('LOAD_PLANTS_PROGRESS')
 
-  if (state.storage.type === 'cloud') {
+  if (state.storage.type === 'cloud' && state.user.id) {
     const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
     for (const doc of snapshot.docs) {
       const plant = await firestoreQuery([

@@ -17,7 +17,7 @@ export async function loadTags ({ state, commit }, data = {}) {
   let tags = []
   commit('LOAD_TAGS_PROGRESS')
 
-  if (state.storage.type === 'cloud') {
+  if (state.storage.type === 'cloud' && state.user.id) {
     const data = await getEntryFire([['users', state.user.id]])
     if (data.exists) {
       tags = data.data()[namespace]

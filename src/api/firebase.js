@@ -20,7 +20,7 @@ export function firestoreQuery (commands = []) {
   let query = firestore
 
   for (const [collection, doc] of commands) {
-    if (collection === undefined) {
+    if (collection === undefined || collection === null) {
       query = query.doc(doc)
     } else if (doc === undefined) {
       query = query.collection(collection)

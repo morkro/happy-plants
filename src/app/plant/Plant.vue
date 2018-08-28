@@ -276,10 +276,10 @@
     },
 
     updated () {
-      this.updateAppHeader({
-        iconColor: this.headerInView ? 'white' : this.defaultIconColor,
-        showIconBackdrop: this.headerInView
-      })
+      // this.updateAppHeader({
+      //   iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+      //   showIconBackdrop: this.headerInView
+      // })
     },
 
     beforeDestroy () {

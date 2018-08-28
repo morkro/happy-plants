@@ -1,6 +1,6 @@
 <template>
   <div class="start-wrapper">
-    <v-button @click="nextStep" :disabled="signInProgress">
+    <v-button @click.native="nextStep" :disabled="signInProgress">
       <feather-right slot="icon" />
       <span>Start introduction</span>
     </v-button>
