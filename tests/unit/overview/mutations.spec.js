@@ -6,10 +6,12 @@ describe('app/overview/mutations.js', () => {
 
   it('UPDATE_VIEWMODE', () => {
     const state = {
-      plants: [
-        { name: 'Foo', created: now },
-        { name: 'Bar', created: then }
-      ],
+      plants: {
+        data: [
+          { name: 'Foo', created: now },
+          { name: 'Bar', created: then }
+        ]
+      },
       settings: {
         viewMode: 'grid',
         orderBy: 'latest'
@@ -29,11 +31,13 @@ describe('app/overview/mutations.js', () => {
 
   it('UPDATE_PLANT_OVERVIEW', () => {
     const state = {
-      plants: [
-        { name: 'Baz', created: now, guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
-        { name: 'Foo', created: now, guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
-        { name: 'Bar', created: then, guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' }
-      ],
+      plants: {
+        data: [
+          { name: 'Baz', created: now, guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
+          { name: 'Foo', created: now, guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
+          { name: 'Bar', created: then, guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' }
+        ]
+      },
       settings: {
         viewMode: 'grid',
         orderBy: 'latest'
