@@ -6,7 +6,8 @@ export default {
   },
 
   getPlantItem: state => guid => {
-    const plant = state.plants.data.find(plant => plant.guid === guid)
-    return plant || getPlantStructure()
+    return Object.assign({}, getPlantStructure(),
+      state.plants.data.find(plant => plant.guid === guid)
+    )
   }
 }

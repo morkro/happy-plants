@@ -52,6 +52,7 @@
     },
 
     computed: mapState({
+      storageType: state => state.storage.type,
       authenticated: state => state.user.authenticated,
       hasNewRelease: state => state.settings.hasNewRelease,
       theme: state => state.settings.theme,
@@ -88,18 +89,18 @@
       await this.loadStorage()
       await this.loadSettings()
 
-      try {
-        await this.authenticateUser()
-      } catch (error) {
-        this.$router.push('/intro')
-      }
+      if (this.storageType === 'cloud') {
+        try {
+          await this.authenticateUser()
+        } catch (error) {
+          this.showNotification()
+        }
 
-      try {
-        await this.authRedirectResults()
-        this.$router.push('/')
-      } catch (error) {
-        this.$router.push('/intro')
-        this.showNotification({ message: 'Something went wrong. Please try again.' })
+        try {
+          await this.authRedirectResults()
+        } catch (error) {
+          this.showNotification()
+        }
       }
 
       await this.loadPlants()

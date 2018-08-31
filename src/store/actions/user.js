@@ -15,6 +15,7 @@ export const signOutUser = ({ commit }) => {
 }
 
 export const authRedirectResults = async ({ commit, state }) => {
+  commit('USER_SIGNIN_PROGRESS')
   firebase.auth().getRedirectResult()
     .then(result => commit('USER_SIGNIN_SUCCESS', result.user))
     .catch(error => {
@@ -24,17 +25,15 @@ export const authRedirectResults = async ({ commit, state }) => {
 }
 
 export const authenticateUser = ({ commit, state }) => {
-  if (state.storage.type === 'cloud') {
-    commit('USER_SIGNIN_PROGRESS')
+  commit('USER_SIGNIN_PROGRESS')
 
-    return new Promise((resolve, reject) => {
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          resolve(commit('USER_SIGNIN_SUCCESS', { user }))
-        } else {
-          reject(commit('USER_SIGNIN_FAILED'))
-        }
-      })
+  return new Promise((resolve, reject) => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        resolve(commit('USER_SIGNIN_SUCCESS', { user }))
+      } else {
+        reject(commit('USER_SIGNIN_FAILED'))
+      }
     })
-  }
+  })
 }

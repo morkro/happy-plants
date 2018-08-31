@@ -15,7 +15,10 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <main :class="{ 'view-content': true, 'no-modules': !plant.modules.length, 'app-content': true }">
+    <main :class="{
+      'view-content': true,
+      'no-modules': plant.modules && !plant.modules.length,
+      'app-content': true }">
       <plant-header
         :name="plant.name"
         :image-url="plant.imageURL"
@@ -35,7 +38,7 @@
         can be added/removed and sorted.
       -->
       <component
-        v-if="plant.modules.length"
+        v-if="plant.modules && plant.modules.length"
         v-for="module in plant.modules"
         v-bind="getPlantModuleProps(module.type)"
         :key="module.type"
@@ -43,7 +46,7 @@
         @update-plant="getModuleListener" />
 
       <plant-footer
-        :no-modules="!plant.modules.length"
+        :no-modules="plant.modules && !plant.modules.length"
         :show-tag-button="allTags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
@@ -91,27 +94,19 @@
       headerInView: true,
       showPlantModal: false,
       showModuleManager: false,
-      deletePlantProgress: false
+      deletePlantProgress: false,
+      plantDataLoaded: false
     }),
 
     computed: {
       ...mapState({
         theme: state => state.settings.theme,
-        guid: state => state.selected.guid,
-        name: state => state.selected.name,
-        blob: state => state.selected.blob,
-        imageURL: state => state.selected.imageURL,
-        modules: state => state.selected.modules || [],
-        modified: state => state.selected.modified,
-        created: state => state.selected.created
+        plantsData: state => state.plants.data,
+        plant: state => state.selected
       }),
       ...mapGetters({
-        plantTags: 'getPlantTags',
-        getPlantItem: 'getPlantItem'
+        plantTags: 'getPlantTags'
       }),
-      plant () {
-        return this.getPlantItem(this.$route.params.id)
-      },
       defaultIconColor () {
         return this.theme === 'light' ? 'black' : 'white'
       },
@@ -121,7 +116,7 @@
       plantModules () {
         return getPlantModules().map(module =>
           Object.assign(module, {
-            selected: !!this.modules.find(m => m.type === module.type)
+            selected: !!this.plant.modules && this.plant.modules.find(m => m.type === module.type)
           }))
       }
     },
@@ -133,6 +128,12 @@
           iconColor: this.headerInView ? 'white' : this.defaultIconColor,
           showIconBackdrop: this.headerInView
         })
+      },
+
+      plantsData (data) {
+        if (data.length) {
+          this.loadPlantItem(this.$route.params.id)
+        }
       }
     },
 
@@ -150,11 +151,11 @@
         'toggleTags',
         'addTag',
         'deleteTag',
-        'resetSelectedState',
         'updatePlantsList',
         'deletePlants',
         'showNotification',
-        'updateAppHeader'
+        'updateAppHeader',
+        'resetSelectedState'
       ]),
       getPlantModuleProps (type) {
         const module = this.plant.modules.find(mod => mod.type === type).value
@@ -224,7 +225,7 @@
       },
       updateModules (updatedModules) {
         this.updatePlantModules(updatedModules.map(m => {
-          const activateModule = this.modules.find(mod => mod.type === m.type)
+          const activateModule = this.plant.modules.find(mod => mod.type === m.type)
           const defaultModule = this.plantModules.find(mod => mod.type === m.type)
           return {
             ...m,
@@ -273,6 +274,10 @@
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
+    },
+
+    mounted () {
+      this.loadPlantItem(this.$route.params.id)
     },
 
     updated () {

@@ -5,7 +5,7 @@
       app-root=".settings-data"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">Login</span>
+      <span slot="headline">Login to Google</span>
       <div>
         <p>
           When using the cloud storage option, you have to sign in.
@@ -92,13 +92,13 @@
         {
           label: 'Locally on phone',
           icon: 'smartphone',
-          description: 'This is the default option. All application data is stored on your phone.',
+          description: 'This is the default option. All application data is stored on your device.',
           id: 'local'
         },
         {
           label: 'In the cloud',
           icon: 'cloud',
-          description: `Required by certain features. Let's you keep your data on different devices.`,
+          description: `Stores your plant data in Google Firebase. Let's you login from different devices. Required by some features.`,
           id: 'cloud'
         }
       ]

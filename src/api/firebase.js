@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 export const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -12,9 +13,15 @@ export const firebaseConfig = {
 
 export const app = firebase.initializeApp(firebaseConfig)
 export const firestore = app.firestore()
-// export const storage = firebase.storage()
+export const storage = firebase.storage()
 
 firestore.settings({ timestampsInSnapshots: true })
+
+export function storagePath (path = []) {
+  return path
+    .reduce((a, b) => a.concat(b), [])
+    .join('/')
+}
 
 export function firestoreQuery (commands = []) {
   let query = firestore
@@ -46,7 +53,7 @@ export const updateEntry = (commands = [], data) => {
   const ref = firestoreQuery(commands)
   return ref.get().then(doc => {
     if (doc.exists) {
-      ref.set({ data }, { merge: true })
+      ref.update(data)
     } else {
       ref.add(data)
     }
@@ -56,4 +63,22 @@ export const updateEntry = (commands = [], data) => {
 export const deleteEntry = (commands = []) => {
   return firestoreQuery(commands)
     .delete()
+}
+
+export const uploadFile = (path = [], file) => {
+  return storage.ref()
+    .child(storagePath(path))
+    .put(file)
+}
+
+export const deleteFile = (path = []) => {
+  return storage.ref()
+    .child(storagePath(path))
+    .delete()
+}
+
+export const downloadFile = (path) => {
+  return storage.ref()
+    .child(path)
+    .getDownloadURL()
 }

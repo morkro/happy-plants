@@ -18,11 +18,21 @@ export default {
   },
 
   LOAD_PLANTS_SUCCESS (state, payload) {
-    const transformed = payload.plants.map(item =>
-      Object.assign(item, { imageURL: getUrlFromBlob(item.blob) }))
+    let transformed = payload.plants
+
+    if (state.storage.type === 'local') {
+      transformed = payload.plants.map(item =>
+        Object.assign(item, { imageURL: getUrlFromBlob(item.blob) }))
+    }
 
     state.plants.loading = false
     state.plants.data = sortPlants(state, transformed)
+  },
+
+  LOAD_PLANT_ITEM (state, payload) {
+    state.selected = Object.assign({},
+      state.plants.data.find(plant => plant.guid === payload.guid)
+    )
   },
 
   ADD_PLANT (state, payload) {

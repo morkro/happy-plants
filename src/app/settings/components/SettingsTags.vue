@@ -5,7 +5,7 @@
       :show="showModal"
       :tag="selectedTag"
       :tag-names="tags.map(c => c.label)"
-      :loading="deleteTagProgress"
+      :loading="updateTagProgress"
       @content-update="editTagLabel"
       @content-error="showTagUpdateError"
       @close-dialog="closeModal" />
@@ -25,7 +25,10 @@
           This will remove it from all plants!
         </p>
 
-        <v-button color="yellow" @click.native="confirmDeleteTag">
+        <v-button
+          color="yellow"
+          :loading="deleteTagProgress"
+          @click.native="confirmDeleteTag">
           Delete tag
         </v-button>
       </div>
@@ -116,7 +119,8 @@
       showDialog: false,
       tagName: '',
       selectedTag: null,
-      deleteTagProgress: false
+      deleteTagProgress: false,
+      updateTagProgress: false
     }),
 
     computed: {
@@ -162,9 +166,12 @@
           message: `A tag with name "${tag.label}" already exists.`
         })
       },
-      editTagLabel (tag) {
-        this.updateTag(tag)
-          .then(() => this.showNotification({ message: `Updated tag.` }))
+      async editTagLabel (tag) {
+        this.updateTagProgress = true
+        await this.updateTag(tag)
+        this.updateTagProgress = false
+
+        this.showNotification({ message: `Updated tag.` })
       },
       openTagModal (tag) {
         this.selectedTag = tag

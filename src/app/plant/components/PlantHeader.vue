@@ -179,6 +179,22 @@
       &.no-photo {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
       }
+
+      &.is-skeleton h1 {
+        color: transparent;
+        overflow: hidden;
+
+        &::after {
+          content: "";
+          height: 30px;
+          width: calc(100% - 2 * var(--base-gap));
+          display: block;
+          border-radius: var(--border-radius);
+          background: var(--transparency-black-light);
+          bottom: var(--base-gap);
+          position: absolute;
+        }
+      }
     }
 
     & img {

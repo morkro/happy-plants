@@ -55,12 +55,12 @@ export default new Vuex.Store({
       authFromRedirect: false
     },
 
+    selected: plant.state,
+
     plants: {
       loading: false,
       data: []
     },
-
-    selected: plant.state,
 
     tags: {
       loading: false,

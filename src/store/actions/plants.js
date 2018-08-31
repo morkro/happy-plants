@@ -11,37 +11,19 @@ import {
 } from '@/api/localforage'
 
 import {
+  storagePath,
   firestoreQuery,
   addEntry as addEntryFire,
   updateEntry as updateEntryFire,
-  deleteEntry as deleteEntryFire
+  deleteEntry as deleteEntryFire,
+  uploadFile,
+  deleteFile,
+  downloadFile
 } from '@/api/firebase'
 
 const namespace = 'plant-'
 const folder = 'plants'
-
-/**
- * Clean up method to migrate old plant object structure to new system.
- */
-// function cleanUpPlantObject (plant) {
-//   const plantCopy = plant
-//
-//   if (!plantCopy.modules) {
-//     plantCopy.modules = []
-//   }
-//
-//   if (plantCopy.tags === undefined) {
-//     plantCopy.tags = []
-//   }
-//
-//   delete plantCopy.componentOrder
-//   delete plantCopy.notes
-//   delete plantCopy.seasons
-//   delete plantCopy.sunshine
-//   delete plantCopy.watering
-//
-//   return plantCopy
-// }
+const fileName = 'cover.png'
 
 export async function loadPlants ({ state, commit }, data = {}) {
   let plants = []
@@ -54,7 +36,11 @@ export async function loadPlants ({ state, commit }, data = {}) {
         ['users', state.user.id],
         [folder, doc.id]
       ]).get()
-      plants.push(plant.data())
+      const data = plant.data()
+      plants.push({
+        ...data,
+        imageURL: data.imageURL && await downloadFile(data.imageURL)
+      })
     }
   } else {
     const values = await getEntryLF(namespace)
@@ -72,6 +58,10 @@ export async function loadPlants ({ state, commit }, data = {}) {
   return commit('LOAD_PLANTS_SUCCESS', { plants })
 }
 
+export function loadPlantItem ({ state, commit }, guid) {
+    commit('LOAD_PLANT_ITEM', { guid })
+}
+
 export async function addPlant ({ state, commit }, data) {
   const meta = {
     ...data,
@@ -82,10 +72,13 @@ export async function addPlant ({ state, commit }, data) {
   const payload = { item: meta }
 
   if (state.storage.type === 'cloud') {
-    await addEntryFire([
-      ['users', state.user.id],
-      [folder, meta.guid]
-    ], meta)
+    const path = [['users', state.user.id], [folder, meta.guid]]
+    await addEntryFire(path, {
+      ...meta,
+      blob: null,
+      imageURL: `${storagePath(path)}/${fileName}`
+    })
+    await uploadFile(path.concat(fileName), meta.blob)
   } else {
     // FIXME: This is generally a bad idea. Use feature detection instead.
     // However, I could not find a reliable way to test if IndexedDB supports blobs,
@@ -114,10 +107,14 @@ export async function updatePlant (action, { state, commit }, data) {
   commit(action, { item: data, updated })
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([
-      ['users', state.user.id],
-      [folder, state.selected.guid]
-    ], state.selected)
+    const path = [['users', state.user.id], [folder, state.selected.guid]]
+    const { imageURL, blob, ...selected } = state.selected
+
+    if (action === 'UPDATE_PHOTO') {
+      await uploadFile(path.concat(fileName), data.blob)
+    }
+
+    await updateEntryFire(path, selected)
   } else {
     await updateEntryLF(namespace + state.selected.guid, state.selected)
   }
@@ -125,10 +122,11 @@ export async function updatePlant (action, { state, commit }, data) {
 
 export async function deletePlants ({ state, commit }, items) {
   if (state.storage.type === 'cloud') {
-    await Promise.all(items.map(item => deleteEntryFire([
-      ['users', state.user.id],
-      [folder, item.guid]
-    ])))
+    await Promise.all(items.map(async item => {
+      const path = [['users', state.user.id], [folder, item.guid]]
+      await deleteEntryFire(path)
+      await deleteFile(path.concat(fileName))
+    }))
   } else {
     await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
   }

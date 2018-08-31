@@ -203,7 +203,6 @@
 </script>
 
 <style lang="postcss" scoped>
-
   .plant-preview {
     display: block;
     width: 100%;
@@ -218,7 +217,6 @@
 
     @nest html[data-theme="dark"] & {
       --preview-background: var(--dark-grey);
-      --preview-color: white;
     }
 
     &:focus {
@@ -236,6 +234,7 @@
       display: flex;
       box-shadow: none;
       overflow: visible;
+      --preview-color: var(--text-color-base);
     }
   }
 

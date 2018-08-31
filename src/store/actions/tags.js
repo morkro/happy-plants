@@ -7,6 +7,7 @@ import {
 } from '@/api/localforage'
 
 import {
+  addEntry as addEntryFire,
   getEntry as getEntryFire,
   updateEntry as updateEntryFire
 } from '@/api/firebase'
@@ -42,9 +43,9 @@ export async function addTag ({ state, commit }, data) {
   commit('ADD_TAG', { item: meta, updated })
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+    await addEntryFire([['users', state.user.id]], { tags: state.tags.data })
   } else {
-    await addEntryLF(namespace, state.tags)
+    await addEntryLF(namespace, state.tags.data)
   }
 }
 
@@ -55,14 +56,14 @@ export async function deleteTag ({ state, commit }, data) {
   commit('DELETE_TAG', { item: data, updated })
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+    await updateEntryFire([['users', state.user.id]], { tags: state.tags.data })
   } else {
-    await addEntryLF(namespace, state.tags)
+    await addEntryLF(namespace, state.tags.data)
   }
 }
 
 export async function updateTag ({ state, commit }, data) {
-  const item = state.tags.find(tag => tag.guid === data.guid)
+  const item = state.tags.data.find(tag => tag.guid === data.guid)
   const meta = { ...item, ...data, modified: Date.now() }
   const updated = Date.now()
   await updateEntryLF('updated', updated)
@@ -70,8 +71,8 @@ export async function updateTag ({ state, commit }, data) {
   commit('UPDATE_TAG', { item: meta })
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+    await updateEntryFire([['users', state.user.id]], { tags: state.tags.data })
   } else {
-    await addEntryLF(namespace, state.tags)
+    await addEntryLF(namespace, state.tags.data)
   }
 }
