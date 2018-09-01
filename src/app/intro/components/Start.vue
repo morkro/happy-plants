@@ -47,7 +47,8 @@
       ...mapActions([
         'signInUser',
         'loadPlants',
-        'loadTags'
+        'loadTags',
+        'showNotification'
       ]),
 
       nextStep () {
@@ -60,7 +61,7 @@
         try {
           await this.signInUser()
         } catch (error) {
-          // @TODO Implement failed login behaviour.
+          this.showNotification()
           return
         }
         this.signInProgress = false

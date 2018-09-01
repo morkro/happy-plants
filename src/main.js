@@ -35,6 +35,10 @@ localforage.keys()
   })
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
+Vue.config.devtools = true
+Vue.config.errorHandler = function (err, vm, info) {
+  console.log('[Global Error Handler]: Error in ' + info + ': ' + err) // eslint-disable-line no-console
+}
 
 VueTouch.registerCustomEvent('doubletap', {
   type: 'tap',
