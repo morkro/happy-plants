@@ -61,6 +61,7 @@
         try {
           await this.signInUser()
         } catch (error) {
+          console.log(error) // eslint-disable-line no-console
           this.showNotification()
           return
         }
