@@ -38,14 +38,19 @@
       </div>
 
       <plants-list
-        v-if="plants.length"
+        v-if="plantsLoading || plants.length !== 0"
         @delete-selection="toggleDeleteSelection"
         @pressed-selection="togglePressedSelection"
+        :content-loading="plantsLoading"
         :plants="filteredPlants"
         :tags="tags"
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
         :is-pressed-mode="isPressedMode" />
+
+      <div v-if="!plantsLoading && plants.length === 0">
+        Looks like you got no plants.
+      </div>
 
       <div :class="footerClass">
         <viewmode-menu
@@ -182,10 +187,10 @@
     },
 
     updated () {
-      if (this.storage === 'cloud') return
-      if (!this.plantsLoading && this.plants && this.plants.length === 0) {
-        this.$router.push('/intro')
-      }
+      // if (this.storage === 'cloud') return
+      // if (!this.plantsLoading && this.plants && this.plants.length === 0) {
+      //   this.$router.push('/intro')
+      // }
     },
 
     created () {

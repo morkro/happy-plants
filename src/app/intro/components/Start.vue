@@ -1,6 +1,6 @@
 <template>
   <div class="start-wrapper">
-    <v-button @click.native="nextStep" :disabled="signInProgress">
+    <v-button @click.native="nextStep" :disabled="authProgress || signInProgress">
       <feather-right slot="icon" />
       <span>Start introduction</span>
     </v-button>
@@ -10,8 +10,8 @@
 
       <v-button
         color="plain"
-        :loading="signInProgress"
-        :disabled="signInProgress"
+        :loading="authProgress || signInProgress"
+        :disabled="authProgress || signInProgress"
         @click.native="loginUser">
         <feather-login slot="icon" />
         <span>Login</span>
@@ -36,12 +36,22 @@
     },
 
     computed: mapState({
+      authProgress: state => state.user.loading,
+      authenticated: state => state.user.authenticated,
       plants: state => state.plants.data
     }),
 
     data: () => ({
       signInProgress: false
     }),
+
+    watch: {
+      authenticated (auth) {
+        if (auth) {
+          this.$router.push('/')
+        }
+      }
+    },
 
     methods: {
       ...mapActions([
@@ -61,7 +71,6 @@
         try {
           await this.signInUser()
         } catch (error) {
-          console.log(error) // eslint-disable-line no-console
           this.showNotification()
           return
         }

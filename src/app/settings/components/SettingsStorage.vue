@@ -103,6 +103,7 @@
       },
       async switchStorageType (type) {
         let authMethod = null
+        const prevStorageType = this.storageType
 
         if (type === 'local' && this.authenticated) {
           authMethod = this.signOutUser
@@ -111,9 +112,10 @@
         }
 
         try {
-          await authMethod()
           await this.updateStorage({ type })
+          await authMethod()
         } catch (error) {
+          await this.updateStorage({ type: prevStorageType })
           this.showNotification()
         }
       },

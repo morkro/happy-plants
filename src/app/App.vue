@@ -96,10 +96,12 @@
           this.showNotification()
         }
 
-        try {
-          await this.authRedirectResults()
-        } catch (error) {
-          this.showNotification()
+        if (!this.authenticated) {
+          try {
+            await this.authRedirectResults()
+          } catch (error) {
+            this.showNotification()
+          }
         }
       }
 

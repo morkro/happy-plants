@@ -1,7 +1,7 @@
 <template>
   <section class="plant-header">
     <div class="plant-header-view">
-      <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
+      <div :class="{ 'is-skeleton': contentLoading, 'no-photo': !imageUrl, 'header-content': true }">
         <v-touch tag="h1"
           @tap="updateTitle"
           :contenteditable="editTitle"
@@ -28,12 +28,14 @@
             @loading-file="handleLoadingState"
             @file-selected="assignNewPhoto" />
         </div>
+
         <img
-          v-if="imageUrl"
+          v-if="!contentLoading && imageUrl"
           :src="imageUrl"
           :alt="name">
+
         <svgicon
-          v-else
+          v-else-if="!imageUrl"
           icon="cactus"
           width="50"
           height="50"
@@ -51,7 +53,8 @@
 
     props: {
       name: { type: [String, Boolean], default: false },
-      imageUrl: { type: [String, Boolean], default: false }
+      imageUrl: { type: [String, Boolean], default: false },
+      contentLoading: { type: Boolean, default: true }
     },
 
     components: {
@@ -59,7 +62,9 @@
       'feather-image': () =>
         import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
       'feather-aperture': () =>
-        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */),
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
@@ -186,11 +191,11 @@
 
         &::after {
           content: "";
-          height: 30px;
-          width: calc(100% - 2 * var(--base-gap));
+          height: 22px;
+          width: 75%;
           display: block;
           border-radius: var(--border-radius);
-          background: var(--transparency-black-light);
+          background: var(--background-primary);
           bottom: var(--base-gap);
           position: absolute;
         }

@@ -20,6 +20,7 @@
       'no-modules': plant.modules && !plant.modules.length,
       'app-content': true }">
       <plant-header
+        :content-loading="plantsLoading"
         :name="plant.name"
         :image-url="plant.imageURL"
         v-observe-visibility.60="observeVisibility"
@@ -102,6 +103,7 @@
       ...mapState({
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
+        plantsLoading: state => state.plants.loading,
         plant: state => state.selected
       }),
       ...mapGetters({

@@ -26,8 +26,10 @@
       <div v-if="isListView"
         class="box preview-image"
         :style="background">
+        <feather-loader
+          v-if="contentLoading && !imageUrl" />
         <svgicon
-          v-if="!imageUrl"
+          v-if="!contentLoading && !imageUrl"
           icon="cactus"
           width="40"
           height="40"
@@ -51,8 +53,11 @@
         </ul>
       </div>
 
+      <feather-loader
+        v-if="contentLoading && !imageUrl && type === 'grid'" />
+
       <svgicon
-        v-if="!imageUrl && type === 'grid'"
+        v-if="!contentLoading && !imageUrl && type === 'grid'"
         icon="cactus"
         width="40"
         height="40"
@@ -71,6 +76,7 @@
     name: 'PlantPreview',
 
     props: {
+      contentLoading: { type: Boolean, default: true },
       type: { type: String, default: 'grid' },
       tags: { type: Array, default: () => [] },
       deleteMode: { type: Boolean, default: false, required: true },
@@ -91,7 +97,9 @@
       'feather-check': () =>
         import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
       'feather-tag': () =>
-        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
@@ -128,6 +136,7 @@
       },
       wrapperClass () {
         return [`type-${this.type}`, 'box', 'plant-preview', {
+          'is-skeleton': this.contentLoading,
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-pressed': this.pressedMode && this.pressed && this.selected,
@@ -159,6 +168,7 @@
         }]
       },
       handleInteraction (event) {
+        if (this.contentLoading) return
         event.preventDefault()
 
         if (event.type === 'press') {
@@ -203,6 +213,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/animations";
+
   .plant-preview {
     display: block;
     width: 100%;
@@ -236,6 +248,10 @@
       overflow: visible;
       --preview-color: var(--text-color-base);
     }
+
+    &.is-skeleton {
+      box-shadow: none;
+    }
   }
 
   .preview-image {
@@ -248,6 +264,14 @@
     justify-content: center;
     align-items: center;
     margin-right: var(--base-gap);
+
+    @nest .is-skeleton & {
+      box-shadow: none;
+
+      &::after {
+        visibility: hidden;
+      }
+    }
 
     @nest .no-photo & {
       /* TODO: Show default image instead */
@@ -329,6 +353,12 @@
       align-items: flex-start;
     }
 
+    @nest .is-skeleton & svg {
+      width: 30% !important;
+      transform-origin: center center;
+      animation: rotate360 4s linear infinite;
+    }
+
     & svg {
       width: 65% !important;
       height: auto !important;
@@ -390,6 +420,20 @@
 
     @nest .no-photo:not(.type-list) & {
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+    }
+
+    @nest .is-skeleton:not(.type-list) & {
+      background: none !important;
+
+      & h1 {
+        width: 75%;
+        height: 18px;
+        display: block;
+        background: var(--background-primary);
+        background-position: 0 50%;
+        background-size: 200% 200%;
+        border-radius: var(--border-radius);
+      }
     }
 
     &.inactive,

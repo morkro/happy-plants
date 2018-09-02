@@ -56,11 +56,7 @@
 </script>
 
 <style lang="postcss">
-  @keyframes rotate360 {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+  @import "../styles/animations";
 
   button,
   .btn {

@@ -14,10 +14,12 @@ export const signOutUser = ({ commit }) => {
     .catch(error => commit('USER_SIGNOUT_FAILED', error))
 }
 
-export const authRedirectResults = async ({ commit, state }) => {
+export const authRedirectResults = ({ commit, state }) => {
   commit('USER_SIGNIN_PROGRESS')
   firebase.auth().getRedirectResult()
-    .then(result => commit('USER_SIGNIN_SUCCESS', result.user))
+    .then(result => {
+      commit('USER_SIGNIN_SUCCESS', result.user)
+    })
     .catch(error => {
       if (state.user.authenticated) return
       commit('USER_SIGNIN_FAILED', error)
@@ -26,7 +28,6 @@ export const authRedirectResults = async ({ commit, state }) => {
 
 export const authenticateUser = ({ commit, state }) => {
   commit('USER_SIGNIN_PROGRESS')
-
   return new Promise((resolve, reject) => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {

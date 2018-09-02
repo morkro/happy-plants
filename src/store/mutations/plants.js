@@ -19,7 +19,6 @@ export default {
 
   LOAD_PLANTS_SUCCESS (state, payload) {
     let transformed = payload.plants
-
     if (state.storage.type === 'local') {
       transformed = payload.plants.map(item =>
         Object.assign(item, { imageURL: getUrlFromBlob(item.blob) }))
