@@ -69,7 +69,6 @@
 <script>
   import router from '@/router'
   import Tag from '@/components/Tag'
-
   import '@/assets/icons/cactus'
 
   export default {

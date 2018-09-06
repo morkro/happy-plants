@@ -25,7 +25,14 @@
       class="overview-backdrop"
       @click="hideBackdrop" />
 
-    <main :class="['app-content', { 'loading': plantsLoading }]">
+    <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
+      <div v-if="noPlantData" class="content-empty">
+        <svgicon icon="cactus" :color="theme === 'light' ? '#000' : '#fff'" />
+        <p>
+          You haven't added any plants yet.
+        </p>
+      </div>
+
       <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
         <h2>Filtered by <v-tag size="small">{{ filteredTag }}</v-tag></h2>
         <v-button
@@ -47,10 +54,6 @@
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
         :is-pressed-mode="isPressedMode" />
-
-      <div v-if="!plantsLoading && plants.length === 0">
-        Looks like you got no plants.
-      </div>
 
       <div :class="footerClass">
         <viewmode-menu
@@ -92,6 +95,7 @@
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
   import ViewmodeMenu from './components/ViewmodeMenu'
+  import '@/assets/icons/cactus'
 
   export default {
     name: 'Overview',
@@ -113,6 +117,7 @@
 
     computed: {
       ...mapState({
+        theme: state => state.settings.theme,
         authenticated: state => state.user.authenticated,
         storage: state => state.storage.type,
         plantsLoading: state => state.plants.loading,
@@ -122,6 +127,9 @@
         filterBy: state => state.settings.filterBy,
         tags: state => state.tags.data
       }),
+      noPlantData () {
+        return !this.plantsLoading && this.plants.length === 0
+      },
       isViewMode () {
         return this.editMode === 'view-mode'
       },
@@ -296,6 +304,10 @@
     height: 100%;
     padding: var(--base-gap);
     padding-bottom: calc(var(--app-footer-size) * 1.2);
+
+    &.no-data {
+      height: calc(100vh - var(--app-header-size));
+    }
   }
 
   .header-controls {
@@ -337,6 +349,25 @@
     & svg rect,
     & svg path {
       stroke: var(--text-color-button);
+    }
+  }
+
+  .content-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    & svg {
+      width: 40%;
+      height: auto;
+      margin-bottom: calc(2 * var(--base-gap));
+      opacity: 0.2;
+    }
+
+    & p {
+      color: var(--text-color-secondary);
     }
   }
 
