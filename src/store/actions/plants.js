@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4'
 import { blobToBase64String } from 'blob-util'
-// import { convertToBlob } from '@/utils/blob'
+import { isBlobbable } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
 
 import {
@@ -25,7 +25,7 @@ const namespace = 'plant-'
 const folder = 'plants'
 const fileName = 'cover.png'
 
-export async function loadPlants ({ state, commit }, data = {}) {
+export async function loadPlants ({ state, commit }) {
   let plants = []
   commit('LOAD_PLANTS_PROGRESS')
 
@@ -36,16 +36,16 @@ export async function loadPlants ({ state, commit }, data = {}) {
         ['users', state.user.id],
         [folder, doc.id]
       ]).get()
-      const data = plant.data()
+      const plantData = plant.data()
       plants.push({
-        ...data,
-        imageURL: data.imageURL && await downloadFile(data.imageURL)
+        ...plantData,
+        imageURL: plantData.imageURL && await downloadFile(plantData.imageURL)
       })
     }
   } else {
     const values = await getEntryLF(namespace)
-      .then(data => {
-        const copy = data
+      .then(plantData => {
+        const copy = plantData
         delete copy[namespace + 'undefined']
         return copy
       })
@@ -59,7 +59,7 @@ export async function loadPlants ({ state, commit }, data = {}) {
 }
 
 export function loadPlantItem ({ state, commit }, guid) {
-    commit('LOAD_PLANT_ITEM', { guid })
+  commit('LOAD_PLANT_ITEM', { guid })
 }
 
 export async function addPlant ({ state, commit }, data) {
@@ -73,12 +73,15 @@ export async function addPlant ({ state, commit }, data) {
 
   if (state.storage.type === 'cloud') {
     const path = [['users', state.user.id], [folder, meta.guid]]
+    const hasFile = meta.blob && isBlobbable(meta.blob)
     await addEntryFire(path, {
       ...meta,
       blob: null,
-      imageURL: `${storagePath(path)}/${fileName}`
+      imageURL: hasFile && `${storagePath(path)}/${fileName}`
     })
-    await uploadFile(path.concat(fileName), meta.blob)
+    if (hasFile) {
+      await uploadFile(path.concat(fileName), meta.blob)
+    }
   } else {
     // FIXME: This is generally a bad idea. Use feature detection instead.
     // However, I could not find a reliable way to test if IndexedDB supports blobs,

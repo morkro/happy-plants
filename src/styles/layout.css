@@ -59,9 +59,11 @@ html {
 
   &.red {
     background: var(--brand-red);
+    color: var(--text-color-inverse);
   }
 
   &.green {
     background: var(--brand-green);
+    color: var(--text-color-inverse);
   }
 }

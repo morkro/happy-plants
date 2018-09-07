@@ -1,6 +1,6 @@
 <template>
   <div class="start-wrapper">
-    <v-button @click.native="nextStep" :disabled="authProgress || signInProgress">
+    <v-button @click.native="nextStep" :disabled="disabled">
       <feather-right slot="icon" />
       <span>Start introduction</span>
     </v-button>
@@ -10,11 +10,11 @@
 
       <v-button
         color="plain"
-        :loading="authProgress || signInProgress"
-        :disabled="authProgress || signInProgress"
+        :loading="disabled"
+        :disabled="disabled"
         @click.native="loginUser">
         <feather-login slot="icon" />
-        <span>Login</span>
+        <span>Login with Google</span>
       </v-button>
     </div>
   </div>
@@ -35,11 +35,21 @@
         import('vue-feather-icons/icons/LogInIcon' /* webpackChunkName: "icons" */)
     },
 
-    computed: mapState({
-      authProgress: state => state.user.loading,
-      authenticated: state => state.user.authenticated,
-      plants: state => state.plants.data
-    }),
+    computed: {
+      ...mapState({
+        authFromRedirect: state => state.user.authFromRedirect,
+        authProgress: state => state.user.loading,
+        authenticated: state => state.user.authenticated,
+        plants: state => state.plants.data
+      }),
+      disabled () {
+        return (
+          this.authFromRedirect ||
+          this.authProgress ||
+          this.signInProgress
+        )
+      }
+    },
 
     data: () => ({
       signInProgress: false
@@ -93,6 +103,10 @@
   .start-wrapper {
     display: flex;
     flex-direction: column;
+
+    & button {
+      align-self: center;
+    }
   }
 
   .start-login {

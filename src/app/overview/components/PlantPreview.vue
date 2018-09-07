@@ -82,7 +82,7 @@
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
-      imageUrl: { type: String, default: '', required: true }
+      imageUrl: { type: String, default: '' }
     },
 
     components: {
@@ -228,6 +228,7 @@
 
     @nest html[data-theme="dark"] & {
       --preview-background: var(--dark-grey);
+      --preview-color: var(--link-color);
     }
 
     &:focus {

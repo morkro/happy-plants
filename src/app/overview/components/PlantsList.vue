@@ -46,7 +46,7 @@
     },
 
     data: () => ({
-      mockPlants: new Array(5).fill({})
+      mockPlants: new Array(4).fill({})
     }),
 
     methods: {

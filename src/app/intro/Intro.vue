@@ -23,10 +23,6 @@
       title: 'Welcome to HappyPlants!'
     },
 
-    data: () => ({
-      authenticated: state => state.user.authenticated
-    }),
-
     methods: mapActions([
       'updateAppHeader'
     ]),

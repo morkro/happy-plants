@@ -27,6 +27,10 @@
   import { mapActions, mapState } from 'vuex'
   import AppHeader from '@/components/AppHeader'
   import AppNotifications from '@/components/AppNotifications'
+  import {
+    getEntry as getSessionEntry,
+    deleteEntry as deleteSessionEntry
+  } from '@/api/sessionStorage'
 
   export default {
     name: 'HappyPlants',
@@ -69,6 +73,7 @@
 
     methods: {
       ...mapActions([
+        'updateAuthMethod',
         'authRedirectResults',
         'authenticateUser',
         'loadVersion',
@@ -83,24 +88,28 @@
       ])
     },
 
-    async mounted () {
+    async created () {
       await this.loadVersion()
       await this.updateVersion()
       await this.loadStorage()
       await this.loadSettings()
 
       if (this.storageType === 'cloud') {
-        try {
-          await this.authenticateUser()
-        } catch (error) {
-          this.showNotification()
-        }
-
-        if (!this.authenticated) {
+        // This detects if the user is coming from a signin redirect.
+        if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
+          this.updateAuthMethod()
+          deleteSessionEntry('USER_SIGNIN_PROGRESS')
           try {
             await this.authRedirectResults()
           } catch (error) {
             this.showNotification()
+          }
+        // If not, we just want a regular authentication observer.
+        } else {
+          try {
+            await this.authenticateUser()
+          } catch (error) {
+            this.$router.push('/intro')
           }
         }
       }

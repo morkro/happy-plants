@@ -159,6 +159,10 @@
     display: flex;
     flex-wrap: wrap;
 
+    @nest html[data-theme="dark"] & {
+      border: 2px solid var(--border-color);
+    }
+
     &.filter-view {
       display: grid;
       grid-template-areas:

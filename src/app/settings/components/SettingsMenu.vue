@@ -46,9 +46,15 @@
       <ul class="settings-submenu">
         <li class="menu-user">
           <div v-if="authenticated">
-            <span>{{ userName }}</span>
+            <span>
+              <strong>{{ userName }}</strong>
+              <span>{{ userEmail }}</span>
+            </span>
             <div>
-              <v-button type="small" @click.native="logOutUser">
+              <v-button
+                :loading="logOutProgress"
+                type="small"
+                @click.native="logOutUser">
               Logout
               </v-button>
             </div>
@@ -94,6 +100,7 @@
 
     data () {
       return {
+        logOutProgress: false,
         menu: [
           {
             label: 'Data',
@@ -152,6 +159,7 @@
       storageType: state => state.storage.type,
       authenticated: state => state.user.authenticated,
       userName: state => state.user.name,
+      userEmail: state => state.user.email,
       version: state => state.version,
       hasNewRelease: state => state.settings.hasNewRelease,
       theme: state => state.settings.theme
@@ -194,7 +202,9 @@
         )
       },
       async logOutUser () {
+        this.logOutProgress = true
         await this.signOutUser()
+        this.logOutProgress = false
         this.$router.push('/intro')
       },
       logInUser () {
@@ -211,20 +221,24 @@
 </script>
 
 <style lang="postcss" scoped>
-  .settings-menu > li {
-    & h3 {
-      padding: calc(var(--base-gap) / 2) var(--base-gap);
-      color: var(--text-color-secondary);
-    }
+  .settings-menu {
+    list-style: none;
 
-    &.menu-version {
-      font-size: var(--text-size-xsmall);
-      color: var(--text-color-secondary);
-      padding: var(--base-gap);
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    & > li {
+      & h3 {
+        padding: calc(var(--base-gap) / 2) var(--base-gap);
+        color: var(--text-color-secondary);
+      }
+
+      &.menu-version {
+        font-size: var(--text-size-xsmall);
+        color: var(--text-color-secondary);
+        padding: var(--base-gap);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
   }
 
@@ -324,5 +338,14 @@
     font-size: var(--text-size-xsmall);
     word-break: break-all;
     padding-right: var(--base-gap);
+
+    & strong {
+      display: block;
+    }
+
+    & span {
+      font-weight: 400;
+      color: var(--text-color-secondary);
+    }
   }
 </style>

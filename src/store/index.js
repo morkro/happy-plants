@@ -47,12 +47,12 @@ export default new Vuex.Store({
     },
 
     user: {
+      authFromRedirect: false,
       authenticated: false,
       error: false,
       loading: false,
       name: null,
-      id: null,
-      authFromRedirect: false
+      id: null
     },
 
     selected: plant.state,

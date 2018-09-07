@@ -8,8 +8,23 @@ import {
 import {
   addEntry as addEntryFire,
   updateEntry as updateEntryFire,
-  deleteEntry as deleteEntryFire
+  deleteEntry as deleteEntryFire,
+  deleteFile
 } from '@/api/firebase'
+
+const namespace = 'plant-'
+const folder = 'plants'
+const fileName = 'cover.png'
+
+export async function getAllData ({ state }) {
+  return {
+    version: state.version,
+    settings: state.settings,
+    plants: state.plants,
+    tags: state.tags,
+    storage: state.storage
+  }
+}
 
 export async function deleteAllData ({ state, commit }) {
   const updated = Date.now()
@@ -18,18 +33,19 @@ export async function deleteAllData ({ state, commit }) {
   // Delete from Firebase
   if (state.storage.type === 'cloud') {
     await deleteEntryFire([['users', state.user.id]])
-    await Promise.all(state.plants.data.map(plant => deleteEntryFire([
-      ['users', state.user.id],
-      ['plants', plant.guid]
-    ])))
+    await Promise.all(state.plants.data.map(async (plant) => {
+      const path = [['users', state.user.id], [folder, plant.guid]]
+      await deleteEntryFire(path)
+      await deleteFile(path.concat(fileName))
+    }))
   } else {
     // Delete from localForage
     await deleteEntryLF('tags')
     await deleteEntryLF('storage')
-    await getEntryLF('plant-')
+    await getEntryLF(namespace)
       .then(Object.values)
       .then(data =>
-        Promise.all(data.map(p => deleteEntryLF('plant-' + p.guid))))
+        Promise.all(data.map(p => deleteEntryLF(namespace + p.guid))))
   }
 
   commit('DELETE_ALL_DATA', { updated })
@@ -66,9 +82,9 @@ export async function importPlants ({ state, commit }, data) {
   if (state.storage.type === 'cloud') {
     await Promise.all(state.plants.data.map(item => addEntryFire([
       ['users', state.user.id],
-      ['plants', item.guid]
+      [folder, item.guid]
     ])))
   } else {
-    await Promise.all(state.plants.data.map(item => addEntryLF('plant-' + item.guid, item)))
+    await Promise.all(state.plants.data.map(item => addEntryLF(namespace + item.guid, item)))
   }
 }

@@ -60,6 +60,7 @@ export default function hermiteResize (canvas, W, H, W2 = W / 2, H2 = H / 2) {
     }
   }
 
+  // eslint-disable-next-line
   console.log('hermite = ' + Math.round(Date.now() - time1) / 1000 + ' s')
 
   canvas.width = W2

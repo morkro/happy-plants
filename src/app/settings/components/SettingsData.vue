@@ -53,28 +53,30 @@
 
         <v-button
           :disabled="file === null || selectedImportType === false"
+          :loading="importDataProgress"
           @click.native.prevent="importApplicationData">
           Import
         </v-button>
       </div>
     </settings-dialog>
 
-    <section class="download-section">
+    <section class="download-section box">
       <h2>Export plant data</h2>
 
       <span>
-        Download all your plant data as a JSON file (without photos!).
+        Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
+        it's currently <strong>not possible</strong> to include the images.
         You might use this little database to import in a different tool,
         or even modify and import it again.
       </span>
 
-      <v-button @click.native="downloadData">
+      <v-button :loading="exportDataProgress" @click.native="downloadData">
         <feather-download slot="icon" />
         Export plant data
       </v-button>
     </section>
 
-    <section class="import-section">
+    <section class="import-section box">
       <h2>Import plant data</h2>
 
       <span>
@@ -134,6 +136,8 @@
 
     data () {
       return {
+        exportDataProgress: false,
+        importDataProgress: false,
         file: null,
         showDialog: false,
         modalType: null,
@@ -197,9 +201,12 @@
         $a.dispatchEvent(new MouseEvent('click', { view: window }))
       },
 
-      downloadData () {
-        this.getAllData()
-          .then(this.triggerDownload)
+      async downloadData () {
+        this.exportDataProgress = true
+        const data = await this.getAllData()
+        this.exportDataProgress = false
+
+        this.triggerDownload(data)
       },
 
       updateImportType (id) {
@@ -301,10 +308,16 @@
     }
   }
 
+  .download-section,
+  .import-section {
+    margin: var(--base-gap);
+  }
+
   @media (--min-desktop-viewport) {
     .download-section,
     .import-section {
       width: 50%;
+      margin: 0 var(--base-gap);
     }
   }
 
