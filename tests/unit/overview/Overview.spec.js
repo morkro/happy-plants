@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
@@ -16,17 +16,11 @@ describe('app/overview/Overview.vue', () => {
   const options = {
     localVue,
     store,
-    router,
-    stubs: {
-      'a11y-dialog': '<div class="happy-dialog-base" />',
-      'feather-grid': '<svg />',
-      'feather-x': '<svg />',
-      'feather-box': '<svg />'
-    }
+    router
   }
 
   it('is a Vue component', () => {
-    const wrapper = mount(Overview, options)
+    const wrapper = shallowMount(Overview, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })

@@ -7,8 +7,8 @@ module.exports = {
   ],
   transform: {
     '^.+\\.vue$': 'vue-jest',
-    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.(jsx|js)?$': 'babel-jest',
+    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub'
   },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
@@ -18,8 +18,9 @@ module.exports = {
     'jest-serializer-vue'
   ],
   testMatch: [
-    '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
+    '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)'
   ],
+  testURL: 'http://localhost/',
   collectCoverage: true,
   coverageDirectory: '<rootDir>/tests/coverage',
   collectCoverageFrom: [
@@ -29,7 +30,6 @@ module.exports = {
     '!src/router.js',
     '!src/registerServiceWorker.js',
     '!src/**/routes.js',
-    '!src/**/index.js',
     '!**/node_modules/**'
   ]
 }

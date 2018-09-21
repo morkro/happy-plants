@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import VueSVGIcon from 'vue-svgicon'
 import Register from '@/app/register/Register'
@@ -12,12 +12,12 @@ describe('app/register/Register.vue', () => {
   const options = { localVue, store }
 
   it('is a Vue component', () => {
-    const wrapper = mount(Register, options)
+    const wrapper = shallowMount(Register, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('computed prop canRegisterPlant()', () => {
-    const wrapper = mount(Register, options)
+    const wrapper = shallowMount(Register, options)
     expect(wrapper.vm.canRegisterPlant).toBe(false)
 
     const input = wrapper.find('input#register-name')
@@ -27,7 +27,7 @@ describe('app/register/Register.vue', () => {
   })
 
   it('getName() works', () => {
-    const wrapper = mount(Register, options)
+    const wrapper = shallowMount(Register, options)
     expect(wrapper.vm.name).toEqual('')
 
     const input = wrapper.find('input#register-name')

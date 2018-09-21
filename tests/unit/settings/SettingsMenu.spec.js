@@ -18,7 +18,7 @@ describe('app/settings/SettingsMenu.vue', () => {
   })
 
   it('before destroying calls action when new release', () => {
-    let wrapper = shallowMount(SettingsMenu, {
+    const wrapper = shallowMount(SettingsMenu, {
       ...options,
       computed: {
         hasNewRelease: () => true
@@ -30,7 +30,7 @@ describe('app/settings/SettingsMenu.vue', () => {
   })
 
   it('before destroying does nothing if no new release', () => {
-    let wrapper = shallowMount(SettingsMenu, options)
+    const wrapper = shallowMount(SettingsMenu, options)
     wrapper.setMethods({ hasSeenNewRelease: jest.fn() })
     wrapper.destroy()
     expect(wrapper.vm.hasSeenNewRelease).not.toHaveBeenCalled()
