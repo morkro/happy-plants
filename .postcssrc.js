@@ -12,6 +12,7 @@ module.exports = {
       }
     },
     'postcss-reporter': {},
+    'postcss-color-mod-function': {},
     // to edit target browsers: use 'browserslist' field in package.json
     autoprefixer: {}
   }

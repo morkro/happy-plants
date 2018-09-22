@@ -1,7 +1,7 @@
 <template>
   <section :class="{ 'plant-footer': true, 'no-modules': noModules }">
     <v-button
-      color="grey"
+      color="plain"
       class="footer-modules"
       @click.native.prevent="emitShowModules">
       <feather-box slot="icon" />

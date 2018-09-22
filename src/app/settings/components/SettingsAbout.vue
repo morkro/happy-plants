@@ -3,7 +3,7 @@
     <section class="about-intro box">
       <p>
         <strong>HappyPlants</strong> is all about organising,
-        collecting all sorts of information and trivia,
+        collecting all sorts of information,
         and adding notes to your little friends. Basically, creating your own plant database.
         <br><br>
         This app is a <em>progressive web application</em>
@@ -26,7 +26,7 @@
     <section class="about-contrubtions box green">
       <h2>I want to make this better</h2>
       <em>
-        Please, yes! Bugs? Feature requests? Any other issues?<br>
+        Please, yes! Bugs? Feature requests? Other issues?<br>
         <a href="https://github.com/morkro/happy-plants"
           target="_blank"
           rel="noopener">

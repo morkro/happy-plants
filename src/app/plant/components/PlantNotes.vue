@@ -106,7 +106,7 @@
   }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   #plant-notes-dialog .happy-dialog-element {
     background-color: var(--background-primary);
   }
