@@ -31,7 +31,7 @@ export async function loadTags ({ state, commit }, data = {}) {
 }
 
 export async function addTag ({ state, commit }, data) {
-  const meta = {
+  const meta = state.storage.migrationMode ? data : {
     ...data,
     guid: uuid(),
     created: Date.now(),
@@ -40,7 +40,9 @@ export async function addTag ({ state, commit }, data) {
   const updated = Date.now()
   await updateEntryLF('updated', updated)
 
-  commit('ADD_TAG', { item: meta, updated })
+  if (!state.storage.migrationMode) {
+    commit('ADD_TAG', { item: meta, updated })
+  }
 
   if (state.storage.type === 'cloud') {
     await addEntryFire([['users', state.user.id]], { tags: state.tags.data })
@@ -53,7 +55,9 @@ export async function deleteTag ({ state, commit }, data) {
   const updated = Date.now()
   await updateEntryLF('updated', updated)
 
-  commit('DELETE_TAG', { item: data, updated })
+  if (!state.storage.migrationMode) {
+    commit('DELETE_TAG', { item: data, updated })
+  }
 
   if (state.storage.type === 'cloud') {
     await updateEntryFire([['users', state.user.id]], { tags: state.tags.data })

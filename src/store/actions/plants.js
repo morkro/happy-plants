@@ -63,13 +63,12 @@ export function loadPlantItem ({ state, commit }, guid) {
 }
 
 export async function addPlant ({ state, commit }, data) {
-  const meta = {
+  let meta = state.storage.migrationMode ? data : {
     ...data,
     guid: uuid(),
     created: Date.now(),
     modified: Date.now()
   }
-  const payload = { item: meta }
 
   if (state.storage.type === 'cloud') {
     const path = [['users', state.user.id], [folder, meta.guid]]
@@ -83,24 +82,33 @@ export async function addPlant ({ state, commit }, data) {
       await uploadFile(path.concat(fileName), meta.blob)
     }
   } else {
+    // If we're in migration mode, we want to create a blob from the image
+    if (state.storage.migrationMode) {
+      const image = await fetch(meta.imageURL)
+      meta.blob = image.blob()
+      meta.imageURL = null
+    }
+
     // FIXME: This is generally a bad idea. Use feature detection instead.
     // However, I could not find a reliable way to test if IndexedDB supports blobs,
     // as it fails silently. We have to convert the blob to base64,
     // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-    if (iOS && !!data.blob) {
+    if (iOS && !!meta.blob) {
       // 1. Turn blob into base64 string (only needed for storage)
-      const base64String = await blobToBase64String(data.blob)
+      const base64String = await blobToBase64String(meta.blob)
       const config = Object.assign({}, meta, { blob: base64String })
 
       await addEntryLF(namespace + config.guid, config)
-      payload.item = Object.assign({}, config, { blob: data.blob })
+      meta = Object.assign({}, config, { blob: meta.blob })
     } else {
       await addEntryLF(namespace + meta.guid, meta)
     }
   }
 
-  commit('ADD_PLANT', payload)
-  return meta.guid
+  if (!state.storage.migrationMode) {
+    commit('ADD_PLANT', { item: meta })
+    return meta.guid
+  }
 }
 
 export async function updatePlant (action, { state, commit }, data) {
@@ -134,5 +142,7 @@ export async function deletePlants ({ state, commit }, items) {
     await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
   }
 
-  commit('DELETE_PLANTS', { items })
+  if (!state.storage.migrationMode) {
+    commit('DELETE_PLANTS', { items })
+  }
 }

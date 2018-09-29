@@ -8,7 +8,15 @@ export const loadStorage = ({ commit }) => {
 }
 
 export const updateStorage = ({ state, commit }, data) => {
-  const config = { ...state.storage, ...data }
+  const { migrationMode, ...config } = { ...state.storage, ...data }
   return updateEntry(namespace, config)
     .then(() => commit('UPDATE_STORAGE', data))
+}
+
+export const startDataMigration = ({ commit }) => {
+  commit('DATA_MIGRATION_START')
+}
+
+export const endDataMigration = ({ commit }) => {
+  commit('DATA_MIGRATION_FINISHED')
 }

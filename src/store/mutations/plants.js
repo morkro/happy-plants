@@ -42,6 +42,7 @@ export default {
 
   DELETE_PLANTS (state, payload) {
     state.updated = Date.now()
+
     for (const item of payload.items) {
       Vue.delete(
         state.plants.data,

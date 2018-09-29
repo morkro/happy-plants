@@ -43,7 +43,8 @@ export default new Vuex.Store({
     },
 
     storage: {
-      type: 'local'
+      type: 'local',
+      migrationMode: false
     },
 
     user: {

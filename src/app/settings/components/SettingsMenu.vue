@@ -247,6 +247,10 @@
     align-items: center;
     background: var(--background-primary);
 
+    @nest [data-theme="dark"] & {
+      --border-color: var(--background-secondary);
+    }
+
     &:not(:last-child) {
       border-bottom: 2px solid var(--border-color);
     }
