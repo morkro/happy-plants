@@ -43,6 +43,7 @@
   import FileUpload from '@/components/FileUpload'
   import Button from '@/components/Button'
   import { getPlantStructure } from '@/app/plant/utils'
+  import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import '@/assets/icons/leaf'
 
   export default {
@@ -68,7 +69,6 @@
         name: '',
         blob: null,
         isUploadingFile: false,
-        showDialog: false,
         addPlantProgress: false
       }
     },
@@ -101,6 +101,7 @@
         const guid = await this.addPlant({
           ...getPlantStructure(),
           blob: this.blob,
+          imageURL: isBlobbable(this.blob) && getUrlFromBlob(this.blob),
           name: this.name
         })
         this.addPlantProgress = false

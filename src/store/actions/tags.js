@@ -24,7 +24,8 @@ export async function loadTags ({ state, commit }, data = {}) {
       tags = data.data()[namespace]
     }
   } else {
-    tags = await getEntryLF(namespace)
+    const data = await getEntryLF(namespace)
+    tags = data.tags
   }
 
   return commit('LOAD_TAGS_SUCCESS', { tags })

@@ -60,11 +60,13 @@ export default new Vuex.Store({
 
     plants: {
       loading: false,
+      finished: false,
       data: []
     },
 
     tags: {
       loading: false,
+      finished: false,
       data: []
     }
   },

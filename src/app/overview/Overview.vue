@@ -121,6 +121,7 @@
         authenticated: state => state.user.authenticated,
         storage: state => state.storage.type,
         plantsLoading: state => state.plants.loading,
+        plantsLoaded: state => state.plants.finished,
         plants: state => state.plants.data,
         viewMode: state => state.settings.viewMode,
         orderBy: state => state.settings.orderBy,
@@ -195,10 +196,9 @@
     },
 
     updated () {
-      // if (this.storage === 'cloud') return
-      // if (!this.plantsLoading && this.plants && this.plants.length === 0) {
-      //   this.$router.push('/intro')
-      // }
+      if (this.storage !== 'cloud' && this.plantsLoaded && !this.plants.length) {
+        this.$router.push('/intro')
+      }
     },
 
     created () {

@@ -94,23 +94,20 @@
       await this.loadStorage()
       await this.loadSettings()
 
-      if (this.storageType === 'cloud') {
-        // This detects if the user is coming from a signin redirect.
-        if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
-          this.updateAuthMethod()
-          deleteSessionEntry('USER_SIGNIN_PROGRESS')
-          try {
-            await this.authRedirectResults()
-          } catch (error) {
-            this.showNotification()
-          }
-        // If not, we just want a regular authentication observer.
-        } else {
-          try {
-            await this.authenticateUser()
-          } catch (error) {
-            this.$router.push('/intro')
-          }
+      if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
+        this.updateAuthMethod()
+        deleteSessionEntry('USER_SIGNIN_PROGRESS')
+        try {
+          await this.authRedirectResults()
+        } catch (error) {
+          this.showNotification()
+        }
+      // If not, we just want a regular authentication observer.
+      } else if (this.storageType === 'cloud') {
+        try {
+          await this.authenticateUser()
+        } catch (error) {
+          this.$router.push('/intro')
         }
       }
 

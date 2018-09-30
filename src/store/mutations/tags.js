@@ -6,11 +6,9 @@ export default {
   },
 
   LOAD_TAGS_SUCCESS (state, payload) {
-    if (!payload.tags || !payload.tags.length) {
-      return
-    }
     state.tags.loading = false
-    state.tags.data = payload.tags
+    state.tags.finished = true
+    state.tags.data = payload.tags || state.tags.data
   },
 
   ADD_TAG (state, payload) {

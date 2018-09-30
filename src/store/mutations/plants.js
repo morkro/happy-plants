@@ -25,6 +25,7 @@ export default {
     }
 
     state.plants.loading = false
+    state.plants.finished = true
     state.plants.data = sortPlants(state, transformed)
   },
 

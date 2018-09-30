@@ -42,7 +42,16 @@
       <span slot="headline">Migrate data to {{ storageTypeName }}</span>
 
       <div>
-        <div v-if="migrationProgress || migrationFinished" class="dialog-migration-progress">
+        <!--
+          Show this content when the user is coming from a redirect
+          and content is still loading
+        -->
+        <div v-if="authFromRedirect && (plantsLoading || tagsLoading)" class="dialog-progress">
+          <feather-loader class="rotate" />
+        </div>
+
+        <!-- Status message when migration is active -->
+        <div v-if="migrationProgress || migrationFinished" class="dialog-migration">
           <p>
             <feather-check v-if="migrationFinished" />
             <feather-loader v-else class="rotate" />
@@ -50,7 +59,8 @@
           </p>
         </div>
 
-        <div v-if="selectedType === 'local' && !migrationProgress">
+        <!-- Information for "local" migration -->
+        <div v-if="showDialogInfoContent('local')">
           <p>
             <span class="dialog-caution">
               <strong>Caution:</strong> This will delete all your cloud data!
@@ -62,7 +72,8 @@
           </p>
         </div>
 
-        <div v-if="selectedType === 'cloud' && !migrationProgress">
+        <!-- Information for "cloud" migration -->
+        <div v-if="showDialogInfoContent('cloud')">
           <p>
             Activating the cloud option will prompt you to sign in with a Google account.
           </p>
@@ -72,7 +83,10 @@
           </p>
         </div>
 
-        <v-button v-if="!migrationProgress" @click.native="switchStorageType(selectedType)">
+        <!-- Action for "local" migration -->
+        <v-button
+          v-if="showDialogInfoContent('local') || showDialogInfoContent('cloud')"
+          @click.native="switchStorageType">
           I understand, let's go
         </v-button>
       </div>
@@ -104,11 +118,16 @@
 
     computed: {
       ...mapState({
+        authFromRedirect: state => state.user.authFromRedirect,
         storageType: state => state.storage.type,
         migrationProgress: state => state.storage.migrationMode,
         authenticated: state => state.user.authenticated,
         plants: state => state.plants.data,
-        tags: state => state.tags.data
+        plantsLoaded: state => state.plants.finished,
+        plantsLoading: state => state.plants.loading,
+        tags: state => state.tags.data,
+        tagsLoaded: state => state.tags.finished,
+        tagsLoading: state => state.tags.loading
       }),
       storageTypeName () {
         return this.selectedType === 'local'
@@ -118,11 +137,27 @@
     },
 
     data: () => ({
+      dataIsLoaded: false,
       selectedType: null,
       showCloudDialog: false,
       migrationFinished: false,
       migrationMessage: null
     }),
+
+    watch: {
+      authFromRedirect (isRedirect) {
+        if (isRedirect) {
+          this.openDialog('cloud')
+        }
+      }
+    },
+
+    updated () {
+      if (!this.dataIsLoaded && this.authFromRedirect && this.plantsLoaded && this.tagsLoaded) {
+        this.dataIsLoaded = true
+        this.switchStorageType()
+      }
+    },
 
     methods: {
       ...mapActions([
@@ -146,6 +181,16 @@
       },
       isStorageType (type) {
         return this.storageType === type
+      },
+      showDialogInfoContent (type) {
+        return (
+          this.selectedType === type &&
+          !this.authFromRedirect &&
+          !this.migrationProgress &&
+          !this.migrationFinished &&
+          this.plantsLoaded &&
+          this.tagsLoaded
+        )
       },
       async migrateDataLocal () {
         this.migrationMessage = '1/5 Downloading all data...'
@@ -171,30 +216,52 @@
         for (const tag of this.tags) {
           await this.addTag(tag)
         }
-        // Create new photos here
 
         this.migrationMessage = '5/5 Logging you out of your account...'
         await this.signOutUser()
       },
       async migrateDataCloud () {
-        await this.signInUser()
+        if (!this.authFromRedirect) {
+          this.migrationMessage = 'Signing you in...'
+          await this.signInUser()
+        }
 
-        this.migrationMessage = '1/4 Updating data for cloud usage...'
-        await sleep(500) // FIXME
-        this.migrationMessage = '2/4 Uploading data...'
-        await sleep(500) // FIXME
-        this.migrationMessage = '3/4 Uploading photos...'
-        await sleep(4000) // FIXME
-        this.migrationMessage = '4/4 Deleting data from device...'
-        await sleep(5000) // FIXME
+        this.migrationMessage = '2/4 Deleting data from device...'
+        await sleep(500)
+        if (this.plants) {
+          await this.deletePlants(this.plants)
+        }
+        if (this.tags) {
+          for (const tag of this.tags) {
+            await this.deleteTag(tag)
+          }
+        }
+
+        this.migrationMessage = '3/4 Updating data for cloud usage...'
+        // TODO: Here we should clean up the data for
+        // modules that aren't supported in device storage mode.
+        await sleep(500)
+        this.updateStorage({ type: 'cloud' })
+
+        this.migrationMessage = '4/4 Uploading data...'
+        if (this.plants) {
+          for (const plant of this.plants) {
+            await this.addPlant(plant)
+          }
+        }
+        if (this.tags) {
+          for (const tag of this.tags) {
+            await this.addTag(tag)
+          }
+        }
       },
-      async switchStorageType (type) {
+      async switchStorageType () {
         this.startDataMigration()
 
         try {
-          if (type === 'local') {
+          if (this.selectedType === 'local') {
             await this.migrateDataLocal()
-          } else if (type === 'cloud') {
+          } else if (this.selectedType === 'cloud') {
             await this.migrateDataCloud()
           }
 
@@ -293,7 +360,17 @@
       box-shadow: 0 2px 9px var(--brand-red-low);
     }
 
-    & .dialog-migration-progress {
+    & svg.rotate {
+      animation: rotate360 4s linear infinite;
+    }
+
+    & .dialog-progress {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & .dialog-migration {
       & p {
         display: flex;
         align-items: center;
@@ -303,10 +380,6 @@
       & svg {
         margin-right: calc(var(--base-gap) / 2);
         transform-origin: center center;
-
-        &.rotate {
-          animation: rotate360 4s linear infinite;
-        }
       }
     }
 
