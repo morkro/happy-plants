@@ -18,7 +18,10 @@
     </storage-dialog>
 
     <div class="intro-storage box">
-      <h2>How do you want to save your data?</h2>
+      <h2>How do you want to save your plant data?</h2>
+      <p>
+        You can change this at any time in the settings later on.
+      </p>
       <ul>
         <li v-for="(type, index) of options" :key="index">
           <input
@@ -110,21 +113,21 @@
         'signInUser'
       ]),
       updateStorageMethod (type) {
-        this.updateStorage({ type })
         if (type === 'cloud') {
           this.showDialog = true
+        } else {
+          this.updateStorage({ type })
         }
       },
       closeDialog () {
         this.showDialog = false
       },
-      loginUser () {
-        this.signInUser()
-          .then(() => {
-            if (!this.authenticated) return
-            this.closeDialog()
-            this.$router.push('/intro/howto')
-          })
+      async loginUser () {
+        await this.updateStorage({ type: 'cloud' })
+        await this.signInUser()
+        if (!this.authenticated) return
+        this.closeDialog()
+        this.$router.push('/intro/howto')
       }
     }
   }
@@ -133,6 +136,10 @@
 <style lang="postcss" scoped>
   .intro-storage {
     padding: var(--base-gap);
+
+    & p {
+      margin-top: var(--base-gap);
+    }
 
     & ul {
       margin-top: calc(2 * var(--base-gap));

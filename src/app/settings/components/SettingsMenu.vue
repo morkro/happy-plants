@@ -161,7 +161,7 @@
       userName: state => state.user.name,
       userEmail: state => state.user.email,
       version: state => state.version,
-      hasNewRelease: state => state.settings.hasNewRelease,
+      hasNewRelease: state => state.hasNewRelease,
       theme: state => state.settings.theme
     }),
 

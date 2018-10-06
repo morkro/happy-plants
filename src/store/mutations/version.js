@@ -2,6 +2,11 @@ import compareVersion from '@/utils/compare-version'
 
 export default {
   LOAD_VERSION (state, payload) {
+    if (!payload.version) {
+      state.firstTimeUser = true
+      return
+    }
+
     const versionIsValid = typeof payload.version === 'string'
 
     if (versionIsValid && !compareVersion(payload.version, state.version, false)) {
@@ -10,7 +15,7 @@ export default {
       state.version = state.version
     }
 
-    state.settings.hasNewRelease = !versionIsValid
+    state.hasNewRelease = !versionIsValid
       ? true
       : compareVersion(payload.version, state.version)
   },

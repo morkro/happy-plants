@@ -238,15 +238,17 @@
 
       selectImportType (key) {
         const data = this.file[key]
-
-        if (key === 'tags') {
-          return this.importTags(data)
-        } else if (key === 'settings') {
-          return this.importSettings(data)
-        } else if (key.startsWith('plant-')) {
-          return this.importPlants({ data, importType: this.selectedImportType })
-        } else {
-          return Promise.resolve()
+        switch (key) {
+          case 'tags':
+            return this.importTags(Array.isArray(data) ? data : data.data)
+          case 'settings':
+            return this.importSettings(data)
+          case 'plants':
+            return this.importPlants({ data: data.data, importType: this.selectedImportType })
+          case key.startsWith('plant-'):
+            return this.importPlants({ data, importType: this.selectedImportType })
+          default:
+            return Promise.resolve()
         }
       },
 

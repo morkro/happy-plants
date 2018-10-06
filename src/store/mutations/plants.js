@@ -26,7 +26,14 @@ export default {
 
     state.plants.loading = false
     state.plants.finished = true
+    state.plants.error = false
     state.plants.data = sortPlants(state, transformed)
+  },
+
+  LOAD_PLANTS_FAILURE (state) {
+    state.plants.loading = false
+    state.plants.finished = true
+    state.plants.error = true
   },
 
   LOAD_PLANT_ITEM (state, payload) {
@@ -35,10 +42,18 @@ export default {
     )
   },
 
+  ADD_PLANT_PROGRESS (state) {
+    state.updated = Date.now()
+  },
+
   ADD_PLANT (state, payload) {
     state.updated = Date.now()
     state.plants.data.push(payload.item)
     state.plants.data = sortPlants(state)
+  },
+
+  DELETE_PLANT_PROGRESS (state) {
+    state.updated = Date.now()
   },
 
   DELETE_PLANTS (state, payload) {

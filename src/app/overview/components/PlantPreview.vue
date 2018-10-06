@@ -82,7 +82,7 @@
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
-      imageUrl: { type: String, default: '' }
+      imageUrl: { type: [String, Boolean], default: '' }
     },
 
     components: {

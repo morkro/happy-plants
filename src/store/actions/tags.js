@@ -15,23 +15,28 @@ import {
 const namespace = 'tags'
 
 export async function loadTags ({ state, commit }, data = {}) {
-  let tags = []
   commit('LOAD_TAGS_PROGRESS')
+  let tags = []
 
   if (state.storage.type === 'cloud' && state.user.id) {
-    const data = await getEntryFire([['users', state.user.id]])
-    if (data.exists) {
-      tags = data.data()[namespace]
+    try {
+      const data = await getEntryFire([['users', state.user.id]])
+      if (data.exists) {
+        tags = data.data()[namespace]
+      }
+    } catch (error) {
+      commit('LOAD_TAGS_FAILURE')
     }
   } else {
     const data = await getEntryLF(namespace)
     tags = data.tags
   }
 
-  return commit('LOAD_TAGS_SUCCESS', { tags })
+  commit('LOAD_TAGS_SUCCESS', { tags })
 }
 
 export async function addTag ({ state, commit }, data) {
+  commit('ADD_TAG_PROGRESS')
   const meta = state.storage.migrationMode ? data : {
     ...data,
     guid: uuid(),
@@ -53,6 +58,7 @@ export async function addTag ({ state, commit }, data) {
 }
 
 export async function deleteTag ({ state, commit }, data) {
+  commit('DELETE_TAG_PROGRESS')
   const updated = Date.now()
   await updateEntryLF('updated', updated)
 

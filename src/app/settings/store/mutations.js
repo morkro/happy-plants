@@ -24,7 +24,7 @@ export default {
 
   IMPORT_SETTINGS (state, payload) {
     state.updated = payload.updated
-    state.settings = payload.data
+    state.settings = Object.assign({}, state.settings, payload.data)
   },
 
   IMPORT_PLANTS (state, payload) {

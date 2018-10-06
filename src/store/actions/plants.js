@@ -26,23 +26,27 @@ const folder = 'plants'
 const fileName = 'cover.png'
 
 export async function loadPlants ({ state, commit }) {
-  let plants = []
   commit('LOAD_PLANTS_PROGRESS')
+  let plants = []
 
   if (state.storage.type === 'cloud' && state.user.id) {
-    const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
-    for (const doc of snapshot.docs) {
-      const plant = await firestoreQuery([
-        ['users', state.user.id],
-        [folder, doc.id]
-      ]).get()
-      const plantData = plant.data()
-      plants.push({
-        ...plantData,
-        imageURL: plantData.imageURL && await downloadFile(plantData.imageURL)
-      })
+    try {
+      const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
+      for (const doc of snapshot.docs) {
+        const plant = await firestoreQuery([
+          ['users', state.user.id],
+          [folder, doc.id]
+        ]).get()
+        const plantData = plant.data()
+        plants.push({
+          ...plantData,
+          imageURL: plantData.imageURL && await downloadFile(plantData.imageURL)
+        })
+      }
+    } catch (error) {
+      commit('LOAD_PLANTS_FAILURE')
     }
-  } else {
+   } else {
     const values = await getEntryLF(namespace)
       .then(plantData => {
         const copy = plantData
@@ -55,7 +59,7 @@ export async function loadPlants ({ state, commit }) {
     }
   }
 
-  return commit('LOAD_PLANTS_SUCCESS', { plants })
+  commit('LOAD_PLANTS_SUCCESS', { plants })
 }
 
 export function loadPlantItem ({ state, commit }, guid) {
@@ -63,6 +67,7 @@ export function loadPlantItem ({ state, commit }, guid) {
 }
 
 export async function addPlant ({ state, commit }, data) {
+  commit('ADD_PLANT_PROGRESS')
   let meta = state.storage.migrationMode ? data : {
     ...data,
     guid: uuid(),
@@ -132,6 +137,8 @@ export async function updatePlant (action, { state, commit }, data) {
 }
 
 export async function deletePlants ({ state, commit }, items) {
+  commit('DELETE_PLANT_PROGRESS')
+
   if (state.storage.type === 'cloud') {
     await Promise.all(items.map(async item => {
       const path = [['users', state.user.id], [folder, item.guid]]

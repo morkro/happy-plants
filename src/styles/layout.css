@@ -52,18 +52,26 @@ html {
 }
 
 .box {
+  --box-color: var(--text-color-inverse);
   background: var(--background-primary);
   border-radius: var(--border-radius);
   box-shadow: var(--plain-shadow);
   overflow: hidden;
 
+  &.red,
+  &.green {
+    color: var(--box-color);
+
+    & p {
+      color: var(--box-color);
+    }
+  }
+
   &.red {
     background: var(--brand-red);
-    color: var(--text-color-inverse);
   }
 
   &.green {
     background: var(--brand-green);
-    color: var(--text-color-inverse);
   }
 }

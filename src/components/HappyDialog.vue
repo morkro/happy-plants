@@ -120,9 +120,9 @@
   .happy-dialog-element {
     width: 100%;
     max-width: 90vw;
-    max-height: 95vh;
+    max-height: 75vh;
     padding: var(--base-gap);
-    overflow: scroll;
+    overflow: scroll !important;
     border: none;
     position: relative;
     background: var(--background-secondary);

@@ -18,6 +18,8 @@ export default new Vuex.Store({
 
   state: {
     version: pkg.version,
+    firstTimeUser: false,
+    hasNewRelease: false,
     updated: Date.now(),
 
     appheader: {
@@ -61,12 +63,14 @@ export default new Vuex.Store({
     plants: {
       loading: false,
       finished: false,
+      error: false,
       data: []
     },
 
     tags: {
       loading: false,
       finished: false,
+      error: false,
       data: []
     }
   },

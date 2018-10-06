@@ -60,7 +60,7 @@ export async function importTags ({ state, commit }, data) {
   if (state.storage.type === 'cloud') {
     await updateEntryFire([['users', state.user.id]], { tags: state.tags })
   } else {
-    await updateEntryLF('tags', state.tags)
+    await updateEntryLF('tags', state.tags.data)
   }
 }
 

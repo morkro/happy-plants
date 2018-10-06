@@ -8,7 +8,12 @@ export default {
   LOAD_TAGS_SUCCESS (state, payload) {
     state.tags.loading = false
     state.tags.finished = true
+    state.tags.error = false
     state.tags.data = payload.tags || state.tags.data
+  },
+
+  ADD_TAG_PROGRESS (state) {
+    state.updated = Date.now()
   },
 
   ADD_TAG (state, payload) {
@@ -24,6 +29,10 @@ export default {
     } else {
       state.tags.data.push(payload.item)
     }
+  },
+
+  DELETE_TAG_PROGRESS (state) {
+    state.updated = Date.now()
   },
 
   DELETE_TAG (state, payload) {

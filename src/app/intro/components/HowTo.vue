@@ -1,6 +1,7 @@
 <template>
   <div class="intro-wrapper">
     <div class="intro-content box">
+      <h2>You're all set!</h2>
       <router-link to="/add" class="btn">
         <div class="button-icon">
           <svgicon
