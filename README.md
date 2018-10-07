@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.2.2</code> <a href="CHANGELOG.md">(Changelog)</a>
+  Current version: <code>1.3.0</code> <a href="CHANGELOG.md">(Changelog)</a>
 </p>
 
 <p align="center">
@@ -42,9 +42,9 @@ This project is currently still in `alpha` development and only supports a bare 
 
 | Feature | Status |
 | ------- | ------ |
-| Firebase integration | Not started |
-| Better onboarding | Not started |
-| Skeleton views | Not started |
+| Firebase integration | ✅ Implemented |
+| Better onboarding | ✅ Implemented |
+| Skeleton views | ✅ Implemented |
 | Growth progress gallery | Not started |
 | Desktop layout | Not started |
 
