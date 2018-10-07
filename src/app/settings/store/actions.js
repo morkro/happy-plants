@@ -7,10 +7,11 @@ import {
 
 import {
   addEntry as addEntryFire,
-  updateEntry as updateEntryFire,
   deleteEntry as deleteEntryFire,
   deleteFile
 } from '@/api/firebase'
+
+import { isBlobbable } from '@/utils/blob'
 
 const namespace = 'plant-'
 const folder = 'plants'
@@ -36,7 +37,9 @@ export async function deleteAllData ({ state, commit }) {
     await Promise.all(state.plants.data.map(async (plant) => {
       const path = [['users', state.user.id], [folder, plant.guid]]
       await deleteEntryFire(path)
-      await deleteFile(path.concat(fileName))
+      if (plant.blob && isBlobbable(plant.blob)) {
+        await deleteFile(path.concat(fileName))
+      }
     }))
   } else {
     // Delete from localForage
@@ -59,7 +62,7 @@ export async function importTags ({ state, commit }, data) {
   commit('IMPORT_TAGS', { data, updated })
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([['users', state.user.id]], { tags: state.tags })
+    await addEntryFire([['users', state.user.id]], { tags: state.tags.data })
   } else {
     await updateEntryLF('tags', state.tags.data)
   }
@@ -74,17 +77,50 @@ export async function importSettings ({ state, commit }, data) {
   await updateEntryLF('settings', state.settings)
 }
 
+function cleanUpPlantData (oldData) {
+  const copy = oldData
+
+  if (copy.categories) {
+    delete copy.categories
+  }
+
+  if (!isBlobbable(copy.blob)) {
+    copy.blob = null
+  }
+
+  if (!Array.isArray(copy.tags)) {
+    copy.tags = []
+  }
+
+  return copy
+}
+
 export async function importPlants ({ state, commit }, data) {
   const updated = Date.now()
   await updateEntryLF('updated', updated)
+  let plantData = data
+
+  if (Array.isArray(plantData)) {
+    plantData = plantData.map(cleanUpPlantData)
+  } else {
+    plantData = cleanUpPlantData(data.data)
+  }
 
   commit('IMPORT_PLANTS', { data: data.data, updated })
 
   if (state.storage.type === 'cloud') {
-    await Promise.all(state.plants.data.map(item => addEntryFire([
-      ['users', state.user.id],
-      [folder, item.guid]
-    ])))
+    if (Array.isArray(data.data)) {
+      await Promise.all(state.plants.data.map(item => addEntryFire([
+        ['users', state.user.id],
+        [folder, item.guid]
+      ], item)))
+    } else {
+      if (!data.data.guid) return
+      await addEntryFire([
+        ['users', state.user.id],
+        [folder, data.data.guid]
+      ], data.data)
+    }
   } else {
     await Promise.all(state.plants.data.map(item => addEntryLF(namespace + item.guid, item)))
   }
