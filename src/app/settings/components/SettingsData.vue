@@ -238,28 +238,29 @@
 
       selectImportType (key) {
         const data = this.file[key]
-        switch (key) {
-          case 'tags':
-            return this.importTags(Array.isArray(data) ? data : data.data)
-          case 'settings':
-            return this.importSettings(data)
-          case 'plants':
-            return this.importPlants({ data: data.data, importType: this.selectedImportType })
-          case key.startsWith('plant-'):
-            return this.importPlants({ data, importType: this.selectedImportType })
-          default:
-            return Promise.resolve()
+        if (key === 'tags') {
+          return this.importTags(Array.isArray(data) ? data : data.data)
+        } else if (key === 'settings') {
+          return this.importSettings(data)
+        } else if (key === 'plants') {
+          return this.importPlants({ data: data.data, importType: this.selectedImportType })
+        } else if (key.startsWith('plant-')) {
+          return this.importPlants({ data, importType: this.selectedImportType })
+        } else {
+          return Promise.resolve()
         }
       },
 
-      importApplicationData () {
-        Promise.resolve(Object.keys(this.file))
-          .then(keys => Promise.all(keys.map(this.selectImportType)))
-          .then(() => this.closeDialog())
-          .then(() => this.showNotification({
-            message: 'Successfully imported your plant data!'
-          }))
-          .then(() => this.$router.push('/'))
+      async importApplicationData () {
+        this.importDataProgress = true
+        await Promise.all(Object.keys(this.file).map(this.selectImportType))
+        this.importDataProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: 'Successfully imported your plant data!'
+        })
+        this.$router.push('/')
       },
 
       async deleteApplicationData () {

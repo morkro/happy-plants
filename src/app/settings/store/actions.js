@@ -42,6 +42,7 @@ export async function deleteAllData ({ state, commit }) {
     // Delete from localForage
     await deleteEntryLF('tags')
     await deleteEntryLF('storage')
+    await deleteEntryLF('settings')
     await getEntryLF(namespace)
       .then(Object.values)
       .then(data =>

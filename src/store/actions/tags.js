@@ -47,7 +47,7 @@ export async function addTag ({ state, commit }, data) {
   await updateEntryLF('updated', updated)
 
   if (!state.storage.migrationMode) {
-    commit('ADD_TAG', { item: meta, updated })
+    commit('ADD_TAG_SUCCESS', { item: meta, updated })
   }
 
   if (state.storage.type === 'cloud') {
@@ -61,15 +61,22 @@ export async function deleteTag ({ state, commit }, data) {
   commit('DELETE_TAG_PROGRESS')
   const updated = Date.now()
   await updateEntryLF('updated', updated)
+  let tags = state.tags.data
 
   if (!state.storage.migrationMode) {
-    commit('DELETE_TAG', { item: data, updated })
+    commit('DELETE_TAG_SUCCESS', { item: data, updated })
+  } else {
+    tags = tags.filter(p => p.guid !== data.guid)
   }
 
   if (state.storage.type === 'cloud') {
-    await updateEntryFire([['users', state.user.id]], { tags: state.tags.data })
+    try {
+      await updateEntryFire([['users', state.user.id]], { tags })
+    } catch (error) {
+      commit('DELETE_TAG_FAILURE')
+    }
   } else {
-    await addEntryLF(namespace, state.tags.data)
+    await addEntryLF(namespace, tags)
   }
 }
 

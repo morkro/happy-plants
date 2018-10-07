@@ -46,17 +46,21 @@ export default {
     state.updated = Date.now()
   },
 
-  ADD_PLANT (state, payload) {
+  ADD_PLANT_SUCCESS (state, payload) {
     state.updated = Date.now()
     state.plants.data.push(payload.item)
     state.plants.data = sortPlants(state)
+  },
+
+  ADD_PLANT_FAILURE (state) {
+    state.plants.error = true
   },
 
   DELETE_PLANT_PROGRESS (state) {
     state.updated = Date.now()
   },
 
-  DELETE_PLANTS (state, payload) {
+  DELETE_PLANTS_SUCCESS (state, payload) {
     state.updated = Date.now()
 
     for (const item of payload.items) {
@@ -65,6 +69,10 @@ export default {
         state.plants.data.findIndex(p => p.guid === item.guid)
       )
     }
+  },
+
+  DELETE_PLANTS_FAILURE (state) {
+    state.plants.error = true
   },
 
   UPDATE_PLANT (state, payload) {

@@ -171,7 +171,7 @@
         'loadPlants',
         'deletePlants',
         'loadTags',
-        'deleteTags',
+        'deleteTag',
         'addTag'
       ]),
       getStorageClass (type) {
@@ -193,28 +193,41 @@
         )
       },
       async migrateDataLocal () {
+        // 1. Download all data from firestore
+        // 2. add all data to IndexedDB (required to fetch all images)
+        // 3. delete data from firestore
+        // 4. sign user out
+
         this.migrationMessage = '1/5 Downloading all data...'
         await this.loadPlants()
         await this.loadTags()
 
         this.migrationMessage = '2/5 Deleting data from cloud...'
-        await this.deletePlants(this.plants)
-        for (const tag of this.tags) {
-          await this.deleteTag(tag)
+        if (this.plants) {
+          await this.deletePlants(this.plants)
+        }
+        if (this.tags) {
+          for (const tag of this.tags) {
+            await this.deleteTag(tag)
+          }
         }
 
         this.migrationMessage = '3/5 Updating data for device usage...'
         // TODO: Here we should clean up the data for
         // modules that aren't supported in device storage mode.
         await sleep(500)
-        this.updateStorage({ type: 'local' })
+        await this.updateStorage({ type: 'local' })
 
         this.migrationMessage = '4/5 Adding data to device...'
-        for (const plant of this.plants) {
-          await this.addPlant(plant)
+        if (this.plants) {
+          for (const plant of this.plants) {
+            await this.addPlant(plant)
+          }
         }
-        for (const tag of this.tags) {
-          await this.addTag(tag)
+        if (this.tags) {
+          for (const tag of this.tags) {
+            await this.addTag(tag)
+          }
         }
 
         this.migrationMessage = '5/5 Logging you out of your account...'
@@ -224,6 +237,7 @@
         if (!this.authFromRedirect) {
           this.migrationMessage = 'Signing you in...'
           await this.signInUser()
+          return
         }
 
         this.migrationMessage = '2/4 Deleting data from device...'
@@ -241,7 +255,7 @@
         // TODO: Here we should clean up the data for
         // modules that aren't supported in device storage mode.
         await sleep(500)
-        this.updateStorage({ type: 'cloud' })
+        await this.updateStorage({ type: 'cloud' })
 
         this.migrationMessage = '4/4 Uploading data...'
         if (this.plants) {

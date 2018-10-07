@@ -16,7 +16,7 @@ export default {
     state.updated = Date.now()
   },
 
-  ADD_TAG (state, payload) {
+  ADD_TAG_SUCCESS (state, payload) {
     state.updated = Date.now()
     const index = state.tags.data.findIndex(tag => tag.name === payload.item.name)
     const tag = state.tags.data[index]
@@ -35,7 +35,7 @@ export default {
     state.updated = Date.now()
   },
 
-  DELETE_TAG (state, payload) {
+  DELETE_TAG_SUCCESS (state, payload) {
     state.updated = Date.now()
     const index = state.tags.data.findIndex(tag => tag.guid === payload.item.tag)
     const tag = state.tags.data[index]
@@ -55,6 +55,10 @@ export default {
         })
       }
     }
+  },
+
+  DELETE_TAG_FAILURE (state) {
+    state.tags.error = true
   },
 
   UPDATE_TAG (state, payload) {
