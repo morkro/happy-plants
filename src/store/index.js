@@ -18,16 +18,17 @@ export default new Vuex.Store({
 
   state: {
     version: pkg.version,
+    firstTimeUser: false,
+    hasNewRelease: false,
     updated: Date.now(),
 
     appheader: {
       transparent: false,
-      iconColor: 'black',
+      iconColor: undefined,
       title: '',
       backBtn: true,
       backBtnPath: '/',
       settingsBtn: true,
-      settingsIcon: 'settings',
       settingsBtnOnClick: () => {}
     },
 
@@ -39,12 +40,39 @@ export default new Vuex.Store({
       orderBy: 'latest',
       viewMode: 'grid',
       filterBy: 'all',
-      hasNewRelease: false
+      hasNewRelease: false,
+      theme: 'light'
     },
 
-    plants: false,
+    storage: {
+      type: 'local',
+      migrationMode: false
+    },
+
+    user: {
+      authFromRedirect: false,
+      authenticated: false,
+      error: false,
+      loading: false,
+      name: null,
+      id: null
+    },
+
     selected: plant.state,
-    tags: []
+
+    plants: {
+      loading: false,
+      finished: false,
+      error: false,
+      data: []
+    },
+
+    tags: {
+      loading: false,
+      finished: false,
+      error: false,
+      data: []
+    }
   },
 
   actions: {

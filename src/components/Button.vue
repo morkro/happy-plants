@@ -1,7 +1,8 @@
 <template>
   <button type="button" :class="[color, type]">
-    <div v-if="!!$slots.icon" :class="['button-icon', { single: !$slots.default }]">
-      <slot name="icon" />
+    <div v-if="loading || !!$slots.icon" :class="getIconClass()">
+      <feather-loader v-if="loading" />
+      <slot v-else name="icon" />
     </div>
 
     <span v-if="!!$slots.default">
@@ -18,6 +19,10 @@
     name: 'Button',
 
     props: {
+      loading: {
+        type: Boolean,
+        default: false
+      },
       color: {
         type: String,
         default: 'default',
@@ -32,11 +37,27 @@
             : types.includes(value)
         }
       }
+    },
+
+    components: {
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
+    },
+
+    methods: {
+      getIconClass () {
+        return ['button-icon', {
+          single: !this.$slots.default,
+          rotate: this.loading
+        }]
+      }
     }
   }
 </script>
 
 <style lang="postcss">
+  @import "../styles/animations";
+
   button,
   .btn {
     --button-padding: 6px;
@@ -44,6 +65,7 @@
     --button-background: var(--brand-green);
     --button-focus: var(--brand-green-low);
     --button-icon: var(--text-color-button);
+    --button-shadow: var(--brand-green-medium);
     --text-color: var(--text-color-button);
 
     position: relative;
@@ -58,6 +80,7 @@
     border-radius: var(--border-radius);
     padding: calc(2 * var(--button-padding)) calc(3 * var(--button-padding));
     transition: background-color 100ms var(--ease-out-back);
+    box-shadow: 0 2px 9px var(--button-shadow);
 
     &::after {
       opacity: 0;
@@ -97,6 +120,11 @@
 
       &:not(.single) {
         margin-right: calc(var(--base-gap) / 2);
+      }
+
+      &.rotate svg {
+        transform-origin: center center;
+        animation: rotate360 4s linear infinite;
       }
     }
 
@@ -141,6 +169,7 @@
   button[disabled],
   .btn[disabled] {
     --button-background: var(--grey);
+    --button-shadow: var(--grey);
     color: var(--dark-grey);
     cursor: not-allowed;
 
@@ -153,32 +182,50 @@
   .btn.plain {
     --button-background: var(--grey);
     --button-focus: var(--dark-grey);
+    --button-shadow: var(--grey);
     --text-color: var(--link-color);
+
+    @nest html[data-theme="dark"] & {
+      --button-background: var(--dark-grey);
+      --button-focus: var(--grey);
+      --text-color: white;
+    }
   }
 
   button.yellow,
   .btn.yellow {
     --button-background: var(--brand-yellow);
+    --button-focus: var(--brand-yellow-low);
+    --button-shadow: var(--brand-yellow-medium);
     --text-color: var(--link-color);
   }
 
   button.red,
   .btn.red {
     --button-background: var(--brand-red);
+    --button-focus: var(--brand-red-low);
+    --button-shadow: var(--brand-red-medium);
   }
 
   button.grey,
   .btn.grey {
     --button-background: var(--dark-grey);
     --button-focus: var(--grey);
+    --button-shadow: var(--dark-grey);
   }
 
   button.transparent,
   .btn.transparent {
     --button-background: transparent;
+    --button-focus: transparent;
+    --button-shadow: transparent;
 
     & .button-icon svg {
       filter: invert(100%);
+
+      @nest html[data-theme="dark"] & {
+        filter: invert(0);
+      }
     }
   }
 </style>

@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueSVGIcon from 'vue-svgicon'
 import FileUpload from '@/components/FileUpload'
 
@@ -18,12 +18,12 @@ describe('components/FileUpload.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = mount(FileUpload, options)
+    const wrapper = shallowMount(FileUpload, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = mount(FileUpload, options)
+    const wrapper = shallowMount(FileUpload, options)
     expect(wrapper.props().name).toEqual('')
     expect(wrapper.props().accepts).toEqual(['.png', '.jpg', '.jpeg'])
     expect(wrapper.props().disablePreview).toEqual(false)
@@ -31,7 +31,7 @@ describe('components/FileUpload.vue', () => {
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {
-    const wrapper = mount(FileUpload, Object.assign({}, options, { propsData: {
+    const wrapper = shallowMount(FileUpload, Object.assign({}, options, { propsData: {
       accepts: ['.foo', '.bar']
     } }))
     expect(wrapper.props().accepts).toEqual(['.foo', '.bar'])

@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
@@ -25,7 +25,14 @@ describe('app/not-found/NotFound.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = mount(Intro, options)
+    const wrapper = shallowMount(Intro, options)
     expect(wrapper.isVueInstance()).toEqual(true)
+  })
+
+  it('lifecycle hook beforeDestroy is correctly fired', () => {
+    const wrapper = shallowMount(Intro, options)
+    wrapper.setMethods({ updateAppHeader: jest.fn() })
+    wrapper.destroy()
+    expect(wrapper.vm.updateAppHeader).toHaveBeenCalled()
   })
 })

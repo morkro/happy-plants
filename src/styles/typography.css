@@ -9,6 +9,10 @@ body {
   /* Enable best font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  @nest html[data-theme="dark"] & {
+    color: var(--text-color-secondary);
+  }
 }
 
 a {
@@ -43,6 +47,10 @@ a {
     transform: translateY(-2px);
     opacity: 0.4;
   }
+
+  @nest html[data-theme="dark"] &[target="_blank"]::after {
+    filter: invert(1);
+  }
 }
 
 h1 {
@@ -59,5 +67,5 @@ h2 {
 
 h3 {
   font-weight: 500;
-  font-size: var(--text-size-small);
+  font-size: var(--text-size-base);
 }

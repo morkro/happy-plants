@@ -1,9 +1,10 @@
 <template>
   <ul :class="['plant-list', `type-${type}`]">
-    <li v-for="(plant, index) in plants" :key="index">
+    <li v-for="(plant, index) in plantData" :key="index">
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-pressed-selection="emitPressedSelection"
+        :content-loading="contentLoading"
         :tags="plantTags(plant.guid)"
         :type="type"
         :delete-mode="isDeleteMode"
@@ -23,6 +24,7 @@
     name: 'PlantsList',
 
     props: {
+      contentLoading: { type: Boolean, default: true },
       type: { type: String, default: 'grid' },
       plants: { type: Array, default: () => [], required: true },
       tags: { type: Array, default: () => [], required: true },
@@ -37,8 +39,15 @@
     computed: {
       ...mapGetters({
         plantTags: 'getPlantTags'
-      })
+      }),
+      plantData () {
+        return this.contentLoading ? this.mockPlants : this.plants
+      }
     },
+
+    data: () => ({
+      mockPlants: new Array(4).fill({})
+    }),
 
     methods: {
       emitDeleteSelection (item) {
@@ -61,10 +70,7 @@
     flex-wrap: wrap;
     position: relative;
 
-    /* --list-gap: calc(var(--base-gap) * 2 - var(--base-gap) / 2); */
-
-    /* Temporary fix */
-    --list-gap: 22.5px;
+    --list-gap: 1.5 * var(--base-gap);
     --item-size-width: calc(50vw - var(--list-gap));
     --item-size-height: var(--item-size-width);
 

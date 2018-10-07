@@ -2,23 +2,18 @@ module.exports = {
   plugins: {
     'postcss-import': {},
     'postcss-url': {},
-    'postcss-calc': { preserve: true },
     'postcss-preset-env': {
-      stage: 2,
+      stage: 0,
       features: {
         calc: { preserve: true },
         'nesting-rules': true,
-        'color-mod': true
+        'color-mod': true,
+        'custom-media': true
       }
     },
     'postcss-reporter': {},
+    'postcss-color-mod-function': {},
     // to edit target browsers: use 'browserslist' field in package.json
-    autoprefixer: {},
-    cssnano: {
-      preset: ['default', {
-        calc: false,
-        zindex: false
-      }]
-    }
+    autoprefixer: {}
   }
 }

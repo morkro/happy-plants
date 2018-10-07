@@ -26,8 +26,10 @@
       <div v-if="isListView"
         class="box preview-image"
         :style="background">
+        <feather-loader
+          v-if="contentLoading && !imageUrl" />
         <svgicon
-          v-if="!imageUrl"
+          v-if="!contentLoading && !imageUrl"
           icon="cactus"
           width="40"
           height="40"
@@ -43,16 +45,19 @@
 
         <ul v-if="isListView && tags.length" class="preview-tags">
           <li>
-            <span class="tag">
+            <v-tag size="small">
               <feather-tag height="16" width="16" />
               {{ tags.length }}
-            </span>
+            </v-tag>
           </li>
         </ul>
       </div>
 
+      <feather-loader
+        v-if="contentLoading && !imageUrl && type === 'grid'" />
+
       <svgicon
-        v-if="!imageUrl && type === 'grid'"
+        v-if="!contentLoading && !imageUrl && type === 'grid'"
         icon="cactus"
         width="40"
         height="40"
@@ -63,22 +68,25 @@
 
 <script>
   import router from '@/router'
+  import Tag from '@/components/Tag'
   import '@/assets/icons/cactus'
 
   export default {
     name: 'PlantPreview',
 
     props: {
+      contentLoading: { type: Boolean, default: true },
       type: { type: String, default: 'grid' },
       tags: { type: Array, default: () => [] },
       deleteMode: { type: Boolean, default: false, required: true },
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
       name: { type: String, default: '', required: true },
-      imageUrl: { type: String, default: '', required: true }
+      imageUrl: { type: [String, Boolean], default: '' }
     },
 
     components: {
+      'v-tag': Tag,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-plus': () =>
@@ -88,7 +96,9 @@
       'feather-check': () =>
         import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
       'feather-tag': () =>
-        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
@@ -125,6 +135,7 @@
       },
       wrapperClass () {
         return [`type-${this.type}`, 'box', 'plant-preview', {
+          'is-skeleton': this.contentLoading,
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-pressed': this.pressedMode && this.pressed && this.selected,
@@ -156,6 +167,7 @@
         }]
       },
       handleInteraction (event) {
+        if (this.contentLoading) return
         event.preventDefault()
 
         if (event.type === 'press') {
@@ -200,6 +212,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/animations";
+
   .plant-preview {
     display: block;
     width: 100%;
@@ -209,6 +223,13 @@
     background-position: center;
     transform-origin: center;
     transition: transform 50ms var(--ease-out-back);
+    --preview-background: var(--grey);
+    --preview-color: var(--text-color-inverse);
+
+    @nest html[data-theme="dark"] & {
+      --preview-background: var(--dark-grey);
+      --preview-color: var(--link-color);
+    }
 
     &:focus {
       outline: none;
@@ -217,7 +238,7 @@
 
     &.no-photo {
       /* TODO: Show default image instead */
-      background: var(--grey);
+      background: var(--preview-background);
     }
 
     &.type-list {
@@ -225,6 +246,11 @@
       display: flex;
       box-shadow: none;
       overflow: visible;
+      --preview-color: var(--text-color-base);
+    }
+
+    &.is-skeleton {
+      box-shadow: none;
     }
   }
 
@@ -239,9 +265,17 @@
     align-items: center;
     margin-right: var(--base-gap);
 
+    @nest .is-skeleton & {
+      box-shadow: none;
+
+      &::after {
+        visibility: hidden;
+      }
+    }
+
     @nest .no-photo & {
       /* TODO: Show default image instead */
-      background: var(--grey);
+      background: var(--preview-background);
     }
 
     &::after {
@@ -319,6 +353,12 @@
       align-items: flex-start;
     }
 
+    @nest .is-skeleton & svg {
+      width: 30% !important;
+      transform-origin: center center;
+      animation: rotate360 4s linear infinite;
+    }
+
     & svg {
       width: 65% !important;
       height: auto !important;
@@ -328,7 +368,7 @@
 
   .preview-content-inner {
     position: absolute;
-    color: var(--text-color-inverse);
+    color: var(--preview-color);
     width: 100%;
     bottom: 0;
     left: 0;
@@ -348,7 +388,7 @@
       color: var(--text-color-base);
 
       & h1 {
-        color: var(--text-color-base);
+        color: var(--preview-color);
         font-size: var(--text-size-medium);
         display: inline-block;
         position: relative;
@@ -382,13 +422,27 @@
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
     }
 
+    @nest .is-skeleton:not(.type-list) & {
+      background: none !important;
+
+      & h1 {
+        width: 75%;
+        height: 18px;
+        display: block;
+        background: var(--background-primary);
+        background-position: 0 50%;
+        background-size: 200% 200%;
+        border-radius: var(--border-radius);
+      }
+    }
+
     &.inactive,
     &.inactive h1 {
       color: rgba(255, 255, 255, 0.75);
     }
 
     & h1 {
-      color: var(--text-color-inverse);
+      color: var(--preview-color);
       font-size: var(--text-size-base);
       font-weight: 500;
     }

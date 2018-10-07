@@ -1,13 +1,5 @@
-import { updatePlant as updatePlantFromAPI } from '@/api/plants'
-import { updateStoreTimestamp } from '@/api/store'
+import { updatePlant } from '@/store/actions/plants'
 import { getPlantStructure } from '../utils'
-
-const updatePlant = (action, { state, commit }, data) => {
-  updateStoreTimestamp(data)
-    .then(config =>
-      commit(action, { item: config.data, updated: config.updated }))
-    .then(() => updatePlantFromAPI(state.selected))
-}
 
 export const resetSelectedState = ({ commit }) => {
   commit('RESET_SELECTED_PLANT', { defaultState: getPlantStructure() })

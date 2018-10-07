@@ -1,128 +1,189 @@
 import uuid from 'uuid/v4'
 import { blobToBase64String } from 'blob-util'
-import { convertToBlob } from '@/utils/blob'
+import { isBlobbable, getUrlFromBlob } from '@/utils/blob'
 import { iOS } from '@/utils/useragent'
+
 import {
-  fetchPlants,
-  getPlant,
-  addPlant as addPlantFromAPI,
-  deletePlants as deletePlantsFromAPI,
-  updatePlant as updatePlantFromAPI
-} from '@/api/plants'
+  getEntry as getEntryLF,
+  addEntry as addEntryLF,
+  updateEntry as updateEntryLF,
+  deleteEntry as deleteEntryLF
+} from '@/api/localforage'
 
-function shrinkPlantObjects (plant) {
-  return {
-    name: plant.name,
-    blob: plant.blob,
-    created: plant.created,
-    guid: plant.guid
+import {
+  storagePath,
+  firestoreQuery,
+  addEntry as addEntryFire,
+  updateEntry as updateEntryFire,
+  deleteEntry as deleteEntryFire,
+  uploadFile,
+  deleteFile,
+  downloadFile
+} from '@/api/firebase'
+
+const namespace = 'plant-'
+const folder = 'plants'
+const fileName = 'cover.png'
+
+async function loadPlantsFirestore (state) {
+  const plants = []
+  const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
+
+  for (const doc of snapshot.docs) {
+    const plant = await firestoreQuery([
+      ['users', state.user.id],
+      [folder, doc.id]
+    ]).get()
+    const plantData = plant.data()
+
+    if (plantData.imageURL) {
+      plantData.imageURL = await downloadFile(plantData.imageURL)
+
+      if (state.storage.migrationMode) {
+        const photo = await fetch(plantData.imageURL)
+        plantData.blob = await photo.blob()
+        plantData.imageURL = getUrlFromBlob(plantData.blob)
+      }
+    }
+
+    plants.push(plantData)
+  }
+
+  return plants
+}
+
+async function loadPlantsLocalforage () {
+  const plants = []
+  const values = await getEntryLF(namespace)
+    .then(plantData => {
+      const copy = plantData
+      delete copy[namespace + 'undefined']
+      return copy
+    })
+    .then(Object.values)
+
+  for (const item of values) {
+    plants.push(item)
+  }
+
+  return plants
+}
+
+export async function loadPlants ({ state, commit }) {
+  commit('LOAD_PLANTS_PROGRESS')
+  let plants = []
+
+  if (state.storage.type === 'cloud' && state.user.id) {
+    try {
+      plants = await loadPlantsFirestore(state)
+    } catch (error) {
+      commit('LOAD_PLANTS_FAILURE')
+    }
+   } else {
+    plants = await loadPlantsLocalforage()
+  }
+
+  commit('LOAD_PLANTS_SUCCESS', { plants })
+}
+
+export function loadPlantItem ({ state, commit }, guid) {
+  commit('LOAD_PLANT_ITEM', { guid })
+}
+
+async function addPlantFirestore (state, meta) {
+  const path = [['users', state.user.id], [folder, meta.guid]]
+  const hasFile = meta.blob && isBlobbable(meta.blob)
+  const blob = meta.blob
+  await addEntryFire(path, {
+    ...meta,
+    blob: null,
+    imageURL: hasFile && `${storagePath(path)}/${fileName}`
+  })
+  if (hasFile) {
+    await uploadFile(path.concat(fileName), blob)
   }
 }
 
-/**
- * Clean up method to migrate old plant object structure to new system.
- */
-function cleanUpPlantObject (plant) {
-  const plantCopy = plant
+async function addPlantLocalforage (state, meta) {
+  // FIXME: This is generally a bad idea. Use feature detection instead.
+  // However, I could not find a reliable way to test if IndexedDB supports blobs,
+  // as it fails silently. We have to convert the blob to base64,
+  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
 
-  if (!plantCopy.modules) {
-    plantCopy.modules = []
+  if (iOS && !!meta.blob) {
+    const base64String = await blobToBase64String(meta.blob)
+    await addEntryLF(namespace + meta.guid, { ...meta, blob: base64String })
+  } else {
+    await addEntryLF(namespace + meta.guid, meta)
   }
-
-  if (plantCopy.tags === undefined) {
-    plantCopy.tags = []
-  }
-
-  delete plantCopy.componentOrder
-  delete plantCopy.notes
-  delete plantCopy.seasons
-  delete plantCopy.sunshine
-  delete plantCopy.watering
-
-  return plantCopy
 }
 
-export const loadPlants = ({ state, commit }, data = {}) => {
-  if (!state.plants || state.plants.length === 0 || !!data.force) {
-    return fetchPlants()
-      .then(data => Promise.all(data.map(shrinkPlantObjects).map(convertToBlob)))
-      .then(plants => commit('LOAD_PLANTS', { plants }))
-  }
-
-  return Promise.resolve()
-}
-
-export const loadPlantItem = ({ state, commit }, guid) => {
-  getPlant(guid)
-    .then(convertToBlob)
-    .then(cleanUpPlantObject)
-    .then(item => commit('LOAD_PLANT_ITEM', { item }))
-}
-
-export const addPlant = ({ commit }, data) => {
-  const meta = {
+export async function addPlant ({ state, commit }, data) {
+  commit('ADD_PLANT_PROGRESS')
+  const meta = state.storage.migrationMode ? data : {
     ...data,
     guid: uuid(),
     created: Date.now(),
     modified: Date.now()
   }
 
-  // FIXME: This is generally a bad idea. Use feature detection instead.
-  // However, I could not find a reliable way to test if IndexedDB supports blobs,
-  // as it fails silently. We have to convert the blob to base64,
-  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-  if (iOS && !!data.blob) {
-    // 1. Turn blob into base64 string (only needed for storage)
-    return blobToBase64String(data.blob)
-      // 2. Take the base64 string and add it to the data object
-      .then(base64String => Object.assign({}, meta, { blob: base64String }))
-      // 3. Add data to IndexedDB and return it
-      .then(config => addPlantFromAPI(config).then(() => config))
-      // 4. Add the blob back to the object
-      .then(config => Object.assign({}, config, { blob: data.blob }))
-      // 5. Add new data to Vuex
-      .then(data => {
-        commit('ADD_PLANT', { item: data })
-        return data.guid
-      })
+  if (state.storage.type === 'cloud') {
+    try {
+      await addPlantFirestore(state, meta)
+    } catch (error) {
+      commit('ADD_PLANT_FAILURE')
+    }
+  } else {
+    await addPlantLocalforage(state, meta)
   }
 
-  return addPlantFromAPI(meta)
-    .then(data => {
-      commit('ADD_PLANT', { item: meta })
-      return data.guid
-    })
-}
-
-export const deletePlants = ({ commit }, items) => {
-  return deletePlantsFromAPI(items)
-    .then(() => commit('DELETE_PLANTS', { items }))
-}
-
-export const updatePlant = ({ state, commit }, data) => {
-  const item = state.plants.find(p => p.guid === data.guid)
-  const meta = { ...item, ...data, modified: Date.now() }
-
-  // FIXME: This is generally a bad idea. Use feature detection instead.
-  // However, I could not find a reliable way to test if IndexedDB supports blobs,
-  // as it fails silently. We have to convert the blob to base64,
-  // because mobile Safari 10 has a bug with storing Blobs in IndexedDB.
-  if (iOS && !!data.blob) {
-    // 1. Turn blob into base64 string (only needed for storage)
-    return blobToBase64String(data.blob)
-      // 2. Take the base64 string and add it to the data object
-      .then(base64String => Object.assign({}, meta, { blob: base64String }))
-      // 3. Add data to IndexedDB and return it
-      .then(config => addPlantFromAPI(config).then(() => config))
-      // 4. Add the blob back to the object
-      .then(config => Object.assign({}, config, { blob: data.blob }))
-      // 5. Add new data to Vuex
-      .then(data => {
-        commit('ADD_PLANT', { item: data })
-        return data.guid
-      })
+  if (!state.storage.migrationMode) {
+    commit('ADD_PLANT_SUCCESS', { item: meta })
   }
 
-  return updatePlantFromAPI(meta)
-    .then(() => commit('UPDATE_PLANT', { config: meta }))
+  return meta.guid
+}
+
+export async function updatePlant (action, { state, commit }, data) {
+  const updated = Date.now()
+  await updateEntryLF('updated', updated)
+
+  commit(action, { item: data, updated })
+
+  if (state.storage.type === 'cloud') {
+    const path = [['users', state.user.id], [folder, state.selected.guid]]
+    const { imageURL, blob, ...selected } = state.selected
+
+    if (action === 'UPDATE_PHOTO') {
+      await uploadFile(path.concat(fileName), data.blob)
+    }
+
+    await updateEntryFire(path, selected)
+  } else {
+    await updateEntryLF(namespace + state.selected.guid, state.selected)
+  }
+}
+
+export async function deletePlants ({ state, commit }, items) {
+  commit('DELETE_PLANT_PROGRESS')
+
+  if (state.storage.type === 'cloud') {
+    try {
+      await Promise.all(items.map(async item => {
+        const path = [['users', state.user.id], [folder, item.guid]]
+        await deleteEntryFire(path)
+        if (item.blob && isBlobbable(item.blob)) {
+          await deleteFile(path.concat(fileName))
+        }
+      }))
+    } catch (error) {
+      commit('DELETE_PLANTS_FAILURE')
+    }
+  } else {
+    await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
+  }
+
+  if (!state.storage.migrationMode) {
+    commit('DELETE_PLANTS_SUCCESS', { items })
+  }
 }

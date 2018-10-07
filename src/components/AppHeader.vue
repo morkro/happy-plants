@@ -5,7 +5,7 @@
         <router-link
           v-if="backButton"
           :to="backPath"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Back">
           <feather-arrow-left :stroke="color" />
         </router-link>
@@ -20,7 +20,7 @@
         <router-link
           v-if="settings === true"
           :to="{ path: '/settings' }"
-          :class="{ 'link-wrapper': true, 'backdrop': isWhite(color) }"
+          :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Settings">
           <div :class="['header-settings-icon', { 'highlight': showNotification }]">
             <component :is="`feather-${settingsIcon}`"/>
@@ -48,8 +48,8 @@
       backPath: { type: [String, Object], default: '/' },
       backButton: { type: Boolean, default: false },
       settings: { type: [Boolean, String], default: false },
-      settingsIcon: { type: String, default: 'settings' },
       settingsOnClick: { type: Function, default: () => {} },
+      showIconBackdrop: { type: Boolean, default: false },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
       transparent: { type: Boolean, default: false },
@@ -67,12 +67,17 @@
     },
 
     computed: {
+      settingsIcon () {
+        return this.settings === true
+          ? 'settings'
+          : this.settings
+      },
       settingsClass () {
         return {
           'edit-data': true,
           'icon': true,
           'inverse': !this.isWhite(this.color),
-          'backdrop': this.isWhite(this.color)
+          'backdrop': this.showIconBackdrop
         }
       }
     },
@@ -110,7 +115,7 @@
   @import "../styles/media-queries";
 
   .app-header {
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.1);
     background: var(--background-primary);
     max-height: var(--app-header-size);
     width: 100%;
@@ -205,6 +210,7 @@
       align-items: center;
       position: relative;
       background: transparent;
+      box-shadow: none;
 
       &:focus {
         outline: none;

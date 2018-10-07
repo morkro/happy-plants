@@ -2,9 +2,10 @@
   <div class="main-wireframe">
     <plant-modal
       :show="showPlantModal"
-      :name="name"
-      :modified="modified"
-      :created="created"
+      :name="plant.name"
+      :modified="plant.modified"
+      :created="plant.created"
+      :loading="deletePlantProgress"
       @close-modal="closePlantEditModal"
       @delete-plant="deletePlantFromModal" />
 
@@ -14,10 +15,14 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <main :class="{ 'view-content': true, 'no-modules': !modules.length, 'app-content': true }">
+    <main :class="{
+      'view-content': true,
+      'no-modules': plant.modules && !plant.modules.length,
+      'app-content': true }">
       <plant-header
-        :name="name"
-        :image-url="imageURL"
+        :content-loading="plantsLoading"
+        :name="plant.name"
+        :image-url="plant.imageURL"
         v-observe-visibility.60="observeVisibility"
         @update-name="updatePlantName"
         @update-photo="updatePlantPhoto" />
@@ -34,15 +39,15 @@
         can be added/removed and sorted.
       -->
       <component
-        v-if="modules.length"
-        v-for="module in modules"
+        v-if="plant.modules && plant.modules.length"
+        v-for="module in plant.modules"
         v-bind="getPlantModuleProps(module.type)"
         :key="module.type"
         :is="`plant-${module.type}`"
         @update-plant="getModuleListener" />
 
       <plant-footer
-        :no-modules="!modules.length"
+        :no-modules="plant.modules && !plant.modules.length"
         :show-tag-button="allTags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
@@ -70,7 +75,7 @@
 
     meta () {
       return {
-        title: this.name
+        title: this.plant.name
       }
     },
 
@@ -89,30 +94,31 @@
     data: () => ({
       headerInView: true,
       showPlantModal: false,
-      showModuleManager: false
+      showModuleManager: false,
+      deletePlantProgress: false,
+      plantDataLoaded: false
     }),
 
     computed: {
       ...mapState({
-        guid: state => state.selected.guid,
-        name: state => state.selected.name,
-        blob: state => state.selected.blob,
-        imageURL: state => state.selected.imageURL,
-        modules: state => state.selected.modules || [],
-        modified: state => state.selected.modified,
-        created: state => state.selected.created,
-        tags: state => state.selected.tags
+        theme: state => state.settings.theme,
+        plantsData: state => state.plants.data,
+        plantsLoading: state => state.plants.loading,
+        plant: state => state.selected
       }),
       ...mapGetters({
         plantTags: 'getPlantTags'
       }),
+      defaultIconColor () {
+        return this.theme === 'light' ? 'black' : 'white'
+      },
       allTags () {
-        return this.tags && this.plantTags(this.guid)
+        return this.plantTags(this.plant.guid)
       },
       plantModules () {
         return getPlantModules().map(module =>
           Object.assign(module, {
-            selected: !!this.modules.find(m => m.type === module.type)
+            selected: !!this.plant.modules && this.plant.modules.find(m => m.type === module.type)
           }))
       }
     },
@@ -121,8 +127,15 @@
       headerInView (show) {
         this.updateAppHeader({
           transparent: show,
-          iconColor: this.headerInView ? 'white' : 'black'
+          iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+          showIconBackdrop: this.headerInView
         })
+      },
+
+      plantsData (data) {
+        if (data.length) {
+          this.loadPlantItem(this.$route.params.id)
+        }
       }
     },
 
@@ -140,14 +153,14 @@
         'toggleTags',
         'addTag',
         'deleteTag',
-        'resetSelectedState',
         'updatePlantsList',
         'deletePlants',
         'showNotification',
-        'updateAppHeader'
+        'updateAppHeader',
+        'resetSelectedState'
       ]),
       getPlantModuleProps (type) {
-        const module = this.modules.find(mod => mod.type === type).value
+        const module = this.plant.modules.find(mod => mod.type === type).value
         switch (type) {
           case 'watering':
             return {
@@ -187,23 +200,24 @@
         this.showPlantModal = false
       },
       onNotesUpdate (notes) {
-        this.updateNotes({ guid: this.guid, notes })
+        this.updateNotes({ guid: this.plant.guid, notes })
       },
       onSeasonUpdate (month) {
-        this.updateSeason({ guid: this.guid, month })
+        this.updateSeason({ guid: this.plant.guid, month })
       },
       onWateringUpdate (watering) {
-        this.updateWatering({ guid: this.guid, watering })
+        this.updateWatering({ guid: this.plant.guid, watering })
       },
       onSunshineUpdate (sunshine) {
-        this.updateSunshine({ guid: this.guid, sunshine })
+        this.updateSunshine({ guid: this.plant.guid, sunshine })
       },
-      deletePlantFromModal () {
-        this.deletePlants([{ guid: this.guid }])
-          .then(() => this.showNotification({
-            message: 'Plant deleted.'
-          }))
-          .then(() => this.$router.push('/'))
+      async deletePlantFromModal () {
+        this.deletePlantProgress = true
+        await this.deletePlants([{ guid: this.plant.guid }])
+        this.deletePlantProgress = false
+
+        this.showNotification({ message: 'Plant deleted.' })
+        this.$router.push('/')
       },
       activateModuleManager () {
         this.showModuleManager = true
@@ -213,7 +227,7 @@
       },
       updateModules (updatedModules) {
         this.updatePlantModules(updatedModules.map(m => {
-          const activateModule = this.modules.find(mod => mod.type === m.type)
+          const activateModule = this.plant.modules.find(mod => mod.type === m.type)
           const defaultModule = this.plantModules.find(mod => mod.type === m.type)
           return {
             ...m,
@@ -228,13 +242,13 @@
         this.addTag({
           label: tag.label,
           name: tag.label.toLowerCase().replace(/\s/g, '-'),
-          plants: [this.guid]
+          plants: [this.plant.guid]
         })
       },
       removePlantTag (tag) {
         this.deleteTag({
           tag: tag.guid,
-          plant: this.guid
+          plant: this.plant.guid
         })
       },
       hidePlantTags () {
@@ -244,11 +258,11 @@
         this.toggleTags({ show: true })
       },
       updatePlantName (name) {
-        this.updateName({ guid: this.guid, name })
+        this.updateName({ guid: this.plant.guid, name })
       },
       updatePlantPhoto (blob) {
-        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.imageURL
-        this.updatePhoto({ guid: this.guid, blob, imageURL })
+        const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.plant.imageURL
+        this.updatePhoto({ guid: this.plant.guid, blob, imageURL })
       }
     },
 
@@ -257,10 +271,10 @@
         transparent: true,
         title: false,
         backBtn: true,
-        settingsIcon: 'edit',
         settingsBtn: 'edit',
         settingsBtnOnClick: this.openPlantEditModal,
-        iconColor: this.headerInView ? 'white' : 'black'
+        iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+        showIconBackdrop: true
       })
     },
 
@@ -269,23 +283,24 @@
     },
 
     updated () {
-      this.updateAppHeader({
-        iconColor: this.headerInView ? 'white' : 'black'
-      })
+      // this.updateAppHeader({
+      //   iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+      //   showIconBackdrop: this.headerInView
+      // })
     },
 
     beforeDestroy () {
       this.updateAppHeader({
         transparent: false,
-        iconColor: 'black',
-        settingsIcon: 'settings'
+        iconColor: this.defaultIconColor,
+        showIconBackdrop: false
       })
 
       this.updatePlantsList({
-        guid: this.guid,
-        name: this.name,
-        imageURL: this.imageURL,
-        tags: this.tags
+        guid: this.plant.guid,
+        name: this.plant.name,
+        imageURL: this.plant.imageURL,
+        tags: this.plant.tags
       }).then(() => this.resetSelectedState())
     }
   }

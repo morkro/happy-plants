@@ -1,11 +1,13 @@
-import { fetchVersion, updateVersion as updateVersionFromAPI } from '@/api/version'
+import { getEntry, updateEntry } from '@/api/localforage'
+
+const namespace = 'version'
 
 export const loadVersion = ({ commit }) => {
-  return fetchVersion()
+  return getEntry(namespace)
     .then(version => commit('LOAD_VERSION', version))
 }
 
 export const updateVersion = ({ state, commit }) => {
-  return updateVersionFromAPI(state.version)
+  return updateEntry(namespace, state.version)
     .then(() => commit('UPDATE_VERSION'))
 }

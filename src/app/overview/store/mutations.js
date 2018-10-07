@@ -20,17 +20,21 @@ export default {
   UPDATE_VIEWMODE (state, payload) {
     state.updated = Date.now()
     state.settings = Object.assign({}, state.settings, payload)
-    state.plants = sortPlants(state.settings, state.plants)
+    state.plants.data = sortPlants(state.settings, state.plants.data)
   },
 
   UPDATE_PLANT_OVERVIEW (state, payload) {
-    const itemIndex = state.plants.findIndex(p => p.guid === payload.item.guid)
+    const itemIndex = state.plants.data.findIndex(p => p.guid === payload.item.guid)
 
     state.updated = Date.now()
 
-    if (state.plants[itemIndex]) {
-      Vue.set(state.plants, itemIndex, Object.assign(state.plants[itemIndex], payload.item))
-      state.plants = sortPlants(state.settings, state.plants)
+    if (state.plants.data[itemIndex]) {
+      Vue.set(
+        state.plants.data,
+        itemIndex,
+        Object.assign(state.plants.data[itemIndex], payload.item)
+      )
+      state.plants.data = sortPlants(state.settings, state.plants.data)
     }
   }
 }

@@ -7,7 +7,10 @@
     @close-dialog="emitCloseDialog">
     <span slot="headline">Delete plant</span>
 
-    <v-button color="red" @click.native="emitDeletePlant">
+    <v-button
+      color="red"
+      :loading="loading"
+      @click.native="emitDeletePlant">
       <feather-trash slot="icon" />
       Yes, delete this plant
     </v-button>
@@ -31,7 +34,8 @@
       show: { type: Boolean, default: false },
       name: { type: String, default: '' },
       modified: { type: Number, default: Date.now() },
-      created: { type: Number, default: Date.now() }
+      created: { type: Number, default: Date.now() },
+      loading: { type: Boolean, default: false }
     },
 
     components: {

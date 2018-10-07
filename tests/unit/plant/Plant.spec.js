@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueTouch from 'vue-touch'
@@ -38,7 +38,7 @@ describe('app/plant/Plant.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = mount(Plant, options)
+    const wrapper = shallowMount(Plant, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })

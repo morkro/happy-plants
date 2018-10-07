@@ -5,6 +5,7 @@
       :show="showModal"
       :tag="selectedTag"
       :tag-names="tags.map(c => c.label)"
+      :loading="updateTagProgress"
       @content-update="editTagLabel"
       @content-error="showTagUpdateError"
       @close-dialog="closeModal" />
@@ -20,11 +21,14 @@
 
       <div>
         <p>
-          Do you really want to delete <span class="tag">{{ selectedTagLabel }}</span>?
+          Do you really want to delete <v-tag>{{ selectedTagLabel }}</v-tag>?
           This will remove it from all plants!
         </p>
 
-        <v-button color="yellow" @click.native="confirmDeleteTag">
+        <v-button
+          color="yellow"
+          :loading="deleteTagProgress"
+          @click.native="confirmDeleteTag">
           Delete tag
         </v-button>
       </div>
@@ -32,7 +36,7 @@
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
       <div v-if="!tags.length" class="tags-empty">
-        <feather-tag />
+        <feather-tag class="tags-header" />
         <h1>You haven't added tags to your plants yet</h1>
         <p>
           Tagging is a system to help organise your plants better.
@@ -40,6 +44,7 @@
           they will appear here and you can rename or delete them.
         </p>
         <router-link class="btn" to="/">
+          <feather-grid class="button-icon" />
           Overview
         </router-link>
       </div>
@@ -80,6 +85,7 @@
   import { mapState, mapActions } from 'vuex'
   import HappyDialog from '@/components/HappyDialog'
   import Button from '@/components/Button'
+  import Tag from '@/components/Tag'
   import TagModal from './TagModal'
   import TagItem from './TagItem'
 
@@ -92,6 +98,7 @@
 
     components: {
       'v-button': Button,
+      'v-tag': Tag,
       'tag-dialog': HappyDialog,
       'tag-modal': TagModal,
       'tag-item': TagItem,
@@ -102,20 +109,24 @@
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-trash': () =>
-        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */),
+      'feather-grid': () =>
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
       showModal: false,
       showDialog: false,
       tagName: '',
-      selectedTag: null
+      selectedTag: null,
+      deleteTagProgress: false,
+      updateTagProgress: false
     }),
 
     computed: {
       ...mapState({
-        tags: state => state.tags,
-        plants: state => state.plants
+        tags: state => state.tags.data,
+        plants: state => state.plants.data
       }),
       hasTagName () {
         return this.tagName !== ''
@@ -155,9 +166,12 @@
           message: `A tag with name "${tag.label}" already exists.`
         })
       },
-      editTagLabel (tag) {
-        this.updateTag(tag)
-          .then(() => this.showNotification({ message: `Updated tag.` }))
+      async editTagLabel (tag) {
+        this.updateTagProgress = true
+        await this.updateTag(tag)
+        this.updateTagProgress = false
+
+        this.showNotification({ message: `Updated tag.` })
       },
       openTagModal (tag) {
         this.selectedTag = tag
@@ -171,17 +185,17 @@
           event.currentTarget.blur()
         }
       },
-      confirmDeleteTag () {
+      async confirmDeleteTag () {
         const { label, guid } = this.selectedTag
-        // 1. Delete tag
-        this.deleteTag({ tag: guid, forceDelete: true })
-          // 2. Close alert
-          .then(() => this.closeDialog())
-          // 3. Show notification
-          .then(() =>
-            this.showNotification({
-              message: `Tag "${label}" deleted.`
-            }))
+
+        this.deleteTagProgress = true
+        await this.deleteTag({ tag: guid, forceDelete: true })
+        this.deleteTagProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: `Tag "${label}" deleted.`
+        })
       }
     }
   }
@@ -200,7 +214,7 @@
     flex-direction: column;
     text-align: center;
 
-    & svg {
+    & .tags-header {
       align-self: center;
       width: 10%;
       height: 10%;
@@ -235,7 +249,7 @@
       font-size: var(--text-size-medium);
 
       &:not(:last-child) {
-        border-bottom: 2px solid var(--transparency-black-light);
+        border-bottom: 2px solid var(--border-color);
       }
     }
 

@@ -14,8 +14,11 @@
           This permanently deletes all your plant (photos, collections, <em>everything</em>) data.
         </p>
 
-        <v-button color="yellow" @click.native="deleteApplicationData">
-          Delete my data
+        <v-button
+          color="yellow"
+          :loading="deleteAllDataProgress"
+          @click.native="deleteApplicationData">
+          I understand, delete my data
         </v-button>
       </div>
 
@@ -50,28 +53,30 @@
 
         <v-button
           :disabled="file === null || selectedImportType === false"
+          :loading="importDataProgress"
           @click.native.prevent="importApplicationData">
           Import
         </v-button>
       </div>
     </settings-dialog>
 
-    <section class="download-section">
+    <section class="download-section box">
       <h2>Export plant data</h2>
 
       <span>
-        Download all your plant data as a JSON file (without photos!).
+        Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
+        it's currently <strong>not possible</strong> to include the images.
         You might use this little database to import in a different tool,
         or even modify and import it again.
       </span>
 
-      <v-button @click.native="downloadData">
+      <v-button :loading="exportDataProgress" @click.native="downloadData">
         <feather-download slot="icon" />
         Export plant data
       </v-button>
     </section>
 
-    <section class="import-section">
+    <section class="import-section box">
       <h2>Import plant data</h2>
 
       <span>
@@ -114,7 +119,7 @@
     name: 'SettingsData',
 
     meta: {
-      title: 'Data'
+      title: 'Import/ Export'
     },
 
     components: {
@@ -131,12 +136,15 @@
 
     data () {
       return {
+        exportDataProgress: false,
+        importDataProgress: false,
         file: null,
         showDialog: false,
         modalType: null,
         dangerDialogTitle: 'Deleting application data',
         importDialogTitle: 'Import plant data',
         selectedImportType: false,
+        deleteAllDataProgress: false,
         importTypes: [
           {
             label: 'Overwrite',
@@ -163,6 +171,14 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: 'Import/ Export',
+        backBtn: true,
+        settingsBtn: false
+      })
+    },
+
     methods: {
       ...mapActions([
         'showNotification',
@@ -170,7 +186,8 @@
         'deleteAllData',
         'importTags',
         'importSettings',
-        'importPlants'
+        'importPlants',
+        'updateAppHeader'
       ]),
 
       triggerDownload (data = { message: 'No data!' }) {
@@ -184,9 +201,12 @@
         $a.dispatchEvent(new MouseEvent('click', { view: window }))
       },
 
-      downloadData () {
-        this.getAllData()
-          .then(this.triggerDownload)
+      async downloadData () {
+        this.exportDataProgress = true
+        const data = await this.getAllData()
+        this.exportDataProgress = false
+
+        this.triggerDownload(data)
       },
 
       updateImportType (id) {
@@ -218,11 +238,12 @@
 
       selectImportType (key) {
         const data = this.file[key]
-
         if (key === 'tags') {
-          return this.importTags(data)
+          return this.importTags(Array.isArray(data) ? data : data.data)
         } else if (key === 'settings') {
           return this.importSettings(data)
+        } else if (key === 'plants') {
+          return this.importPlants({ data: data.data, importType: this.selectedImportType })
         } else if (key.startsWith('plant-')) {
           return this.importPlants({ data, importType: this.selectedImportType })
         } else {
@@ -230,23 +251,28 @@
         }
       },
 
-      importApplicationData () {
-        Promise.resolve(Object.keys(this.file))
-          .then(keys => Promise.all(keys.map(this.selectImportType)))
-          .then(() => this.closeDialog())
-          .then(() => this.showNotification({
-            message: 'Successfully imported your plant data!'
-          }))
-          .then(() => this.$router.push('/'))
+      async importApplicationData () {
+        this.importDataProgress = true
+        await Promise.all(Object.keys(this.file).map(this.selectImportType))
+        this.importDataProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: 'Successfully imported your plant data!'
+        })
+        this.$router.push('/')
       },
 
-      deleteApplicationData () {
-        this.deleteAllData()
-          .then(() => this.closeDialog())
-          .then(() => this.showNotification({
-            message: 'Successfully deleted all your data.'
-          }))
-          .then(() => this.$router.push('/'))
+      async deleteApplicationData () {
+        this.deleteAllDataProgress = true
+        await this.deleteAllData()
+        this.deleteAllDataProgress = false
+
+        this.closeDialog()
+        this.showNotification({
+          message: 'Successfully deleted all your data.'
+        })
+        this.$router.push('/')
       }
     }
   }
@@ -285,10 +311,16 @@
     }
   }
 
+  .download-section,
+  .import-section {
+    margin: var(--base-gap);
+  }
+
   @media (--min-desktop-viewport) {
     .download-section,
     .import-section {
       width: 50%;
+      margin: 0 var(--base-gap);
     }
   }
 
@@ -309,10 +341,16 @@
   }
 
   section.danger-zone {
+    --danger-zone-color: var(--text-color-inverse);
+
     padding-top: calc(var(--base-gap) * 1.5);
     padding-bottom: calc(var(--base-gap) * 1.5);
     background: var(--brand-red);
-    color: var(--text-color-inverse);
+    color: var(--danger-zone-color);
+
+    @nest html[data-theme="dark"] & {
+      --danger-zone-color: var(--text-color-base);
+    }
 
     @media (--min-desktop-viewport) {
       border-radius: var(--border-radius);
@@ -320,7 +358,7 @@
     }
 
     & h2 {
-      color: var(--text-color-inverse);
+      color: var(--danger-zone-color);
     }
   }
 

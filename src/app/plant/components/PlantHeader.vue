@@ -1,7 +1,7 @@
 <template>
   <section class="plant-header">
     <div class="plant-header-view">
-      <div :class="{ 'is-skeleton': !name, 'no-photo': !imageUrl, 'header-content': true }">
+      <div :class="{ 'is-skeleton': contentLoading, 'no-photo': !imageUrl, 'header-content': true }">
         <v-touch tag="h1"
           @tap="updateTitle"
           :contenteditable="editTitle"
@@ -28,12 +28,14 @@
             @loading-file="handleLoadingState"
             @file-selected="assignNewPhoto" />
         </div>
+
         <img
-          v-if="imageUrl"
+          v-if="!contentLoading && imageUrl"
           :src="imageUrl"
           :alt="name">
+
         <svgicon
-          v-else
+          v-else-if="!imageUrl"
           icon="cactus"
           width="50"
           height="50"
@@ -51,7 +53,8 @@
 
     props: {
       name: { type: [String, Boolean], default: false },
-      imageUrl: { type: [String, Boolean], default: false }
+      imageUrl: { type: [String, Boolean], default: false },
+      contentLoading: { type: Boolean, default: true }
     },
 
     components: {
@@ -59,7 +62,9 @@
       'feather-image': () =>
         import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
       'feather-aperture': () =>
-        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */),
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
@@ -129,11 +134,19 @@
   @import "../../../styles/media-queries";
 
   .plant-header {
+    --header-background: var(--grey);
+    --header-color: var(--text-color-inverse);
+
     position: relative;
     color: var(--text-color-inverse);
     height: 100vw;
-    background: var(--grey);
+    background: var(--header-background);
     z-index: 1;
+
+    @nest html[data-theme="dark"] & {
+      --header-background: var(--dark-grey);
+      --header-color: white;
+    }
 
     @media (--min-desktop-viewport) {
       height: 50vh;
@@ -147,7 +160,7 @@
       padding: var(--base-gap);
       font-size: var(--text-size-large);
       font-weight: 500;
-      color: var(--text-color-inverse);
+      color: var(--header-color);
       line-height: 115%;
       position: relative;
       width: 100%;
@@ -170,6 +183,22 @@
 
       &.no-photo {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+      }
+
+      &.is-skeleton h1 {
+        color: transparent;
+        overflow: hidden;
+
+        &::after {
+          content: "";
+          height: 22px;
+          width: 75%;
+          display: block;
+          border-radius: var(--border-radius);
+          background: var(--background-primary);
+          bottom: var(--base-gap);
+          position: absolute;
+        }
       }
     }
 

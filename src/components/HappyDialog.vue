@@ -120,12 +120,16 @@
   .happy-dialog-element {
     width: 100%;
     max-width: 90vw;
-    max-height: 95vh;
+    max-height: 75vh;
     padding: var(--base-gap);
-    overflow: scroll;
+    overflow: scroll !important;
     border: none;
     position: relative;
     background: var(--background-secondary);
+
+    @nest html[data-theme="dark"] & {
+      background: var(--background-primary);
+    }
 
     @media (--min-desktop-viewport) {
       width: var(--app-desktop-max-width);
@@ -134,6 +138,7 @@
     &.danger {
       background: var(--brand-red);
       color: var(--text-color-inverse);
+      box-shadow: 0 2px 7px var(--brand-red-medium);
     }
   }
 

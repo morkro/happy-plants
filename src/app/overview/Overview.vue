@@ -12,7 +12,10 @@
         <p>
           You are about to delete <strong>{{ selection.length }}</strong> plants.
         </p>
-        <v-button color="yellow" @click.native="confirmDeletePlants">
+        <v-button
+          color="yellow"
+          :loading="deletePlantsProgress"
+          @click.native="confirmDeletePlants">
           Yes, delete plants
         </v-button>
       </div>
@@ -22,22 +25,30 @@
       class="overview-backdrop"
       @click="hideBackdrop" />
 
-    <main :class="['app-content', { 'no-plants': plants.length <= 0 }]">
+    <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
+      <div v-if="noPlantData" class="content-empty">
+        <svgicon icon="cactus" :color="theme === 'light' ? '#000' : '#fff'" />
+        <p>
+          You haven't added any plants yet.
+        </p>
+      </div>
+
       <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
-        <h2>Filtered by <span class="tag">{{ filteredTag }}</span></h2>
-        <button
-          type="button"
-          class="icon circle inverse"
+        <h2>Filtered by <v-tag size="small">{{ filteredTag }}</v-tag></h2>
+        <v-button
+          type="circle"
+          color="plain"
           aria-label="Clear filter"
-          @click="clearFilter">
-          <feather-x />
-        </button>
+          @click.native="clearFilter">
+          <feather-x slot="icon" />
+        </v-button>
       </div>
 
       <plants-list
-        v-if="plants.length"
+        v-if="plantsLoading || plants.length !== 0"
         @delete-selection="toggleDeleteSelection"
         @pressed-selection="togglePressedSelection"
+        :content-loading="plantsLoading"
         :plants="filteredPlants"
         :tags="tags"
         :type="viewMode"
@@ -79,10 +90,12 @@
   import AppHeader from '@/components/AppHeader'
   import HappyDialog from '@/components/HappyDialog'
   import Button from '@/components/Button'
+  import Tag from '@/components/Tag'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
   import ViewmodeMenu from './components/ViewmodeMenu'
+  import '@/assets/icons/cactus'
 
   export default {
     name: 'Overview',
@@ -91,6 +104,7 @@
       'app-header': AppHeader,
       'overview-dialog': HappyDialog,
       'v-button': Button,
+      'v-tag': Tag,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
@@ -103,12 +117,20 @@
 
     computed: {
       ...mapState({
-        plants: state => state.plants,
+        theme: state => state.settings.theme,
+        authenticated: state => state.user.authenticated,
+        storage: state => state.storage.type,
+        plantsLoading: state => state.plants.loading,
+        plantsLoaded: state => state.plants.finished,
+        plants: state => state.plants.data,
         viewMode: state => state.settings.viewMode,
         orderBy: state => state.settings.orderBy,
         filterBy: state => state.settings.filterBy,
-        tags: state => state.tags
+        tags: state => state.tags.data
       }),
+      noPlantData () {
+        return !this.plantsLoading && this.plants.length === 0
+      },
       isViewMode () {
         return this.editMode === 'view-mode'
       },
@@ -141,6 +163,7 @@
       },
       filteredTag () {
         return (
+          this.filterBy !== 'all' &&
           this.tags.length &&
           this.tags.find(tag => tag.guid === this.filterBy).label
         )
@@ -167,12 +190,13 @@
         selection: [],
         editMode: false,
         showDialog: false,
-        showBackdrop: false
+        showBackdrop: false,
+        deletePlantsProgress: false
       }
     },
 
     updated () {
-      if (this.plants && this.plants.length === 0) {
+      if (this.storage !== 'cloud' && this.plantsLoaded && !this.plants.length) {
         this.$router.push('/intro')
       }
     },
@@ -181,14 +205,9 @@
       this.updateAppHeader({
         title: 'Happy Plants',
         backBtn: false,
-        settingsBtn: true
+        settingsBtn: true,
+        showIconBackdrop: false
       })
-    },
-
-    mounted () {
-      if (this.plants && this.plants.length === 0) {
-        this.$router.push('/intro')
-      }
     },
 
     methods: {
@@ -230,13 +249,16 @@
       cancelDeleteMode () {
         this.reset()
       },
-      confirmDeletePlants () {
+      async confirmDeletePlants () {
         const message = this.selection.length > 1
           ? `Deleted ${this.selection.length} plants.`
           : `Deleted ${this.selection.length} plant.`
 
+        this.deletePlantsProgress = true
+        await this.deletePlants(this.selection)
+        this.deletePlantsProgress = false
+
         this.showNotification({ message })
-        this.deletePlants(this.selection)
         this.cancelDeleteMode()
       },
       updateEditMode (type) {
@@ -283,12 +305,8 @@
     padding: var(--base-gap);
     padding-bottom: calc(var(--app-footer-size) * 1.2);
 
-    &.no-plants {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: calc(100vh - var(--app-header-size));
-      background: var(--brand-green);
+    &.no-data {
+      height: calc(100vh - var(--app-header-size));
     }
   }
 
@@ -334,6 +352,25 @@
     }
   }
 
+  .content-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    & svg {
+      width: 40%;
+      height: auto;
+      margin-bottom: calc(2 * var(--base-gap));
+      opacity: 0.2;
+    }
+
+    & p {
+      color: var(--text-color-secondary);
+    }
+  }
+
   .plant-list {
     z-index: 1;
   }
@@ -352,7 +389,6 @@
 
     & .tag {
       margin-left: calc(var(--base-gap) / 3);
-      font-size: var(--text-size-small);
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
@@ -360,7 +396,6 @@
     }
 
     & button {
-      background: var(--grey);
       width: 35px;
       height: 35px;
     }

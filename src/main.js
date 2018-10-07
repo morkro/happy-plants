@@ -10,6 +10,7 @@ import './registerServiceWorker'
 import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
+import VueFirebase from '@/utils/vue-firebase'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 
@@ -34,12 +35,17 @@ localforage.keys()
   })
 
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
+Vue.config.devtools = true
+Vue.config.errorHandler = function (err, vm, info) {
+  console.log('[Global Error Handler]: Error in ' + info + ': ' + err) // eslint-disable-line no-console
+}
 
 VueTouch.registerCustomEvent('doubletap', {
   type: 'tap',
   taps: 2
 })
 
+Vue.use(VueFirebase)
 Vue.use(observeVisibility)
 Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)

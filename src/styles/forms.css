@@ -1,5 +1,5 @@
 input {
-  background: white;
+  background: var(--form-color);
   padding: calc(var(--base-gap) + 5px) var(--base-gap);
   color: var(--text-color-base);
   border: none;
@@ -30,8 +30,12 @@ input {
     max-height: 22px;
     border-radius: 50%;
     box-shadow: none;
-    background: var(--grey);
+    background: var(--border-color);
     transition: background var(--base-speed) var(--ease-out-back);
+
+    @nest html[data-theme="dark"] &:not(:checked) {
+      background: var(--dark-grey);
+    }
 
     &:focus {
       outline: none;

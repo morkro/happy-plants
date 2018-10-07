@@ -16,7 +16,7 @@
           @change="updateLabelName">
       </label>
 
-      <v-button @click.native="updateTag">
+      <v-button :loading="loading" @click.native="updateTag">
         Update name
       </v-button>
     </form>
@@ -32,7 +32,8 @@
     props: {
       show: { type: Boolean, default: false },
       tag: { type: Object, default: () => {} },
-      tagNames: { type: Array, default: () => [] }
+      tagNames: { type: Array, default: () => [] },
+      loading: { type: Boolean, default: false }
     },
 
     components: {

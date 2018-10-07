@@ -179,5 +179,9 @@
     @nest .disabled & {
       opacity: 0.3;
     }
+
+    @nest html[data-theme="dark"] & svg {
+      filter: invert(1);
+    }
   }
 </style>

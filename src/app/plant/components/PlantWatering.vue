@@ -162,6 +162,7 @@
 
   .watering-routine {
     --button-background: var(--brand-blue-low);
+    --button-shadow: var(--brand-blue-low);
     --button-focus: var(--brand-blue);
     padding: calc(var(--base-gap) / 2) calc(var(--base-gap) / 2);
     margin-top: calc(var(--base-gap) / 4);
@@ -194,13 +195,18 @@
   }
 
   .droplet-canvas {
+    --droplet-color: var(--grey);
+
     position: relative;
     width: 30vw;
     min-height: 65px;
     z-index: 1;
 
+    @nest html[data-theme="dark"] & {
+      --droplet-color: var(--dark-grey);
+    }
+
     & .droplet-background {
-      --droplet-color: var(--grey);
       position: absolute;
       z-index: 0;
       background: var(--droplet-color);
@@ -246,9 +252,24 @@
       border-radius: 4% 50% 50% 50%;
       border: 2px solid var(--background-primary);
       transform: rotate(45deg);
+      overflow: hidden;
 
-      &.active {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 4% 50% 50% 50%;
         background: var(--brand-blue);
+        transform: scale(0);
+        transform-origin: 100% 100%;
+        transition: transform calc(2.5 * var(--base-speed)) var(--ease-out-back);
+      }
+
+      &.active::after {
+        transform: scaleY(1);
       }
 
       &:nth-of-type(1) {

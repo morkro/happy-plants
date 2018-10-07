@@ -1,4 +1,4 @@
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 
@@ -14,14 +14,11 @@ describe('app/not-found/NotFound.vue', () => {
   const options = {
     localVue,
     store,
-    router,
-    stubs: {
-      'feather-home': '<svg />'
-    }
+    router
   }
 
   it('is a Vue component', () => {
-    const wrapper = mount(NotFound, options)
+    const wrapper = shallowMount(NotFound, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })

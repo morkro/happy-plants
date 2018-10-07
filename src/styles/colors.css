@@ -19,5 +19,6 @@
   --grey: rgb(216, 216, 216);
   --dark-grey: color-mod(rgb(216, 216, 216) shade(30%));
 
-  --custom-black: #1a1e1f;
+  --custom-black: #202425;
+  --custom-white: #dadada;
 }
