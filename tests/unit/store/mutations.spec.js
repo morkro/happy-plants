@@ -73,7 +73,7 @@ describe('store/mutations/plants.js', () => {
   //   expect(state).toBe()
   // })
 
-  it('ADD_PLANT', () => {
+  it('ADD_PLANT_SUCCESS', () => {
     const then = new Date('2018-06-25').getTime()
     const now = Date.now()
     const state = {
@@ -86,7 +86,7 @@ describe('store/mutations/plants.js', () => {
     }
 
     // Add and sort alphabetical
-    mutations.ADD_PLANT(state, { item: { name: 'Foo', created: now } })
+    mutations.ADD_PLANT_SUCCESS(state, { item: { name: 'Foo', created: now } })
     expect(state.plants.data).toEqual(expect.arrayContaining([
       { name: 'Bar', created: then },
       { name: 'Foo', created: now }
@@ -95,14 +95,14 @@ describe('store/mutations/plants.js', () => {
     // Add and sort by date (latest)
     state.settings.orderBy = 'latest'
     state.plants.data = [{ name: 'Bar', created: then }]
-    mutations.ADD_PLANT(state, { item: { name: 'Foo', created: now } })
+    mutations.ADD_PLANT_SUCCESS(state, { item: { name: 'Foo', created: now } })
     expect(state.plants.data).toEqual(expect.arrayContaining([
       { name: 'Foo', created: now },
       { name: 'Bar', created: then }
     ]))
   })
 
-  it('DELETE_PLANTS', () => {
+  it('DELETE_PLANTS_SUCCESS', () => {
     const state = {
       plants: {
         data: [
@@ -113,10 +113,10 @@ describe('store/mutations/plants.js', () => {
         ]
       }
     }
-    mutations.DELETE_PLANTS(state, { items: [
+    mutations.DELETE_PLANTS_SUCCESS(state, { items: [
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
       { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
-    ]})
+    ] })
     expect(state.plants.data).toEqual(expect.arrayContaining([
       { guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
       { guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' }
@@ -159,28 +159,28 @@ describe('store/mutations/tags.js', () => {
     expect(state.tags.data).toEqual(expect.arrayContaining([1, 2, 3]))
   })
 
-  it('ADD_TAG', () => {
+  it('ADD_TAG_SUCCESS', () => {
     const state = {
       tags: { data: [] }
     }
     const name = 'Foo tag'
 
     // Adding a new tag works as expected
-    mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })
+    mutations.ADD_TAG_SUCCESS(state, { item: { name, plants: ['guid'] } })
     expect(state.tags.data).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
 
     // Adding the exact same tag again just returns and doesn't mutate
-    expect(mutations.ADD_TAG(state, { item: { name, plants: ['guid'] } })).toBe(undefined)
+    expect(mutations.ADD_TAG_SUCCESS(state, { item: { name, plants: ['guid'] } })).toBe(undefined)
     expect(state.tags.data).toEqual(expect.arrayContaining([{ name, plants: ['guid'] }]))
 
     // Adding a new plant ID to the same tag works
-    mutations.ADD_TAG(state, { item: { name, plants: ['guid 2'] } })
+    mutations.ADD_TAG_SUCCESS(state, { item: { name, plants: ['guid 2'] } })
     expect(state.tags.data).toEqual(expect.arrayContaining([
       { name, plants: ['guid', 'guid 2'] }
     ]))
   })
 
-  it('DELETE_TAG', () => {
+  it('DELETE_TAG_SUCCESS', () => {
     const state = {
       tags: {
         data: [
@@ -201,7 +201,7 @@ describe('store/mutations/tags.js', () => {
     }
 
     // Force delete works as expected
-    mutations.DELETE_TAG(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, { item: {
       tag: '6e7e20bc-436e-4267-ae59-07e6686b6a2d',
       forceDelete: true
     } })
@@ -210,7 +210,7 @@ describe('store/mutations/tags.js', () => {
       .toBeUndefined()
 
     // Delete just the plant
-    mutations.DELETE_TAG(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, { item: {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid'
     } })
@@ -222,7 +222,7 @@ describe('store/mutations/tags.js', () => {
     }]))
 
     // Delete tag if no plants anymore
-    mutations.DELETE_TAG(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, { item: {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid2'
     } })
