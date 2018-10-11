@@ -20,4 +20,15 @@ describe('app/plant/PlantSunshine.vue', () => {
     expect(wrapper.props().intensity).toEqual(1)
     expect(wrapper.props().messages).toEqual(false)
   })
+
+  // it('emits correct data when clicked', () => {
+  //   const wrapper = shallowMount(PlantSunshine, options)
+  //   const intensityEl = wrapper.find('.sunshine-canvas .active')
+  //
+  //   wrapper.setMethods({ onEmitIntensityChange: jest.fn() })
+  //   expect(intensityEl.exists()).toBe(true)
+  //   intensityEl.trigger('click')
+  //   expect(wrapper.emitted('update-plant')).toBeTruthy()
+  //   expect(wrapper.vm.onEmitIntensityChange).toHaveBeenCalled()
+  // })
 })

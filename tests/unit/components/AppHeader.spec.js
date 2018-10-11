@@ -33,6 +33,19 @@ describe('components/AppHeader.vue', () => {
     expect(wrapper.props().settingsOnClick).toEqual(settingsOnClick)
   })
 
+  it('settingsOnClick() works as expected', () => {
+    const settingsOnClick = jest.fn()
+    const wrapper = shallowMount(AppHeader, { ...options,
+      propsData: {
+        settingsOnClick,
+        settings: 'edit'
+      }
+    })
+    expect(wrapper.find('.edit-data').exists()).toBe(true)
+    wrapper.find('.edit-data').trigger('click')
+    expect(wrapper.vm.settingsOnClick).toHaveBeenCalled()
+  })
+
   it('isWhite() works as expected', () => {
     const wrapper = shallowMount(AppHeader, options)
     expect(typeof wrapper.vm.isWhite).toEqual('function')
