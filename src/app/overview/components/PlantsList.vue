@@ -4,7 +4,7 @@
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-pressed-selection="emitPressedSelection"
-        :content-loading="contentLoading"
+        :content-loading="!plant.guid"
         :tags="plantTags(plant.guid)"
         :type="type"
         :delete-mode="isDeleteMode"
@@ -41,7 +41,9 @@
         plantTags: 'getPlantTags'
       }),
       plantData () {
-        return this.contentLoading ? this.mockPlants : this.plants
+        return this.contentLoading && this.plants.length === 0
+          ? this.mockPlants
+          : this.plants
       }
     },
 

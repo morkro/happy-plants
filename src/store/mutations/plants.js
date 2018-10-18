@@ -2,6 +2,13 @@ import Vue from 'vue'
 import { getUrlFromBlob } from '@/utils/blob'
 import { sortByDate, sortByAlphabet } from '@/utils/sort'
 
+function isEmptyObject (entry) {
+  return (
+    Object.keys(entry).length === 0 &&
+    entry.constructor === Object
+  )
+}
+
 function sortPlants (state, array = state.plants.data) {
   switch (state.settings && state.settings.orderBy) {
     case 'alphabetical':
@@ -15,6 +22,25 @@ function sortPlants (state, array = state.plants.data) {
 export default {
   LOAD_PLANTS_PROGRESS (state) {
     state.plants.loading = true
+  },
+
+  LOAD_PLANTS_TOTAL_COUNT (state, payload) {
+    state.plants.loading = true
+    state.plants.data = new Array(payload.total).fill({})
+  },
+
+  LOAD_PLANTS_SINGLE (state, payload) {
+    let plantCopy = state.plants.data
+
+    // Get all existing plant items, add new entry and sort them
+    let allPlants = plantCopy.filter(plant => !isEmptyObject(plant)).concat([payload.plant])
+    if (allPlants.length > 1) {
+      allPlants = sortPlants(state, allPlants)
+    }
+
+    // Get all remaining empty objects, add them to the filtered list
+    plantCopy = plantCopy.slice(allPlants.length, plantCopy.length)
+    state.plants.data = allPlants.concat(plantCopy)
   },
 
   LOAD_PLANTS_SUCCESS (state, payload) {

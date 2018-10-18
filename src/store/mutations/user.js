@@ -29,7 +29,7 @@ export default {
   ...mutationCreator([
     'USER_REDIRECT_RESULT_FAILED',
     'USER_AUTH_STATE_FAILED'],
-    (state, payload) => {
+    (state) => {
       if (state.user.authenticated === true) return
       state.updated = Date.now()
       state.user.authenticated = false

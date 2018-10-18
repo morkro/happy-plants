@@ -26,6 +26,11 @@
       @click="hideBackdrop" />
 
     <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
+      <div v-if="plantsLoading && !plantsLoaded" class="content-loading-indicator box">
+        <feather-loader class="rotate" />
+        <span>Loading</span>
+      </div>
+
       <div v-if="noPlantData" class="content-empty">
         <svgicon icon="cactus" :color="theme === 'light' ? '#000' : '#fff'" />
         <p>
@@ -112,7 +117,9 @@
       'feather-arrow-down': () =>
         import('vue-feather-icons/icons/ArrowDownIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
-        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
 
     computed: {
@@ -294,6 +301,7 @@
 
 <style lang="postcss" scoped>
   @import "../../styles/media-queries";
+  @import "../../styles/animations";
 
   .main-wireframe {
     min-height: 100vh;
@@ -349,6 +357,27 @@
     & svg rect,
     & svg path {
       stroke: var(--text-color-button);
+    }
+  }
+
+  .content-loading-indicator {
+    position: fixed;
+    z-index: 2;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(var(--app-footer-size) + var(--base-gap));
+    padding: calc(var(--base-gap) / 2) calc(var(--base-gap) / 1.5);
+    font-size: var(--text-size-xsmall);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & span {
+      margin-left: calc(var(--base-gap) / 2);
+    }
+
+    & svg.rotate {
+      animation: rotate360 4s linear infinite;
     }
   }
 

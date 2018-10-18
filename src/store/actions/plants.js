@@ -25,9 +25,10 @@ const namespace = 'plant-'
 const folder = 'plants'
 const fileName = 'cover.png'
 
-async function loadPlantsFirestore (state) {
+async function loadPlantsFirestore (state, commit) {
   const plants = []
   const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
+  commit('LOAD_PLANTS_TOTAL_COUNT', { total: snapshot.docs.length })
 
   for (const doc of snapshot.docs) {
     const plant = await firestoreQuery([
@@ -44,6 +45,10 @@ async function loadPlantsFirestore (state) {
         plantData.blob = await photo.blob()
         plantData.imageURL = getUrlFromBlob(plantData.blob)
       }
+    }
+
+    if (!state.storage.migrationMode) {
+      commit('LOAD_PLANTS_SINGLE', { plant: plantData })
     }
 
     plants.push(plantData)
@@ -75,7 +80,7 @@ export async function loadPlants ({ state, commit }) {
 
   if (state.storage.type === 'cloud' && state.user.id) {
     try {
-      plants = await loadPlantsFirestore(state)
+      plants = await loadPlantsFirestore(state, commit)
     } catch (error) {
       commit('LOAD_PLANTS_FAILURE')
     }

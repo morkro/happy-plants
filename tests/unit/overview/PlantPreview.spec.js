@@ -34,4 +34,12 @@ describe('app/overview/PlantPreview.vue', () => {
     expect(wrapper.props().name).toEqual('')
     expect(wrapper.props().imageUrl).toEqual('')
   })
+
+  it('has correct state when deleteMode is active', () => {
+    const wrapper = shallowMount(PlantPreview, options)
+    expect(wrapper.vm.ariaLabel).toEqual('')
+    wrapper.setProps({ deleteMode: true })
+    expect(wrapper.vm.ariaLabel).toEqual('Delete')
+    expect(wrapper.vm.frozen).toBe(true)
+  })
 })
