@@ -1,7 +1,7 @@
 <template>
-  <section :class="{ 'plant-tags': true, 'edit-mode': showInput }">
+  <section :class="['plant-tags', { 'edit-mode': showInput }]">
     <div
-      :class="{ 'plant-tags-module': true, 'show-tooltip': showTooltip }"
+      :class="['plant-tags-module', { 'show-tooltip': showTooltip }]"
       data-tooltip="Double tap to remove">
       <v-button
         color="plain"
@@ -12,13 +12,14 @@
         <feather-x v-else slot="icon" />
       </v-button>
 
-      <div :class="{ 'tags-list-wrapper': true, 'show-input': showInput }">
+      <div :class="['tags-list-wrapper', { 'show-input': showInput }]">
         <form
           v-if="showInput"
           class="tags-new"
           @submit.prevent="addNewTag">
           <input
             type="text"
+            autocomplete="off"
             id="tag-new-name"
             ref="tagInput"
             @change="getTagName">
@@ -33,7 +34,9 @@
               <v-touch tag="div"
                 @doubletap="toggleRemovable(tag)"
                 @tap="showRemovalNote">
-                <v-tag>{{ tag.label }}</v-tag>
+                <v-tag>
+                  {{ tag.label }}
+                </v-tag>
               </v-touch>
             </li>
           </ul>
@@ -53,6 +56,19 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-if="showInput && allTags.length" class="tags-suggestions">
+      <ul>
+        <li v-for="(tag, index) in allTags" :key="index">
+          <v-touch @tap="selectTag(tag)">
+            <v-tag >
+              <feather-plus slot="icon" />
+              {{ tag.label }}
+            </v-tag>
+          </v-touch>
+        </li>
+      </ul>
     </div>
 
     <div v-if="showInput"
@@ -79,7 +95,8 @@
     },
 
     props: {
-      tags: { type: Array, default: () => [] }
+      tags: { type: Array, default: () => [] },
+      allTags: { type: Array, default: () => [] }
     },
 
     data: () => ({
@@ -118,9 +135,10 @@
         this.newTagName = event.target.value
       },
 
-      addNewTag () {
-        if (this.newTagName !== '') {
-          this.$emit('new-tag', { label: this.newTagName.trim() })
+      addNewTag (event, tagName) {
+        const tagLabel = tagName || this.newTagName
+        if (tagLabel !== '') {
+          this.$emit('new-tag', { label: tagLabel.trim() })
         }
         Object.assign(this.$data, this.$options.data()) // Reset state
       },
@@ -138,6 +156,10 @@
         setTimeout(() => {
           this.showTooltip = false
         }, 2000)
+      },
+
+      selectTag (tag) {
+        this.addNewTag(undefined, tag.label)
       }
     }
   }
@@ -301,6 +323,23 @@
     }
   }
 
+  .tags-suggestions {
+    position: absolute;
+    z-index: 2;
+    padding: var(--base-gap) var(--tag-module-height);
+
+    & ul {
+      display: flex;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    & li:not(:last-child) {
+      margin-right: calc(var(--base-gap) / 2);
+      margin-bottom: calc(var(--base-gap) / 2);
+    }
+  }
+
   .tags-backdrop {
     width: 100%;
     height: 100%;
@@ -308,5 +347,6 @@
     top: 0;
     left: 0;
     z-index: 1;
+    background: var(--transparency-black-medium);
   }
 </style>

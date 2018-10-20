@@ -63,6 +63,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 0;
+    position: relative;
 
     &.no-modules {
       font-size: var(--text-size-base);

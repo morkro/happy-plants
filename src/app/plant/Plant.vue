@@ -28,8 +28,9 @@
         @update-photo="updatePlantPhoto" />
 
       <plant-tags
-        v-if="Array.isArray(allTags)"
-        :tags="allTags"
+        v-if="Array.isArray(allPlantTags)"
+        :tags="allPlantTags"
+        :all-tags="tags"
         @new-tag="addNewPlantTag"
         @remove-tag="removePlantTag"
         @hide-module="hidePlantTags" />
@@ -48,7 +49,7 @@
 
       <plant-footer
         :no-modules="plant.modules && !plant.modules.length"
-        :show-tag-button="allTags === false"
+        :show-tag-button="allPlantTags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
     </main>
@@ -104,7 +105,8 @@
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
         plantsLoading: state => state.plants.loading,
-        plant: state => state.selected
+        plant: state => state.selected,
+        tags: state => state.tags.data
       }),
       ...mapGetters({
         plantTags: 'getPlantTags'
@@ -112,7 +114,7 @@
       defaultIconColor () {
         return this.theme === 'light' ? 'black' : 'white'
       },
-      allTags () {
+      allPlantTags () {
         return this.plantTags(this.plant.guid)
       },
       plantModules () {

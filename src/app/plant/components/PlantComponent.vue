@@ -42,6 +42,8 @@
     padding: var(--base-gap);
     margin-bottom: 4px;
     overflow: hidden;
+    z-index: 0;
+    position: relative;
   }
 
   .plant-component header {
