@@ -28,7 +28,7 @@
         @update-photo="updatePlantPhoto" />
 
       <plant-tags
-        v-if="Array.isArray(allPlantTags)"
+        v-if="Array.isArray(plant.tags)"
         :tags="allPlantTags"
         :all-tags="tags"
         @new-tag="addNewPlantTag"
@@ -49,7 +49,7 @@
 
       <plant-footer
         :no-modules="plant.modules && !plant.modules.length"
-        :show-tag-button="allPlantTags === false"
+        :show-tag-button="plant.tags === false"
         @manage-modules="activateModuleManager"
         @show-tags="showPlantTags" />
     </main>

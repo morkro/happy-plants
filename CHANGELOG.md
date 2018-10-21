@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added suggestions when adding a new tag to a plant.
 
 ### Changed
-- Updated list view with more details
+- Updated list view with more details.
+
+### Fixed
+- Hiding tags on plant view now works again.
 
 ## [1.3.1] - 2018-10-18
 
