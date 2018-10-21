@@ -8,7 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 
 ### Added
-- Improved touch actions on the overview menu
+- Improved touch actions on the overview menu.
+- Added suggestions when adding a new tag to a plant.
+
+### Changed
+- Updated list view with more details
 
 ## [1.3.1] - 2018-10-18
 
