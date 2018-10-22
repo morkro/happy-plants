@@ -40,7 +40,7 @@
       </ul>
     </li>
 
-    <li v-if="storageType === 'cloud'">
+    <li>
       <h3>User</h3>
 
       <ul class="settings-submenu">
@@ -60,9 +60,15 @@
             </div>
           </div>
           <div v-else class="user-logged-out">
-            <span>You're logged out.</span>
+            <span>
+              Login with your Google account.
+            </span>
             <div>
-              <v-button type="small" @click.native="logInUser">
+              <v-button
+                type="small"
+                :loading="disabled"
+                :disabled="disabled"
+                @click.native="logInUser">
               Login
               </v-button>
             </div>
@@ -98,72 +104,82 @@
         import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */)
     },
 
-    data () {
-      return {
-        logOutProgress: false,
-        menu: [
-          {
-            label: 'Data',
-            children: [
-              {
-                label: 'Import/ Export',
-                name: 'SettingsData',
-                icon: 'save',
-                type: 'link'
-              },
-              {
-                label: 'Storage',
-                name: 'SettingsStorage',
-                icon: 'database',
-                type: 'link'
-              },
-              {
-                label: 'Tags',
-                name: 'SettingsTags',
-                icon: 'tag',
-                type: 'link'
-              }
-            ]
-          },
-          {
-            label: 'Application',
-            children: [
-              {
-                label: 'Theme',
-                type: 'button',
-                buttons: [
-                  { label: 'Light', option: 'light' },
-                  { label: 'Dark', option: 'dark' }
-                ]
-              },
-              {
-                label: 'About',
-                name: 'SettingsAbout',
-                icon: 'users',
-                type: 'link'
-              },
-              {
-                label: 'Release Notes',
-                description: 'A new version has been released!',
-                name: 'SettingsReleaseNotes',
-                icon: 'file-text',
-                type: 'link'
-              }
-            ]
-          }
-        ]
+    data: () => ({
+      signInProgress: false,
+      logOutProgress: false,
+      menu: [
+        {
+          label: 'Data',
+          children: [
+            {
+              label: 'Import/ Export',
+              name: 'SettingsData',
+              icon: 'save',
+              type: 'link'
+            },
+            {
+              label: 'Storage',
+              name: 'SettingsStorage',
+              icon: 'database',
+              type: 'link'
+            },
+            {
+              label: 'Tags',
+              name: 'SettingsTags',
+              icon: 'tag',
+              type: 'link'
+            }
+          ]
+        },
+        {
+          label: 'Application',
+          children: [
+            {
+              label: 'Theme',
+              type: 'button',
+              buttons: [
+                { label: 'Light', option: 'light' },
+                { label: 'Dark', option: 'dark' }
+              ]
+            },
+            {
+              label: 'About',
+              name: 'SettingsAbout',
+              icon: 'users',
+              type: 'link'
+            },
+            {
+              label: 'Release Notes',
+              description: 'A new version has been released!',
+              name: 'SettingsReleaseNotes',
+              icon: 'file-text',
+              type: 'link'
+            }
+          ]
+        }
+      ]
+    }),
+
+    computed: {
+      ...mapState({
+        storageType: state => state.storage.type,
+        authenticated: state => state.user.authenticated,
+        authFromRedirect: state => state.user.authFromRedirect,
+        authProgress: state => state.user.loading,
+        userName: state => state.user.name,
+        userEmail: state => state.user.email,
+        version: state => state.version,
+        hasNewRelease: state => state.hasNewRelease,
+        theme: state => state.settings.theme
+      }),
+      disabled () {
+        return (
+          this.authFromRedirect ||
+          this.authProgress ||
+          this.signInProgress
+        )
       }
     },
-
-    computed: mapState({
-      storageType: state => state.storage.type,
-      authenticated: state => state.user.authenticated,
-      userName: state => state.user.name,
-      userEmail: state => state.user.email,
-      version: state => state.version,
-      hasNewRelease: state => state.hasNewRelease,
-      theme: state => state.settings.theme
-    }),
 
     methods: {
       ...mapActions([
@@ -171,7 +187,9 @@
         'updateTheme',
         'updateAppHeader',
         'signOutUser',
-        'signInUser'
+        'signInUser',
+        'updateStorage',
+        'showNotification'
       ]),
       getThemeButtonColor (type) {
         if (this.theme !== type) {
@@ -203,12 +221,21 @@
       },
       async logOutUser () {
         this.logOutProgress = true
+        await this.updateStorage({ type: 'local' })
         await this.signOutUser()
         this.logOutProgress = false
-        this.$router.push('/intro')
+        this.$router.push('/')
       },
-      logInUser () {
-        this.signInUser()
+      async logInUser () {
+        this.signInProgress = true
+        await this.updateStorage({ type: 'cloud' })
+        try {
+          await this.signInUser()
+        } catch (error) {
+          this.showNotification()
+          return
+        }
+        this.signInProgress = false
       }
     },
 
