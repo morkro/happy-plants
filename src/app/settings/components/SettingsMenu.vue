@@ -52,8 +52,9 @@
             </span>
             <div>
               <v-button
-                :loading="logOutProgress"
                 type="small"
+                :loading="logOutProgress"
+                :disabled="logOutProgress"
                 @click.native="logOutUser">
               Logout
               </v-button>

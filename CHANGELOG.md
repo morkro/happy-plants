@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Improved touch actions on the overview menu.
 - Added suggestions when adding a new tag to a plant.
+- It's now possible to login from the Settings view.
 
 ### Changed
 - Updated list view with more details.
