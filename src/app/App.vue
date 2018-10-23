@@ -207,6 +207,7 @@
       font-family: monospace;
       font-size: var(--text-size-xsmall);
       letter-spacing: -4px;
+      display: inline-block;
     }
 
     & .happy-dialog-content section h1,

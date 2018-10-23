@@ -7,7 +7,8 @@
           aria-label="View mode"
           :class="`view-mode icon ${disableMenu ? '' : 'inverse'}`"
           @click.native.prevent="emitMenuAction('view-mode')">
-          <feather-grid slot="icon" />
+          <feather-grid v-if="!disableMenu" slot="icon" />
+          <feather-x v-else slot="icon" />
         </v-button>
       </li>
     </ul>
@@ -50,7 +51,9 @@
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-grid': () =>
-        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/GridIcon' /* webpackChunkName: "icons" */),
+      'feather-x': () =>
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {
@@ -72,8 +75,7 @@
 
     methods: {
       emitMenuAction (type) {
-        if (this.disableMenu) return
-        this.$emit('clicked-item', type)
+        this.$emit('clicked-item', this.disableMenu ? `${type}-toggle` : type)
       }
     }
   }

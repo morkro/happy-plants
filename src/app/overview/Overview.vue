@@ -269,6 +269,11 @@
         this.cancelDeleteMode()
       },
       updateEditMode (type) {
+        if (type === 'view-mode-toggle') {
+          this.hideBackdrop()
+          return
+        }
+
         this.editMode = type
 
         if (type === 'category' || type === 'view-mode') {

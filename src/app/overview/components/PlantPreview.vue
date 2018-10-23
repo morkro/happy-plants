@@ -44,10 +44,10 @@
         </div>
 
         <ul v-if="isListView && tags.length" class="preview-tags">
-          <li>
+          <li v-for="tag of tags" :key="tag.label">
             <v-tag size="small">
               <feather-tag height="16" width="16" />
-              {{ tags.length }}
+              {{ tag.label }}
             </v-tag>
           </li>
         </ul>
@@ -386,6 +386,9 @@
       padding: calc(var(--base-gap) / 1.5);
       height: 100%;
       color: var(--text-color-base);
+      overflow-y: hidden;
+      overflow-x: scroll;
+      -webkit-overflow-scrolling: touch;
 
       & h1 {
         color: var(--preview-color);
@@ -451,10 +454,16 @@
   .preview-tags {
     list-style: none;
     display: flex;
-    flex-wrap: wrap;
+    width: 100%;
 
     & li {
+      flex-shrink: 0;
       margin-bottom: calc(var(--base-gap) / 2);
+
+      &:last-child {
+        /* Workaround */
+        padding-right: calc(var(--base-gap) / 2);
+      }
     }
 
     & li:not(:last-child) {
@@ -465,6 +474,7 @@
       padding: calc(var(--base-gap) / 4) calc(var(--base-gap) / 2);
       display: flex;
       align-items: center;
+      white-space: nowrap;
     }
 
     & .tag svg {
