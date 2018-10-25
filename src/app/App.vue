@@ -74,6 +74,7 @@
 
     data () {
       return {
+        applicationOnline: window && window.navigator && window.navigator.onLine,
         notificationTimeout: 2000,
         showReleaseDialog: false
       }
@@ -84,25 +85,39 @@
         if (newRelease) {
           this.showReleaseDialog = true
         }
+      },
+
+      applicationOnline (online) {
+        if (online === false && this.shouldGetOfflineNotification) {
+          this.showNotification({ message: 'You just went offline.' })
+        }
       }
     },
 
-    computed: mapState({
-      version: state => state.version,
-      hasNewRelease: state => state.hasNewRelease,
-      storageType: state => state.storage.type,
-      authenticated: state => state.user.authenticated,
-      theme: state => state.settings.theme,
-      message: state => state.notification.message,
-      pageTitle: state => state.appheader.title,
-      transparent: state => state.appheader.transparent,
-      iconColor: state => state.appheader.iconColor,
-      backBtn: state => state.appheader.backBtn,
-      backBtnPath: state => state.appheader.backBtnPath,
-      settingsBtn: state => state.appheader.settingsBtn,
-      settingsBtnOnClick: state => state.appheader.settingsBtnOnClick,
-      showIconBackdrop: state => state.appheader.showIconBackdrop
-    }),
+    computed: {
+      ...mapState({
+        version: state => state.version,
+        hasNewRelease: state => state.hasNewRelease,
+        storageType: state => state.storage.type,
+        authenticated: state => state.user.authenticated,
+        theme: state => state.settings.theme,
+        message: state => state.notification.message,
+        pageTitle: state => state.appheader.title,
+        transparent: state => state.appheader.transparent,
+        iconColor: state => state.appheader.iconColor,
+        backBtn: state => state.appheader.backBtn,
+        backBtnPath: state => state.appheader.backBtnPath,
+        settingsBtn: state => state.appheader.settingsBtn,
+        settingsBtnOnClick: state => state.appheader.settingsBtnOnClick,
+        showIconBackdrop: state => state.appheader.showIconBackdrop
+      }),
+      shouldGetOfflineNotification () {
+        return (
+          this.storageType === 'cloud' &&
+          this.authenticated
+        )
+      }
+    },
 
     methods: {
       ...mapActions([
@@ -122,6 +137,12 @@
       ]),
       emitCloseDialog () {
         this.showReleaseDialog = false
+      },
+      setApplicationOnline () {
+        this.applicationOnline = true
+      },
+      setApplicationOffline () {
+        this.applicationOnline = false
       }
     },
 
@@ -162,10 +183,23 @@
       }
     },
 
+    mounted () {
+      if (!this.applicationOnline && this.shouldGetOfflineNotification) {
+        this.showNotification({ message: 'You are currently offline.' })
+      }
+      window.addEventListener('online', this.setApplicationOnline)
+      window.addEventListener('offline', this.setApplicationOffline)
+    },
+
     updated () {
       if (this.message) {
         setTimeout(this.hideNotification, this.notificationTimeout)
       }
+    },
+
+    beforeDestroy () {
+      window.removeEventListener('online', this.setApplicationOnline)
+      window.removeEventListener('offline', this.setApplicationOffline)
     }
   }
 </script>
