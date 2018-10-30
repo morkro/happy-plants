@@ -88,7 +88,7 @@
       },
 
       applicationOnline (online) {
-        if (online === false && this.shouldGetOfflineNotification) {
+        if (online === false && this.canSeeOfflineNotification) {
           this.showNotification({ message: 'You just went offline.' })
         }
       }
@@ -111,7 +111,7 @@
         settingsBtnOnClick: state => state.appheader.settingsBtnOnClick,
         showIconBackdrop: state => state.appheader.showIconBackdrop
       }),
-      shouldGetOfflineNotification () {
+      canSeeOfflineNotification () {
         return (
           this.storageType === 'cloud' &&
           this.authenticated
@@ -184,7 +184,7 @@
     },
 
     mounted () {
-      if (!this.applicationOnline && this.shouldGetOfflineNotification) {
+      if (!this.applicationOnline && this.canSeeOfflineNotification) {
         this.showNotification({ message: 'You are currently offline.' })
       }
       window.addEventListener('online', this.setApplicationOnline)

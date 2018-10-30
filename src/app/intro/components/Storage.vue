@@ -124,7 +124,7 @@
       },
       async loginUser () {
         await this.updateStorage({ type: 'cloud' })
-        await this.signInUser()
+        await this.signInUser('google')
         if (!this.authenticated) return
         this.closeDialog()
         this.$router.push('/intro/howto')
