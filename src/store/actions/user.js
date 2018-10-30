@@ -2,11 +2,23 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { setEntry } from '@/api/sessionStorage'
 
-export const signInUser = ({ commit }) => {
+export const signInUser = ({ commit }, providerName) => {
   commit('USER_SIGNIN_PROGRESS')
   setEntry('USER_SIGNIN_PROGRESS', true)
 
-  const provider = new firebase.auth.GoogleAuthProvider()
+  let provider
+  switch (providerName) {
+    case 'google':
+      provider = new firebase.auth.GoogleAuthProvider()
+      break
+    case 'github':
+      provider = new firebase.auth.GithubAuthProvider()
+      break
+    case 'twitter':
+      provider = new firebase.auth.TwitterAuthProvider()
+      break
+  }
+
   return firebase.auth().signInWithRedirect(provider)
 }
 
