@@ -31,12 +31,8 @@ export default {
 
   LOAD_PLANTS_SINGLE (state, payload) {
     let plantCopy = state.plants.data
-
     // Get all existing plant items, add new entry and sort them
-    let allPlants = plantCopy.filter(plant => !isEmptyObject(plant)).concat([payload.plant])
-    if (allPlants.length > 1) {
-      allPlants = sortPlants(state, allPlants)
-    }
+    const allPlants = plantCopy.filter(plant => !isEmptyObject(plant)).concat([payload.plant])
 
     // Get all remaining empty objects, add them to the filtered list
     plantCopy = plantCopy.slice(allPlants.length, plantCopy.length)

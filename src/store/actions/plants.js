@@ -24,11 +24,18 @@ import {
 const namespace = 'plant-'
 const folder = 'plants'
 const fileName = 'cover.png'
+const orderMap = new Map([
+  ['alphabetical', ['name', 'asc']],
+  ['latest', ['created', 'desc']]
+])
 
 async function loadPlantsFirestore (state, commit) {
   const plants = []
-  const snapshot = await firestoreQuery([['users', state.user.id], [folder]]).get()
-  commit('LOAD_PLANTS_TOTAL_COUNT', { total: snapshot.docs.length })
+  const [orderBy, sortBy] = orderMap.get(state.settings.orderBy)
+  const snapshot = await firestoreQuery([['users', state.user.id], [folder]])
+    .orderBy(orderBy, sortBy)
+    .get()
+  commit('LOAD_PLANTS_TOTAL_COUNT', { total: snapshot.size })
 
   for (const doc of snapshot.docs) {
     const plant = await firestoreQuery([
