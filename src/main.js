@@ -10,9 +10,9 @@ import './registerServiceWorker'
 import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
-import VueFirebase from '@/utils/vue-firebase'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
+import LazyLoadDirective from '@/utils/vue-lazy-load-directive'
 
 /**
  * This is required as Webpack seems to do some static analysis
@@ -45,7 +45,8 @@ VueTouch.registerCustomEvent('doubletap', {
   taps: 2
 })
 
-Vue.use(VueFirebase)
+Vue.directive('lazyload', LazyLoadDirective)
+
 Vue.use(observeVisibility)
 Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)

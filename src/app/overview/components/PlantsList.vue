@@ -1,6 +1,6 @@
 <template>
   <ul :class="['plant-list', `type-${type}`]">
-    <li v-for="(plant, index) in plantData" :key="index">
+    <li v-for="plant in plantData" :key="plant.guid">
       <plant-preview
         @toggle-delete-selection="emitDeleteSelection"
         @toggle-pressed-selection="emitPressedSelection"

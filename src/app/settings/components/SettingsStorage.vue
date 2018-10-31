@@ -236,7 +236,7 @@
       async migrateDataCloud () {
         if (!this.authFromRedirect) {
           this.migrationMessage = 'Signing you in...'
-          await this.signInUser()
+          await this.signInUser('google')
           return
         }
 

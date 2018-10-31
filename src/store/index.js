@@ -18,9 +18,10 @@ export default new Vuex.Store({
 
   state: {
     version: pkg.version,
+    updated: Date.now(),
+
     firstTimeUser: false,
     hasNewRelease: false,
-    updated: Date.now(),
 
     appheader: {
       transparent: false,

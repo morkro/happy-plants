@@ -8,14 +8,11 @@
     <div class="start-login">
       <p>Already have an account?</p>
 
-      <v-button
-        color="plain"
-        :loading="disabled"
+      <auth-provider-list
+        :loading="authFromRedirect"
         :disabled="disabled"
-        @click.native="loginUser">
-        <feather-login slot="icon" />
-        <span>Login with Google</span>
-      </v-button>
+        @provider-selected="loginUser"
+      />
     </div>
   </div>
 </template>
@@ -23,16 +20,16 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import Button from '@/components/Button'
+  import AuthProviderList from '@/components/AuthProviderList'
 
   export default {
     name: 'IntroStart',
 
     components: {
       'v-button': Button,
+      'auth-provider-list': AuthProviderList,
       'feather-right': () =>
-        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
-      'feather-login': () =>
-        import('vue-feather-icons/icons/LogInIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },
 
     computed: {
@@ -76,10 +73,10 @@
         this.$router.push('/intro/storage')
       },
 
-      async loginUser () {
+      async loginUser (provider) {
         this.signInProgress = true
         try {
-          await this.signInUser()
+          await this.signInUser(provider)
         } catch (error) {
           this.showNotification()
           return
@@ -99,7 +96,7 @@
   }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .start-wrapper {
     display: flex;
     flex-direction: column;

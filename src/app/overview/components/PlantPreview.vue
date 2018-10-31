@@ -3,7 +3,6 @@
     tag="a"
     @tap.prevent="handleInteraction"
     @press="handleInteraction"
-    :style="type === 'grid' && background"
     :class="wrapperClass"
     :aria-label="ariaLabel">
     <div v-show="pressedMode" :class="getLayerClass('pressed')">
@@ -23,11 +22,14 @@
     </div>
 
     <div class="preview-content">
-      <div v-if="isListView"
-        class="box preview-image"
-        :style="background">
-        <feather-loader
-          v-if="contentLoading && !imageUrl" />
+      <div :class="['preview-image', { 'box': isListView }]">
+        <feather-loader v-if="contentLoading && !imageUrl" />
+        <lazy-image
+          v-if="imageUrl"
+          :key="name"
+          :alt="name"
+          :title="name"
+          :source="imageUrl" />
         <svgicon
           v-if="!contentLoading && !imageUrl"
           icon="cactus"
@@ -52,16 +54,6 @@
           </li>
         </ul>
       </div>
-
-      <feather-loader
-        v-if="contentLoading && !imageUrl && type === 'grid'" />
-
-      <svgicon
-        v-if="!contentLoading && !imageUrl && type === 'grid'"
-        icon="cactus"
-        width="40"
-        height="40"
-        color="#000" />
     </div>
   </v-touch>
 </template>
@@ -69,6 +61,7 @@
 <script>
   import router from '@/router'
   import Tag from '@/components/Tag'
+  import LazyImage from '@/components/LazyImage'
   import '@/assets/icons/cactus'
 
   export default {
@@ -87,6 +80,7 @@
 
     components: {
       'v-tag': Tag,
+      'lazy-image': LazyImage,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-plus': () =>
@@ -127,11 +121,6 @@
           return 'Delete'
         }
         return ''
-      },
-      background () {
-        return this.imageUrl
-          ? { backgroundImage: `url(${this.imageUrl})` }
-          : ''
       },
       wrapperClass () {
         return [`type-${this.type}`, 'box', 'plant-preview', {
@@ -219,8 +208,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background-size: cover;
-    background-position: center;
     transform-origin: center;
     transition: transform 50ms var(--ease-out-back);
     --preview-background: var(--grey);
@@ -256,14 +243,17 @@
 
   .preview-image {
     position: relative;
-    width: var(--item-size-height);
-    height: var(--item-size-height);
-    background-size: cover;
-    background-position: center;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: var(--base-gap);
+
+    @nest .type-list & {
+      margin-right: var(--base-gap);
+      width: var(--item-size-height);
+      height: var(--item-size-height);
+    }
 
     @nest .is-skeleton & {
       box-shadow: none;

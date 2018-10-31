@@ -1,98 +1,114 @@
 <template>
-  <ul class="settings-menu">
-    <li
-      v-for="category in menu"
-      :key="category.label">
-      <h3>{{ category.label }}</h3>
+  <div class="settings-menu">
+    <menu-dialog
+      id="settings-menu-dialog"
+      app-root=".settings-menu"
+      :show="showLoginDialog"
+      @close-dialog="closeLoginDialog">
+      <span slot="headline">Select login</span>
 
-      <ul class="settings-submenu">
-        <li
-          v-for="(item, index) in category.children"
-          :key="index"
-          :class="`menu-${item.label.toLowerCase()}`">
-          <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
-            <div class="menu-item-text">
+      <auth-provider-list
+        :loading="authFromRedirect"
+        :disabled="disabled"
+        @provider-selected="loginUser"
+      />
+    </menu-dialog>
+
+    <ul class="settings-menu-list">
+      <li
+        v-for="category in menu"
+        :key="category.label">
+        <h3>{{ category.label }}</h3>
+
+        <ul class="settings-submenu">
+          <li
+            v-for="(item, index) in category.children"
+            :key="index"
+            :class="`menu-${item.label.toLowerCase()}`">
+            <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
+              <div class="menu-item-text">
+                <span>{{ item.label }}</span>
+                <span v-if="hasReleaseUpdates(item)" class="description">
+                  {{ item.description }}
+                </span>
+              </div>
+              <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
+                <component :is="`feather-${item.icon}`" />
+              </div>
+            </router-link>
+
+            <div v-else-if="item.type === 'button'">
               <span>{{ item.label }}</span>
-              <span v-if="hasReleaseUpdates(item)" class="description">
-                {{ item.description }}
+              <div v-if="item.buttons">
+                <v-button
+                  v-for="(option, index) in item.buttons"
+                  :key="index"
+                  type="small"
+                  :color="getThemeButtonColor(option.option)"
+                  :class="getThemeButtonClass(option.option)"
+                  @click.native="emitThemeChange(option.option)">
+                  {{ option.label }}
+                </v-button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <h3>User</h3>
+
+        <ul class="settings-submenu">
+          <li class="menu-user">
+            <div v-if="authenticated">
+              <span>
+                <strong>{{ userName }}</strong>
+                <span v-if="userEmail">{{ userEmail }}</span>
               </span>
+              <div>
+                <v-button
+                  type="small"
+                  :loading="logOutProgress"
+                  :disabled="logOutProgress"
+                  @click.native="logOutUser">
+                Logout
+                </v-button>
+              </div>
             </div>
-            <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
-              <component :is="`feather-${item.icon}`" />
+            <div v-else class="user-logged-out">
+              <span>
+                Login with your account.
+              </span>
+              <div>
+                <v-button type="small" @click.native="openLoginDialog">
+                Login
+                </v-button>
+              </div>
             </div>
-          </router-link>
+          </li>
+        </ul>
+      </li>
 
-          <div v-else-if="item.type === 'button'">
-            <span>{{ item.label }}</span>
-            <div v-if="item.buttons">
-              <v-button
-                v-for="(option, index) in item.buttons"
-                :key="index"
-                type="small"
-                :color="getThemeButtonColor(option.option)"
-                :class="getThemeButtonClass(option.option)"
-                @click.native="emitThemeChange(option.option)">
-                {{ option.label }}
-              </v-button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </li>
-
-    <li>
-      <h3>User</h3>
-
-      <ul class="settings-submenu">
-        <li class="menu-user">
-          <div v-if="authenticated">
-            <span>
-              <strong>{{ userName }}</strong>
-              <span>{{ userEmail }}</span>
-            </span>
-            <div>
-              <v-button
-                type="small"
-                :loading="logOutProgress"
-                :disabled="logOutProgress"
-                @click.native="logOutUser">
-              Logout
-              </v-button>
-            </div>
-          </div>
-          <div v-else class="user-logged-out">
-            <span>
-              Login with your Google account.
-            </span>
-            <div>
-              <v-button
-                type="small"
-                :loading="disabled"
-                :disabled="disabled"
-                @click.native="logInUser">
-              Login
-              </v-button>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </li>
-
-    <li class="menu-version">
-      <span>Version</span><span>{{ version }}</span>
-    </li>
-  </ul>
+      <li class="menu-version">
+        <span>Version</span><span>{{ version }}</span>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
   import Button from '@/components/Button'
+  import HappyDialog from '@/components/HappyDialog'
+  import AuthProviderList from '@/components/AuthProviderList'
 
   export default {
     name: 'SettingsMenu',
 
     components: {
       'v-button': Button,
+      'menu-dialog': HappyDialog,
+      'auth-provider-list': AuthProviderList,
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
@@ -102,12 +118,19 @@
       'feather-users': () =>
         import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */),
       'feather-file-text': () =>
-        import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */),
+      'feather-twitter': () =>
+        import('vue-feather-icons/icons/TwitterIcon' /* webpackChunkName: "icons" */),
+      'feather-google': () =>
+        import('vue-feather-icons/icons/ChromeIcon' /* webpackChunkName: "icons" */),
+      'feather-github': () =>
+        import('vue-feather-icons/icons/GithubIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
       signInProgress: false,
       logOutProgress: false,
+      showLoginDialog: false,
       menu: [
         {
           label: 'Data',
@@ -227,16 +250,22 @@
         this.logOutProgress = false
         this.$router.push('/')
       },
-      async logInUser () {
+      async loginUser (provider) {
         this.signInProgress = true
         await this.updateStorage({ type: 'cloud' })
         try {
-          await this.signInUser()
+          await this.signInUser(provider)
         } catch (error) {
           this.showNotification()
           return
         }
         this.signInProgress = false
+      },
+      openLoginDialog () {
+        this.showLoginDialog = true
+      },
+      closeLoginDialog () {
+        this.showLoginDialog = false
       }
     },
 
@@ -248,8 +277,12 @@
   }
 </script>
 
-<style lang="postcss" scoped>
-  .settings-menu {
+<style lang="postcss">
+  #settings-menu-dialog .auth-provider-list button {
+    margin-top: 0;
+  }
+
+  .settings-menu-list {
     list-style: none;
 
     & > li {

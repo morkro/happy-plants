@@ -5,6 +5,18 @@ All notable changes to this project will be documented here.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2018-10-31
+
+### Added
+- Added Twitter and GitHub as additional login methods.
+
+### Changed
+- Plant images are now lazy loaded, improving download times and data usage for mobile users.
+
+### Fixed
+- Improved data loading for cloud users, resulting in a more fluent experience on the overview.
+- Couple of performance improvements.
+
 ## [1.4.0] - 2018-10-23
 
 ### Added
