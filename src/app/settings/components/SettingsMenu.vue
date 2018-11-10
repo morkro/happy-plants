@@ -402,7 +402,10 @@
   .menu-user span {
     font-size: var(--text-size-xsmall);
     word-break: break-all;
-    padding-right: var(--base-gap);
+
+    @nest .menu-user > div > & {
+      padding-right: var(--base-gap);
+    }
 
     & strong {
       display: block;

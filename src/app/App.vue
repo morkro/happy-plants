@@ -112,10 +112,7 @@
         showIconBackdrop: state => state.appheader.showIconBackdrop
       }),
       canSeeOfflineNotification () {
-        return (
-          this.storageType === 'cloud' &&
-          this.authenticated
-        )
+        return this.storageType === 'cloud'
       }
     },
 
@@ -184,7 +181,7 @@
     },
 
     mounted () {
-      if (!this.applicationOnline && this.canSeeOfflineNotification) {
+      if (this.applicationOnline === false && this.canSeeOfflineNotification) {
         this.showNotification({ message: 'You are currently offline.' })
       }
       window.addEventListener('online', this.setApplicationOnline)

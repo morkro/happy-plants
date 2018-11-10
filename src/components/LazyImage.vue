@@ -4,7 +4,7 @@
     <img
       :data-src="source"
       :alt="alt"
-      :title="title">
+      :title="title || alt">
   </figure>
 </template>
 
@@ -20,7 +20,7 @@
     props: {
       source: { type: String, required: true },
       alt: { type: String, required: true },
-      title: { type: String, required: true }
+      title: { type: String, default: '' }
     }
   }
 </script>
