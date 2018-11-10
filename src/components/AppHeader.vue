@@ -12,7 +12,7 @@
         <slot name="custom-action-left" />
       </div>
 
-      <div @click="scrollTop">
+      <div class="header-title" @click="scrollTop">
         <slot name="title" />
       </div>
 
@@ -129,8 +129,10 @@
     & h1 {
       text-transform: uppercase;
       color: var(--text-color-base);
-      margin: 0 var(--base-gap);
       padding: var(--base-gap) 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     &.transparent {
@@ -178,6 +180,12 @@
     }
   }
 
+  .app-header .header-title {
+    flex-shrink: 1;
+    overflow: hidden;
+    padding: 0 var(--base-gap);
+  }
+
   .app-header .header-ctrl {
     width: var(--app-header-size);
     min-height: var(--app-header-size);
@@ -190,8 +198,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: calc(var(--icon-size-base) * 2.5);
-      height: calc(var(--icon-size-base) * 2.5);
+      width: calc(var(--icon-size-base) * 2);
+      height: calc(var(--icon-size-base) * 2);
       transform: translate(-50%, -50%);
       z-index: -1;
     }
@@ -202,6 +210,7 @@
 
     & a,
     & button {
+      color: var(--text-color-base);
       width: var(--app-header-size);
       min-height: var(--app-header-size);
       height: 100%;
