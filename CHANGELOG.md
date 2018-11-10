@@ -5,6 +5,18 @@ All notable changes to this project will be documented here.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] - 2018-11-10
+
+### Added
+- Added plant name to header when scrolling down.
+
+### Changed
+- Header height is now slightly reduced
+
+### Fixed
+- Login/Logout button size in settings menu.
+- An info layer when the application is offline should now actually show up.
+
 ## [1.5.0] - 2018-10-31
 
 ### Added

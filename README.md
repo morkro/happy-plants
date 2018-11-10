@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.5.0</code> <a href="CHANGELOG.md">(Changelog)</a>
+  Current version: <code>1.5.1</code> <a href="CHANGELOG.md">(Changelog)</a>
 </p>
 
 <p align="center">
