@@ -2,8 +2,8 @@
   --app-mobile-max-size: 600px;
   --app-desktop-min-size: 1100px;
   --app-desktop-max-width: 1000px;
-  --app-header-size: 60px;
-  --app-footer-size: calc(var(--app-header-size) / 1.2);
+  --app-header-size: 50px;
+  --app-footer-size: var(--app-header-size);
 
   --border-radius: 6px;
   --base-gap: 15px;

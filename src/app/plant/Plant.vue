@@ -130,6 +130,7 @@
         this.updateAppHeader({
           transparent: show,
           iconColor: this.headerInView ? 'white' : this.defaultIconColor,
+          title: this.headerInView ? false : this.plant.name,
           showIconBackdrop: this.headerInView
         })
       },
@@ -268,27 +269,18 @@
       }
     },
 
-    created () {
+    mounted () {
       this.updateAppHeader({
         transparent: true,
         title: false,
         backBtn: true,
+        backBtnPath: '/',
         settingsBtn: 'edit',
         settingsBtnOnClick: this.openPlantEditModal,
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
-    },
-
-    mounted () {
       this.loadPlantItem(this.$route.params.id)
-    },
-
-    updated () {
-      // this.updateAppHeader({
-      //   iconColor: this.headerInView ? 'white' : this.defaultIconColor,
-      //   showIconBackdrop: this.headerInView
-      // })
     },
 
     beforeDestroy () {

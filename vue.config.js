@@ -27,5 +27,9 @@ module.exports = {
     stylelint: {
       fix: false
     }
+  },
+
+  pwa: {
+    name: 'HappyPlants'
   }
 }

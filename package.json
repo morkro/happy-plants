@@ -1,6 +1,6 @@
 {
   "name": "happy-plants",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "private": true,
   "scripts": {
     "serve": "npm run svg && vue-cli-service serve",
@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "blob-util": "^2.0.2",
-    "firebase": "^5.5.5",
-    "localforage": "^1.7.2",
+    "firebase": "^5.5.7",
+    "localforage": "^1.7.3",
     "localforage-startswith": "^1.4.0",
     "lodash.throttle": "^4.1.1",
     "normalize.css": "^8.0.0",
@@ -32,11 +32,11 @@
   "devDependencies": {
     "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.0",
     "@babel/core": "^7.1.2",
-    "@vue/cli-plugin-babel": "^3.0.5",
-    "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-plugin-pwa": "^3.0.5",
-    "@vue/cli-plugin-unit-jest": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-plugin-eslint": "^3.1.4",
+    "@vue/cli-plugin-pwa": "^3.1.1",
+    "@vue/cli-plugin-unit-jest": "^3.1.1",
+    "@vue/cli-service": "^3.1.2",
     "@vue/eslint-config-standard": "^3.0.5",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
