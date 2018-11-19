@@ -6,6 +6,7 @@ import { routes as intro } from '@/app/intro'
 import { routes as overview } from '@/app/overview'
 import { routes as register } from '@/app/register'
 import { routes as plant } from '@/app/plant'
+import { routes as gallery } from '@/app/gallery'
 import { routes as settings } from '@/app/settings'
 import { routes as notfound } from '@/app/not-found'
 
@@ -28,6 +29,7 @@ export default new Router({
     ...overview,
     ...register,
     ...plant,
+    ...gallery,
     ...settings,
     ...notfound
   ]

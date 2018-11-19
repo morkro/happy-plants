@@ -68,6 +68,7 @@
   import PlantSeasons from './components/PlantSeasons'
   import PlantWatering from './components/PlantWatering'
   import PlantSunshine from './components/PlantSunshine'
+  import PlantGallery from './components/PlantGallery'
   import PlantFooter from './components/PlantFooter'
   import { getPlantModules } from './utils'
 
@@ -89,6 +90,7 @@
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
+      'plant-gallery': PlantGallery,
       'plant-footer': PlantFooter
     },
 
@@ -275,8 +277,8 @@
         title: false,
         backBtn: true,
         backBtnPath: '/',
-        settingsBtn: 'edit',
-        settingsBtnOnClick: this.openPlantEditModal,
+        rightBtn: 'edit',
+        rightBtnOnClick: this.openPlantEditModal,
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
@@ -290,12 +292,14 @@
         showIconBackdrop: false
       })
 
-      this.updatePlantsList({
-        guid: this.plant.guid,
-        name: this.plant.name,
-        imageURL: this.plant.imageURL,
-        tags: this.plant.tags
-      }).then(() => this.resetSelectedState())
+      if (this.$route.name !== 'Gallery') {
+        this.updatePlantsList({
+          guid: this.plant.guid,
+          name: this.plant.name,
+          imageURL: this.plant.imageURL,
+          tags: this.plant.tags
+        }).then(() => this.resetSelectedState())
+      }
     }
   }
 </script>

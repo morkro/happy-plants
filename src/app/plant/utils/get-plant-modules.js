@@ -40,6 +40,16 @@ export default function getPlantModules () {
       }
     },
     {
+      type: 'gallery',
+      selected: false,
+      meta: {
+        title: 'Progress Gallery',
+        description: 'Foo',
+        icon: 'image'
+      },
+      value: {}
+    },
+    {
       type: 'notes',
       selected: false,
       meta: {

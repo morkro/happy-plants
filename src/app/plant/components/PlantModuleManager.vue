@@ -60,7 +60,9 @@
       'feather-book': () =>
         import('vue-feather-icons/icons/BookIcon' /* webpackChunkName: "icons" */),
       'feather-check': () =>
-        import('vue-feather-icons/icons/CheckIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/CheckIcon' /* webpackChunkName: "icons" */),
+      'feather-image': () =>
+        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */)
     },
 
     props: {
