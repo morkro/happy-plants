@@ -32,7 +32,7 @@
         title: false,
         transparent: true,
         backBtn: false,
-        settingsBtn: false,
+        rightBtn: false,
         color: 'black'
       })
     },

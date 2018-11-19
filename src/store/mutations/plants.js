@@ -1,22 +1,12 @@
 import Vue from 'vue'
 import { getUrlFromBlob } from '@/utils/blob'
-import { sortByDate, sortByAlphabet } from '@/utils/sort'
+import sortPlants from '@/store/utils/sort-plants'
 
 function isEmptyObject (entry) {
   return (
     Object.keys(entry).length === 0 &&
     entry.constructor === Object
   )
-}
-
-function sortPlants (state, array = state.plants.data) {
-  switch (state.settings && state.settings.orderBy) {
-    case 'alphabetical':
-      return array.sort(sortByAlphabet)
-    case 'latest':
-    default:
-      return array.sort(sortByDate).reverse()
-  }
 }
 
 export default {

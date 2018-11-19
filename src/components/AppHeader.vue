@@ -18,20 +18,20 @@
 
       <div class="header-ctrl">
         <router-link
-          v-if="settings === true"
+          v-if="rightBtn === 'settings'"
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Settings">
           <div :class="['header-settings-icon', { 'highlight': showNotification }]">
-            <component :is="`feather-${settingsIcon}`"/>
+            <feather-settings />
           </div>
         </router-link>
         <v-button
-          v-else-if="settings === 'edit'"
-          aria-label="Edit"
-          :class="settingsClass"
-          @click.native.prevent="settingsOnClick">
-          <component :is="`feather-${settingsIcon}`" slot="icon" />
+          v-else-if="typeof rightBtn === 'string' && rightBtn !== false"
+          :aria-label="rightBtn"
+          :class="rightBtnClass"
+          @click.native.prevent="rightBtnOnClick">
+          <component :is="`feather-${rightBtn}`" slot="icon" />
         </v-button>
         <slot name="custom-action-right" />
       </div>
@@ -47,8 +47,8 @@
     props: {
       backPath: { type: [String, Object], default: '/' },
       backButton: { type: Boolean, default: false },
-      settings: { type: [Boolean, String], default: false },
-      settingsOnClick: { type: Function, default: () => {} },
+      rightBtn: { type: [Boolean, String], default: false },
+      rightBtnOnClick: { type: Function, default: () => {} },
       showIconBackdrop: { type: Boolean, default: false },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
@@ -63,16 +63,13 @@
       'feather-settings': () =>
         import('vue-feather-icons/icons/SettingsIcon' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
-        import('vue-feather-icons/icons/Edit2Icon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/Edit2Icon' /* webpackChunkName: "icons" */),
+      'feather-close': () =>
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
     },
 
     computed: {
-      settingsIcon () {
-        return this.settings === true
-          ? 'settings'
-          : this.settings
-      },
-      settingsClass () {
+      rightBtnClass () {
         return {
           'edit-data': true,
           'icon': true,

@@ -45,7 +45,7 @@
         title: this.currentRoute,
         backBtn: true,
         backBtnPath: this.returnRoutePath,
-        settingsBtn: false
+        rightBtn: false
       })
     }
   }
