@@ -1,20 +1,5 @@
 import Vue from 'vue'
-import { sortByDate, sortByAlphabet } from '@/utils/sort'
-
-const sortPlants = (settings, plants) => {
-  let sortedPlants = plants
-
-  switch (settings.orderBy) {
-    case 'latest':
-      sortedPlants = sortedPlants.sort(sortByDate).reverse()
-      break
-    case 'alphabetical':
-      sortedPlants = sortedPlants.sort(sortByAlphabet)
-      break
-  }
-
-  return sortedPlants
-}
+import sortPlants from '@/store/utils/sort-plants'
 
 export default {
   UPDATE_VIEWMODE (state, payload) {

@@ -212,7 +212,7 @@
       this.updateAppHeader({
         title: 'Happy Plants',
         backBtn: false,
-        settingsBtn: true,
+        rightBtn: 'settings',
         showIconBackdrop: false
       })
     },

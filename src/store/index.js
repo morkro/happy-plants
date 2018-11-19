@@ -29,8 +29,8 @@ export default new Vuex.Store({
       title: '',
       backBtn: true,
       backBtnPath: '/',
-      settingsBtn: true,
-      settingsBtnOnClick: () => {}
+      rightBtn: true,
+      rightBtnOnClick: () => {}
     },
 
     notification: {

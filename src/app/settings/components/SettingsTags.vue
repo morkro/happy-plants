@@ -142,7 +142,7 @@
       this.updateAppHeader({
         title: 'Manage tags',
         backBtn: true,
-        settingsBtn: false
+        rightBtn: false
       })
     },
 

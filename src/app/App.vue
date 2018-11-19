@@ -8,8 +8,8 @@
       :scroll-up="true"
       :transparent="transparent"
       :color="iconColor"
-      :settings="settingsBtn"
-      :settings-on-click="settingsBtnOnClick"
+      :right-btn="rightBtn"
+      :right-btn-on-click="rightBtnOnClick"
       :back-button="backBtn"
       :back-path="backBtnPath"
       :show-icon-backdrop="showIconBackdrop">
@@ -107,8 +107,8 @@
         iconColor: state => state.appheader.iconColor,
         backBtn: state => state.appheader.backBtn,
         backBtnPath: state => state.appheader.backBtnPath,
-        settingsBtn: state => state.appheader.settingsBtn,
-        settingsBtnOnClick: state => state.appheader.settingsBtnOnClick,
+        rightBtn: state => state.appheader.rightBtn,
+        rightBtnOnClick: state => state.appheader.rightBtnOnClick,
         showIconBackdrop: state => state.appheader.showIconBackdrop
       }),
       canSeeOfflineNotification () {

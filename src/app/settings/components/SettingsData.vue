@@ -175,7 +175,7 @@
       this.updateAppHeader({
         title: 'Import/ Export',
         backBtn: true,
-        settingsBtn: false
+        rightBtn: false
       })
     },
 
