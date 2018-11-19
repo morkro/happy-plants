@@ -89,10 +89,25 @@ describe('store/mutations/plants.js', () => {
     }
   })
 
+  it('LOAD_PLANTS_TOTAL_COUNT', () => {
+    let state = defaultState
+    mutations.LOAD_PLANTS_TOTAL_COUNT(state, { total: 10 })
+    expect(state.plants.loading).toBe(true)
+    expect(state.plants.data).toHaveLength(10)
+  })
+
   it('LOAD_PLANTS_PROGRESS', () => {
     let state = defaultState
     mutations.LOAD_PLANTS_PROGRESS(state)
     expect(state.plants.loading).toBe(true)
+  })
+
+  it('LOAD_PLANTS_FAILURE', () => {
+    let state = defaultState
+    mutations.LOAD_PLANTS_FAILURE(state)
+    expect(state.plants.loading).toBe(false)
+    expect(state.plants.finished).toBe(true)
+    expect(state.plants.error).toBe(true)
   })
 
   it('ADD_PLANT_SUCCESS', () => {
@@ -122,6 +137,15 @@ describe('store/mutations/plants.js', () => {
       { name: 'Foo', created: now },
       { name: 'Bar', created: then }
     ]))
+  })
+
+  it('ADD_PLANT_FAILURE, DELETE_PLANTS_FAILURE', () => {
+    let state = defaultState
+    mutations.ADD_PLANT_FAILURE(state)
+    expect(state.plants.error).toBe(true)
+    state = defaultState
+    mutations.DELETE_PLANTS_FAILURE(state)
+    expect(state.plants.error).toBe(true)
   })
 
   it('DELETE_PLANTS_SUCCESS', () => {
