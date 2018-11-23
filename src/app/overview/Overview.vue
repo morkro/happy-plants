@@ -396,7 +396,7 @@
     & svg {
       width: 40%;
       height: auto;
-      margin-bottom: calc(2 * var(--base-gap));
+      margin-bottom: var(--double-gap);
       opacity: 0.2;
     }
 

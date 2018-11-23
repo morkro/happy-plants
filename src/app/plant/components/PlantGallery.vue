@@ -46,7 +46,7 @@
   }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
   .gallery-list {
     list-style: none;
     display: flex;

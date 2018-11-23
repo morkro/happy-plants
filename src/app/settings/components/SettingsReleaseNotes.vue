@@ -69,7 +69,7 @@
     }
 
     & ul {
-      padding-left: calc(2 * var(--base-gap));
+      padding-left: var(--double-gap);
     }
   }
 </style>
