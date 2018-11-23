@@ -208,7 +208,7 @@
   }
 
   .tags-empty {
-    padding: calc(2 * var(--base-gap)) var(--base-gap);
+    padding: var(--double-gap) var(--base-gap);
     color: var(--text-color-secondary);
     display: flex;
     flex-direction: column;
@@ -226,7 +226,7 @@
     }
 
     & a {
-      margin-top: calc(2 * var(--base-gap));
+      margin-top: var(--double-gap);
       align-self: center;
     }
   }

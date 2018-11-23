@@ -317,7 +317,7 @@
     & > div {
       width: 100%;
       padding: var(--base-gap);
-      margin-bottom: calc(2 * var(--base-gap));
+      margin-bottom: var(--double-gap);
       position: relative;
 
       &.green {

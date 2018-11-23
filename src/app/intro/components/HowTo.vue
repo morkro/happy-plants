@@ -49,7 +49,7 @@
   }
 
   .intro-footer {
-    margin-top: calc(2 * var(--base-gap));
+    margin-top: var(--double-gap);
     color: var(--text-color-inverse);
     display: flex;
     justify-content: space-between;

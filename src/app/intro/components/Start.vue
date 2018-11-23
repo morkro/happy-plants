@@ -107,7 +107,7 @@
   }
 
   .start-login {
-    margin-top: calc(2 * var(--base-gap));
+    margin-top: var(--double-gap);
     display: flex;
     justify-content: center;
     flex-direction: column;
