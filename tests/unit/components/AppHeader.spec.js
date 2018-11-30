@@ -24,26 +24,26 @@ describe('components/AppHeader.vue', () => {
   })
 
   it('has correct default props data', () => {
-    const settingsOnClick = jest.fn()
-    const wrapper = shallowMount(AppHeader, { ...options, propsData: { settingsOnClick } })
+    const rightBtnOnClick = jest.fn()
+    const wrapper = shallowMount(AppHeader, { ...options, propsData: { rightBtnOnClick } })
     expect(wrapper.props().backPath).toEqual('/')
     expect(wrapper.props().backButton).toEqual(false)
-    expect(wrapper.props().settings).toEqual(false)
+    expect(wrapper.props().rightBtn).toEqual(false)
     expect(wrapper.props().color).toEqual('black')
-    expect(wrapper.props().settingsOnClick).toEqual(settingsOnClick)
+    expect(wrapper.props().rightBtnOnClick).toEqual(rightBtnOnClick)
   })
 
   it('settingsOnClick() works as expected', () => {
-    const settingsOnClick = jest.fn()
+    const rightBtnOnClick = jest.fn()
     const wrapper = shallowMount(AppHeader, { ...options,
       propsData: {
-        settingsOnClick,
-        settings: 'edit'
+        rightBtnOnClick,
+        rightBtn: 'edit'
       }
     })
     expect(wrapper.find('.edit-data').exists()).toBe(true)
     wrapper.find('.edit-data').trigger('click')
-    expect(wrapper.vm.settingsOnClick).toHaveBeenCalled()
+    expect(wrapper.vm.rightBtnOnClick).toHaveBeenCalled()
   })
 
   it('isWhite() works as expected', () => {
