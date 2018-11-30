@@ -1,6 +1,20 @@
-<!-- @click="showGallery(index)" -->
 <template>
   <div :class="['main-wireframe', { fullscreen }]">
+    <gallery-dialog
+      id="gallery-dialog"
+      app-root=".main-wireframe"
+      :show="showDialog"
+      @close-dialog="closeDialog">
+      <span slot="headline">Add photo</span>
+
+      <div>
+        <file-upload
+          name="add-gallery-file"
+          @file-selected="getPhoto"
+          @loading-file="handleLoadingState" />
+      </div>
+    </gallery-dialog>
+
     <main class="app-content">
       <div v-if="fullscreen" class="gallery-steps">
         <span>{{ listIndex + 1 }}</span>
@@ -9,7 +23,7 @@
       </div>
 
       <div v-if="!fullscreen" class="gallery-add">
-        <v-button>
+        <v-button @click.native="openAddPhoto">
           <feather-plus slot="icon" />
           Add photo
         </v-button>
@@ -40,6 +54,8 @@
   import { mapState, mapActions } from 'vuex'
   import LazyImage from '@/components/LazyImage'
   import Button from '@/components/Button'
+  import HappyDialog from '@/components/HappyDialog'
+  import FileUpload from '@/components/FileUpload'
   export default {
     name: 'Gallery',
 
@@ -52,12 +68,15 @@
     components: {
       'lazy-image': LazyImage,
       'v-button': Button,
+      'gallery-dialog': HappyDialog,
+      'file-upload': FileUpload,
       'feather-plus': () =>
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
       fullscreen: false,
+      showDialog: false,
       listDelta: 0,
       mockData: [
         { name: 'foo', imageURL: 'https://scontent-lhr3-1.cdninstagram.com/vp/d53e062c778e4ebb10469fb40178c477/5C736CF5/t51.2885-15/sh0.08/e35/p640x640/44249492_206290176949667_8900058224792858038_n.jpg' },
@@ -179,6 +198,18 @@
         if (!$galleryEl.classList.contains('animated')) {
           $galleryEl.classList.add('animated')
         }
+      },
+      openAddPhoto () {
+        this.showDialog = true
+      },
+      closeDialog () {
+        this.showDialog = false
+      },
+      handleLoadingState ({ loading }) {
+        console.log(loading)
+      },
+      getPhoto (data) {
+        console.log(data)
       }
     },
 
@@ -260,6 +291,25 @@
     & li {
       width: var(--preview-size);
       height: var(--preview-size);
+
+      &:last-child:not(:nth-child(even)) {
+        position: relative;
+      }
+
+      &:last-child:not(:nth-child(even))::after {
+        display: block;
+        content: "";
+        position: absolute;
+        width: calc(100% - var(--base-gap));
+        height: calc(100% - var(--base-gap));
+        border-radius: var(--border-radius);
+        background: var(--background-primary);
+        right: 0;
+        top: 0;
+        transform:
+          translateX(calc(100% + 0.5 * var(--base-gap)))
+          translateY(calc(0.5 * var(--base-gap)));
+      }
     }
 
     @nest .fullscreen & li {
@@ -269,6 +319,10 @@
       padding: 0 var(--base-gap);
       border-radius: none;
       margin-bottom: 0;
+
+      &:last-child:not(:nth-child(even))::after {
+        display: none;
+      }
     }
 
     & li > div {
