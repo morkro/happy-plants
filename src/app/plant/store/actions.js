@@ -8,6 +8,9 @@ export const resetSelectedState = ({ commit }) => {
 export const updatePlantModules = (...args) =>
   updatePlant('UPDATE_PLANT_MODULES', ...args)
 
+export const updateGallery = (...args) =>
+  updatePlant('UPDATE_GALLERY', ...args)
+
 export const updateSeason = (...args) =>
   updatePlant('UPDATE_SEASON', ...args)
 

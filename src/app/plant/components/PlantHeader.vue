@@ -23,7 +23,6 @@
           <file-upload
             ref="plantHeaderUpload"
             name="header-file"
-            :trigger-upload="triggerUpload"
             :disable-preview="true"
             @loading-file="handleLoadingState"
             @file-selected="assignNewPhoto" />
@@ -105,6 +104,7 @@
         }
 
         this.triggerUpload = true
+        this.$refs.plantHeaderUpload.triggerUpload()
       },
 
       handleLoadingState ({ loading }) {
