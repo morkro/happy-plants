@@ -8,10 +8,12 @@
       <span slot="headline">{{ uploadedPhotoName }}</span>
 
       <div class="gallery-dialog-content">
-        <img
-          :alt="uploadedPhotoName"
-          :title="uploadedPhotoName"
-          :src="uploadedPhoto">
+        <div class="gallery-preview-photo">
+          <img
+            :alt="uploadedPhotoName"
+            :title="uploadedPhotoName"
+            :src="uploadedPhoto">
+        </div>
 
         <v-button :loading="addGalleryItemProgress" @click.native="addPhotoToGallery">
           Add photo
@@ -27,7 +29,7 @@
           <span>{{ galleryData.length }}</span>
         </div>
         <v-button
-          type="circle"
+          :type="['circle', 'small']"
           class="gallery-delete icon inverse"
           @click.native="deletePhoto">
           <feather-trash slot="icon" />
@@ -53,6 +55,26 @@
       </div>
 
       <div v-if="galleryData.length" class="gallery-list-wrapper">
+        <v-button
+          v-if="fullscreen"
+          :disabled="listIndex === 0"
+          :type="['circle', 'small']"
+          class="gallery-control-prev icon inverse"
+          aria-label="Previous photo"
+          @click.native="moveGallery('right')">
+          <feather-left slot="icon" />
+        </v-button>
+
+        <v-button
+          v-if="fullscreen"
+          :disabled="listIndex === (galleryData.length - 1)"
+          :type="['circle', 'small']"
+          class="gallery-control-next icon inverse"
+          aria-label="Next photo"
+          @click.native="moveGallery('left')">
+          <feather-right slot="icon" />
+        </v-button>
+
         <selectable-list
           class="gallery-list"
           ref="galleryList"
@@ -106,7 +128,11 @@
       'feather-trash': () =>
         import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */),
       'feather-image': () =>
-        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
+      'feather-left': () =>
+        import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
+      'feather-right': () =>
+        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
@@ -162,7 +188,8 @@
       ...mapActions([
         'updateAppHeader',
         'loadPlantItem',
-        'updateGallery'
+        'updateGallery',
+        'showNotification'
       ]),
       showGallery (event) {
         const $selectedEl = event.target.closest('li')
@@ -186,12 +213,16 @@
       moveGallery (event) {
         if (!this.fullscreen) return
 
+        console.log('event', event)
         this.setGalleryAnimation()
 
+        const eventLeft = event === 'left' || event.additionalEvent === 'panleft'
+        const eventRight = event === 'right' || event.additionalEvent === 'panright'
         const isLastItem = this.listIndex === (this.galleryData.length - 1)
-        if (event.additionalEvent === 'panleft' && !isLastItem) {
+
+        if (eventLeft && !isLastItem) {
           this.listDelta -= 100
-        } else if (event.additionalEvent === 'panright' && this.listDelta !== 0) {
+        } else if (eventRight && this.listDelta !== 0) {
           this.listDelta += 100
         }
       },
@@ -222,9 +253,9 @@
           $galleryEl.classList.add('animated')
         }
       },
-      deletePhoto () {
-        console.log('delete this photo pls')
-        console.log(this.galleryData[this.listIndex])
+      async deletePhoto () {
+        await this.updateGallery(this.galleryData[this.listIndex])
+        this.showNotification({ message: 'Photo deleted.' })
       },
       openAddPhoto () {
         this.$refs.galleryUpload.triggerUpload()
@@ -338,15 +369,27 @@
   }
 
   .gallery-dialog-content {
-    & img,
     & button {
       width: 100%;
+    }
+
+    & img {
+      width: 100%;
+      vertical-align: middle;
+    }
+
+    & .gallery-preview-photo {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      border-radius: var(--border-radius);
     }
   }
 
   .gallery-options {
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    z-index: 2;
     width: 100vw;
     height: var(--app-footer-size);
     display: flex;
@@ -373,6 +416,28 @@
 
   .gallery-list-wrapper {
     width: 100%;
+
+    & [class^="gallery-control"] {
+      position: fixed;
+      z-index: 2;
+      top: 50%;
+      transform: translateY(-50%);
+      --button-background: var(--transparency-black-medium);
+      --button-shadow: var(--transparency-black-medium);
+      --button-focus: var(--transparency-black-medium);
+
+      &[disabled] {
+        opacity: 0.5;
+      }
+    }
+
+    & .gallery-control-prev {
+      left: var(--base-gap);
+    }
+
+    & .gallery-control-next {
+      right: var(--base-gap);
+    }
   }
 
   .gallery-list {
