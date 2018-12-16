@@ -27,13 +27,14 @@ describe('components/FileUpload.vue', () => {
     expect(wrapper.props().name).toEqual('')
     expect(wrapper.props().accepts).toEqual(['.png', '.jpg', '.jpeg'])
     expect(wrapper.props().disablePreview).toEqual(false)
-    expect(wrapper.props().triggerUpload).toEqual(false)
   })
 
   it(`computed 'acceptedFilePattern' is always a string`, () => {
-    const wrapper = shallowMount(FileUpload, Object.assign({}, options, { propsData: {
-      accepts: ['.foo', '.bar']
-    } }))
+    const wrapper = shallowMount(FileUpload, Object.assign({}, options, {
+      propsData: {
+        accepts: ['.foo', '.bar']
+      }
+    }))
     expect(wrapper.props().accepts).toEqual(['.foo', '.bar'])
     expect(wrapper.vm.acceptedFilePattern).toEqual('.foo, .bar')
   })

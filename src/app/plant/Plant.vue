@@ -180,6 +180,10 @@
             return {
               seasons: module.seasons
             }
+          case 'gallery':
+            return {
+              list: module.list
+            }
           case 'notes':
             return {
               content: module.notes

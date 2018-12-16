@@ -43,11 +43,13 @@ export default function getPlantModules () {
       type: 'gallery',
       selected: false,
       meta: {
-        title: 'Progress Gallery',
-        description: 'Foo',
+        title: 'Gallery',
+        description: 'Add more photos of your plant to track growth.',
         icon: 'image'
       },
-      value: {}
+      value: {
+        list: []
+      }
     },
     {
       type: 'notes',

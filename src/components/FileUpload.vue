@@ -41,8 +41,7 @@
     props: {
       name: { type: String, default: '' },
       accepts: { type: [Array, String], default: () => ['.png', '.jpg', '.jpeg'] },
-      disablePreview: { type: Boolean, default: false },
-      triggerUpload: { type: Boolean, default: false }
+      disablePreview: { type: Boolean, default: false }
     },
 
     components: {
@@ -74,15 +73,11 @@
       }
     },
 
-    watch: {
-      triggerUpload (trigger) {
-        if (trigger) {
-          this.$refs.fileInput.click()
-        }
-      }
-    },
-
     methods: {
+      triggerUpload () {
+        this.$refs.fileInput.click()
+      },
+
       async emitPhoto (event) {
         if (!event.target.files && !event.target.files.length) {
           return
@@ -108,7 +103,7 @@
         this.imageURL = getUrlFromBlob(this.newPhoto)
 
         this.$emit('loading-file', { loading: this.loading })
-        this.$emit('file-selected', { blob: this.newPhoto })
+        this.$emit('file-selected', { blob: this.newPhoto, fileName: this.fileName })
       }
     }
   }

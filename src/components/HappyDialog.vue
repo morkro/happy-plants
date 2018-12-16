@@ -157,6 +157,7 @@
     font-size: var(--text-size-large);
     font-weight: 500;
     line-height: 115%;
+    word-break: break-word;
 
     @nest .danger & {
       color: var(--text-color-inverse);
