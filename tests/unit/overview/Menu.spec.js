@@ -1,13 +1,17 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueTouch from 'vue-touch'
 import Menu from '@/app/overview/components/Menu'
+import Button from '@/components/Button'
 
 const localVue = createLocalVue()
 localVue.use(VueTouch)
 
 describe('app/overview/Menu.vue', () => {
   const options = {
-    localVue
+    localVue,
+    stubs: {
+      'v-button': Button
+    }
   }
 
   it('is a Vue component', () => {

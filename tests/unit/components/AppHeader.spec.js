@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import AppHeader from '@/components/AppHeader'
+import Button from '@/components/Button'
 
 const localVue = createLocalVue()
 
@@ -15,6 +16,9 @@ describe('components/AppHeader.vue', () => {
     localVue,
     slots: {
       default: '<h1>Title</h1>'
+    },
+    stubs: {
+      'v-button': Button
     }
   }
 
