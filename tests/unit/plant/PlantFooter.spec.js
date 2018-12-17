@@ -1,28 +1,37 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Button from '@/components/Button'
 import PlantFooter from '@/app/plant/components/PlantFooter'
 
+const localVue = createLocalVue()
+
 describe('app/plant/PlantFooter.vue', () => {
+  const options = {
+    localVue,
+    stubs: {
+      'v-button': Button
+    }
+  }
+
   it('is a Vue component', () => {
-    const wrapper = shallowMount(PlantFooter)
+    const wrapper = shallowMount(PlantFooter, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = shallowMount(PlantFooter)
+    const wrapper = shallowMount(PlantFooter, options)
     expect(wrapper.props().noModules).toEqual(true)
     expect(wrapper.props().showTagButton).toEqual(false)
   })
 
   it('toggles a message if noModules prop is changed', () => {
-    const wrapper = shallowMount(PlantFooter)
+    const wrapper = shallowMount(PlantFooter, options)
     expect(wrapper.find('p').exists()).toBe(true)
     wrapper.setProps({ noModules: false })
     expect(wrapper.find('p').exists()).toBe(false)
   })
 
   it('shows the tag button if prop is set', () => {
-    const wrapper = shallowMount(PlantFooter)
+    const wrapper = shallowMount(PlantFooter, options)
     let TagButton = wrapper.find('v-button.footer-tags')
 
     expect(TagButton.exists()).toBe(false)
@@ -34,7 +43,7 @@ describe('app/plant/PlantFooter.vue', () => {
   })
 
   it('emits event when tag button is tapped', () => {
-    const wrapper = shallowMount(PlantFooter, { propsData: { showTagButton: true } })
+    const wrapper = shallowMount(PlantFooter, { ...options, propsData: { showTagButton: true } })
     const TagButton = wrapper.find('.footer-tags')
     expect(TagButton.exists()).toBe(true)
     TagButton.trigger('click')
@@ -42,7 +51,7 @@ describe('app/plant/PlantFooter.vue', () => {
   })
 
   it('emits event when modules button is tapped', () => {
-    const wrapper = shallowMount(PlantFooter)
+    const wrapper = shallowMount(PlantFooter, options)
     const ModulesButton = wrapper.find('.footer-modules')
     expect(ModulesButton.exists()).toBe(true)
     ModulesButton.trigger('click')

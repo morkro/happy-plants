@@ -15,7 +15,10 @@ describe('app/not-found/NotFound.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'v-button': Button
+    }
   }
 
   it('is a Vue component', () => {

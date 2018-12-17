@@ -1,9 +1,15 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TagItem from '@/app/settings/components/TagItem'
 import Tag from '@/components/Tag'
 
+const localVue = createLocalVue()
+
 describe('app/settings/TagItem.vue', () => {
   const options = {
+    localVue,
+    stubs: {
+      'v-tag': Tag
+    },
     propsData: {
       label: 'Foo'
     }

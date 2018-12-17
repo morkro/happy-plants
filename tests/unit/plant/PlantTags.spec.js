@@ -1,19 +1,31 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import PlantTags from '@/app/plant/components/PlantTags'
+import Tag from '@/components/Tag'
+import Button from '@/components/Button'
+
+const localVue = createLocalVue()
 
 describe('app/plant/PlantTags.vue', () => {
+  const options = {
+    localVue,
+    stubs: {
+      'v-tag': Tag,
+      'v-button': Button
+    }
+  }
+
   it('is a Vue component', () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('has correct default props data', () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     expect(wrapper.props().tags).toEqual([])
   })
 
   it('hide button is visible and works', () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     const hideButton = wrapper.find('.hide-module')
     expect(hideButton.exists()).toBe(true)
     hideButton.trigger('click')
@@ -21,7 +33,7 @@ describe('app/plant/PlantTags.vue', () => {
   })
 
   it('toggle tag works', () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     const addTagButton = wrapper.find('.tags-add')
     let inputField = wrapper.find('.tags-new')
 
@@ -36,7 +48,7 @@ describe('app/plant/PlantTags.vue', () => {
   })
 
   it('adding a tag works', () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     wrapper.setData({ showInput: true })
 
     const input = wrapper.find({ ref: 'tagInput' })
@@ -54,7 +66,7 @@ describe('app/plant/PlantTags.vue', () => {
   })
 
   it(`adding empty tag won’t emit`, () => {
-    const wrapper = shallowMount(PlantTags)
+    const wrapper = shallowMount(PlantTags, options)
     wrapper.setData({ showInput: true })
 
     const input = wrapper.find({ ref: 'tagInput' })
