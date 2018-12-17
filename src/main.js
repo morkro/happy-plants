@@ -5,7 +5,6 @@ import VueA11yDialog from 'vue-a11y-dialog'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
-import './registerServiceWorker'
 
 import App from '@/app/App'
 import router from '@/router'
@@ -13,6 +12,9 @@ import store from '@/store'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 import LazyLoadDirective from '@/utils/vue-lazy-load-directive'
+
+import './registerComponents'
+import './registerServiceWorker'
 
 /**
  * This is required as Webpack seems to do some static analysis
@@ -34,6 +36,9 @@ localforage.keys()
     }
   })
 
+/**
+ * Vue configuration.
+ */
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 Vue.config.devtools = true
 Vue.config.errorHandler = function (err, vm, info) {

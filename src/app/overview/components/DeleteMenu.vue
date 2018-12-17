@@ -22,7 +22,6 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
   export default {
     name: 'DeleteMenu',
 
@@ -31,7 +30,6 @@
     },
 
     components: {
-      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-x': () =>

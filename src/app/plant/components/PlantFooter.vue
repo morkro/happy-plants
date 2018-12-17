@@ -24,7 +24,6 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
   export default {
     name: 'PlantFooter',
 
@@ -34,7 +33,6 @@
     },
 
     components: {
-      'v-button': Button,
       'feather-box': () =>
         import('vue-feather-icons/icons/BoxIcon' /* webpackChunkName: "icons" */),
       'feather-tag': () =>

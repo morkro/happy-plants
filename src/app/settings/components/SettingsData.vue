@@ -1,6 +1,6 @@
 <template>
   <div class="settings-data">
-    <settings-dialog
+    <happy-dialog
       id="settings-dialog"
       app-root=".settings-data"
       :type="this.modalType"
@@ -58,7 +58,7 @@
           Import
         </v-button>
       </div>
-    </settings-dialog>
+    </happy-dialog>
 
     <section class="download-section box">
       <h2>Export plant data</h2>
@@ -111,9 +111,6 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import HappyDialog from '@/components/HappyDialog'
-  import FileUpload from '@/components/FileUpload'
-  import Button from '@/components/Button'
 
   export default {
     name: 'SettingsData',
@@ -123,9 +120,6 @@
     },
 
     components: {
-      'settings-dialog': HappyDialog,
-      'file-upload': FileUpload,
-      'v-button': Button,
       'feather-download': () =>
         import('vue-feather-icons/icons/DownloadIcon' /* webpackChunkName: "icons" */),
       'feather-delete': () =>

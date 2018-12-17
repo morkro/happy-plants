@@ -1,5 +1,5 @@
 <template>
-  <app-dialog
+  <happy-dialog
     id="settings-tags-dialog"
     app-root=".settings-tags"
     :show="show"
@@ -20,12 +20,10 @@
         Update name
       </v-button>
     </form>
-  </app-dialog>
+  </happy-dialog>
 </template>
 
 <script>
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
   export default {
     name: 'TagModal',
 
@@ -34,11 +32,6 @@
       tag: { type: Object, default: () => {} },
       tagNames: { type: Array, default: () => [] },
       loading: { type: Boolean, default: false }
-    },
-
-    components: {
-      'app-dialog': HappyDialog,
-      'v-button': Button
     },
 
     data: () => ({

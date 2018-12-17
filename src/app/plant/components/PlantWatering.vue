@@ -4,7 +4,7 @@
     <h2 slot="title">Watering</h2>
 
     <div slot="content" class="watering-content">
-      <plant-dialog
+      <happy-dialog
         id="plant-watering-dialog"
         app-root=".main-wireframe"
         :show="showRoutineSelection"
@@ -24,7 +24,7 @@
             </label>
           </li>
         </ul>
-      </plant-dialog>
+      </happy-dialog>
 
       <div class="watering-description">
         <p>
@@ -55,13 +55,11 @@
 </template>
 
 <script>
-  import HappyDialog from '@/components/HappyDialog'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantWatering',
 
     components: {
-      'plant-dialog': HappyDialog,
       'plant-component': PlantComponent,
       'feather-droplet': () =>
         import('vue-feather-icons/icons/DropletIcon' /* webpackChunkName: "icons" */)

@@ -3,7 +3,7 @@
     <feather-book slot="icon" />
     <h2 slot="title">Notebook</h2>
     <div slot="content">
-      <app-dialog
+      <happy-dialog
         id="plant-notes-dialog"
         app-root=".main-wireframe"
         :show="showNotes"
@@ -17,7 +17,7 @@
         <v-button @click.native="closeAndSaveNotes">
           Save
         </v-button>
-      </app-dialog>
+      </happy-dialog>
 
       <div v-if="!content"
         key="notes-empty"
@@ -49,15 +49,11 @@
 </template>
 
 <script>
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
   import PlantComponent from './PlantComponent'
   export default {
     name: 'PlantNotes',
 
     components: {
-      'app-dialog': HappyDialog,
-      'v-button': Button,
       'plant-component': PlantComponent,
       'feather-book': () =>
         import('vue-feather-icons/icons/BookIcon' /* webpackChunkName: "icons" */)

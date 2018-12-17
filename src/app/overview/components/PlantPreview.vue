@@ -60,8 +60,6 @@
 
 <script>
   import router from '@/router'
-  import Tag from '@/components/Tag'
-  import LazyImage from '@/components/LazyImage'
   import '@/assets/icons/cactus'
 
   export default {
@@ -79,8 +77,6 @@
     },
 
     components: {
-      'v-tag': Tag,
-      'lazy-image': LazyImage,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-plus': () =>

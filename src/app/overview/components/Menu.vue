@@ -40,14 +40,12 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
   import '@/assets/icons/leaf'
 
   export default {
     name: 'OverviewMenu',
 
     components: {
-      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
       'feather-grid': () =>

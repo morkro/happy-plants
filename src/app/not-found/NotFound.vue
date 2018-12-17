@@ -15,8 +15,6 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import Button from '@/components/Button'
-
   export default {
     name: 'NotFound',
 
@@ -25,7 +23,6 @@
     },
 
     components: {
-      'v-button': Button,
       'feather-home': () =>
         import('vue-feather-icons/icons/HomeIcon' /* webpackChunkName: "icons" */)
     },

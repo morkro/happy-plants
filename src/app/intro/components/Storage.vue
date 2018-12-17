@@ -1,7 +1,7 @@
 <template>
   <div>
-    <storage-dialog
-      id="storage-dialog"
+    <happy-dialog
+      id="happy-dialog"
       app-root=".settings-data"
       :show="showDialog"
       @close-dialog="closeDialog">
@@ -15,7 +15,7 @@
           Open Google sign-in
         </v-button>
       </div>
-    </storage-dialog>
+    </happy-dialog>
 
     <div class="intro-storage box">
       <h2>How do you want to save your plant data?</h2>
@@ -65,15 +65,11 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
 
   export default {
     name: 'IntroStorage',
 
     components: {
-      'storage-dialog': HappyDialog,
-      'v-button': Button,
       'feather-right': () =>
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
       'feather-left': () =>
