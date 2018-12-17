@@ -11,17 +11,12 @@
 </template>
 
 <script>
-  import Tag from '@/components/Tag'
   export default {
     name: 'TagItem',
 
     props: {
       count: { type: Number, default: 0 },
       label: { type: String, required: true }
-    },
-
-    components: {
-      'v-tag': Tag
     }
   }
 </script>

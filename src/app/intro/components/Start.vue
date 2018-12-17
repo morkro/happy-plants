@@ -19,15 +19,11 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import Button from '@/components/Button'
-  import AuthProviderList from '@/components/AuthProviderList'
 
   export default {
     name: 'IntroStart',
 
     components: {
-      'v-button': Button,
-      'auth-provider-list': AuthProviderList,
       'feather-right': () =>
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },

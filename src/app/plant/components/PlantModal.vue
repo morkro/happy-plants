@@ -1,8 +1,8 @@
 <template>
-  <app-dialog
+  <happy-dialog
     id="plant-edit-dialog"
     app-root=".main-wireframe"
-    class="app-dialog"
+    class="happy-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
     <span slot="headline">Delete plant</span>
@@ -19,12 +19,10 @@
       <span>Last updated: {{ modified | formatDate }}</span>
       <span>Created: {{ created | formatDate }}</span>
     </div>
-  </app-dialog>
+  </happy-dialog>
 </template>
 
 <script>
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
   import '@/assets/icons/cactus'
 
   export default {
@@ -39,8 +37,6 @@
     },
 
     components: {
-      'app-dialog': HappyDialog,
-      'v-button': Button,
       'feather-trash': () =>
         import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },

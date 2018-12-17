@@ -1,7 +1,7 @@
 <template>
   <div class="main-wireframe">
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
-    <overview-dialog
+    <happy-dialog
       id="overview-dialog"
       app-root=".main-wireframe"
       type="danger"
@@ -19,7 +19,7 @@
           Yes, delete plants
         </v-button>
       </div>
-    </overview-dialog>
+    </happy-dialog>
 
     <div v-if="showBackdrop"
       class="overview-backdrop"
@@ -92,10 +92,6 @@
 <script>
   import { mapState, mapActions } from 'vuex'
 
-  import AppHeader from '@/components/AppHeader'
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
-  import Tag from '@/components/Tag'
   import OverviewMenu from './components/Menu'
   import DeleteMenu from './components/DeleteMenu'
   import PlantsList from './components/PlantsList'
@@ -106,10 +102,6 @@
     name: 'Overview',
 
     components: {
-      'app-header': AppHeader,
-      'overview-dialog': HappyDialog,
-      'v-button': Button,
-      'v-tag': Tag,
       'plants-list': PlantsList,
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,

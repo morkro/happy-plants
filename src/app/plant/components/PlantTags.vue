@@ -78,14 +78,10 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
-  import Tag from '@/components/Tag'
   export default {
     name: 'PlantTag',
 
     components: {
-      'v-button': Button,
-      'v-tag': Tag,
       'feather-plus': () =>
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>

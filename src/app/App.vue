@@ -18,10 +18,10 @@
       </h1>
     </app-header>
 
-    <app-dialog
+    <happy-dialog
       id="new-release-dialog"
       app-root=".main-wireframe"
-      class="app-dialog"
+      class="happy-dialog"
       :show="showReleaseDialog"
       @close-dialog="emitCloseDialog">
       <span slot="headline">
@@ -36,7 +36,7 @@
 
         <md-changelog ref="releaseUpdates" />
       </div>
-    </app-dialog>
+    </happy-dialog>
 
     <router-view />
   </div>
@@ -45,9 +45,6 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import Changelog from '#/CHANGELOG.md'
-  import AppHeader from '@/components/AppHeader'
-  import AppNotifications from '@/components/AppNotifications'
-  import HappyDialog from '@/components/HappyDialog'
   import {
     getEntry as getSessionEntry,
     deleteEntry as deleteSessionEntry
@@ -66,9 +63,6 @@
     },
 
     components: {
-      'app-notifications': AppNotifications,
-      'app-header': AppHeader,
-      'app-dialog': HappyDialog,
       'md-changelog': Changelog
     },
 

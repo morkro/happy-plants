@@ -1,7 +1,7 @@
 <template>
   <div class="settings-menu">
-    <menu-dialog
-      id="settings-menu-dialog"
+    <happy-dialog
+      id="settings-happy-dialog"
       app-root=".settings-menu"
       :show="showLoginDialog"
       @close-dialog="closeLoginDialog">
@@ -12,7 +12,7 @@
         :disabled="disabled"
         @provider-selected="loginUser"
       />
-    </menu-dialog>
+    </happy-dialog>
 
     <ul class="settings-menu-list">
       <li
@@ -98,17 +98,11 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import Button from '@/components/Button'
-  import HappyDialog from '@/components/HappyDialog'
-  import AuthProviderList from '@/components/AuthProviderList'
 
   export default {
     name: 'SettingsMenu',
 
     components: {
-      'v-button': Button,
-      'menu-dialog': HappyDialog,
-      'auth-provider-list': AuthProviderList,
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
       'feather-database': () =>
@@ -278,7 +272,7 @@
 </script>
 
 <style lang="postcss">
-  #settings-menu-dialog .auth-provider-list button {
+  #settings-happy-dialog .auth-provider-list button {
     margin-top: 0;
   }
 

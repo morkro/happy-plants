@@ -1,13 +1,13 @@
 <template>
   <div :class="['main-wireframe', { fullscreen }]">
-    <gallery-dialog
+    <happy-dialog
       id="gallery-dialog"
       app-root=".main-wireframe"
       :show="showDialog"
       @close-dialog="closeDialog">
       <span slot="headline">{{ uploadedPhotoName }}</span>
 
-      <div class="gallery-dialog-content">
+      <div class="happy-dialog-content">
         <div class="gallery-preview-photo">
           <img
             :alt="uploadedPhotoName"
@@ -19,40 +19,20 @@
           Add photo
         </v-button>
       </div>
-    </gallery-dialog>
+    </happy-dialog>
 
     <main class="app-content">
-      <div v-if="fullscreen" class="gallery-options">
-        <div class="gallery-steps">
-          <span>{{ listIndex + 1 }}</span>
-          <span>/</span>
-          <span>{{ galleryData.length }}</span>
-        </div>
-        <v-button
-          :type="['circle', 'small']"
-          class="gallery-delete icon inverse"
-          @click.native="deletePhoto">
-          <feather-trash slot="icon" />
-        </v-button>
-      </div>
+      <gallery-options
+        v-if="fullscreen"
+        :current="listIndex + 1"
+        :total="galleryData.length"
+        @delete-photo="deletePhoto" />
 
-      <div v-if="!fullscreen" class="gallery-add">
-        <file-upload
-          ref="galleryUpload"
-          name="add-gallery-file"
-          :disable-preview="true"
-          @file-selected="getPhoto" />
-
-        <v-button
-          aria-label="Add photo"
-          type="circle"
-          @click.native="openAddPhoto">
-          <div slot="icon" class="add-photo-icon">
-            <feather-plus />
-            <feather-image />
-          </div>
-        </v-button>
-      </div>
+      <gallery-upload
+        v-if="!fullscreen"
+        ref="galleryUpload"
+        @photo-selected="getPhoto"
+        @trigger-selection="openAddPhoto" />
 
       <div v-if="galleryData.length" class="gallery-list-wrapper">
         <v-button
@@ -100,11 +80,8 @@
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
-  import LazyImage from '@/components/LazyImage'
-  import Button from '@/components/Button'
-  import HappyDialog from '@/components/HappyDialog'
-  import FileUpload from '@/components/FileUpload'
-  import SelectableList from '@/components/SelectableList'
+  import GalleryOptions from './components/GalleryOptions'
+  import GalleryUpload from './components/GalleryUpload'
 
   import getGalleryItemStructure from './utils/get-gallery-item-structure'
 
@@ -118,17 +95,8 @@
     },
 
     components: {
-      'lazy-image': LazyImage,
-      'v-button': Button,
-      'gallery-dialog': HappyDialog,
-      'file-upload': FileUpload,
-      'selectable-list': SelectableList,
-      'feather-plus': () =>
-        import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
-      'feather-trash': () =>
-        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */),
-      'feather-image': () =>
-        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
+      'gallery-options': GalleryOptions,
+      'gallery-upload': GalleryUpload,
       'feather-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-right': () =>
@@ -213,7 +181,6 @@
       moveGallery (event) {
         if (!this.fullscreen) return
 
-        console.log('event', event)
         this.setGalleryAnimation()
 
         const eventLeft = event === 'left' || event.additionalEvent === 'panleft'
@@ -343,32 +310,7 @@
     overflow: hidden;
   }
 
-  .gallery-add {
-    position: fixed;
-    bottom: var(--base-gap);
-    z-index: 1;
-
-    & .file-upload {
-      position: absolute;
-      left: 0;
-      transform: translateX(-100%);
-      height: 0;
-      opacity: 0;
-    }
-
-    & .add-photo-icon {
-      transform: translate(1px, 2px);
-
-      & svg:nth-of-type(1) {
-        position: absolute;
-        background: var(--button-background);
-        border-radius: 50%;
-        transform: scale(0.8) translateY(-9px) translateX(-9px);
-      }
-    }
-  }
-
-  .gallery-dialog-content {
+  .happy-dialog-content {
     & button {
       width: 100%;
     }
@@ -383,34 +325,6 @@
       height: auto;
       overflow: hidden;
       border-radius: var(--border-radius);
-    }
-  }
-
-  .gallery-options {
-    position: fixed;
-    bottom: 0;
-    z-index: 2;
-    width: 100vw;
-    height: var(--app-footer-size);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--base-gap);
-
-    & .gallery-steps {
-      align-self: center;
-      color: var(--text-color-inverse);
-      background: var(--custom-black);
-      padding:
-        calc(var(--base-gap) / 4)
-        calc(var(--base-gap) / 2);
-      border-radius: var(--border-radius);
-      font-size: var(--text-size-xsmall);
-    }
-
-    & .gallery-delete {
-      background: transparent;
-      box-shadow: none;
     }
   }
 

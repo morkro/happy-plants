@@ -11,7 +11,7 @@
       @close-dialog="closeModal" />
 
     <!-- Alert as confirmation to delete tag. -->
-    <tag-dialog
+    <happy-dialog
       id="settings-tags-delete"
       app-root=".settings-tags"
       type="danger"
@@ -32,7 +32,7 @@
           Delete tag
         </v-button>
       </div>
-    </tag-dialog>
+    </happy-dialog>
 
     <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
       <div v-if="!tags.length" class="tags-empty">
@@ -83,9 +83,6 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
-  import Tag from '@/components/Tag'
   import TagModal from './TagModal'
   import TagItem from './TagItem'
 
@@ -97,9 +94,6 @@
     },
 
     components: {
-      'v-button': Button,
-      'v-tag': Tag,
-      'tag-dialog': HappyDialog,
       'tag-modal': TagModal,
       'tag-item': TagItem,
       'feather-plus': () =>

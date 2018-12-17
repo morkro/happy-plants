@@ -1,5 +1,5 @@
 <template>
-  <plant-dialog
+  <happy-dialog
     id="plant-module-manager-dialog"
     app-root=".main-wireframe"
     :show="show"
@@ -38,19 +38,14 @@
         Update modules
       </v-button>
     </div>
-  </plant-dialog>
+  </happy-dialog>
 </template>
 
 <script>
-  import HappyDialog from '@/components/HappyDialog'
-  import Button from '@/components/Button'
-
   export default {
     name: 'PlantModuleManager',
 
     components: {
-      'plant-dialog': HappyDialog,
-      'v-button': Button,
       'feather-droplet': () =>
         import('vue-feather-icons/icons/DropletIcon' /* webpackChunkName: "icons" */),
       'feather-sun': () =>

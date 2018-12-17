@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <storage-dialog
+    <happy-dialog
       id="storage-dialog"
       app-root=".settings-storage"
       :show="showCloudDialog"
@@ -90,22 +90,18 @@
           I understand, let's go
         </v-button>
       </div>
-    </storage-dialog>
+    </happy-dialog>
   </div>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import Button from '@/components/Button'
-  import HappyDialog from '@/components/HappyDialog'
   import sleep from '@/utils/sleep'
 
   export default {
     name: 'SettingsStorage',
 
     components: {
-      'v-button': Button,
-      'storage-dialog': HappyDialog,
       'feather-cloud': () =>
         import('vue-feather-icons/icons/CloudIcon' /* webpackChunkName: "icons" */),
       'feather-smartphone': () =>

@@ -40,7 +40,6 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
   export default {
     name: 'AppHeader',
 
@@ -57,7 +56,6 @@
     },
 
     components: {
-      'v-button': Button,
       'feather-arrow-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-settings': () =>

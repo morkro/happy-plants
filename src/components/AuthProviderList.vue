@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  import Button from '@/components/Button'
   export default {
     name: 'AuthProviderList',
 
@@ -24,7 +23,6 @@
     },
 
     components: {
-      'v-button': Button,
       'feather-twitter': () =>
         import('vue-feather-icons/icons/TwitterIcon' /* webpackChunkName: "icons" */),
       'feather-google': () =>

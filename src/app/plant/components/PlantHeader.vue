@@ -45,7 +45,6 @@
 </template>
 
 <script>
-  import FileUpload from '@/components/FileUpload'
   import '@/assets/icons/cactus'
   export default {
     name: 'PlantHeader',
@@ -57,7 +56,6 @@
     },
 
     components: {
-      'file-upload': FileUpload,
       'feather-image': () =>
         import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
       'feather-aperture': () =>

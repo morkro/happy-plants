@@ -39,8 +39,6 @@
 </template>
 
 <script>
-  import LazyImage from '@/components/LazyImage'
-  import Button from '@/components/Button'
   import PlantComponent from './PlantComponent'
   import '@/assets/icons/cactus'
 
@@ -48,8 +46,6 @@
     name: 'PlantGallery',
 
     components: {
-      'lazy-image': LazyImage,
-      'v-button': Button,
       'plant-component': PlantComponent,
       'feather-image': () =>
         import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */)

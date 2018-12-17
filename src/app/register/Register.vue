@@ -40,8 +40,6 @@
 
 <script>
   import { mapActions } from 'vuex'
-  import FileUpload from '@/components/FileUpload'
-  import Button from '@/components/Button'
   import { getPlantStructure } from '@/app/plant/utils'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
   import '@/assets/icons/leaf'
@@ -51,11 +49,6 @@
 
     meta: {
       title: 'Add a new friend'
-    },
-
-    components: {
-      'file-upload': FileUpload,
-      'v-button': Button
     },
 
     computed: {
