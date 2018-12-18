@@ -6,35 +6,49 @@
     @close-dialog="cancel">
     <span slot="headline">Manage modules</span>
 
-    <ul class="module-list">
-      <v-touch
-        tag="li"
-        v-for="(module, index) in updatedModules"
-        :class="{ [`type-${module.type}`]: true, active: module.selected }"
-        :key="`module-${index}`"
-        @tap="onToggleModule(module)">
-        <div class="module-icon">
-          <input type="radio"
-            :id="`module-${module.type}`"
-            :name="`module-${module.type}`"
-            :value="module.type"
-            :checked="module.selected">
-          <span aria-hidden="true">
-            <feather-check />
-          </span>
-        </div>
-        <label class="module-description" :for="`module-${module.type}`">
-          <h2>
-            <component :is="`feather-${module.meta.icon}`" />
-            {{ module.meta.title }}
-          </h2>
-          <span>{{ module.meta.description }}</span>
-        </label>
-      </v-touch>
-    </ul>
+    <div class="module-content">
+      <div v-if="warnGalleryRemoval" class="module-warning">
+        <p>
+          Disabling the gallery module will also <strong>delete all photos</strong> from it!
+          Are you sure about this?
+        </p>
+      </div>
+
+      <ul class="module-list">
+        <v-touch
+          tag="li"
+          v-for="(module, index) in updatedModules"
+          :class="{ [`type-${module.type}`]: true, active: module.selected }"
+          :key="`module-${index}`"
+          @tap="onToggleModule(module)">
+          <div class="module-icon">
+            <input type="radio"
+              :id="`module-${module.type}`"
+              :name="`module-${module.type}`"
+              :value="module.type"
+              :checked="module.selected">
+            <span aria-hidden="true">
+              <feather-check />
+            </span>
+          </div>
+          <label class="module-description" :for="`module-${module.type}`">
+            <h2>
+              <component :is="`feather-${module.meta.icon}`" />
+              {{ module.meta.title }}
+            </h2>
+            <span>{{ module.meta.description }}</span>
+          </label>
+        </v-touch>
+      </ul>
+    </div>
 
     <div class="dialog-actions">
-      <v-button @click.native="confirmModuleUpdates">
+      <v-button
+        v-if="warnGalleryRemoval"
+        @click.native="continueModuleEditing">
+        Continue updating
+      </v-button>
+      <v-button v-else @click.native="confirmModuleUpdates">
         Update modules
       </v-button>
     </div>
@@ -67,7 +81,9 @@
 
     data () {
       return {
-        updatedModules: Array.from(this.modules)
+        updatedModules: Array.from(this.modules),
+        warnGalleryRemoval: false,
+        forceUpdates: false
       }
     },
 
@@ -80,13 +96,24 @@
     methods: {
       cancel () {
         this.updatedModules = Array.from(this.modules)
+        this.warnGalleryRemoval = false
         this.$emit('close-module-manager')
       },
       onToggleModule ({ type, selected }) {
         const updatedIndex = this.updatedModules.findIndex(mod => mod.type === type)
         const module = this.updatedModules[updatedIndex]
 
+        const moduleContent = selected.value && selected.value.list
+        if (!this.forceUpdates && type === 'gallery' && moduleContent && moduleContent.length) {
+          this.warnGalleryRemoval = true
+          return
+        }
+
         this.updatedModules.splice(updatedIndex, 1, { ...module, selected: !module.selected })
+      },
+      continueModuleEditing () {
+        this.warnGalleryRemoval = false
+        this.forceUpdates = true
       },
       confirmModuleUpdates () {
         this.$emit('updated-modules',
@@ -113,12 +140,36 @@
     }
   }
 
-  .module-list {
-    list-style: none;
+  .module-content {
     max-height: 80vh;
     overflow: scroll;
     margin: 0 calc(-1 * var(--base-gap));
     border-top: 2px solid var(--border-color);
+    position: relative;
+  }
+
+  .module-warning {
+    position: absolute;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    padding: var(--base-gap);
+    background: var(--transparency-black-medium);
+    display: flex;
+    align-items: center;
+
+    & p {
+      color: var(--text-color-inverse);
+      display: block;
+      background: var(--transparency-black-medium);
+      padding: var(--base-gap);
+      border-radius: var(--border-radius);
+    }
+  }
+
+  .module-list {
+    list-style: none;
+    height: 100%;
 
     @nest html[data-theme="dark"] & {
       border-top: 2px solid var(--background-secondary);
