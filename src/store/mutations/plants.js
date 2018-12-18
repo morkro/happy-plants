@@ -9,6 +9,12 @@ function isEmptyObject (entry) {
   )
 }
 
+function refreshBlobUrl (item) {
+  return Object.assign(item, {
+    imageURL: getUrlFromBlob(item.blob)
+  })
+}
+
 export default {
   LOAD_PLANTS_PROGRESS (state) {
     state.plants.loading = true
@@ -32,8 +38,22 @@ export default {
   LOAD_PLANTS_SUCCESS (state, payload) {
     let transformed = payload.plants
     if (state.storage.type === 'local') {
-      transformed = payload.plants.map(item =>
-        Object.assign(item, { imageURL: getUrlFromBlob(item.blob) }))
+      transformed = payload.plants.map(refreshBlobUrl)
+
+      // REMOVE
+      transformed = transformed.map(plant => {
+        return Object.assign(plant, {
+          modules: plant.modules.map(module => {
+            if (module.type !== 'gallery') return module
+
+            if (module.value.list.length) {
+              module.value.list = module.value.list.map(refreshBlobUrl)
+            }
+
+            return module
+          })
+        })
+      })
     }
 
     state.plants.loading = false

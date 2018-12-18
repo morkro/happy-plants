@@ -31,8 +31,10 @@
       <gallery-upload
         v-if="!fullscreen"
         ref="galleryUpload"
+        :edit-mode="listEditMode"
         @photo-selected="getPhoto"
-        @trigger-selection="openAddPhoto" />
+        @trigger-selection="openAddPhoto"
+        @trigger-delete="deleteSelectedPhotos" />
 
       <div v-if="galleryData.length" class="gallery-list-wrapper">
         <v-button
@@ -61,14 +63,15 @@
           :items="galleryData"
           :style="listStyle"
           :pan-options="{ direction: 'horizontal' }"
-          @selected="getSelectedItems"
           @tap="showGallery"
-          @panend="moveGallery">
-          <lazy-image
-            slot-scope="{ data }"
-            v-if="data.imageURL"
-            :source="data.imageURL"
-            :alt="data.fileName" />
+          @selected="getSelectedItems"
+          @panend="moveGallery"
+          @edit-mode="toggleListEditMode">
+            <lazy-image
+              slot-scope="{ data }"
+              v-if="data.imageURL"
+              :source="data.imageURL"
+              :alt="data.fileName" />
         </selectable-list>
       </div>
     </main>
@@ -110,7 +113,9 @@
       listDelta: 0,
       uploadedBlob: null,
       uploadedPhoto: null,
-      uploadedPhotoName: null
+      uploadedPhotoName: null,
+      listEditMode: false,
+      selectedItemsList: []
     }),
 
     computed: {
@@ -119,7 +124,9 @@
         plant: state => state.selected
       }),
       galleryData () {
-        return this.plant.modules.find(module => module.type === 'gallery').value.list
+        return this.plant.modules
+          .find(module => module.type === 'gallery')
+          .value.list
       },
       listStyle () {
         return {
@@ -159,6 +166,14 @@
         'updateGallery',
         'showNotification'
       ]),
+      defaultAppHeader () {
+        this.updateAppHeader({
+          transparent: false,
+          title: 'Gallery',
+          backBtn: true,
+          rightBtn: false
+        })
+      },
       showGallery (event) {
         const $selectedEl = event.target.closest('li')
         if ($selectedEl) {
@@ -207,12 +222,7 @@
         this.$refs.galleryList.$el.classList.remove('animated')
         this.fullscreen = false
         this.listDelta = 0
-        this.updateAppHeader({
-          transparent: false,
-          title: 'Gallery',
-          backBtn: true,
-          rightBtn: false
-        })
+        this.defaultAppHeader()
       },
       setGalleryAnimation () {
         const $galleryEl = this.$refs.galleryList.$el
@@ -258,10 +268,36 @@
         this.closeDialog()
         this.clearPhoto()
       },
-      async getSelectedItems (list) {
-        for (const item of list) {
+      toggleListEditMode (value) {
+        this.listEditMode = value
+        if (this.listEditMode) {
+          this.updateAppHeader({
+            title: `0 selected`,
+            backBtn: false,
+            rightBtn: 'close',
+            rightBtnOnClick: () => this.$refs.galleryList.clearSelection()
+          })
+        } else {
+          this.defaultAppHeader()
+        }
+      },
+      getSelectedItems (list) {
+        this.selectedItemsList = list
+        this.updateAppHeader({
+          title: `${this.selectedItemsList.length} selected`
+        })
+      },
+      async deleteSelectedPhotos () {
+        for (const item of this.selectedItemsList) {
           await this.updateGallery(item)
         }
+
+        const selectedCount = this.selectedItemsList.length
+        this.showNotification({
+          message: selectedCount > 1
+            ? `${selectedCount} photos deleted.`
+            : `${selectedCount} photo deleted.`
+        })
         this.$refs.galleryList.clearSelection()
       }
     },
