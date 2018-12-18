@@ -10,8 +10,8 @@
     <li
       v-for="(item, index) in items"
       :key="item.guid || index"
-      :class="{ selected: selected.find(s => s.guid === item.guid)}">
-      <slot :data="item" />
+      :class="{ selected: isSelected(item.guid) }">
+      <slot :data="item" :selected="isSelected(item.guid)" />
     </li>
   </v-touch>
 </template>
@@ -49,6 +49,10 @@
     },
 
     methods: {
+      isSelected (guid) {
+        return this.selected.some(s => s.guid === guid)
+      },
+
       onPressList () {
         if (!this.editMode) {
           this.editMode = true
@@ -84,15 +88,3 @@
     }
   }
 </script>
-
-<style lang="postcss">
-  .selectable-list {
-    &.edit-mode {
-      background: green;
-    }
-
-    & li.selected {
-      border: 6px solid var(--brand-yellow);
-    }
-  }
-</style>

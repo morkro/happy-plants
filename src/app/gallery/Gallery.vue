@@ -67,11 +67,13 @@
           @selected="getSelectedItems"
           @panend="moveGallery"
           @edit-mode="toggleListEditMode">
-            <lazy-image
-              slot-scope="{ data }"
+            <gallery-image
+              slot-scope="{ data, selected }"
               v-if="data.imageURL"
               :source="data.imageURL"
-              :alt="data.fileName" />
+              :name="data.fileName"
+              :selectable="listEditMode"
+              :selected="selected" />
         </selectable-list>
       </div>
     </main>
@@ -85,6 +87,7 @@
 
   import GalleryOptions from './components/GalleryOptions'
   import GalleryUpload from './components/GalleryUpload'
+  import GalleryImage from './components/GalleryImage'
 
   import getGalleryItemStructure from './utils/get-gallery-item-structure'
 
@@ -100,6 +103,7 @@
     components: {
       'gallery-options': GalleryOptions,
       'gallery-upload': GalleryUpload,
+      'gallery-image': GalleryImage,
       'feather-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */),
       'feather-right': () =>
@@ -272,7 +276,7 @@
         this.listEditMode = value
         if (this.listEditMode) {
           this.updateAppHeader({
-            title: `0 selected`,
+            title: `0 photos selected`,
             backBtn: false,
             rightBtn: 'close',
             rightBtnOnClick: () => this.$refs.galleryList.clearSelection()
@@ -282,7 +286,6 @@
         }
       },
       getSelectedItems (list) {
-        this.selectedItemsList = list
         this.updateAppHeader({
           title: `${this.selectedItemsList.length} selected`
         })
