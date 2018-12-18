@@ -9,11 +9,15 @@
     <v-button
       aria-label="Add photo"
       type="circle"
+      :color="editMode ? 'red' : 'default'"
       @click.native="onClickButton">
-      <div slot="icon" class="add-photo-icon">
+      <div v-if="!editMode"
+        slot="icon"
+        class="add-photo-icon">
         <feather-plus />
         <feather-image />
       </div>
+      <feather-trash v-else />
     </v-button>
   </div>
 </template>
@@ -22,11 +26,17 @@
   export default {
     name: 'GalleryUpload',
 
+    props: {
+      editMode: { type: Boolean, default: false }
+    },
+
     components: {
       'feather-plus': () =>
         import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-image': () =>
-        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
+      'feather-trash': () =>
+        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */)
     },
 
     methods: {
@@ -34,8 +44,12 @@
         this.$emit('photo-selected', data)
       },
 
-      onClickButton (event) {
-        this.$emit('trigger-selection')
+      onClickButton () {
+        if (!this.editMode) {
+          this.$emit('trigger-selection')
+        } else {
+          this.$emit('trigger-delete')
+        }
       },
 
       triggerUpload () {

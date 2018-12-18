@@ -1,8 +1,11 @@
 <template>
   <v-touch tag="ul"
-    rel="selectableList"
+    ref="selectableList"
+    :class="['selectable-list', { 'edit-mode': editMode }]"
     v-bind="$attrs"
-    v-on="$listeners"
+    v-on="filterListeners"
+    @tap="onTapList"
+    @click="onTapList"
     @press="onPressList">
     <li
       v-for="(item, index) in items"
@@ -18,25 +21,78 @@
     name: 'SelectableList',
 
     props: {
-      items: { type: Array, required: true }
+      items: { type: Array, required: true },
+      onList: { type: Function, default: () => {} }
     },
 
     data: () => ({
-      selected: []
+      selected: [],
+      editMode: false
     }),
 
+    watch: {
+      selected (list) {
+        if (list.length === 0) {
+          this.editMode = false
+        }
+      },
+      editMode (value) {
+        this.$emit('edit-mode', value)
+      }
+    },
+
+    computed: {
+      filterListeners () {
+        const { tap, click, press, ...rest } = this.$listeners
+        return rest
+      }
+    },
+
     methods: {
-      onPressList (event) {
-        const $rootList = Array.from(event.target.closest('ul').children)
-        const selectedIndex = $rootList.findIndex($el => $el === event.target.closest('li'))
+      onPressList () {
+        if (!this.editMode) {
+          this.editMode = true
+        }
+      },
+
+      onTapList (event) {
+        if (this.editMode) {
+          this.toggleItemSelection(event.target.closest('li'))
+          this.$emit('selected', this.selected)
+        } else {
+          this.$listeners.tap(event)
+        }
+      },
+
+      toggleItemSelection (item) {
+        const $selectableList = Array.from(this.$refs.selectableList.$el.children)
+        const selectedIndex = $selectableList.findIndex($el => $el === item)
         const selected = this.items[selectedIndex]
-        this.selected.push({ guid: selected.guid })
-        this.$emit('selected', this.selected)
+
+        if (this.selected.find(s => s.guid === selected.guid)) {
+          this.selected = this.selected.filter(s => s.guid !== selected.guid)
+        } else {
+          this.selected.push(selected)
+        }
       },
 
       clearSelection () {
+        this.editMode = false
         this.selected = []
+        this.$emit('selected', this.selected)
       }
     }
   }
 </script>
+
+<style lang="postcss">
+  .selectable-list {
+    &.edit-mode {
+      background: green;
+    }
+
+    & li.selected {
+      border: 6px solid var(--brand-yellow);
+    }
+  }
+</style>
