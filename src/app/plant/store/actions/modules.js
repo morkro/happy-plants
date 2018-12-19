@@ -1,4 +1,4 @@
-import { updatePlant } from '@/app/plant/store/actions'
+import { updatePlant } from '@/app/plant/store/actions/update'
 
 export const updatePlantModules = (...args) =>
   updatePlant('UPDATE_PLANT_MODULES', ...args)
