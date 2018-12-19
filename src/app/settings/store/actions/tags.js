@@ -14,6 +14,19 @@ import {
 
 const namespace = 'tags'
 
+export async function importTags ({ state, commit }, data) {
+  const updated = Date.now()
+  await updateEntryLF('updated', updated)
+
+  commit('IMPORT_TAGS', { data, updated })
+
+  if (state.storage.type === 'cloud') {
+    await addEntryFire([['users', state.user.id]], { tags: state.tags.data })
+  } else {
+    await updateEntryLF('tags', state.tags.data)
+  }
+}
+
 export async function loadTags ({ state, commit }, data = {}) {
   commit('LOAD_TAGS_PROGRESS')
   let tags = []

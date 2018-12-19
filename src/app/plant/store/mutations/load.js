@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import { getUrlFromBlob } from '@/utils/blob'
 import sortPlants from '@/store/utils/sort-plants'
 
@@ -72,44 +71,5 @@ export default {
     state.selected = Object.assign({},
       state.plants.data.find(plant => plant.guid === payload.guid)
     )
-  },
-
-  ADD_PLANT_PROGRESS (state) {
-    state.updated = Date.now()
-  },
-
-  ADD_PLANT_SUCCESS (state, payload) {
-    state.updated = Date.now()
-    state.plants.data.push(payload.item)
-    state.plants.data = sortPlants(state)
-  },
-
-  ADD_PLANT_FAILURE (state) {
-    state.plants.error = true
-  },
-
-  DELETE_PLANT_PROGRESS (state) {
-    state.updated = Date.now()
-  },
-
-  DELETE_PLANTS_SUCCESS (state, payload) {
-    state.updated = Date.now()
-
-    for (const item of payload.items) {
-      Vue.delete(
-        state.plants.data,
-        state.plants.data.findIndex(p => p.guid === item.guid)
-      )
-    }
-  },
-
-  DELETE_PLANTS_FAILURE (state) {
-    state.plants.error = true
-  },
-
-  UPDATE_PLANT (state, payload) {
-    const itemIndex = state.plants.data.findIndex(p => p.guid === payload.data.guid)
-    state.updated = Date.now()
-    Vue.set(state.plants.data, itemIndex, payload.data)
   }
 }

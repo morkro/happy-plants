@@ -18,7 +18,7 @@
         <v-touch
           tag="li"
           v-for="(module, index) in updatedModules"
-          :class="{ [`type-${module.type}`]: true, active: module.selected }"
+          :class="getListClass(module)"
           :key="`module-${index}`"
           @tap="onToggleModule(module)">
           <div class="module-icon">
@@ -26,7 +26,8 @@
               :id="`module-${module.type}`"
               :name="`module-${module.type}`"
               :value="module.type"
-              :checked="module.selected">
+              :checked="!cloudOnlyFeature(module) && module.selected"
+              :disabled="cloudOnlyFeature(module)">
             <span aria-hidden="true">
               <feather-check />
             </span>
@@ -36,7 +37,7 @@
               <component :is="`feather-${module.meta.icon}`" />
               {{ module.meta.title }}
             </h2>
-            <span>{{ module.meta.description }}</span>
+            <span>{{ getModuleDescription(module) }}</span>
           </label>
         </v-touch>
       </ul>
@@ -75,6 +76,7 @@
     },
 
     props: {
+      storageType: { type: String, required: true },
       show: { type: Boolean, default: false },
       modules: { type: Array, default: () => [] }
     },
@@ -94,14 +96,38 @@
     },
 
     methods: {
+      getListClass (module) {
+        const disabled = this.cloudOnlyFeature(module)
+        return {
+          [`type-${module.type}`]: true,
+          active: !disabled && module.selected,
+          disabled
+        }
+      },
+      cloudOnlyFeature (module) {
+        return (
+          module.meta.cloudOnly &&
+          this.storageType === 'local'
+        )
+      },
+      getModuleDescription (module) {
+        return this.cloudOnlyFeature(module)
+          ? 'This module requires the cloud storage option.'
+          : module.meta.description
+      },
       cancel () {
         this.updatedModules = Array.from(this.modules)
         this.warnGalleryRemoval = false
         this.$emit('close-module-manager')
       },
-      onToggleModule ({ type, selected }) {
+      onToggleModule (module) {
+        if (this.cloudOnlyFeature(module)) {
+          return
+        }
+
+        const { type, selected } = module
         const updatedIndex = this.updatedModules.findIndex(mod => mod.type === type)
-        const module = this.updatedModules[updatedIndex]
+        const selectedModule = this.updatedModules[updatedIndex]
 
         const moduleContent = selected && selected.value && selected.value.list
         if (!this.forceUpdates && type === 'gallery' && moduleContent && moduleContent.length) {
@@ -109,7 +135,10 @@
           return
         }
 
-        this.updatedModules.splice(updatedIndex, 1, { ...module, selected: !module.selected })
+        this.updatedModules.splice(updatedIndex, 1, {
+          ...selectedModule,
+          selected: !selectedModule.selected
+        })
       },
       continueModuleEditing () {
         this.warnGalleryRemoval = false
@@ -209,6 +238,19 @@
 
       & .module-icon span {
         display: block;
+      }
+    }
+
+    & .disabled {
+      color: var(--text-color-secondary);
+
+      & span {
+        font-style: italic;
+      }
+
+      & .module-icon {
+        background: transparent;
+        border: 4px solid var(--border-color);
       }
     }
 

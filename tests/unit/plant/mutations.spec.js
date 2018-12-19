@@ -54,11 +54,11 @@ describe('app/plant/mutations.js', () => {
           .map(({ selected, ...rest }) => rest)))
   })
 
-  // it('UPDATE_SEASON', () => {
+  // it('UPDATE_MODULE_SEASONS', () => {
   //   const state = {
   //     selected: {}
   //   }
-  //   mutations.UPDATE_SEASON(state, {})
+  //   mutations.UPDATE_MODULE_SEASONS(state, {})
   //   expect()
   // })
 
@@ -75,7 +75,7 @@ describe('app/plant/mutations.js', () => {
     expect(state.selected).toEqual(expect.objectContaining(defaultStructure))
   })
 
-  it('UPDATE_NAME', () => {
+  it('UPDATE_PLANT_NAME', () => {
     const state = {
       updated: then,
       selected: {
@@ -85,7 +85,7 @@ describe('app/plant/mutations.js', () => {
       }
     }
 
-    mutations.UPDATE_NAME(state, {
+    mutations.UPDATE_PLANT_NAME(state, {
       updated: now,
       item: {
         name: 'Super cool plant'
@@ -99,7 +99,7 @@ describe('app/plant/mutations.js', () => {
     }))
   })
 
-  it('UPDATE_PHOTO', () => {
+  it('UPDATE_PLANT_PHOTO', () => {
     const state = {
       updated: then,
       selected: {
@@ -108,7 +108,7 @@ describe('app/plant/mutations.js', () => {
         blob: null
       }
     }
-    mutations.UPDATE_PHOTO(state, {
+    mutations.UPDATE_PLANT_PHOTO(state, {
       updated: now,
       item: {
         imageURL: 'data://foo',

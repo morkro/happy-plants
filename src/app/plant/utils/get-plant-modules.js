@@ -8,7 +8,8 @@ export default function getPlantModules () {
       meta: {
         title: 'Watering',
         description: 'Define the amount of water your plant requires.',
-        icon: 'droplet'
+        icon: 'droplet',
+        cloudOnly: false
       },
       value: {
         amount: 1,
@@ -21,7 +22,8 @@ export default function getPlantModules () {
       meta: {
         title: 'Sunshine',
         description: 'How much sun does your plant need?',
-        icon: 'sun'
+        icon: 'sun',
+        cloudOnly: false
       },
       value: {
         level: 1
@@ -33,7 +35,8 @@ export default function getPlantModules () {
       meta: {
         title: 'Growth',
         description: 'In which seasons is your plant in growth?',
-        icon: 'moon'
+        icon: 'moon',
+        cloudOnly: false
       },
       value: {
         seasons: getCalendarMonth().map(month => ({ month, growth: false }))
@@ -45,7 +48,8 @@ export default function getPlantModules () {
       meta: {
         title: 'Gallery',
         description: 'Add more photos of your plant to track growth.',
-        icon: 'image'
+        icon: 'image',
+        cloudOnly: true
       },
       value: {
         list: []
@@ -57,7 +61,8 @@ export default function getPlantModules () {
       meta: {
         title: 'Notes',
         description: 'Add useful notes.',
-        icon: 'book'
+        icon: 'book',
+        cloudOnly: false
       },
       value: {
         notes: ''

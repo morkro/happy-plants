@@ -12,6 +12,7 @@
     <plant-module-manager
       :show="showModuleManager"
       :modules="plantModules"
+      :storage-type="storageType"
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
@@ -104,6 +105,7 @@
 
     computed: {
       ...mapState({
+        storageType: state => state.storage.type,
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
         plantsLoading: state => state.plants.loading,
@@ -149,7 +151,7 @@
         'loadPlantItem',
         'loadPlants',
         'updatePlantModules',
-        'updateSeason',
+        'updateSeasons',
         'updateNotes',
         'updateSunshine',
         'updateWatering',
@@ -212,7 +214,7 @@
         this.updateNotes({ guid: this.plant.guid, notes })
       },
       onSeasonUpdate (month) {
-        this.updateSeason({ guid: this.plant.guid, month })
+        this.updateSeasons({ guid: this.plant.guid, month })
       },
       onWateringUpdate (watering) {
         this.updateWatering({ guid: this.plant.guid, watering })

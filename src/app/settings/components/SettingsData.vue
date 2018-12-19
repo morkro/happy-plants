@@ -110,7 +110,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
 
   export default {
     name: 'SettingsData',
@@ -176,12 +176,14 @@
     methods: {
       ...mapActions([
         'showNotification',
-        'getAllData',
         'deleteAllData',
         'importTags',
         'importSettings',
         'importPlants',
         'updateAppHeader'
+      ]),
+      ...mapGetters([
+        'getAllData'
       ]),
 
       triggerDownload (data = { message: 'No data!' }) {
