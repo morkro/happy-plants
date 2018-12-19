@@ -3,7 +3,7 @@ import getModule from '@/store/utils/get-module'
 
 export default {
   // This isn't really well written, should be refactored.
-  UPDATE_GALLERY (state, payload) {
+  UPDATE_MODULE_GALLERY (state, payload) {
     const { index, module } = getModule('gallery', state)
     const galleryIndex = module.value.list.findIndex(g => g.guid === payload.item.guid)
     const galleryItem = module.value.list[galleryIndex]

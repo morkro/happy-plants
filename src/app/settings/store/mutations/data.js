@@ -17,11 +17,6 @@ export default {
     state.tags.data = []
   },
 
-  IMPORT_TAGS (state, payload) {
-    state.updated = payload.updated
-    state.tags.data = payload.data
-  },
-
   IMPORT_SETTINGS (state, payload) {
     state.updated = payload.updated
     state.settings = Object.assign({}, state.settings, payload.data)

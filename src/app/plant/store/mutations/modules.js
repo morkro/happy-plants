@@ -17,10 +17,6 @@ export function updatePlantModule (moduleName, valueTypes, state, payload) {
 }
 
 export default {
-  RESET_SELECTED_PLANT (state, payload) {
-    state.selected = Object.assign({}, state.selected, payload.defaultState)
-  },
-
   UPDATE_PLANT_MODULES (state, payload) {
     state.updated = payload.updated
     state.selected.modified = payload.updated
@@ -30,7 +26,7 @@ export default {
       .map(({ selected, ...rest }) => rest)
   },
 
-  UPDATE_SEASON (state, payload) {
+  UPDATE_MODULE_SEASONS (state, payload) {
     const { index, module } = getModule('seasons', state)
     const seasonIndex = module.value.seasons.findIndex(s => s.month === payload.item.month)
     const season = module.value.seasons[seasonIndex]
@@ -48,36 +44,15 @@ export default {
     })
   },
 
-  UPDATE_NOTES (...args) {
+  UPDATE_MODULE_NOTES (...args) {
     updatePlantModule('notes', ['notes'], ...args)
   },
 
-  UPDATE_WATERING (...args) {
+  UPDATE_MODULE_WATERING (...args) {
     updatePlantModule('watering', ['amount', 'frequency'], ...args)
   },
 
-  UPDATE_SUNSHINE (...args) {
+  UPDATE_MODULE_SUNSHINE (...args) {
     updatePlantModule('sunshine', ['level'], ...args)
-  },
-
-  UPDATE_NAME (state, payload) {
-    state.updated = payload.updated
-    state.selected.modified = payload.updated
-    state.selected.name = payload.item.name
-  },
-
-  UPDATE_PHOTO (state, payload) {
-    state.updated = payload.updated
-    state.selected.modified = payload.updated
-    state.selected.imageURL = payload.item.imageURL
-
-    if (payload.item.blob) {
-      state.selected.blob = payload.item.blob
-    }
-  },
-
-  UPDATE_PLANT_TAGS (state, payload) {
-    state.updated = payload.updated
-    state.selected.tags = payload.item.show ? [] : false
   }
 }

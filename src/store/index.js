@@ -86,7 +86,8 @@ export default new Vuex.Store({
   },
 
   getters: {
-    ...getters
+    ...getters,
+    ...settings.getters
   },
 
   mutations: {

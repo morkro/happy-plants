@@ -12,6 +12,7 @@ import {
 } from '@/api/firebase'
 
 import { isBlobbable } from '@/utils/blob'
+import cleanUpPlantData from '@/app/settings/utils/cleanup-plant-data'
 
 const namespace = 'plant-'
 const folder = 'plants'
@@ -55,19 +56,6 @@ export async function deleteAllData ({ state, commit }) {
   commit('DELETE_ALL_DATA', { updated })
 }
 
-export async function importTags ({ state, commit }, data) {
-  const updated = Date.now()
-  await updateEntryLF('updated', updated)
-
-  commit('IMPORT_TAGS', { data, updated })
-
-  if (state.storage.type === 'cloud') {
-    await addEntryFire([['users', state.user.id]], { tags: state.tags.data })
-  } else {
-    await updateEntryLF('tags', state.tags.data)
-  }
-}
-
 export async function importSettings ({ state, commit }, data) {
   const updated = Date.now()
   await updateEntryLF('updated', updated)
@@ -75,24 +63,6 @@ export async function importSettings ({ state, commit }, data) {
   commit('IMPORT_SETTINGS', { data, updated })
 
   await updateEntryLF('settings', state.settings)
-}
-
-function cleanUpPlantData (oldData) {
-  const copy = oldData
-
-  if (copy.categories) {
-    delete copy.categories
-  }
-
-  if (!isBlobbable(copy.blob)) {
-    copy.blob = null
-  }
-
-  if (!Array.isArray(copy.tags)) {
-    copy.tags = []
-  }
-
-  return copy
 }
 
 export async function importPlants ({ state, commit }, data) {

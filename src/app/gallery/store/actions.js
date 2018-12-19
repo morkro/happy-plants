@@ -1,4 +1,4 @@
-import { updatePlant } from '@/store/actions/plants'
+import { updatePlant } from '@/app/plant/store/actions'
 
 export const updateGallery = (...args) =>
-  updatePlant('UPDATE_GALLERY', ...args)
+  updatePlant('UPDATE_MODULE_GALLERY', ...args)

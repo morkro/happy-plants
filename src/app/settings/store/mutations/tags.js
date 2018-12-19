@@ -1,6 +1,11 @@
 import Vue from 'vue'
 
 export default {
+  IMPORT_TAGS (state, payload) {
+    state.updated = payload.updated
+    state.tags.data = payload.data
+  },
+
   LOAD_TAGS_PROGRESS (state) {
     state.tags.loading = true
   },

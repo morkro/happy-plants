@@ -13,10 +13,10 @@ export const updateStorage = ({ state, commit }, data) => {
     .then(() => commit('UPDATE_STORAGE', data))
 }
 
-export const startDataMigration = ({ commit }) => {
+export function startDataMigration ({ commit }) {
   commit('DATA_MIGRATION_START')
 }
 
-export const endDataMigration = ({ commit }) => {
+export function endDataMigration ({ commit }) {
   commit('DATA_MIGRATION_FINISHED')
 }
