@@ -276,7 +276,7 @@
         this.listEditMode = value
         if (this.listEditMode) {
           this.updateAppHeader({
-            title: `0 photos selected`,
+            title: `0 selected`,
             backBtn: false,
             rightBtn: 'close',
             rightBtnOnClick: () => this.$refs.galleryList.clearSelection()
@@ -286,6 +286,7 @@
         }
       },
       getSelectedItems (list) {
+        this.selectedItemsList = list
         this.updateAppHeader({
           title: `${this.selectedItemsList.length} selected`
         })
@@ -301,7 +302,12 @@
             ? `${selectedCount} photos deleted.`
             : `${selectedCount} photo deleted.`
         })
-        this.$refs.galleryList.clearSelection()
+
+        if (this.$refs.galleryList) {
+          this.$refs.galleryList.clearSelection()
+        } else {
+          this.toggleListEditMode(false)
+        }
       }
     },
 

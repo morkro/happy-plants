@@ -103,7 +103,7 @@
         const updatedIndex = this.updatedModules.findIndex(mod => mod.type === type)
         const module = this.updatedModules[updatedIndex]
 
-        const moduleContent = selected.value && selected.value.list
+        const moduleContent = selected && selected.value && selected.value.list
         if (!this.forceUpdates && type === 'gallery' && moduleContent && moduleContent.length) {
           this.warnGalleryRemoval = true
           return

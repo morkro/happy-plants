@@ -7,6 +7,7 @@ import mutations from './mutations'
 
 import overview from '@/app/overview/store'
 import plant from '@/app/plant/store'
+import gallery from '@/app/gallery/store'
 import settings from '@/app/settings/store'
 
 import pkg from '#/package.json'
@@ -80,6 +81,7 @@ export default new Vuex.Store({
     ...actions,
     ...overview.actions,
     ...plant.actions,
+    ...gallery.actions,
     ...settings.actions
   },
 
@@ -91,6 +93,7 @@ export default new Vuex.Store({
     ...mutations,
     ...overview.mutations,
     ...plant.mutations,
+    ...gallery.mutations,
     ...settings.mutations
   }
 })
