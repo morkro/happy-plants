@@ -1,4 +1,4 @@
-import { updatePlant } from '@/app/plant/store/actions'
+import { updatePlant } from '@/app/plant/store/actions/update'
 import { getPlantStructure } from '@/app/plant/utils'
 
 export * from './add'
