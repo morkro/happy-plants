@@ -5,9 +5,9 @@ export function updatePlantModule (moduleName, valueTypes, state, payload) {
   const { index, module } = getModule(moduleName, state)
 
   state.updated = payload.updated
-  state.selected.modified = payload.updated
+  state.plants.selected.modified = payload.updated
 
-  state.selected.modules.splice(index, 1, {
+  state.plants.selected.modules.splice(index, 1, {
     type: module.type,
     value: valueTypes.reduce((acc, current) => {
       acc[current] = payload.item[moduleName][current]
@@ -19,9 +19,9 @@ export function updatePlantModule (moduleName, valueTypes, state, payload) {
 export default {
   UPDATE_PLANT_MODULES (state, payload) {
     state.updated = payload.updated
-    state.selected.modified = payload.updated
+    state.plants.selected.modified = payload.updated
 
-    state.selected.modules = payload.item
+    state.plants.selected.modules = payload.item
       .filter(m => m.selected)
       .map(({ selected, ...rest }) => rest)
   },
@@ -32,11 +32,11 @@ export default {
     const season = module.value.seasons[seasonIndex]
 
     season.growth = !season.growth
-    state.selected.modified = payload.updated
+    state.plants.selected.modified = payload.updated
     state.updated = payload.updated
 
     module.value.seasons.splice(seasonIndex, 1, season)
-    state.selected.modules.splice(index, 1, {
+    state.plants.selected.modules.splice(index, 1, {
       type: module.type,
       value: {
         seasons: module.value.seasons
