@@ -3,5 +3,10 @@ import mutations from './mutations'
 
 export default {
   actions,
-  mutations
+  mutations,
+  state: {
+    filterBy: 'all',
+    orderBy: 'latest',
+    viewMode: 'grid'
+  }
 }

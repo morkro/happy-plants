@@ -5,5 +5,13 @@ import getters from './getters'
 export default {
   actions,
   mutations,
-  getters
+  getters,
+  state: {
+    tags: {
+      data: [],
+      error: false,
+      finished: false,
+      loading: false
+    }
+  }
 }

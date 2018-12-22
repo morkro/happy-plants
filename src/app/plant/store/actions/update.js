@@ -18,8 +18,8 @@ export async function updatePlant (action, { state, commit }, data) {
   commit(action, { item: data, updated })
 
   if (state.storage.type === 'cloud') {
-    const path = [['users', state.user.id], [folder, state.selected.guid]]
-    const { imageURL, blob, ...selected } = state.selected
+    const path = [['users', state.user.id], [folder, state.plants.selected.guid]]
+    const { imageURL, blob, ...selected } = state.plants.selected
 
     if (action === 'UPDATE_PLANT_PHOTO') {
       await uploadFile(path.concat(fileName), data.blob)
@@ -27,6 +27,6 @@ export async function updatePlant (action, { state, commit }, data) {
 
     await updateEntryFire(path, selected)
   } else {
-    await updateEntryLF(namespace + state.selected.guid, state.selected)
+    await updateEntryLF(namespace + state.plants.selected.guid, state.plants.selected)
   }
 }

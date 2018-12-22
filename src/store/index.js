@@ -25,13 +25,13 @@ export default new Vuex.Store({
     hasNewRelease: false,
 
     appheader: {
-      transparent: false,
-      iconColor: undefined,
-      title: '',
       backBtn: true,
       backBtnPath: '/',
+      iconColor: undefined,
       rightBtn: true,
-      rightBtnOnClick: () => {}
+      rightBtnOnClick: () => {},
+      title: '',
+      transparent: false
     },
 
     notification: {
@@ -39,42 +39,28 @@ export default new Vuex.Store({
     },
 
     settings: {
-      orderBy: 'latest',
-      viewMode: 'grid',
-      filterBy: 'all',
+      ...overview.state,
       hasNewRelease: false,
       theme: 'light'
     },
 
     storage: {
-      type: 'local',
-      migrationMode: false
+      migrationMode: false,
+      type: 'local'
     },
 
     user: {
-      authFromRedirect: false,
       authenticated: false,
+      authFromRedirect: false,
       error: false,
+      id: null,
       loading: false,
-      name: null,
-      id: null
+      name: null
     },
 
-    selected: plant.state,
+    plants: plant.state,
 
-    plants: {
-      loading: false,
-      finished: false,
-      error: false,
-      data: []
-    },
-
-    tags: {
-      loading: false,
-      finished: false,
-      error: false,
-      data: []
-    }
+    tags: settings.state.tags
   },
 
   actions: {

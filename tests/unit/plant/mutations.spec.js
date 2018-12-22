@@ -10,23 +10,27 @@ describe('app/plant/mutations', () => {
   it('RESET_SELECTED_PLANT', () => {
     const defaultStructure = getPlantStructure()
     const state = {
-      selected: {
-        modified: then,
-        name: 'Cool plant',
-        guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
+      plants: {
+        selected: {
+          modified: then,
+          name: 'Cool plant',
+          guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
+        }
       }
     }
     mutations.RESET_SELECTED_PLANT(state, { defaultState: defaultStructure })
-    expect(state.selected).toEqual(expect.objectContaining(defaultStructure))
+    expect(state.plants.selected).toEqual(expect.objectContaining(defaultStructure))
   })
 
   it('UPDATE_PLANT_NAME', () => {
     const state = {
       updated: then,
-      selected: {
-        modified: then,
-        name: 'Cool plant',
-        guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
+      plants: {
+        selected: {
+          modified: then,
+          name: 'Cool plant',
+          guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
+        }
       }
     }
 
@@ -37,7 +41,7 @@ describe('app/plant/mutations', () => {
       }
     })
     expect(state.updated).toEqual(now)
-    expect(state.selected).toEqual(expect.objectContaining({
+    expect(state.plants.selected).toEqual(expect.objectContaining({
       modified: now,
       name: 'Super cool plant',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
@@ -47,10 +51,12 @@ describe('app/plant/mutations', () => {
   it('UPDATE_PLANT_PHOTO', () => {
     const state = {
       updated: then,
-      selected: {
-        modified: now,
-        imageURL: '',
-        blob: null
+      plants: {
+        selected: {
+          modified: now,
+          imageURL: '',
+          blob: null
+        }
       }
     }
     mutations.UPDATE_PLANT_PHOTO(state, {
@@ -60,25 +66,27 @@ describe('app/plant/mutations', () => {
         blob: true
       }
     })
-    expect(state.selected.imageURL).toEqual('data://foo')
-    expect(state.selected.blob).toBe(true)
+    expect(state.plants.selected.imageURL).toEqual('data://foo')
+    expect(state.plants.selected.blob).toBe(true)
   })
 
   it('UPDATE_PLANT_TAGS', () => {
     const state = {
       updated: then,
-      selected: {
-        tags: []
+      plants: {
+        selected: {
+          tags: []
+        }
       }
     }
 
     mutations.UPDATE_PLANT_TAGS(state, { updated: now, item: { show: false } })
     expect(state.updated).toEqual(now)
-    expect(state.selected.tags).toBe(false)
+    expect(state.plants.selected.tags).toBe(false)
 
     mutations.UPDATE_PLANT_TAGS(state, { updated: now, item: { show: true } })
     expect(state.updated).toEqual(now)
-    expect(state.selected.tags).toEqual([])
+    expect(state.plants.selected.tags).toEqual([])
   })
 })
 
@@ -218,9 +226,11 @@ describe('app/plant/mutations/update.js', () => {
   it('updatePlantModule()', () => {
     const state = {
       updated: then,
-      selected: {
-        modified: then,
-        modules: getPlantModules()
+      plants: {
+        selected: {
+          modified: then,
+          modules: getPlantModules()
+        }
       }
     }
     const moduleType = 'watering'
@@ -235,15 +245,17 @@ describe('app/plant/mutations/update.js', () => {
         [moduleType]: expected
       }
     })
-    expect(state.selected.modules[0].value).toEqual(expect.objectContaining(expected))
+    expect(state.plants.selected.modules[0].value).toEqual(expect.objectContaining(expected))
   })
 
   it('UPDATE_PLANT_MODULES', () => {
     const state = {
       updated: then,
-      selected: {
-        modified: then,
-        modules: getPlantModules()
+      plants: {
+        selected: {
+          modified: then,
+          modules: getPlantModules()
+        }
       }
     }
     const expected = getPlantModules().map((module, index) => {
@@ -255,8 +267,8 @@ describe('app/plant/mutations/update.js', () => {
       updated: now,
       item: expected
     })
-    expect(state.selected.modules.length).toBe(1)
-    expect(state.selected.modules)
+    expect(state.plants.selected.modules.length).toBe(1)
+    expect(state.plants.selected.modules)
       .toEqual(expect.arrayContaining(
         expected
           .filter(m => m.selected)

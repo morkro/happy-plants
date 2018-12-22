@@ -68,7 +68,7 @@ export default {
   },
 
   LOAD_PLANT_ITEM (state, payload) {
-    state.selected = Object.assign({},
+    state.plants.selected = Object.assign({},
       state.plants.data.find(plant => plant.guid === payload.guid)
     )
   }

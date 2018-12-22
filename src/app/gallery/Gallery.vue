@@ -125,7 +125,7 @@
     computed: {
       ...mapState({
         plantsData: state => state.plants.data,
-        plant: state => state.selected
+        plant: state => state.plants.selected
       }),
       galleryData () {
         return this.plant.modules

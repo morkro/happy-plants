@@ -109,7 +109,7 @@
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
         plantsLoading: state => state.plants.loading,
-        plant: state => state.selected,
+        plant: state => state.plants.selected,
         tags: state => state.tags.data
       }),
       ...mapGetters({

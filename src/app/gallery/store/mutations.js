@@ -16,8 +16,8 @@ export default {
       module.value.list.push(payload.item)
     }
 
-    const plantIndex = state.plants.data.findIndex(p => p.guid === state.selected.guid)
-    const { modules } = state.selected
+    const plantIndex = state.plants.data.findIndex(p => p.guid === state.plants.selected.guid)
+    const { modules } = state.plants.selected
     modules.splice(index, 1, {
       type: module.type,
       value: {
