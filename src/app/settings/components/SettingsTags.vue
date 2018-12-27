@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-tags">
+  <div :class="['settings-tags', { 'no-tags': !tags.length }]">
     <!-- Modal for editing tags. -->
     <tag-modal
       :show="showModal"
@@ -34,7 +34,7 @@
       </div>
     </happy-dialog>
 
-    <div :class="{ 'no-tags': !tags.length, 'app-content': true }">
+    <div class="app-content">
       <div v-if="!tags.length" class="tags-empty">
         <feather-tag class="tags-header" />
         <h1>You haven't added tags to your plants yet</h1>
@@ -199,10 +199,15 @@
   .settings-tags {
     min-height: 100vh;
     background: var(--background-secondary);
+
+    &.no-tags {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .tags-empty {
-    padding: var(--double-gap) var(--base-gap);
+    padding: var(--double-gap);
     color: var(--text-color-secondary);
     display: flex;
     flex-direction: column;
@@ -210,8 +215,8 @@
 
     & .tags-header {
       align-self: center;
-      width: 10%;
-      height: 10%;
+      width: 15%;
+      height: 15%;
       opacity: 0.25;
     }
 
