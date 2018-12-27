@@ -4,7 +4,6 @@ import { getPlantStructure } from '@/app/plant/utils'
 export * from './add'
 export * from './delete'
 export * from './load'
-export * from './modules'
 export * from './update'
 
 export const resetSelectedState = ({ commit }) => {

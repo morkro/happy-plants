@@ -18,7 +18,7 @@
         @tap="forwardGallery"
         @click="forwardGallery">
         <ul class="gallery-list">
-          <li v-for="item of previewList" :key="item.guid">
+          <li v-for="(item, index) of previewList" :key="item.guid || index">
             <div v-if="item.empty" class="gallery-item-empty">
               <svgicon
                 icon="cactus"
@@ -52,6 +52,10 @@
     },
 
     props: {
+      gallery: {
+        type: Array,
+        default: () => []
+      },
       list: {
         type: Array,
         default: () => []
@@ -64,8 +68,13 @@
 
     computed: {
       previewList () {
-        const defaultList = new Array(this.maxListCount).fill({ empty: true })
+        const defaultItem = { empty: true }
+        const defaultList = new Array(this.maxListCount).fill(defaultItem)
         const sliced = this.list.slice(0, this.maxListCount)
+
+        for (let slicedIndex = 0; slicedIndex < sliced.length; slicedIndex++) {
+          sliced[slicedIndex] = this.getGalleryItem(sliced[slicedIndex]) || defaultItem
+        }
 
         for (let index = 0; index < sliced.length; index++) {
           defaultList[index] = sliced[index]
@@ -76,6 +85,9 @@
     },
 
     methods: {
+      getGalleryItem (guid) {
+        return this.gallery.find(item => item.guid === guid)
+      },
       forwardGallery (options = {}) {
         this.$router.push({ ...options, path: `/gallery/${this.$route.params.id}` })
       },

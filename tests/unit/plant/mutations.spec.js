@@ -1,5 +1,5 @@
 import mutations from '@/app/plant/store/mutations'
-import { updatePlantModule } from '@/app/plant/store/mutations/modules'
+import { updatePlantModule } from '@/app/plant/store/mutations/update'
 import getPlantStructure from '@/app/plant/utils/get-plant-structure'
 import getPlantModules from '@/app/plant/utils/get-plant-modules'
 
