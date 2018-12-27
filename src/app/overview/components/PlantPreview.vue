@@ -38,7 +38,7 @@
           color="#000" />
       </div>
 
-      <div class="preview-content-inner">
+      <div :class="['preview-content-inner', { 'three-columns': gallery.length && tags.length }]">
         <div class="preview-headline">
           <h1 :class="{ 'ellipsis': name.length > oneLineHeadlineCount }">
             {{ name }}
@@ -53,6 +53,14 @@
             </v-tag>
           </li>
         </ul>
+
+        <div v-if="isListView && gallery.length" class="preview-gallery">
+          <span>
+            {{ gallery.length }}
+            <feather-image height="16" width="16" />
+            in gallery
+          </span>
+        </div>
       </div>
     </div>
   </v-touch>
@@ -69,6 +77,7 @@
       contentLoading: { type: Boolean, default: true },
       type: { type: String, default: 'grid' },
       tags: { type: Array, default: () => [] },
+      gallery: { type: Array, default: () => [] },
       deleteMode: { type: Boolean, default: false, required: true },
       pressedMode: { type: Boolean, default: false, required: true },
       guid: { type: String, default: '', required: true },
@@ -87,6 +96,8 @@
         import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
       'feather-tag': () =>
         import('vue-feather-icons/icons/TagIcon' /* webpackChunkName: "icons" */),
+      'feather-image': () =>
+        import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
     },
@@ -275,6 +286,12 @@
       left: 0;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
     }
+
+    & svg {
+      width: 65% !important;
+      height: auto !important;
+      opacity: 0.12;
+    }
   }
 
   .select-layer {
@@ -344,12 +361,6 @@
       transform-origin: center center;
       animation: rotate360 4s linear infinite;
     }
-
-    & svg {
-      width: 65% !important;
-      height: auto !important;
-      opacity: 0.12;
-    }
   }
 
   .preview-content-inner {
@@ -375,6 +386,16 @@
       overflow-y: hidden;
       overflow-x: scroll;
       -webkit-overflow-scrolling: touch;
+
+      &.three-columns {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      &:not(.three-columns) h1 {
+        margin-bottom: calc(var(--base-gap) / 2);
+      }
 
       & h1 {
         color: var(--preview-color);
@@ -466,6 +487,16 @@
     & .tag svg {
       margin-right: calc(var(--base-gap) / 4);
       opacity: 1;
+    }
+  }
+
+  .preview-gallery {
+    & span {
+      display: flex;
+    }
+
+    & svg {
+      margin: 0 calc(var(--base-gap) / 4);
     }
   }
 </style>

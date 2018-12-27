@@ -6,6 +6,7 @@
         @toggle-pressed-selection="emitPressedSelection"
         :content-loading="!plant.guid"
         :tags="plantTags(plant.guid)"
+        :gallery="getPlantGallery(plant)"
         :type="type"
         :delete-mode="isDeleteMode"
         :pressed-mode="isPressedMode"
@@ -52,6 +53,10 @@
     }),
 
     methods: {
+      getPlantGallery (plant) {
+        const gallery = plant.modules && plant.modules.find(m => m.type === 'gallery')
+        return gallery ? gallery.value.list : []
+      },
       emitDeleteSelection (item) {
         this.$emit('delete-selection', item)
       },
