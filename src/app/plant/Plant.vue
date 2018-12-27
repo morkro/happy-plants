@@ -110,10 +110,12 @@
         plantsData: state => state.plants.data,
         plantsLoading: state => state.plants.loading,
         plant: state => state.plants.selected,
-        tags: state => state.tags.data
+        tags: state => state.tags.data,
+        galleries: state => state.gallery
       }),
       ...mapGetters({
-        plantTags: 'getPlantTags'
+        plantTags: 'getPlantTags',
+        plantGallery: 'getPlantGallery'
       }),
       defaultIconColor () {
         return this.theme === 'light' ? 'black' : 'white'
@@ -148,13 +150,14 @@
 
     methods: {
       ...mapActions([
+        'loadGallery',
         'loadPlantItem',
         'loadPlants',
         'updatePlantModules',
-        'updateSeasons',
-        'updateNotes',
-        'updateSunshine',
-        'updateWatering',
+        'updateSeasonsModule',
+        'updateNotesModule',
+        'updateSunshineModule',
+        'updateWateringModule',
         'updateName',
         'updatePhoto',
         'toggleTags',
@@ -184,6 +187,7 @@
             }
           case 'gallery':
             return {
+              gallery: this.plantGallery(this.plant.guid).list,
               list: module.list
             }
           case 'notes':
@@ -211,16 +215,16 @@
         this.showPlantModal = false
       },
       onNotesUpdate (notes) {
-        this.updateNotes({ guid: this.plant.guid, notes })
+        this.updateNotesModule({ guid: this.plant.guid, notes })
       },
       onSeasonUpdate (month) {
-        this.updateSeasons({ guid: this.plant.guid, month })
+        this.updateSeasonsModule({ guid: this.plant.guid, month })
       },
       onWateringUpdate (watering) {
-        this.updateWatering({ guid: this.plant.guid, watering })
+        this.updateWateringModule({ guid: this.plant.guid, watering })
       },
       onSunshineUpdate (sunshine) {
-        this.updateSunshine({ guid: this.plant.guid, sunshine })
+        this.updateSunshineModule({ guid: this.plant.guid, sunshine })
       },
       async deletePlantFromModal () {
         this.deletePlantProgress = true
@@ -274,6 +278,12 @@
       updatePlantPhoto (blob) {
         const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.plant.imageURL
         this.updatePhoto({ guid: this.plant.guid, blob, imageURL })
+      }
+    },
+
+    async created () {
+      if (!(this.galleries.finished && this.galleries.loading)) {
+        await this.loadGallery()
       }
     },
 

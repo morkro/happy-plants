@@ -10,6 +10,7 @@
       aria-label="Add photo"
       type="circle"
       :color="editMode ? 'red' : 'default'"
+      :loading="loading"
       @click.native="onClickButton">
       <div v-if="!editMode"
         slot="icon"
@@ -17,7 +18,7 @@
         <feather-plus />
         <feather-image />
       </div>
-      <feather-trash v-else />
+      <feather-trash slot="icon" v-else />
     </v-button>
   </div>
 </template>
@@ -27,7 +28,8 @@
     name: 'GalleryUpload',
 
     props: {
-      editMode: { type: Boolean, default: false }
+      editMode: { type: Boolean, default: false },
+      loading: { type: Boolean, default: false }
     },
 
     components: {

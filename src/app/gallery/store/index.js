@@ -3,5 +3,11 @@ import mutations from './mutations'
 
 export default {
   actions,
-  mutations
+  mutations,
+  state: {
+    data: [],
+    error: false,
+    finished: false,
+    loading: false
+  }
 }

@@ -27,7 +27,9 @@ export default {
   LOAD_PLANTS_SINGLE (state, payload) {
     let plantCopy = state.plants.data
     // Get all existing plant items, add new entry and sort them
-    const allPlants = plantCopy.filter(plant => !isEmptyObject(plant)).concat([payload.plant])
+    const allPlants = plantCopy
+      .filter(plant => !isEmptyObject(plant))
+      .concat([payload.plant])
 
     // Get all remaining empty objects, add them to the filtered list
     plantCopy = plantCopy.slice(allPlants.length, plantCopy.length)
@@ -38,21 +40,6 @@ export default {
     let transformed = payload.plants
     if (state.storage.type === 'local') {
       transformed = payload.plants.map(refreshBlobUrl)
-
-      // REMOVE
-      transformed = transformed.map(plant => {
-        return Object.assign(plant, {
-          modules: plant.modules.map(module => {
-            if (module.type !== 'gallery') return module
-
-            if (module.value.list.length) {
-              module.value.list = module.value.list.map(refreshBlobUrl)
-            }
-
-            return module
-          })
-        })
-      })
     }
 
     state.plants.loading = false

@@ -59,8 +59,8 @@ export default new Vuex.Store({
     },
 
     plants: plant.state,
-
-    tags: settings.state.tags
+    tags: settings.state.tags,
+    gallery: gallery.state
   },
 
   actions: {

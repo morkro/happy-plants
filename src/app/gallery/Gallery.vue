@@ -32,6 +32,7 @@
         v-if="!fullscreen"
         ref="galleryUpload"
         :edit-mode="listEditMode"
+        :loading="deleteGalleryItemProgress"
         @photo-selected="getPhoto"
         @trigger-selection="openAddPhoto"
         @trigger-delete="deleteSelectedPhotos" />
@@ -81,7 +82,6 @@
 </template>
 
 <script>
-  import uuid from 'uuid/v4'
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
@@ -89,7 +89,7 @@
   import GalleryUpload from './components/GalleryUpload'
   import GalleryImage from './components/GalleryImage'
 
-  import getGalleryItemStructure from './utils/get-gallery-item-structure'
+  import { getGalleryItemStructure } from './utils/get-gallery-structure'
 
   export default {
     name: 'Gallery',
@@ -112,6 +112,7 @@
 
     data: () => ({
       addGalleryItemProgress: false,
+      deleteGalleryItemProgress: false,
       fullscreen: false,
       showDialog: false,
       listDelta: 0,
@@ -124,13 +125,14 @@
 
     computed: {
       ...mapState({
+        plantsLoaded: ({ plants }) => plants.finished && !plants.loading,
         plantsData: state => state.plants.data,
-        plant: state => state.plants.selected
+        plant: state => state.plants.selected,
+        gallery: state => state.gallery
       }),
       galleryData () {
-        return this.plant.modules
-          .find(module => module.type === 'gallery')
-          .value.list
+        const gallery = this.gallery.data.find(g => g.guid === this.$route.params.id)
+        return gallery ? gallery.list : []
       },
       listStyle () {
         return {
@@ -143,11 +145,6 @@
     },
 
     watch: {
-      plantsData (data) {
-        if (data.length) {
-          this.loadPlantItem(this.$route.params.id)
-        }
-      },
       listDelta (delta) {
         const $galleryEl = this.$refs.galleryList.$el
         const $prevActiveEl = $galleryEl.querySelector('li.active')
@@ -167,7 +164,10 @@
       ...mapActions([
         'updateAppHeader',
         'loadPlantItem',
-        'updateGallery',
+        'loadPlants',
+        'loadGallery',
+        'addGalleryItem',
+        'deleteGalleryItem',
         'showNotification'
       ]),
       defaultAppHeader () {
@@ -235,7 +235,12 @@
         }
       },
       async deletePhoto () {
-        await this.updateGallery(this.galleryData[this.listIndex])
+        this.deleteGalleryItemProgress = true
+        await this.deleteGalleryItem({
+          guid: this.$route.params.id,
+          item: this.galleryData[this.listIndex]
+        })
+        this.deleteGalleryItemProgress = false
         this.showNotification({ message: 'Photo deleted.' })
       },
       openAddPhoto () {
@@ -259,14 +264,15 @@
       },
       async addPhotoToGallery () {
         this.addGalleryItemProgress = true
-        const data = Object.assign({}, getGalleryItemStructure(), {
-          guid: uuid(),
-          created: Date.now(),
-          fileName: this.uploadedPhotoName,
-          imageURL: this.uploadedPhoto,
-          blob: this.uploadedBlob
+        await this.addGalleryItem({
+          guid: this.$route.params.id,
+          item: {
+            ...getGalleryItemStructure(),
+            fileName: this.uploadedPhotoName,
+            imageURL: this.uploadedPhoto,
+            blob: this.uploadedBlob
+          }
         })
-        await this.updateGallery(data)
         this.addGalleryItemProgress = false
 
         this.closeDialog()
@@ -292,9 +298,14 @@
         })
       },
       async deleteSelectedPhotos () {
+        this.deleteGalleryItemProgress = true
         for (const item of this.selectedItemsList) {
-          await this.updateGallery(item)
+          await this.deleteGalleryItem({
+            guid: this.$route.params.id,
+            item
+          })
         }
+        this.deleteGalleryItemProgress = false
 
         const selectedCount = this.selectedItemsList.length
         this.showNotification({
@@ -311,22 +322,30 @@
       }
     },
 
-    created () {
+    async created () {
       this.updateAppHeader({
         title: 'Gallery',
         backBtn: true,
         backBtnPath: `/plant/${this.$route.params.id}`,
         rightBtn: false
       })
+
+      if (!(this.gallery.finished && this.gallery.loading)) {
+        await this.loadGallery()
+      }
+
+      if (!this.plantsLoaded) {
+        await this.loadPlants()
+      }
+
+      if (!this.plant.guid) {
+        this.loadPlantItem(this.$route.params.id)
+      }
     },
 
     mounted () {
       if (this.$route.query.openUpload) {
         this.$refs.galleryUpload.triggerUpload()
-      }
-
-      if (!this.plant.guid) {
-        this.loadPlantItem(this.$route.params.id)
       }
     },
 

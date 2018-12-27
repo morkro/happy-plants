@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     name: 'Settings',
 
@@ -16,6 +16,9 @@
     },
 
     computed: {
+      ...mapState({
+        galleries: state => state.gallery
+      }),
       currentRoute () {
         return this.$route.path.split('/').pop()
       },
@@ -37,16 +40,21 @@
     },
 
     methods: mapActions([
+      'loadGallery',
       'updateAppHeader'
     ]),
 
-    created () {
+    async created () {
       this.updateAppHeader({
         title: this.currentRoute,
         backBtn: true,
         backBtnPath: this.returnRoutePath,
         rightBtn: false
       })
+
+      if (!(this.galleries.finished && this.galleries.loading)) {
+        await this.loadGallery()
+      }
     }
   }
 </script>

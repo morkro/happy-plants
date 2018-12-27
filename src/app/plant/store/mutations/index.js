@@ -1,7 +1,6 @@
 // https://vuejs.org/v2/guide/list.html#Caveats
 import add from './add'
 import load from './load'
-import modules from './modules'
 import update from './update'
 import deleteM from './delete'
 
@@ -9,7 +8,6 @@ export default {
   ...add,
   ...deleteM,
   ...load,
-  ...modules,
   ...update,
 
   RESET_SELECTED_PLANT (state, payload) {
