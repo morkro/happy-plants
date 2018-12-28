@@ -49,8 +49,7 @@ export default function getPlantModules () {
         title: 'Gallery',
         description: 'Add more photos of your plant to track growth.',
         icon: 'image',
-        // cloudOnly: true
-        cloudOnly: false
+        cloudOnly: true
       },
       value: {
         list: []

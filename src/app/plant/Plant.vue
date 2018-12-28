@@ -109,6 +109,7 @@
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
         plantsLoading: state => state.plants.loading,
+        plantsFinished: state => state.plants.finished,
         plant: state => state.plants.selected,
         tags: state => state.tags.data,
         galleries: state => state.gallery
@@ -141,9 +142,17 @@
         })
       },
 
-      plantsData (data) {
+      async plantsData (data) {
         if (data.length) {
-          this.loadPlantItem(this.$route.params.id)
+          await this.loadPlantItem(this.$route.params.id)
+        }
+      },
+
+      async plantsFinished (value, prevValue) {
+        if (value && prevValue === false) {
+          if (!this.galleries.finished && !this.galleries.loading) {
+            await this.loadGallery(this.plant.guid)
+          }
         }
       }
     },
@@ -282,8 +291,8 @@
     },
 
     async created () {
-      if (!(this.galleries.finished && this.galleries.loading)) {
-        await this.loadGallery()
+      if (!this.plant.guid) {
+        await this.loadPlantItem(this.$route.params.id)
       }
     },
 
@@ -298,7 +307,6 @@
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
-      this.loadPlantItem(this.$route.params.id)
     },
 
     beforeDestroy () {
@@ -308,14 +316,16 @@
         showIconBackdrop: false
       })
 
-      if (this.$route.name !== 'Gallery') {
-        this.updatePlantsList({
-          guid: this.plant.guid,
-          name: this.plant.name,
-          imageURL: this.plant.imageURL,
-          tags: this.plant.tags
-        }).then(() => this.resetSelectedState())
-      }
+      this.updatePlantsList({
+        guid: this.plant.guid,
+        name: this.plant.name,
+        imageURL: this.plant.imageURL,
+        tags: this.plant.tags
+      }).then(() => {
+        if (this.$route.name !== 'Gallery') {
+          this.resetSelectedState()
+        }
+      })
     }
   }
 </script>
