@@ -12,6 +12,7 @@ import store from '@/store'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 import LazyLoadDirective from '@/utils/vue-lazy-load-directive'
+import errorHandler from '@/utils/vue-error-handler'
 
 import './registerComponents'
 import './registerServiceWorker'
@@ -41,9 +42,7 @@ localforage.keys()
  */
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 Vue.config.devtools = true
-Vue.config.errorHandler = function (err, vm, info) {
-  console.log('[Global Error Handler]: Error in ' + info + ': ' + err) // eslint-disable-line no-console
-}
+Vue.config.errorHandler = errorHandler
 
 VueTouch.registerCustomEvent('doubletap', {
   type: 'tap',

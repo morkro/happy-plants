@@ -40,7 +40,6 @@
     },
 
     methods: mapActions([
-      'loadGallery',
       'updateAppHeader'
     ]),
 
@@ -51,10 +50,6 @@
         backBtnPath: this.returnRoutePath,
         rightBtn: false
       })
-
-      if (!(this.galleries.finished && this.galleries.loading)) {
-        await this.loadGallery()
-      }
     }
   }
 </script>

@@ -78,6 +78,6 @@ export async function loadPlants ({ state, commit }) {
   commit('LOAD_PLANTS_SUCCESS', { plants })
 }
 
-export function loadPlantItem ({ state, commit }, guid) {
+export async function loadPlantItem ({ state, commit }, guid) {
   commit('LOAD_PLANT_ITEM', { guid })
 }

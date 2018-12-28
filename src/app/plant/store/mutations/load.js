@@ -1,12 +1,6 @@
 import { getUrlFromBlob } from '@/utils/blob'
 import sortPlants from '@/store/utils/sort-plants'
-
-function isEmptyObject (entry) {
-  return (
-    Object.keys(entry).length === 0 &&
-    entry.constructor === Object
-  )
-}
+import isEmptyObject from '@/utils/is-object'
 
 function refreshBlobUrl (item) {
   return Object.assign(item, {

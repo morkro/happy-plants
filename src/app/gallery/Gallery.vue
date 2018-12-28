@@ -157,6 +157,14 @@
         if ($nextActiveEl) {
           $nextActiveEl.classList.add('active')
         }
+      },
+
+      async plantsLoaded (value, prevValue) {
+        if (value && prevValue === false) {
+          if (!this.gallery.finished && !this.gallery.loading) {
+            await this.loadGallery(this.$route.params.id)
+          }
+        }
       }
     },
 
@@ -330,16 +338,8 @@
         rightBtn: false
       })
 
-      if (!(this.gallery.finished && this.gallery.loading)) {
-        await this.loadGallery()
-      }
-
-      if (!this.plantsLoaded) {
-        await this.loadPlants()
-      }
-
       if (!this.plant.guid) {
-        this.loadPlantItem(this.$route.params.id)
+        await this.loadPlantItem(this.$route.params.id)
       }
     },
 
