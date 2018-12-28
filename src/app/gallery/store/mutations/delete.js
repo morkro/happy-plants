@@ -24,5 +24,9 @@ export default {
         })
       }
     }
+  },
+
+  DELETE_GALLERY_ITEM_FAILURE (state) {
+    state.gallery.error = true
   }
 }

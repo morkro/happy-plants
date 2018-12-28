@@ -112,7 +112,8 @@
         plantsFinished: state => state.plants.finished,
         plant: state => state.plants.selected,
         tags: state => state.tags.data,
-        galleries: state => state.gallery
+        galleries: state => state.gallery,
+        navigatingFromView: state => state.route.from.name
       }),
       ...mapGetters({
         plantTags: 'getPlantTags',
@@ -296,7 +297,7 @@
       }
     },
 
-    mounted () {
+    async mounted () {
       this.updateAppHeader({
         transparent: true,
         title: false,
@@ -307,6 +308,10 @@
         iconColor: this.headerInView ? 'white' : this.defaultIconColor,
         showIconBackdrop: true
       })
+
+      if (this.navigatingFromView && !this.galleries.finished && !this.galleries.loading) {
+        await this.loadGallery(this.plant.guid)
+      }
     },
 
     beforeDestroy () {
