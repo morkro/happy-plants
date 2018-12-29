@@ -309,7 +309,11 @@
         showIconBackdrop: true
       })
 
-      if (this.navigatingFromView && !this.galleries.finished && !this.galleries.loading) {
+      const galleryExists = this.galleries.data.some(g => g.guid === this.$route.params.id)
+      if (
+        (this.navigatingFromView && !this.galleries.finished && !this.galleries.loading) ||
+        (!galleryExists && this.galleries.finished)
+      ) {
         await this.loadGallery(this.plant.guid)
       }
     },
