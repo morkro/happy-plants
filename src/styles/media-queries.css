@@ -1,4 +1,2 @@
-:root {
-  @custom-media --max-mobile-viewport (width >= 600px);
-  @custom-media --min-desktop-viewport (width >= 1100px);
-}
+@custom-media --max-mobile-viewport (width >= 600px);
+@custom-media --min-desktop-viewport (width >= 1100px);
