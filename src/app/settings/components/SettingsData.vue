@@ -283,7 +283,7 @@
 
     @media (--min-desktop-viewport) {
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       flex-wrap: wrap;
     }
 
@@ -315,8 +315,8 @@
   @media (--min-desktop-viewport) {
     .download-section,
     .import-section {
-      width: 50%;
-      margin: 0 var(--base-gap);
+      width: calc(50% - var(--base-gap));
+      margin: var(--base-gap) 0;
     }
   }
 

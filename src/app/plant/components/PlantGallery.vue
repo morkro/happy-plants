@@ -99,6 +99,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .gallery-empty {
     & p {
       margin-bottom: var(--base-gap);
@@ -113,6 +115,13 @@
     border-radius: var(--border-radius);
     overflow: hidden;
     --preview-size: calc(25vw - var(--base-gap) + 5px);
+
+    @media (--min-desktop-viewport) {
+      --preview-size:
+        calc(
+          calc(0.6 * var(--app-desktop-max-width) / 4) - var(--base-gap) + 2px
+        );
+    }
 
     & li {
       width: var(--preview-size);
