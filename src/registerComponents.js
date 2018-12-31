@@ -5,6 +5,7 @@ import Vue from 'vue'
  * codebase. This file loads all files from the 'src/components/' directory
  * and normalizes their filename to become the components name.
  * Examples:
+ *    fileName               => componentName
  *    ./AuthProviderList.vue => auth-provider-list
  *    ./Button.vue           => v-button
  */

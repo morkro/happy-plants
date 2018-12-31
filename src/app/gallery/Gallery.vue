@@ -356,6 +356,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../styles/media-queries";
+
   .main-wireframe {
     min-height: 100vh;
     justify-content: flex-flex-start;
@@ -425,6 +427,13 @@
     justify-content: space-between;
     width: 100%;
     --preview-size: calc(50vw - 0.125 * var(--base-gap));
+
+    @media (--min-desktop-viewport) {
+      --preview-size:
+        calc(
+          calc(var(--app-desktop-max-width) / 2) - 0.125 * var(--base-gap)
+        );
+    }
 
     @nest .fullscreen & {
       align-self: flex-start;

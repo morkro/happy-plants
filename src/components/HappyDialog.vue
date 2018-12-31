@@ -132,7 +132,7 @@
     }
 
     @media (--min-desktop-viewport) {
-      width: var(--app-desktop-max-width);
+      width: calc(var(--app-desktop-max-width) / 2);
     }
 
     &.danger {

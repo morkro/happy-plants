@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
 import VueA11yDialog from 'vue-a11y-dialog'
+import VueMQ from 'vue-mq'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
@@ -56,6 +57,13 @@ Vue.use(formatDateFilter)
 Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
 Vue.use(VueA11yDialog)
+Vue.use(VueMQ, {
+  breakpoints: {
+    phone: 600,
+    desktop: 1100
+  },
+  defaultBreakpoint: 'phone'
+})
 
 sync(store, router)
 

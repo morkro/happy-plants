@@ -23,6 +23,7 @@
     "vue-a11y-dialog": "^0.3.1",
     "vue-feather-icons": "^4.7.1",
     "vue-meta": "^1.5.8",
+    "vue-mq": "^1.0.1",
     "vue-router": "^3.0.2",
     "vue-svgicon": "^3.2.2",
     "vue-touch": "^2.0.0-beta.4",

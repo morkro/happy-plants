@@ -20,39 +20,43 @@
       'view-content': true,
       'no-modules': plant.modules && !plant.modules.length,
       'app-content': true }">
-      <plant-header
-        :content-loading="plantsLoading"
-        :name="plant.name"
-        :image-url="plant.imageURL"
-        v-observe-visibility.60="observeVisibility"
-        @update-name="updatePlantName"
-        @update-photo="updatePlantPhoto" />
+      <div>
+        <plant-header
+          :content-loading="plantsLoading"
+          :name="plant.name"
+          :image-url="plant.imageURL"
+          v-observe-visibility.60="observeVisibility"
+          @update-name="updatePlantName"
+          @update-photo="updatePlantPhoto" />
 
-      <plant-tags
-        v-if="Array.isArray(plant.tags)"
-        :tags="allPlantTags"
-        :all-tags="tags"
-        @new-tag="addNewPlantTag"
-        @remove-tag="removePlantTag"
-        @hide-module="hidePlantTags" />
+        <plant-tags
+          v-if="Array.isArray(plant.tags)"
+          :tags="allPlantTags"
+          :all-tags="tags"
+          @new-tag="addNewPlantTag"
+          @remove-tag="removePlantTag"
+          @hide-module="hidePlantTags" />
+      </div>
 
-      <!--
-        Plant modules are dynamically rendered since they
-        can be added/removed and sorted.
-      -->
-      <component
-        v-if="plant.modules && plant.modules.length"
-        v-for="module in plant.modules"
-        v-bind="getPlantModuleProps(module.type)"
-        :key="module.type"
-        :is="`plant-${module.type}`"
-        @update-plant="getModuleListener" />
+      <div>
+        <!--
+          Plant modules are dynamically rendered since they
+          can be added/removed and sorted.
+        -->
+        <component
+          v-if="plant.modules && plant.modules.length"
+          v-for="module in plant.modules"
+          v-bind="getPlantModuleProps(module.type)"
+          :key="module.type"
+          :is="`plant-${module.type}`"
+          @update-plant="getModuleListener" />
 
-      <plant-footer
-        :no-modules="plant.modules && !plant.modules.length"
-        :show-tag-button="plant.tags === false"
-        @manage-modules="activateModuleManager"
-        @show-tags="showPlantTags" />
+        <plant-footer
+          :no-modules="plant.modules && !plant.modules.length"
+          :show-tag-button="plant.tags === false"
+          @manage-modules="activateModuleManager"
+          @show-tags="showPlantTags" />
+      </div>
     </main>
   </div>
 </template>
@@ -130,11 +134,15 @@
           Object.assign(module, {
             selected: !!this.plant.modules && this.plant.modules.find(m => m.type === module.type)
           }))
+      },
+      isPhone () {
+        return this.$mq === 'phone'
       }
     },
 
     watch: {
       headerInView (show) {
+        if (!this.isPhone) return
         this.updateAppHeader({
           transparent: show,
           iconColor: this.headerInView ? 'white' : this.defaultIconColor,
@@ -299,14 +307,14 @@
 
     async mounted () {
       this.updateAppHeader({
-        transparent: true,
+        transparent: this.isPhone,
         title: false,
         backBtn: true,
         backBtnPath: '/',
         rightBtn: 'edit',
         rightBtnOnClick: this.openPlantEditModal,
-        iconColor: this.headerInView ? 'white' : this.defaultIconColor,
-        showIconBackdrop: true
+        iconColor: this.headerInView && this.isPhone ? 'white' : this.defaultIconColor,
+        showIconBackdrop: this.isPhone
       })
 
       const galleryExists = this.galleries.data.some(g => g.guid === this.$route.params.id)
@@ -340,14 +348,35 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../styles/media-queries";
+
   .main-wireframe {
     padding-top: 0;
+
+    @media (--min-desktop-viewport) {
+      padding-top: var(--app-header-size);
+    }
   }
 
   .view-content {
     background-color: var(--background-secondary);
     min-height: 100vh;
     z-index: 0;
+
+    @media (--min-desktop-viewport) {
+      display: grid;
+      grid-template-columns: 40% calc(60% - var(--base-gap));
+      grid-template-areas: "left right";
+      grid-column-gap: var(--base-gap);
+
+      & > div:first-of-type {
+        grid-area: left;
+      }
+
+      & > div:nth-of-type(2) {
+        grid-area: right;
+      }
+    }
 
     &.no-modules {
       display: flex;
