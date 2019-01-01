@@ -173,7 +173,7 @@ Modules have all the same structure with a module-specific `value` definition.
 | Command | Description |
 | ------- | ----------- |
 | `npm install` | Installs dependencies |
-| `npm run dev` | Serve with hot reload at localhost:8080 |
+| `npm run serve` | Serve with hot reload at localhost:8080 |
 | `npm run build` | Build for production with minification |
 | `npm run build --report` | Build for production and view the bundle analyzer report |
 | `npm run unit` | Run unit tests |
