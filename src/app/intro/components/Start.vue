@@ -107,6 +107,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
 
     & p {
       text-align: center;
