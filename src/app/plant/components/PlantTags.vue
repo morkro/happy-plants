@@ -172,6 +172,10 @@
     background: transparent;
     margin-bottom: var(--tag-module-gap);
 
+    @media screen and (min-width: 768px) {
+      --tag-module-height: auto;
+    }
+
     &.edit-mode {
       position: relative;
       z-index: 1;
@@ -201,6 +205,10 @@
         padding: calc(var(--base-gap) / 2) var(--base-gap);
         left: 50%;
       }
+
+      @media screen and (min-width: 768px) {
+        margin-top: 16px;
+      }
     }
 
     & button:not(.hide-module) {
@@ -209,6 +217,10 @@
       display: flex;
       justify-content: center;
       box-shadow: none;
+
+      @media screen and (min-width: 768px) {
+        height: 58px;
+      }
     }
   }
 
@@ -256,6 +268,11 @@
     &:not(.show-input)::after {
       right: 0;
     }
+
+    @media screen and (min-width: 768px) {
+      overflow-x: hidden;
+      margin-bottom: 16px;
+    }
   }
 
   .tags-new {
@@ -286,6 +303,15 @@
       var(--base-gap)
       var(--base-gap)
       calc(var(--base-gap) / 2);
+
+    @media screen and (min-width: 768px) {
+      overflow-x: hidden;
+      padding:
+        0
+        var(--base-gap)
+        0
+        calc(var(--base-gap) / 2);
+    }
   }
 
   .tags-list {
@@ -304,10 +330,18 @@
       flex-shrink: 0;
       margin-right: calc(var(--base-gap) / 2);
 
+      @media screen and (min-width: 768px) {
+        margin-bottom: calc(var(--base-gap) / 2);
+      }
+
       &:last-child {
         /* Workaround */
         padding-right: calc(var(--base-gap) / 2);
       }
+    }
+
+    @media screen and (min-width: 768px) {
+      flex-wrap: wrap;
     }
   }
 

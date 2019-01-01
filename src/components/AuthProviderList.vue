@@ -57,6 +57,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
 
     & li:not(:last-child) {
       margin-bottom: var(--base-gap);

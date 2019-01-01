@@ -56,6 +56,8 @@
     padding-left: var(--base-gap);
     padding-right: var(--base-gap);
     padding-bottom: var(--base-gap);
+    max-width: 960px;
+    margin: 0 auto;
 
     & p {
       font-weight: 500;
@@ -68,6 +70,12 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: calc(var(--base-gap) * 2);
+  }
+
+  @media screen and (min-width: 768px) {
+    .intro-header > img {
+      max-width: 500px;
+    }
   }
 
   .intro-wrapper {
