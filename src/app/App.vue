@@ -276,7 +276,7 @@
     max-width: var(--app-mobile-max-size);
     margin: 0 auto;
 
-    @media (--min-desktop-viewport) {
+    @media (--max-mobile-viewport) {
       max-width: var(--app-desktop-max-width);
     }
   }

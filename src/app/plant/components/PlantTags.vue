@@ -162,13 +162,15 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .plant-tags {
     --tag-module-gap: 4px;
     --tag-module-height: 64px;
     background: transparent;
     margin-bottom: var(--tag-module-gap);
 
-    @media screen and (min-width: 768px) {
+    @media (--max-mobile-viewport) {
       --tag-module-height: auto;
     }
 
@@ -202,8 +204,8 @@
         left: 50%;
       }
 
-      @media screen and (min-width: 768px) {
-        margin-top: 16px;
+      @media (--max-mobile-viewport) {
+        margin-top: var(--base-gap);
       }
     }
 
@@ -214,7 +216,7 @@
       justify-content: center;
       box-shadow: none;
 
-      @media screen and (min-width: 768px) {
+      @media (--max-mobile-viewport) {
         height: 58px;
       }
     }
@@ -265,9 +267,9 @@
       right: 0;
     }
 
-    @media screen and (min-width: 768px) {
+    @media (--max-mobile-viewport) {
       overflow-x: hidden;
-      margin-bottom: 16px;
+      margin-bottom: var(--base-gap);
     }
   }
 
@@ -300,7 +302,7 @@
       var(--base-gap)
       calc(var(--base-gap) / 2);
 
-    @media screen and (min-width: 768px) {
+    @media (--max-mobile-viewport) {
       overflow-x: hidden;
       padding:
         0
@@ -326,7 +328,7 @@
       flex-shrink: 0;
       margin-right: calc(var(--base-gap) / 2);
 
-      @media screen and (min-width: 768px) {
+      @media (--max-mobile-viewport) {
         margin-bottom: calc(var(--base-gap) / 2);
       }
 
@@ -336,7 +338,7 @@
       }
     }
 
-    @media screen and (min-width: 768px) {
+    @media (--max-mobile-viewport) {
       flex-wrap: wrap;
     }
   }
