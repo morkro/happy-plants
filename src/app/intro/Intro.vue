@@ -44,6 +44,8 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../styles/media-queries";
+
   .main-wireframe {
     display: flex;
     align-items: flex-start;
@@ -72,7 +74,7 @@
     margin-bottom: calc(var(--base-gap) * 2);
   }
 
-  @media screen and (min-width: 768px) {
+  @media (--max-mobile-viewport) {
     .intro-header > img {
       max-width: 500px;
     }

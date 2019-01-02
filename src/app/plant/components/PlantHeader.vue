@@ -148,7 +148,7 @@
       --header-color: white;
     }
 
-    @media (--min-desktop-viewport) {
+    @media (--max-mobile-viewport) {
       height: 50vh;
     }
   }
