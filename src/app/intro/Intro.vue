@@ -58,7 +58,7 @@
     padding-left: var(--base-gap);
     padding-right: var(--base-gap);
     padding-bottom: var(--base-gap);
-    max-width: 960px;
+    max-width: var(--app-desktop-max-width);
     margin: 0 auto;
 
     & p {
@@ -76,7 +76,7 @@
 
   @media (--max-mobile-viewport) {
     .intro-header > img {
-      max-width: 500px;
+      max-width: 50%;
     }
   }
 
