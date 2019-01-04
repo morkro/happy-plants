@@ -170,10 +170,6 @@
     background: transparent;
     margin-bottom: var(--tag-module-gap);
 
-    @media (--max-mobile-viewport) {
-      --tag-module-height: auto;
-    }
-
     &.edit-mode {
       position: relative;
       z-index: 1;
@@ -203,10 +199,6 @@
         padding: calc(var(--base-gap) / 2) var(--base-gap);
         left: 50%;
       }
-
-      @media (--max-mobile-viewport) {
-        margin-top: var(--base-gap);
-      }
     }
 
     & button:not(.hide-module) {
@@ -217,7 +209,7 @@
       box-shadow: none;
 
       @media (--max-mobile-viewport) {
-        height: 58px;
+        height: var(--tag-module-height);
       }
     }
   }
@@ -269,7 +261,6 @@
 
     @media (--max-mobile-viewport) {
       overflow-x: hidden;
-      margin-bottom: var(--base-gap);
     }
   }
 
