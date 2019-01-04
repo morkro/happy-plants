@@ -162,11 +162,17 @@
 </script>
 
 <style lang="postcss" scoped>
+  @import "../../../styles/media-queries";
+
   .plant-tags {
     --tag-module-gap: 4px;
     --tag-module-height: 64px;
     background: transparent;
     margin-bottom: var(--tag-module-gap);
+
+    @media (--max-mobile-viewport) {
+      --tag-module-height: auto;
+    }
 
     &.edit-mode {
       position: relative;
@@ -197,6 +203,10 @@
         padding: calc(var(--base-gap) / 2) var(--base-gap);
         left: 50%;
       }
+
+      @media (--max-mobile-viewport) {
+        margin-top: var(--base-gap);
+      }
     }
 
     & button:not(.hide-module) {
@@ -205,6 +215,10 @@
       display: flex;
       justify-content: center;
       box-shadow: none;
+
+      @media (--max-mobile-viewport) {
+        height: 58px;
+      }
     }
   }
 
@@ -252,6 +266,11 @@
     &:not(.show-input)::after {
       right: 0;
     }
+
+    @media (--max-mobile-viewport) {
+      overflow-x: hidden;
+      margin-bottom: var(--base-gap);
+    }
   }
 
   .tags-new {
@@ -282,6 +301,15 @@
       var(--base-gap)
       var(--base-gap)
       calc(var(--base-gap) / 2);
+
+    @media (--max-mobile-viewport) {
+      overflow-x: hidden;
+      padding:
+        0
+        var(--base-gap)
+        0
+        calc(var(--base-gap) / 2);
+    }
   }
 
   .tags-list {
@@ -300,10 +328,18 @@
       flex-shrink: 0;
       margin-right: calc(var(--base-gap) / 2);
 
+      @media (--max-mobile-viewport) {
+        margin-bottom: calc(var(--base-gap) / 2);
+      }
+
       &:last-child {
         /* Workaround */
         padding-right: calc(var(--base-gap) / 2);
       }
+    }
+
+    @media (--max-mobile-viewport) {
+      flex-wrap: wrap;
     }
   }
 
