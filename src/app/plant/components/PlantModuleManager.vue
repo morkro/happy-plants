@@ -1,59 +1,60 @@
 <template>
-  <happy-dialog
-    id="plant-module-manager-dialog"
-    app-root=".main-wireframe"
+  <portal-dialog
+    dialog-name="plant-module-manager-dialog"
     :show="show"
     @close-dialog="cancel">
     <span slot="headline">Manage modules</span>
 
-    <div class="module-content">
-      <div v-if="warnGalleryRemoval" class="module-warning">
-        <p>
-          Disabling the gallery module will also <strong>delete all photos</strong> from it!
-          Are you sure about this?
-        </p>
+    <div>
+      <div class="module-content">
+        <div v-if="warnGalleryRemoval" class="module-warning">
+          <p>
+            Disabling the gallery module will also <strong>delete all photos</strong> from it!
+            Are you sure about this?
+          </p>
+        </div>
+
+        <ul class="module-list">
+          <v-touch
+            tag="li"
+            v-for="(module, index) in updatedModules"
+            :class="getListClass(module)"
+            :key="`module-${index}`"
+            @tap="onToggleModule(module)">
+            <div class="module-icon">
+              <input type="radio"
+                :id="`module-${module.type}`"
+                :name="`module-${module.type}`"
+                :value="module.type"
+                :checked="!cloudOnlyFeature(module) && module.selected"
+                :disabled="cloudOnlyFeature(module)">
+              <span aria-hidden="true">
+                <feather-check />
+              </span>
+            </div>
+            <label class="module-description" :for="`module-${module.type}`">
+              <h2>
+                <component :is="`feather-${module.meta.icon}`" />
+                {{ module.meta.title }}
+              </h2>
+              <span>{{ getModuleDescription(module) }}</span>
+            </label>
+          </v-touch>
+        </ul>
       </div>
 
-      <ul class="module-list">
-        <v-touch
-          tag="li"
-          v-for="(module, index) in updatedModules"
-          :class="getListClass(module)"
-          :key="`module-${index}`"
-          @tap="onToggleModule(module)">
-          <div class="module-icon">
-            <input type="radio"
-              :id="`module-${module.type}`"
-              :name="`module-${module.type}`"
-              :value="module.type"
-              :checked="!cloudOnlyFeature(module) && module.selected"
-              :disabled="cloudOnlyFeature(module)">
-            <span aria-hidden="true">
-              <feather-check />
-            </span>
-          </div>
-          <label class="module-description" :for="`module-${module.type}`">
-            <h2>
-              <component :is="`feather-${module.meta.icon}`" />
-              {{ module.meta.title }}
-            </h2>
-            <span>{{ getModuleDescription(module) }}</span>
-          </label>
-        </v-touch>
-      </ul>
+      <div class="dialog-actions">
+        <v-button
+          v-if="warnGalleryRemoval"
+          @click.native="continueModuleEditing">
+          Continue updating
+        </v-button>
+        <v-button v-else @click.native="confirmModuleUpdates">
+          Update modules
+        </v-button>
+      </div>
     </div>
-
-    <div class="dialog-actions">
-      <v-button
-        v-if="warnGalleryRemoval"
-        @click.native="continueModuleEditing">
-        Continue updating
-      </v-button>
-      <v-button v-else @click.native="confirmModuleUpdates">
-        Update modules
-      </v-button>
-    </div>
-  </happy-dialog>
+  </portal-dialog>
 </template>
 
 <script>

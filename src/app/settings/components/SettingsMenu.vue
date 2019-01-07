@@ -1,8 +1,7 @@
 <template>
   <div class="settings-menu">
-    <happy-dialog
-      id="settings-happy-dialog"
-      app-root=".settings-menu"
+    <portal-dialog
+      dialog-name="settings-happy-dialog"
       :show="showLoginDialog"
       @close-dialog="closeLoginDialog">
       <span slot="headline">Select login</span>
@@ -12,7 +11,7 @@
         :disabled="disabled"
         @provider-selected="loginUser"
       />
-    </happy-dialog>
+    </portal-dialog>
 
     <ul class="settings-menu-list">
       <li

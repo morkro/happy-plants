@@ -4,9 +4,8 @@
     <h2 slot="title">Watering</h2>
 
     <div slot="content" class="watering-content">
-      <happy-dialog
-        id="plant-watering-dialog"
-        app-root=".main-wireframe"
+      <portal-dialog
+        dialog-name="plant-watering-dialog"
         :show="showRoutineSelection"
         @close-dialog="closeRoutineDialog">
         <span slot="headline">Choose frequency</span>
@@ -24,7 +23,7 @@
             </label>
           </li>
         </ul>
-      </happy-dialog>
+      </portal-dialog>
 
       <div class="watering-description">
         <p>

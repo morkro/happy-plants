@@ -34,9 +34,8 @@
       </div>
     </div>
 
-    <happy-dialog
-      id="storage-dialog"
-      app-root=".settings-storage"
+    <portal-dialog
+      dialog-name="storage-dialog"
       :show="showCloudDialog"
       @close-dialog="closeDialog">
       <span slot="headline">Migrate data to {{ storageTypeName }}</span>
@@ -90,7 +89,7 @@
           I understand, let's go
         </v-button>
       </div>
-    </happy-dialog>
+    </portal-dialog>
   </div>
 </template>
 

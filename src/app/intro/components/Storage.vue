@@ -1,8 +1,7 @@
 <template>
   <div>
-    <happy-dialog
-      id="happy-dialog"
-      app-root=".settings-data"
+    <portal-dialog
+      dialog-name="intro-storage-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
       <span slot="headline">Login to Google</span>
@@ -15,7 +14,7 @@
           Open Google sign-in
         </v-button>
       </div>
-    </happy-dialog>
+    </portal-dialog>
 
     <div class="intro-storage box">
       <h2>How do you want to save your plant data?</h2>

@@ -1,30 +1,31 @@
 <template>
   <a11y-dialog disable-native
-    :id="id"
-    :app-root="appRoot"
-    :class-names="classNames"
+    :id="dialogIdentifier"
+    app-root="#app"
+    dialog-root="#dialog"
+    :class-names="dialogClassNames"
     @dialog-ref="assignDialogRef">
     <feather-x
       slot="closeButtonContent"
       width="24"
       height="24" />
 
-    <slot slot="title" name="headline" />
+    <slot slot="title">
+      <portal-target name="dialog-title" slim />
+    </slot>
 
     <div class="happy-dialog-content">
-      <slot />
+      <portal-target name="dialog-content" slim />
     </div>
   </a11y-dialog>
 </template>
 
 <script>
   export default {
-    name: 'HappyDialog',
+    name: 'AppDialog',
 
     props: {
-      id: { type: String, required: true, default: 'happy-dialog' },
-      appRoot: { type: String, required: true, default: '#app' },
-      show: { type: Boolean, default: false },
+      dialogId: { type: [String, Boolean], default: '' },
       type: { type: String, default: 'normal' }
     },
 
@@ -33,12 +34,8 @@
         import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
     },
 
-    data: () => ({
-      dialog: null
-    }),
-
     computed: {
-      classNames () {
+      dialogClassNames () {
         return {
           base: 'happy-dialog-base',
           overlay: 'happy-dialog-overlay',
@@ -47,42 +44,16 @@
           title: 'happy-dialog-title',
           closeButton: 'happy-dialog-close-button circle plain'
         }
-      }
-    },
+      },
 
-    watch: {
-      show () {
-        if (this.show) {
-          this.$root.$el.parentNode.classList.add('js-no-scrolling')
-          if (this.dialog) this.dialog.show()
-        } else {
-          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
-          if (this.dialog) this.dialog.hide()
-        }
+      dialogIdentifier () {
+        return this.dialogId || 'app-dialog'
       }
     },
 
     methods: {
       assignDialogRef (dialog) {
-        this.dialog = dialog
-        if (this.dialog) this.dialog.on('hide', this.onDialogClose)
-        if (this.dialog) this.dialog.on('show', this.onDialogOpen)
-      },
-      onDialogClose () {
-        this.$emit('close-dialog')
-      },
-      onDialogOpen () {
-        this.$emit('open-dialog')
-      }
-    },
-
-    beforeDestroy () {
-      if (this.dialog) this.dialog.off('hide', this.onDialogClose)
-      if (this.dialog) this.dialog.off('show', this.onDialogOpen)
-
-      const rootNode = this.$root.$el.parentNode
-      if (rootNode.classList.contains('js-no-scrolling')) {
-        rootNode.classList.remove('js-no-scrolling')
+        this.$emit('dialog-ref', dialog)
       }
     }
   }

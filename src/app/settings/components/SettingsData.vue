@@ -1,8 +1,7 @@
 <template>
   <div class="settings-data">
-    <happy-dialog
-      id="settings-dialog"
-      app-root=".settings-data"
+    <portal-dialog
+      dialog-name="settings-dialog"
       :type="this.modalType"
       :show="showDialog"
       @close-dialog="closeDialog">
@@ -58,7 +57,7 @@
           Import
         </v-button>
       </div>
-    </happy-dialog>
+    </portal-dialog>
 
     <section class="download-section box">
       <h2>Export plant data</h2>

@@ -1,7 +1,6 @@
 <template>
-  <happy-dialog
-    id="settings-tags-dialog"
-    app-root=".settings-tags"
+  <portal-dialog
+    dialog-name="settings-tags-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
     <span slot="headline">Edit tag</span>
@@ -20,7 +19,7 @@
         Update name
       </v-button>
     </form>
-  </happy-dialog>
+  </portal-dialog>
 </template>
 
 <script>
@@ -75,11 +74,6 @@
 </script>
 
 <style lang="postcss" scoped>
-  .dialog-content {
-    border-top: 3px solid rgba(0, 0, 0, 0.06);
-    padding-top: var(--base-gap);
-  }
-
   label {
     display: block;
     margin-bottom: calc(var(--base-gap) * 2);

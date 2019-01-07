@@ -1,25 +1,25 @@
 <template>
-  <happy-dialog
-    id="plant-edit-dialog"
-    app-root=".main-wireframe"
-    class="happy-dialog"
+  <portal-dialog
+    dialog-name="plant-edit-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
     <span slot="headline">Delete plant</span>
 
-    <v-button
-      color="red"
-      :loading="loading"
-      @click.native="emitDeletePlant">
-      <feather-trash slot="icon" />
-      Yes, delete this plant
-    </v-button>
+    <div>
+      <v-button
+        color="red"
+        :loading="loading"
+        @click.native="emitDeletePlant">
+        <feather-trash slot="icon" />
+        Yes, delete this plant
+      </v-button>
 
-    <div class="modal-meta">
-      <span>Last updated: {{ modified | formatDate }}</span>
-      <span>Created: {{ created | formatDate }}</span>
+      <div class="modal-meta">
+        <span>Last updated: {{ modified | formatDate }}</span>
+        <span>Created: {{ created | formatDate }}</span>
+      </div>
     </div>
-  </happy-dialog>
+  </portal-dialog>
 </template>
 
 <script>

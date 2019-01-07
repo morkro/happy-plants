@@ -3,21 +3,22 @@
     <feather-book slot="icon" />
     <h2 slot="title">Notebook</h2>
     <div slot="content">
-      <happy-dialog
-        id="plant-notes-dialog"
-        app-root=".main-wireframe"
+      <portal-dialog
+        dialog-name="plant-notes-dialog"
         :show="showNotes"
         @close-dialog="closeNotes">
         <span slot="headline">Notebook</span>
 
-        <textarea
-          @change="updateContent"
-          :value="content" />
+        <div>
+          <textarea
+            @change="updateContent"
+            :value="content" />
 
-        <v-button @click.native="closeAndSaveNotes">
-          Save
-        </v-button>
-      </happy-dialog>
+          <v-button @click.native="closeAndSaveNotes">
+            Save
+          </v-button>
+        </div>
+      </portal-dialog>
 
       <div v-if="!content"
         key="notes-empty"

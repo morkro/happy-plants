@@ -24,6 +24,11 @@ export default new Vuex.Store({
     firstTimeUser: false,
     hasNewRelease: false,
 
+    dialog: {
+      active: false,
+      type: 'default'
+    },
+
     appheader: {
       backBtn: true,
       backBtnPath: '/',
