@@ -1,9 +1,8 @@
 <template>
   <div class="main-wireframe">
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
-    <happy-dialog
-      id="overview-dialog"
-      app-root=".main-wireframe"
+    <portal-dialog
+      dialog-name="overview-dialog"
       type="danger"
       :show="showDialog"
       @close-dialog="cancelDeleteMode">
@@ -19,7 +18,7 @@
           Yes, delete plants
         </v-button>
       </div>
-    </happy-dialog>
+    </portal-dialog>
 
     <div v-if="showBackdrop"
       class="overview-backdrop"

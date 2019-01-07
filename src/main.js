@@ -3,6 +3,7 @@ import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
 import VueA11yDialog from 'vue-a11y-dialog'
 import VueMQ from 'vue-mq'
+import PortalVue from 'portal-vue'
 import { sync } from 'vuex-router-sync'
 import localforage from 'localforage'
 import { extendPrototype } from 'localforage-startswith'
@@ -64,6 +65,7 @@ Vue.use(VueMQ, {
   },
   defaultBreakpoint: 'phone'
 })
+Vue.use(PortalVue)
 
 sync(store, router)
 

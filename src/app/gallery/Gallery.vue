@@ -1,8 +1,7 @@
 <template>
   <div :class="['main-wireframe', { fullscreen }]">
-    <happy-dialog
-      id="gallery-dialog"
-      app-root=".main-wireframe"
+    <portal-dialog
+      dialog-name="gallery-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
       <span slot="headline">{{ uploadedPhotoName }}</span>
@@ -19,7 +18,7 @@
           Add photo
         </v-button>
       </div>
-    </happy-dialog>
+    </portal-dialog>
 
     <main class="app-content">
       <gallery-options

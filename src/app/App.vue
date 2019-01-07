@@ -1,5 +1,10 @@
 <template>
   <div id="app">
+    <app-dialog
+      :dialog-id="activeDialog"
+      :type="dialogType"
+      @dialog-ref="assignDialogRef" />
+
     <app-notifications
       class="notifications"
       :message="message" />
@@ -18,10 +23,8 @@
       </h1>
     </app-header>
 
-    <happy-dialog
-      id="new-release-dialog"
-      app-root=".main-wireframe"
-      class="happy-dialog"
+    <portal-dialog
+      dialog-name="new-release-dialog"
       :show="showReleaseDialog"
       @close-dialog="emitCloseDialog">
       <span slot="headline">
@@ -36,7 +39,7 @@
 
         <md-changelog ref="releaseUpdates" />
       </div>
-    </happy-dialog>
+    </portal-dialog>
 
     <router-view />
   </div>
@@ -70,7 +73,8 @@
       return {
         applicationOnline: window && window.navigator && window.navigator.onLine,
         notificationTimeout: 2000,
-        showReleaseDialog: false
+        showReleaseDialog: false,
+        dialog: null
       }
     },
 
@@ -85,6 +89,16 @@
         if (online === false && this.canSeeOfflineNotification) {
           this.showNotification({ message: 'You just went offline.' })
         }
+      },
+
+      activeDialog (dialogName) {
+        if (dialogName) {
+          this.$root.$el.parentNode.classList.add('js-no-scrolling')
+          if (this.dialog) this.dialog.show()
+        } else {
+          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
+          if (this.dialog) this.dialog.hide()
+        }
       }
     },
 
@@ -92,6 +106,8 @@
       ...mapState({
         version: state => state.version,
         hasNewRelease: state => state.hasNewRelease,
+        activeDialog: state => state.dialog.active,
+        dialogType: state => state.dialog.type,
         storageType: state => state.storage.type,
         authenticated: state => state.user.authenticated,
         theme: state => state.settings.theme,
@@ -124,8 +140,16 @@
         'loadTags',
         'showNotification',
         'hideNotification',
-        'updateAppHeader'
+        'updateAppHeader',
+        'toggleDialog'
       ]),
+      assignDialogRef (dialog) {
+        this.dialog = dialog
+        if (this.dialog) this.dialog.on('hide', this.onDialogClose)
+      },
+      onDialogClose () {
+        this.toggleDialog({ dialog: false })
+      },
       emitCloseDialog () {
         this.showReleaseDialog = false
       },
@@ -191,6 +215,7 @@
     beforeDestroy () {
       window.removeEventListener('online', this.setApplicationOnline)
       window.removeEventListener('offline', this.setApplicationOffline)
+      if (this.dialog) this.dialog.off('hide', this.onDialogClose)
     }
   }
 </script>
