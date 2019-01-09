@@ -15,7 +15,7 @@
 
 ---
 
-<img src="resources/web-app.png" align="left" width="180px" alt="HappyPlants App" />
+<img src="resources/happyplants-phone-presentation.png" alt="HappyPlants App" />
 
 [_HappyPlants_](https://happyplants.garden) is all about collecting, organising, and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application.
 
