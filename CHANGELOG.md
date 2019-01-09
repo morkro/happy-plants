@@ -7,14 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.6.0] - 2019-01-xx
 
-## Added
+### Added
 - Gallery module for plants.
 
-## Changed
+### Changed
 - Couple of layout adjustments for the desktop version.
 
-## Fixed
-- Some minor layout issues in Plant screen
+### Fixed
+- Some minor layout issues in Plant screen.
+- Issues with the dialog.
 
 ## [1.5.1] - 2018-11-10
 
