@@ -15,8 +15,6 @@ export const app = firebase.initializeApp(firebaseConfig)
 export const firestore = app.firestore()
 export const storage = firebase.storage()
 
-firestore.settings({ timestampsInSnapshots: true })
-
 export function storagePath (path = []) {
   return path
     .reduce((a, b) => a.concat(b), [])
