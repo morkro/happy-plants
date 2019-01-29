@@ -97,7 +97,7 @@
       </span>
     </section>
 
-    <section class="danger-zone">
+    <section class="danger-zone box">
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
       <v-button color="yellow" @click.native="openDangerModal">
@@ -307,7 +307,8 @@
   }
 
   .download-section,
-  .import-section {
+  .import-section,
+  .danger-zone {
     margin: var(--base-gap);
   }
 
