@@ -86,7 +86,7 @@
       },
 
       applicationOnline (online) {
-        if (online === false && this.canSeeOfflineNotification) {
+        if (online === false && this.storageType === 'cloud') {
           this.showNotification({ message: 'You just went offline.' })
         }
       },
@@ -120,10 +120,7 @@
         rightBtn: state => state.appheader.rightBtn,
         rightBtnOnClick: state => state.appheader.rightBtnOnClick,
         showIconBackdrop: state => state.appheader.showIconBackdrop
-      }),
-      canSeeOfflineNotification () {
-        return this.storageType === 'cloud'
-      }
+      })
     },
 
     methods: {
@@ -190,6 +187,10 @@
         }
       }
 
+      if (!this.applicationOnline && this.storageType === 'cloud') {
+        this.showNotification({ message: 'You are currently offline.' })
+      }
+
       await this.loadPlants()
       await this.loadTags()
 
@@ -199,9 +200,6 @@
     },
 
     mounted () {
-      if (this.applicationOnline === false && this.canSeeOfflineNotification) {
-        this.showNotification({ message: 'You are currently offline.' })
-      }
       window.addEventListener('online', this.setApplicationOnline)
       window.addEventListener('offline', this.setApplicationOffline)
     },
