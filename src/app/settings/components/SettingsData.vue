@@ -5,7 +5,9 @@
       :type="this.modalType"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">{{ modalTitle }}</span>
+      <template v-slot:headline>
+        <span>{{ modalTitle }}</span>
+      </template>
 
       <div v-if="isDangerDialog" key="modal-warning">
         <p>
@@ -70,7 +72,9 @@
       </span>
 
       <v-button :loading="exportDataProgress" @click.native="downloadData">
-        <feather-download slot="icon" />
+        <template v-slot:icon>
+          <feather-download />
+        </template>
         Export plant data
       </v-button>
     </section>
@@ -85,7 +89,9 @@
       </span>
 
       <v-button @click.native="openImportModal">
-        <feather-copy slot="icon" />
+        <template v-slot:icon>
+          <feather-copy />
+        </template>
         Import plant data
       </v-button>
 
@@ -101,7 +107,9 @@
       <h2>Danger Zone</h2>
       <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
       <v-button color="yellow" @click.native="openDangerModal">
-        <feather-delete slot="icon" />
+        <template v-slot:icon>
+          <feather-delete />
+        </template>
         Delete application data
       </v-button>
     </section>

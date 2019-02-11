@@ -4,7 +4,9 @@
       aria-label="Trash"
       class="delete icon"
       @click.native="activate($event)">
-      <feather-trash slot="icon" />
+      <template v-slot:icon>
+        <feather-trash />
+      </template>
     </v-button>
 
     <div class="deletion-info">
@@ -16,7 +18,9 @@
       aria-label="Cancel trash"
       class="cancel icon"
       @click.native="cancel($event)">
-      <feather-x slot="icon" />
+      <template v-slot:icon>
+        <feather-x />
+      </template>
     </v-button>
   </div>
 </template>

@@ -4,7 +4,9 @@
       dialog-name="gallery-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">{{ uploadedPhotoName }}</span>
+      <template v-slot:headline>
+        <span>{{ uploadedPhotoName }}</span>
+      </template>
 
       <div class="happy-dialog-content">
         <div class="gallery-preview-photo">
@@ -44,7 +46,9 @@
           class="gallery-control-prev icon inverse"
           aria-label="Previous photo"
           @click.native="moveGallery('right')">
-          <feather-left slot="icon" />
+          <template v-slot:icon>
+            <feather-left />
+          </template>
         </v-button>
 
         <v-button
@@ -54,7 +58,9 @@
           class="gallery-control-next icon inverse"
           aria-label="Next photo"
           @click.native="moveGallery('left')">
-          <feather-right slot="icon" />
+          <template v-slot:icon>
+            <feather-right />
+          </template>
         </v-button>
 
         <selectable-list
@@ -68,7 +74,7 @@
           @panend="moveGallery"
           @edit-mode="toggleListEditMode">
             <gallery-image
-              slot-scope="{ data, selected }"
+              v-slot="{ data, selected }"
               v-if="data.imageURL"
               :source="data.imageURL"
               :name="data.fileName"

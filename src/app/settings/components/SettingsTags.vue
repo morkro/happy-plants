@@ -16,7 +16,9 @@
       type="danger"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">Delete tag</span>
+      <template v-slot:headline>
+        <span>Delete tag</span>
+      </template>
 
       <div>
         <p>
@@ -62,7 +64,9 @@
                 class="edit"
                 aria-label="Edit tag"
                 @click.native="openTagModal(tag)">
-                <feather-edit slot="icon" />
+                <template v-slot:icon>
+                  <feather-edit />
+                </template>
               </v-button>
               <v-button
                 :type="['small', 'circle']"
@@ -70,7 +74,9 @@
                 class="delete"
                 aria-label="Delete tag"
                 @click.native="openTagDialog($event, tag)">
-                <feather-trash slot="icon" />
+                <template v-slot:icon>
+                  <feather-trash />
+                </template>
               </v-button>
             </div>
           </li>

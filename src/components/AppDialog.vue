@@ -5,14 +5,15 @@
     dialog-root="#dialog"
     :class-names="dialogClassNames"
     @dialog-ref="assignDialogRef">
-    <feather-x
-      slot="closeButtonContent"
-      width="24"
-      height="24" />
+    <template v-slot:closeButtonContent>
+      <feather-x
+        width="24"
+        height="24" />
+    </template>
 
-    <slot slot="title">
+    <template v-slot:title>
       <portal-target name="dialog-title" slim />
-    </slot>
+    </template>
 
     <div class="happy-dialog-content">
       <portal-target name="dialog-content" slim />

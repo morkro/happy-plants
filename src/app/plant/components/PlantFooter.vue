@@ -4,7 +4,9 @@
       color="plain"
       class="footer-modules"
       @click.native.prevent="emitShowModules">
-      <feather-box slot="icon" />
+      <template v-slot:icon>
+        <feather-box />
+      </template>
       Manage modules
     </v-button>
 
@@ -17,7 +19,9 @@
       color="grey"
       class="footer-tags"
       @click.native.prevent="emitShowTags">
-      <feather-tag slot="icon" />
+      <template v-slot:icon>
+        <feather-tag />
+      </template>
       Add tags
     </v-button>
   </section>

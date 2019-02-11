@@ -6,7 +6,9 @@
       type="danger"
       :show="showDialog"
       @close-dialog="cancelDeleteMode">
-      <span slot="headline">Are you sure?</span>
+      <template v-slot:headline>
+        <span>Are you sure?</span>
+      </template>
       <div>
         <p>
           You are about to delete <strong>{{ selection.length }}</strong> plants.
@@ -44,7 +46,9 @@
           color="plain"
           aria-label="Clear filter"
           @click.native="clearFilter">
-          <feather-x slot="icon" />
+          <template v-slot:icon>
+            <feather-x />
+          </template>
         </v-button>
       </div>
 

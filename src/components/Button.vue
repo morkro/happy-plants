@@ -1,11 +1,11 @@
 <template>
   <button type="button" :class="[color, type]">
-    <div v-if="loading || !!$slots.icon" :class="getIconClass()">
+    <div v-if="loading || $slots.icon || $scopedSlots.icon" :class="getIconClass()">
       <feather-loader v-if="loading" />
       <slot v-else name="icon" />
     </div>
 
-    <span v-if="!!$slots.default">
+    <span v-if="$slots.default || $scopedSlots.default">
       <slot />
     </span>
   </button>
@@ -47,7 +47,7 @@
     methods: {
       getIconClass () {
         return ['button-icon', {
-          single: !this.$slots.default,
+          single: !this.$scopedSlots.default,
           rotate: this.loading
         }]
       }

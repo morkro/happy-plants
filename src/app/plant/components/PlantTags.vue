@@ -8,8 +8,10 @@
         class="tags-add"
         @click.native="toggleNewTagInput"
         :aria-label="ariaLabelToggle">
-        <feather-plus v-if="!showInput" slot="icon" />
-        <feather-x v-else slot="icon" />
+        <template v-slot:icon>
+          <feather-plus v-if="!showInput" />
+          <feather-x v-else />
+        </template>
       </v-button>
 
       <div :class="['tags-list-wrapper', { 'show-input': showInput }]">
@@ -24,7 +26,9 @@
             ref="tagInput"
             @change="getTagName">
           <v-button class="tags-new-button" @click.native="addNewTag">
-            <feather-check slot="icon" />
+            <template v-slot:icon>
+              <feather-check />
+            </template>
           </v-button>
         </form>
 
@@ -63,7 +67,9 @@
         <li v-for="(tag, index) in allTags" :key="index">
           <v-touch @tap="selectTag(tag)">
             <v-tag >
-              <feather-plus slot="icon" />
+              <template v-slot:icon>
+                <feather-plus />
+              </template>
               {{ tag.label }}
             </v-tag>
           </v-touch>

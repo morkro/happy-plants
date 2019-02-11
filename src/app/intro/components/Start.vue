@@ -1,7 +1,9 @@
 <template>
   <div class="start-wrapper">
     <v-button @click.native="nextStep" :disabled="disabled">
-      <feather-right slot="icon" />
+      <template v-slot:icon>
+        <feather-right />
+      </template>
       <span>Start introduction</span>
     </v-button>
 

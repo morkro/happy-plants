@@ -4,7 +4,9 @@
       dialog-name="intro-storage-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">Login to Google</span>
+      <template v-slot:headline>
+        <span>Login to Google</span>
+      </template>
       <div>
         <p>
           When using the cloud storage option, you have to sign in.

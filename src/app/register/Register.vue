@@ -25,12 +25,13 @@
           @click.native="validateForm"
           :disabled="!canRegisterPlant"
           :loading="addPlantProgress">
-          <svgicon
-            icon="leaf"
-            width="16"
-            height="24"
-            color="#000"
-            slot="icon" />
+          <template v-slot:icon>
+            <svgicon
+              icon="leaf"
+              width="16"
+              height="24"
+              color="#000" />
+          </template>
           Add plant
         </v-button>
       </form>

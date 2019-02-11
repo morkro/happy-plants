@@ -1,9 +1,14 @@
 <template>
   <plant-component>
-    <feather-image slot="icon" />
-    <h2 slot="title">Gallery</h2>
+    <template v-slot:icon>
+      <feather-image />
+    </template>
 
-    <div slot="content">
+    <template v-slot:title>
+      <h2>Gallery</h2>
+    </template>
+
+    <template v-slot:content>
       <div v-if="!list.length" class="gallery-empty">
         <p>You haven't uploaded any photos yet.</p>
         <v-button @click.native="addFirstPhoto">
@@ -14,7 +19,6 @@
       <v-touch
         v-else
         tag="div"
-        slot="content"
         @tap="forwardGallery"
         @click="forwardGallery">
         <ul class="gallery-list">
@@ -34,7 +38,7 @@
           </li>
         </ul>
       </v-touch>
-    </div>
+    </template>
   </plant-component>
 </template>
 
