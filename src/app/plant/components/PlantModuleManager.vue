@@ -3,7 +3,9 @@
     dialog-name="plant-module-manager-dialog"
     :show="show"
     @close-dialog="cancel">
-    <span slot="headline">Manage modules</span>
+    <template v-slot:headline>
+      <span>Manage modules</span>
+    </template>
 
     <div>
       <div class="module-content">

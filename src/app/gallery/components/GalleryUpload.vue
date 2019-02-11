@@ -12,13 +12,14 @@
       :color="editMode ? 'red' : 'default'"
       :loading="loading"
       @click.native="onClickButton">
-      <div v-if="!editMode"
-        slot="icon"
-        class="add-photo-icon">
-        <feather-plus />
-        <feather-image />
-      </div>
-      <feather-trash slot="icon" v-else />
+      <template v-slot:icon>
+        <div v-if="!editMode"
+          class="add-photo-icon">
+          <feather-plus />
+          <feather-image />
+        </div>
+        <feather-trash v-else />
+      </template>
     </v-button>
   </div>
 </template>

@@ -7,8 +7,10 @@
           aria-label="View mode"
           :class="`view-mode icon ${disableMenu ? '' : 'inverse'}`"
           @click.native.prevent="emitMenuAction('view-mode')">
-          <feather-grid v-if="!disableMenu" slot="icon" />
-          <feather-x v-else slot="icon" />
+          <template v-slot:icon>
+            <feather-grid v-if="!disableMenu" />
+            <feather-x v-else />
+          </template>
         </v-button>
       </li>
     </ul>
@@ -32,7 +34,9 @@
           aria-label="Trash"
           class="delete"
           @click.native.prevent="emitMenuAction('delete')">
-          <feather-trash slot="icon" />
+          <template v-slot:icon>
+            <feather-trash />
+          </template>
         </v-button>
       </li>
     </ul>

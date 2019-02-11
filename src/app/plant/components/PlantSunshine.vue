@@ -1,9 +1,14 @@
 <template>
   <plant-component>
-    <feather-sun slot="icon" />
-    <h2 slot="title">Sunshine</h2>
+    <template v-slot:icon>
+      <feather-sun />
+    </template>
 
-    <div slot="content">
+    <template v-slot:title>
+      <h2>Sunshine</h2>
+    </template>
+
+    <template v-slot:content>
       <div class="sunshine-description">
         <p class="description-level">
           <strong>Intensity: {{ intensityLevel }}</strong>
@@ -19,7 +24,7 @@
           @tap="onEmitIntensityChange($event, level)"
           @click="onEmitIntensityChange($event, level)" />
       </div>
-    </div>
+    </template>
   </plant-component>
 </template>
 

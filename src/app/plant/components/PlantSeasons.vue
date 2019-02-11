@@ -1,25 +1,33 @@
 <template>
   <plant-component>
-    <feather-moon slot="icon" />
-    <h2 slot="title">Growing seasons</h2>
-    <div slot="content">
-      <p v-if="isEvergreen" key="seasons-full">
-        Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
-      </p>
-      <p v-else key="seasons-partial">
-        Your plant is currently <strong>{{ getGrowthText() }}</strong>.
-      </p>
-      <ul class="season-list">
-        <li
-          v-for="(season, index) of seasons"
-          :class="getSeasonListClass(season, index)"
-          :key="index">
-          <button type="button" @click.self="emitSeasonToggle(season)">
-            {{ season.month[0] }}
-          </button>
-        </li>
-      </ul>
-    </div>
+    <template v-slot:icon>
+      <feather-moon />
+    </template>
+
+    <template v-slot:title>
+      <h2>Growing seasons</h2>
+    </template>
+
+    <template v-slot:content>
+      <div class="seasons-content">
+        <p v-if="isEvergreen" key="seasons-full">
+          Looks like your plant is an <strong>evergreen</strong>! It will growth throughout the year.
+        </p>
+        <p v-else key="seasons-partial">
+          Your plant is currently <strong>{{ getGrowthText() }}</strong>.
+        </p>
+        <ul class="season-list">
+          <li
+            v-for="(season, index) of seasons"
+            :class="getSeasonListClass(season, index)"
+            :key="index">
+            <button type="button" @click.self="emitSeasonToggle(season)">
+              {{ season.month[0] }}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </template>
   </plant-component>
 </template>
 
@@ -103,6 +111,10 @@
 
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
+
+  .seasons-content {
+    width: 100%;
+  }
 
   p {
     color: var(--text-color-secondary);

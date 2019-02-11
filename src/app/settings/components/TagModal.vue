@@ -3,7 +3,9 @@
     dialog-name="settings-tags-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
-    <span slot="headline">Edit tag</span>
+    <template v-slot:headline>
+      <span>Edit tag</span>
+    </template>
 
     <form class="dialog-content">
       <label for="dialog-name">

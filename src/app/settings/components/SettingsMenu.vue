@@ -4,7 +4,9 @@
       dialog-name="settings-happy-dialog"
       :show="showLoginDialog"
       @close-dialog="closeLoginDialog">
-      <span slot="headline">Select login</span>
+      <template v-slot:headline>
+        <span>Select login</span>
+      </template>
 
       <auth-provider-list
         :loading="authFromRedirect"

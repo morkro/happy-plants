@@ -6,7 +6,9 @@
         How about we pretend this didn't happen?
       </p>
       <v-button @click.native="pushToSafety">
-        <feather-home slot="icon" />
+        <template v-slot:icon>
+          <feather-home />
+        </template>
         Back to overview
       </v-button>
     </main>

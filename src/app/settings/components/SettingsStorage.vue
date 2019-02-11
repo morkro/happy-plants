@@ -38,7 +38,9 @@
       dialog-name="storage-dialog"
       :show="showCloudDialog"
       @close-dialog="closeDialog">
-      <span slot="headline">Migrate data to {{ storageTypeName }}</span>
+      <template v-slot:headline>
+        <span>Migrate data to {{ storageTypeName }}</span>
+      </template>
 
       <div>
         <!--

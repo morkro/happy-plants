@@ -16,7 +16,9 @@
       </div>
     </header>
 
-    <slot class="component-content" name="content" />
+    <div class="component-content">
+      <slot name="content" />
+    </div>
   </section>
 </template>
 
@@ -65,5 +67,10 @@
         margin-right: calc(var(--base-gap) / 3);
       }
     }
+  }
+
+  .plant-component .component-content {
+    display: flex;
+    width: 100%;
   }
 </style>

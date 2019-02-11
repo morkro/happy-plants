@@ -31,7 +31,9 @@
           :aria-label="rightBtn"
           :class="rightBtnClass"
           @click.native.prevent="rightBtnOnClick">
-          <component :is="`feather-${rightBtn}`" slot="icon" />
+          <template v-slot:icon>
+            <component :is="`feather-${rightBtn}`" />
+          </template>
         </v-button>
         <slot name="custom-action-right" />
       </div>

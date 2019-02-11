@@ -6,7 +6,9 @@
         :loading="selectedProvider === signin.key || loading"
         :disabled="disabled"
         @click.native="emitSelectedProvider(signin.key)">
-        <component :is="`feather-${signin.key}`" slot="icon" />
+        <template v-slot:icon>
+          <component :is="`feather-${signin.key}`" />
+        </template>
         <span>Login with {{ signin.label }}</span>
       </v-button>
     </li>

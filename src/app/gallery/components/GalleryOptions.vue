@@ -9,7 +9,9 @@
       :type="['circle', 'small']"
       class="gallery-delete icon inverse"
       @click.native="onDeleteButton">
-      <feather-trash slot="icon" />
+      <template v-slot:icon>
+        <feather-trash />
+      </template>
     </v-button>
   </div>
 </template>

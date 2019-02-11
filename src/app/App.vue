@@ -18,19 +18,21 @@
       :back-button="backBtn"
       :back-path="backBtnPath"
       :show-icon-backdrop="showIconBackdrop">
-      <h1 v-if="!!pageTitle" slot="title">
-        {{ pageTitle }}
-      </h1>
+      <template v-if="!!pageTitle" v-slot:title>
+        <h1>{{ pageTitle }}</h1>
+      </template>
     </app-header>
 
     <portal-dialog
       dialog-name="new-release-dialog"
       :show="showReleaseDialog"
       @close-dialog="emitCloseDialog">
-      <span slot="headline">
-        A new release has been downloaded!
-        <span class="headline-emoji">( ˘ ³˘)♥</span>
-      </span>
+      <template v-slot:headline>
+        <span>
+          A new release has been downloaded!
+          <span class="headline-emoji">( ˘ ³˘)♥</span>
+        </span>
+      </template>
 
       <div>
         <p>

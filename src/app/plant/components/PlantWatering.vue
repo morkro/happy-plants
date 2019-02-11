@@ -1,14 +1,21 @@
 <template>
   <plant-component>
-    <feather-droplet slot="icon" />
-    <h2 slot="title">Watering</h2>
+    <template v-slot:icon>
+      <feather-droplet />
+    </template>
 
-    <div slot="content" class="watering-content">
+    <template v-slot:title>
+      <h2>Watering</h2>
+    </template>
+
+    <template v-slot:content>
       <portal-dialog
         dialog-name="plant-watering-dialog"
         :show="showRoutineSelection"
         @close-dialog="closeRoutineDialog">
-        <span slot="headline">Choose frequency</span>
+        <template v-slot:headline>
+          <span>Choose frequency</span>
+        </template>
         <ul>
           <li v-for="type in messages.frequency" :key="type">
             <label :for="type">
@@ -49,7 +56,7 @@
           @tap="onEmitAmountChange($event, item)" />
         <div :class="{ 'droplet-background': true, 'active': amount >= 3 }"/>
       </div>
-    </div>
+    </template>
   </plant-component>
 </template>
 
@@ -140,11 +147,6 @@
 </script>
 
 <style lang="postcss" scoped>
-  .watering-content {
-    display: flex;
-    width: 100%;
-  }
-
   .watering-description {
     color: var(--text-color-secondary);
     width: 100%;

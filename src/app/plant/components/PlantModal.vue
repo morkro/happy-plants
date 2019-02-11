@@ -3,14 +3,18 @@
     dialog-name="plant-edit-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
-    <span slot="headline">Delete plant</span>
+    <template v-slot:headline>
+      <span>Delete plant</span>
+    </template>
 
     <div>
       <v-button
         color="red"
         :loading="loading"
         @click.native="emitDeletePlant">
-        <feather-trash slot="icon" />
+        <template v-slot:icon>
+          <feather-trash />
+        </template>
         Yes, delete this plant
       </v-button>
 

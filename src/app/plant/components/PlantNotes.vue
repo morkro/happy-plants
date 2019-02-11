@@ -1,13 +1,21 @@
 <template>
   <plant-component>
-    <feather-book slot="icon" />
-    <h2 slot="title">Notebook</h2>
-    <div slot="content">
+    <template v-slot:icon>
+      <feather-book />
+    </template>
+
+    <template v-slot:title>
+      <h2>Notebook</h2>
+    </template>
+
+    <template v-slot:content>
       <portal-dialog
         dialog-name="plant-notes-dialog"
         :show="showNotes"
         @close-dialog="closeNotes">
-        <span slot="headline">Notebook</span>
+        <template v-slot:headline>
+          <span>Notebook</span>
+        </template>
 
         <div>
           <textarea
@@ -45,7 +53,7 @@
           </v-button>
         </div>
       </div>
-    </div>
+    </template>
   </plant-component>
 </template>
 
