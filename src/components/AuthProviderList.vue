@@ -62,5 +62,9 @@
     & li:not(:last-child) {
       margin-bottom: var(--base-gap);
     }
+
+    & button {
+      width: 100%;
+    }
   }
 </style>

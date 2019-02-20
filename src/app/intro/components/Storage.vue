@@ -5,16 +5,17 @@
       :show="showDialog"
       @close-dialog="closeDialog">
       <template v-slot:headline>
-        <span>Login to Google</span>
+        <span>Login</span>
       </template>
       <div>
         <p>
-          When using the cloud storage option, you have to sign in.
+          When using the cloud storage option, you have to sign in first.
         </p>
 
-        <v-button @click.native="loginUser">
-          Open Google sign-in
-        </v-button>
+        <auth-provider-list
+          :loading="signInProgress"
+          @provider-selected="loginUser"
+        />
       </div>
     </portal-dialog>
 
@@ -88,6 +89,7 @@
 
     data: () => ({
       showDialog: false,
+      signInProgress: false,
       options: [
         {
           label: 'Locally on phone',
@@ -119,9 +121,18 @@
       closeDialog () {
         this.showDialog = false
       },
-      async loginUser () {
+      async loginUser (provider) {
         await this.updateStorage({ type: 'cloud' })
-        await this.signInUser('google')
+
+        this.signInProgress = true
+        try {
+          await this.signInUser(provider)
+        } catch (error) {
+          this.showNotification()
+          return
+        }
+        this.signInProgress = false
+
         if (!this.authenticated) return
         this.closeDialog()
         this.$router.push('/intro/howto')

@@ -1,21 +1,51 @@
 <template>
   <div class="start-wrapper">
-    <v-button @click.native="nextStep" :disabled="disabled">
-      <template v-slot:icon>
-        <feather-right />
+    <portal-dialog
+      dialog-name="intro-start-signin"
+      :show="showDialog"
+      @close-dialog="closeDialog">
+      <template v-slot:headline>
+        <span>Welcome back!</span>
       </template>
-      <span>Start introduction</span>
-    </v-button>
+      <div>
+        <auth-provider-list
+          :loading="authFromRedirect"
+          :disabled="disabled"
+          @provider-selected="loginUser"
+        />
+      </div>
+    </portal-dialog>
 
-    <div class="start-login">
-      <p>Already have an account?</p>
-
-      <auth-provider-list
-        :loading="authFromRedirect"
-        :disabled="disabled"
-        @provider-selected="loginUser"
-      />
+    <div class="start-content">
+      <h2>
+        HappyPlants is all about collecting, organising, and
+        adding all kinds of information of your little friends.
+      </h2>
+      <p>
+        How much water does it need? During which seasons does it grow?
+        When is it dormant? Does it require lots of sun?
+      </p>
     </div>
+
+    <ul class="start-actions">
+      <li>
+        <v-button
+          @click.native="nextStep"
+          :disabled="disabled"
+          :loading="disabled">
+          <span>Getting started</span>
+        </v-button>
+      </li>
+      <li>
+        <v-button
+          @click.native="openDialog"
+          color="grey"
+          :disabled="disabled"
+          :loading="disabled">
+          <span>Sign in</span>
+        </v-button>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -47,6 +77,7 @@
     },
 
     data: () => ({
+      showDialog: false,
       signInProgress: false
     }),
 
@@ -89,6 +120,14 @@
         } else {
           this.$router.push('/')
         }
+      },
+
+      openDialog () {
+        this.showDialog = true
+      },
+
+      closeDialog () {
+        this.showDialog = false
       }
     }
   }
@@ -98,10 +137,6 @@
   .start-wrapper {
     display: flex;
     flex-direction: column;
-
-    & button {
-      align-self: center;
-    }
   }
 
   .start-login {
@@ -121,6 +156,33 @@
     & p,
     & button {
       align-self: center;
+    }
+  }
+
+  .start-content {
+    margin-bottom: var(--double-gap);
+    text-align: center;
+    padding: 0 var(--base-gap);
+
+    & h2 {
+      margin-bottom: var(--base-gap);
+    }
+
+    & p {
+      color: var(--text-color-secondary);
+    }
+  }
+
+  .start-actions {
+    list-style: none;
+    width: 100%;
+
+    & li:not(:last-child) {
+      margin-bottom: var(--base-gap);
+    }
+
+    & button {
+      width: 100%;
     }
   }
 </style>

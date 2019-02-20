@@ -72,6 +72,10 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: calc(var(--base-gap) * 2);
+
+    & > img {
+      max-width: 80%;
+    }
   }
 
   @media (--max-mobile-viewport) {

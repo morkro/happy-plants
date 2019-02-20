@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Changed
+- Some layout tweaks for intro screen.
+
 ### Fixed
+- Added full authentication list to intro step.
 - Notification when user is offline.
 
 ## [1.6.2] - 2019-01-28
