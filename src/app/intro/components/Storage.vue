@@ -100,7 +100,7 @@
         {
           label: 'In the cloud',
           icon: 'cloud',
-          description: `Stores your plant data in Google Firebase. Let's you login from different devices. Required by some features.`,
+          description: `Stores your plant data in Google Firebase. You will be able to login from different devices. Required by some features.`,
           id: 'cloud'
         }
       ]
@@ -108,6 +108,7 @@
 
     methods: {
       ...mapActions([
+        'updateAppHeader',
         'updateStorage',
         'signInUser'
       ]),
@@ -137,6 +138,15 @@
         this.closeDialog()
         this.$router.push('/intro/howto')
       }
+    },
+
+    mounted () {
+      this.updateAppHeader({
+        title: 'Setup storage',
+        transparent: false,
+        backBtn: true,
+        rightBtn: false
+      })
     }
   }
 </script>

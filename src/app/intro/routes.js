@@ -5,8 +5,8 @@ export default [
     children: [
       {
         path: '',
-        name: 'Intro',
-        component: () => import('./components/Start' /* webpackChunkName: "intro" */)
+        name: 'Welcome',
+        component: () => import('./components/Welcome' /* webpackChunkName: "intro" */)
       },
       {
         path: 'storage',
