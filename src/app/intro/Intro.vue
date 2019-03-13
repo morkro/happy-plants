@@ -1,20 +1,11 @@
 <template>
   <div class="main-wireframe">
-    <div class="intro-header">
-      <img
-        src="@/assets/happyplants-logo.svg"
-        alt="HappyPlants Logo"
-        title="HappyPlants Logo"
-        width="100%">
-    </div>
-
     <router-view class="intro-wrapper" />
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
-  import '@/assets/icons/leaf'
 
   export default {
     name: 'Intro',
@@ -27,7 +18,7 @@
       'updateAppHeader'
     ]),
 
-    created () {
+    mounted () {
       this.updateAppHeader({
         title: false,
         transparent: true,
@@ -47,12 +38,6 @@
   @import "../../styles/media-queries";
 
   .main-wireframe {
-    display: flex;
-    align-items: flex-start;
-    align-content: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
     width: 100%;
     min-height: 100vh;
     padding-left: var(--base-gap);
@@ -66,25 +51,7 @@
     }
   }
 
-  .intro-header {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: calc(var(--base-gap) * 2);
-
-    & > img {
-      max-width: 80%;
-    }
-  }
-
-  @media (--max-mobile-viewport) {
-    .intro-header > img {
-      max-width: 50%;
-    }
-  }
-
   .intro-wrapper {
-    width: 100%;
+    padding-top: var(--base-gap);
   }
 </style>
