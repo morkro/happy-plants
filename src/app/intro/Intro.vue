@@ -18,16 +18,6 @@
       'updateAppHeader'
     ]),
 
-    mounted () {
-      this.updateAppHeader({
-        title: false,
-        transparent: true,
-        backBtn: false,
-        rightBtn: false,
-        color: 'black'
-      })
-    },
-
     beforeDestroy () {
       this.updateAppHeader({ transparent: false })
     }

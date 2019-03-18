@@ -16,43 +16,36 @@
       </div>
     </portal-dialog>
 
-    <welcome-carousel>
-      <div :style="{ 'background-color': 'silver' }">
-        intro
-      </div>
-      <div :style="{ 'background-color': 'blue' }">
-        water
-      </div>
-      <div :style="{ 'background-color': 'yellow' }">
-        sun
-      </div>
-      <div :style="{ 'background-color': 'green' }">
-        gallery
-      </div>
-      <div :style="{ 'background-color': 'purple' }">
-        notes
-      </div>
-    </welcome-carousel>
-
-    <!-- <div class="welcome-header">
-      <img
+    <v-carousel>
+      <div class="welcome-cards">
+        <img
         src="@/assets/happyplants-logo.svg"
         alt="HappyPlants Logo"
         title="HappyPlants Logo"
         width="100%">
-    </div>
 
-    <div class="welcome-content">
-      <h2>
-        HappyPlants is all about collecting, organising, and
-        adding all kinds of information of your little friends.
-      </h2>
-      <img src="./icon.svg">
-      <p>
-        How much water does it need? During which seasons does it grow?
-        When is it dormant? Does it require lots of sun?
-      </p>
-    </div> -->
+        <h2>
+          HappyPlants is all about collecting, organising, and
+          adding all kinds of information of your little friends.
+        </h2>
+      </div>
+
+      <div class="welcome-cards">
+        <img src="./icon.svg">
+        <p>
+          How much water does it need? During which seasons does it grow?
+          When is it dormant? Does it require lots of sun?
+        </p>
+      </div>
+
+      <div class="welcome-cards">
+        sun
+      </div>
+
+      <div class="welcome-cards">
+        gallery
+      </div>
+    </v-carousel>
 
     <ul class="welcome-actions">
       <li>
@@ -78,15 +71,13 @@
 
 <script>
   import { mapActions, mapState } from 'vuex'
-  import Carousel from './Carousel'
 
   export default {
     name: 'IntroStart',
 
     components: {
       'feather-right': () =>
-        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
-      'welcome-carousel': Carousel
+        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },
 
     computed: {
@@ -118,12 +109,23 @@
       }
     },
 
+    created () {
+      this.updateAppHeader({
+        title: false,
+        transparent: true,
+        backBtn: false,
+        rightBtn: false,
+        color: 'black'
+      })
+    },
+
     methods: {
       ...mapActions([
         'signInUser',
         'loadPlants',
         'loadTags',
-        'showNotification'
+        'showNotification',
+        'updateAppHeader'
       ]),
 
       nextStep () {
@@ -221,6 +223,10 @@
     & p {
       color: var(--text-color-secondary);
     }
+  }
+
+  .welcome-cards {
+    width: 100vw;
   }
 
   .welcome-actions {
