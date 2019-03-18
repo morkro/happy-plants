@@ -140,11 +140,11 @@
       }
     },
 
-    mounted () {
+    created () {
       this.updateAppHeader({
         title: 'Setup storage',
         transparent: false,
-        backBtn: true,
+        backBtn: false,
         rightBtn: false
       })
     }

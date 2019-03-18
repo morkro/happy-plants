@@ -26,7 +26,7 @@
 </script>
 
 <style lang="postcss">
-  @import "../styles/animations";
+  @import '../styles/animations';
 
   .lazy-image {
     --preview-background: var(--grey);
@@ -38,7 +38,7 @@
     justify-content: center;
     align-items: center;
 
-    @nest html[data-theme="dark"] & {
+    @nest html[data-theme='dark'] & {
       --preview-background: var(--dark-grey);
     }
 

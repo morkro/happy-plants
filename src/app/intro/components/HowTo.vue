@@ -25,13 +25,28 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'IntroHowTo',
 
     components: {
       'feather-left': () =>
         import('vue-feather-icons/icons/ArrowLeftIcon' /* webpackChunkName: "icons" */)
-    }
+    },
+
+    created () {
+      this.updateAppHeader({
+        title: 'Add first plant',
+        transparent: false,
+        backBtn: false,
+        rightBtn: false
+      })
+    },
+
+    methods: mapActions([
+      'updateAppHeader'
+    ])
   }
 </script>
 
