@@ -1,5 +1,5 @@
 <template>
-  <section class="app-carousel" id="app-carousel">
+  <section class="app-carousel" :id="id">
     <span
       class="visuallyhidden"
       aria-live="polite"
@@ -21,14 +21,13 @@
 
     <ul v-if="showDots" class="carousel-dots">
       <li v-for="(dot, index) of items" :key="'carousel-dot-' + index">
-        <a
+        <button
           @click="onShowSlide(index)"
-          :href="`#slide${index}`"
-          aria-controls="app-carousel"
+          :aria-controls="id"
           :aria-selected="!!(currentIndex === index)"
           :class="{ active: currentIndex === index }">
           <span class="visuallyhidden">Slide {{ index }}</span>
-        </a>
+        </button>
       </li>
     </ul>
   </section>
@@ -39,6 +38,7 @@
     name: 'Carousel',
 
     props: {
+      id: { type: String, default: () => 'app-carousel' },
       showDots: { type: Boolean, default: true }
     },
 
@@ -167,15 +167,21 @@
       margin-right: calc(var(--base-gap) / 2);
     }
 
-    & li a {
-      display: block;
+    & li button {
+      --button-background: var(--dark-grey);
+      --button-shadow: none;
+      --button-padding: 0;
+      border-radius: 50%;
       width: 10px;
       height: 10px;
-      background: var(--dark-grey);
-      border-radius: 50%;
+
+      &::after {
+        display: none;
+      }
 
       &.active {
-        background: var(--custom-black);
+        background: var(--brand-yellow);
+        box-shadow: 0 2px 9px var(--brand-yellow-medium);
       }
     }
   }
