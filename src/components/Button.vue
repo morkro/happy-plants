@@ -75,6 +75,7 @@
     cursor: pointer;
     background: var(--button-background);
     font-size: var(--text-size-base);
+    font-weight: 500;
     color: var(--text-color);
     border: none;
     border-radius: var(--border-radius);
