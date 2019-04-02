@@ -16,34 +16,54 @@
       </div>
     </portal-dialog>
 
-    <v-carousel>
-      <div class="welcome-cards">
+    <v-carousel class="welcome-carousel">
+      <div class="welcome-cards card-intro">
         <img
-        src="@/assets/happyplants-logo.svg"
-        alt="HappyPlants Logo"
-        title="HappyPlants Logo"
-        width="100%">
+          src="@/assets/happyplants-logo.svg"
+          alt="HappyPlants Logo"
+          title="HappyPlants Logo"
+          width="100%">
 
         <h2>
           HappyPlants is all about collecting, organising, and
-          adding all kinds of information of your little friends.
+          adding all kinds of information of your little friends
         </h2>
       </div>
 
-      <div class="welcome-cards">
-        <img src="./icon.svg">
-        <p>
-          How much water does it need? During which seasons does it grow?
-          When is it dormant? Does it require lots of sun?
-        </p>
+      <div class="welcome-cards card-features">
+        <ul>
+          <li class="box">
+            <plant-watering />
+          </li>
+          <li class="box">
+            <plant-sunshine />
+          </li>
+          <li class="box">
+            <plant-seasons />
+          </li>
+        </ul>
+
+        <h2>
+          How much water does it need? Does it require lots of sun?
+          Keep track by adding plant modules!
+        </h2>
       </div>
 
-      <div class="welcome-cards">
-        sun
-      </div>
-
-      <div class="welcome-cards">
-        gallery
+      <div class="welcome-cards card-gallery">
+        <ul>
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+          <li class="box" />
+        </ul>
+        <h2>
+          Add a gallery to your plants for documenting its growth or keeping a collection of photos
+        </h2>
       </div>
     </v-carousel>
 
@@ -76,6 +96,12 @@
     name: 'IntroStart',
 
     components: {
+      'plant-watering': () =>
+        import('@/app/plant/components/PlantWatering' /* webpackChunkName: "intro" */),
+      'plant-sunshine': () =>
+        import('@/app/plant/components/PlantSunshine' /* webpackChunkName: "intro" */),
+      'plant-seasons': () =>
+        import('@/app/plant/components/PlantSeasons' /* webpackChunkName: "intro" */),
       'feather-right': () =>
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },
@@ -172,18 +198,6 @@
     align-content: space-between;
   }
 
-  .welcome-header {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: calc(var(--base-gap) * 2);
-
-    & > img {
-      max-width: 80%;
-    }
-  }
-
   @media (--max-mobile-viewport) {
     .welcome-header > img {
       max-width: 50%;
@@ -210,23 +224,108 @@
     }
   }
 
-  .welcome-content {
+  .welcome-carousel {
     margin-bottom: var(--double-gap);
-    text-align: center;
-    padding: 0 var(--base-gap);
-
-    & h2 {
-      margin-bottom: var(--double-gap);
-      color: var(--brand-green);
-    }
-
-    & p {
-      color: var(--text-color-secondary);
-    }
   }
 
   .welcome-cards {
     width: 100vw;
+    padding: 0 var(--base-gap);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & p {
+      color: var(--text-color-secondary);
+    }
+
+    & h2 {
+      line-height: 140%;
+      margin-bottom: var(--double-gap);
+    }
+  }
+
+  .card-intro {
+    padding: 0 var(--base-gap);
+
+    & > img {
+      max-width: 80%;
+      margin-bottom: var(--double-gap);
+    }
+  }
+
+  @media (--max-mobile-viewport) {
+    .card-intro > img {
+      max-width: 50%;
+    }
+  }
+
+  .card-features ul {
+    list-style: none;
+    margin-bottom: var(--base-gap);
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 100vw;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      left: calc(-1 * var(--double-gap));
+      background-image:
+        linear-gradient(
+          transparent 0%,
+          var(--background-secondary) 50%,
+          var(--background-secondary) 100%
+        );
+    }
+
+    &::after {
+      top: 0;
+      transform: rotate(180deg);
+    }
+
+    &::before {
+      bottom: 0;
+    }
+
+    & li {
+      margin-bottom: var(--base-gap);
+    }
+  }
+
+  .card-gallery ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin-bottom: var(--base-gap);
+    position: relative;
+
+    &::before {
+      content: "";
+      width: 100vw;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      left: calc(-1 * var(--double-gap));
+      background-image:
+        linear-gradient(
+          transparent 0%,
+          var(--background-secondary) 50%,
+          var(--background-secondary) 100%
+        );
+    }
+
+    & li {
+      --gallery-item-size: calc(33vw - var(--double-gap));
+      width: var(--gallery-item-size);
+      height: var(--gallery-item-size);
+      margin-bottom: var(--base-gap);
+    }
   }
 
   .welcome-actions {
