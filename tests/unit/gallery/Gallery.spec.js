@@ -23,7 +23,8 @@ describe('app/gallery/Gallery.vue', () => {
     stubs: {
       'a11y-dialog': '<div class="happy-dialog-base" />',
       'feather-left': '<svg />',
-      'feather-right': '<svg />'
+      'feather-right': '<svg />',
+      'portal-dialog': '<div />'
     }
   }
 
