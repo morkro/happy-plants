@@ -10,7 +10,9 @@ describe('app/overview/DeleteMenu.vue', () => {
   const options = {
     localVue,
     stubs: {
-      'v-button': Button
+      'v-button': Button,
+      'feather-trash': '<svg />',
+      'feather-x': '<svg />'
     }
   }
 

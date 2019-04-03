@@ -8,7 +8,11 @@ describe('components/AuthProviderList.vue', () => {
   const options = {
     localVue,
     stubs: {
-      'v-button': Button
+      'v-button': Button,
+      'feather-twitter': '<svg />',
+      'feather-google': '<svg />',
+      'feather-github': '<svg />',
+      'feather-loader': '<svg />'
     }
   }
 

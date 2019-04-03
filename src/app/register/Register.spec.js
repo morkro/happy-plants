@@ -2,7 +2,9 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
+
 import Register from '@/app/register/Register'
+import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'
 
@@ -15,7 +17,12 @@ describe('app/register/Register.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'file-upload': '<div />',
+      'v-button': Button,
+      'feather-loader': '<svg />'
+    }
   }
 
   it('is a Vue component', () => {

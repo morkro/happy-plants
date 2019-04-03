@@ -7,7 +7,15 @@ localVue.use(VueTouch)
 
 describe('app/overview/ViewmodeMenu.vue', () => {
   const options = {
-    localVue
+    localVue,
+    stubs: {
+      'feather-grid': '<svg />',
+      'feather-list': '<svg />',
+      'feather-layers': '<svg />',
+      'feather-hash': '<svg />',
+      'feather-bold': '<svg />',
+      'feather-clock': '<svg />'
+    }
   }
 
   it('is a Vue component', () => {

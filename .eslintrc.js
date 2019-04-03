@@ -1,7 +1,12 @@
+// const off = 0
+const warn = 1
+const error = 2
+
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    jest: true
   },
   'extends': [
     'plugin:vue/strongly-recommended',
@@ -12,10 +17,10 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/script-indent': 'off',
     'vue/html-indent': 'off',
-    'vue/max-attributes-per-line': [2, {
-      'singleline': 2,
+    'vue/max-attributes-per-line': [error, {
+      'singleline': error,
       'multiline': {
-        'max': 1,
+        'max': warn,
         'allowFirstLine': true
       }
     }],

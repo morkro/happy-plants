@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  const colors = ['red', 'green']
+  const colors = ['red', 'green', 'default']
   export default {
     name: 'Box',
 

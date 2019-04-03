@@ -1,6 +1,6 @@
 <template>
   <div class="intro-wrapper">
-    <div class="intro-content box">
+    <v-box class="intro-content">
       <h2>You're all set!</h2>
       <router-link to="/add" class="btn">
         <div class="button-icon">
@@ -11,7 +11,7 @@
         </div>
         <span>Add your first plant</span>
       </router-link>
-    </div>
+    </v-box>
 
     <div class="intro-footer">
       <router-link to="/intro/storage" class="btn plain">

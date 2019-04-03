@@ -19,7 +19,7 @@
       </div>
     </portal-dialog>
 
-    <div class="intro-storage box">
+    <v-box class="intro-storage">
       <h2>How do you want to save your plant data?</h2>
       <p>
         You can change this at any time in the settings later on.
@@ -46,7 +46,7 @@
           </label>
         </li>
       </ul>
-    </div>
+    </v-box>
 
     <div class="intro-footer">
       <router-link to="/intro" class="btn plain">

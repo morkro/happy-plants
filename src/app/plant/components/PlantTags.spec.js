@@ -10,7 +10,10 @@ describe('app/plant/PlantTags.vue', () => {
     localVue,
     stubs: {
       'v-tag': Tag,
-      'v-button': Button
+      'v-button': Button,
+      'feather-plus': '<svg />',
+      'feather-x': '<svg />',
+      'feather-check': '<svg />'
     }
   }
 

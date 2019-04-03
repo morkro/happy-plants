@@ -17,6 +17,15 @@ describe('app/overview/PlantPreview.vue', () => {
       guid: '',
       name: '',
       imageUrl: ''
+    },
+    stubs: {
+      'feather-trash': '<svg />',
+      'feather-plus': '<svg />',
+      'feather-circle': '<svg />',
+      'feather-check': '<svg />',
+      'feather-tag': '<svg />',
+      'feather-image': '<svg />',
+      'feather-loader': '<svg />'
     }
   }
 

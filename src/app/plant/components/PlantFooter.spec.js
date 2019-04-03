@@ -8,7 +8,9 @@ describe('app/plant/PlantFooter.vue', () => {
   const options = {
     localVue,
     stubs: {
-      'v-button': Button
+      'v-button': Button,
+      'feather-box': '<svg />',
+      'feather-tag': '<svg />'
     }
   }
 

@@ -1,5 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import SettingsTags from '@/app/settings/components/SettingsTags'
+import Button from '@/components/Button'
+import Tag from '@/components/Tag'
 import store from '@/store'
 import router from '@/router'
 
@@ -11,8 +13,8 @@ describe('app/settings/SettingsTags.vue', () => {
     store,
     router,
     stubs: {
-      'v-button': '<button />',
-      'v-tag': '<span />',
+      'v-button': Button,
+      'v-tag': Tag,
       'tag-dialog': '<div />',
       'tag-modal': '</div>',
       'tag-item': '<div />',

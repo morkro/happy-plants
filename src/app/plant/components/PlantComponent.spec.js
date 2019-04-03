@@ -5,7 +5,10 @@ const localVue = createLocalVue()
 
 describe('app/plant/PlantComponent.vue', () => {
   const options = {
-    localVue
+    localVue,
+    stubs: {
+      'feather-more-horizontal': '<div />'
+    }
   }
 
   it('is a Vue component', () => {
