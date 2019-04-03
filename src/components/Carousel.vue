@@ -180,8 +180,8 @@
       }
 
       &.active {
-        background: var(--brand-yellow);
-        box-shadow: 0 2px 9px var(--brand-yellow-medium);
+        background: var(--brand-green);
+        box-shadow: 0 2px 9px var(--brand-green-medium);
       }
     }
   }

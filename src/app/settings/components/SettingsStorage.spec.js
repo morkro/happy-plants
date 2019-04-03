@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import SettingsStorage from '@/app/settings/components/SettingsStorage'
+import Button from '@/components/Button'
 import store from '@/store'
 import mutations from '@/store/mutations'
 import router from '@/router'
@@ -12,7 +13,12 @@ describe('app/settings/SettingsStorage.vue', () => {
     store,
     router,
     stubs: {
-      'portal-dialog': '<div />'
+      'portal-dialog': '<div />',
+      'feather-cloud': '<div />',
+      'feather-smartphone': '<div />',
+      'feather-loader': '<div />',
+      'feather-check': '<div />',
+      'v-button': Button
     }
   }
 

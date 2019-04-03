@@ -1,16 +1,31 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+import Router from 'vue-router'
+
 import Storage from '@/app/intro/components/Storage'
+import Box from '@/components/Box'
 import store from '@/store'
 import mutations from '@/store/mutations'
 import router from '@/router'
 
 const localVue = createLocalVue()
+localVue.use(Vuex)
+localVue.use(Router)
 
 describe('app/intro/Storage.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'v-box': Box,
+      'portal-dialog': '<div />',
+      'auth-provider-list': '<div />',
+      'feather-right': '<svg />',
+      'feather-left': '<svg />',
+      'feather-cloud': '<svg />',
+      'feather-smartphone': '<svg />'
+    }
   }
 
   it('is a Vue component', () => {

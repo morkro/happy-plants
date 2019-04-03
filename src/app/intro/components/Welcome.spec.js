@@ -1,5 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import IntroStart from '@/app/intro/components/Welcome'
+import PlantWatering from '@/app/plant/components/PlantWatering'
+import PlantSunshine from '@/app/plant/components/PlantSunshine'
+import PlantSeasons from '@/app/plant/components/PlantSeasons'
+import Button from '@/components/Button'
+import Box from '@/components/Box'
 import store from '@/store'
 import router from '@/router'
 
@@ -11,8 +16,12 @@ describe('app/intro/Welcome.vue', () => {
     store,
     router,
     stubs: {
-      'v-box': '<div />',
-      'v-button': '<button />',
+      'v-box': Box,
+      'v-button': Button,
+      'plant-watering': PlantWatering,
+      'plant-sunshine': PlantSunshine,
+      'plant-seasons': PlantSeasons,
+      'feather-right': '<svg />',
       'portal-dialog': '<div />',
       'v-carousel': '<div />',
       'auth-provider-list': '<div />'

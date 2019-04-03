@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import SettingsMenu from '@/app/settings/components/SettingsMenu'
+import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'
 
@@ -9,7 +10,20 @@ describe('app/settings/SettingsMenu.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'v-button': Button,
+      'portal-dialog': '<div />',
+      'file-upload': '<div />',
+      'feather-tag': '<svg />',
+      'feather-database': '<svg />',
+      'feather-save': '<svg />',
+      'feather-users': '<svg />',
+      'feather-file-text': '<svg />',
+      'feather-twitter': '<svg />',
+      'feather-google': '<svg />',
+      'feather-github': '<svg />'
+    }
   }
 
   it('is a Vue component', () => {

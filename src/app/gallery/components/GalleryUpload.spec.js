@@ -11,7 +11,8 @@ describe('app/gallery/GalleryOptions.vue', () => {
       'feather-plus': '<svg />',
       'feather-image': '<svg />',
       'feather-trash': '<svg />',
-      'v-button': Button
+      'v-button': Button,
+      'file-upload': '<div />'
     }
   }
 

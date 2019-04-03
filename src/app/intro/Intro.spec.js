@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
 
+import Button from '@/components/Button'
+import Box from '@/components/Box'
 import Intro from '@/app/intro/Intro'
 import store from '@/store'
 import router from '@/router'
@@ -21,8 +23,8 @@ describe('app/intro/Intro.vue', () => {
       'feather-settings': '<svg />',
       'feather-grid': '<svg />',
       'feather-box': '<svg />',
-      'v-box': '<div />',
-      'v-button': '<div />'
+      'v-box': Box,
+      'v-button': Button
     }
   }
 

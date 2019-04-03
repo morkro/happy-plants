@@ -17,7 +17,8 @@ describe('app/not-found/NotFound.vue', () => {
     store,
     router,
     stubs: {
-      'v-button': Button
+      'v-button': Button,
+      'feather-home': '<svg />'
     }
   }
 

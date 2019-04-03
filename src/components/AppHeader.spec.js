@@ -18,7 +18,11 @@ describe('components/AppHeader.vue', () => {
       default: '<h1>Title</h1>'
     },
     stubs: {
-      'v-button': Button
+      'v-button': Button,
+      'feather-arrow-left': '<svg />',
+      'feather-settings': '<svg />',
+      'feather-edit': '<svg />',
+      'feather-close': '<svg />'
     }
   }
 
