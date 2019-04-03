@@ -16,7 +16,10 @@ describe('app/overview/Overview.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'portal-dialog': '<div />'
+    }
   }
 
   it('is a Vue component', () => {

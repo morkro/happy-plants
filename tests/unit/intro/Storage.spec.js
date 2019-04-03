@@ -6,7 +6,7 @@ import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/Storage.vue', () => {
+describe('app/intro/Storage.vue', () => {
   const options = {
     localVue,
     store,

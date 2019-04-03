@@ -12,7 +12,7 @@ localVue.use(Vuex)
 localVue.use(Router)
 localVue.use(VueSVGIcon)
 
-describe('app/not-found/NotFound.vue', () => {
+describe('app/intro/Intro.vue', () => {
   const options = {
     localVue,
     store,
@@ -20,7 +20,9 @@ describe('app/not-found/NotFound.vue', () => {
     stubs: {
       'feather-settings': '<svg />',
       'feather-grid': '<svg />',
-      'feather-box': '<svg />'
+      'feather-box': '<svg />',
+      'v-box': '<div />',
+      'v-button': '<div />'
     }
   }
 

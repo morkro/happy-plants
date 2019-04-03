@@ -5,11 +5,14 @@ import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/HowTo.vue', () => {
+describe('app/intro/HowTo.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'portal-dialog': '<div />'
+    }
   }
 
   it('is a Vue component', () => {

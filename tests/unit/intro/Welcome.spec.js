@@ -1,15 +1,22 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import IntroStart from '@/app/intro/components/Start'
+import IntroStart from '@/app/intro/components/Welcome'
 import store from '@/store'
 import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/IntroStart.vue', () => {
+describe('app/intro/Welcome.vue', () => {
   const options = {
     localVue,
     store,
-    router
+    router,
+    stubs: {
+      'v-box': '<div />',
+      'v-button': '<button />',
+      'portal-dialog': '<div />',
+      'v-carousel': '<div />',
+      'auth-provider-list': '<div />'
+    }
   }
 
   it('is a Vue component', () => {
