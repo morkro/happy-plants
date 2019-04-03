@@ -31,17 +31,19 @@
       </div>
 
       <div class="welcome-cards card-features">
-        <ul>
-          <li class="box">
-            <plant-watering />
-          </li>
-          <li class="box">
-            <plant-sunshine />
-          </li>
-          <li class="box">
-            <plant-seasons />
-          </li>
-        </ul>
+        <div class="features-modules card-showcase">
+          <ul>
+            <li>
+              <v-box><plant-watering /></v-box>
+            </li>
+            <li>
+              <v-box><plant-sunshine /></v-box>
+            </li>
+            <li>
+              <v-box><plant-seasons /></v-box>
+            </li>
+          </ul>
+        </div>
 
         <h2>
           How much water does it need? Does it require lots of sun?
@@ -50,16 +52,16 @@
       </div>
 
       <div class="welcome-cards card-gallery">
-        <ul>
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
-          <li class="box" />
+        <ul class="card-showcase">
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
+          <li><v-box /></li>
         </ul>
         <h2>
           Add a gallery to your plants for documenting its growth or keeping a collection of photos
@@ -228,6 +230,36 @@
     margin-bottom: var(--double-gap);
   }
 
+  .card-showcase {
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 100vw;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      left: calc(-1 * var(--double-gap));
+      z-index: 1;
+      background-image:
+        linear-gradient(
+          transparent 0%,
+          var(--background-secondary) 50%,
+          var(--background-secondary) 100%
+        );
+    }
+
+    &::after {
+      top: 0;
+      transform: rotate(180deg);
+    }
+
+    &::before {
+      bottom: 0;
+    }
+  }
+
   .welcome-cards {
     width: 100vw;
     padding: 0 var(--base-gap);
@@ -237,11 +269,7 @@
     justify-content: center;
     align-items: center;
 
-    & p {
-      color: var(--text-color-secondary);
-    }
-
-    & h2 {
+    & > h2 {
       line-height: 140%;
       margin-bottom: var(--double-gap);
     }
@@ -262,39 +290,29 @@
     }
   }
 
-  .card-features ul {
-    list-style: none;
+  .card-features {
+    padding: 0;
+
+    & ul {
+      list-style: none;
+      transform: translateY(-2.5%);
+
+      & li {
+        margin-bottom: var(--base-gap);
+      }
+    }
+
+    & .plant-component {
+      margin-bottom: 0;
+    }
+  }
+
+  .features-modules {
+    max-height: 45vh;
     margin-bottom: var(--base-gap);
-    position: relative;
-
-    &::before,
-    &::after {
-      content: "";
-      width: 100vw;
-      height: 50px;
-      position: absolute;
-      bottom: 0;
-      left: calc(-1 * var(--double-gap));
-      background-image:
-        linear-gradient(
-          transparent 0%,
-          var(--background-secondary) 50%,
-          var(--background-secondary) 100%
-        );
-    }
-
-    &::after {
-      top: 0;
-      transform: rotate(180deg);
-    }
-
-    &::before {
-      bottom: 0;
-    }
-
-    & li {
-      margin-bottom: var(--base-gap);
-    }
+    overflow: hidden;
+    padding: 0 var(--base-gap);
+    text-align: left;
   }
 
   .card-gallery ul {
@@ -303,22 +321,6 @@
     justify-content: space-between;
     list-style: none;
     margin-bottom: var(--base-gap);
-    position: relative;
-
-    &::before {
-      content: "";
-      width: 100vw;
-      height: 50px;
-      position: absolute;
-      bottom: 0;
-      left: calc(-1 * var(--double-gap));
-      background-image:
-        linear-gradient(
-          transparent 0%,
-          var(--background-secondary) 50%,
-          var(--background-secondary) 100%
-        );
-    }
 
     & li {
       --gallery-item-size: calc(33vw - var(--double-gap));
