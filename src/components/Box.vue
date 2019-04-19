@@ -19,7 +19,7 @@
   }
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .box {
     --box-color: var(--text-color-inverse);
     background: var(--background-primary);

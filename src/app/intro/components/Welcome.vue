@@ -37,7 +37,7 @@
               <v-box><plant-watering /></v-box>
             </li>
             <li>
-              <v-box><plant-sunshine /></v-box>
+              <v-box><plant-sunshine :intensity="2" /></v-box>
             </li>
             <li>
               <v-box><plant-seasons /></v-box>
@@ -52,17 +52,13 @@
       </div>
 
       <div class="welcome-cards card-gallery">
-        <ul class="card-showcase">
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-          <li><v-box /></li>
-        </ul>
+        <div class="gallery-list card-showcase">
+          <ul>
+            <li v-for="index in 9" :key="'gallery-item-' + index">
+              <v-box />
+            </li>
+          </ul>
+        </div>
         <h2>
           Add a gallery to your plants for documenting its growth or keeping a collection of photos
         </h2>
@@ -307,7 +303,8 @@
     }
   }
 
-  .features-modules {
+  .features-modules,
+  .gallery-list {
     max-height: 45vh;
     margin-bottom: var(--base-gap);
     overflow: hidden;
@@ -315,18 +312,22 @@
     text-align: left;
   }
 
-  .card-gallery ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    list-style: none;
-    margin-bottom: var(--base-gap);
+  .card-gallery {
+    padding: 0;
 
-    & li {
-      --gallery-item-size: calc(33vw - var(--double-gap));
-      width: var(--gallery-item-size);
-      height: var(--gallery-item-size);
+    & ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      list-style: none;
       margin-bottom: var(--base-gap);
+
+      & li {
+        --gallery-item-size: calc(33vw - var(--double-gap));
+        width: var(--gallery-item-size);
+        height: var(--gallery-item-size);
+        margin-bottom: var(--base-gap);
+      }
     }
   }
 
