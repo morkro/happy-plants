@@ -61,57 +61,63 @@
       </div>
     </portal-dialog>
 
-    <section class="download-section box">
-      <h2>Export plant data</h2>
+    <section class="download-section">
+      <v-box>
+        <h2>Export plant data</h2>
 
-      <span>
-        Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
-        it's currently <strong>not possible</strong> to include the images.
-        You might use this little database to import in a different tool,
-        or even modify and import it again.
-      </span>
+        <span>
+          Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
+          it's currently <strong>not possible</strong> to include the images.
+          You might use this little database to import in a different tool,
+          or even modify and import it again.
+        </span>
 
-      <v-button :loading="exportDataProgress" @click.native="downloadData">
-        <template v-slot:icon>
-          <feather-download />
-        </template>
-        Export plant data
-      </v-button>
+        <v-button :loading="exportDataProgress" @click.native="downloadData">
+          <template v-slot:icon>
+            <feather-download />
+          </template>
+          Export plant data
+        </v-button>
+      </v-box>
     </section>
 
-    <section class="import-section box">
-      <h2>Import plant data</h2>
+    <section class="import-section">
+      <v-box>
+        <h2>Import plant data</h2>
 
-      <span>
-        Import existing plant data. You can choose
-        between overwriting your current database, merging, or adding new data
-        to your current data.
-      </span>
+        <span>
+          Import existing plant data. You can choose
+          between overwriting your current database, merging, or adding new data
+          to your current data.
+        </span>
 
-      <v-button @click.native="openImportModal">
-        <template v-slot:icon>
-          <feather-copy />
-        </template>
-        Import plant data
-      </v-button>
+        <v-button @click.native="openImportModal">
+          <template v-slot:icon>
+            <feather-copy />
+          </template>
+          Import plant data
+        </v-button>
 
-      <span class="note">
-        More info for custom plant
-        <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">
-          data structure
-        </a>.
-      </span>
+        <span class="note">
+          More info for custom plant
+          <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">
+            data structure
+          </a>.
+        </span>
+      </v-box>
     </section>
 
-    <section class="danger-zone box">
-      <h2>Danger Zone</h2>
-      <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
-      <v-button color="yellow" @click.native="openDangerModal">
-        <template v-slot:icon>
-          <feather-delete />
-        </template>
-        Delete application data
-      </v-button>
+    <section class="danger-zone">
+      <v-box color="red">
+        <h2>Danger Zone</h2>
+        <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
+        <v-button color="yellow" @click.native="openDangerModal">
+          <template v-slot:icon>
+            <feather-delete />
+          </template>
+          Delete application data
+        </v-button>
+      </v-box>
     </section>
   </div>
 </template>
@@ -294,11 +300,11 @@
       flex-wrap: wrap;
     }
 
-    & section {
+    & .box {
       padding: var(--base-gap);
     }
 
-    & section > span {
+    & .box > span {
       display: inline-block;
       margin-bottom: var(--base-gap);
     }
@@ -309,7 +315,7 @@
       filter: none;
     }
 
-    & section h2 {
+    & .box h2 {
       margin-bottom: calc(var(--base-gap) / 2);
     }
   }
@@ -335,7 +341,7 @@
       font-size: var(--text-size-small);
       font-style: italic;
       margin-top: var(--base-gap);
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       opacity: 0.7;
 
       & a {
@@ -347,9 +353,6 @@
   section.danger-zone {
     --danger-zone-color: var(--text-color-inverse);
 
-    padding-top: calc(var(--base-gap) * 1.5);
-    padding-bottom: calc(var(--base-gap) * 1.5);
-    background: var(--brand-red);
     color: var(--danger-zone-color);
 
     @nest html[data-theme="dark"] & {

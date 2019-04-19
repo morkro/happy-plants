@@ -43,13 +43,14 @@
           Plant modules are dynamically rendered since they
           can be added/removed and sorted.
         -->
-        <component
-          v-if="plant.modules && plant.modules.length"
-          v-for="module in plant.modules"
-          v-bind="getPlantModuleProps(module.type)"
-          :key="module.type"
-          :is="`plant-${module.type}`"
-          @update-plant="getModuleListener" />
+        <div v-if="plant.modules && plant.modules.length">
+          <component
+            v-for="module in plant.modules"
+            v-bind="getPlantModuleProps(module.type)"
+            :key="module.type"
+            :is="`plant-${module.type}`"
+            @update-plant="getModuleListener" />
+        </div>
 
         <plant-footer
           :no-modules="plant.modules && !plant.modules.length"
