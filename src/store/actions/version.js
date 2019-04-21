@@ -2,12 +2,14 @@ import { getEntry, updateEntry } from '@/api/localforage'
 
 const namespace = 'version'
 
-export const loadVersion = ({ commit }) => {
-  return getEntry(namespace)
-    .then(version => commit('LOAD_VERSION', version))
-}
+export const updateVersion = async ({ state, commit }) => {
+  const prevStorage = await getEntry(namespace)
+  if (!prevStorage.version) {
+    await commit('REGISTER_FIRST_TIME_USER')
+    return
+  }
 
-export const updateVersion = ({ state, commit }) => {
-  return updateEntry(namespace, state.version)
-    .then(() => commit('UPDATE_VERSION'))
+  await commit('LOAD_VERSION', prevStorage)
+  await updateEntry(namespace, state.version)
+  await commit('UPDATE_VERSION')
 }

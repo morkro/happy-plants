@@ -89,8 +89,9 @@
     z-index: 0;
   }
 
-  .happy-dialog-element {
+  .happy-dialog-element.box {
     width: 100%;
+    height: auto;
     max-width: 90vw;
     max-height: 90vh;
     padding: var(--base-gap);

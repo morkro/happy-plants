@@ -13,7 +13,7 @@ import { routes as notfound } from '@/app/not-found'
 Vue.use(Router)
 Vue.use(Meta, { keyName: 'meta' })
 
-export default new Router({
+const router = new Router({
   mode: 'history',
 
   scrollBehavior (to, from, savedPosition) {
@@ -33,3 +33,5 @@ export default new Router({
     ...notfound
   ]
 })
+
+export default router

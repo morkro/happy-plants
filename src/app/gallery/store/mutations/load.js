@@ -40,7 +40,7 @@ export default {
     state.gallery.finished = true
     state.gallery.error = false
 
-    if (state.storage.type === 'local') {
+    if (state.storage.type === 'local' && payload.gallery.length) {
       state.gallery.data = payload.gallery.sort(sortByDate).reverse()
     }
   },

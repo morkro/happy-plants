@@ -1,6 +1,10 @@
 import mutationCreator from '@/store/utils/mutation-creator'
 
 export default {
+  REGISTER_FIRST_TIME_USER (state) {
+    state.user.firstTimeUser = true
+  },
+
   ...mutationCreator([
     'USER_SIGNIN_PROGRESS',
     'USER_REDIRECT_RESULT_PROGRESS',

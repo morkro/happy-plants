@@ -6,7 +6,10 @@ export default {
 
   UPDATE_STORAGE (state, payload) {
     state.updated = Date.now()
-    state.storage = Object.assign({}, state.storage, { type: payload.type })
+    state.storage = Object.assign({},
+      state.storage,
+      { type: payload.type || state.storage.type }
+    )
   },
 
   DATA_MIGRATION_START (state) {
