@@ -5,23 +5,22 @@ import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 
-import overview from '@/app/overview/store'
-import plant from '@/app/plant/store'
-import gallery from '@/app/gallery/store'
-import settings from '@/app/settings/store'
+import { store as overview } from '@/app/overview'
+import { store as plant } from '@/app/plant'
+import { store as gallery } from '@/app/gallery'
+import { store as settings } from '@/app/settings'
 
 import pkg from '#/package.json'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
 
   state: {
     version: pkg.version,
     updated: Date.now(),
 
-    firstTimeUser: false,
     hasNewRelease: false,
 
     dialog: {
@@ -58,6 +57,7 @@ export default new Vuex.Store({
       authenticated: false,
       authFromRedirect: false,
       error: false,
+      firstTimeUser: false,
       id: null,
       loading: false,
       name: null
@@ -89,3 +89,5 @@ export default new Vuex.Store({
     ...settings.mutations
   }
 })
+
+export default store

@@ -130,7 +130,6 @@
         'updateAuthMethod',
         'authRedirectResults',
         'authenticateUser',
-        'loadVersion',
         'updateVersion',
         'loadSettings',
         'loadStorage',
@@ -161,10 +160,9 @@
     },
 
     async created () {
-      await this.loadVersion()
       await this.updateVersion()
       await this.loadStorage()
-      await this.updateStorage({ type: this.storageType })
+      await this.updateStorage()
       await this.loadSettings()
 
       if (getSessionEntry('USER_SIGNIN_PROGRESS')) {

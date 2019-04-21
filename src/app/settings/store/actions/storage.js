@@ -7,7 +7,7 @@ export const loadStorage = ({ commit }) => {
     .then(storage => commit('LOAD_STORAGE', storage))
 }
 
-export const updateStorage = ({ state, commit }, data) => {
+export const updateStorage = ({ state, commit }, data = {}) => {
   const { migrationMode, ...config } = { ...state.storage, ...data }
   return updateEntry(namespace, config)
     .then(() => commit('UPDATE_STORAGE', data))

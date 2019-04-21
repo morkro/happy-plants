@@ -45,7 +45,7 @@ export async function loadGallery ({ state, commit }, guid) {
     gallery = await loadGalleryFirestore({ state, commit }, guid)
   } else {
     const data = await getEntryLF(namespace)
-    gallery = data.gallery
+    gallery = data.gallery || []
   }
 
   commit('LOAD_GALLERY_SUCCESS', { gallery })
