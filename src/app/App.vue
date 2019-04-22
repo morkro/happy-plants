@@ -168,7 +168,7 @@
       if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
         this.updateAuthMethod()
 
-        if (this.$route.name === 'Intro' && this.storageType === 'local') {
+        if (this.$route.name === 'Intro') {
           await this.updateStorage({ type: 'cloud' })
         }
         deleteSessionEntry('USER_SIGNIN_PROGRESS')

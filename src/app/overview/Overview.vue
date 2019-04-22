@@ -361,6 +361,8 @@
   }
 
   .content-loading-indicator {
+    height: auto;
+    width: auto;
     position: fixed;
     z-index: 2;
     left: 50%;

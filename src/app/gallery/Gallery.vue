@@ -73,13 +73,15 @@
           @selected="getSelectedItems"
           @panend="moveGallery"
           @edit-mode="toggleListEditMode">
+          <template v-slot="{ data: image, selected }">
             <gallery-image
-              v-slot="{ data, selected }"
-              v-if="data.imageURL"
-              :source="data.imageURL"
-              :name="data.fileName"
+              v-if="image && image.imageURL"
+              :source="image.imageURL"
+              :name="image.fileName"
               :selectable="listEditMode"
-              :selected="selected" />
+              :selected="selected"
+            />
+          </template>
         </selectable-list>
       </div>
     </main>
@@ -125,7 +127,8 @@
       uploadedPhoto: null,
       uploadedPhotoName: null,
       listEditMode: false,
-      selectedItemsList: []
+      selectedItemsList: [],
+      image: null
     }),
 
     computed: {
