@@ -45,11 +45,8 @@ describe('store/mutations/notifications.js', () => {
 describe('store/mutations/version.js', () => {
   it('LOAD_VERSION', () => {
     const state = {
-      firstTimeUser: false,
       version: undefined
     }
-    mutations.LOAD_VERSION(state, {})
-    expect(state.firstTimeUser).toBe(true)
     mutations.LOAD_VERSION(state, { version: '1.0.0' })
     expect(state.version).toEqual('1.0.0')
     mutations.LOAD_VERSION(state, { version: '0.9.0' })
