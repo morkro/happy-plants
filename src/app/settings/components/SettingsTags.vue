@@ -11,8 +11,8 @@
       @close-dialog="closeModal" />
 
     <!-- Alert as confirmation to delete tag. -->
-    <portal-dialog
-      dialog-name="settings-tags-delete"
+    <better-dialog
+      id="settings-tags-delete"
       type="danger"
       :show="showDialog"
       @close-dialog="closeDialog">
@@ -33,7 +33,7 @@
           Delete tag
         </v-button>
       </div>
-    </portal-dialog>
+    </better-dialog>
 
     <div class="app-content">
       <div v-if="!tags.length" class="tags-empty">

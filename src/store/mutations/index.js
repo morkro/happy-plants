@@ -7,10 +7,5 @@ export default {
   ...appheader,
   ...notifications,
   ...version,
-  ...user,
-
-  TOGGLE_APP_DIALOG (state, payload) {
-    state.dialog.active = payload.dialog || false
-    state.dialog.type = payload.type || 'default'
-  }
+  ...user
 }

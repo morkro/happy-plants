@@ -24,7 +24,7 @@ describe('app/gallery/Gallery.vue', () => {
       'a11y-dialog': '<div class="happy-dialog-base" />',
       'feather-left': '<svg />',
       'feather-right': '<svg />',
-      'portal-dialog': '<div />'
+      'better-dialog': '<div />'
     }
   }
 

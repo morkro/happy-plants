@@ -13,7 +13,7 @@ describe('app/settings/SettingsData.vue', () => {
     router,
     stubs: {
       'v-button': Button,
-      'portal-dialog': '<div />',
+      'better-dialog': '<div />',
       'file-upload': '<div />'
     }
   }

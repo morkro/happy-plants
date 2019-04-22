@@ -1,10 +1,12 @@
 <template>
-  <a11y-dialog disable-native
+  <a11y-dialog
+    disable-native
     :id="dialogIdentifier"
     app-root="#app"
     dialog-root="#dialog"
     :class-names="dialogClassNames"
-    @dialog-ref="assignDialogRef">
+    @dialog-ref="assignDialogRef"
+  >
     <template v-slot:closeButtonContent>
       <feather-x
         width="24"
@@ -12,21 +14,22 @@
     </template>
 
     <template v-slot:title>
-      <portal-target name="dialog-title" slim />
+      <slot name="headline" />
     </template>
 
     <div class="happy-dialog-content">
-      <portal-target name="dialog-content" slim />
+      <slot />
     </div>
   </a11y-dialog>
 </template>
 
 <script>
   export default {
-    name: 'AppDialog',
+    name: 'BetterDialog',
 
     props: {
-      dialogId: { type: [String, Boolean], default: '' },
+      id: { type: String, required: true },
+      show: { type: Boolean, default: false },
       type: { type: String, default: 'normal' }
     },
 
@@ -34,6 +37,10 @@
       'feather-x': () =>
         import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */)
     },
+
+    data: () => ({
+      dialog: null
+    }),
 
     computed: {
       dialogClassNames () {
@@ -46,15 +53,36 @@
           closeButton: 'happy-dialog-close-button circle plain'
         }
       },
-
       dialogIdentifier () {
-        return this.dialogId || 'app-dialog'
+        return this.id || `app-dialog`
+      }
+    },
+
+    watch: {
+      show (showDialog) {
+        if (showDialog) {
+          this.$root.$el.parentNode.classList.add('js-no-scrolling')
+          if (this.dialog) {
+            this.dialog.show()
+          }
+        } else {
+          this.$root.$el.parentNode.classList.remove('js-no-scrolling')
+          if (this.dialog) {
+            this.dialog.hide()
+          }
+        }
       }
     },
 
     methods: {
       assignDialogRef (dialog) {
-        this.$emit('dialog-ref', dialog)
+        this.dialog = dialog
+        if (this.dialog) {
+          this.dialog.on('hide', this.onDialogClose)
+        }
+      },
+      onDialogClose () {
+        this.$emit('close-dialog')
       }
     }
   }

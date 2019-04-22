@@ -1,6 +1,6 @@
 <template>
-  <portal-dialog
-    dialog-name="plant-edit-dialog"
+  <better-dialog
+    id="plant-edit-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
     <template v-slot:headline>
@@ -23,7 +23,7 @@
         <span>Created: {{ created | formatDate }}</span>
       </div>
     </div>
-  </portal-dialog>
+  </better-dialog>
 </template>
 
 <script>

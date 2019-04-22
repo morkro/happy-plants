@@ -9,8 +9,8 @@
     </template>
 
     <template v-slot:content>
-      <portal-dialog
-        dialog-name="plant-notes-dialog"
+      <better-dialog
+        id="plant-notes-dialog"
         :show="showNotes"
         @close-dialog="closeNotes">
         <template v-slot:headline>
@@ -26,7 +26,7 @@
             Save
           </v-button>
         </div>
-      </portal-dialog>
+      </better-dialog>
 
       <div v-if="!content"
         key="notes-empty"

@@ -1,6 +1,6 @@
 <template>
-  <portal-dialog
-    dialog-name="plant-module-manager-dialog"
+  <better-dialog
+    id="plant-module-manager-dialog"
     :show="show"
     @close-dialog="cancel">
     <template v-slot:headline>
@@ -56,7 +56,7 @@
         </v-button>
       </div>
     </div>
-  </portal-dialog>
+  </better-dialog>
 </template>
 
 <script>

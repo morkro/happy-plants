@@ -9,8 +9,8 @@
     </template>
 
     <template v-slot:content>
-      <portal-dialog
-        dialog-name="plant-watering-dialog"
+      <better-dialog
+        id="plant-watering-dialog"
         :show="showRoutineSelection"
         @close-dialog="closeRoutineDialog">
         <template v-slot:headline>
@@ -30,7 +30,7 @@
             </label>
           </li>
         </ul>
-      </portal-dialog>
+      </better-dialog>
 
       <div class="watering-description">
         <p>

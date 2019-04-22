@@ -23,11 +23,6 @@ const store = new Vuex.Store({
 
     hasNewRelease: false,
 
-    dialog: {
-      active: false,
-      type: 'default'
-    },
-
     appheader: {
       backBtn: true,
       backBtnPath: '/',

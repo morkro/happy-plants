@@ -18,7 +18,7 @@ describe('app/overview/Overview.vue', () => {
     store,
     router,
     stubs: {
-      'portal-dialog': '<div />'
+      'better-dialog': '<div />'
     }
   }
 

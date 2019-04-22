@@ -18,7 +18,7 @@ describe('app/settings/SettingsTags.vue', () => {
       'tag-dialog': '<div />',
       'tag-modal': '</div>',
       'tag-item': '<div />',
-      'portal-dialog': '<div />'
+      'better-dialog': '<div />'
     }
   }
 

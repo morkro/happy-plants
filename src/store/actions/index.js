@@ -7,9 +7,5 @@ export default {
   ...appheader,
   ...notifications,
   ...version,
-  ...user,
-
-  toggleDialog ({ commit }, data) {
-    commit('TOGGLE_APP_DIALOG', data)
-  }
+  ...user
 }

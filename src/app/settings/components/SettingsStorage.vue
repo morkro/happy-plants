@@ -34,8 +34,8 @@
       </div>
     </div>
 
-    <portal-dialog
-      dialog-name="storage-dialog"
+    <better-dialog
+      id="storage-dialog"
       :show="showCloudDialog"
       @close-dialog="closeDialog">
       <template v-slot:headline>
@@ -91,7 +91,7 @@
           I understand, let's go
         </v-button>
       </div>
-    </portal-dialog>
+    </better-dialog>
   </div>
 </template>
 
