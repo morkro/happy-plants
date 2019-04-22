@@ -19,7 +19,7 @@ describe('app/intro/Storage.vue', () => {
     router,
     stubs: {
       'v-box': Box,
-      'portal-dialog': '<div />',
+      'better-dialog': '<div />',
       'auth-provider-list': '<div />',
       'feather-right': '<svg />',
       'feather-left': '<svg />',

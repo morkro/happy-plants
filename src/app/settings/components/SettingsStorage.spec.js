@@ -13,7 +13,7 @@ describe('app/settings/SettingsStorage.vue', () => {
     store,
     router,
     stubs: {
-      'portal-dialog': '<div />',
+      'better-dialog': '<div />',
       'feather-cloud': '<div />',
       'feather-smartphone': '<div />',
       'feather-loader': '<div />',

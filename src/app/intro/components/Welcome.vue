@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-wrapper">
-    <portal-dialog
-      dialog-name="intro-welcome-signin"
+    <better-dialog
+      id="intro-welcome-signin"
       :show="showDialog"
       @close-dialog="closeDialog">
       <template v-slot:headline>
@@ -14,7 +14,7 @@
           @provider-selected="loginUser"
         />
       </div>
-    </portal-dialog>
+    </better-dialog>
 
     <v-carousel class="welcome-carousel">
       <div class="welcome-cards card-intro">

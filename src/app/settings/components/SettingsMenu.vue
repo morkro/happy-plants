@@ -1,7 +1,7 @@
 <template>
   <div class="settings-menu">
-    <portal-dialog
-      dialog-name="settings-happy-dialog"
+    <better-dialog
+      id="settings-happy-dialog"
       :show="showLoginDialog"
       @close-dialog="closeLoginDialog">
       <template v-slot:headline>
@@ -13,7 +13,7 @@
         :disabled="disabled"
         @provider-selected="loginUser"
       />
-    </portal-dialog>
+    </better-dialog>
 
     <ul class="settings-menu-list">
       <li

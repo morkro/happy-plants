@@ -1,7 +1,7 @@
 <template>
   <div class="settings-data">
-    <portal-dialog
-      dialog-name="settings-dialog"
+    <better-dialog
+      id="settings-dialog"
       :type="this.modalType"
       :show="showDialog"
       @close-dialog="closeDialog">
@@ -59,7 +59,7 @@
           Import
         </v-button>
       </div>
-    </portal-dialog>
+    </better-dialog>
 
     <section class="download-section">
       <v-box>

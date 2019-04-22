@@ -12,7 +12,7 @@ describe('app/intro/HowTo.vue', () => {
     store,
     router,
     stubs: {
-      'portal-dialog': '<div />',
+      'better-dialog': '<div />',
       'svgicon': '<div />',
       'v-box': Box,
       'feather-arrow-left': '<svg />'

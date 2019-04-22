@@ -1,6 +1,6 @@
 <template>
-  <portal-dialog
-    dialog-name="settings-tags-dialog"
+  <better-dialog
+    id="settings-tags-dialog"
     :show="show"
     @close-dialog="emitCloseDialog">
     <template v-slot:headline>
@@ -21,7 +21,7 @@
         Update name
       </v-button>
     </form>
-  </portal-dialog>
+  </better-dialog>
 </template>
 
 <script>

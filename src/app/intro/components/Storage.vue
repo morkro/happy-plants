@@ -1,7 +1,7 @@
 <template>
   <div>
-    <portal-dialog
-      dialog-name="intro-storage-dialog"
+    <better-dialog
+      id="intro-storage-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
       <template v-slot:headline>
@@ -17,7 +17,7 @@
           @provider-selected="loginUser"
         />
       </div>
-    </portal-dialog>
+    </better-dialog>
 
     <v-box class="intro-storage">
       <h2>How do you want to save your plant data?</h2>

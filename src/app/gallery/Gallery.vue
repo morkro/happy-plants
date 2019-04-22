@@ -1,7 +1,7 @@
 <template>
   <div :class="['main-wireframe', { fullscreen }]">
-    <portal-dialog
-      dialog-name="gallery-dialog"
+    <better-dialog
+      id="gallery-dialog"
       :show="showDialog"
       @close-dialog="closeDialog">
       <template v-slot:headline>
@@ -20,7 +20,7 @@
           Add photo
         </v-button>
       </div>
-    </portal-dialog>
+    </better-dialog>
 
     <main class="app-content">
       <gallery-options
