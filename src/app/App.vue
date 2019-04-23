@@ -113,6 +113,7 @@
         'updateAuthMethod',
         'authRedirectResults',
         'authenticateUser',
+        'loadVersion',
         'updateVersion',
         'loadSettings',
         'loadStorage',
@@ -135,15 +136,16 @@
     },
 
     async created () {
+      await this.loadVersion()
       await this.updateVersion()
       await this.loadStorage()
-      await this.updateStorage()
+      await this.updateStorage({ type: this.storageType })
       await this.loadSettings()
 
       if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
         this.updateAuthMethod()
 
-        if (this.$route.name === 'Welcome') {
+        if (this.$route.name === 'Welcome' && this.storageType === 'local') {
           await this.updateStorage({ type: 'cloud' })
         }
         deleteSessionEntry('USER_SIGNIN_PROGRESS')

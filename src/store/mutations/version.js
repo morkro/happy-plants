@@ -6,6 +6,8 @@ export default {
 
     if (versionIsValid && !compareVersion(payload.version, state.version, false)) {
       state.version = payload.version
+    } else {
+      state.version = state.version
     }
 
     state.hasNewRelease = (
