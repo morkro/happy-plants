@@ -103,7 +103,7 @@
       },
       onPanMove (event) {
         this.setPosition({
-          x: this.interactPosition.x + event.velocityX * 2
+          x: this.interactPosition.x + event.velocityX * 2.5
         })
       },
       onPanEnd () {
