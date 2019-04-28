@@ -155,6 +155,7 @@
 <style lang="postcss" scoped>
   .viewmode-container {
     width: 100%;
+    height: auto;
     max-height: 35vh;
     display: flex;
     flex-wrap: wrap;
