@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.7.0</code> <a href="CHANGELOG.md">(Changelog)</a>
+  Current version: <code>1.7.1</code> <a href="CHANGELOG.md">(Changelog)</a>
 </p>
 
 <p align="center">
@@ -74,4 +74,4 @@ The logo is a combination of existing illustrations by [Vitaly Gorbachev](https:
 Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
 
 ## License
-[MIT](https:/github.com/morkro/happy-plants/LICENSE)
+[BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)
