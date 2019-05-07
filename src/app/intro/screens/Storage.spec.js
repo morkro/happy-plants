@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 
-import Storage from '@/app/intro/components/Storage'
+import Storage from '@/app/intro/screens/Storage'
 import Box from '@/components/Box'
 import store from '@/store'
 import mutations from '@/store/mutations'

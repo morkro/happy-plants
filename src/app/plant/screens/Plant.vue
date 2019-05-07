@@ -66,17 +66,17 @@
   import { mapState, mapActions, mapGetters } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
-  import PlantModuleManager from './components/PlantModuleManager'
-  import PlantModal from './components/PlantModal'
-  import PlantHeader from './components/PlantHeader'
-  import PlantTags from './components/PlantTags'
-  import PlantNotes from './components/PlantNotes'
-  import PlantSeasons from './components/PlantSeasons'
-  import PlantWatering from './components/PlantWatering'
-  import PlantSunshine from './components/PlantSunshine'
-  import PlantGallery from './components/PlantGallery'
-  import PlantFooter from './components/PlantFooter'
-  import { getPlantModules } from './utils'
+  import PlantModuleManager from '@/app/plant/components/PlantModuleManager'
+  import PlantModal from '@/app/plant/components/PlantModal'
+  import PlantHeader from '@/app/plant/components/PlantHeader'
+  import PlantTags from '@/app/plant/components/PlantTags'
+  import PlantNotes from '@/app/plant/components/PlantNotes'
+  import PlantSeasons from '@/app/plant/components/PlantSeasons'
+  import PlantWatering from '@/app/plant/components/PlantWatering'
+  import PlantSunshine from '@/app/plant/components/PlantSunshine'
+  import PlantGallery from '@/app/plant/components/PlantGallery'
+  import PlantFooter from '@/app/plant/components/PlantFooter'
+  import { getPlantModules } from '@/app/plant/utils'
 
   export default {
     name: 'PlantView',
@@ -349,7 +349,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  @import "../../styles/media-queries";
+  @import "../../../styles/media-queries";
 
   .main-wireframe {
     padding-top: 0;

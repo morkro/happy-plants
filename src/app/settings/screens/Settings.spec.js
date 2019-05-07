@@ -1,25 +1,25 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsData from '@/app/settings/components/SettingsData'
-import Button from '@/components/Button'
+import VueSVGIcon from 'vue-svgicon'
+import Settings from '@/app/settings/screens/Settings'
 import store from '@/store'
 import router from '@/router'
 
 const localVue = createLocalVue()
+localVue.use(VueSVGIcon)
 
-describe('app/settings/SettingsData.vue', () => {
+describe('app/settings/Settings.vue', () => {
   const options = {
     localVue,
     store,
     router,
     stubs: {
-      'v-button': Button,
-      'better-dialog': '<div />',
-      'file-upload': '<div />'
+      'a11y-dialog': '<div />',
+      'feather-x': '<svg />'
     }
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(SettingsData, options)
+    const wrapper = shallowMount(Settings, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })

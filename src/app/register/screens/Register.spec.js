@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
 
-import Register from '@/app/register/Register'
+import Register from '@/app/register/screens/Register'
 import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'

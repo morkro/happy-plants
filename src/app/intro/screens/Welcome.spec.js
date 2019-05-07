@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import IntroStart from '@/app/intro/components/Welcome'
+import IntroStart from '@/app/intro/screens/Welcome'
 import PlantWatering from '@/app/plant/components/PlantWatering'
 import PlantSunshine from '@/app/plant/components/PlantSunshine'
 import PlantSeasons from '@/app/plant/components/PlantSeasons'

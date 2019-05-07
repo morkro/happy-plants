@@ -2,6 +2,6 @@ export default [
   {
     path: '/add',
     name: 'RegisterPlant',
-    component: () => import('./Register' /* webpackChunkName: "register" */)
+    component: () => import('./screens/Register' /* webpackChunkName: "register" */)
   }
 ]

@@ -5,7 +5,7 @@ import VueSVGIcon from 'vue-svgicon'
 
 import Button from '@/components/Button'
 import Box from '@/components/Box'
-import Intro from '@/app/intro/Intro'
+import Intro from '@/app/intro/screens/Intro'
 import store from '@/store'
 import router from '@/router'
 

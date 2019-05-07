@@ -1,22 +1,22 @@
 export default [
   {
     path: '/intro',
-    component: () => import('./Intro' /* webpackChunkName: "intro" */),
+    component: () => import('./screens/Intro' /* webpackChunkName: "intro" */),
     children: [
       {
         path: '',
         name: 'Welcome',
-        component: () => import('./components/Welcome' /* webpackChunkName: "intro" */)
+        component: () => import('./screens/Welcome' /* webpackChunkName: "intro" */)
       },
       {
         path: 'storage',
         name: 'IntroStorage',
-        component: () => import('./components/Storage' /* webpackChunkName: "intro" */)
+        component: () => import('./screens/Storage' /* webpackChunkName: "intro" */)
       },
       {
         path: 'howto',
         name: 'IntroHowTo',
-        component: () => import('./components/HowTo' /* webpackChunkName: "intro" */)
+        component: () => import('./screens/HowTo' /* webpackChunkName: "intro" */)
       }
     ]
   }

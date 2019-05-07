@@ -2,6 +2,6 @@ export default [
   {
     path: '/plant/:id',
     name: 'PlantView',
-    component: () => import('./Plant' /* webpackChunkName: "plant" */)
+    component: () => import('./screens/Plant' /* webpackChunkName: "plant" */)
   }
 ]

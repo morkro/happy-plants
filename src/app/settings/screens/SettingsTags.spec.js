@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsTags from '@/app/settings/components/SettingsTags'
+import SettingsTags from '@/app/settings/screens/SettingsTags'
 import Button from '@/components/Button'
 import Tag from '@/components/Tag'
 import store from '@/store'

@@ -5,7 +5,7 @@ import VueTouch from 'vue-touch'
 import VueSVGIcon from 'vue-svgicon'
 import 'localforage-startswith'
 
-import Plant from '@/app/plant/Plant'
+import Plant from '@/app/plant/screens/Plant'
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
 import store from '@/store'

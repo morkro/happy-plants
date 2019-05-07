@@ -92,11 +92,11 @@
   import { mapState, mapActions } from 'vuex'
   import { getUrlFromBlob, isBlobbable } from '@/utils/blob'
 
-  import GalleryOptions from './components/GalleryOptions'
-  import GalleryUpload from './components/GalleryUpload'
-  import GalleryImage from './components/GalleryImage'
+  import GalleryOptions from '@/app/gallery/components/GalleryOptions'
+  import GalleryUpload from '@/app/gallery/components/GalleryUpload'
+  import GalleryImage from '@/app/gallery/components/GalleryImage'
 
-  import { getGalleryItemStructure } from './utils/get-gallery-structure'
+  import { getGalleryItemStructure } from '@/app/gallery/utils/get-gallery-structure'
 
   export default {
     name: 'Gallery',
@@ -364,7 +364,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  @import "../../styles/media-queries";
+  @import "../../../styles/media-queries";
 
   .main-wireframe {
     min-height: 100vh;

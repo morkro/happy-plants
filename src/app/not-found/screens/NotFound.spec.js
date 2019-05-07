@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 
-import NotFound from '@/app/not-found/NotFound'
+import NotFound from '@/app/not-found/screens/NotFound'
 import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'

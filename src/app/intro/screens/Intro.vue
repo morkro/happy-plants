@@ -25,7 +25,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  @import "../../styles/media-queries";
+  @import "../../../styles/media-queries";
 
   .main-wireframe {
     width: 100%;

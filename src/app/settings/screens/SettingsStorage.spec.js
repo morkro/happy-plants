@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsStorage from '@/app/settings/components/SettingsStorage'
+import SettingsStorage from '@/app/settings/screens/SettingsStorage'
 import Button from '@/components/Button'
 import store from '@/store'
 import mutations from '@/store/mutations'

@@ -1,23 +1,26 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsAbout from '@/app/settings/components/SettingsAbout'
+import HowTo from '@/app/intro/screens/HowTo'
+import Box from '@/components/Box'
 import store from '@/store'
 import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/SettingsAbout.vue', () => {
+describe('app/intro/HowTo.vue', () => {
   const options = {
     localVue,
     store,
     router,
     stubs: {
-      'feather-github': '<div />',
-      'feather-heart': '<div />'
+      'better-dialog': '<div />',
+      'svgicon': '<div />',
+      'v-box': Box,
+      'feather-arrow-left': '<svg />'
     }
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(SettingsAbout, options)
+    const wrapper = shallowMount(HowTo, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })
