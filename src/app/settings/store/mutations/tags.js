@@ -17,6 +17,12 @@ export default {
     state.tags.data = payload.tags || state.tags.data
   },
 
+  LOAD_TAGS_FAILURE (state) {
+    state.tags.loading = false
+    state.tags.finished = true
+    state.tags.error = true
+  },
+
   ADD_TAG_PROGRESS (state) {
     state.updated = Date.now()
   },
