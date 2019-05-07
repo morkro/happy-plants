@@ -95,10 +95,10 @@
 <script>
   import { mapState, mapActions } from 'vuex'
 
-  import OverviewMenu from './components/Menu'
-  import DeleteMenu from './components/DeleteMenu'
-  import PlantsList from './components/PlantsList'
-  import ViewmodeMenu from './components/ViewmodeMenu'
+  import OverviewMenu from '@/app/overview/components/Menu'
+  import DeleteMenu from '@/app/overview/components/DeleteMenu'
+  import PlantsList from '@/app/overview/components/PlantsList'
+  import ViewmodeMenu from '@/app/overview/components/ViewmodeMenu'
   import '@/assets/icons/cactus'
 
   export default {
@@ -300,8 +300,8 @@
 </script>
 
 <style lang="postcss" scoped>
-  @import "../../styles/media-queries";
-  @import "../../styles/animations";
+  @import "../../../styles/media-queries";
+  @import "../../../styles/animations";
 
   .main-wireframe {
     min-height: 100vh;

@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsMenu from '@/app/settings/components/SettingsMenu'
+import SettingsMenu from '@/app/settings/screens/SettingsMenu'
 import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'

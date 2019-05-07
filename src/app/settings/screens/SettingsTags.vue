@@ -88,8 +88,8 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
-  import TagModal from './TagModal'
-  import TagItem from './TagItem'
+  import TagModal from '@/app/settings/components/TagModal'
+  import TagItem from '@/app/settings/components/TagItem'
 
   export default {
     name: 'SettingsTags',

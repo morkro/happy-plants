@@ -2,6 +2,6 @@ export default [
   {
     path: '*',
     name: 'NotFound',
-    component: () => import('./NotFound' /* webpackChunkName: "404" */)
+    component: () => import('./screens/NotFound' /* webpackChunkName: "404" */)
   }
 ]

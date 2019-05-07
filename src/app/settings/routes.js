@@ -1,37 +1,37 @@
 export default [
   {
     path: '/settings',
-    component: () => import('./Settings' /* webpackChunkName: "settings" */),
+    component: () => import('./screens/Settings' /* webpackChunkName: "settings" */),
     children: [
       {
         path: '',
         name: 'Settings',
-        component: () => import('./components/SettingsMenu' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsMenu' /* webpackChunkName: "settings" */)
       },
       {
         path: 'data',
         name: 'SettingsData',
-        component: () => import('./components/SettingsData' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsData' /* webpackChunkName: "settings" */)
       },
       {
         path: 'storage',
         name: 'SettingsStorage',
-        component: () => import('./components/SettingsStorage' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsStorage' /* webpackChunkName: "settings" */)
       },
       {
         path: 'tags',
         name: 'SettingsTags',
-        component: () => import('./components/SettingsTags' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsTags' /* webpackChunkName: "settings" */)
       },
       {
         path: 'about',
         name: 'SettingsAbout',
-        component: () => import('./components/SettingsAbout' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsAbout' /* webpackChunkName: "settings" */)
       },
       {
         path: 'release',
         name: 'SettingsReleaseNotes',
-        component: () => import('./components/SettingsReleaseNotes' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/SettingsReleaseNotes' /* webpackChunkName: "settings" */)
       }
     ]
   }
