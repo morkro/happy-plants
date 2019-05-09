@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.7.2] - 2019-05-09
 
 ### Fixed
+- Adds a missing Vuex mutation handler for errors.
 - Removes the `--modern` flag from build output as it was causing issues on Netlify.
 
 ## [1.7.1] - 2019-05-01
