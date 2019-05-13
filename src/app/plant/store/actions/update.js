@@ -26,9 +26,9 @@ export async function updatePlant (action, { state, commit }, data) {
     }
 
     await updateEntryFire(path, selected)
-  } else {
-    await updateEntryLF(namespace + state.plants.selected.guid, state.plants.selected)
   }
+
+  await updateEntryLF(namespace + state.plants.selected.guid, state.plants.selected)
 }
 
 export const updatePlantModules = (...args) =>

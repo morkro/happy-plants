@@ -29,7 +29,7 @@
     <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
       <div v-if="plantsLoading && !plantsLoaded" class="content-loading-indicator box">
         <feather-loader class="rotate" />
-        <span>Loading</span>
+        <span>Sync</span>
       </div>
 
       <div v-if="noPlantData" class="content-empty">

@@ -30,6 +30,10 @@ module.exports = {
   },
 
   pwa: {
-    name: 'HappyPlants'
+    name: 'HappyPlants',
+    themeColor: '#ffffff',
+    msTileColor: '#17c37b',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'white'
   }
 }

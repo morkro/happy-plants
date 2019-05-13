@@ -28,9 +28,9 @@ export async function deletePlants ({ state, commit }, items) {
     } catch (error) {
       commit('DELETE_PLANTS_FAILURE')
     }
-  } else {
-    await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
   }
+
+  await Promise.all(items.map(item => deleteEntryLF(namespace + item.guid, item)))
 
   if (!state.storage.migrationMode) {
     commit('DELETE_PLANTS_SUCCESS', { items })

@@ -13,6 +13,17 @@ export default {
     state.plants.loading = true
   },
 
+  LOAD_PLANTS_LOCALSTORAGE (state, payload) {
+    if (!payload.plants || !payload.plants.length) return
+
+    let transformed = payload.plants
+    if (state.storage.type === 'local') {
+      transformed = payload.plants.map(refreshBlobUrl)
+    }
+
+    state.plants.data = sortPlants(state, transformed)
+  },
+
   LOAD_PLANTS_TOTAL_COUNT (state, payload) {
     state.plants.loading = true
     state.plants.data = new Array(payload.total).fill({})
@@ -30,16 +41,21 @@ export default {
     state.plants.data = allPlants.concat(plantCopy)
   },
 
-  LOAD_PLANTS_SUCCESS (state, payload) {
+  LOAD_PLANTS_FIREBASE (state, payload) {
     let transformed = payload.plants
     if (state.storage.type === 'local') {
       transformed = payload.plants.map(refreshBlobUrl)
     }
 
+    if (payload.plants.length) {
+      state.plants.data = sortPlants(state, [...transformed, payload.plants])
+    }
+  },
+
+  LOAD_PLANTS_SUCCESS (state) {
     state.plants.loading = false
     state.plants.finished = true
     state.plants.error = false
-    state.plants.data = sortPlants(state, transformed)
   },
 
   LOAD_PLANTS_FAILURE (state) {
