@@ -13,6 +13,12 @@
       :back-button="backBtn"
       :back-path="backBtnPath"
       :show-icon-backdrop="showIconBackdrop">
+      <template v-if="plantsLoading && !plantsLoaded" v-slot:custom-action-left>
+        <div class="header-sync-data">
+          <feather-refresh />
+        </div>
+      </template>
+
       <template v-if="!!pageTitle" v-slot:title>
         <h1>{{ pageTitle }}</h1>
       </template>
@@ -63,7 +69,9 @@
     },
 
     components: {
-      'md-changelog': Changelog
+      'md-changelog': Changelog,
+      'feather-refresh': () =>
+        import('vue-feather-icons/icons/RefreshCwIcon' /* webpackChunkName: "icons" */)
     },
 
     data () {
@@ -104,7 +112,9 @@
         backBtnPath: state => state.appheader.backBtnPath,
         rightBtn: state => state.appheader.rightBtn,
         rightBtnOnClick: state => state.appheader.rightBtnOnClick,
-        showIconBackdrop: state => state.appheader.showIconBackdrop
+        showIconBackdrop: state => state.appheader.showIconBackdrop,
+        plantsLoading: state => state.plants.loading,
+        plantsLoaded: state => state.plants.finished
       })
     },
 
@@ -253,6 +263,21 @@
     & .happy-dialog-content section p,
     & .happy-dialog-content section h3 {
       margin-bottom: calc(var(--base-gap) / 2);
+    }
+  }
+
+  .header-sync-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--app-header-size);
+    min-height: var(--app-header-size);
+    height: 100%;
+
+    & svg {
+      width: var(--icon-size-base);
+      height: var(--icon-size-base);
+      animation: rotate360 3s linear infinite;
     }
   }
 
