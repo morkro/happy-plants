@@ -91,8 +91,8 @@ export async function loadPlants ({ state, commit }) {
   if (state.storage.type === 'cloud' && state.user.id) {
     try {
       const plants = await loadPlantsFirestore(state, commit)
-
       const removals = plantsFromLocalforage.filter(p => !plants.find(p1 => p1.guid === p.guid))
+
       if (plantsFromLocalforage.length && removals.length) {
         await Promise.all(removals
           .map(item => deleteEntryLF(namespace + item.guid, item))

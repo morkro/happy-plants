@@ -42,13 +42,8 @@ export default {
   },
 
   LOAD_PLANTS_FIREBASE (state, payload) {
-    let transformed = payload.plants
-    if (state.storage.type === 'local') {
-      transformed = payload.plants.map(refreshBlobUrl)
-    }
-
-    if (transformed.length) {
-      state.plants.data = sortPlants(state, [...transformed])
+    if (payload.plants.length) {
+      state.plants.data = sortPlants(state, payload.plants)
     }
   },
 
