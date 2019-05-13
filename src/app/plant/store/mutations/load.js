@@ -47,8 +47,8 @@ export default {
       transformed = payload.plants.map(refreshBlobUrl)
     }
 
-    if (payload.plants.length) {
-      state.plants.data = sortPlants(state, [...transformed, payload.plants])
+    if (transformed.length) {
+      state.plants.data = sortPlants(state, [...transformed])
     }
   },
 

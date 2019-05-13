@@ -1,5 +1,9 @@
 import { getUrlFromBlob } from '@/utils/blob'
-import { getEntry as getEntryLF, addEntry as addEntryLF } from '@/api/localforage'
+import {
+  getEntry as getEntryLF,
+  addEntry as addEntryLF,
+  deleteEntry as deleteEntryLF
+} from '@/api/localforage'
 import { firestoreQuery, downloadFile } from '@/api/firebase'
 
 const namespace = 'plant-'
@@ -32,6 +36,7 @@ async function loadPlantsFirestore (state, commit) {
       if (plantData.modified > plantExists.modified) {
         commit('UPDATE_PLANT', { plant: plantData })
       }
+      plants.push(plantData)
       continue
     }
 
@@ -88,6 +93,14 @@ export async function loadPlants ({ state, commit }) {
   if (state.storage.type === 'cloud' && state.user.id) {
     try {
       const plants = await loadPlantsFirestore(state, commit)
+
+      const removals = plantsFromLocalforage.filter(p => !plants.find(p1 => p1.guid === p.guid))
+      if (plantsFromLocalforage.length && removals.length) {
+        await Promise.all(removals
+          .map(item => deleteEntryLF(namespace + item.guid, item))
+        )
+      }
+
       commit('LOAD_PLANTS_FIREBASE', { plants })
     } catch (error) {
       console.warn('Unable to load plants from Firestore: ', error.message)
