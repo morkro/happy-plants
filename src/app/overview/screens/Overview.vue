@@ -28,7 +28,7 @@
 
     <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
       <div v-if="plantsLoading && !plantsLoaded" class="content-loading-indicator box">
-        <feather-loader class="rotate" />
+        <div><feather-refresh class="rotate" /></div>
         <span>Syncing data</span>
       </div>
 
@@ -113,8 +113,8 @@
         import('vue-feather-icons/icons/ArrowDownIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
         import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
-      'feather-loader': () =>
-        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
+      'feather-refresh': () =>
+        import('vue-feather-icons/icons/RefreshCwIcon' /* webpackChunkName: "icons" */)
     },
 
     computed: {
@@ -378,8 +378,12 @@
       margin-left: calc(var(--base-gap) / 2);
     }
 
+    & > div {
+      transform: scale(0.8);
+    }
+
     & svg.rotate {
-      animation: rotate360 4s linear infinite;
+      animation: rotate360 3s linear infinite;
     }
   }
 

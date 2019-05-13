@@ -32,27 +32,25 @@ async function loadPlantsFirestore (state, commit) {
     const plantData = plant.data()
     const plantExists = state.plants.data.find(p => p.guid === plantData.guid)
 
+    if (plantData.imageURL) {
+      plantData.imageURL = await downloadFile(plantData.imageURL)
+    }
+
     if (plantExists) {
       if (plantData.modified > plantExists.modified) {
         commit('UPDATE_PLANT', { plant: plantData })
       }
-      plants.push(plantData)
-      continue
-    }
-
-    if (plantData.imageURL) {
-      plantData.imageURL = await downloadFile(plantData.imageURL)
-
-      if (state.storage.migrationMode) {
+    } else {
+      if (plantData.imageURL && state.storage.migrationMode) {
         const photo = await fetch(plantData.imageURL)
         plantData.blob = await photo.blob()
         plantData.imageURL = getUrlFromBlob(plantData.blob)
       }
-    }
 
-    if (!state.storage.migrationMode) {
-      commit('LOAD_PLANTS_SINGLE', { plant: plantData })
-      await addEntryLF(namespace + plantData.guid, plantData)
+      if (!state.storage.migrationMode) {
+        commit('LOAD_PLANTS_SINGLE', { plant: plantData })
+        await addEntryLF(namespace + plantData.guid, plantData)
+      }
     }
 
     plants.push(plantData)
