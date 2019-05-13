@@ -3,6 +3,7 @@ import {
 } from '@/api/localforage'
 
 import {
+  storagePath,
   updateEntry as updateEntryFire,
   uploadFile
 } from '@/api/firebase'
@@ -25,10 +26,13 @@ export async function updatePlant (action, { state, commit }, data) {
       await uploadFile(path.concat(fileName), data.blob)
     }
 
-    await updateEntryFire(path, selected)
-  } else {
-    await updateEntryLF(namespace + state.plants.selected.guid, state.plants.selected)
+    await updateEntryFire(path, {
+      ...selected,
+      imageURL: selected.imageURL || `${storagePath(path)}/${fileName}`
+    })
   }
+
+  await updateEntryLF(namespace + state.plants.selected.guid, state.plants.selected)
 }
 
 export const updatePlantModules = (...args) =>

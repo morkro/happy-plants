@@ -22,7 +22,7 @@
       'app-content': true }">
       <div>
         <plant-header
-          :content-loading="plantsLoading"
+          :content-loading="plantLoading"
           :name="plant.name"
           :image-url="plant.imageURL"
           v-observe-visibility.60="observeVisibility"
@@ -113,7 +113,7 @@
         storageType: state => state.storage.type,
         theme: state => state.settings.theme,
         plantsData: state => state.plants.data,
-        plantsLoading: state => state.plants.loading,
+        plantLoading: state => !state.plants.selected.guid,
         plantsFinished: state => state.plants.finished,
         plant: state => state.plants.selected,
         tags: state => state.tags.data,

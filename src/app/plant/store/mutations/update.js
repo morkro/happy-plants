@@ -18,9 +18,9 @@ export function updatePlantModule (moduleName, valueTypes, state, payload) {
 
 export default {
   UPDATE_PLANT (state, payload) {
-    const itemIndex = state.plants.data.findIndex(p => p.guid === payload.data.guid)
+    const itemIndex = state.plants.data.findIndex(p => p.guid === payload.plant.guid)
     state.updated = Date.now()
-    Vue.set(state.plants.data, itemIndex, payload.data)
+    Vue.set(state.plants.data, itemIndex, payload.plant)
   },
 
   UPDATE_PLANT_MODULES (state, payload) {

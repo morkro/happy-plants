@@ -184,7 +184,8 @@
   }
 
   .app-header .header-ctrl {
-    width: var(--app-header-size);
+    display: flex;
+    min-width: var(--app-header-size);
     min-height: var(--app-header-size);
     height: 100%;
 

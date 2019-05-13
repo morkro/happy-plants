@@ -60,9 +60,9 @@ export async function addPlant ({ state, commit }, data) {
     } catch (error) {
       commit('ADD_PLANT_FAILURE')
     }
-  } else {
-    await addPlantLocalforage(state, meta)
   }
+
+  await addPlantLocalforage(state, meta)
 
   if (!state.storage.migrationMode) {
     commit('ADD_PLANT_SUCCESS', { item: meta })

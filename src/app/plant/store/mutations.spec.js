@@ -213,7 +213,7 @@ describe('app/plant/mutations/update.js', () => {
         }]
       }
     }
-    mutations.UPDATE_PLANT(state, { data: {
+    mutations.UPDATE_PLANT(state, { plant: {
       name: 'New name',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
     } })
