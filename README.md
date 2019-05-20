@@ -32,20 +32,24 @@ By participating, you are expected to uphold this code. Please report unacceptab
 
 For upcoming features, ideas, and general roadmap, see the [Roadmap board](https://github.com/morkro/happy-plants/projects/5).
 
-Overview of all available features:
+### General
 
-**General**
 - 🔋 Save all data either _locally on device_ (via IndexedDB) or in the cloud (Firebase)
   - 🗝 Sign in options: Twitter, GitHub, Google
 - 📦 Import/Export your plant data
 - 📦 Migrate your data from local storage to Firebase and vice versa
-- 💡 Dark/Light Theme
 - 📱 Responsive layout with mobile-first focus
+- 💡 Dark/Light Theme
 
-**Plants**
+### Plants
+
 - 🗂 Add, delete, modify your plants
 - 🔖 Add _tags_ to your plants for better organisation
-- Add different modules to each plant:
+
+#### Add different modules to each plant
+
+![plant-modules](resources/plant-modules.png)
+
   - 💦 Watering schedule
   - ☀️ Sunshine requirements
   - 🌱 Growth cycle
