@@ -30,6 +30,7 @@
                 :value="module.type"
                 :checked="!cloudOnlyFeature(module) && module.selected"
                 :disabled="cloudOnlyFeature(module)">
+
               <span aria-hidden="true">
                 <feather-check />
               </span>
@@ -272,6 +273,7 @@
       align-items: center;
       flex: 0 0 auto;
       position: relative;
+      transition: var(--base-speed) background var(--ease-out-expo);
 
       & input {
         opacity: 0;

@@ -124,11 +124,13 @@
           setTimeout(() => this.$refs.tagInput.focus(), 1)
         }
         this.showInput = !this.showInput
+        this.$emit('toggle-suggestions', this.showInput)
       },
 
       closeInputOutside () {
         if (this.showInput) {
           this.showInput = false
+          this.$emit('toggle-suggestions', this.showInput)
         }
       },
 

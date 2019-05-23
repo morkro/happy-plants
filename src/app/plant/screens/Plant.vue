@@ -16,11 +16,8 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <main :class="{
-      'view-content': true,
-      'no-modules': plant.modules && !plant.modules.length,
-      'app-content': true }">
-      <div>
+    <main :class="['view-content', 'app-content', { 'no-modules': plant.modules && !plant.modules.length }]">
+      <div class="plant-content-upper">
         <plant-header
           :content-loading="plantLoading"
           :name="plant.name"
@@ -33,12 +30,13 @@
           v-if="Array.isArray(plant.tags)"
           :tags="allPlantTags"
           :all-tags="tags"
+          @toggle-suggestions="onTogglePlantTags"
           @new-tag="addNewPlantTag"
           @remove-tag="removePlantTag"
           @hide-module="hidePlantTags" />
       </div>
 
-      <div>
+      <div :class="['app-content-lower', { 'no-events': plantTagVisible }]">
         <!--
           Plant modules are dynamically rendered since they
           can be added/removed and sorted.
@@ -105,7 +103,8 @@
       showPlantModal: false,
       showModuleManager: false,
       deletePlantProgress: false,
-      plantDataLoaded: false
+      plantDataLoaded: false,
+      plantTagVisible: false
     }),
 
     computed: {
@@ -297,6 +296,9 @@
       updatePlantPhoto (blob) {
         const imageURL = isBlobbable(blob) ? getUrlFromBlob(blob) : this.plant.imageURL
         this.updatePhoto({ guid: this.plant.guid, blob, imageURL })
+      },
+      onTogglePlantTags (visible) {
+        this.plantTagVisible = visible
       }
     },
 
@@ -356,6 +358,15 @@
 
     @media (--min-desktop-viewport) {
       padding-top: var(--app-header-size);
+    }
+  }
+
+  .app-content-upper,
+  .app-content-lower {
+    position: relative;
+
+    &.no-events {
+      pointer-events: none;
     }
   }
 
