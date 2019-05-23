@@ -16,6 +16,40 @@
     </better-dialog>
 
     <ul class="settings-menu-list">
+      <li>
+        <h3>User</h3>
+
+        <ul class="settings-submenu">
+          <li class="menu-user">
+            <div v-if="authenticated">
+              <span>
+                <strong>{{ userName }}</strong>
+                <span v-if="userEmail">{{ userEmail }}</span>
+              </span>
+              <div>
+                <v-button
+                  type="small"
+                  :loading="logOutProgress"
+                  :disabled="logOutProgress"
+                  @click.native="logOutUser">
+                  Logout
+                </v-button>
+              </div>
+            </div>
+            <div v-else class="user-logged-out">
+              <span>
+                Login with your account.
+              </span>
+              <div>
+                <v-button type="small" @click.native="openLoginDialog">
+                Login
+                </v-button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </li>
+
       <li
         v-for="category in menu"
         :key="category.label">
@@ -49,40 +83,6 @@
                   :class="getThemeButtonClass(option.option)"
                   @click.native="emitThemeChange(option.option)">
                   {{ option.label }}
-                </v-button>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </li>
-
-      <li>
-        <h3>User</h3>
-
-        <ul class="settings-submenu">
-          <li class="menu-user">
-            <div v-if="authenticated">
-              <span>
-                <strong>{{ userName }}</strong>
-                <span v-if="userEmail">{{ userEmail }}</span>
-              </span>
-              <div>
-                <v-button
-                  type="small"
-                  :loading="logOutProgress"
-                  :disabled="logOutProgress"
-                  @click.native="logOutUser">
-                Logout
-                </v-button>
-              </div>
-            </div>
-            <div v-else class="user-logged-out">
-              <span>
-                Login with your account.
-              </span>
-              <div>
-                <v-button type="small" @click.native="openLoginDialog">
-                Login
                 </v-button>
               </div>
             </div>
