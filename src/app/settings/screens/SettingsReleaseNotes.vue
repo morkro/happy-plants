@@ -1,5 +1,15 @@
 <template>
   <div class="settings-release-notes">
+    <v-button
+      type="circle"
+      class="release-scroll-up"
+      aria-label="Scroll up"
+      @click.native="onScrollTop">
+      <template v-slot:icon>
+        <feather-top />
+      </template>
+    </v-button>
+
     <md-changelog ref="changelog" />
   </div>
 </template>
@@ -7,11 +17,15 @@
 <script>
   import Changelog from '#/CHANGELOG.md'
   import { mapActions } from 'vuex'
+  import scrollTop from '@/utils/scroll-top'
+
   export default {
     name: 'SettingsReleaseNotes',
 
     components: {
-      'md-changelog': Changelog
+      'md-changelog': Changelog,
+      'feather-top': () =>
+        import('vue-feather-icons/icons/ArrowUpIcon' /* webpackChunkName: "icons" */)
     },
 
     created () {
@@ -29,13 +43,26 @@
       }
     },
 
-    methods: mapActions([
-      'updateAppHeader'
-    ])
+    methods: {
+      ...mapActions([
+        'updateAppHeader'
+      ]),
+      onScrollTop () {
+        scrollTop()
+      }
+    }
   }
 </script>
 
 <style lang="postcss">
+  .release-scroll-up {
+    position: fixed;
+    z-index: 2;
+    bottom: var(--base-gap);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .settings-release-notes {
     padding: var(--base-gap) 0;
     line-height: 150%;
