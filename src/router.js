@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Meta from 'vue-meta'
 
 import { routes as intro } from '@/app/intro'
+import { routes as login } from '@/app/login'
 import { routes as overview } from '@/app/overview'
 import { routes as register } from '@/app/register'
 import { routes as plant } from '@/app/plant'
@@ -25,6 +26,7 @@ const router = new Router({
 
   routes: [
     ...intro,
+    ...login,
     ...overview,
     ...register,
     ...plant,
