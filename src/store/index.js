@@ -9,6 +9,7 @@ import { store as overview } from '@/app/overview'
 import { store as plant } from '@/app/plant'
 import { store as gallery } from '@/app/gallery'
 import { store as settings } from '@/app/settings'
+import { store as user } from '@/app/user'
 
 import pkg from '#/package.json'
 
@@ -48,16 +49,7 @@ const store = new Vuex.Store({
       type: 'local'
     },
 
-    user: {
-      authenticated: false,
-      authFromRedirect: false,
-      error: false,
-      firstTimeUser: false,
-      id: null,
-      loading: false,
-      name: null
-    },
-
+    user: user.state,
     plants: plant.state,
     tags: settings.state.tags,
     gallery: gallery.state
@@ -68,7 +60,8 @@ const store = new Vuex.Store({
     ...overview.actions,
     ...plant.actions,
     ...gallery.actions,
-    ...settings.actions
+    ...settings.actions,
+    ...user.actions
   },
 
   getters: {
@@ -81,7 +74,8 @@ const store = new Vuex.Store({
     ...overview.mutations,
     ...plant.mutations,
     ...gallery.mutations,
-    ...settings.mutations
+    ...settings.mutations,
+    ...user.mutations
   }
 })
 

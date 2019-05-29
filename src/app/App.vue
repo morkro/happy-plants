@@ -230,6 +230,11 @@
     }
   }
 
+  hr {
+    border: none;
+    border-top: 2px solid var(--border-color);
+  }
+
   #app {
     width: 100vw;
     min-height: 100vh;
