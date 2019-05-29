@@ -6,32 +6,32 @@ export default [
       {
         path: '',
         name: 'Settings',
-        component: () => import('./screens/SettingsMenu' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/Menu' /* webpackChunkName: "settings" */)
       },
       {
         path: 'data',
         name: 'SettingsData',
-        component: () => import('./screens/SettingsData' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/Data' /* webpackChunkName: "settings" */)
       },
       {
         path: 'storage',
         name: 'SettingsStorage',
-        component: () => import('./screens/SettingsStorage' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/Storage' /* webpackChunkName: "settings" */)
       },
       {
         path: 'tags',
         name: 'SettingsTags',
-        component: () => import('./screens/SettingsTags' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/Tags' /* webpackChunkName: "settings" */)
       },
       {
         path: 'about',
         name: 'SettingsAbout',
-        component: () => import('./screens/SettingsAbout' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/About' /* webpackChunkName: "settings" */)
       },
       {
         path: 'release',
         name: 'SettingsReleaseNotes',
-        component: () => import('./screens/SettingsReleaseNotes' /* webpackChunkName: "settings" */)
+        component: () => import('./screens/ReleaseNotes' /* webpackChunkName: "settings" */)
       }
     ]
   }
