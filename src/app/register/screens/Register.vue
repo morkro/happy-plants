@@ -2,24 +2,23 @@
   <div class="main-wireframe">
     <main class="app-content">
       <form @submit.prevent>
-        <label for="register-name" class="form-label-group">
-          <h2 class="required">What's your friends name?</h2>
-          <span />
-          <input required
+        <form-group for="register-name" required>
+          <h2>What's your friends name?</h2>
+          <v-input required
             type="text"
             id="register-name"
             placeholder="Name"
-            @change="getName">
-        </label>
+            @change="getName" />
+        </form-group>
 
-        <label for="register-file" class="form-label-group">
+        <form-group for="register-file">
           <h2>Upload photo</h2>
           <span>You can either select a photo from your gallery or take one now.</span>
           <file-upload
             name="register-file"
             @file-selected="getFile"
             @loading-file="handleLoadingState" />
-        </label>
+        </form-group>
 
         <v-button
           @click.native="validateForm"
@@ -128,14 +127,6 @@
     padding: 0 var(--base-gap);
     width: 100%;
 
-    & input {
-      width: 100%;
-    }
-
-    & select {
-      padding: calc(var(--base-gap) + 5px) var(--base-gap);
-    }
-
     & button:not([disabled]) svg {
       filter: invert(100%) !important;
     }
@@ -150,37 +141,5 @@
     border-radius: var(--border-radius);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
     width: 100%;
-  }
-
-  .form-label-group {
-    display: block;
-    width: 100%;
-    margin-bottom: calc(var(--base-gap) * 2);
-  }
-
-  label h2 {
-    margin-bottom: calc(var(--base-gap) / 2);
-
-    &.required::after {
-      color: var(--text-color-button);
-      content: "*";
-      font-size: var(--text-size-medium);
-      background: var(--brand-red);
-      border-radius: 50%;
-      width: var(--icon-size-small);
-      height: var(--icon-size-small);
-      display: inline-flex;
-      justify-content: center;
-      align-content: center;
-      margin-left: calc(var(--base-gap) / 2);
-    }
-  }
-
-  label span {
-    display: block;
-    color: var(--text-color-secondary);
-    font-size: var(--text-size-small);
-    margin-bottom: calc(var(--base-gap) / 2);
-    padding: 0 1px;
   }
 </style>

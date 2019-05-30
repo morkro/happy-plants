@@ -10,11 +10,11 @@
     <form class="dialog-content">
       <label for="dialog-name">
         <h2>Name</h2>
-        <input
+        <v-input
           id="dialog-name"
           type="text"
           :value="tagLabel"
-          @change="updateLabelName">
+          @change="updateLabelName" />
       </label>
 
       <v-button :loading="loading" @click.native="updateTag">

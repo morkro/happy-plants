@@ -39,11 +39,11 @@
 
           <ul class="import-types">
             <li v-for="(type, index) of importTypes" :key="index">
-              <input
+              <v-input
                 type="radio"
                 name="import-type"
                 :id="type.id"
-                @change="updateImportType(type.id)">
+                @change="updateImportType(type.id)" />
               <label :for="type.id">
                 {{ type.label }}
                 <span>{{ type.description }}</span>

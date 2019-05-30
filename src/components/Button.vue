@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :class="[color, type]">
+  <button :type="buttonType" :class="[color, type]">
     <div v-if="loading || $slots.icon || $scopedSlots.icon" :class="getIconClass()">
       <feather-loader v-if="loading" />
       <slot v-else name="icon" />
@@ -32,6 +32,7 @@
         type: [String, Array],
         default: 'normal',
         validator: value => {
+          if (value === 'submit') return value
           return Array.isArray(value)
             ? value.every(v => types.includes(v))
             : types.includes(value)
@@ -42,6 +43,12 @@
     components: {
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
+    },
+
+    computed: {
+      buttonType () {
+        return this.type === 'submit' ? this.type : 'button'
+      }
     },
 
     methods: {

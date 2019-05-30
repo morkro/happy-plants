@@ -211,7 +211,6 @@
   @import "../styles/media-queries";
   @import "../styles/fonts";
   @import "../styles/typography";
-  @import "../styles/forms";
   @import "../styles/layout";
 
   * {

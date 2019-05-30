@@ -1,33 +1,38 @@
 <template>
   <div class="main-wireframe">
     <main class="app-content">
-      <form class="form-signin" @submit.prevent>
-        <label for="login-email" class="form-label-group">
-          <h2 class="required">E-Mail</h2>
-          <span />
-          <input
+      <form class="form-signin" @submit.prevent="validateForm">
+        <form-group for="login-email" :error="$v.email.$error">
+          <h2>E-Mail</h2>
+          <v-input
             required
+            :class="{ invalid: $v.email.$error }"
             autocomplete="email"
             type="text"
             id="login-email"
             placeholder="Email"
-            @change="getEmail">
-        </label>
+            @change="setEmail" />
+          <div v-if="!$v.email.email" class="form-group-error">
+            <span>You need to use a valid email address.</span>
+          </div>
+        </form-group>
 
-        <label for="login-password" class="form-label-group">
-          <h2 class="required">Password</h2>
-          <span />
-          <input
+        <form-group for="login-password">
+          <h2>Password</h2>
+          <v-input
             required
             autocomplete="current-password"
             type="password"
             id="login-password"
             placeholder="Password"
-            @change="getPassword">
-        </label>
+            @change="setPassword" />
+          <div v-if="$v.password.$error" class="form-group-error">
+            <span>You have to provide a password to login.</span>
+          </div>
+        </form-group>
 
         <v-button
-          @click.native="validateForm"
+          type="submit"
           :disabled="disabled">
           Sign in
         </v-button>
@@ -58,6 +63,8 @@
 </template>
 
 <script>
+  import { validationMixin } from 'vuelidate'
+  import { required, email } from 'vuelidate/lib/validators'
   import { mapActions } from 'vuex'
   export default {
     name: 'Login',
@@ -65,6 +72,8 @@
     meta: {
       title: 'Login'
     },
+
+    mixins: [validationMixin],
 
     components: {
       'feather-twitter': () =>
@@ -87,6 +96,15 @@
       ]
     }),
 
+    validations: {
+      email: {
+        email
+      },
+      password: {
+        required
+      }
+    },
+
     created () {
       this.updateAppHeader({
         title: 'Login',
@@ -99,19 +117,27 @@
         'updateAppHeader',
         'signInUser'
       ]),
+      setEmail (event) {
+        if (!event.target.value) return
+        this.email = event.target.value
+        this.$v.email.$touch()
+      },
+      setPassword (event) {
+        if (!event.target.value) return
+        this.password = event.target.value
+        this.$v.password.$touch()
+      },
       validateForm () {
+        this.$v.$touch()
+        if (this.$v.$invalid) {
+          console.log('cant do it')
+        } else {
+          console.log('yes submit')
+        }
         console.group('login user')
           console.log('email', this.email)
           console.log('password', this.password)
         console.groupEnd()
-      },
-      getEmail (event) {
-        if (!event.target.value) return
-        this.email = event.target.value
-      },
-      getPassword (event) {
-        if (!event.target.value) return
-        this.password = event.target.value
       },
       async selectProvider (provider) {
         this.disabled = true
@@ -142,27 +168,8 @@
   .form-signin {
     width: 100%;
 
-    & button,
-    & input {
+    & button {
       width: 100%;
-    }
-
-    & .form-label-group {
-      display: block;
-      width: 100%;
-      margin-bottom: calc(var(--base-gap) * 2);
-    }
-
-    & label h2 {
-      margin-bottom: calc(var(--base-gap) / 2);
-    }
-
-    & label span {
-      display: block;
-      color: var(--text-color-secondary);
-      font-size: var(--text-size-small);
-      margin-bottom: calc(var(--base-gap) / 2);
-      padding: 0 1px;
     }
   }
 

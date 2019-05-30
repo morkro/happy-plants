@@ -24,12 +24,12 @@
             :key="`module-${index}`"
             @tap="onToggleModule(module)">
             <div class="module-icon">
-              <input type="radio"
+              <v-input type="radio"
                 :id="`module-${module.type}`"
                 :name="`module-${module.type}`"
                 :value="module.type"
                 :checked="!cloudOnlyFeature(module) && module.selected"
-                :disabled="cloudOnlyFeature(module)">
+                :disabled="cloudOnlyFeature(module)" />
 
               <span aria-hidden="true">
                 <feather-check />

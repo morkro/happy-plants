@@ -19,12 +19,12 @@
           v-if="showInput"
           class="tags-new"
           @submit.prevent="addNewTag">
-          <input
+          <v-input
             type="text"
             autocomplete="off"
             id="tag-new-name"
             ref="tagInput"
-            @change="getTagName">
+            @change="getTagName" />
           <v-button class="tags-new-button" @click.native="addNewTag">
             <template v-slot:icon>
               <feather-check />

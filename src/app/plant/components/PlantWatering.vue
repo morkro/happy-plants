@@ -19,13 +19,13 @@
         <ul>
           <li v-for="type in messages.frequency" :key="type">
             <label :for="type">
-              <input
+              <v-input
                 type="radio"
                 name="watering-frequency"
                 :id="type"
                 :value="type"
                 :checked="type === frequency"
-                @change="onEmitFrequencyChange(type)">
+                @change="onEmitFrequencyChange(type)" />
               <span>{{ type }}</span>
             </label>
           </li>

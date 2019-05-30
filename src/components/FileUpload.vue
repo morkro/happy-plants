@@ -1,11 +1,11 @@
 <template>
   <div class="file-upload">
-    <input
+    <v-input
       ref="fileInput"
       type="file"
       :id="name"
       :accept="acceptedFilePattern"
-      @change="emitPhoto">
+      @change="emitPhoto" />
 
     <div class="upload-preview">
       <div :class="getWrapperClass">

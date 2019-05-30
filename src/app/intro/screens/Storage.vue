@@ -26,12 +26,12 @@
       </p>
       <ul>
         <li v-for="(type, index) of options" :key="index">
-          <input
+          <v-input
             type="radio"
             name="storage-type"
             :checked="selectedStorageType === type.id"
             :id="type.id"
-            @change="updateStorageMethod(type.id)">
+            @change="updateStorageMethod(type.id)" />
           <label :for="type.id">
             <span class="storage-title">
               <component

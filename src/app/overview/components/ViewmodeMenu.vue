@@ -11,13 +11,13 @@
           :key="index">
           <label :for="item.type">
             <div>
-              <input
+              <v-input
                 type="radio"
                 :id="item.type"
                 :name="section.type"
                 :value="item.type"
                 :checked="item.selected"
-                @click="emitViewmodeUpdate(section.type, item.type)">
+                @click="emitViewmodeUpdate(section.type, item.type)" />
               <span>{{ item.label }}</span>
             </div>
 
@@ -36,26 +36,26 @@
       <ul class="viewmode-select">
         <li>
           <label for="show-all">
-            <input
+            <v-input
               type="radio"
               name="viewmode-filter-tag"
               id="show-all"
               value="show-all"
               :checked="filterBy === 'all'"
-              @change="emitViewmodeUpdate('filterBy', 'all')">
+              @change="emitViewmodeUpdate('filterBy', 'all')" />
             <span>Show All</span>
           </label>
         </li>
 
         <li v-for="(tag, index) in sortedTags" :key="index">
           <label :for="tag.name">
-            <input
+            <v-input
               type="radio"
               name="viewmode-filter-tag"
               :id="tag.name"
               :value="tag.name"
               :checked="isCheckedTag(tag.guid)"
-              @change="emitViewmodeUpdate('filterBy', tag.guid)">
+              @change="emitViewmodeUpdate('filterBy', tag.guid)" />
             <span>{{ tag.label }}</span>
           </label>
         </li>
