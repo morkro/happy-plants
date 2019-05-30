@@ -1,20 +1,5 @@
 <template>
   <div class="settings-menu">
-    <better-dialog
-      id="settings-happy-dialog"
-      :show="showLoginDialog"
-      @close-dialog="closeLoginDialog">
-      <template v-slot:headline>
-        <span>Select login</span>
-      </template>
-
-      <auth-provider-list
-        :loading="authFromRedirect"
-        :disabled="disabled"
-        @provider-selected="loginUser"
-      />
-    </better-dialog>
-
     <ul class="settings-menu-list">
       <li>
         <h3>User</h3>
@@ -27,11 +12,7 @@
                 <span v-if="userEmail">{{ userEmail }}</span>
               </span>
               <div>
-                <v-button
-                  type="small"
-                  :loading="logOutProgress"
-                  :disabled="logOutProgress"
-                  @click.native="logOutUser">
+                <v-button type="small" @click.native="logOutUser">
                   Logout
                 </v-button>
               </div>
@@ -41,8 +22,8 @@
                 Login with your account.
               </span>
               <div>
-                <v-button type="small" @click.native="openLoginDialog">
-                Login
+                <v-button type="small" @click.native="logInUser">
+                  Login
                 </v-button>
               </div>
             </div>
@@ -114,19 +95,10 @@
       'feather-users': () =>
         import('vue-feather-icons/icons/UsersIcon' /* webpackChunkName: "icons" */),
       'feather-file-text': () =>
-        import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */),
-      'feather-twitter': () =>
-        import('vue-feather-icons/icons/TwitterIcon' /* webpackChunkName: "icons" */),
-      'feather-google': () =>
-        import('vue-feather-icons/icons/ChromeIcon' /* webpackChunkName: "icons" */),
-      'feather-github': () =>
-        import('vue-feather-icons/icons/GithubIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/FileTextIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({
-      signInProgress: false,
-      logOutProgress: false,
-      showLoginDialog: false,
       menu: getMenuData()
     }),
 
@@ -134,32 +106,19 @@
       ...mapState({
         storageType: state => state.storage.type,
         authenticated: state => state.user.authenticated,
-        authFromRedirect: state => state.user.authFromRedirect,
-        authProgress: state => state.user.loading,
         userName: state => state.user.name,
         userEmail: state => state.user.email,
         version: state => state.version,
         hasNewRelease: state => state.hasNewRelease,
         theme: state => state.settings.theme
-      }),
-      disabled () {
-        return (
-          this.authFromRedirect ||
-          this.authProgress ||
-          this.signInProgress
-        )
-      }
+      })
     },
 
     methods: {
       ...mapActions([
         'hasSeenNewRelease',
         'updateTheme',
-        'updateAppHeader',
-        'signOutUser',
-        'signInUser',
-        'updateStorage',
-        'showNotification'
+        'updateAppHeader'
       ]),
       getThemeButtonColor (type) {
         if (this.theme !== type) {
@@ -189,29 +148,11 @@
           this.hasNewRelease
         )
       },
-      async logOutUser () {
-        this.logOutProgress = true
-        await this.updateStorage({ type: 'local' })
-        await this.signOutUser()
-        this.logOutProgress = false
-        this.$router.push('/')
+      logOutUser () {
+        this.$router.push('/logout')
       },
-      async loginUser (provider) {
-        this.signInProgress = true
-        await this.updateStorage({ type: 'cloud' })
-        try {
-          await this.signInUser(provider)
-        } catch (error) {
-          this.showNotification()
-          return
-        }
-        this.signInProgress = false
-      },
-      openLoginDialog () {
-        this.showLoginDialog = true
-      },
-      closeLoginDialog () {
-        this.showLoginDialog = false
+      logInUser () {
+        this.$router.push('/login')
       }
     },
 
@@ -224,10 +165,6 @@
 </script>
 
 <style lang="postcss">
-  #settings-happy-dialog .auth-provider-list button {
-    margin-top: 0;
-  }
-
   .settings-menu-list {
     list-style: none;
 
