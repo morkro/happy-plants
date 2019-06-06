@@ -2,27 +2,27 @@
   <div class="main-wireframe">
     <main class="app-content">
       <form @submit.prevent>
-        <form-group for="register-name" required>
+        <form-group for="new-plant-name" required>
           <h2>What's your friends name?</h2>
           <v-input required
             type="text"
-            id="register-name"
+            id="new-plant-name"
             placeholder="Name"
             @change="getName" />
         </form-group>
 
-        <form-group for="register-file">
+        <form-group for="new-plant-file">
           <h2>Upload photo</h2>
           <span>You can either select a photo from your gallery or take one now.</span>
           <file-upload
-            name="register-file"
+            name="new-plant-file"
             @file-selected="getFile"
             @loading-file="handleLoadingState" />
         </form-group>
 
         <v-button
           @click.native="validateForm"
-          :disabled="!canRegisterPlant"
+          :disabled="!canAddPlant"
           :loading="addPlantProgress">
           <template v-slot:icon>
             <svgicon
@@ -45,14 +45,14 @@
   import '@/assets/icons/leaf'
 
   export default {
-    name: 'RegisterPlant',
+    name: 'NewPlant',
 
     meta: {
       title: 'Add a new friend'
     },
 
     computed: {
-      canRegisterPlant () {
+      canAddPlant () {
         return this.name !== '' || this.isUploadingFile
       }
     },
@@ -106,7 +106,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  .register-dialog {
+  .new-plant-dialog {
     & input {
       width: 100%;
     }

@@ -19,7 +19,7 @@
       tag="button"
       aria-label="Add plant"
       class="add-plant transparent"
-      :to="{ path: 'add' }"
+      :to="{ path: 'new' }"
       :event="disableMenu ? '' : 'click'">
       <svgicon icon="leaf"
         width="20"

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
 
-import Register from '@/app/register/screens/Register'
+import NewPlant from '@/app/new-plant/screens/NewPlant'
 import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'
@@ -13,7 +13,7 @@ localVue.use(Vuex)
 localVue.use(Router)
 localVue.use(VueSVGIcon)
 
-describe('app/register/Register.vue', () => {
+describe('app/new-plant/NewPlant.vue', () => {
   const options = {
     localVue,
     store,
@@ -26,25 +26,25 @@ describe('app/register/Register.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(Register, options)
+    const wrapper = shallowMount(NewPlant, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
-  it('computed prop canRegisterPlant()', () => {
-    const wrapper = shallowMount(Register, options)
-    expect(wrapper.vm.canRegisterPlant).toBe(false)
+  it('computed prop canAddPlant()', () => {
+    const wrapper = shallowMount(NewPlant, options)
+    expect(wrapper.vm.canAddPlant).toBe(false)
 
-    const input = wrapper.find('input#register-name')
+    const input = wrapper.find('input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
-    expect(wrapper.vm.canRegisterPlant).toBe(true)
+    expect(wrapper.vm.canAddPlant).toBe(true)
   })
 
   it('getName() works', () => {
-    const wrapper = shallowMount(Register, options)
+    const wrapper = shallowMount(NewPlant, options)
     expect(wrapper.vm.name).toEqual('')
 
-    const input = wrapper.find('input#register-name')
+    const input = wrapper.find('input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
     expect(wrapper.vm.name).toEqual('foo')
@@ -52,7 +52,7 @@ describe('app/register/Register.vue', () => {
   })
 
   it('handleLoadingState() works', () => {
-    const wrapper = shallowMount(Register, options)
+    const wrapper = shallowMount(NewPlant, options)
     wrapper.vm.handleLoadingState({ loading: true })
     expect(wrapper.vm.isUploadingFile).toBe(true)
     wrapper.vm.handleLoadingState({ loading: false })
@@ -60,15 +60,15 @@ describe('app/register/Register.vue', () => {
   })
 
   it('getFile() works', () => {
-    const wrapper = shallowMount(Register, options)
+    const wrapper = shallowMount(NewPlant, options)
     const blob = new Blob()
     wrapper.vm.getFile({ blob })
     expect(wrapper.vm.blob).toEqual(blob)
   })
 
   it('async validateForm() works', async () => {
-    const wrapper = shallowMount(Register, options)
-    const input = wrapper.find('input#register-name')
+    const wrapper = shallowMount(NewPlant, options)
+    const input = wrapper.find('input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
 

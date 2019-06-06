@@ -5,7 +5,7 @@ import Meta from 'vue-meta'
 import { routes as intro } from '@/app/intro'
 import { routes as user } from '@/app/user'
 import { routes as overview } from '@/app/overview'
-import { routes as register } from '@/app/register'
+import { routes as newplant } from '@/app/new-plant'
 import { routes as plant } from '@/app/plant'
 import { routes as gallery } from '@/app/gallery'
 import { routes as settings } from '@/app/settings'
@@ -28,7 +28,7 @@ const router = new Router({
     ...intro,
     ...user,
     ...overview,
-    ...register,
+    ...newplant,
     ...plant,
     ...gallery,
     ...settings,

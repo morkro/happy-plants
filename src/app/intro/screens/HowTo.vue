@@ -2,7 +2,7 @@
   <div class="intro-wrapper">
     <v-box class="intro-content">
       <h2>You're all set!</h2>
-      <router-link to="/add" class="btn">
+      <router-link to="/new" class="btn">
         <div class="button-icon">
           <svgicon
             icon="leaf"
