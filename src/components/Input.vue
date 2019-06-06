@@ -63,6 +63,7 @@
       max-height: 22px;
       border-radius: 50%;
       box-shadow: none;
+      padding: 0;
       background: var(--border-color);
       transition: background var(--base-speed) var(--ease-out-back);
 
