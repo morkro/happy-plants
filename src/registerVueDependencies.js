@@ -3,7 +3,6 @@ import VueSVGIcon from 'vue-svgicon'
 import VueA11yDialog from 'vue-a11y-dialog'
 import VueMQ from 'vue-mq'
 import VueTouch from 'vue-touch'
-import PortalVue from 'portal-vue'
 
 import observeVisibility from '@/utils/vue-observe-visibility'
 import formatDateFilter from '@/utils/vue-format-date'
@@ -35,4 +34,3 @@ Vue.use(VueSVGIcon)
 Vue.use(VueTouch)
 Vue.use(VueA11yDialog)
 Vue.use(VueMQ, MQ_CONFIG)
-Vue.use(PortalVue)

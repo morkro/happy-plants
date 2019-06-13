@@ -2,30 +2,31 @@
   <div class="intro-wrapper">
     <v-box class="intro-content">
       <h2>You're all set!</h2>
-      <router-link to="/new" class="btn">
-        <div class="button-icon">
+      <v-button @click.native="$router.push('/new')">
+        <template v-slot:icon>
           <svgicon
             icon="leaf"
             width="20"
             height="28" />
-        </div>
+        </template>
         <span>Add your first plant</span>
-      </router-link>
+      </v-button>
     </v-box>
 
     <div class="intro-footer">
-      <router-link to="/intro/storage" class="btn plain">
-        <div class="button-icon">
+      <v-button color="plain" @click.native="$router.back()">
+        <template v-slot:icon>
           <feather-left />
-        </div>
+        </template>
         <span>Back</span>
-      </router-link>
+      </v-button>
     </div>
   </div>
 </template>
 
 <script>
   import { mapActions } from 'vuex'
+  import '@/assets/icons/leaf'
 
   export default {
     name: 'IntroHowTo',
@@ -58,7 +59,7 @@
       margin-bottom: var(--base-gap);
     }
 
-    & svg {
+    & button .button-icon svg {
       filter: invert(100%);
     }
   }
@@ -68,9 +69,5 @@
     color: var(--text-color-inverse);
     display: flex;
     justify-content: space-between;
-
-    & .btn .button-icon svg {
-      filter: none;
-    }
   }
 </style>

@@ -5,7 +5,7 @@
       <h2>Signing you out</h2>
       <p>See you soon!</p>
     </main>
-    </div>
+  </div>
 </template>
 
 <script>

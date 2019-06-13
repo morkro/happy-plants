@@ -14,6 +14,11 @@ export default [
         component: () => import('./screens/Storage' /* webpackChunkName: "intro" */)
       },
       {
+        path: 'register',
+        name: 'IntroRegister',
+        component: () => import('./screens/Register' /* webpackChunkName: "intro" */)
+      },
+      {
         path: 'howto',
         name: 'IntroHowTo',
         component: () => import('./screens/HowTo' /* webpackChunkName: "intro" */)

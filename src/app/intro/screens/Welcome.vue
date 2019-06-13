@@ -1,21 +1,5 @@
 <template>
   <div class="welcome-wrapper">
-    <better-dialog
-      id="intro-welcome-signin"
-      :show="showDialog"
-      @close-dialog="closeDialog">
-      <template v-slot:headline>
-        <span>Welcome back!</span>
-      </template>
-      <div>
-        <auth-provider-list
-          :loading="authFromRedirect"
-          :disabled="disabled"
-          @provider-selected="loginUser"
-        />
-      </div>
-    </better-dialog>
-
     <v-carousel class="welcome-carousel">
       <div class="welcome-cards card-intro">
         <img
@@ -76,7 +60,7 @@
       </li>
       <li>
         <v-button
-          @click.native="openDialog"
+          @click.native="$router.push('/login')"
           color="grey"
           :disabled="disabled"
           :loading="disabled">
@@ -121,7 +105,6 @@
     },
 
     data: () => ({
-      showDialog: false,
       signInProgress: false
     }),
 
@@ -155,34 +138,6 @@
       nextStep () {
         if (this.signInProgress) return
         this.$router.push('/intro/storage')
-      },
-
-      async loginUser (provider) {
-        this.signInProgress = true
-        try {
-          await this.signInUser(provider)
-        } catch (error) {
-          this.showNotification()
-          return
-        }
-        this.signInProgress = false
-
-        await this.loadPlants()
-        await this.loadTags()
-
-        if (!this.plants.length) {
-          this.$router.push('/intro/howto')
-        } else {
-          this.$router.push('/')
-        }
-      },
-
-      openDialog () {
-        this.showDialog = true
-      },
-
-      closeDialog () {
-        this.showDialog = false
       }
     }
   }

@@ -51,10 +51,10 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import Changelog from '#/CHANGELOG.md'
-  import {
-    getEntry as getSessionEntry,
-    deleteEntry as deleteSessionEntry
-  } from '@/api/sessionStorage'
+  // import {
+  //   getEntry as getSessionEntry,
+  //   deleteEntry as deleteSessionEntry
+  // } from '@/api/sessionStorage'
 
   export default {
     name: 'HappyPlants',
@@ -74,14 +74,12 @@
         import('vue-feather-icons/icons/RefreshCwIcon' /* webpackChunkName: "icons" */)
     },
 
-    data () {
-      return {
-        applicationOnline: window && window.navigator && window.navigator.onLine,
-        notificationTimeout: 2000,
-        showReleaseDialog: false,
-        dialog: null
-      }
-    },
+    data: () => ({
+      applicationOnline: window && window.navigator && window.navigator.onLine,
+      notificationTimeout: 2000,
+      showReleaseDialog: false,
+      dialog: null
+    }),
 
     watch: {
       hasNewRelease (newRelease) {
@@ -147,43 +145,43 @@
 
     async created () {
       await this.loadVersion()
-      await this.updateVersion()
-      await this.loadStorage()
-      await this.updateStorage({ type: this.storageType })
-      await this.loadSettings()
+      // await this.updateVersion()
+      // await this.loadStorage()
+      // await this.updateStorage({ type: this.storageType })
+      // await this.loadSettings()
 
-      if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
-        this.updateAuthMethod()
+      // if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
+      //   this.updateAuthMethod()
 
-        if (this.$route.name === 'Welcome' && this.storageType === 'local') {
-          await this.updateStorage({ type: 'cloud' })
-        }
-        deleteSessionEntry('USER_SIGNIN_PROGRESS')
+      //   if (this.$route.name === 'Welcome' && this.storageType === 'local') {
+      //     await this.updateStorage({ type: 'cloud' })
+      //   }
+      //   deleteSessionEntry('USER_SIGNIN_PROGRESS')
 
-        try {
-          await this.authRedirectResults()
-        } catch (error) {
-          this.showNotification()
-        }
-      // If not, we just want a regular authentication observer.
-      } else if (this.storageType === 'cloud') {
-        try {
-          await this.authenticateUser()
-        } catch (error) {
-          this.$router.push('/intro')
-        }
-      }
+      //   try {
+      //     await this.authRedirectResults()
+      //   } catch (error) {
+      //     this.showNotification()
+      //   }
+      //   // If not, we just want a regular authentication observer.
+      // } else if (this.storageType === 'cloud') {
+      //   try {
+      //     await this.authenticateUser()
+      //   } catch (error) {
+      //     this.$router.push('/intro')
+      //   }
+      // }
 
-      if (!this.applicationOnline && this.storageType === 'cloud') {
-        this.showNotification({ message: 'You are currently offline.' })
-      }
+      // if (!this.applicationOnline && this.storageType === 'cloud') {
+      //   this.showNotification({ message: 'You are currently offline.' })
+      // }
 
-      await this.loadPlants()
-      await this.loadTags()
+      // await this.loadPlants()
+      // await this.loadTags()
 
-      if (this.theme === 'dark') {
-        this.updateAppHeader({ iconColor: 'white' })
-      }
+      // if (this.theme === 'dark') {
+      //   this.updateAppHeader({ iconColor: 'white' })
+      // }
     },
 
     mounted () {
@@ -205,13 +203,13 @@
 </script>
 
 <style lang="postcss">
-  @import "normalize.css";
-  @import "../styles/colors";
-  @import "../styles/animations";
-  @import "../styles/media-queries";
-  @import "../styles/fonts";
-  @import "../styles/typography";
-  @import "../styles/layout";
+  @import 'normalize.css';
+  @import '../styles/colors';
+  @import '../styles/animations';
+  @import '../styles/media-queries';
+  @import '../styles/fonts';
+  @import '../styles/typography';
+  @import '../styles/layout';
 
   * {
     padding: 0;

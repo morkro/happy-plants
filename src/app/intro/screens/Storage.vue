@@ -1,24 +1,5 @@
 <template>
   <div>
-    <better-dialog
-      id="intro-storage-dialog"
-      :show="showDialog"
-      @close-dialog="closeDialog">
-      <template v-slot:headline>
-        <span>Login</span>
-      </template>
-      <div>
-        <p>
-          When using the cloud storage option, you have to sign in first.
-        </p>
-
-        <auth-provider-list
-          :loading="signInProgress"
-          @provider-selected="loginUser"
-        />
-      </div>
-    </better-dialog>
-
     <v-box class="intro-storage">
       <h2>How do you want to save your plant data?</h2>
       <p>
@@ -49,18 +30,18 @@
     </v-box>
 
     <div class="intro-footer">
-      <router-link to="/intro" class="btn plain">
-        <div class="button-icon">
+      <v-button color="plain" @click.native="$router.back()">
+        <template v-slot:icon>
           <feather-left />
-        </div>
+        </template>
         <span>Back</span>
-      </router-link>
-      <router-link to="/intro/howto" class="btn">
-        <div class="button-icon">
+      </v-button>
+      <v-button @click.native="evalNextStep">
+        <template v-slot:icon>
           <feather-right />
-        </div>
+        </template>
         <span>Next</span>
-      </router-link>
+      </v-button>
     </div>
   </div>
 </template>
@@ -83,13 +64,11 @@
     },
 
     computed: mapState({
-      authenticated: state => state.user.authenticated,
       selectedStorageType: state => state.storage.type
     }),
 
     data: () => ({
-      showDialog: false,
-      signInProgress: false,
+      storageType: null,
       options: [
         {
           label: 'Locally on phone',
@@ -113,30 +92,22 @@
         'signInUser'
       ]),
       updateStorageMethod (type) {
-        if (type === 'cloud') {
-          this.showDialog = true
-        } else {
-          this.updateStorage({ type })
-        }
+        this.storageType = type
       },
-      closeDialog () {
-        this.showDialog = false
-      },
-      async loginUser (provider) {
-        await this.updateStorage({ type: 'cloud' })
+      evalNextStep () {
+        let path = '/intro'
 
-        this.signInProgress = true
-        try {
-          await this.signInUser(provider)
-        } catch (error) {
-          this.showNotification()
-          return
+        switch (this.storageType) {
+          case 'cloud':
+            path += '/register'
+            break
+          case 'local':
+          default:
+            path += '/howto'
+            break
         }
-        this.signInProgress = false
 
-        if (!this.authenticated) return
-        this.closeDialog()
-        this.$router.push('/intro/howto')
+        this.$router.push(path)
       }
     },
 
@@ -199,9 +170,5 @@
     margin-top: var(--double-gap);
     display: flex;
     justify-content: space-between;
-
-    & .btn .button-icon svg {
-      filter: none;
-    }
   }
 </style>

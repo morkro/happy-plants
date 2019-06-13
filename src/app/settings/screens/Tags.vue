@@ -44,10 +44,12 @@
           Head over to any of your plants and add a tag. After that,
           they will appear here and you can rename or delete them.
         </p>
-        <router-link class="btn" to="/">
-          <feather-grid class="button-icon" />
-          Overview
-        </router-link>
+        <v-button @click.native="$router.push('/')">
+          <template v-slot:icon>
+            <feather-grid class="button-icon" />
+          </template>
+          <span>Overview</span>
+        </v-button>
       </div>
 
       <section class="tags-list" v-else>

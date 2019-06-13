@@ -22,9 +22,7 @@ describe('app/intro/Welcome.vue', () => {
       'plant-sunshine': PlantSunshine,
       'plant-seasons': PlantSeasons,
       'feather-right': '<svg />',
-      'better-dialog': '<div />',
-      'v-carousel': '<div />',
-      'auth-provider-list': '<div />'
+      'v-carousel': '<div />'
     }
   }
 

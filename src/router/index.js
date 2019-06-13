@@ -11,6 +11,8 @@ import { routes as gallery } from '@/app/gallery'
 import { routes as settings } from '@/app/settings'
 import { routes as notfound } from '@/app/not-found'
 
+import { hasUser } from '@/app/user/utils/user'
+
 Vue.use(Router)
 Vue.use(Meta, { keyName: 'meta' })
 
@@ -34,6 +36,16 @@ const router = new Router({
     ...settings,
     ...notfound
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+
+  if (requiresAuth && await hasUser() === false) {
+    next('intro')
+  } else {
+    next()
+  }
 })
 
 export default router

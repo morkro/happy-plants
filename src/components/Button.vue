@@ -65,8 +65,7 @@
 <style lang="postcss">
   @import "../styles/animations";
 
-  button,
-  .btn {
+  button {
     --button-padding: 6px;
     --button-circle-size: 50px;
     --button-background: var(--brand-green);
@@ -143,8 +142,7 @@
     }
   }
 
-  button.circle,
-  .btn.circle {
+  button.circle {
     border-radius: 50%;
     width: var(--button-circle-size);
     height: var(--button-circle-size);
@@ -162,8 +160,7 @@
     }
   }
 
-  button.small,
-  .btn.small {
+  button.small {
     --button-padding: 4px;
     --button-circle-size: 35px;
 
@@ -173,9 +170,7 @@
   }
 
   button.disabled,
-  .btn.disabled,
-  button[disabled],
-  .btn[disabled] {
+  button[disabled] {
     --button-background: var(--grey);
     --button-shadow: var(--grey);
     color: var(--dark-grey);
@@ -186,8 +181,7 @@
     }
   }
 
-  button.plain,
-  .btn.plain {
+  button.plain {
     --button-background: var(--grey);
     --button-focus: var(--dark-grey);
     --button-shadow: var(--grey);
@@ -200,30 +194,26 @@
     }
   }
 
-  button.yellow,
-  .btn.yellow {
+  button.yellow {
     --button-background: var(--brand-yellow);
     --button-focus: var(--brand-yellow-low);
     --button-shadow: var(--brand-yellow-medium);
     --text-color: var(--link-color);
   }
 
-  button.red,
-  .btn.red {
+  button.red {
     --button-background: var(--brand-red);
     --button-focus: var(--brand-red-low);
     --button-shadow: var(--brand-red-medium);
   }
 
-  button.grey,
-  .btn.grey {
+  button.grey {
     --button-background: var(--dark-grey);
     --button-focus: var(--grey);
     --button-shadow: var(--dark-grey);
   }
 
-  button.transparent,
-  .btn.transparent {
+  button.transparent {
     --button-background: transparent;
     --button-focus: transparent;
     --button-shadow: transparent;
