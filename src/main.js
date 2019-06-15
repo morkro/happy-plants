@@ -8,6 +8,8 @@ import * as Integrations from '@sentry/integrations'
 import App from '@/app/App'
 import router from '@/router'
 import store from '@/store'
+import { authenticateUser } from '@/app/user/store/actions'
+import { loadStorage } from '@/app/settings/store/actions'
 import pkg from '#/package.json'
 
 import './registerComponents'
@@ -38,6 +40,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 sync(store, router)
+
+;(async () => {
+  await loadStorage(store)
+  await authenticateUser(store)
+})()
 
 /* eslint-disable no-new */
 new Vue({

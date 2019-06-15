@@ -1,6 +1,12 @@
 <template>
-  <div class="main-wireframe">
-    <main class="app-content">
+  <app-wireframe>
+    <app-header :back-button="true">
+      <template v-slot:title>
+        <h1>Add a new friend</h1>
+      </template>
+    </app-header>
+
+    <main-content>
       <form @submit.prevent>
         <form-group for="new-plant-name" required>
           <h2>What's your friends name?</h2>
@@ -34,8 +40,8 @@
           Add plant
         </v-button>
       </form>
-    </main>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -66,19 +72,8 @@
       }
     },
 
-    created () {
-      this.updateAppHeader({
-        title: 'Add a new friend',
-        backBtn: true,
-        backBtnPath: this.returnRoutePath
-      })
-    },
-
     methods: {
-      ...mapActions([
-        'addPlant',
-        'updateAppHeader'
-      ]),
+      ...mapActions(['addPlant']),
       handleLoadingState ({ loading }) {
         this.isUploadingFile = loading
       },

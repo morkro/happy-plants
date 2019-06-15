@@ -1,49 +1,57 @@
 <template>
-  <div>
-    <v-box class="intro-storage">
-      <h2>How do you want to save your plant data?</h2>
-      <p>
-        You can change this at any time in the settings later on.
-      </p>
-      <ul>
-        <li v-for="(type, index) of options" :key="index">
-          <v-input
-            type="radio"
-            name="storage-type"
-            :checked="selectedStorageType === type.id"
-            :id="type.id"
-            @change="updateStorageMethod(type.id)" />
-          <label :for="type.id">
-            <span class="storage-title">
-              <component
-                :is="`feather-${type.icon}`"
-                height="22"
-                width="22" />
-              {{ type.label }}
-            </span>
-            <span class="storage-description">
-              {{ type.description }}
-            </span>
-          </label>
-        </li>
-      </ul>
-    </v-box>
+  <app-wireframe>
+    <app-header>
+      <template v-slot:title>
+        <h1>Setup storage</h1>
+      </template>
+    </app-header>
 
-    <div class="intro-footer">
-      <v-button color="plain" @click.native="$router.back()">
-        <template v-slot:icon>
-          <feather-left />
-        </template>
-        <span>Back</span>
-      </v-button>
-      <v-button @click.native="evalNextStep">
-        <template v-slot:icon>
-          <feather-right />
-        </template>
-        <span>Next</span>
-      </v-button>
-    </div>
-  </div>
+    <main-content>
+      <v-box class="intro-storage">
+        <h2>How do you want to save your plant data?</h2>
+        <p>
+          You can change this at any time in the settings later on.
+        </p>
+        <ul>
+          <li v-for="(type, index) of options" :key="index">
+            <v-input
+              type="radio"
+              name="storage-type"
+              :checked="selectedStorageType === type.id"
+              :id="type.id"
+              @change="updateStorageMethod(type.id)" />
+            <label :for="type.id">
+              <span class="storage-title">
+                <component
+                  :is="`feather-${type.icon}`"
+                  height="22"
+                  width="22" />
+                {{ type.label }}
+              </span>
+              <span class="storage-description">
+                {{ type.description }}
+              </span>
+            </label>
+          </li>
+        </ul>
+      </v-box>
+
+      <div class="intro-footer">
+        <v-button color="plain" @click.native="$router.back()">
+          <template v-slot:icon>
+            <feather-left />
+          </template>
+          <span>Back</span>
+        </v-button>
+        <v-button @click.native="evalNextStep">
+          <template v-slot:icon>
+            <feather-right />
+          </template>
+          <span>Next</span>
+        </v-button>
+      </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -51,6 +59,10 @@
 
   export default {
     name: 'IntroStorage',
+
+    meta: {
+      title: 'Setup storage'
+    },
 
     components: {
       'feather-right': () =>
@@ -87,7 +99,6 @@
 
     methods: {
       ...mapActions([
-        'updateAppHeader',
         'updateStorage',
         'signInUser'
       ]),
@@ -109,20 +120,15 @@
 
         this.$router.push(path)
       }
-    },
-
-    created () {
-      this.updateAppHeader({
-        title: 'Setup storage',
-        transparent: false,
-        backBtn: false,
-        rightBtn: false
-      })
     }
   }
 </script>
 
 <style lang="postcss" scoped>
+  .main-content {
+    padding: var(--base-gap);
+  }
+
   .intro-storage {
     padding: var(--base-gap);
 

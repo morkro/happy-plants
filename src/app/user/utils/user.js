@@ -1,13 +1,18 @@
-import { app as firestoreApp } from '@/api/firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import { app } from '@/api/firebase'
+
 import { getEntry } from '@/api/localforage'
 
 export function getUser () {
-  return firestoreApp.auth().currentUser
+  return firebase.auth(app).currentUser
 }
 
 export async function hasUser () {
   const storage = await getEntry('storage')
-  if (!storage) return
+  if (!storage || !storage.storage) {
+    return false
+  }
 
   switch (storage.storage.type) {
     case 'cloud':

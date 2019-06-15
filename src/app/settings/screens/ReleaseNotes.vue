@@ -1,22 +1,29 @@
 <template>
-  <div class="settings-release-notes">
-    <v-button
-      type="circle"
-      class="release-scroll-up"
-      aria-label="Scroll up"
-      @click.native="onScrollTop">
-      <template v-slot:icon>
-        <feather-top />
+  <app-wireframe>
+    <app-header :back-button="true" back-path="/settings">
+      <template v-slot:title>
+        <h1>Release Notes</h1>
       </template>
-    </v-button>
+    </app-header>
 
-    <md-changelog ref="changelog" />
-  </div>
+    <main-content>
+      <v-button
+        type="circle"
+        class="release-scroll-up"
+        aria-label="Scroll up"
+        @click.native="onScrollTop">
+        <template v-slot:icon>
+          <feather-top />
+        </template>
+      </v-button>
+
+      <md-changelog class="changelog" ref="changelog" />
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
   import Changelog from '#/CHANGELOG.md'
-  import { mapActions } from 'vuex'
   import scrollTop from '@/utils/scroll-top'
 
   export default {
@@ -26,12 +33,6 @@
       'md-changelog': Changelog,
       'feather-top': () =>
         import('vue-feather-icons/icons/ArrowUpIcon' /* webpackChunkName: "icons" */)
-    },
-
-    created () {
-      this.updateAppHeader({
-        title: 'Release Notes'
-      })
     },
 
     mounted () {
@@ -44,9 +45,6 @@
     },
 
     methods: {
-      ...mapActions([
-        'updateAppHeader'
-      ]),
       onScrollTop () {
         scrollTop()
       }
@@ -54,7 +52,7 @@
   }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
   .release-scroll-up {
     position: fixed;
     z-index: 2;
@@ -63,10 +61,12 @@
     transform: translateX(-50%);
   }
 
-  .settings-release-notes {
+  .main-content {
     padding: var(--base-gap) 0;
     line-height: 150%;
+  }
 
+  .changelog {
     & h1 {
       display: none;
     }

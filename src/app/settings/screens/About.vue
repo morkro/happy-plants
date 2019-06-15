@@ -1,6 +1,13 @@
 <template>
-  <div class="settings-about">
-    <section class="about-intro box">
+  <app-wireframe>
+    <app-header :back-button="true" back-path="/settings">
+      <template v-slot:title>
+        <h1>About</h1>
+      </template>
+    </app-header>
+
+    <main-content>
+      <section class="about-intro box">
       <p>
         <strong>HappyPlants</strong> is all about organising,
         collecting all sorts of information,
@@ -57,7 +64,8 @@
         </a>
       </div>
     </section>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -65,7 +73,7 @@
     name: 'SettingsAbout',
 
     meta: {
-      title: 'About HappyPlants'
+      title: 'About'
     },
 
     components: {
@@ -80,7 +88,7 @@
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
 
-  .settings-about {
+  .main-content {
     padding: var(--base-gap);
     line-height: 150%;
 

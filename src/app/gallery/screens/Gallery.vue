@@ -1,5 +1,16 @@
 <template>
-  <div :class="['main-wireframe', { fullscreen }]">
+  <app-wireframe :class="{ fullscreen }">
+    <app-header
+      :back-button="header.back"
+      :back-path="header.backBtnPath"
+      :transparent="header.transparent"
+      :right-button="header.rightBtn"
+      :right-button-on-click="header.rightBtnOnClick">
+      <template v-if="header.title" v-slot:title>
+        <h1>{{ header.title }}}</h1>
+      </template>
+    </app-header>
+
     <better-dialog
       id="gallery-dialog"
       :show="showDialog"
@@ -22,7 +33,7 @@
       </div>
     </better-dialog>
 
-    <main class="app-content">
+    <main-content>
       <gallery-options
         v-if="fullscreen"
         :current="listIndex + 1"
@@ -84,8 +95,8 @@
           </template>
         </selectable-list>
       </div>
-    </main>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -118,6 +129,14 @@
     },
 
     data: () => ({
+      header: {
+        transparent: false,
+        title: 'Gallery',
+        back: true,
+        backBtnPath: `/plant/${this.$route.params.id}`,
+        rightBtn: false,
+        rightBtnOnClick: () => {}
+      },
       addGalleryItemProgress: false,
       deleteGalleryItemProgress: false,
       fullscreen: false,
@@ -178,7 +197,6 @@
 
     methods: {
       ...mapActions([
-        'updateAppHeader',
         'loadPlantItem',
         'loadPlants',
         'loadGallery',
@@ -187,12 +205,11 @@
         'showNotification'
       ]),
       defaultAppHeader () {
-        this.updateAppHeader({
-          transparent: false,
-          title: 'Gallery',
-          backBtn: true,
-          rightBtn: false
-        })
+        this.header.transparent = false
+        this.header.title = 'Gallery'
+        this.header.backBtn = true
+        this.header.backBtnPath = `/plant/${this.$route.params.id}`
+        this.header.rightBtn = false
       },
       showGallery (event) {
         const $selectedEl = event.target.closest('li')
@@ -230,13 +247,11 @@
       },
       activateFullscreen () {
         this.fullscreen = true
-        this.updateAppHeader({
-          transparent: true,
-          title: false,
-          backBtn: false,
-          rightBtn: 'close',
-          rightBtnOnClick: this.closeGallery
-        })
+        this.header.transparent = true
+        this.header.title = false
+        this.header.back = false
+        this.header.rightBtn = 'close'
+        this.header.rightBtnOnClick = this.closeGallery
       },
       deactivateFullscreen () {
         this.$refs.galleryList.$el.classList.remove('animated')
@@ -297,21 +312,17 @@
       toggleListEditMode (value) {
         this.listEditMode = value
         if (this.listEditMode) {
-          this.updateAppHeader({
-            title: `0 selected`,
-            backBtn: false,
-            rightBtn: 'close',
-            rightBtnOnClick: () => this.$refs.galleryList.clearSelection()
-          })
+          this.header.title = `0 selected`
+          this.header.backBtn = false
+          this.header.rightBtn = 'close'
+          this.header.rightBtnOnClick = () => this.$refs.galleryList.clearSelection()
         } else {
           this.defaultAppHeader()
         }
       },
       getSelectedItems (list) {
         this.selectedItemsList = list
-        this.updateAppHeader({
-          title: `${this.selectedItemsList.length} selected`
-        })
+        this.header.title = `${this.selectedItemsList.length} selected`
       },
       async deleteSelectedPhotos () {
         this.deleteGalleryItemProgress = true
@@ -339,13 +350,6 @@
     },
 
     async created () {
-      this.updateAppHeader({
-        title: 'Gallery',
-        backBtn: true,
-        backBtnPath: `/plant/${this.$route.params.id}`,
-        rightBtn: false
-      })
-
       if (!this.plant.guid) {
         await this.loadPlantItem(this.$route.params.id)
       }

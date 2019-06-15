@@ -3,7 +3,7 @@ import { beforeEnter } from '@/router/guards'
 export default [
   {
     path: '/settings',
-    component: () => import('./screens/Settings' /* webpackChunkName: "settings" */),
+    component: () => import('@/components/EmptyRoute' /* webpackChunkName: "settings" */),
     meta: {
       requiresAuth: true
     },

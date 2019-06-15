@@ -1,11 +1,11 @@
 <template>
-  <div class="main-wireframe logout">
-    <main class="app-content">
+  <app-wireframe class="logout">
+    <main-content>
       <feather-refresh />
       <h2>Signing you out</h2>
       <p>See you soon!</p>
-    </main>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -14,17 +14,13 @@
   export default {
     name: 'Logout',
 
+    meta: {
+      title: 'Logout'
+    },
+
     components: {
       'feather-refresh': () =>
         import('vue-feather-icons/icons/RefreshCwIcon' /* webpackChunkName: "icons" */)
-    },
-
-    created () {
-      this.updateAppHeader({
-        title: null,
-        backBtn: false,
-        transparent: true
-      })
     },
 
     async mounted () {
@@ -36,7 +32,6 @@
 
     methods: {
       ...mapActions([
-        'updateAppHeader',
         'updateStorage',
         'signOutUser'
       ])
@@ -45,15 +40,21 @@
 </script>
 
 <style lang="postcss">
-  .main-wireframe.logout {
+  .app-wireframe.logout {
     justify-content: center;
     background: var(--background-primary);
 
-    & .app-content {
+    & .main-content {
       display: flex;
       flex-wrap: wrap;
       flex-direction: column;
       align-items: center;
+
+      & svg {
+        width: calc(var(--icon-size-base) * 2);
+        height: calc(var(--icon-size-base) * 2);
+        animation: rotate360 3s linear infinite;
+      }
     }
 
     & h2 {

@@ -1,5 +1,20 @@
 <template>
-  <div class="main-wireframe">
+  <app-wireframe>
+    <app-header
+      :transparent="header.transparent"
+      :scroll-up="true"
+      :back-button="true"
+      back-path="/"
+      right-button="edit"
+      :right-button-on-click="openPlantEditModal"
+      :icon-color="header.iconColor"
+      :show-icon-backdrop="header.iconBackdrop"
+    >
+      <template v-if="header.title" v-slot:title>
+        <h1>{{ header.title }}</h1>
+      </template>
+    </app-header>
+
     <plant-modal
       :show="showPlantModal"
       :name="plant.name"
@@ -16,7 +31,7 @@
       @updated-modules="updateModules"
       @close-module-manager="cancelModuleManager" />
 
-    <main :class="['view-content', 'app-content', { 'no-modules': plant.modules && !plant.modules.length }]">
+    <main-content :class="['view-content', { 'no-modules': plant.modules && !plant.modules.length }]">
       <div class="plant-content-upper">
         <plant-header
           :content-loading="plantLoading"
@@ -56,8 +71,8 @@
           @manage-modules="activateModuleManager"
           @show-tags="showPlantTags" />
       </div>
-    </main>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -99,6 +114,12 @@
     },
 
     data: () => ({
+      header: {
+        title: false,
+        transparent: true,
+        iconColor: 'white',
+        iconBackdrop: true
+      },
       headerInView: true,
       showPlantModal: false,
       showModuleManager: false,
@@ -143,12 +164,10 @@
     watch: {
       headerInView (show) {
         if (!this.isPhone) return
-        this.updateAppHeader({
-          transparent: show,
-          iconColor: this.headerInView ? 'white' : this.defaultIconColor,
-          title: this.headerInView ? false : this.plant.name,
-          showIconBackdrop: this.headerInView
-        })
+        this.header.transparent = show
+        this.header.iconColor = this.headerInView ? 'white' : this.defaultIconColor
+        this.header.iconBackdrop = show
+        this.header.title = this.headerInView ? false : this.plant.name
       },
 
       async plantsData (data) {
@@ -184,7 +203,6 @@
         'updatePlantsList',
         'deletePlants',
         'showNotification',
-        'updateAppHeader',
         'resetSelectedState'
       ]),
       getPlantModuleProps (type) {
@@ -309,16 +327,8 @@
     },
 
     async mounted () {
-      this.updateAppHeader({
-        transparent: this.isPhone,
-        title: false,
-        backBtn: true,
-        backBtnPath: '/',
-        rightBtn: 'edit',
-        rightBtnOnClick: this.openPlantEditModal,
-        iconColor: this.headerInView && this.isPhone ? 'white' : this.defaultIconColor,
-        showIconBackdrop: this.isPhone
-      })
+      this.header.transparent = this.isPhone
+      this.header.iconColor = this.headerInView && this.isPhone ? 'white' : this.defaultIconColor
 
       const galleryExists = this.galleries.data.some(g => g.guid === this.$route.params.id)
       if (
@@ -330,12 +340,6 @@
     },
 
     beforeDestroy () {
-      this.updateAppHeader({
-        transparent: false,
-        iconColor: this.defaultIconColor,
-        showIconBackdrop: false
-      })
-
       this.updatePlantsList({
         guid: this.plant.guid,
         name: this.plant.name,
@@ -353,7 +357,7 @@
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
 
-  .main-wireframe {
+  .app-wireframe {
     padding-top: 0;
 
     @media (--min-desktop-viewport) {
@@ -372,6 +376,7 @@
 
   .view-content {
     background-color: var(--background-secondary);
+    padding-top: 0;
     min-height: 100vh;
     z-index: 0;
 

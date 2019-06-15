@@ -1,86 +1,97 @@
 <template>
-  <div class="settings-menu">
-    <ul class="settings-menu-list">
-      <li>
-        <h3>User</h3>
+  <app-wireframe>
+    <app-header :back-button="true">
+      <template v-slot:title>
+        <h1>Settings</h1>
+      </template>
+    </app-header>
 
-        <ul class="settings-submenu">
-          <li class="menu-user">
-            <div v-if="authenticated">
-              <span>
-                <strong>{{ userName }}</strong>
-                <span v-if="userEmail">{{ userEmail }}</span>
-              </span>
-              <div>
-                <v-button type="small" @click.native="logOutUser">
-                  Logout
-                </v-button>
-              </div>
-            </div>
-            <div v-else class="user-logged-out">
-              <span>
-                Login with your account.
-              </span>
-              <div>
-                <v-button type="small" @click.native="logInUser">
-                  Login
-                </v-button>
-              </div>
-            </div>
+    <main-content>
+      <div class="settings-menu">
+        <ul class="settings-menu-list">
+          <li>
+            <h3>User</h3>
+
+            <ul class="settings-submenu">
+              <li class="menu-user">
+                <div v-if="authenticated">
+                  <span>
+                    <strong>{{ userName }}</strong>
+                    <span v-if="userEmail">{{ userEmail }}</span>
+                  </span>
+                  <div>
+                    <v-button type="small" @click.native="logOutUser">
+                      Logout
+                    </v-button>
+                  </div>
+                </div>
+                <div v-else class="user-logged-out">
+                  <span>
+                    Login with your account.
+                  </span>
+                  <div>
+                    <v-button type="small" @click.native="logInUser">
+                      Login
+                    </v-button>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </li>
-        </ul>
-      </li>
 
-      <li
-        v-for="category in menu"
-        :key="category.label">
-        <h3>{{ category.label }}</h3>
-
-        <ul class="settings-submenu">
           <li
-            v-for="(item, index) in category.children"
-            :key="index"
-            :class="`menu-${item.label.toLowerCase()}`">
-            <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
-              <div class="menu-item-text">
-                <span>{{ item.label }}</span>
-                <span v-if="hasReleaseUpdates(item)" class="description">
-                  {{ item.description }}
-                </span>
-              </div>
-              <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
-                <component :is="`feather-${item.icon}`" />
-              </div>
-            </router-link>
+            v-for="category in menu"
+            :key="category.label">
+            <h3>{{ category.label }}</h3>
 
-            <div v-else-if="item.type === 'button'">
-              <span>{{ item.label }}</span>
-              <div v-if="item.buttons">
-                <v-button
-                  v-for="(option, index) in item.buttons"
-                  :key="index"
-                  type="small"
-                  :color="getThemeButtonColor(option.option)"
-                  :class="getThemeButtonClass(option.option)"
-                  @click.native="emitThemeChange(option.option)">
-                  {{ option.label }}
-                </v-button>
-              </div>
-            </div>
+            <ul class="settings-submenu">
+              <li
+                v-for="(item, index) in category.children"
+                :key="index"
+                :class="`menu-${item.label.toLowerCase()}`">
+                <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
+                  <div class="menu-item-text">
+                    <span>{{ item.label }}</span>
+                    <span v-if="hasReleaseUpdates(item)" class="description">
+                      {{ item.description }}
+                    </span>
+                  </div>
+                  <div :class="['menu-icon', { highlight: hasReleaseUpdates(item) }]">
+                    <component :is="`feather-${item.icon}`" />
+                  </div>
+                </router-link>
+
+                <div v-else-if="item.type === 'button'">
+                  <span>{{ item.label }}</span>
+                  <div v-if="item.buttons">
+                    <v-button
+                      v-for="(option, index) in item.buttons"
+                      :key="index"
+                      type="small"
+                      :color="getThemeButtonColor(option.option)"
+                      :class="getThemeButtonClass(option.option)"
+                      @click.native="emitThemeChange(option.option)">
+                      {{ option.label }}
+                    </v-button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="menu-version">
+            <span>Version</span><span>{{ version }}</span>
           </li>
         </ul>
-      </li>
-
-      <li class="menu-version">
-        <span>Version</span><span>{{ version }}</span>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
   import getMenuData from '@/app/settings/utils/get-menu-data'
+  import sleep from '@/utils/sleep'
 
   export default {
     name: 'SettingsMenu',
@@ -117,8 +128,7 @@
     methods: {
       ...mapActions([
         'hasSeenNewRelease',
-        'updateTheme',
-        'updateAppHeader'
+        'updateTheme'
       ]),
       getThemeButtonColor (type) {
         if (this.theme !== type) {
@@ -128,18 +138,12 @@
       getThemeButtonClass (type) {
         return { active: this.theme === type }
       },
-      emitThemeChange (theme) {
+      async emitThemeChange (theme) {
         const $html = document.documentElement
         $html.classList.add('js-theme-in-transition')
-        this.updateTheme({ theme })
-          .then(() => setTimeout(() =>
-            $html.classList.remove('js-theme-in-transition'),
-            1000
-          ))
-
-        this.updateAppHeader({
-          iconColor: theme === 'light' ? 'black' : 'white'
-        })
+        await this.updateTheme({ theme })
+        await sleep(1000)
+        $html.classList.remove('js-theme-in-transition')
       },
       hasReleaseUpdates (item) {
         return (

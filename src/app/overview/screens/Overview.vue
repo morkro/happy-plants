@@ -1,5 +1,11 @@
 <template>
-  <div class="main-wireframe">
+  <app-wireframe>
+    <app-header right-button="settings">
+      <template v-slot:title>
+        <h1>Happy Plants</h1>
+      </template>
+    </app-header>
+
     <!-- Alert window pops up as confirmation the user is about to delete plants. -->
     <better-dialog
       id="overview-dialog"
@@ -26,7 +32,7 @@
       class="overview-backdrop"
       @click="hideBackdrop" />
 
-    <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
+    <main-content :class="{ 'loading': plantsLoading, 'no-data': noPlantData }">
       <div v-if="plantsLoading && !plantsLoaded" class="content-loading-indicator box">
         <div><feather-refresh class="rotate" /></div>
         <span>Syncing data</span>
@@ -88,8 +94,8 @@
           :disable-menu="isViewMode"
           @clicked-item="updateEditMode" />
       </div>
-    </main>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -197,28 +203,12 @@
       }
     },
 
-    updated () {
-      if (this.storage !== 'cloud' && this.plantsLoaded && !this.plants.length) {
-        this.$router.push('/intro')
-      }
-    },
-
-    created () {
-      this.updateAppHeader({
-        title: 'Happy Plants',
-        backBtn: false,
-        rightBtn: 'settings',
-        showIconBackdrop: false
-      })
-    },
-
     methods: {
       ...mapActions([
         'loadPlants',
         'deletePlants',
         'showNotification',
-        'updateViewmode',
-        'updateAppHeader'
+        'updateViewmode'
       ]),
       reset () {
         Object.assign(this.$data, this.$options.data()) // Reset state
@@ -303,12 +293,12 @@
   @import "../../../styles/media-queries";
   @import "../../../styles/animations";
 
-  .main-wireframe {
+  .app-wireframe {
     min-height: 100vh;
     background: var(--background-secondary);
   }
 
-  .main-wireframe > .app-content {
+  .app-wireframe > .main-content {
     height: 100%;
     padding: var(--base-gap);
     padding-bottom: calc(var(--app-footer-size) * 1.2);

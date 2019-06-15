@@ -1,5 +1,11 @@
 <template>
-  <div class="settings-data">
+  <app-wireframe>
+    <app-header :back-button="true" back-path="/settings">
+      <template v-slot:title>
+        <h1>Import/ Export</h1>
+      </template>
+    </app-header>
+
     <better-dialog
       id="settings-dialog"
       :type="this.modalType"
@@ -61,65 +67,67 @@
       </div>
     </better-dialog>
 
-    <section class="download-section">
-      <v-box>
-        <h2>Export plant data</h2>
+    <main-content>
+      <section class="download-section">
+        <v-box>
+          <h2>Export plant data</h2>
 
-        <span>
-          Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
-          it's currently <strong>not possible</strong> to include the images.
-          You might use this little database to import in a different tool,
-          or even modify and import it again.
-        </span>
+          <span>
+            Download all your plant data as a JSON file. If you're <strong>storing your data locally</strong>,
+            it's currently <strong>not possible</strong> to include the images.
+            You might use this little database to import in a different tool,
+            or even modify and import it again.
+          </span>
 
-        <v-button :loading="exportDataProgress" @click.native="downloadData">
-          <template v-slot:icon>
-            <feather-download />
-          </template>
-          Export plant data
-        </v-button>
-      </v-box>
-    </section>
+          <v-button :loading="exportDataProgress" @click.native="downloadData">
+            <template v-slot:icon>
+              <feather-download />
+            </template>
+            Export plant data
+          </v-button>
+        </v-box>
+      </section>
 
-    <section class="import-section">
-      <v-box>
-        <h2>Import plant data</h2>
+      <section class="import-section">
+        <v-box>
+          <h2>Import plant data</h2>
 
-        <span>
-          Import existing plant data. You can choose
-          between overwriting your current database, merging, or adding new data
-          to your current data.
-        </span>
+          <span>
+            Import existing plant data. You can choose
+            between overwriting your current database, merging, or adding new data
+            to your current data.
+          </span>
 
-        <v-button @click.native="openImportModal">
-          <template v-slot:icon>
-            <feather-copy />
-          </template>
-          Import plant data
-        </v-button>
+          <v-button @click.native="openImportModal">
+            <template v-slot:icon>
+              <feather-copy />
+            </template>
+            Import plant data
+          </v-button>
 
-        <span class="note">
-          More info for custom plant
-          <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">
-            data structure
-          </a>.
-        </span>
-      </v-box>
-    </section>
+          <span class="note">
+            More info for custom plant
+            <a href="https://github.com/morkro/happy-plants#data-structure" target="_blank">
+              data structure
+            </a>.
+          </span>
+        </v-box>
+      </section>
 
-    <section class="danger-zone">
-      <v-box color="red">
-        <h2>Danger Zone</h2>
-        <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
-        <v-button color="yellow" @click.native="openDangerModal">
-          <template v-slot:icon>
-            <feather-delete />
-          </template>
-          Delete application data
-        </v-button>
-      </v-box>
-    </section>
-  </div>
+      <section class="danger-zone">
+        <v-box color="red">
+          <h2>Danger Zone</h2>
+          <span>Delete your application data. Once you've deleted your data, there is no going back!</span>
+          <v-button color="yellow" @click.native="openDangerModal">
+            <template v-slot:icon>
+              <feather-delete />
+            </template>
+            Delete application data
+          </v-button>
+        </v-box>
+      </section>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -178,22 +186,13 @@
       }
     },
 
-    created () {
-      this.updateAppHeader({
-        title: 'Import/ Export',
-        backBtn: true,
-        rightBtn: false
-      })
-    },
-
     methods: {
       ...mapActions([
         'showNotification',
         'deleteAllData',
         'importTags',
         'importSettings',
-        'importPlants',
-        'updateAppHeader'
+        'importPlants'
       ]),
       ...mapGetters([
         'getAllData'
@@ -290,9 +289,10 @@
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
 
-  .settings-data {
+  .main-content {
     --color-modal-border: rgba(0, 0, 0, 0.06);
     line-height: 150%;
+    padding-top: 0;
 
     @media (--min-desktop-viewport) {
       display: flex;

@@ -1,7 +1,19 @@
+import { hasUser } from '@/app/user/utils/user'
+
 export default [
   {
     path: '/intro',
     component: () => import('./screens/Intro' /* webpackChunkName: "intro" */),
+    meta: {
+      requiresAuth: false
+    },
+    async beforeEnter (to, from, next) {
+      if (await hasUser()) {
+        next('/')
+      } else {
+        next()
+      }
+    },
     children: [
       {
         path: '',

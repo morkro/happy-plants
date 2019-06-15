@@ -18,7 +18,7 @@
 
       <div class="header-ctrl">
         <router-link
-          v-if="rightBtn === 'settings'"
+          v-if="rightButton === 'settings'"
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
           aria-label="Settings">
@@ -27,12 +27,12 @@
           </div>
         </router-link>
         <v-button
-          v-else-if="typeof rightBtn === 'string' && rightBtn !== false"
-          :aria-label="rightBtn"
-          :class="rightBtnClass"
-          @click.native.prevent="rightBtnOnClick">
+          v-else-if="typeof rightButton === 'string' && rightButton !== false"
+          :aria-label="rightButton"
+          :class="rightButtonClass"
+          @click.native.prevent="rightButtonOnClick">
           <template v-slot:icon>
-            <component :is="`feather-${rightBtn}`" />
+            <component :is="`feather-${rightButton}`" />
           </template>
         </v-button>
         <slot name="custom-action-right" />
@@ -49,8 +49,8 @@
     props: {
       backPath: { type: [String, Object], default: '/' },
       backButton: { type: Boolean, default: false },
-      rightBtn: { type: [Boolean, String], default: false },
-      rightBtnOnClick: { type: Function, default: () => {} },
+      rightButton: { type: [Boolean, String], default: false },
+      rightButtonOnClick: { type: Function, default: () => {} },
       showIconBackdrop: { type: Boolean, default: false },
       scrollUp: { type: Boolean, default: false },
       color: { type: String, default: 'black' },
@@ -70,7 +70,7 @@
     },
 
     computed: {
-      rightBtnClass () {
+      rightButtonClass () {
         return {
           'edit-data': true,
           'icon': true,
@@ -103,6 +103,8 @@
     width: 100%;
     position: fixed;
     top: 0;
+    right: 0;
+    left: 0;
     z-index: 2;
     transition:
       background calc(var(--base-speed) * 2) var(--ease-out-back),

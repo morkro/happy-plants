@@ -1,38 +1,10 @@
 <template>
-  <div class="settings-storage">
-    <div class="storage-switch">
-      <div :class="getStorageClass('local')">
-        <h3>
-          <feather-smartphone />
-          Store data on your phone
-        </h3>
-        <p>
-          All your data will be stored on your device only. Some functionality won't be available.
-          <br><br>
-          When switching to local from cloud storage, all <strong>data will be migrated</strong> and
-          <strong>deleted from your cloud account</strong>.
-        </p>
-        <v-button v-if="isStorageType('cloud')" @click.native="openDialog('local')">
-          <span>Use device storage</span>
-        </v-button>
-      </div>
-
-      <div :class="getStorageClass('cloud')">
-        <h3>
-          <feather-cloud />
-          Store data in the cloud
-        </h3>
-        <p>
-          All your data will be stored in <strong>Google Firebase</strong>.
-          This enables you to access your account from different devices.
-          <br><br>
-          When switching to cloud storage, all your data will be migrated and deleted from your device.
-        </p>
-        <v-button v-if="isStorageType('local')" @click.native="openDialog('cloud')">
-          <span>Use cloud storage</span>
-        </v-button>
-      </div>
-    </div>
+  <app-wireframe>
+    <app-header :back-button="true" back-path="/settings">
+      <template v-slot:title>
+        <h1>Storage</h1>
+      </template>
+    </app-header>
 
     <better-dialog
       id="storage-dialog"
@@ -92,7 +64,43 @@
         </v-button>
       </div>
     </better-dialog>
-  </div>
+
+    <main-content>
+      <div class="storage-switch">
+        <div :class="getStorageClass('local')">
+          <h3>
+            <feather-smartphone />
+            Store data on your phone
+          </h3>
+          <p>
+            All your data will be stored on your device only. Some functionality won't be available.
+            <br><br>
+            When switching to local from cloud storage, all <strong>data will be migrated</strong> and
+            <strong>deleted from your cloud account</strong>.
+          </p>
+          <v-button v-if="isStorageType('cloud')" @click.native="openDialog('local')">
+            <span>Use device storage</span>
+          </v-button>
+        </div>
+
+        <div :class="getStorageClass('cloud')">
+          <h3>
+            <feather-cloud />
+            Store data in the cloud
+          </h3>
+          <p>
+            All your data will be stored in <strong>Google Firebase</strong>.
+            This enables you to access your account from different devices.
+            <br><br>
+            When switching to cloud storage, all your data will be migrated and deleted from your device.
+          </p>
+          <v-button v-if="isStorageType('local')" @click.native="openDialog('cloud')">
+            <span>Use cloud storage</span>
+          </v-button>
+        </div>
+      </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -303,8 +311,9 @@
 <style lang="postcss" scoped>
   @import "../../../styles/animations";
 
-  .settings-storage {
+  .main-content {
     padding: var(--base-gap);
+    padding-top: 0;
   }
 
   .storage-switch {

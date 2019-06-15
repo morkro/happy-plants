@@ -1,6 +1,11 @@
 <template>
-  <div :class="['settings-tags', { 'no-tags': !tags.length }]">
-    <!-- Modal for editing tags. -->
+  <app-wireframe>
+    <app-header :back-button="true" back-path="/settings">
+      <template v-slot:title>
+        <h1>Manage tags</h1>
+      </template>
+    </app-header>
+
     <tag-modal
       :show="showModal"
       :tag="selectedTag"
@@ -35,7 +40,7 @@
       </div>
     </better-dialog>
 
-    <div class="app-content">
+    <main-content :class="{ 'no-tags': !tags.length }">
       <div v-if="!tags.length" class="tags-empty">
         <feather-tag class="tags-header" />
         <h1>You haven't added tags to your plants yet</h1>
@@ -84,8 +89,8 @@
           </li>
         </ul>
       </section>
-    </div>
-  </div>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
@@ -139,20 +144,11 @@
       }
     },
 
-    created () {
-      this.updateAppHeader({
-        title: 'Manage tags',
-        backBtn: true,
-        rightBtn: false
-      })
-    },
-
     methods: {
       ...mapActions([
         'deleteTag',
         'updateTag',
-        'showNotification',
-        'updateAppHeader'
+        'showNotification'
       ]),
       closeModal () {
         this.showModal = false
@@ -203,7 +199,7 @@
 </script>
 
 <style lang="postcss" scoped>
-  .settings-tags {
+  .main-content {
     min-height: 100vh;
     background: var(--background-secondary);
 
@@ -231,7 +227,7 @@
       margin: var(--base-gap) 0;
     }
 
-    & a {
+    & button {
       margin-top: var(--double-gap);
       align-self: center;
     }

@@ -32,11 +32,4 @@ describe('app/intro/Intro.vue', () => {
     const wrapper = shallowMount(Intro, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
-
-  it('lifecycle hook beforeDestroy is correctly fired', () => {
-    const wrapper = shallowMount(Intro, options)
-    wrapper.setMethods({ updateAppHeader: jest.fn() })
-    wrapper.destroy()
-    expect(wrapper.vm.updateAppHeader).toHaveBeenCalled()
-  })
 })

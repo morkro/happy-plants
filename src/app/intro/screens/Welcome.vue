@@ -1,79 +1,72 @@
 <template>
-  <div class="welcome-wrapper">
-    <v-carousel class="welcome-carousel">
-      <div class="welcome-cards card-intro">
-        <img
-          src="@/assets/happyplants-logo.svg"
-          alt="HappyPlants Logo"
-          title="HappyPlants Logo"
-          width="100%">
+  <app-wireframe>
+    <main-content class="welcome-wrapper">
+      <v-carousel class="welcome-carousel">
+        <div class="welcome-cards card-intro">
+          <img
+            src="@/assets/happyplants-logo.svg"
+            alt="HappyPlants Logo"
+            title="HappyPlants Logo"
+            width="100%">
 
-        <h2>
-          HappyPlants is all about collecting, organising, and
-          adding all kinds of information of your little friends
-        </h2>
-      </div>
-
-      <div class="welcome-cards card-features">
-        <div class="features-modules card-showcase">
-          <ul>
-            <li>
-              <v-box><plant-watering /></v-box>
-            </li>
-            <li>
-              <v-box><plant-sunshine :intensity="2" /></v-box>
-            </li>
-            <li>
-              <v-box><plant-seasons /></v-box>
-            </li>
-          </ul>
+          <h2>
+            HappyPlants is all about collecting, organising, and
+            adding all kinds of information of your little friends
+          </h2>
         </div>
 
-        <h2>
-          How much water does it need? Does it require lots of sun?
-          Keep track by adding plant modules!
-        </h2>
-      </div>
+        <div class="welcome-cards card-features">
+          <div class="features-modules card-showcase">
+            <ul>
+              <li>
+                <v-box><plant-watering /></v-box>
+              </li>
+              <li>
+                <v-box><plant-sunshine :intensity="2" /></v-box>
+              </li>
+              <li>
+                <v-box><plant-seasons /></v-box>
+              </li>
+            </ul>
+          </div>
 
-      <div class="welcome-cards card-gallery">
-        <div class="gallery-list card-showcase">
-          <ul>
-            <li v-for="index in 9" :key="'gallery-item-' + index">
-              <v-box />
-            </li>
-          </ul>
+          <h2>
+            How much water does it need? Does it require lots of sun?
+            Keep track by adding plant modules!
+          </h2>
         </div>
-        <h2>
-          Add a gallery to your plants for documenting its growth or keeping a collection of photos
-        </h2>
-      </div>
-    </v-carousel>
 
-    <ul class="welcome-actions">
-      <li>
-        <v-button
-          @click.native="nextStep"
-          :disabled="disabled"
-          :loading="disabled">
-          <span>Getting started</span>
-        </v-button>
-      </li>
-      <li>
-        <v-button
-          @click.native="$router.push('/login')"
-          color="grey"
-          :disabled="disabled"
-          :loading="disabled">
-          <span>Sign in</span>
-        </v-button>
-      </li>
-    </ul>
-  </div>
+        <div class="welcome-cards card-gallery">
+          <div class="gallery-list card-showcase">
+            <ul>
+              <li v-for="index in 9" :key="'gallery-item-' + index">
+                <v-box />
+              </li>
+            </ul>
+          </div>
+          <h2>
+            Add a gallery to your plants for documenting its growth or keeping a collection of photos
+          </h2>
+        </div>
+      </v-carousel>
+
+      <ul class="welcome-actions">
+        <li>
+          <v-button @click.native="nextStep">
+            <span>Getting started</span>
+          </v-button>
+        </li>
+        <li>
+          <v-button @click.native="$router.push('/login')" color="grey">
+            <span>Sign in</span>
+          </v-button>
+        </li>
+      </ul>
+    </main-content>
+  </app-wireframe>
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
-
   export default {
     name: 'IntroStart',
 
@@ -88,62 +81,19 @@
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
     },
 
-    computed: {
-      ...mapState({
-        authFromRedirect: state => state.user.authFromRedirect,
-        authProgress: state => state.user.loading,
-        authenticated: state => state.user.authenticated,
-        plants: state => state.plants.data
-      }),
-      disabled () {
-        return (
-          this.authFromRedirect ||
-          this.authProgress ||
-          this.signInProgress
-        )
-      }
-    },
-
-    data: () => ({
-      signInProgress: false
-    }),
-
-    watch: {
-      authenticated (auth) {
-        if (auth) {
-          this.$router.push('/')
-        }
-      }
-    },
-
-    created () {
-      this.updateAppHeader({
-        title: false,
-        transparent: true,
-        backBtn: false,
-        rightBtn: false,
-        color: 'black'
-      })
-    },
-
     methods: {
-      ...mapActions([
-        'signInUser',
-        'loadPlants',
-        'loadTags',
-        'showNotification',
-        'updateAppHeader'
-      ]),
-
       nextStep () {
-        if (this.signInProgress) return
         this.$router.push('/intro/storage')
       }
     }
   }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
+  .app-wireframe {
+    padding: var(--base-gap);
+  }
+
   .welcome-wrapper {
     flex: 1;
     display: flex;

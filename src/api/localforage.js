@@ -28,3 +28,7 @@ export const updateEntry = setEntry
 export const deleteEntry = (namespace) => {
   return localforage.removeItem(namespace)
 }
+
+export const clearAll = () => {
+  return localforage.clear()
+}

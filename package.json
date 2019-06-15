@@ -25,7 +25,7 @@
     "vue": "^2.6.10",
     "vue-a11y-dialog": "^0.5.0",
     "vue-feather-icons": "^4.10.0",
-    "vue-meta": "^1.6.0",
+    "vue-meta": "^2.0.3",
     "vue-mq": "^1.0.1",
     "vue-router": "^3.0.6",
     "vue-svgicon": "^3.2.6",

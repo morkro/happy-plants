@@ -4,26 +4,6 @@
       class="notifications"
       :message="message" />
 
-    <app-header
-      :scroll-up="true"
-      :transparent="transparent"
-      :color="iconColor"
-      :right-btn="rightBtn"
-      :right-btn-on-click="rightBtnOnClick"
-      :back-button="backBtn"
-      :back-path="backBtnPath"
-      :show-icon-backdrop="showIconBackdrop">
-      <template v-if="plantsLoading && !plantsLoaded" v-slot:custom-action-left>
-        <div class="header-sync-data">
-          <feather-refresh />
-        </div>
-      </template>
-
-      <template v-if="!!pageTitle" v-slot:title>
-        <h1>{{ pageTitle }}</h1>
-      </template>
-    </app-header>
-
     <better-dialog
       id="new-release-dialog"
       :show="showReleaseDialog"
@@ -51,10 +31,10 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import Changelog from '#/CHANGELOG.md'
-  // import {
-  //   getEntry as getSessionEntry,
-  //   deleteEntry as deleteSessionEntry
-  // } from '@/api/sessionStorage'
+  import {
+    getEntry as getSessionEntry,
+    deleteEntry as deleteSessionEntry
+  } from '@/api/sessionStorage'
 
   export default {
     name: 'HappyPlants',
@@ -62,6 +42,7 @@
     meta () {
       return {
         title: 'HappyPlants',
+        titleTemplate: 'HappyPlants — %s',
         htmlAttrs: {
           'data-theme': this.theme
         }
@@ -120,17 +101,14 @@
       ...mapActions([
         'updateAuthMethod',
         'authRedirectResults',
-        'authenticateUser',
         'loadVersion',
         'updateVersion',
         'loadSettings',
-        'loadStorage',
         'updateStorage',
         'loadPlants',
         'loadTags',
         'showNotification',
-        'hideNotification',
-        'updateAppHeader'
+        'hideNotification'
       ]),
       emitCloseDialog () {
         this.showReleaseDialog = false
@@ -145,43 +123,27 @@
 
     async created () {
       await this.loadVersion()
-      // await this.updateVersion()
-      // await this.loadStorage()
-      // await this.updateStorage({ type: this.storageType })
-      // await this.loadSettings()
+      await this.updateVersion()
+      await this.loadSettings()
 
-      // if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
-      //   this.updateAuthMethod()
+      if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
+        this.updateAuthMethod()
+        deleteSessionEntry('USER_SIGNIN_PROGRESS')
 
-      //   if (this.$route.name === 'Welcome' && this.storageType === 'local') {
-      //     await this.updateStorage({ type: 'cloud' })
-      //   }
-      //   deleteSessionEntry('USER_SIGNIN_PROGRESS')
+        try {
+          await this.authRedirectResults()
+          await this.updateStorage({ type: 'cloud' })
+        } catch (error) {
+          this.showNotification()
+        }
+      }
 
-      //   try {
-      //     await this.authRedirectResults()
-      //   } catch (error) {
-      //     this.showNotification()
-      //   }
-      //   // If not, we just want a regular authentication observer.
-      // } else if (this.storageType === 'cloud') {
-      //   try {
-      //     await this.authenticateUser()
-      //   } catch (error) {
-      //     this.$router.push('/intro')
-      //   }
-      // }
+      if (!this.applicationOnline && this.storageType === 'cloud') {
+        this.showNotification({ message: 'You are currently offline.' })
+      }
 
-      // if (!this.applicationOnline && this.storageType === 'cloud') {
-      //   this.showNotification({ message: 'You are currently offline.' })
-      // }
-
-      // await this.loadPlants()
-      // await this.loadTags()
-
-      // if (this.theme === 'dark') {
-      //   this.updateAppHeader({ iconColor: 'white' })
-      // }
+      await this.loadPlants()
+      await this.loadTags()
     },
 
     mounted () {
@@ -285,26 +247,6 @@
 
   .notifications {
     z-index: 4;
-  }
-
-  .main-wireframe {
-    display: flex;
-    height: 100%;
-    min-height: 100vh;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    padding-top: var(--app-header-size);
-  }
-
-  .app-content {
-    width: 100%;
-    max-width: var(--app-mobile-max-size);
-    margin: 0 auto;
-
-    @media (--max-mobile-viewport) {
-      max-width: var(--app-desktop-max-width);
-    }
   }
 
   .svg-icon {
