@@ -37,17 +37,17 @@ describe('app/intro/Welcome.vue', () => {
     expect(wrapper.vm.nextStep()).toBeUndefined()
   })
 
-  it('loginUser() works as expected', async () => {
-    const wrapper = shallowMount(IntroStart, options)
-    wrapper.setMethods({ signInUser: jest.fn(), loadPlants: jest.fn(), loadTags: jest.fn() })
-    await wrapper.vm.loginUser()
-    expect(wrapper.vm.signInProgress).toBe(false)
-  })
+  // it('loginUser() works as expected', async () => {
+  //   const wrapper = shallowMount(IntroStart, options)
+  //   wrapper.setMethods({ signInUser: jest.fn(), loadPlants: jest.fn(), loadTags: jest.fn() })
+  //   await wrapper.vm.loginUser()
+  //   expect(wrapper.vm.signInProgress).toBe(false)
+  // })
 
-  it('loginUser() shows notification if sign in fails', async () => {
-    const wrapper = shallowMount(IntroStart, options)
-    wrapper.setMethods({ signInUser: Promise.reject(new Error()), showNotification: jest.fn() })
-    await wrapper.vm.loginUser()
-    expect(wrapper.vm.showNotification).toHaveBeenCalled()
-  })
+  // it('loginUser() shows notification if sign in fails', async () => {
+  //   const wrapper = shallowMount(IntroStart, options)
+  //   wrapper.setMethods({ signInUser: Promise.reject(new Error()), showNotification: jest.fn() })
+  //   await wrapper.vm.loginUser()
+  //   expect(wrapper.vm.showNotification).toHaveBeenCalled()
+  // })
 })

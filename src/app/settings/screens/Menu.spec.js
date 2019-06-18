@@ -1,12 +1,12 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsMenu from '@/app/settings/screens/SettingsMenu'
+import Menu from '@/app/settings/screens/Menu'
 import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/SettingsMenu.vue', () => {
+describe('app/settings/screens/Menu.vue', () => {
   const options = {
     localVue,
     store,
@@ -27,12 +27,12 @@ describe('app/settings/SettingsMenu.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(SettingsMenu, options)
+    const wrapper = shallowMount(Menu, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
   it('before destroying calls action when new release', () => {
-    const wrapper = shallowMount(SettingsMenu, {
+    const wrapper = shallowMount(Menu, {
       ...options,
       computed: {
         hasNewRelease: () => true
@@ -44,7 +44,7 @@ describe('app/settings/SettingsMenu.vue', () => {
   })
 
   it('before destroying does nothing if no new release', () => {
-    const wrapper = shallowMount(SettingsMenu, options)
+    const wrapper = shallowMount(Menu, options)
     wrapper.setMethods({ hasSeenNewRelease: jest.fn() })
     wrapper.destroy()
     expect(wrapper.vm.hasSeenNewRelease).not.toHaveBeenCalled()

@@ -7,7 +7,7 @@
       :right-button="header.rightBtn"
       :right-button-on-click="header.rightBtnOnClick">
       <template v-if="header.title" v-slot:title>
-        <h1>{{ header.title }}}</h1>
+        <h1>{{ header.title }}</h1>
       </template>
     </app-header>
 
@@ -133,7 +133,7 @@
         transparent: false,
         title: 'Gallery',
         back: true,
-        backBtnPath: `/plant/${this.$route.params.id}`,
+        backBtnPath: `/`,
         rightBtn: false,
         rightBtnOnClick: () => {}
       },
@@ -207,7 +207,7 @@
       defaultAppHeader () {
         this.header.transparent = false
         this.header.title = 'Gallery'
-        this.header.backBtn = true
+        this.header.back = true
         this.header.backBtnPath = `/plant/${this.$route.params.id}`
         this.header.rightBtn = false
       },
@@ -313,7 +313,7 @@
         this.listEditMode = value
         if (this.listEditMode) {
           this.header.title = `0 selected`
-          this.header.backBtn = false
+          this.header.back = false
           this.header.rightBtn = 'close'
           this.header.rightBtnOnClick = () => this.$refs.galleryList.clearSelection()
         } else {
@@ -356,6 +356,7 @@
     },
 
     mounted () {
+      this.header.backBtnPath = `/plant/${this.$route.params.id}`
       if (this.$route.query.openUpload) {
         this.$refs.galleryUpload.triggerUpload()
       }
@@ -370,7 +371,7 @@
 <style lang="postcss" scoped>
   @import "../../../styles/media-queries";
 
-  .main-wireframe {
+  .app-wireframe {
     min-height: 100vh;
     justify-content: flex-flex-start;
     background: var(--background-secondary);
@@ -380,12 +381,13 @@
     }
   }
 
-  .app-content {
+  .main-content {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     overflow: hidden;
+    padding-top: 0;
   }
 
   .happy-dialog-content {

@@ -34,7 +34,7 @@ describe('app/new-plant/NewPlant.vue', () => {
     const wrapper = shallowMount(NewPlant, options)
     expect(wrapper.vm.canAddPlant).toBe(false)
 
-    const input = wrapper.find('input#new-plant-name')
+    const input = wrapper.find('v-input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
     expect(wrapper.vm.canAddPlant).toBe(true)
@@ -44,7 +44,7 @@ describe('app/new-plant/NewPlant.vue', () => {
     const wrapper = shallowMount(NewPlant, options)
     expect(wrapper.vm.name).toEqual('')
 
-    const input = wrapper.find('input#new-plant-name')
+    const input = wrapper.find('v-input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
     expect(wrapper.vm.name).toEqual('foo')
@@ -68,7 +68,7 @@ describe('app/new-plant/NewPlant.vue', () => {
 
   it('async validateForm() works', async () => {
     const wrapper = shallowMount(NewPlant, options)
-    const input = wrapper.find('input#new-plant-name')
+    const input = wrapper.find('v-input#new-plant-name')
     input.element.value = 'foo'
     input.trigger('change')
 

@@ -1,4 +1,4 @@
-import mutations from '@/app/login/store/mutations'
+import mutations from '@/app/user/store/mutations'
 
 describe('store/mutations/user.js', () => {
   const payload = { user: { displayName: 'Foo', email: 'foo@bar.plant', uid: '0' } }

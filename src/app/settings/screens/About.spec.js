@@ -1,11 +1,11 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
-import SettingsAbout from '@/app/settings/screens/SettingsAbout'
+import About from '@/app/settings/screens/About'
 import store from '@/store'
 import router from '@/router'
 
 const localVue = createLocalVue()
 
-describe('app/settings/SettingsAbout.vue', () => {
+describe('app/settings/screens/About.vue', () => {
   const options = {
     localVue,
     store,
@@ -17,7 +17,7 @@ describe('app/settings/SettingsAbout.vue', () => {
   }
 
   it('is a Vue component', () => {
-    const wrapper = shallowMount(SettingsAbout, options)
+    const wrapper = shallowMount(About, options)
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 })

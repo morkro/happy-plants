@@ -32,26 +32,26 @@ describe('components/AppHeader.vue', () => {
   })
 
   it('has correct default props data', () => {
-    const rightBtnOnClick = jest.fn()
-    const wrapper = shallowMount(AppHeader, { ...options, propsData: { rightBtnOnClick } })
+    const rightButtonOnClick = jest.fn()
+    const wrapper = shallowMount(AppHeader, { ...options, propsData: { rightButtonOnClick } })
     expect(wrapper.props().backPath).toEqual('/')
     expect(wrapper.props().backButton).toEqual(false)
-    expect(wrapper.props().rightBtn).toEqual(false)
+    expect(wrapper.props().rightButton).toEqual(false)
     expect(wrapper.props().color).toEqual('black')
-    expect(wrapper.props().rightBtnOnClick).toEqual(rightBtnOnClick)
+    expect(wrapper.props().rightButtonOnClick).toEqual(rightButtonOnClick)
   })
 
   it('settingsOnClick() works as expected', () => {
-    const rightBtnOnClick = jest.fn()
+    const rightButtonOnClick = jest.fn()
     const wrapper = shallowMount(AppHeader, { ...options,
       propsData: {
-        rightBtnOnClick,
-        rightBtn: 'edit'
+        rightButtonOnClick,
+        rightButton: 'edit'
       }
     })
     expect(wrapper.find('.edit-data').exists()).toBe(true)
     wrapper.find('.edit-data').trigger('click')
-    expect(wrapper.vm.rightBtnOnClick).toHaveBeenCalled()
+    expect(wrapper.vm.rightButtonOnClick).toHaveBeenCalled()
   })
 
   it('isWhite() works as expected', () => {
@@ -61,9 +61,9 @@ describe('components/AppHeader.vue', () => {
     expect(wrapper.vm.isWhite('white')).toEqual(true)
   })
 
-  it('scrollTop()', () => {
+  it('onScrollTop()', () => {
     const wrapper = shallowMount(AppHeader, options)
     wrapper.setProps({ scrollUp: false })
-    expect(wrapper.vm.scrollTop()).toEqual(undefined)
+    expect(wrapper.vm.onScrollTop()).toEqual(undefined)
   })
 })
