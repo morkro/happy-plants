@@ -1,0 +1,692 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > jest-jasmine2 > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - lint-staged > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@babel/core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - postcss-reporter > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > inquirer > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - lint-staged > yup > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/eslint-config-standard > eslint-plugin-import > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-service > webpack-merge > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-service > webpack-bundle-analyzer > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-service > html-webpack-plugin > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-service > css-loader > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > eslint > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - vue-markdown-loader > cheerio > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@babel/core > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - commitizen > inquirer > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > table > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > eslint-plugin-vue > vue-eslint-parser > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@babel/core > @babel/template > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > eslint > table > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > eslint > inquirer > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > babel-eslint > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-reporter > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > node-cache > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-service > webpack-dev-server > http-proxy-middleware > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/cli-shared-utils > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @babel/core > @babel/traverse > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > babel-eslint > @babel/traverse > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @babel/core > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > async > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-plugin-transform-strict-mode > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/babel-preset-app > @babel/preset-env > @babel/plugin-transform-classes > @babel/helper-replace-supers > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > @babel/traverse > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-eslint > babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-jasmine2 > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > jest-jasmine2 > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > vue-jest > babel-plugin-transform-es2015-modules-commonjs > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-resolve-dependencies > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/babel-preset-app > @babel/preset-env > @babel/plugin-proposal-async-generator-functions > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-environment-jsdom > jsdom > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > jest-jasmine2 > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > jest-jasmine2 > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > jest-jasmine2 > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-jasmine2 > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-jasmine2 > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > jest-jasmine2 > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/babel-preset-app > @babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/generator > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > @babel/helpers > @babel/traverse > @babel/generator > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > jest-jasmine2 > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - commitizen > lodash:
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > jest-jasmine2 > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > jest-jasmine2 > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > istanbul-api > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > jest-jasmine2 > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > jest-jasmine2 > jest-snapshot > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@ascendancyy/vue-cli-plugin-stylelint > stylelint > postcss-jsx > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/babel-preset-app > @babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/traverse > @babel/generator > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > jest-jasmine2 > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > jest-environment-jsdom > jsdom > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > jest-environment-jsdom > jsdom > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-babel > @vue/babel-preset-app > @babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > request-promise-native > request-promise-core > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-generator > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-jest > babel-plugin-istanbul > istanbul-lib-instrument > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
+    - '@vue/cli-plugin-unit-jest > jest > jest-cli > jest-runner > jest-runtime > jest-config > babel-core > babel-register > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash':
+        patched: '2019-07-04T09:37:09.123Z'
