@@ -1528,3 +1528,13 @@ patch:
         patched: '2019-12-13T09:16:20.393Z'
     - '@vue/cli-plugin-unit-jest > jest > jest-cli > @jest/core > @jest/reporters > jest-runtime > jest-config > @jest/test-sequencer > jest-runner > jest-jasmine2 > @jest/environment > @jest/transform > @babel/core > @babel/helpers > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
         patched: '2019-12-13T09:16:20.393Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-12-13T11:47:00.001Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-12-13T11:47:00.001Z'
+    - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
+        patched: '2019-12-13T11:47:00.001Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/dep-graph > lodash:
+        patched: '2019-12-13T11:47:00.001Z'
+    - snyk > @snyk/snyk-cocoapods-plugin > @snyk/cocoapods-lockfile-parser > @snyk/dep-graph > lodash:
+        patched: '2019-12-13T11:47:00.001Z'
