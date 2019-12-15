@@ -1,8 +1,14 @@
 module.exports = {
   root: true,
-  processors: ['stylelint-processor-html'],
+  processors: [
+    'stylelint-processor-html'
+  ],
   extends: [
     'stylelint-config-standard'
+  ],
+  ignoreFiles: [
+    '**/*.js',
+    '*.js'
   ],
   rules: {
     'no-empty-source': null,

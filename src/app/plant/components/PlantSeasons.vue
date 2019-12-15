@@ -20,7 +20,8 @@
           <li
             v-for="(season, index) of seasons"
             :class="getSeasonListClass(season, index)"
-            :key="index">
+            :key="index"
+          >
             <button type="button" @click.self="emitSeasonToggle(season)">
               {{ season.month[0] }}
             </button>
@@ -71,14 +72,14 @@
         const prevMonth = this.seasons[index - 1]
         return (
           (
-            type === 'to' &&
-              !currentGrowth &&
-              nextMonth && nextMonth.growth
+          type === 'to' &&
+          !currentGrowth &&
+          nextMonth && nextMonth.growth
           ) || (
-            type === 'from' &&
-              !currentGrowth &&
-              nextMonth && !nextMonth.growth &&
-              prevMonth && prevMonth.growth
+          type === 'from' &&
+          !currentGrowth &&
+          nextMonth && !nextMonth.growth &&
+          prevMonth && prevMonth.growth
           )
         )
       },

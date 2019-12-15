@@ -10,7 +10,8 @@
         <button
           type="button"
           class="icon"
-          aria-role="Options">
+          aria-role="Options"
+        >
           <feather-more-horizontal />
         </button>
       </div>
@@ -61,7 +62,7 @@
       align-items: center;
 
       & svg {
-        width: var(--icon-size--small);
+        width: var(--icon-size-small);
         height: var(--icon-size-small);
         opacity: 0.5;
         margin-right: calc(var(--base-gap) / 3);
