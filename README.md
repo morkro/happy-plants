@@ -14,6 +14,13 @@
 </p>
 
 ---
+## Version 2 in development!
+
+HappyPlants v2 is currently in development. It will be a complete rebuild from scratch, eliminating some early architectural design decision issues (e.g. account management). I am currently waiting for [Vue 3 to be in beta](https://github.com/vuejs/vue-next) (or at least in a workable state), so I can start new development. As of now, I am working on a redesign and improved user experience flow.
+
+You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
+
+---
 
 <img src="resources/happyplants-phone-presentation.png" alt="HappyPlants App" />
 
