@@ -1,0 +1,19 @@
+:root {
+    /* Typography */
+  --text-color-base: var(--custom-black);
+  --text-color-secondary: rgba(0, 0, 0, 0.6);
+  --text-color-inverse: white;
+  --text-color-button: white;
+  --link-color: var(--text-color-base, black);
+
+  --transparency-white-light: rgba(255, 255, 255, 0.25);
+  --transparency-black-light: rgba(0, 0, 0, 0.12);
+  --transparency-black-medium: rgba(0, 0, 0, 0.66);
+
+  /* Layout */
+  --max-page-width: 960px;
+  --base-gap: 20px;
+  --border-radius: 6px;
+  --plain-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+  --icon-size-small: 16px;
+}
