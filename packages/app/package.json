@@ -12,6 +12,7 @@
     "url": "https://github.com/morkro/happy-plants/issues"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "serve": "npm run svg && vue-cli-service serve",
     "build": "npm run svg && vue-cli-service build",
     "lint": "vue-cli-service lint",
