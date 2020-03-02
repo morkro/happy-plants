@@ -25,3 +25,6 @@ lerna-debug.log*
 
 # nuxt.js build output
 .nuxt
+
+# Dist files
+packages/*/dist

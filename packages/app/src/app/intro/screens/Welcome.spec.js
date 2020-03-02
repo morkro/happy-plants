@@ -4,7 +4,7 @@ import PlantWatering from '@/app/plant/components/PlantWatering'
 import PlantSunshine from '@/app/plant/components/PlantSunshine'
 import PlantSeasons from '@/app/plant/components/PlantSeasons'
 import Button from '@/components/Button'
-import Box from '@/components/Box'
+import Box from '@happy-plants/shared/components/Box.vue'
 import store from '@/store'
 import router from '@/router'
 

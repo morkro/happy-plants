@@ -28,5 +28,8 @@
   },
   "peerDependencies": {
     "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/eslint-config-standard": "^5.1.2"
   }
 }
