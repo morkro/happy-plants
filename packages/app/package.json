@@ -1,0 +1,95 @@
+{
+  "name": "@happy-plants/app",
+  "version": "1.7.3",
+  "private": true,
+  "author": "Moritz Kröger <write@morkro.de>",
+  "description": "🌵 Web application to keep your plants happy",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
+  },
+  "bugs": {
+    "url": "https://github.com/morkro/happy-plants/issues"
+  },
+  "scripts": {
+    "serve": "npm run svg && vue-cli-service serve",
+    "build": "npm run svg && vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "svg": "vsvg -s ./public/icons -t ./src/assets/icons",
+    "lint:style": "vue-cli-service lint:style",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "dependencies": {
+    "@happy-plants/shared": "^1.0.0",
+    "@sentry/browser": "^5.3.0",
+    "@sentry/integrations": "^5.3.0",
+    "blob-util": "^2.0.2",
+    "firebase": "^7.9.3",
+    "localforage": "^1.7.3",
+    "localforage-startswith": "^1.4.0",
+    "lodash.throttle": "^4.1.1",
+    "normalize.css": "^8.0.1",
+    "portal-vue": "^2.1.4",
+    "register-service-worker": "^1.6.2",
+    "snyk": "^1.259.0",
+    "uuid": "^3.3.2",
+    "vue": "^2.6.10",
+    "vue-a11y-dialog": "^0.5.0",
+    "vue-feather-icons": "^5.0.0",
+    "vue-meta": "^2.3.3",
+    "vue-mq": "^1.0.1",
+    "vue-router": "^3.0.6",
+    "vue-svgicon": "^3.2.6",
+    "vue-touch": "^2.0.0-beta.4",
+    "vuex": "^3.1.1",
+    "vuex-router-sync": "^5.0.0"
+  },
+  "devDependencies": {
+    "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
+    "@babel/core": "^7.4.4",
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-plugin-pwa": "^3.7.0",
+    "@vue/cli-plugin-unit-jest": "^4.0.0",
+    "@vue/cli-service": "^3.7.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^24.9.0",
+    "commitizen": "^3.1.1",
+    "cssnano": "^4.1.10",
+    "lint-staged": "^8.1.6",
+    "postcss-calc": "^7.0.1",
+    "postcss-color-mod-function": "^3.0.3",
+    "postcss-custom-properties": "^8.0.10",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.6.0",
+    "postcss-reporter": "^6.0.1",
+    "postcss-url": "^8.0.0",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-processor-html": "^1.0.0",
+    "vue-markdown-loader": "^2.4.1",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.{vue,htm,html,css,sss,less,scss}": [
+      "vue-cli-service lint:style",
+      "git add"
+    ]
+  },
+  "snyk": true
+}
