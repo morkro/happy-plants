@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Box from '@happy-plants/shared/components/Box.vue'
 import HowTo from '@/app/intro/screens/HowTo'
-import Box from '@/components/Box'
 import store from '@/store'
 import router from '@/router'
 
