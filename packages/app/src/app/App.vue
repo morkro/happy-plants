@@ -163,6 +163,7 @@
         try {
           await this.authRedirectResults()
         } catch (error) {
+          console.error(error)
           this.showNotification()
         }
       // If not, we just want a regular authentication observer.
@@ -206,7 +207,7 @@
 
 <style lang="postcss">
   @import "normalize.css";
-  @import "../styles/colors";
+  @import "@happy-plants/shared/styles/colors";
   @import "../styles/animations";
   @import "../styles/media-queries";
   @import "../styles/fonts";

@@ -1,0 +1,7 @@
+{
+  "eslint.workingDirectories": [
+    "./packages/app",
+    "./packages/shared",
+    "./packages/landing",
+  ]
+}
