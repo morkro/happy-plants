@@ -1,0 +1,63 @@
+{
+  "name": "@happy-plants/landing",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Moritz Kröger <write@morkro.de>",
+  "description": "Landing page for HappyPlants app",
+  "homepage": "https://happyplants.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
+  },
+  "bugs": {
+    "url": "https://github.com/morkro/happy-plants/issues"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js,.vue .",
+    "precommit": "npm run lint",
+    "test": "jest",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "dependencies": {
+    "@happy-plants/shared": "^1.0.0",
+    "@nuxtjs/google-analytics": "^2.2.0",
+    "@nuxtjs/pwa": "^3.0.0-beta.16",
+    "nuxt": "^2.9.1",
+    "snyk": "^1.259.0",
+    "vue-feather-icons": "^5.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/eslint-config": "^1.1.2",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-config-standard": "^14.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.15.2",
+    "eslint-plugin-node": ">=8.0.1",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": ">=4.0.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "jest": "^24.9.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.16.4",
+    "stylelint": "^11.0.0",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-processor-html": "^1.0.0",
+    "stylelint-webpack-plugin": "^0.10.5",
+    "vue-jest": "^3.0.3"
+  },
+  "snyk": true
+}
