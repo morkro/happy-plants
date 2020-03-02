@@ -5,6 +5,7 @@ tests/coverage/
 coverage/
 
 # local env files
+.env
 .env.local
 .env.*.local
 
