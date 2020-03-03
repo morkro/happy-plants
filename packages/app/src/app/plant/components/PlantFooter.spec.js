@@ -1,16 +1,16 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { BoxIcon, TagIcon } from 'vue-feather-icons'
 import Button from '@/components/Button'
 import PlantFooter from '@/app/plant/components/PlantFooter'
 
-const localVue = createLocalVue()
-
 describe('app/plant/PlantFooter.vue', () => {
+  const localVue = createLocalVue()
   const options = {
     localVue,
     stubs: {
       'v-button': Button,
-      'feather-box': '<svg />',
-      'feather-tag': '<svg />'
+      'feather-box': BoxIcon,
+      'feather-tag': TagIcon
     }
   }
 

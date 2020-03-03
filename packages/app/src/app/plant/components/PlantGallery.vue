@@ -20,7 +20,8 @@
         v-else
         tag="div"
         @tap="forwardGallery"
-        @click="forwardGallery">
+        @click="forwardGallery"
+      >
         <ul class="gallery-list">
           <li v-for="(item, index) of previewList" :key="item.guid || index">
             <div v-if="item.empty" class="gallery-item-empty">
@@ -28,13 +29,15 @@
                 icon="cactus"
                 width="40"
                 height="40"
-                color="#000" />
+                color="#000"
+              />
             </div>
             <lazy-image
               v-else
               :source="item.imageURL"
               :alt="item.fileName"
-              :title="item.fileName" />
+              :title="item.fileName"
+            />
           </li>
         </ul>
       </v-touch>

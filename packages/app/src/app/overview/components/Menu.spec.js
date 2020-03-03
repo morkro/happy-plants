@@ -16,7 +16,7 @@ describe('app/overview/Menu.vue', () => {
     router,
     stubs: {
       'v-button': Button,
-      'svgicon': '<svg />',
+      svgicon: '<svg />',
       'feather-trash': '<svg />',
       'feather-grid': '<svg />',
       'feather-x': '<svg />'

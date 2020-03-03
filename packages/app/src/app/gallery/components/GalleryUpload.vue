@@ -4,17 +4,20 @@
       ref="fileUpload"
       name="add-gallery-file"
       :disable-preview="true"
-      @file-selected="onFileSelected" />
+      @file-selected="onFileSelected"
+    />
 
     <v-button
       aria-label="Add photo"
       type="circle"
       :color="editMode ? 'red' : 'default'"
       :loading="loading"
-      @click.native="onClickButton">
+      @click.native="onClickButton"
+    >
       <template v-slot:icon>
         <div v-if="!editMode"
-          class="add-photo-icon">
+             class="add-photo-icon"
+        >
           <feather-plus />
           <feather-image />
         </div>

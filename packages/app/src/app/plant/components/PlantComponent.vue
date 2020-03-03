@@ -10,7 +10,8 @@
         <button
           type="button"
           class="icon"
-          aria-role="Options">
+          aria-role="Options"
+        >
           <feather-more-horizontal />
         </button>
       </div>

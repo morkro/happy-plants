@@ -1,16 +1,18 @@
 <template>
   <v-touch tag="ul"
-    ref="selectableList"
-    :class="['selectable-list', { 'edit-mode': editMode }]"
-    v-bind="$attrs"
-    v-on="filterListeners"
-    @tap="onTapList"
-    @click="onTapList"
-    @press="onPressList">
+           ref="selectableList"
+           :class="['selectable-list', { 'edit-mode': editMode }]"
+           v-bind="$attrs"
+           v-on="filterListeners"
+           @tap="onTapList"
+           @click="onTapList"
+           @press="onPressList"
+  >
     <li
       v-for="(item, index) in items"
       :key="item.guid || index"
-      :class="{ selected: isSelected(item.guid) }">
+      :class="{ selected: isSelected(item.guid) }"
+    >
       <slot :data="item" :selected="isSelected(item.guid)" />
     </li>
   </v-touch>

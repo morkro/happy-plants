@@ -5,7 +5,8 @@
       id="overview-dialog"
       type="danger"
       :show="showDialog"
-      @close-dialog="cancelDeleteMode">
+      @close-dialog="cancelDeleteMode"
+    >
       <template v-slot:headline>
         <span>Are you sure?</span>
       </template>
@@ -16,15 +17,17 @@
         <v-button
           color="yellow"
           :loading="deletePlantsProgress"
-          @click.native="confirmDeletePlants">
+          @click.native="confirmDeletePlants"
+        >
           Yes, delete plants
         </v-button>
       </div>
     </better-dialog>
 
     <div v-if="showBackdrop"
-      class="overview-backdrop"
-      @click="hideBackdrop" />
+         class="overview-backdrop"
+         @click="hideBackdrop"
+    />
 
     <main :class="['app-content', { 'loading': plantsLoading, 'no-data': noPlantData }]">
       <div v-if="plantsLoading && !plantsLoaded" class="content-loading-indicator box">
@@ -40,12 +43,17 @@
       </div>
 
       <div v-if="filterBy !== 'all'" class="plants-filtered-headline">
-        <h2>Filtered by <v-tag size="small">{{ filteredTag }}</v-tag></h2>
+        <h2>
+          Filtered by <v-tag size="small">
+            {{ filteredTag }}
+          </v-tag>
+        </h2>
         <v-button
           type="circle"
           color="plain"
           aria-label="Clear filter"
-          @click.native="clearFilter">
+          @click.native="clearFilter"
+        >
           <template v-slot:icon>
             <feather-x />
           </template>
@@ -61,7 +69,8 @@
         :tags="tags"
         :type="viewMode"
         :is-delete-mode="isDeleteMode"
-        :is-pressed-mode="isPressedMode" />
+        :is-pressed-mode="isPressedMode"
+      />
 
       <div :class="footerClass">
         <viewmode-menu
@@ -71,14 +80,16 @@
           :order-by="orderBy"
           :filter-by="filterBy"
           :tags="tags"
-          @update-mode="updateViewmodeFromMenu" />
+          @update-mode="updateViewmodeFromMenu"
+        />
 
         <!-- Delete button and control element. -->
         <delete-menu
           v-if="isDeleteMode"
           :selected="this.selection.length"
           @cancel-selection="cancelDeleteMode"
-          @delete-selection="activateDeleteMode" />
+          @delete-selection="activateDeleteMode"
+        />
 
         <overview-menu
           v-if="showMenu"
@@ -86,7 +97,8 @@
           :show-viewmode="!!plants.length"
           :show-delete="!!plants.length"
           :disable-menu="isViewMode"
-          @clicked-item="updateEditMode" />
+          @clicked-item="updateEditMode"
+        />
       </div>
     </main>
   </div>
@@ -109,8 +121,6 @@
       'overview-menu': OverviewMenu,
       'delete-menu': DeleteMenu,
       'viewmode-menu': ViewmodeMenu,
-      'feather-arrow-down': () =>
-        import('vue-feather-icons/icons/ArrowDownIcon' /* webpackChunkName: "icons" */),
       'feather-x': () =>
         import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
       'feather-refresh': () =>
@@ -144,7 +154,7 @@
       },
       footerClass () {
         return ['overview-footer-menu', {
-          'editmode': this.editMode,
+          editmode: this.editMode,
           [`mode-${this.editMode}`]: this.editMode
         }]
       },

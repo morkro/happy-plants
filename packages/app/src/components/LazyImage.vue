@@ -4,7 +4,8 @@
     <img
       :data-src="source"
       :alt="alt"
-      :title="title || alt">
+      :title="title || alt"
+    >
   </figure>
 </template>
 

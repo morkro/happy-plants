@@ -12,7 +12,8 @@
       <better-dialog
         id="plant-notes-dialog"
         :show="showNotes"
-        @close-dialog="closeNotes">
+        @close-dialog="closeNotes"
+      >
         <template v-slot:headline>
           <span>Notebook</span>
         </template>
@@ -20,7 +21,8 @@
         <div>
           <textarea
             @change="updateContent"
-            :value="content" />
+            :value="content"
+          />
 
           <v-button @click.native="closeAndSaveNotes">
             Save
@@ -29,8 +31,9 @@
       </better-dialog>
 
       <div v-if="!content"
-        key="notes-empty"
-        class="notes-empty">
+           key="notes-empty"
+           class="notes-empty"
+      >
         <p>Seems like you haven't added any notes yet.</p>
         <v-button @click.native="toggleNotes">
           Add notes
@@ -38,8 +41,9 @@
       </div>
 
       <div v-else
-        key="notes-available"
-        :class="{ 'notes-available': true, 'show-all': showAllNotes }">
+           key="notes-available"
+           :class="{ 'notes-available': true, 'show-all': showAllNotes }"
+      >
         <div class="notes-preview">
           <p>{{ content }}</p>
         </div>

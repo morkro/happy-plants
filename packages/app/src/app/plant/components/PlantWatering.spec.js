@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { DropletIcon } from 'vue-feather-icons'
 import VueTouch from 'vue-touch'
 import PlantWatering from '@/app/plant/components/PlantWatering'
 
@@ -7,7 +8,11 @@ localVue.use(VueTouch)
 
 describe('app/plant/PlantWatering.vue', () => {
   const options = {
-    localVue
+    localVue,
+    stubs: {
+      'better-dialog': '<div />',
+      'feather-droplet': DropletIcon
+    }
   }
 
   it('is a Vue component', () => {

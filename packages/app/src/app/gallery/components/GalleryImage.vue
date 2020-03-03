@@ -7,7 +7,8 @@
     <lazy-image
       :source="source"
       :alt="name"
-      :title="name" />
+      :title="name"
+    />
   </div>
 </template>
 

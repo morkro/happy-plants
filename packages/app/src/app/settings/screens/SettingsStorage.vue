@@ -37,7 +37,8 @@
     <better-dialog
       id="storage-dialog"
       :show="showCloudDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>Migrate data to {{ storageTypeName }}</span>
       </template>
@@ -87,7 +88,8 @@
         <!-- Action for "local" migration -->
         <v-button
           v-if="showDialogInfoContent('local') || showDialogInfoContent('cloud')"
-          @click.native="switchStorageType">
+          @click.native="switchStorageType"
+        >
           I understand, let's go
         </v-button>
       </div>

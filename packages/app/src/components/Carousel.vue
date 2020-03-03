@@ -3,7 +3,8 @@
     <span
       class="visuallyhidden"
       aria-live="polite"
-      aria-atomic="true">
+      aria-atomic="true"
+    >
       Slide {{ currentIndex + 1 }} of {{ items.length }}
     </span>
 
@@ -14,8 +15,9 @@
         @panmove="onPanMove"
         @panend="onPanEnd"
         :class="['carousel-inner', { 'is-moving': isAnimating }]"
-        :style="{ transform: cssTransform }">
-        <slot/>
+        :style="{ transform: cssTransform }"
+      >
+        <slot />
       </v-touch>
     </div>
 
@@ -25,7 +27,8 @@
           @click="onShowSlide(index)"
           :aria-controls="id"
           :aria-selected="!!(currentIndex === index)"
-          :class="{ active: currentIndex === index }">
+          :class="{ active: currentIndex === index }"
+        >
           <span class="visuallyhidden">Slide {{ index }}</span>
         </button>
       </li>

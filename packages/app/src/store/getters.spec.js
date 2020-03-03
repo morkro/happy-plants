@@ -22,24 +22,24 @@ const localState = {
   plants: {
     data: [
       {
-        'blob': null,
-        'created': 1510936448969,
-        'guid': '9ef74253-e66f-423b-8107-130975070d5b',
-        'imageURL': '',
-        'modified': 1529960811305,
-        'modules': [],
-        'name': '× Citrofortunella microcarpa',
-        'tags': []
+        blob: null,
+        created: 1510936448969,
+        guid: '9ef74253-e66f-423b-8107-130975070d5b',
+        imageURL: '',
+        modified: 1529960811305,
+        modules: [],
+        name: '× Citrofortunella microcarpa',
+        tags: []
       },
       {
-        'blob': null,
-        'created': 1510936811778,
-        'guid': 'c8e37088-5d0b-4887-979c-8e172a23de53',
-        'imageURL': '',
-        'modified': 1530101431198,
-        'modules': [],
-        'name': 'Adenium obesum',
-        'tags': []
+        blob: null,
+        created: 1510936811778,
+        guid: 'c8e37088-5d0b-4887-979c-8e172a23de53',
+        imageURL: '',
+        modified: 1530101431198,
+        modules: [],
+        name: 'Adenium obesum',
+        tags: []
       }
     ]
   }

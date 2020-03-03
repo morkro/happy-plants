@@ -154,10 +154,12 @@ describe('app/plant/mutations/delete.js', () => {
         ]
       }
     }
-    mutations.DELETE_PLANTS_SUCCESS(state, { items: [
+    mutations.DELETE_PLANTS_SUCCESS(state, {
+ items: [
       { guid: 'c05c08a7-552c-4895-a431-62455c6966df' },
       { guid: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf' }
-    ] })
+    ]
+})
     expect(state.plants.data).toEqual(expect.arrayContaining([
       { guid: '526a9181-f84a-45c2-9a0a-7654979277c9' },
       { guid: '6e7e20bc-436e-4267-ae59-07e6686b6a2d' }
@@ -179,20 +181,20 @@ describe('app/plant/mutations/load.js', () => {
   })
 
   it('LOAD_PLANTS_TOTAL_COUNT', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.LOAD_PLANTS_TOTAL_COUNT(state, { total: 10 })
     expect(state.plants.loading).toBe(true)
     expect(state.plants.data).toHaveLength(10)
   })
 
   it('LOAD_PLANTS_PROGRESS', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.LOAD_PLANTS_PROGRESS(state)
     expect(state.plants.loading).toBe(true)
   })
 
   it('LOAD_PLANTS_FAILURE', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.LOAD_PLANTS_FAILURE(state)
     expect(state.plants.loading).toBe(false)
     expect(state.plants.finished).toBe(true)
@@ -213,10 +215,12 @@ describe('app/plant/mutations/update.js', () => {
         }]
       }
     }
-    mutations.UPDATE_PLANT(state, { plant: {
+    mutations.UPDATE_PLANT(state, {
+ plant: {
       name: 'New name',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'
-    } })
+    }
+})
     expect(state.plants.data).toEqual(expect.arrayContaining([{
       name: 'New name',
       guid: '526a9181-f84a-45c2-9a0a-7654979277c9'

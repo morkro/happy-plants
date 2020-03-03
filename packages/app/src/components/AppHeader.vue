@@ -6,7 +6,8 @@
           v-if="backButton"
           :to="backPath"
           :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
-          aria-label="Back">
+          aria-label="Back"
+        >
           <feather-arrow-left :stroke="color" />
         </router-link>
         <slot name="custom-action-left" />
@@ -21,7 +22,8 @@
           v-if="rightBtn === 'settings'"
           :to="{ path: '/settings' }"
           :class="{ 'link-wrapper': true, 'backdrop': showIconBackdrop }"
-          aria-label="Settings">
+          aria-label="Settings"
+        >
           <div :class="['header-settings-icon', { 'highlight': showNotification }]">
             <feather-settings />
           </div>
@@ -30,7 +32,8 @@
           v-else-if="typeof rightBtn === 'string' && rightBtn !== false"
           :aria-label="rightBtn"
           :class="rightBtnClass"
-          @click.native.prevent="rightBtnOnClick">
+          @click.native.prevent="rightBtnOnClick"
+        >
           <template v-slot:icon>
             <component :is="`feather-${rightBtn}`" />
           </template>
@@ -72,9 +75,9 @@
       rightBtnClass () {
         return {
           'edit-data': true,
-          'icon': true,
-          'inverse': !this.isWhite(this.color),
-          'backdrop': this.showIconBackdrop
+          icon: true,
+          inverse: !this.isWhite(this.color),
+          backdrop: this.showIconBackdrop
         }
       }
     },

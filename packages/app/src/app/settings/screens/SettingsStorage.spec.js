@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { CloudIcon, SmartphoneIcon, LoaderIcon, CheckIcon } from 'vue-feather-icons'
 import SettingsStorage from '@/app/settings/screens/SettingsStorage'
 import Button from '@/components/Button'
 import store from '@/store'
@@ -14,10 +15,10 @@ describe('app/settings/SettingsStorage.vue', () => {
     router,
     stubs: {
       'better-dialog': '<div />',
-      'feather-cloud': '<div />',
-      'feather-smartphone': '<div />',
-      'feather-loader': '<div />',
-      'feather-check': '<div />',
+      'feather-cloud': CloudIcon,
+      'feather-smartphone': SmartphoneIcon,
+      'feather-loader': LoaderIcon,
+      'feather-check': CheckIcon,
       'v-button': Button
     }
   }

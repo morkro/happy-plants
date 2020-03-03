@@ -12,7 +12,8 @@
       <better-dialog
         id="plant-watering-dialog"
         :show="showRoutineSelection"
-        @close-dialog="closeRoutineDialog">
+        @close-dialog="closeRoutineDialog"
+      >
         <template v-slot:headline>
           <span>Choose frequency</span>
         </template>
@@ -25,7 +26,8 @@
                 :id="type"
                 :value="type"
                 :checked="type === frequency"
-                @change="onEmitFrequencyChange(type)">
+                @change="onEmitFrequencyChange(type)"
+              >
               <span>{{ type }}</span>
             </label>
           </li>
@@ -38,7 +40,8 @@
           <button
             type="button"
             class="watering-routine"
-            @click="selectRoutine">
+            @click="selectRoutine"
+          >
             {{ frequency }}
           </button>
           and
@@ -50,11 +53,12 @@
 
       <div class="droplet-canvas">
         <v-touch tag="div"
-          :class="{ 'droplet': true, 'active': index <= (amount - 1) }"
-          :key="item.level"
-          v-for="(item, index) in amountLevels"
-          @tap="onEmitAmountChange($event, item)" />
-        <div :class="{ 'droplet-background': true, 'active': amount >= 3 }"/>
+                 :class="{ 'droplet': true, 'active': index <= (amount - 1) }"
+                 :key="item.level"
+                 v-for="(item, index) in amountLevels"
+                 @tap="onEmitAmountChange($event, item)"
+        />
+        <div :class="{ 'droplet-background': true, 'active': amount >= 3 }" />
       </div>
     </template>
   </plant-component>

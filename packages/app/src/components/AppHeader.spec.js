@@ -43,7 +43,8 @@ describe('components/AppHeader.vue', () => {
 
   it('settingsOnClick() works as expected', () => {
     const rightBtnOnClick = jest.fn()
-    const wrapper = shallowMount(AppHeader, { ...options,
+    const wrapper = shallowMount(AppHeader, {
+ ...options,
       propsData: {
         rightBtnOnClick,
         rightBtn: 'edit'

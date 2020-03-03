@@ -29,7 +29,7 @@ describe('components/FileUpload.vue', () => {
     expect(wrapper.props().disablePreview).toEqual(false)
   })
 
-  it(`computed 'acceptedFilePattern' is always a string`, () => {
+  it('computed \'acceptedFilePattern\' is always a string', () => {
     const wrapper = shallowMount(FileUpload, Object.assign({}, options, {
       propsData: {
         accepts: ['.foo', '.bar']

@@ -7,19 +7,19 @@
 export default function hermiteResize (canvas, W, H, W2 = W / 2, H2 = H / 2) {
   if (!canvas) return
 
-  let time1 = Date.now()
-  let img = canvas.getContext('2d').getImageData(0, 0, W, H)
-  let img2 = canvas.getContext('2d').getImageData(0, 0, W2, H2)
-  let data = img.data
-  let data2 = img2.data
-  let ratioWidth = W / W2
-  let ratioHeight = H / H2
-  let ratioWidthHalf = Math.ceil(ratioWidth / 2)
-  let ratioHeightHalf = Math.ceil(ratioHeight / 2)
+  const time1 = Date.now()
+  const img = canvas.getContext('2d').getImageData(0, 0, W, H)
+  const img2 = canvas.getContext('2d').getImageData(0, 0, W2, H2)
+  const data = img.data
+  const data2 = img2.data
+  const ratioWidth = W / W2
+  const ratioHeight = H / H2
+  const ratioWidthHalf = Math.ceil(ratioWidth / 2)
+  const ratioHeightHalf = Math.ceil(ratioHeight / 2)
 
   for (let j = 0; j < H2; j++) {
     for (let i = 0; i < W2; i++) {
-      let x2 = (i + j * W2) * 4
+      const x2 = (i + j * W2) * 4
       let weight = 0
       let weights = 0
       let weightsAlpha = 0
@@ -27,14 +27,14 @@ export default function hermiteResize (canvas, W, H, W2 = W / 2, H2 = H / 2) {
       let gxG = 0
       let gxB = 0
       let gxA = 0
-      let centerY = (j + 0.5) * ratioHeight
+      const centerY = (j + 0.5) * ratioHeight
       for (let yy = Math.floor(j * ratioHeight); yy < (j + 1) * ratioHeight; yy++) {
-        let dy = Math.abs(centerY - (yy + 0.5)) / ratioHeightHalf
-        let centerX = (i + 0.5) * ratioWidth
-        let w0 = dy * dy // pre-calc part of w
+        const dy = Math.abs(centerY - (yy + 0.5)) / ratioHeightHalf
+        const centerX = (i + 0.5) * ratioWidth
+        const w0 = dy * dy // pre-calc part of w
         for (let xx = Math.floor(i * ratioWidth); xx < (i + 1) * ratioWidth; xx++) {
           let dx = Math.abs(centerX - (xx + 0.5)) / ratioWidthHalf
-          let w = Math.sqrt(w0 + dx * dx)
+          const w = Math.sqrt(w0 + dx * dx)
           if (w >= -1 && w <= 1) {
             // hermite filter
             weight = 2 * w * w * w - 3 * w * w + 1

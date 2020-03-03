@@ -1,12 +1,19 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { ArrowRightIcon, LoaderIcon } from 'vue-feather-icons'
 import IntroStart from '@/app/intro/screens/Welcome'
 import PlantWatering from '@/app/plant/components/PlantWatering'
 import PlantSunshine from '@/app/plant/components/PlantSunshine'
 import PlantSeasons from '@/app/plant/components/PlantSeasons'
 import Button from '@/components/Button'
+import AuthProviderList from '@/components/AuthProviderList'
 import Box from '@happy-plants/shared/components/Box.vue'
 import store from '@/store'
 import router from '@/router'
+
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: jest.fn()
+})
 
 const localVue = createLocalVue()
 
@@ -21,10 +28,11 @@ describe('app/intro/Welcome.vue', () => {
       'plant-watering': PlantWatering,
       'plant-sunshine': PlantSunshine,
       'plant-seasons': PlantSeasons,
-      'feather-right': '<svg />',
+      'feather-right': ArrowRightIcon,
+      'feather-loader': LoaderIcon,
       'better-dialog': '<div />',
       'v-carousel': '<div />',
-      'auth-provider-list': '<div />'
+      'auth-provider-list': AuthProviderList
     }
   }
 

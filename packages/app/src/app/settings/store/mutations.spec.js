@@ -142,19 +142,23 @@ describe('app/settings/mutations/tags.js', () => {
     }
 
     // Force delete works as expected
-    mutations.DELETE_TAG_SUCCESS(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, {
+ item: {
       tag: '6e7e20bc-436e-4267-ae59-07e6686b6a2d',
       forceDelete: true
-    } })
+    }
+})
     expect(state.tags.data.length).toEqual(1)
     expect(state.tags.data.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
       .toBeUndefined()
 
     // Delete just the plant
-    mutations.DELETE_TAG_SUCCESS(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, {
+ item: {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid'
-    } })
+    }
+})
     expect(state.tags.data).toEqual(expect.arrayContaining([{
       name: 'awesome-tag',
       label: 'Awesome tag',
@@ -163,10 +167,12 @@ describe('app/settings/mutations/tags.js', () => {
     }]))
 
     // Delete tag if no plants anymore
-    mutations.DELETE_TAG_SUCCESS(state, { item: {
+    mutations.DELETE_TAG_SUCCESS(state, {
+ item: {
       tag: 'c0eb2d07-8504-40cf-ad63-efe3fc86fdbf',
       plant: 'guid2'
-    } })
+    }
+})
     expect(state.tags.data.length).toEqual(0)
     expect(state.tags.data.find(t => t.guid === '6e7e20bc-436e-4267-ae59-07e6686b6a2d'))
       .toBeUndefined()

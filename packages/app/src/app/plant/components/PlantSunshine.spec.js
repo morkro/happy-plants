@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueTouch from 'vue-touch'
+import { SunIcon } from 'vue-feather-icons'
 import PlantSunshine from '@/app/plant/components/PlantSunshine'
 
 const localVue = createLocalVue()
@@ -7,7 +8,10 @@ localVue.use(VueTouch)
 
 describe('app/plant/PlantSunshine.vue', () => {
   const options = {
-    localVue
+    localVue,
+    stubs: {
+      'feather-sun': SunIcon
+    }
   }
 
   it('is a Vue component', () => {
