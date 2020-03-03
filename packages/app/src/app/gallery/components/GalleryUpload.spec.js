@@ -27,7 +27,7 @@ describe('app/gallery/GalleryOptions.vue', () => {
     expect(wrapper.props().loading).toEqual(false)
   })
 
-  it(`emit 'trigger-{selection|delete}' works`, () => {
+  it('emit \'trigger-{selection|delete}\' works', () => {
     const wrapper = shallowMount(GalleryUpload, options)
     const button = wrapper.find(Button)
     button.trigger('click')

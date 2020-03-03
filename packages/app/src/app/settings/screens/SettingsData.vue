@@ -4,7 +4,8 @@
       id="settings-dialog"
       :type="this.modalType"
       :show="showDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>{{ modalTitle }}</span>
       </template>
@@ -18,7 +19,8 @@
         <v-button
           color="yellow"
           :loading="deleteAllDataProgress"
-          @click.native="deleteApplicationData">
+          @click.native="deleteApplicationData"
+        >
           I understand, delete my data
         </v-button>
       </div>
@@ -30,7 +32,8 @@
               name="import-data"
               accepts=".json"
               :disable-preview="true"
-              @file-selected="getImportFile" />
+              @file-selected="getImportFile"
+            />
           </label>
 
           <p>
@@ -43,7 +46,8 @@
                 type="radio"
                 name="import-type"
                 :id="type.id"
-                @change="updateImportType(type.id)">
+                @change="updateImportType(type.id)"
+              >
               <label :for="type.id">
                 {{ type.label }}
                 <span>{{ type.description }}</span>
@@ -55,7 +59,8 @@
         <v-button
           :disabled="file === null || selectedImportType === false"
           :loading="importDataProgress"
-          @click.native.prevent="importApplicationData">
+          @click.native.prevent="importApplicationData"
+        >
           Import
         </v-button>
       </div>

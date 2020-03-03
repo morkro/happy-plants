@@ -8,6 +8,11 @@ import store from '@/store'
 import mutations from '@/store/mutations'
 import router from '@/router'
 
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: jest.fn()
+})
+
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(Router)

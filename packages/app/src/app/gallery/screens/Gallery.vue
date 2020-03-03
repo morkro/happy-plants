@@ -3,7 +3,8 @@
     <better-dialog
       id="gallery-dialog"
       :show="showDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>{{ uploadedPhotoName }}</span>
       </template>
@@ -13,7 +14,8 @@
           <img
             :alt="uploadedPhotoName"
             :title="uploadedPhotoName"
-            :src="uploadedPhoto">
+            :src="uploadedPhoto"
+          >
         </div>
 
         <v-button :loading="addGalleryItemProgress" @click.native="addPhotoToGallery">
@@ -27,7 +29,8 @@
         v-if="fullscreen"
         :current="listIndex + 1"
         :total="galleryData.length"
-        @delete-photo="deletePhoto" />
+        @delete-photo="deletePhoto"
+      />
 
       <gallery-upload
         v-if="!fullscreen"
@@ -36,7 +39,8 @@
         :loading="deleteGalleryItemProgress"
         @photo-selected="getPhoto"
         @trigger-selection="openAddPhoto"
-        @trigger-delete="deleteSelectedPhotos" />
+        @trigger-delete="deleteSelectedPhotos"
+      />
 
       <div v-if="galleryData.length" class="gallery-list-wrapper">
         <v-button
@@ -45,7 +49,8 @@
           :type="['circle', 'small']"
           class="gallery-control-prev icon inverse"
           aria-label="Previous photo"
-          @click.native="moveGallery('right')">
+          @click.native="moveGallery('right')"
+        >
           <template v-slot:icon>
             <feather-left />
           </template>
@@ -57,7 +62,8 @@
           :type="['circle', 'small']"
           class="gallery-control-next icon inverse"
           aria-label="Next photo"
-          @click.native="moveGallery('left')">
+          @click.native="moveGallery('left')"
+        >
           <template v-slot:icon>
             <feather-right />
           </template>
@@ -72,7 +78,8 @@
           @tap="showGallery"
           @selected="getSelectedItems"
           @panend="moveGallery"
-          @edit-mode="toggleListEditMode">
+          @edit-mode="toggleListEditMode"
+        >
           <template v-slot="{ data: image, selected }">
             <gallery-image
               v-if="image && image.imageURL"
@@ -298,7 +305,7 @@
         this.listEditMode = value
         if (this.listEditMode) {
           this.updateAppHeader({
-            title: `0 selected`,
+            title: '0 selected',
             backBtn: false,
             rightBtn: 'close',
             rightBtnOnClick: () => this.$refs.galleryList.clearSelection()

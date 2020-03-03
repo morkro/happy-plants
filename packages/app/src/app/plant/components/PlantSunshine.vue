@@ -22,7 +22,8 @@
           :key="`intensity-${index}`"
           :class="{ active: isActiveLevel(index) }"
           @tap="onEmitIntensityChange($event, level)"
-          @click="onEmitIntensityChange($event, level)" />
+          @click="onEmitIntensityChange($event, level)"
+        />
       </div>
     </template>
   </plant-component>

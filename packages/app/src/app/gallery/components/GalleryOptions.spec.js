@@ -24,7 +24,7 @@ describe('app/gallery/GalleryOptions.vue', () => {
     expect(wrapper.props().total).toEqual(0)
   })
 
-  it(`emit 'delete-photo' works`, () => {
+  it('emit \'delete-photo\' works', () => {
     const wrapper = shallowMount(GalleryOptions, options)
     const button = wrapper.find(Button)
     button.trigger('click')

@@ -6,7 +6,8 @@
           color="transparent"
           aria-label="View mode"
           :class="`view-mode icon ${disableMenu ? '' : 'inverse'}`"
-          @click.native.prevent="emitMenuAction('view-mode')">
+          @click.native.prevent="emitMenuAction('view-mode')"
+        >
           <template v-slot:icon>
             <feather-grid v-if="!disableMenu" />
             <feather-x v-else />
@@ -20,11 +21,13 @@
       aria-label="Add plant"
       class="add-plant transparent"
       :to="{ path: 'add' }"
-      :event="disableMenu ? '' : 'click'">
+      :event="disableMenu ? '' : 'click'"
+    >
       <svgicon icon="leaf"
-        width="20"
-        height="28"
-        color="#000" />
+               width="20"
+               height="28"
+               color="#000"
+      />
     </router-link>
 
     <ul class="menu-right">
@@ -33,7 +36,8 @@
           color="transparent"
           aria-label="Trash"
           class="delete"
-          @click.native.prevent="emitMenuAction('delete')">
+          @click.native.prevent="emitMenuAction('delete')"
+        >
           <template v-slot:icon>
             <feather-trash />
           </template>
@@ -69,8 +73,8 @@
       wrapperClass () {
         return {
           'overview-menu': true,
-          'single': this.noElements,
-          'disabled': this.disableMenu
+          single: this.noElements,
+          disabled: this.disableMenu
         }
       }
     },

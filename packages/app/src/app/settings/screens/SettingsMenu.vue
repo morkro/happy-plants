@@ -3,7 +3,8 @@
     <better-dialog
       id="settings-happy-dialog"
       :show="showLoginDialog"
-      @close-dialog="closeLoginDialog">
+      @close-dialog="closeLoginDialog"
+    >
       <template v-slot:headline>
         <span>Select login</span>
       </template>
@@ -18,14 +19,16 @@
     <ul class="settings-menu-list">
       <li
         v-for="category in menu"
-        :key="category.label">
+        :key="category.label"
+      >
         <h3>{{ category.label }}</h3>
 
         <ul class="settings-submenu">
           <li
             v-for="(item, index) in category.children"
             :key="index"
-            :class="`menu-${item.label.toLowerCase()}`">
+            :class="`menu-${item.label.toLowerCase()}`"
+          >
             <router-link v-if="item.type === 'link'" :to="{ name: item.name }">
               <div class="menu-item-text">
                 <span>{{ item.label }}</span>
@@ -42,12 +45,13 @@
               <span>{{ item.label }}</span>
               <div v-if="item.buttons">
                 <v-button
-                  v-for="(option, index) in item.buttons"
-                  :key="index"
+                  v-for="(option, btnIndex) in item.buttons"
+                  :key="btnIndex"
                   type="small"
                   :color="getThemeButtonColor(option.option)"
                   :class="getThemeButtonClass(option.option)"
-                  @click.native="emitThemeChange(option.option)">
+                  @click.native="emitThemeChange(option.option)"
+                >
                   {{ option.label }}
                 </v-button>
               </div>
@@ -71,8 +75,9 @@
                   type="small"
                   :loading="logOutProgress"
                   :disabled="logOutProgress"
-                  @click.native="logOutUser">
-                Logout
+                  @click.native="logOutUser"
+                >
+                  Logout
                 </v-button>
               </div>
             </div>
@@ -82,7 +87,7 @@
               </span>
               <div>
                 <v-button type="small" @click.native="openLoginDialog">
-                Login
+                  Login
                 </v-button>
               </div>
             </div>

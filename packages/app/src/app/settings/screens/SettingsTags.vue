@@ -8,14 +8,16 @@
       :loading="updateTagProgress"
       @content-update="editTagLabel"
       @content-error="showTagUpdateError"
-      @close-dialog="closeModal" />
+      @close-dialog="closeModal"
+    />
 
     <!-- Alert as confirmation to delete tag. -->
     <better-dialog
       id="settings-tags-delete"
       type="danger"
       :show="showDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>Delete tag</span>
       </template>
@@ -29,7 +31,8 @@
         <v-button
           color="yellow"
           :loading="deleteTagProgress"
-          @click.native="confirmDeleteTag">
+          @click.native="confirmDeleteTag"
+        >
           Delete tag
         </v-button>
       </div>
@@ -55,7 +58,8 @@
           <li v-for="(tag, index) in tags" :key="`tag-${index}`">
             <tag-item
               :label="tag.label"
-              :count="tag.plants.length" />
+              :count="tag.plants.length"
+            />
 
             <div class="tags-actions">
               <v-button
@@ -63,7 +67,8 @@
                 color="plain"
                 class="edit"
                 aria-label="Edit tag"
-                @click.native="openTagModal(tag)">
+                @click.native="openTagModal(tag)"
+              >
                 <template v-slot:icon>
                   <feather-edit />
                 </template>
@@ -73,7 +78,8 @@
                 color="plain"
                 class="delete"
                 aria-label="Delete tag"
-                @click.native="openTagDialog($event, tag)">
+                @click.native="openTagDialog($event, tag)"
+              >
                 <template v-slot:icon>
                   <feather-trash />
                 </template>
@@ -101,8 +107,6 @@
     components: {
       'tag-modal': TagModal,
       'tag-item': TagItem,
-      'feather-plus': () =>
-        import('vue-feather-icons/icons/PlusIcon' /* webpackChunkName: "icons" */),
       'feather-edit': () =>
         import('vue-feather-icons/icons/Edit2Icon' /* webpackChunkName: "icons" */),
       'feather-tag': () =>
@@ -170,7 +174,7 @@
         await this.updateTag(tag)
         this.updateTagProgress = false
 
-        this.showNotification({ message: `Updated tag.` })
+        this.showNotification({ message: 'Updated tag.' })
       },
       openTagModal (tag) {
         this.selectedTag = tag

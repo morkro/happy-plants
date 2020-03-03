@@ -3,7 +3,8 @@
     <better-dialog
       id="intro-welcome-signin"
       :show="showDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>Welcome back!</span>
       </template>
@@ -22,7 +23,8 @@
           src="@/assets/happyplants-logo.svg"
           alt="HappyPlants Logo"
           title="HappyPlants Logo"
-          width="100%">
+          width="100%"
+        >
 
         <h2>
           HappyPlants is all about collecting, organising, and
@@ -70,7 +72,8 @@
         <v-button
           @click.native="nextStep"
           :disabled="disabled"
-          :loading="disabled">
+          :loading="disabled"
+        >
           <span>Getting started</span>
         </v-button>
       </li>
@@ -79,7 +82,8 @@
           @click.native="openDialog"
           color="grey"
           :disabled="disabled"
-          :loading="disabled">
+          :loading="disabled"
+        >
           <span>Sign in</span>
         </v-button>
       </li>
@@ -99,9 +103,7 @@
       'plant-sunshine': () =>
         import('@/app/plant/components/PlantSunshine' /* webpackChunkName: "intro" */),
       'plant-seasons': () =>
-        import('@/app/plant/components/PlantSeasons' /* webpackChunkName: "intro" */),
-      'feather-right': () =>
-        import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */)
+        import('@/app/plant/components/PlantSeasons' /* webpackChunkName: "intro" */)
     },
 
     computed: {

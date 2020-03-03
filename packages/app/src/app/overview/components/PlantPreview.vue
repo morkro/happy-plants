@@ -4,7 +4,8 @@
     @tap.prevent="handleInteraction"
     @press="handleInteraction"
     :class="wrapperClass"
-    :aria-label="ariaLabel">
+    :aria-label="ariaLabel"
+  >
     <div v-show="pressedMode" :class="getLayerClass('pressed')">
       <feather-check v-if="isPressedMode" />
       <feather-circle v-else />
@@ -14,11 +15,13 @@
       <feather-trash
         v-if="isDeleteMode"
         class="reverse"
-        key="icon-trash" />
+        key="icon-trash"
+      />
       <feather-circle
         v-else
         class="reverse"
-        key="icon-minus" />
+        key="icon-minus"
+      />
     </div>
 
     <div class="preview-content">
@@ -29,13 +32,15 @@
           :key="name"
           :alt="name"
           :title="name"
-          :source="imageUrl" />
+          :source="imageUrl"
+        />
         <svgicon
           v-if="!contentLoading && !imageUrl"
           icon="cactus"
           width="40"
           height="40"
-          color="#000" />
+          color="#000"
+        />
       </div>
 
       <div :class="['preview-content-inner', { 'three-columns': gallery.length && tags.length }]">
@@ -88,8 +93,6 @@
     components: {
       'feather-trash': () =>
         import('vue-feather-icons/icons/Trash2Icon' /* webpackChunkName: "icons" */),
-      'feather-plus': () =>
-        import('vue-feather-icons/icons/PlusSquareIcon' /* webpackChunkName: "icons" */),
       'feather-circle': () =>
         import('vue-feather-icons/icons/CircleIcon' /* webpackChunkName: "icons" */),
       'feather-check': () =>
@@ -135,7 +138,7 @@
           'no-photo': !this.imageUrl,
           'select-delete': this.deleteMode && this.selected,
           'select-pressed': this.pressedMode && this.pressed && this.selected,
-          'select': (this.pressedMode || this.deleteMode)
+          select: (this.pressedMode || this.deleteMode)
         }]
       }
     },
@@ -155,7 +158,7 @@
     methods: {
       getLayerClass (type) {
         return ['select-layer', type, {
-          'selected': (
+          selected: (
             (this.pressed && type === 'pressed') ||
             (this.deleteMode && type === 'delete' && this.selected) ||
             (this.categoriseMode && type === 'category' && this.selected)
@@ -195,7 +198,7 @@
         })
       },
       emitSelection () {
-        let type = 'toggle-delete-selection'
+        const type = 'toggle-delete-selection'
         const data = {
           guid: this.guid,
           selected: this.selected

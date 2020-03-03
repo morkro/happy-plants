@@ -12,7 +12,8 @@
         :pressed-mode="isPressedMode"
         :guid="plant.guid"
         :name="plant.name"
-        :image-url="plant.imageURL" />
+        :image-url="plant.imageURL"
+      />
     </li>
   </ul>
 </template>

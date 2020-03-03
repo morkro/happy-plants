@@ -2,12 +2,14 @@
   <section :class="['plant-tags', { 'edit-mode': showInput }]">
     <div
       :class="['plant-tags-module', { 'show-tooltip': showTooltip }]"
-      data-tooltip="Double tap to remove">
+      data-tooltip="Double tap to remove"
+    >
       <v-button
         color="plain"
         class="tags-add"
         @click.native="toggleNewTagInput"
-        :aria-label="ariaLabelToggle">
+        :aria-label="ariaLabelToggle"
+      >
         <template v-slot:icon>
           <feather-plus v-if="!showInput" />
           <feather-x v-else />
@@ -18,13 +20,15 @@
         <form
           v-if="showInput"
           class="tags-new"
-          @submit.prevent="addNewTag">
+          @submit.prevent="addNewTag"
+        >
           <input
             type="text"
             autocomplete="off"
             id="tag-new-name"
             ref="tagInput"
-            @change="getTagName">
+            @change="getTagName"
+          >
           <v-button class="tags-new-button" @click.native="addNewTag">
             <template v-slot:icon>
               <feather-check />
@@ -36,8 +40,9 @@
           <ul class="tags-list" v-if="hasTags">
             <li v-for="tag in tags" :key="tag.label">
               <v-touch tag="div"
-                @doubletap="toggleRemovable(tag)"
-                @tap="showRemovalNote">
+                       @doubletap="toggleRemovable(tag)"
+                       @tap="showRemovalNote"
+              >
                 <v-tag>
                   {{ tag.label }}
                 </v-tag>
@@ -54,7 +59,8 @@
               type="small"
               color="plain"
               class="hide-module"
-              @click.native.prevent="hideTagModule">
+              @click.native.prevent="hideTagModule"
+            >
               Hide
             </v-button>
           </div>
@@ -66,7 +72,7 @@
       <ul>
         <li v-for="(tag, index) in allTags" :key="index">
           <v-touch @tap="selectTag(tag)">
-            <v-tag >
+            <v-tag>
               <template v-slot:icon>
                 <feather-plus />
               </template>
@@ -78,8 +84,9 @@
     </div>
 
     <div v-if="showInput"
-      class="tags-backdrop"
-      @click.self="closeInputOutside"/>
+         class="tags-backdrop"
+         @click.self="closeInputOutside"
+    />
   </section>
 </template>
 

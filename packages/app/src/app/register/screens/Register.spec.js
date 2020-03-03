@@ -8,6 +8,11 @@ import Button from '@/components/Button'
 import store from '@/store'
 import router from '@/router'
 
+Object.defineProperty(window, 'scrollTo', {
+  writable: true,
+  value: jest.fn()
+})
+
 const localVue = createLocalVue()
 localVue.use(Vuex)
 localVue.use(Router)

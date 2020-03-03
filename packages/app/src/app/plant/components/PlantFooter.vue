@@ -3,7 +3,8 @@
     <v-button
       color="plain"
       class="footer-modules"
-      @click.native.prevent="emitShowModules">
+      @click.native.prevent="emitShowModules"
+    >
       <template v-slot:icon>
         <feather-box />
       </template>
@@ -18,7 +19,8 @@
       v-if="showTagButton"
       color="grey"
       class="footer-tags"
-      @click.native.prevent="emitShowTags">
+      @click.native.prevent="emitShowTags"
+    >
       <template v-slot:icon>
         <feather-tag />
       </template>

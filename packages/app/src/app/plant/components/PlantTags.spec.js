@@ -68,7 +68,7 @@ describe('app/plant/PlantTags.vue', () => {
     expect(wrapper.emitted('new-tag')).toEqual([[{ label: 'foo' }]])
   })
 
-  it(`adding empty tag won’t emit`, () => {
+  it('adding empty tag won’t emit', () => {
     const wrapper = shallowMount(PlantTags, options)
     wrapper.setData({ showInput: true })
 

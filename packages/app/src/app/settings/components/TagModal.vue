@@ -2,7 +2,8 @@
   <better-dialog
     id="settings-tags-dialog"
     :show="show"
-    @close-dialog="emitCloseDialog">
+    @close-dialog="emitCloseDialog"
+  >
     <template v-slot:headline>
       <span>Edit tag</span>
     </template>
@@ -14,7 +15,8 @@
           id="dialog-name"
           type="text"
           :value="tagLabel"
-          @change="updateLabelName">
+          @change="updateLabelName"
+        >
       </label>
 
       <v-button :loading="loading" @click.native="updateTag">

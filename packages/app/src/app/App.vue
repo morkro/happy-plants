@@ -2,7 +2,8 @@
   <div id="app">
     <app-notifications
       class="notifications"
-      :message="message" />
+      :message="message"
+    />
 
     <app-header
       :scroll-up="true"
@@ -12,7 +13,8 @@
       :right-btn-on-click="rightBtnOnClick"
       :back-button="backBtn"
       :back-path="backBtnPath"
-      :show-icon-backdrop="showIconBackdrop">
+      :show-icon-backdrop="showIconBackdrop"
+    >
       <template v-if="plantsLoading && !plantsLoaded" v-slot:custom-action-left>
         <div class="header-sync-data">
           <feather-refresh />
@@ -27,7 +29,8 @@
     <better-dialog
       id="new-release-dialog"
       :show="showReleaseDialog"
-      @close-dialog="emitCloseDialog">
+      @close-dialog="emitCloseDialog"
+    >
       <template v-slot:headline>
         <span>
           A new release has been downloaded!

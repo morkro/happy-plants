@@ -20,7 +20,8 @@
           <li
             v-for="(season, index) of seasons"
             :class="getSeasonListClass(season, index)"
-            :key="index">
+            :key="index"
+          >
             <button type="button" @click.self="emitSeasonToggle(season)">
               {{ season.month[0] }}
             </button>

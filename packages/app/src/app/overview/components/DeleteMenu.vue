@@ -3,7 +3,8 @@
     <v-button
       aria-label="Trash"
       class="delete icon"
-      @click.native="activate($event)">
+      @click.native="activate($event)"
+    >
       <template v-slot:icon>
         <feather-trash />
       </template>
@@ -17,7 +18,8 @@
       color="red"
       aria-label="Cancel trash"
       class="cancel icon"
-      @click.native="cancel($event)">
+      @click.native="cancel($event)"
+    >
       <template v-slot:icon>
         <feather-x />
       </template>

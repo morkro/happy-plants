@@ -12,7 +12,7 @@ describe('components/AppNotifications.vue', () => {
     expect(wrapper.props().message).toEqual(false)
   })
 
-  it(`is an empty element when no message is given`, () => {
+  it('is an empty element when no message is given', () => {
     const wrapper = shallowMount(AppNotifications)
     expect(wrapper.isEmpty()).toEqual(true)
   })

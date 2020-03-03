@@ -1,4 +1,12 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import {
+  GridIcon,
+  ListIcon,
+  LayersIcon,
+  HashIcon,
+  BoldIcon,
+  ClockIcon
+} from 'vue-feather-icons'
 import VueTouch from 'vue-touch'
 import ViewmodeMenu from '@/app/overview/components/ViewmodeMenu'
 
@@ -9,12 +17,12 @@ describe('app/overview/ViewmodeMenu.vue', () => {
   const options = {
     localVue,
     stubs: {
-      'feather-grid': '<svg />',
-      'feather-list': '<svg />',
-      'feather-layers': '<svg />',
-      'feather-hash': '<svg />',
-      'feather-bold': '<svg />',
-      'feather-clock': '<svg />'
+      'feather-grid': GridIcon,
+      'feather-list': ListIcon,
+      'feather-layers': LayersIcon,
+      'feather-hash': HashIcon,
+      'feather-bold': BoldIcon,
+      'feather-clock': ClockIcon
     }
   }
 
@@ -30,6 +38,7 @@ describe('app/overview/ViewmodeMenu.vue', () => {
 
   it('emitViewmodeUpdate()', () => {
     const wrapper = shallowMount(ViewmodeMenu, {
+      ...options,
       propsData: {
         tags: [{ name: 'foo' }, { name: 'bar' }]
       }

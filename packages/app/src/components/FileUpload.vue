@@ -5,20 +5,23 @@
       type="file"
       :id="name"
       :accept="acceptedFilePattern"
-      @change="emitPhoto">
+      @change="emitPhoto"
+    >
 
     <div class="upload-preview">
       <div :class="getWrapperClass">
         <img
           v-if="disablePreview === false && imageURL !== ''"
           :src="imageURL"
-          :alt="name">
+          :alt="name"
+        >
         <svgicon
           v-else
           icon="cactus"
           width="30"
           height="30"
-          color="#000" />
+          color="#000"
+        />
       </div>
 
       <span v-if="loading" class="loading-icon">

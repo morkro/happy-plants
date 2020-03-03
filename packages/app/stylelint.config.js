@@ -9,6 +9,7 @@ module.exports = {
     'declaration-empty-line-before': null,
     'custom-property-empty-line-before': null,
     'no-descending-specificity': null,
+    'function-calc-no-invalid': null,
     'length-zero-no-unit': [true, {
       ignore: ['custom-properties']
     }]

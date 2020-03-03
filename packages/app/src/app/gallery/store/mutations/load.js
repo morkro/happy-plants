@@ -18,7 +18,7 @@ export default {
   },
 
   LOAD_GALLERY_SINGLE (state, payload) {
-    let { index, gallery } = ensureGallery(state, payload.guid)
+    const { index, gallery } = ensureGallery(state, payload.guid)
     let galleryCopy = gallery.list
     const allGallery = galleryCopy
       .filter(gallery => !isEmptyObject(gallery))

@@ -3,9 +3,10 @@
     <div class="plant-header-view">
       <div :class="{ 'is-skeleton': contentLoading, 'no-photo': !imageUrl, 'header-content': true }">
         <v-touch tag="h1"
-          @tap="updateTitle"
-          :contenteditable="editTitle"
-          @blur.native="emitTitleUpdate">
+                 @tap="updateTitle"
+                 :contenteditable="editTitle"
+                 @blur.native="emitTitleUpdate"
+        >
           {{ name }}
         </v-touch>
       </div>
@@ -25,20 +26,23 @@
             name="header-file"
             :disable-preview="true"
             @loading-file="handleLoadingState"
-            @file-selected="assignNewPhoto" />
+            @file-selected="assignNewPhoto"
+          />
         </div>
 
         <img
           v-if="!contentLoading && imageUrl"
           :src="imageUrl"
-          :alt="name">
+          :alt="name"
+        >
 
         <svgicon
           v-else-if="!imageUrl"
           icon="cactus"
           width="50"
           height="50"
-          color="#000" />
+          color="#000"
+        />
       </v-touch>
     </div>
   </section>
@@ -59,9 +63,7 @@
       'feather-image': () =>
         import('vue-feather-icons/icons/ImageIcon' /* webpackChunkName: "icons" */),
       'feather-aperture': () =>
-        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */),
-      'feather-loader': () =>
-        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */)
+        import('vue-feather-icons/icons/ApertureIcon' /* webpackChunkName: "icons" */)
     },
 
     data: () => ({

@@ -2,7 +2,8 @@
   <better-dialog
     id="plant-edit-dialog"
     :show="show"
-    @close-dialog="emitCloseDialog">
+    @close-dialog="emitCloseDialog"
+  >
     <template v-slot:headline>
       <span>Delete plant</span>
     </template>
@@ -11,7 +12,8 @@
       <v-button
         color="red"
         :loading="loading"
-        @click.native="emitDeletePlant">
+        @click.native="emitDeletePlant"
+      >
         <template v-slot:icon>
           <feather-trash />
         </template>

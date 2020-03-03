@@ -7,19 +7,22 @@
       :created="plant.created"
       :loading="deletePlantProgress"
       @close-modal="closePlantEditModal"
-      @delete-plant="deletePlantFromModal" />
+      @delete-plant="deletePlantFromModal"
+    />
 
     <plant-module-manager
       :show="showModuleManager"
       :modules="plantModules"
       :storage-type="storageType"
       @updated-modules="updateModules"
-      @close-module-manager="cancelModuleManager" />
+      @close-module-manager="cancelModuleManager"
+    />
 
     <main :class="{
       'view-content': true,
       'no-modules': plant.modules && !plant.modules.length,
-      'app-content': true }">
+      'app-content': true }"
+    >
       <div>
         <plant-header
           :content-loading="plantLoading"
@@ -27,7 +30,8 @@
           :image-url="plant.imageURL"
           v-observe-visibility.60="observeVisibility"
           @update-name="updatePlantName"
-          @update-photo="updatePlantPhoto" />
+          @update-photo="updatePlantPhoto"
+        />
 
         <plant-tags
           v-if="Array.isArray(plant.tags)"
@@ -35,7 +39,8 @@
           :all-tags="tags"
           @new-tag="addNewPlantTag"
           @remove-tag="removePlantTag"
-          @hide-module="hidePlantTags" />
+          @hide-module="hidePlantTags"
+        />
       </div>
 
       <div>
@@ -49,14 +54,16 @@
             v-bind="getPlantModuleProps(module.type)"
             :key="module.type"
             :is="`plant-${module.type}`"
-            @update-plant="getModuleListener" />
+            @update-plant="getModuleListener"
+          />
         </div>
 
         <plant-footer
           :no-modules="plant.modules && !plant.modules.length"
           :show-tag-button="plant.tags === false"
           @manage-modules="activateModuleManager"
-          @show-tags="showPlantTags" />
+          @show-tags="showPlantTags"
+        />
       </div>
     </main>
   </div>

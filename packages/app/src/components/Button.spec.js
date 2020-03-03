@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { LoaderIcon } from 'vue-feather-icons'
 import Button from '@/components/Button'
 
 const localVue = createLocalVue()
@@ -7,7 +8,7 @@ describe('components/Button.vue', () => {
   const options = {
     localVue,
     stubs: {
-      'feather-loader': '<div />'
+      'feather-loader': LoaderIcon
     }
   }
 
@@ -34,6 +35,7 @@ describe('components/Button.vue', () => {
     const wrapper = shallowMount(Button, options)
     expect(wrapper.find('.button-icon').exists()).toBe(false)
     wrapper.setProps({ loading: true })
+    expect(wrapper.props().loading).toBe(true)
     expect(wrapper.find('.button-icon').exists()).toBe(true)
   })
 })

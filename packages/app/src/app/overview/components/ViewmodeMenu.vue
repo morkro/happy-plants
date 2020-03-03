@@ -1,14 +1,16 @@
 <template>
   <div :class="['viewmode-container', 'box', { 'filter-view': tags.length }]">
     <div :class="['viewmode-section', section.type]"
-      v-for="(section, index) in settings"
-      :key="index">
+         v-for="(section, index) in settings"
+         :key="index"
+    >
       <h2>{{ section.title }}</h2>
       <ul class="viewmode-select">
         <li
-          v-for="(item, index) in section.options"
+          v-for="(item, optionsIndex) in section.options"
           :class="{ selected: item.selected }"
-          :key="index">
+          :key="optionsIndex"
+        >
           <label :for="item.type">
             <div>
               <input
@@ -17,14 +19,16 @@
                 :name="section.type"
                 :value="item.type"
                 :checked="item.selected"
-                @click="emitViewmodeUpdate(section.type, item.type)">
+                @click="emitViewmodeUpdate(section.type, item.type)"
+              >
               <span>{{ item.label }}</span>
             </div>
 
             <component
               :is="`feather-${item.icon}`"
               width="16"
-              height="16" />
+              height="16"
+            />
           </label>
         </li>
       </ul>
@@ -42,7 +46,8 @@
               id="show-all"
               value="show-all"
               :checked="filterBy === 'all'"
-              @change="emitViewmodeUpdate('filterBy', 'all')">
+              @change="emitViewmodeUpdate('filterBy', 'all')"
+            >
             <span>Show All</span>
           </label>
         </li>
@@ -55,7 +60,8 @@
               :id="tag.name"
               :value="tag.name"
               :checked="isCheckedTag(tag.guid)"
-              @change="emitViewmodeUpdate('filterBy', tag.guid)">
+              @change="emitViewmodeUpdate('filterBy', tag.guid)"
+            >
             <span>{{ tag.label }}</span>
           </label>
         </li>

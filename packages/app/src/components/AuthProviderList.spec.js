@@ -27,7 +27,7 @@ describe('components/AuthProviderList.vue', () => {
     expect(wrapper.props().disabled).toEqual(false)
   })
 
-  it(`emit 'provider-selected' works`, () => {
+  it('emit \'provider-selected\' works', () => {
     const wrapper = shallowMount(AuthProviderList, options)
     const index = 0
     const button = wrapper.findAll(Button).at(index)

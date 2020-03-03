@@ -8,7 +8,8 @@
     <v-button
       :type="['circle', 'small']"
       class="gallery-delete icon inverse"
-      @click.native="onDeleteButton">
+      @click.native="onDeleteButton"
+    >
       <template v-slot:icon>
         <feather-trash />
       </template>

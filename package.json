@@ -5,10 +5,11 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap:app": "lerna bootstrap --scope @happy-plants/shared --scope @happy-plants/app",
+    "clean": "lerna clean --yes",
+    "bootstrap:app": "lerna bootstrap --include-dependencies --scope @happy-plants/app",
     "build:app": "lerna run --scope @happy-plants/app test:unit && lerna run --scope @happy-plants/app build",
     "init:app": "npm run bootstrap:app && npm run build:app",
-    "bootstrap:landing": "lerna bootstrap --scope @happy-plants/shared --scope @happy-plants/landing",
+    "bootstrap:landing": "lerna bootstrap --include-dependencies --scope @happy-plants/landing",
     "build:landing": "lerna run --scope @happy-plants/landing generate",
     "init:landing": "npm run bootstrap:landing && npm run build:landing"
   },

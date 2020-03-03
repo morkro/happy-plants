@@ -10,7 +10,8 @@
     <template v-slot:closeButtonContent>
       <feather-x
         width="24"
-        height="24" />
+        height="24"
+      />
     </template>
 
     <template v-slot:title>
@@ -54,7 +55,7 @@
         }
       },
       dialogIdentifier () {
-        return this.id || `app-dialog`
+        return this.id || 'app-dialog'
       }
     },
 

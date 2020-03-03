@@ -6,10 +6,11 @@
           <h2 class="required">What's your friends name?</h2>
           <span />
           <input required
-            type="text"
-            id="register-name"
-            placeholder="Name"
-            @change="getName">
+                 type="text"
+                 id="register-name"
+                 placeholder="Name"
+                 @change="getName"
+          >
         </label>
 
         <label for="register-file" class="form-label-group">
@@ -18,19 +19,22 @@
           <file-upload
             name="register-file"
             @file-selected="getFile"
-            @loading-file="handleLoadingState" />
+            @loading-file="handleLoadingState"
+          />
         </label>
 
         <v-button
           @click.native="validateForm"
           :disabled="!canRegisterPlant"
-          :loading="addPlantProgress">
+          :loading="addPlantProgress"
+        >
           <template v-slot:icon>
             <svgicon
               icon="leaf"
               width="16"
               height="24"
-              color="#000" />
+              color="#000"
+            />
           </template>
           Add plant
         </v-button>

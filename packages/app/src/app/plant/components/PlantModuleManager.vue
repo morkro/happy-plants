@@ -2,7 +2,8 @@
   <better-dialog
     id="plant-module-manager-dialog"
     :show="show"
-    @close-dialog="cancel">
+    @close-dialog="cancel"
+  >
     <template v-slot:headline>
       <span>Manage modules</span>
     </template>
@@ -22,14 +23,16 @@
             v-for="(module, index) in updatedModules"
             :class="getListClass(module)"
             :key="`module-${index}`"
-            @tap="onToggleModule(module)">
+            @tap="onToggleModule(module)"
+          >
             <div class="module-icon">
               <input type="radio"
-                :id="`module-${module.type}`"
-                :name="`module-${module.type}`"
-                :value="module.type"
-                :checked="!cloudOnlyFeature(module) && module.selected"
-                :disabled="cloudOnlyFeature(module)">
+                     :id="`module-${module.type}`"
+                     :name="`module-${module.type}`"
+                     :value="module.type"
+                     :checked="!cloudOnlyFeature(module) && module.selected"
+                     :disabled="cloudOnlyFeature(module)"
+              >
               <span aria-hidden="true">
                 <feather-check />
               </span>
@@ -48,7 +51,8 @@
       <div class="dialog-actions">
         <v-button
           v-if="warnGalleryRemoval"
-          @click.native="continueModuleEditing">
+          @click.native="continueModuleEditing"
+        >
           Continue updating
         </v-button>
         <v-button v-else @click.native="confirmModuleUpdates">

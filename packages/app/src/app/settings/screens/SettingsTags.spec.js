@@ -1,5 +1,8 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { GridIcon, TagIcon } from 'vue-feather-icons'
 import SettingsTags from '@/app/settings/screens/SettingsTags'
+import TagModal from '@/app/settings/components/TagModal'
+import TagItem from '@/app/settings/components/TagItem'
 import Button from '@/components/Button'
 import Tag from '@/components/Tag'
 import store from '@/store'
@@ -16,9 +19,11 @@ describe('app/settings/SettingsTags.vue', () => {
       'v-button': Button,
       'v-tag': Tag,
       'tag-dialog': '<div />',
-      'tag-modal': '</div>',
-      'tag-item': '<div />',
-      'better-dialog': '<div />'
+      'tag-modal': TagModal,
+      'tag-item': TagItem,
+      'better-dialog': '<div />',
+      'feather-grid': GridIcon,
+      'feather-tag': TagIcon
     }
   }
 

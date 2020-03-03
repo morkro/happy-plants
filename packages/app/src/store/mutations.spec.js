@@ -126,19 +126,19 @@ describe('store/mutations/user.js', () => {
   })
 
   it('USER_REDIRECT_RESULT', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.USER_REDIRECT_RESULT(state)
     expect(state.user.authFromRedirect).toBe(true)
   })
 
   it('USER_SIGNOUT_PROGRESS', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.USER_SIGNOUT_PROGRESS(state)
     expect(state.user.loading).toBe(true)
   })
 
   it('USER_SIGNOUT_SUCCESS', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.USER_SIGNOUT_SUCCESS(state)
     expect(state.user.authenticated).toEqual(defaultState.user.authenticated)
     expect(state.user.error).toEqual(defaultState.user.error)
@@ -147,7 +147,7 @@ describe('store/mutations/user.js', () => {
   })
 
   it('USER_SIGNOUT_FAILED', () => {
-    let state = defaultState
+    const state = defaultState
     mutations.USER_SIGNOUT_FAILED(state)
     expect(state.user.error).toBe(true)
     expect(state.user.loading).toBe(false)

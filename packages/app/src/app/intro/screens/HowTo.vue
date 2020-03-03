@@ -7,7 +7,8 @@
           <svgicon
             icon="leaf"
             width="20"
-            height="28" />
+            height="28"
+          />
         </div>
         <span>Add your first plant</span>
       </router-link>

@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { ArrowLeftIcon } from 'vue-feather-icons'
 import Box from '@happy-plants/shared/components/Box.vue'
 import HowTo from '@/app/intro/screens/HowTo'
 import store from '@/store'
@@ -13,9 +14,9 @@ describe('app/intro/HowTo.vue', () => {
     router,
     stubs: {
       'better-dialog': '<div />',
-      'svgicon': '<div />',
+      svgicon: '<div />',
       'v-box': Box,
-      'feather-arrow-left': '<svg />'
+      'feather-left': ArrowLeftIcon
     }
   }
 

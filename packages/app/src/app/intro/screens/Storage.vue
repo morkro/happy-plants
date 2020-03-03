@@ -3,7 +3,8 @@
     <better-dialog
       id="intro-storage-dialog"
       :show="showDialog"
-      @close-dialog="closeDialog">
+      @close-dialog="closeDialog"
+    >
       <template v-slot:headline>
         <span>Login</span>
       </template>
@@ -31,13 +32,15 @@
             name="storage-type"
             :checked="selectedStorageType === type.id"
             :id="type.id"
-            @change="updateStorageMethod(type.id)">
+            @change="updateStorageMethod(type.id)"
+          >
           <label :for="type.id">
             <span class="storage-title">
               <component
                 :is="`feather-${type.icon}`"
                 height="22"
-                width="22" />
+                width="22"
+              />
               {{ type.label }}
             </span>
             <span class="storage-description">
@@ -100,7 +103,7 @@
         {
           label: 'In the cloud',
           icon: 'cloud',
-          description: `Stores your plant data in Google Firebase. You will be able to login from different devices. Required by some features.`,
+          description: 'Stores your plant data in Google Firebase. You will be able to login from different devices. Required by some features.',
           id: 'cloud'
         }
       ]

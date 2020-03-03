@@ -8,7 +8,7 @@ module.exports = {
     node: true,
     jest: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/strongly-recommended',
     '@vue/standard'
   ],
@@ -16,15 +16,19 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/script-indent': 'off',
-    'vue/html-indent': 'off',
+    'vue/html-indent': ['error', 2, {
+      attribute: 1,
+      baseIndent: 1,
+      closeBracket: 0
+    }],
     'vue/max-attributes-per-line': [error, {
-      'singleline': error,
-      'multiline': {
-        'max': warn,
-        'allowFirstLine': true
+      singleline: error,
+      multiline: {
+        max: warn,
+        allowFirstLine: true
       }
     }],
-    'indent': 'off',
+    indent: 'off',
     'arrow-parens': 'off',
     'generator-star-spacing': 'off'
   },
