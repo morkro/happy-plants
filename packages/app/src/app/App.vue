@@ -166,6 +166,7 @@
         try {
           await this.authRedirectResults()
         } catch (error) {
+          // eslint-disable-next-line
           console.error(error)
           this.showNotification()
         }
