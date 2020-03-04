@@ -84,6 +84,7 @@ export async function loadPlants ({ state, commit }) {
     plantsFromLocalforage = await loadPlantsLocalforage(state)
     commit('LOAD_PLANTS_LOCALSTORAGE', { plants: plantsFromLocalforage })
   } catch (error) {
+    // eslint-disable-next-line
     console.warn('Unable to load plants from storage: ', error.message)
     commit('LOAD_PLANTS_FAILURE')
   }
@@ -101,6 +102,7 @@ export async function loadPlants ({ state, commit }) {
 
       commit('LOAD_PLANTS_FIREBASE', { plants })
     } catch (error) {
+      // eslint-disable-next-line
       console.warn('Unable to load plants from Firestore: ', error.message)
       commit('LOAD_PLANTS_FAILURE')
     }
