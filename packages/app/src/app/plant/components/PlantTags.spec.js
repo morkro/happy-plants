@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import PlantTags from '@/app/plant/components/PlantTags'
 import Tag from '@/components/Tag'
@@ -5,7 +6,7 @@ import Button from '@/components/Button'
 
 const localVue = createLocalVue()
 
-describe('app/plant/PlantTags.vue', () => {
+describe('app/plant/PlantTags.vue', async () => {
   const options = {
     localVue,
     stubs: {
@@ -35,7 +36,7 @@ describe('app/plant/PlantTags.vue', () => {
     expect(wrapper.emitted('hide-module')).toBeTruthy()
   })
 
-  it('toggle tag works', () => {
+  it('toggle tag works', async () => {
     const wrapper = shallowMount(PlantTags, options)
     const addTagButton = wrapper.find('.tags-add')
     let inputField = wrapper.find('.tags-new')
@@ -45,14 +46,18 @@ describe('app/plant/PlantTags.vue', () => {
     expect(wrapper.vm.showInput).toBe(false)
 
     addTagButton.trigger('click')
+    await Vue.nextTick()
+
     inputField = wrapper.find('.tags-new')
     expect(inputField.exists()).toBe(true)
     expect(wrapper.vm.showInput).toBe(true)
   })
 
   it('adding a tag works', () => {
-    const wrapper = shallowMount(PlantTags, options)
-    wrapper.setData({ showInput: true })
+    const wrapper = shallowMount(PlantTags, {
+      ...options,
+      data: () => ({ showInput: true })
+    })
 
     const input = wrapper.find({ ref: 'tagInput' })
     const button = wrapper.find('.tags-new-button')
@@ -69,8 +74,10 @@ describe('app/plant/PlantTags.vue', () => {
   })
 
   it('adding empty tag won’t emit', () => {
-    const wrapper = shallowMount(PlantTags, options)
-    wrapper.setData({ showInput: true })
+    const wrapper = shallowMount(PlantTags, {
+      ...options,
+      data: () => ({ showInput: true })
+    })
 
     const input = wrapper.find({ ref: 'tagInput' })
     const form = wrapper.find('.tags-new')

@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import { CloudIcon, SmartphoneIcon, LoaderIcon, CheckIcon } from 'vue-feather-icons'
 import SettingsStorage from '@/app/settings/screens/SettingsStorage'
@@ -28,10 +29,11 @@ describe('app/settings/SettingsStorage.vue', () => {
     expect(wrapper.isVueInstance()).toEqual(true)
   })
 
-  it('watching authFromRedirect works as expected', () => {
+  it('watching authFromRedirect works as expected', async () => {
     const wrapper = shallowMount(SettingsStorage, options)
     wrapper.setMethods({ openDialog: jest.fn() })
     mutations.USER_REDIRECT_RESULT(store.state)
+    await Vue.nextTick()
     expect(wrapper.vm.openDialog).toHaveBeenCalled()
   })
 })
