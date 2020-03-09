@@ -4,19 +4,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+  import Vue from 'vue'
   const colors = ['red', 'green', 'default']
-  export default {
+
+  export default Vue.extend({
     name: 'Box',
 
     props: {
       color: {
         type: String,
         default: 'default',
-        validator: v => colors.includes(v)
-      }
-    }
-  }
+        validator: v => colors.includes(v),
+      },
+    },
+  })
 </script>
 
 <style lang="postcss">
