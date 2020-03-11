@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Box from '@happy-plants/shared/components/Box.vue'
+import { Box } from '@happy-plants/components'
 
 Vue.component('v-box', Box)
 

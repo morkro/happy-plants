@@ -1,17 +1,15 @@
 {
-  "name": "@happy-plants/shared",
+  "name": "@happy-plants/components",
   "version": "1.0.0",
-  "description": "Shared components and business logic",
+  "description": "Shared Vue components",
   "author": "Moritz Kröger <write@morkro.de>",
   "homepage": "https://github.com/morkro/happy-plants#readme",
-  "license": "ISC",
   "main": "dist/index.js",
   "directories": {
-    "components": "src/components",
-    "styles": "src/styles"
+    "components": "src/components"
   },
   "files": [
-    "dist/"
+    "dist/colors.css"
   ],
   "repository": {
     "type": "git",
@@ -27,6 +25,7 @@
     "url": "https://github.com/morkro/happy-plants/issues"
   },
   "dependencies": {
+    "@happy-plants/styles": "^1.0.0",
     "snyk": "^1.297.3",
     "vue": "^2.6.11"
   },
@@ -42,15 +41,15 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^6.0.0",
-    "postcss-preset-env": "^6.6.0",
-    "postcss-reporter": "^6.0.1",
     "prettier": "^1.19.1",
     "rollup": "^1.32.0",
-    "rollup-plugin-postcss": "^2.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-vue": "^5.1.6",
     "typescript": "^3.8.3",
     "vue-template-compiler": "^2.6.11"
   },
-  "snyk": true
+  "snyk": true,
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.23.0"
+  }
 }

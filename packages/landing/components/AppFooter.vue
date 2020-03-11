@@ -5,7 +5,8 @@
     <div class="app-footer-inner">
       <div class="app-footer-contact">
         <v-text variant="subline">
-          Having a question or a problem?<br>Don't hesitate to reach out!
+          Having a question or a problem?
+          <br />Don't hesitate to reach out!
         </v-text>
 
         <div class="app-footer-contact-btn">
@@ -14,46 +15,35 @@
 
             <ul class="app-footer-contact-actions">
               <li>
-                <v-button
-                  color="transparent"
-                  @click.native="onCopyEmail"
-                >
-                  Copy
-                </v-button>  
+                <v-button color="transparent" @click.native="onCopyEmail">Copy</v-button>
               </li>
               <li>
                 <v-button
                   tag="a"
                   color="transparent"
                   :href="`mailto:${email}`"
-                >
-                  Open
-                </v-button>  
+                >Open</v-button>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="app-footer-inner">
-      <div class="app-footer-left">     
+      <div class="app-footer-left">
         <div class="app-footer-author">
           <div>
             <v-box class="app-footer-author-photo">
-              <lazy-image
-                :source="require('~/assets/moritz.jpg')"
-                alt="Photo of Moritz Kröger"
-              />
+              <lazy-image :source="require('~/assets/moritz.jpg')" alt="Photo of Moritz Kröger" />
             </v-box>
 
             <ul class="app-footer-author-social">
               <li v-for="profile in socialMedia" :key="profile.icon">
-                <a
-                  :href="profile.link"
-                  target="_blank"
-                  rel="noopener"
-                  :aria-label="profile.label"
+                <a :href="profile.link"
+                   target="_blank"
+                   rel="noopener"
+                   :aria-label="profile.label"
                 >
                   <component :is="`feather-${profile.icon}`" />
                 </a>
@@ -62,13 +52,14 @@
           </div>
 
           <v-typography>
-            My name is Moritz Kröger, I'm an open source engineer and plant enthusiast from 
+            My name is Moritz Kröger, I'm an open source engineer and plant
+            enthusiast from
             <a
               href="https://goo.gl/maps/cateuodz7YfQAGVYA"
               rel="noopener"
               target="_blank"
-            >Berlin</a>.
-            I created HappyPlants as an easy and visual way of documenting my houseplants.
+            >Berlin</a>. I created HappyPlants as an easy and visual way of documenting my
+            houseplants.
           </v-typography>
         </div>
       </div>
@@ -76,19 +67,16 @@
       <div class="app-footer-right">
         <ul>
           <li v-for="link in links" :key="link.label">
-            <a
-              :href="link.link"
-              target="_blank"
-              rel="noopener"
+            <a :href="link.link"
+               target="_blank"
+               rel="noopener"
             >
               <component :is="`feather-${link.icon}`" />
-              {{link.label}}
+              {{ link.label }}
             </a>
           </li>
         </ul>
-        <v-text>
-          © {{ currentYear }} HappyPlants
-        </v-text>
+        <v-text>© {{ currentYear }} HappyPlants</v-text>
       </div>
     </div>
   </footer>
@@ -115,7 +103,7 @@
       'feather-alert': AlertCircleIcon,
       'feather-github': GithubIcon,
       'feather-instagram': InstagramIcon,
-      'feather-home': HomeIcon,
+      'feather-home': HomeIcon
     },
 
     data: () => ({
@@ -163,13 +151,13 @@
     }),
 
     methods: {
-      onCopyEmail () {
+      onCopyEmail() {
         /* Workaround for Safari */
         const range = document.createRange()
         range.selectNodeContents(document.body)
         document.getSelection().addRange(range)
-        
-        const copy = event => {
+
+        const copy = (event) => {
           event.clipboardData.setData('text/plain', this.email)
           event.preventDefault()
         }
@@ -182,7 +170,6 @@
     }
   }
 </script>
-
 
 <style lang="postcss" scoped>
   @custom-media --small-viewport (max-width: 775px);
@@ -205,9 +192,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-    padding:
-      var(--padding-vertical)
-      var(--base-gap);
+    padding: var(--padding-vertical) var(--base-gap);
 
     &:first-of-type {
       border-bottom: 2px solid var(--transparency-white-light);
