@@ -211,7 +211,7 @@
 
 <style lang="postcss">
   @import "normalize.css";
-  @import "@happy-plants/shared/styles/colors";
+  @import "@happy-plants/styles/dist/colors";
   @import "../styles/animations";
   @import "../styles/media-queries";
   @import "../styles/fonts";

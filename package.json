@@ -1,16 +1,25 @@
 {
   "name": "happy-plants",
+  "description": "HappyPlants is a web application to take care of your houseplants.",
   "private": true,
+  "license": "BSD 3-Clause",
+  "author": "Moritz Kröger <write@moritz.berlin> (https://moritz.berlin)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
+  },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "clean": "lerna clean --yes",
     "bootstrap:app": "lerna bootstrap --include-dependencies --scope @happy-plants/app",
-    "build:app": "lerna run --scope @happy-plants/app test:unit && lerna run --scope @happy-plants/app build",
-    "init:app": "npm run bootstrap:app && npm run build:app",
     "bootstrap:landing": "lerna bootstrap --include-dependencies --scope @happy-plants/landing",
-    "build:landing": "lerna run --scope @happy-plants/landing generate",
+    "bootstrap:shared": "lerna bootstrap --include-dependencies --scope @happy-plants/shared",
+    "build:app": "lerna run test:unit --scope @happy-plants/app && lerna run build --scope @happy-plants/app",
+    "build:landing": "lerna run generate --scope @happy-plants/landing",
+    "build:shared": "lerna run build --scope @happy-plants/landing",
+    "init:app": "npm run bootstrap:app && npm run build:app",
     "init:landing": "npm run bootstrap:landing && npm run build:landing"
   },
   "devDependencies": {

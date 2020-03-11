@@ -1,7 +1,14 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
   "eslint.workingDirectories": [
     "./packages/app",
-    "./packages/shared",
-    "./packages/landing",
+    "./packages/shared", d
+    "./packages/landing"
+  ],
+  "eslint.validate": [
+    "javascript",
+    "typescript"
   ]
 }

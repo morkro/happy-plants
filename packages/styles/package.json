@@ -1,0 +1,29 @@
+{
+  "name": "@happy-plants/styles",
+  "version": "1.0.0",
+  "description": "Shared styles for all HappyPlants packages",
+  "author": "Moritz Kröger <write@morkro.de>",
+  "homepage": "https://github.com/morkro/happy-plants#readme",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "bugs": {
+    "url": "https://github.com/morkro/happy-plants/issues"
+  },
+  "devDependencies": {
+    "postcss-preset-env": "^6.6.0",
+    "postcss-reporter": "^6.0.1",
+    "rollup": "^1.32.0",
+    "rollup-plugin-postcss": "^2.2.0"
+  }
+}

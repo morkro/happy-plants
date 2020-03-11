@@ -19,16 +19,14 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "generate": "nuxt generate"
   },
   "dependencies": {
-    "@happy-plants/shared": "^1.0.0",
+    "@happy-plants/components": "^1.0.0",
+    "@happy-plants/styles": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.2.0",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "nuxt": "^2.9.1",
-    "snyk": "^1.259.0",
     "vue-feather-icons": "^5.0.0"
   },
   "devDependencies": {
@@ -59,5 +57,7 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "vue-jest": "^3.0.3"
   },
-  "snyk": true
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.23.0"
+  }
 }

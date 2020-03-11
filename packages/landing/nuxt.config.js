@@ -25,7 +25,7 @@ export default {
   loading: { color: '#fff' },
 
   css: [
-    { src: '@happy-plants/shared/styles/colors.css', lang: 'postcss' },
+    { src: '@happy-plants/styles/dist/colors.css', lang: 'postcss' },
     { src: '@/assets/variables.css', lang: 'postcss' },
     { src: '@/assets/fonts.css', lang: 'postcss' },
     { src: '@/assets/pattern.css', lang: 'postcss' }
@@ -70,7 +70,7 @@ export default {
         'postcss-url': {},
         'postcss-preset-env': {
           stage: 0,
-            features: {
+          features: {
             calc: { preserve: true },
             'nesting-rules': true,
             'color-mod': true,
