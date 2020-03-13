@@ -26,6 +26,7 @@ export default {
 
   css: [
     { src: '@happy-plants/styles/dist/colors.css', lang: 'postcss' },
+    { src: '@happy-plants/components/dist/index.css', lang: 'postcss' },
     { src: '@/assets/variables.css', lang: 'postcss' },
     { src: '@/assets/fonts.css', lang: 'postcss' },
     { src: '@/assets/pattern.css', lang: 'postcss' }

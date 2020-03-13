@@ -1,2 +1,5 @@
-export { default as Button } from './components/Button.vue'
-export { default as Box } from './components/Box.vue'
+import Box from './components/Box.vue'
+
+export default {
+  Box,
+}
