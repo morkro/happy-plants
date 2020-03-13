@@ -1,0 +1,1 @@
+.box{--box-color:var(--text-color-inverse);background:var(--background-primary);border-radius:var(--border-radius);-webkit-box-shadow:var(--plain-shadow);box-shadow:var(--plain-shadow);overflow:hidden;width:inherit;height:inherit}.box.green,.box.green p,.box.red,.box.red p{color:var(--box-color)}.box.red{background:var(--brand-red)}.box.green{background:var(--brand-green)}

@@ -4,8 +4,9 @@
   },
   "eslint.workingDirectories": [
     "./packages/app",
-    "./packages/shared", d
-    "./packages/landing"
+    "./packages/components",
+    "./packages/landing",
+    "./packages/styles"
   ],
   "eslint.validate": [
     "javascript",

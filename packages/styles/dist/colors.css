@@ -1,0 +1,28 @@
+:root {
+  --brand-green: rgb(65, 181, 158);
+  --brand-green-lighten: rgb(198, 233, 226);
+  --brand-green-medium: rgba(65, 181, 158, 0.7);
+  --brand-green-low: rgba(65, 181, 158, 0.3);
+  --brand-green-dark: rgb(59, 163, 142);
+
+  --brand-yellow: rgb(248, 197, 89);
+  --brand-yellow-medium: rgba(248, 197, 89, 0.5);
+  --brand-yellow-low: rgba(248, 197, 89, 0.2);
+
+  --brand-red: rgb(222, 74, 77);
+  --brand-red-medium: rgba(222, 74, 77, 0.7);
+  --brand-red-low: rgba(222, 74, 77, 0.3);
+
+  --brand-blue: rgb(59, 156, 225);
+  --brand-blue-medium: rgba(59, 156, 225, 0.7);
+  --brand-blue-low: rgba(59, 156, 225, 0.2);
+
+  --light-grey: #f5f5f5;
+  --grey: rgb(216, 216, 216);
+  --dark-grey: rgb(151, 151, 151);
+
+  --custom-black: #202425;
+  --custom-white: #dadada;
+
+  --background-primary: white;
+}

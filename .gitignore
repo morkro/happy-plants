@@ -27,4 +27,5 @@ lerna-debug.log*
 .nuxt
 
 # Dist files
-packages/*/dist
+packages/app/dist
+packages/landing/dist

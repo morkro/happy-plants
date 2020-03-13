@@ -8,6 +8,9 @@ module.exports = {
     node: true,
     jest: true
   },
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
   extends: [
     'plugin:vue/strongly-recommended',
     '@vue/standard'
@@ -31,8 +34,5 @@ module.exports = {
     indent: 'off',
     'arrow-parens': 'off',
     'generator-star-spacing': 'off'
-  },
-  parserOptions: {
-    parser: 'babel-eslint'
   }
 }
