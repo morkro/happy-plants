@@ -1,7 +1,4 @@
 import Vue from 'vue'
-import { Box } from '@happy-plants/components'
-
-Vue.component('v-box', Box)
 
 /**
  * Register all base components globally, as they will be used all over the

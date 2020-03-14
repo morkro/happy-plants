@@ -1,7 +1,4 @@
 import Vue from 'vue'
-import { Box } from '@happy-plants/components'
-
-Vue.component('v-box', Box)
 
 const requireComponent = require.context('~/components', false, /^(?!\.\/Module).*(\.vue)$/)
 const fileNameToComponentName = file => file.substr(2).replace(/\.vue/, '')
