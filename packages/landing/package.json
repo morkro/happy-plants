@@ -22,7 +22,6 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@happy-plants/components": "^1.0.0",
     "@happy-plants/styles": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.2.0",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
@@ -37,7 +36,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.2.2",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.1.0",
     "eslint-config-standard": "^14.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -56,8 +55,5 @@
     "stylelint-processor-html": "^1.0.0",
     "stylelint-webpack-plugin": "^0.10.5",
     "vue-jest": "^3.0.3"
-  },
-  "peerDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.23.0"
   }
 }
