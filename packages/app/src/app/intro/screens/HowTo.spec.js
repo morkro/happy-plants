@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import { ArrowLeftIcon } from 'vue-feather-icons'
-import Box from '@happy-plants/shared/components/Box.vue'
+import Box from '@/components/Box'
 import HowTo from '@/app/intro/screens/HowTo'
 import store from '@/store'
 import router from '@/router'

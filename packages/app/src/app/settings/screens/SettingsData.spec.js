@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import { DownloadIcon, DeleteIcon, CopyIcon } from 'vue-feather-icons'
-import Box from '@happy-plants/shared/components/Box.vue'
+import Box from '@/components/Box'
 import SettingsData from '@/app/settings/screens/SettingsData'
 import Button from '@/components/Button'
 import store from '@/store'
