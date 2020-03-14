@@ -6,7 +6,7 @@ import PlantSunshine from '@/app/plant/components/PlantSunshine'
 import PlantSeasons from '@/app/plant/components/PlantSeasons'
 import Button from '@/components/Button'
 import AuthProviderList from '@/components/AuthProviderList'
-import Box from '@happy-plants/shared/components/Box.vue'
+import Box from '@/components/Box'
 import store from '@/store'
 import router from '@/router'
 

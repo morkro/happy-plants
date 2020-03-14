@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import VueSVGIcon from 'vue-svgicon'
 
 import Button from '@/components/Button'
-import Box from '@happy-plants/shared/components/Box.vue'
+import Box from '@/components/Box'
 import Intro from '@/app/intro/screens/Intro'
 import store from '@/store'
 import router from '@/router'
