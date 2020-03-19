@@ -1,0 +1,34 @@
+{
+  "name": "HappyPlants",
+  "short_name": "HappyPlants",
+  "description": "Keep track of your houseplants' well-being.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#17c37b",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icons/logo-mdpi-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/logo-hdpi-288x288.png",
+      "type": "image/png",
+      "sizes": "228x288"
+    },
+    {
+      "src": "/icons/logo-xhdpi-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384"
+    },
+    {
+      "src": "/icons/logo-xxhdpi-576x576.png",
+      "type": "image/png",
+      "sizes": "576x576"
+    }
+  ]
+}

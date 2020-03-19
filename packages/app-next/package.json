@@ -1,0 +1,95 @@
+{
+  "name": "@happy-plants/app-next",
+  "version": "2.0.0",
+  "private": true,
+  "author": "Moritz Kröger <write@morkro.de> (https://moritz.berlin)",
+  "description": "🌵 Web application to keep your plants happy",
+  "homepage": "https://github.com/morkro/happy-plants#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
+  },
+  "bugs": {
+    "url": "https://github.com/morkro/happy-plants/issues"
+  },
+  "_id": "@happy-plants/app-next@1.0.0",
+  "main": "src/main.ts",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "lint:style": "vue-cli-service lint:style"
+  },
+  "dependencies": {
+    "@happy-plants/styles": "^1.0.0",
+    "@sentry/browser": "^5.14.2",
+    "@sentry/integrations": "^5.14.2",
+    "core-js": "^3.6.4",
+    "firebase": "^7.11.0",
+    "normalize.css": "^8.0.1",
+    "register-service-worker": "^1.6.2",
+    "vue": "^2.6.11",
+    "vue-feather-icons": "^5.0.0",
+    "vue-router": "^3.1.5",
+    "vuex": "^3.1.2"
+  },
+  "devDependencies": {
+    "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
+    "@types/jest": "^24.0.19",
+    "@types/node": "^13.9.1",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "@vue/cli-plugin-babel": "~4.2.0",
+    "@vue/cli-plugin-e2e-cypress": "~4.2.0",
+    "@vue/cli-plugin-eslint": "~4.2.0",
+    "@vue/cli-plugin-pwa": "~4.2.0",
+    "@vue/cli-plugin-router": "~4.2.0",
+    "@vue/cli-plugin-typescript": "~4.2.0",
+    "@vue/cli-plugin-unit-jest": "~4.2.0",
+    "@vue/cli-plugin-vuex": "~4.2.0",
+    "@vue/cli-service": "~4.2.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "@vue/eslint-config-typescript": "^5.0.1",
+    "@vue/test-utils": "1.0.0-beta.31",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^6.1.2",
+    "lint-staged": "^10.0.8",
+    "postcss-calc": "^7.0.2",
+    "postcss-color-mod-function": "^3.0.3",
+    "postcss-custom-properties": "^9.1.1",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "postcss-reporter": "^6.0.1",
+    "postcss-url": "^8.0.0",
+    "prettier": "^1.19.1",
+    "stylelint": "^13.2.1",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-processor-html": "^1.0.0",
+    "typescript": "~3.7.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint"
+    ],
+    "*.vue": [
+      "vue-cli-service lint"
+    ],
+    "*.{vue,htm,html,css,sss,less,scss}": [
+      "vue-cli-service lint:style"
+    ]
+  }
+}
