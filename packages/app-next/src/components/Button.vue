@@ -1,5 +1,5 @@
 <template>
-  <button :class="['btn', color, small && 'small']">
+  <button :class="btnClass">
     <slot />
   </button>
 </template>
@@ -22,11 +22,21 @@
         type: Boolean,
         default: false,
       },
+      border: {
+        type: Boolean,
+        default: false,
+      },
+    },
+
+    computed: {
+      btnClass(): string[] {
+        return ['btn', this.color, this.small && 'small', this.border && 'border']
+      },
     },
   })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .btn {
     --background: var(--brand-green);
     --shadow: var(--brand-green);
@@ -35,9 +45,38 @@
     color: var(--brand-white);
     font-weight: 500;
     font-size: var(--text-size-base);
-    border: none;
+    border: 2px solid var(--background);
     padding: 13.5px var(--base-gap);
     box-shadow: 0 2px 9px var(--shadow);
+    text-decoration: none;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
+
+    &:focus:not(.border),
+    &:active:not(.border) {
+      border-color: var(--brand-white);
+      outline: none;
+    }
+
+    /* Type */
+    &.border {
+      background: transparent !important;
+      border: 2px solid var(--brand-white);
+      box-shadow: none;
+
+      &:focus,
+      &:active {
+        --shadow: var(--brand-white);
+        box-shadow: 0 2px 9px var(--shadow);
+      }
+
+      &.yellow {
+        color: var(--brand-white);
+      }
+    }
 
     /* Size */
     &.small {
@@ -53,7 +92,7 @@
     &.yellow {
       --background: var(--brand-yellow);
       --shadow: var(--brand-yellow);
-      color: var(--brand-green);
+      color: var(--brand-green-dark);
     }
 
     &.red {
@@ -64,7 +103,13 @@
     &.grey,
     &[disabled] {
       --background: var(--brand-beige-dark);
+      --shadow: var(--brand-beige-dark);
       box-shadow: none;
+    }
+
+    &.grey:focus,
+    &.gey:active {
+      box-shadow: 0 2px 9px var(--shadow);
     }
   }
 </style>

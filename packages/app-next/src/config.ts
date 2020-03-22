@@ -1,4 +1,20 @@
-export default {
+interface AppConfig {
+  isProduction: boolean
+  sentry: {
+    dsn: string
+  }
+  firebase: {
+    apiKey: string
+    authDomain: string
+    databaseURL: string
+    projectId: string
+    storageBucket: string
+    messagingSenderId: string
+  }
+}
+
+const config: AppConfig = {
+  isProduction: process.env.NODE_ENV === 'production',
   sentry: {
     dsn: process.env.VUE_APP_SENTRY_DSN,
   },
@@ -11,3 +27,5 @@ export default {
     messagingSenderId: process.env.VUE_APP_FIREBASE_MESSENGER_ID,
   },
 }
+
+export default config

@@ -4,7 +4,9 @@ import { routes as welcome } from './modules/welcome'
 import { routes as login } from './modules/login'
 import { routes as onboarding } from './modules/onboarding'
 import { routes as home } from './modules/home'
+import { routes as settings } from './modules/settings'
 import { routes as notfound } from './modules/404'
+import store from './store'
 
 Vue.use(VueRouter)
 
@@ -17,6 +19,7 @@ const router: VueRouter = new VueRouter({
     ...login,
     ...onboarding,
     ...home,
+    ...settings,
     ...notfound,
   ],
   scrollBehavior(to: Route, from: Route, savedPosition) {
@@ -30,7 +33,7 @@ const router: VueRouter = new VueRouter({
 
 router.beforeEach((to: Route, from: Route, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  if (requiresAuth) {
+  if (requiresAuth && store.state.user.authenticated === false) {
     next('welcome')
   } else {
     next()

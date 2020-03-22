@@ -1,5 +1,5 @@
 <template>
-  <component :is="textNode" :class="['text', type, textSize, color]">
+  <component :is="textNode" :class="textClass">
     <slot />
   </component>
 </template>
@@ -44,6 +44,10 @@
       textSize(): string {
         return types.get(this.type).small === this.small && 'small'
       },
+      textClass(): string[] {
+        const typeNotText = this.type && this.type !== 'text'
+        return ['text', typeNotText ? this.type : '', this.textSize, this.color]
+      },
     },
   })
 </script>
@@ -51,7 +55,7 @@
 <style lang="postcss">
   .text {
     font-size: var(--text-size-base);
-    color: var(--brand-green);
+    color: var(--brand-green-dark);
 
     /* Size */
     &.small {

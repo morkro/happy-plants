@@ -3,8 +3,11 @@
     <div class="app-header-icon">
       <router-link v-if="returnTo" :to="returnTo">
         <feather-left />
+        <v-text class="visuallyhidden" color="inactive">
+          Back
+        </v-text>
       </router-link>
-      <div v-else>icon</div>
+      <img v-else src="@/assets/logo-small.svg" width="32" height="28" alt="HappyPlants Logo" />
     </div>
 
     <v-text type="subtitle" class="app-header-title">
@@ -37,9 +40,11 @@
 <style lang="postcss" scoped>
   #app-header {
     width: 100%;
-    height: 50px;
+    height: var(--app-header-height);
     display: flex;
     align-items: center;
+    position: fixed;
+    top: 0;
   }
 
   .app-header-icon {
@@ -48,6 +53,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & svg {
+      stroke: var(--brand-green-dark);
+    }
+
+    & > a {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .app-header-title {
@@ -55,5 +69,6 @@
     height: 100%;
     display: flex;
     align-items: center;
+    font-weight: 700 !important;
   }
 </style>

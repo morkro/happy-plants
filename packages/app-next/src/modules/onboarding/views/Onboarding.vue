@@ -1,7 +1,7 @@
 <template>
   <div class="screen-onboarding">
     <app-header return-to="/welcome">
-      Login
+      Onboarding
     </app-header>
 
     <main>
@@ -68,6 +68,14 @@
           <v-button small color="red">Red</v-button>
           <v-button small color="grey">Grey</v-button>
           <v-button small disabled>Disabled</v-button>
+        </div>
+        <div style="background:var(--brand-green);">
+          <v-button border>Default</v-button>
+          <v-button border color="blue">Blue</v-button>
+          <v-button border color="yellow">Yellow</v-button>
+          <v-button border color="red">Red</v-button>
+          <v-button border color="grey">Grey</v-button>
+          <v-button border disabled>Disabled</v-button>
         </div>
       </div>
     </main>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app-menu">
     <router-link to="/home">
       Home
     </router-link>
@@ -15,3 +15,13 @@
     name: 'AppMenu',
   })
 </script>
+
+<style lang="postcss">
+  #app-menu {
+    height: 50px;
+    width: 100%;
+    background: var(--brand-beige);
+    display: flex;
+    justify-content: space-evenly;
+  }
+</style>

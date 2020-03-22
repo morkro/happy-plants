@@ -19,6 +19,7 @@
   :root {
     --base-radius: 2px;
     --base-gap: 15px;
+    --app-header-height: 50px;
   }
 
   * {
@@ -37,7 +38,7 @@
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 100%;
+    line-height: 120%;
   }
 
   #app {
@@ -45,5 +46,18 @@
     min-height: 100vh;
     height: 100%;
     display: flex;
+  }
+
+  .visuallyhidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
   }
 </style>

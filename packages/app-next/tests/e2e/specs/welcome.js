@@ -1,8 +1,8 @@
 // https://docs.cypress.io/api/introduction/api.html
 
 describe('Welcome', () => {
-  it('Visit app welcome screen', () => {
+  it('has all required elements', () => {
     cy.visit('/welcome')
-    cy.contains('h1', 'HappyPlants')
+    cy.contains('[data-cy=illustration]')
   })
 })

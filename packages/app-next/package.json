@@ -2,24 +2,8 @@
   "name": "@happy-plants/app-next",
   "version": "2.0.0",
   "private": true,
-  "author": "Moritz Kröger <write@morkro.de> (https://moritz.berlin)",
   "description": "🌵 Web application to keep your plants happy",
-  "homepage": "https://github.com/morkro/happy-plants#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/morkro/happy-plants.git"
-  },
-  "bugs": {
-    "url": "https://github.com/morkro/happy-plants/issues"
-  },
-  "_id": "@happy-plants/app-next@1.0.0",
-  "main": "src/main.ts",
-  "directories": {
-    "src": "src"
-  },
-  "files": [
-    "dist"
-  ],
+  "author": "Moritz Kröger <write@morkro.de> (https://moritz.berlin)",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -28,10 +12,15 @@
     "lint": "vue-cli-service lint",
     "lint:style": "vue-cli-service lint:style"
   },
+  "main": "src/main.ts",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@happy-plants/styles": "^1.0.0",
     "@sentry/browser": "^5.14.2",
     "@sentry/integrations": "^5.14.2",
+    "animejs": "^3.1.0",
     "core-js": "^3.6.4",
     "firebase": "^7.11.0",
     "normalize.css": "^8.0.1",
@@ -43,6 +32,7 @@
   },
   "devDependencies": {
     "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
+    "@types/animejs": "^3.1.0",
     "@types/jest": "^24.0.19",
     "@types/node": "^13.9.1",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
@@ -78,9 +68,17 @@
     "typescript": "~3.7.5",
     "vue-template-compiler": "^2.6.11"
   },
+  "_id": "@happy-plants/app-next@1.0.0",
+  "bugs": {
+    "url": "https://github.com/morkro/happy-plants/issues"
+  },
+  "directories": {
+    "src": "src"
+  },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "homepage": "https://github.com/morkro/happy-plants#readme",
   "lint-staged": {
     "*.js": [
       "vue-cli-service lint"
@@ -91,5 +89,9 @@
     "*.{vue,htm,html,css,sss,less,scss}": [
       "vue-cli-service lint:style"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morkro/happy-plants.git"
   }
 }

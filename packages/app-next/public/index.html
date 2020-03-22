@@ -6,11 +6,48 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="description" content="is all about collecting, organising, and adding all kinds of information of your little friends. How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun? Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application.">
+    <meta name="robots" content="index,follow">
+    <link rel="alternate" hreflang="en" href="https://happyplants.garden">
+    <link rel="canonical" href="https://happyplants.garden">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="HappyPlants">
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="/icons/logo-mdpi-192x192.png">
+    <meta name="msapplication-TileColor" content="#1B6D4F">
+    <!-- Color the status bar on mobile devices -->
+    <meta name="theme-color" content="#ffffff">
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <img
+        width="100px"
+        height="100px"
+        src="/icons/logo-hdpi-288x288.png"
+        alt="HappyPlants"
+        title="HappyPlants" />
+
+      <h1>Oops, that's awkward.</h1>
+
+      <p>
+        <strong>HappyPlants</strong> is a
+        <a href="https://en.wikipedia.org/wiki/Web_application" target="_blank">web application</a>
+        and therefore requires JavaScript to run. Please consider enabling it.
+      </p>
+
+      <ul>
+        <li>
+          More info: <a href="https://github.com/morkro/happy-plants" target="_blank">HappyPlants on GitHub</a>
+        </li>
+        <li>
+          Developer: <a href="https://moritz.berlin" target="_blank">Moritz Kröger</a>
+        </li>
+      </ul>
     </noscript>
+
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

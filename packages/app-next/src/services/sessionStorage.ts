@@ -1,11 +1,11 @@
-export const setEntry = (namespace: string, data: string): void => {
+export const setSessionEntry = (namespace: string, data: string): void => {
   return window.sessionStorage.setItem(namespace, data)
 }
 
-export const getEntry = (namespace: string): string => {
+export const getSessionEntry = (namespace: string): string => {
   return window.sessionStorage.getItem(namespace)
 }
 
-export const deleteEntry = (namespace: string): void => {
+export const deleteSessionEntry = (namespace: string): void => {
   return window.sessionStorage.removeItem(namespace)
 }
