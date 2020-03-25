@@ -1,15 +1,25 @@
 {
+  "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
   "eslint.workingDirectories": [
     "./packages/app",
+    "./packages/app-next",
     "./packages/components",
     "./packages/landing",
+    "./packages/server",
     "./packages/styles"
   ],
   "eslint.validate": [
     "javascript",
-    "typescript"
-  ]
+    "typescript",
+    "vue-html",
+    "vue"
+  ],
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/coverage": true
+  }
 }

@@ -14,13 +14,17 @@
   "scripts": {
     "clean": "lerna clean --yes",
     "bootstrap:app": "lerna bootstrap --include-dependencies --scope @happy-plants/app",
+    "bootstrap:app-next": "lerna bootstrap --include-dependencies --scope @happy-plants/app-next",
     "bootstrap:landing": "lerna bootstrap --include-dependencies --scope @happy-plants/landing",
-    "bootstrap:shared": "lerna bootstrap --include-dependencies --scope @happy-plants/shared",
+    "bootstrap:server": "lerna bootstrap --include-dependencies --scope @happy-plants/server",
     "build:app": "lerna run test:unit --scope @happy-plants/app && lerna run build --scope @happy-plants/app",
+    "build:app-next": "lerna run test:unit --scope @happy-plants/app-next && lerna run build --scope @happy-plants/app-next",
     "build:landing": "lerna run generate --scope @happy-plants/landing",
-    "build:shared": "lerna run build --scope @happy-plants/landing",
+    "build:server": "lerna run build --scope @happy-plants/server",
     "init:app": "npm run bootstrap:app && npm run build:app",
-    "init:landing": "npm run bootstrap:landing && npm run build:landing"
+    "init:app-next": "npm run bootstrap:app-next && npm run build:app-next",
+    "init:landing": "npm run bootstrap:landing && npm run build:landing",
+    "init:server": "npm run bootstrap:server && npm run build:server"
   },
   "devDependencies": {
     "husky": "^4.2.3",

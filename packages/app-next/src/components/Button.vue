@@ -71,6 +71,7 @@
       &:active {
         --shadow: var(--brand-white);
         box-shadow: 0 2px 9px var(--shadow);
+        outline: none;
       }
 
       &.yellow {

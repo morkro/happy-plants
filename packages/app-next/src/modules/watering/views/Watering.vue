@@ -1,11 +1,13 @@
 <template>
-  <div class="screen-home">
+  <div class="screen-watering">
     <app-header />
+
     <main>
       <v-text type="title">
-        Yasss home
+        Waterrrrrr
       </v-text>
     </main>
+
     <app-menu />
   </div>
 </template>
@@ -13,12 +15,12 @@
 <script lang="ts">
   import Vue from 'vue'
   export default Vue.extend({
-    name: 'Home',
+    name: 'Watering',
   })
 </script>
 
 <style lang="postcss" scoped>
-  .screen-home {
+  .screen-watering {
     padding-top: var(--app-header-height);
     width: 100%;
     display: flex;

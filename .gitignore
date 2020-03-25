@@ -8,6 +8,7 @@ coverage/
 .env
 .env.local
 .env.*.local
+.secrets/
 
 # Log files
 npm-debug.log*
@@ -29,3 +30,4 @@ lerna-debug.log*
 # Dist files
 packages/app/dist
 packages/landing/dist
+packages/server/dist
