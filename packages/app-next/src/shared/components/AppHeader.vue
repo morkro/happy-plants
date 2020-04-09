@@ -61,6 +61,15 @@
     & > a {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      &:focus {
+        outline: none;
+        background: var(--brand-white);
+        border-bottom-right-radius: var(--base-radius);
+      }
     }
   }
 

@@ -12,7 +12,7 @@ import './registerServiceWorker'
 import './registerComponents'
 
 logger(
-  "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on GitHub 🤙🏼"
+  "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
 )
 logger(`Initialising Firebase App ${app.name}`)
 

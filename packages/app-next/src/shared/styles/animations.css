@@ -1,0 +1,39 @@
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.1, 0.87, 1);
+  }
+
+  40% {
+    transform: scale3d(0.87, 1.1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.1, 0.95, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.fx-bounce {
+  animation: bounce 650ms;
+}

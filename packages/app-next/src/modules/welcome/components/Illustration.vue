@@ -175,12 +175,6 @@
 </script>
 
 <style lang="postcss" scoped>
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
   @keyframes pulse {
     from {
       transform: scale3d(1, 1, 1);

@@ -109,6 +109,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-top-left-radius: var(--base-radius);
+    border-top-right-radius: var(--base-radius);
+    transition: box-shadow 150ms ease-in-out;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 9px -2px var(--brand-beige-dark);
+    }
+
+    &.router-link-active svg {
+      animation: bounce 650ms;
+    }
 
     & svg {
       width: 24px;

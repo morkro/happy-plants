@@ -10,7 +10,7 @@ import Vue from 'vue'
  *    ./Button.vue           => v-button
  */
 
-const requireComponent = require.context('./components', false, /\.vue$/)
+const requireComponent = require.context('./shared/components', false, /\.vue$/)
 const fileNameToComponentName = (file: string) => file.substr(2).replace(/\.vue/, '')
 const pascalToKebab = (name: string) => name.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase()
 const addPrefix = (name: string) => (name.includes('-') ? name : `v-${name}`)

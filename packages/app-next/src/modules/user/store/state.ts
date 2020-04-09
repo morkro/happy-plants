@@ -8,7 +8,6 @@ const state: UserState = {
   authenticated: false,
   displayName: null,
   email: null,
-  phoneNumber: null,
   photoURL: null,
 }
 

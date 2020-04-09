@@ -1,13 +1,24 @@
 <template>
   <div id="app">
+    <transition>
+      <app-notification v-if="notificationMessage" />
+    </transition>
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
+  import { mapState } from 'vuex'
+  import { RootState } from './store'
   export default Vue.extend({
     name: 'HappyPlants',
+    components: {
+      'app-notification': () => import('@/modules/notifications/components/Notification.vue'),
+    },
+    computed: mapState({
+      notificationMessage: (state: RootState) => state.notifications.message,
+    }),
   })
 </script>
 
@@ -15,6 +26,7 @@
   @import 'normalize.css';
   @import '@happy-plants/styles/dist/colors-next.css';
   @import '@happy-plants/styles/dist/fonts.css';
+  @import 'shared/styles/animations.css';
 
   :root {
     --base-radius: 2px;
@@ -46,6 +58,7 @@
     min-height: 100vh;
     height: 100%;
     display: flex;
+    overflow-x: hidden;
   }
 
   .visuallyhidden:not(:focus):not(:active) {

@@ -55,6 +55,10 @@
     align-items: center;
     transition: border-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 
+    &:focus {
+      animation: bounce 650ms;
+    }
+
     &:focus:not(.border),
     &:active:not(.border) {
       border-color: var(--brand-white);

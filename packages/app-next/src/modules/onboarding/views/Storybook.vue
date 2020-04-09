@@ -5,6 +5,9 @@
     </app-header>
 
     <main>
+      <router-link to="/onboarding/account" class="btn">
+        Next
+      </router-link>
       <div class="text-wrap">
         <div>
           <v-text type="hero">Hero</v-text>
@@ -79,6 +82,8 @@
         </div>
       </div>
     </main>
+
+    <app-menu />
   </div>
 </template>
 
@@ -92,6 +97,7 @@
 <style lang="postcss" scoped>
   .screen-onboarding {
     width: 100%;
+    padding-top: var(--app-header-height);
   }
 
   .screen-onboarding main {

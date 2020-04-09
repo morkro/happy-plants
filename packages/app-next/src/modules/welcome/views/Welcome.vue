@@ -19,9 +19,36 @@
       </div>
     </main>
     <footer>
-      <v-text small color="special" data-cy="footer-about">About</v-text>
-      <v-text small color="special" data-cy="footer-contact">Contact</v-text>
-      <v-text small color="special" data-cy="footer-os">Open Source</v-text>
+      <a
+        href="https://happyplants.app/#about"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-about"
+      >
+        <v-text small color="special">
+          About
+        </v-text>
+      </a>
+      <a
+        href="https://happyplants.app/#contact"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-contact"
+      >
+        <v-text small color="special">
+          Contact
+        </v-text>
+      </a>
+      <a
+        href="https://github.com/morkro/happy-plants"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-os"
+      >
+        <v-text small color="special">
+          Open Source
+        </v-text>
+      </a>
     </footer>
   </div>
 </template>
@@ -92,7 +119,11 @@
     align-items: center;
     color: var(--brand-white);
 
-    & .text:not(:last-of-type) {
+    & a {
+      text-decoration: none;
+    }
+
+    & a:not(:last-of-type) {
       margin-right: calc(var(--base-gap) * 2);
     }
   }

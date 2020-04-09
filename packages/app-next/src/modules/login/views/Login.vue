@@ -1,5 +1,7 @@
 <template>
-  <div class="screen-login">
+  <v-layout class="screen-login">
+    <v-loading v-if="loginRedirect" message="login" />
+
     <app-header return-to="/welcome">
       Login
     </app-header>
@@ -11,13 +13,13 @@
             Your e-mail
           </v-text>
         </label>
-        <v-input type="email" placeholder="lover@plants.garden" id="login-email" />
+        <v-input type="email" required placeholder="lover@plants.garden" id="login-email" />
         <label for="login-pw">
           <v-text color="special">
             Your password
           </v-text>
         </label>
-        <v-input type="password" placeholder="********" id="login-pw" />
+        <v-input type="password" required placeholder="********" id="login-pw" />
         <v-button color="yellow">
           Login
         </v-button>
@@ -40,7 +42,7 @@
       <v-text small color="special">Contact</v-text>
       <v-text small color="special">Open Source</v-text>
     </footer>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -54,14 +56,22 @@
     methods: {
       ...mapActions({
         login: 'login/signInUser',
+        authRedirectResults: 'login/authRedirectResults',
       }),
     },
+    data: () => ({
+      loginRedirect: false,
+    }),
     async created() {
       if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
         deleteSessionEntry('USER_SIGNIN_PROGRESS')
-        await delay(4000)
-        this.$router.push('/home')
+        this.loginRedirect = true
+        await Promise.all([this.authRedirectResults(), delay(4000)])
+        // this.$router.push('/home')
       }
+    },
+    beforeDestroy() {
+      this.loginRedirect = false
     },
   })
 </script>
@@ -73,19 +83,6 @@
     background-repeat: no-repeat;
     background-position: top left;
     background-size: calc(100% - var(--base-gap) * 4) auto;
-    padding-top: var(--app-header-height);
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .screen-login main {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--base-gap);
   }
 
   .login-form {
