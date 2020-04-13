@@ -3,6 +3,7 @@ import 'firebase/auth'
 import { Commit, Dispatch } from 'vuex'
 import { setSessionEntry } from '@/services/sessionStorage'
 import { AssignDetailsPayload } from '@/modules/user/store/mutations'
+import logger from '@/utils/vueLogger'
 
 type ProviderName = 'google' | 'github' | 'twitter'
 
@@ -34,16 +35,23 @@ export const authRedirectResults = async (context: {
 }): Promise<void> => {
   try {
     const results = await firebase.auth().getRedirectResult()
+    const idToken = await results.user.getIdToken()
     const details: AssignDetailsPayload = {
       displayName: results.user.displayName,
       photoURL: results.user.photoURL,
       email: results.user.email,
+      idToken,
     }
     context.commit('user/assignDetails', details, { root: true })
   } catch (error) {
-    context.dispatch('notifications/show', {
-      type: 'error',
-      message: error.message,
-    })
+    logger(error.message, true)
+    context.dispatch(
+      'notifications/show',
+      {
+        type: 'error',
+        message: 'There was an issue logging you in, please try again.',
+      },
+      { root: true }
+    )
   }
 }

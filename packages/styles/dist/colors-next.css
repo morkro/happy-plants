@@ -10,5 +10,6 @@
   --brand-red:            #E54B4B;
   --brand-red-light:      #EC8A8A;
   --brand-black:          #000000;
+  --brand-black-50:       rgba(0, 0, 0, .5);
   --brand-white:          #FFFFFF;
 }

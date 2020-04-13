@@ -49,7 +49,7 @@
   import Vue from 'vue'
   import { mapActions } from 'vuex'
   import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
-  import delay from '@/utils/promise-delay'
+  import delay from '@/utils/promiseDelay'
 
   export default Vue.extend({
     name: 'Login',
@@ -67,7 +67,7 @@
         deleteSessionEntry('USER_SIGNIN_PROGRESS')
         this.loginRedirect = true
         await Promise.all([this.authRedirectResults(), delay(4000)])
-        // this.$router.push('/home')
+        this.$router.push('/home')
       }
     },
     beforeDestroy() {

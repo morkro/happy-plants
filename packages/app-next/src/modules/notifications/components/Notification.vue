@@ -1,6 +1,6 @@
 <template>
   <div :class="['notification-wrapper', type]">
-    <component :is="icon" />
+    <component :is="icon()" />
     <v-text color="special">{{ message }}</v-text>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapState } from 'vuex'
-  import { NotificationsState } from '../store/state'
+  import { NotificationsState, NotificationsType } from '../store/state'
 
   export default Vue.extend({
     name: 'AppNotification',
@@ -21,11 +21,11 @@
     },
 
     computed: {
-      ...mapState('notifications', {
-        message: (state: NotificationsState) => state.message,
-        type: (state: NotificationsState) => state.type,
+      ...mapState<NotificationsState>('notifications', {
+        message: (state: NotificationsState): string | null => state.message,
+        type: (state: NotificationsState): NotificationsType => state.type,
       }),
-      icon() {
+      icon(): string {
         let icon = 'feather-check'
         switch (this.type) {
           case 'info':

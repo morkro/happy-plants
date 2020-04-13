@@ -27,6 +27,7 @@
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-feather-icons": "^5.0.0",
+    "vue-meta": "^2.3.3",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"
   },

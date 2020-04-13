@@ -12,8 +12,17 @@
 
 <script lang="ts">
   import Vue from 'vue'
+  import { mapActions } from 'vuex'
   export default Vue.extend({
     name: 'Home',
+
+    methods: {
+      ...mapActions({ loadPlants: 'home/loadPlants' }),
+    },
+
+    async created() {
+      await this.loadPlants()
+    },
   })
 </script>
 

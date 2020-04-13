@@ -7,5 +7,7 @@ export default {
     state.authenticated = true
     state.displayName = payload.displayName
     state.photoURL = payload.photoURL
+    state.email = payload.email
+    state.idToken = payload.idToken
   },
 }

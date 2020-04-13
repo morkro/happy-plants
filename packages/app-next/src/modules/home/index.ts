@@ -1,4 +1,5 @@
 import { RouteConfig } from 'vue-router'
+import store from './store'
 
 const routes: RouteConfig[] = [
   {
@@ -11,4 +12,4 @@ const routes: RouteConfig[] = [
   },
 ]
 
-export { routes }
+export { routes, store }

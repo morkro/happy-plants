@@ -6,6 +6,10 @@ module.exports = {
     },
   },
 
+  devServer: {
+    proxy: 'http://localhost:3000',
+  },
+
   pwa: {
     name: 'HappyPlants',
     themeColor: '#ffffff',

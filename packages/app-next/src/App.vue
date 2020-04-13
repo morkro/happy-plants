@@ -10,14 +10,21 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapState } from 'vuex'
-  import { RootState } from './store'
+  import { NotificationsState } from './modules/notifications/store/state'
   export default Vue.extend({
     name: 'HappyPlants',
+
+    metaInfo: {
+      title: 'HappyPlants',
+      titleTemplate: '%s — HappyPlants',
+    },
+
     components: {
       'app-notification': () => import('@/modules/notifications/components/Notification.vue'),
     },
-    computed: mapState({
-      notificationMessage: (state: RootState) => state.notifications.message,
+
+    computed: mapState<NotificationsState>('notifications', {
+      notificationMessage: (state: NotificationsState) => state.message,
     }),
   })
 </script>

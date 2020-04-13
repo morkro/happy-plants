@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import { init as initSentry } from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
-import errorHandler from './utils/vue-error-handler'
-import logger from './utils/vue-logger'
+import errorHandler from './utils/vueErrorHandler'
 import { app } from '@/services/firebase'
+import logger from './utils/vueLogger'
 import config from './config'
 import router from './router'
 import store from './store'
 import App from './App.vue'
 import './registerServiceWorker'
+import './registerPlugins'
 import './registerComponents'
 
 logger(
@@ -21,6 +22,7 @@ Vue.config.devtools = true
 Vue.config.errorHandler = errorHandler
 
 if (config.isProduction) {
+  logger('Initialising Sentry')
   initSentry({
     release: 'pkg.version',
     dsn: config.sentry.dsn,
