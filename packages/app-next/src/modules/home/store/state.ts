@@ -1,5 +1,7 @@
+import { Plant } from '@/shared/types/plant'
+
 export interface HomeState {
-  plants: unknown[]
+  plants: Plant[]
 }
 
 const state: HomeState = {

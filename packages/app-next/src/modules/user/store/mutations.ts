@@ -10,4 +10,11 @@ export default {
     state.email = payload.email
     state.idToken = payload.idToken
   },
+  resetState(state: UserState) {
+    state.authenticated = false
+    state.displayName = null
+    state.email = null
+    state.photoURL = null
+    state.idToken = null
+  },
 }

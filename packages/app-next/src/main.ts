@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import { init as initSentry } from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
+import firebase from '@/services/firebase'
+import { getSessionEntry } from '@/services/sessionStorage'
 import errorHandler from './utils/vueErrorHandler'
-import { app } from '@/services/firebase'
 import logger from './utils/vueLogger'
 import config from './config'
 import router from './router'
@@ -15,7 +16,6 @@ import './registerComponents'
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
 )
-logger(`Initialising Firebase App ${app.name}`)
 
 Vue.config.productionTip = config.isProduction
 Vue.config.devtools = true
@@ -30,8 +30,31 @@ if (config.isProduction) {
   })
 }
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app')
+let app: Vue
+const createVueInstance = () =>
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app')
+
+if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
+  firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
+    if (!app) {
+      if (user) {
+        const idToken = await user.getIdToken()
+        const details = {
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          email: user.email,
+          idToken,
+        }
+        store.commit('user/assignDetails', details, { root: true })
+      }
+
+      app = createVueInstance()
+    }
+  })
+} else {
+  app = createVueInstance()
+}

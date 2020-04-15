@@ -55,8 +55,8 @@
     name: 'Login',
     methods: {
       ...mapActions({
-        login: 'login/signInUser',
-        authRedirectResults: 'login/authRedirectResults',
+        login: 'user/signInUser',
+        authRedirectResults: 'user/authRedirectResults',
       }),
     },
     data: () => ({

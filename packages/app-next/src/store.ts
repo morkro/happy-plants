@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { store as notifications } from '@/modules/notifications'
 import { store as user } from '@/modules/user'
-import { store as login } from '@/modules/login'
 import { store as home } from '@/modules/home'
 import { NotificationsState } from './modules/notifications/store/state'
 import { UserState } from '@/modules/user/store/state'
@@ -21,7 +20,6 @@ const store = new Vuex.Store<RootState>({
   modules: {
     notifications,
     user,
-    login,
     home,
   },
 })

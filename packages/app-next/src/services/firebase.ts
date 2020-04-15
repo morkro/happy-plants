@@ -6,3 +6,4 @@ import config from '@/config'
 export const app = firebase.initializeApp(config.firebase)
 export const firestore = app.firestore()
 export const storage = firebase.storage()
+export default firebase
