@@ -17,7 +17,7 @@
 
 ## 🛠 HappyPlants v2 in development!
 
-HappyPlants v2 is currently in development and lives in [`feature/next`](/tree/feature/next). It will be a complete rebuild from scratch, eliminating some early architectural design decision issues. 
+HappyPlants v2 is currently in development and lives in [`feature/next`](https://github.com/morkro/happy-plants/tree/feature/next). It will be a complete rebuild from scratch, eliminating some early architectural design decision issues. 
 
 You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6). I am currently finalising the new design and features.
 
