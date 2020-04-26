@@ -47,15 +47,15 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  import { mapActions } from 'vuex'
+  // import { mapActions } from 'vuex'
   export default Vue.extend({
     name: 'OnboardingAccount',
 
     data: () => ({}),
 
     methods: {
-      ...mapActions({}),
-      createAccount() {},
+      // ...mapActions({}),
+      // createAccount() {},
     },
   })
 </script>
