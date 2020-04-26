@@ -1,6 +1,6 @@
-export default function errorHandler(error: unknown, vm: any, info: string): void {
+export default function errorHandler(error: Error, vm: Vue, info: string): void {
   const css = [
-    'background:#c41a16;padding:1px;border-radius:3px;color:#fff',
+    'background:#E54B4B;padding:1px;border-radius:3px;color:#fff',
     'background:transparent',
     'font-weight:bold',
     'background:transparent',

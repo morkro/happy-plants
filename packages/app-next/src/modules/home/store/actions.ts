@@ -18,7 +18,7 @@ export const loadPlants = async (context: {
     context.dispatch(
       'notifications/show',
       {
-        type: 'error',
+        type: 'alert',
         message: 'Unable to load plants.',
       },
       { root: true }

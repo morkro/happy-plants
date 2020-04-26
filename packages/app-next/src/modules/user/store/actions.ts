@@ -6,16 +6,20 @@ import { AssignDetailsPayload } from '@/modules/user/store/mutations'
 import logger from '@/utils/vueLogger'
 import { RootState } from '@/store'
 
-type ProviderName = 'google' | 'github' | 'twitter'
+export type LoginType = 'email' | 'google' | 'github' | 'twitter'
 
-export const signInUser = (
+export const createAccount = async (
   context: { commit: Commit },
-  providerName: ProviderName
-): Promise<void> => {
+  { email, password }: { email: string; password: string }
+): Promise<firebase.auth.UserCredential> => {
+  return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+
+const _signInWithProvider = (loginType: LoginType): void => {
   setSessionEntry('USER_SIGNIN_PROGRESS', 'true')
 
   let provider
-  switch (providerName) {
+  switch (loginType) {
     case 'google':
       provider = new firebase.auth.GoogleAuthProvider()
       break
@@ -27,7 +31,18 @@ export const signInUser = (
       break
   }
 
-  return firebase.auth().signInWithRedirect(provider)
+  firebase.auth().signInWithRedirect(provider)
+}
+
+export const signInUser = async (
+  context: { dispatch: Dispatch },
+  payload: { type: LoginType; email: string; password: string }
+): Promise<void> => {
+  if (payload.type === 'email') {
+    await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+  } else {
+    _signInWithProvider(payload.type)
+  }
 }
 
 export const authRedirectResults = async (context: {
@@ -51,7 +66,7 @@ export const authRedirectResults = async (context: {
     context.dispatch(
       'notifications/show',
       {
-        type: 'error',
+        type: 'alert',
         message: 'There was an issue logging you in, please try again.',
       },
       { root: true }
@@ -68,7 +83,7 @@ export const signOutUser = async (context: { commit: Commit; dispatch: Dispatch 
     context.dispatch(
       'notifications/show',
       {
-        type: 'error',
+        type: 'alert',
         message: 'There was an issue logging you out, please refresh.',
       },
       { root: true }

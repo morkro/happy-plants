@@ -11,6 +11,7 @@
   import Vue from 'vue'
   import { mapState } from 'vuex'
   import { NotificationsState } from './modules/notifications/store/state'
+  import AppNotification from './modules/notifications/components/Notification.vue'
   export default Vue.extend({
     name: 'HappyPlants',
 
@@ -20,7 +21,7 @@
     },
 
     components: {
-      'app-notification': () => import('@/modules/notifications/components/Notification.vue'),
+      'app-notification': AppNotification,
     },
 
     computed: mapState<NotificationsState>('notifications', {

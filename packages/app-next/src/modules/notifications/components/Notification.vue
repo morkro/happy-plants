@@ -1,6 +1,10 @@
 <template>
-  <div :class="['notification-wrapper', type]">
-    <component :is="icon()" />
+  <div
+    :class="['notification-wrapper', type]"
+    role="alert"
+    :aria-live="type !== 'alert' ? 'polite' : 'assertive'"
+  >
+    <!-- <component :is="icon()" /> -->
     <v-text color="special">{{ message }}</v-text>
   </div>
 </template>
@@ -13,12 +17,12 @@
   export default Vue.extend({
     name: 'AppNotification',
 
-    components: {
-      'feather-check': () =>
-        import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
-      'feather-alert': () =>
-        import('vue-feather-icons/icons/AlertCircleIcon' /* webpackChunkName: "icons" */),
-    },
+    // components: {
+    //   'feather-check': () =>
+    //     import('vue-feather-icons/icons/CheckCircleIcon' /* webpackChunkName: "icons" */),
+    //   'feather-alert': () =>
+    //     import('vue-feather-icons/icons/AlertCircleIcon' /* webpackChunkName: "icons" */),
+    // },
 
     computed: {
       ...mapState<NotificationsState>('notifications', {
@@ -46,6 +50,7 @@
   .notification-wrapper {
     width: calc(100vw - 2 * var(--base-gap));
     position: fixed;
+    z-index: 100;
     top: var(--app-header-height);
     left: var(--base-gap);
     right: var(--base-gap);

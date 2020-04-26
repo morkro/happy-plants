@@ -1,5 +1,5 @@
 <template>
-  <div class="screen-onboarding-success">
+  <v-layout class="screen-onboarding-success">
     <app-header return-to="/onboarding">
       Create account
     </app-header>
@@ -11,7 +11,7 @@
         Add your first plant
       </router-link>
     </main>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">

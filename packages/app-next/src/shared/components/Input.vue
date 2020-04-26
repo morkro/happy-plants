@@ -1,11 +1,29 @@
 <template>
-  <input />
+  <input
+    :class="{ hasError: error }"
+    :value="value"
+    @input="handleInput"
+    :aria-describedby="`input-${_uid}`"
+  />
+  <!-- <span v-if="error" :id="`input-${_uid}`">{{ errorMessage }}</span> -->
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
+  import { HTMLElementEvent } from '@/shared/events'
+
   export default Vue.extend({
     name: 'VInput',
+    props: {
+      value: String,
+      error: Boolean,
+      errorMessage: String,
+    },
+    methods: {
+      handleInput(event: HTMLElementEvent<HTMLInputElement>) {
+        this.$emit('input', event.target.value)
+      },
+    },
   })
 </script>
 
@@ -30,6 +48,10 @@
     }
 
     &:invalid:not(:empty) {
+      border-color: var(--brand-red);
+    }
+
+    &.hasError {
       border-color: var(--brand-red);
     }
   }

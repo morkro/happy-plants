@@ -65,6 +65,13 @@
       outline: none;
     }
 
+    /* Icons */
+    & > svg {
+      width: 20px;
+      height: 20px;
+      margin-right: calc(0.5 * var(--base-gap));
+    }
+
     /* Type */
     &.border {
       background: transparent !important;
@@ -106,7 +113,8 @@
     }
 
     &.grey,
-    &[disabled] {
+    &[disabled],
+    &[aria-disabled] {
       --background: var(--brand-beige-dark);
       --shadow: var(--brand-beige-dark);
       box-shadow: none;
