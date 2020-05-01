@@ -20,7 +20,9 @@
     "build:landing": "lerna run generate --scope @happy-plants/landing",
     "build:shared": "lerna run build --scope @happy-plants/landing",
     "init:app": "npm run bootstrap:app && npm run build:app",
-    "init:landing": "npm run bootstrap:landing && npm run build:landing"
+    "init:landing": "npm run bootstrap:landing && npm run build:landing",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "devDependencies": {
     "husky": "^4.2.3",
@@ -30,5 +32,9 @@
     "hooks": {
       "pre-commit": "lerna run --concurrency 1 --stream precommit"
     }
+  },
+  "snyk": true,
+  "dependencies": {
+    "snyk": "^*"
   }
 }
