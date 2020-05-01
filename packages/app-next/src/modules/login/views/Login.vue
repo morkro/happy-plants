@@ -2,47 +2,51 @@
   <v-layout class="screen-login">
     <v-loading v-if="loginRedirect" message="login" />
 
-    <app-header return-to="/welcome">
-      Login
-    </app-header>
+    <app-header return-to="/welcome">Login</app-header>
 
     <main>
       <form class="login-form" @submit.prevent="login('email')">
-        <label for="login-email">
-          <v-text color="special">
-            Your e-mail *
-          </v-text>
-        </label>
-        <v-input
-          type="email"
-          v-model="email"
-          required
-          placeholder="lover@plants.garden"
+        <label-group
           id="login-email"
-          :error="error.el === 'email'"
-          :error-message="error.message"
-          :aria-invalid="error.el === 'email'"
-        />
+          label="Your e-mail *"
+          :error="error.el === 'email' && error.message"
+        >
+          <template v-slot="{ label }">
+            <v-input
+              required
+              type="email"
+              placeholder="lover@plants.garden"
+              id="login-email"
+              v-model="email"
+              :aria-describedby="label"
+              :aria-invalid="error.el === 'email'"
+              :error="error.el === 'email'"
+              :error-message="error.message"
+            />
+          </template>
+        </label-group>
 
-        <label for="login-pw">
-          <v-text color="special">
-            Your password *
-          </v-text>
-        </label>
-        <v-input
-          type="password"
-          v-model="password"
-          required
-          placeholder="********"
+        <label-group
           id="login-pw"
-          :error="error.el === 'password'"
-          :error-message="error.message"
-          :aria-invalid="error.el === 'password'"
-        />
+          label="Your e-mail *"
+          :error="error.el === 'password' && error.message"
+        >
+          <template v-slot="{ label }">
+            <v-input
+              type="password"
+              v-model="password"
+              required
+              placeholder="********"
+              id="login-pw"
+              :aria-describedby="label"
+              :error="error.el === 'password'"
+              :error-message="error.message"
+              :aria-invalid="error.el === 'password'"
+            />
+          </template>
+        </label-group>
 
-        <v-button color="yellow" type="submit" :aria-disabled="email && password">
-          Login
-        </v-button>
+        <v-button color="yellow" type="submit">Login</v-button>
       </form>
 
       <div class="login-form-separator">
@@ -51,9 +55,15 @@
       </div>
 
       <div class="login-services">
-        <v-button border @click.native="login('google')"> <feather-chrome /> Google </v-button>
-        <v-button border @click.native="login('github')"> <feather-github /> GitHub</v-button>
-        <v-button border @click.native="login('twitter')"> <feather-twitter /> Twitter</v-button>
+        <v-button border @click.native="login('google')">
+          <feather-chrome />Google
+        </v-button>
+        <v-button border @click.native="login('github')">
+          <feather-github />GitHub
+        </v-button>
+        <v-button border @click.native="login('twitter')">
+          <feather-twitter />Twitter
+        </v-button>
       </div>
     </main>
 
@@ -68,9 +78,9 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions } from 'vuex'
-  import { FirebaseError } from 'firebase'
   import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
   import delay from '@/utils/promiseDelay'
+  import setErrorMessage from '@/utils/setErrorMessage'
   import { LoginType } from '@/modules/user/store/actions'
 
   export default Vue.extend({
@@ -93,7 +103,6 @@
       ...mapActions({
         signInUser: 'user/signInUser',
         authRedirectResults: 'user/authRedirectResults',
-        showNotifications: 'notifications/show',
       }),
       async login(type: LoginType): Promise<void> {
         this.error.el = null
@@ -106,25 +115,7 @@
             password: this.password,
           })
         } catch (error) {
-          this.setErrorMessage(error)
-        }
-      },
-      setErrorMessage(error: FirebaseError): void {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            this.error.el = 'email'
-            this.error.message = error.message
-            break
-          case 'auth/wrong-password':
-            this.error.el = 'password'
-            this.error.message = error.message
-            break
-          default: {
-            this.showNotifications({
-              type: 'alert',
-              error: error.message,
-            })
-          }
+          this.error = setErrorMessage(error)
         }
       },
     },
@@ -156,10 +147,10 @@
     flex-direction: column;
     width: 100%;
 
-    & label,
-    & input {
-      margin-bottom: var(--base-gap);
-    }
+    /* & label,
+                  & input {
+                    margin-bottom: var(--base-gap);
+                  } */
 
     & .btn.yellow {
       box-shadow: 0 1px 2px var(--brand-green-dark);

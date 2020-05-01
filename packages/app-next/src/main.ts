@@ -6,9 +6,7 @@ import { getSessionEntry } from '@/services/sessionStorage'
 import errorHandler from './utils/vueErrorHandler'
 import logger from './utils/vueLogger'
 import config from './config'
-import router from './router'
-import store from './store'
-import App from './App.vue'
+import { createApp } from './app'
 import './registerServiceWorker'
 import './registerPlugins'
 import './registerComponents'
@@ -30,31 +28,23 @@ if (config.isProduction) {
   })
 }
 
-let app: Vue
-const createVueInstance = () =>
-  new Vue({
-    router,
-    store,
-    render: h => h(App),
-  }).$mount('#app')
+const { app, store } = createApp()
 
 if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
   firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
-    if (!app) {
-      if (user) {
-        const idToken = await user.getIdToken()
-        const details = {
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          email: user.email,
-          idToken,
-        }
-        store.commit('user/assignDetails', details, { root: true })
+    if (user) {
+      const idToken = await user.getIdToken()
+      const details = {
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+        idToken,
       }
-
-      app = createVueInstance()
+      store.commit('user/assignDetails', details, { root: true })
     }
+
+    app.$mount('#app')
   })
 } else {
-  app = createVueInstance()
+  app.$mount('#app')
 }

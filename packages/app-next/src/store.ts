@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import { store as notifications } from '@/modules/notifications'
 import { store as user } from '@/modules/user'
 import { store as home } from '@/modules/home'
@@ -15,13 +15,15 @@ export interface RootState {
   login: {}
 }
 
-const store = new Vuex.Store<RootState>({
-  strict: config.isProduction,
-  modules: {
-    notifications,
-    user,
-    home,
-  },
-})
+export function createStore(): Store<RootState> {
+  return new Vuex.Store<RootState>({
+    strict: config.isProduction,
+    modules: {
+      notifications,
+      user,
+      home,
+    },
+  })
+}
 
-export default store
+export default createStore()

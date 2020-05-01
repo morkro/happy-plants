@@ -11,8 +11,16 @@ export type LoginType = 'email' | 'google' | 'github' | 'twitter'
 export const createAccount = async (
   context: { commit: Commit },
   { email, password }: { email: string; password: string }
-): Promise<firebase.auth.UserCredential> => {
-  return firebase.auth().createUserWithEmailAndPassword(email, password)
+): Promise<void> => {
+  const results = await firebase.auth().createUserWithEmailAndPassword(email, password)
+  const idToken = await results.user.getIdToken()
+  const details: AssignDetailsPayload = {
+    displayName: results.user.displayName,
+    photoURL: results.user.photoURL,
+    email: results.user.email,
+    idToken,
+  }
+  context.commit('assignDetails', details)
 }
 
 const _signInWithProvider = (loginType: LoginType): void => {

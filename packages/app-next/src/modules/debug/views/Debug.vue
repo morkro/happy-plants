@@ -1,13 +1,10 @@
 <template>
-  <div class="screen-onboarding">
-    <app-header return-to="/welcome">
-      Onboarding
+  <div class="screen-debug">
+    <app-header return-to="/">
+      Debugger
     </app-header>
 
     <main>
-      <router-link to="/onboarding/account" class="btn">
-        Next
-      </router-link>
       <div class="text-wrap">
         <div>
           <v-text type="hero">Hero</v-text>
@@ -90,17 +87,17 @@
 <script lang="ts">
   import Vue from 'vue'
   export default Vue.extend({
-    name: 'Onboarding',
+    name: 'debug',
   })
 </script>
 
 <style lang="postcss" scoped>
-  .screen-onboarding {
+  .screen-debug {
     width: 100%;
     padding-top: var(--app-header-height);
   }
 
-  .screen-onboarding main {
+  .screen-debug main {
     display: grid;
 
     & div > div {

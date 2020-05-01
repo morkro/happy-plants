@@ -11,7 +11,7 @@ const routes: RouteConfig[] = [
       {
         path: '',
         name: 'Onboarding',
-        component: () => import('./views/Storybook.vue' /* webpackChunkName: "onboarding" */),
+        component: () => import('./views/Features.vue' /* webpackChunkName: "onboarding" */),
       },
       {
         name: 'OnboardingAccount',

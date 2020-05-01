@@ -18,6 +18,7 @@
         </router-link>
       </div>
     </main>
+
     <footer>
       <a
         href="https://happyplants.app/#about"

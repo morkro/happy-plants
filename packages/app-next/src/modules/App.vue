@@ -10,8 +10,8 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapState } from 'vuex'
-  import { NotificationsState } from './modules/notifications/store/state'
-  import AppNotification from './modules/notifications/components/Notification.vue'
+  import { NotificationsState } from './notifications/store/state'
+  import AppNotification from './notifications/components/Notification.vue'
   export default Vue.extend({
     name: 'HappyPlants',
 
@@ -34,7 +34,7 @@
   @import 'normalize.css';
   @import '@happy-plants/styles/dist/colors-next.css';
   @import '@happy-plants/styles/dist/fonts.css';
-  @import 'shared/styles/animations.css';
+  @import '../shared/styles/animations.css';
 
   :root {
     --base-radius: 2px;
