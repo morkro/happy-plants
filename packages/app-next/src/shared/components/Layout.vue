@@ -13,7 +13,6 @@
 
 <style lang="postcss" scoped>
   .app-screen {
-    padding-top: var(--app-header-height);
     width: 100%;
     display: flex;
     flex-direction: column;

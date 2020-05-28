@@ -35,6 +35,7 @@
   @import '@happy-plants/styles/dist/colors-next.css';
   @import '@happy-plants/styles/dist/fonts.css';
   @import '../shared/styles/animations.css';
+  @import '../shared/styles/media-queries.css';
 
   :root {
     --base-radius: 2px;
@@ -58,15 +59,31 @@
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 120%;
+    line-height: 140%;
+
+    @media (--max-mobile-viewport) {
+      align-items: center;
+      height: 100vh;
+    }
   }
 
   #app {
     width: 100vw;
+    min-width: 375px;
     min-height: 100vh;
     height: 100%;
     display: flex;
-    overflow-x: hidden;
+    position: relative;
+
+    @media (--max-mobile-viewport) {
+      overflow-x: hidden;
+      max-width: 375px;
+      height: 812px;
+      min-height: 818px;
+      border: 10px var(--brand-black) solid;
+      border-radius: 30px;
+      box-shadow: 0 0 0 4px var(--brand-black-50);
+    }
   }
 
   .visuallyhidden:not(:focus):not(:active) {

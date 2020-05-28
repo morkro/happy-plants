@@ -5,10 +5,11 @@
     <main>
       <img src="../assets/404-illustration.svg" />
       <v-text type="title">Oops, how did you get here?</v-text>
-      <v-text color="inactive">Let’s just act like this never happend,<br />shall we?</v-text>
-      <router-link to="/" class="btn">
-        Back to your plants
-      </router-link>
+      <v-text color="inactive">
+        Let’s just act like this never happend,
+        <br />shall we?
+      </v-text>
+      <router-link to="/" class="btn">Back to your plants</router-link>
     </main>
 
     <app-menu />
@@ -24,7 +25,6 @@
 
 <style lang="postcss" scoped>
   .screen-404 {
-    padding-top: var(--app-header-height);
     width: 100%;
     display: flex;
     flex-direction: column;

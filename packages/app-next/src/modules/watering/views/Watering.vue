@@ -3,9 +3,7 @@
     <app-header />
 
     <main>
-      <v-text type="title">
-        Waterrrrrr
-      </v-text>
+      <v-text type="title">Waterrrrrr</v-text>
     </main>
 
     <app-menu />
@@ -21,7 +19,6 @@
 
 <style lang="postcss" scoped>
   .screen-watering {
-    padding-top: var(--app-header-height);
     width: 100%;
     display: flex;
     flex-direction: column;

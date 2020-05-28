@@ -2,11 +2,16 @@
   <main class="screen-home">
     <app-header />
     <main>
-      <div v-for="plant of plants" :key="plant.guid">
-        <v-text type="title">
-          {{ plant.name }}
-        </v-text>
+      <div v-if="plantData.length" class="home-plants-list">
+        <plant-preview
+          v-for="plant of plantData"
+          :loading="loading"
+          :key="plant.guid"
+          :label="plant.name"
+          :link="`plant/${plant.guid}`"
+        />
       </div>
+      <empty-illustration v-else />
     </main>
     <app-menu />
   </main>
@@ -15,37 +20,50 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import { Plant } from '@/shared/types/plant'
   import { RootState } from '@/store'
-
-  interface HomeViewData {
-    plants: Plant[]
-  }
+  import Preview from '../components/Preview.vue'
+  import EmptyIllustration from '../components/EmptyIllustration.vue'
+  import { Plant } from '@/shared/types/plant'
+  import delay from '../../../utils/promiseDelay'
 
   export default Vue.extend({
     name: 'Home',
 
-    data(): HomeViewData {
-      return {
-        plants: [],
-      }
+    components: {
+      'plant-preview': Preview,
+      'empty-illustration': EmptyIllustration,
     },
 
-    computed: mapState<RootState>({
-      idToken: (state: RootState) => state.user.idToken,
+    data: () => ({
+      loading: true,
     }),
 
-    // methods: {
-    //   ...mapActions({ loadPlants: 'home/loadPlants' }),
-    // },
+    computed: {
+      ...mapState<RootState>({
+        plants: (state: RootState) => state.home.plants,
+      }),
+      plantData(): Array<Plant | {}> {
+        if (this.loading) {
+          return new Array(5).fill({})
+        }
+        return this.plants
+      },
+    },
+
+    methods: {
+      ...mapActions({ loadPlants: 'home/loadPlants' }),
+    },
 
     async created() {
       if (this.plants.length === 0) {
-        const response = await fetch('/api/plants', {
-          headers: new Headers({ Authorization: this.idToken }),
-        })
-        this.plants = await response.json()
-        // await this.loadPlants()
+        await this.loadPlants()
+        this.loading = false
+      }
+    },
+
+    beforeMount() {
+      if (this.plants.length) {
+        this.loading = false
       }
     },
   })
@@ -53,10 +71,13 @@
 
 <style lang="postcss" scoped>
   .screen-home {
-    padding-top: var(--app-header-height);
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    & #app-header {
+      background: var(--brand-beige);
+    }
 
     & main {
       padding: 0 var(--base-gap);
@@ -64,9 +85,17 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
     }
+  }
+
+  .home-plants-list {
+    --grid-item-height: calc(50vw - 2 * var(--base-gap));
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: var(--grid-item-height);
+    grid-gap: var(--base-gap);
   }
 </style>

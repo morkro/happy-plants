@@ -5,17 +5,14 @@
         <welcome-illustration data-cy="illustration" focusable="false" />
         <div>
           <v-text color="inactive" data-cy="welcome-text">
-            Keep track of your<br />houseplants' well-being.
+            Keep track of your
+            <br />houseplants' well-being.
           </v-text>
         </div>
       </div>
       <div class="welcome-actions">
-        <router-link to="/login" class="btn border" data-cy="action-login">
-          Login
-        </router-link>
-        <router-link to="/onboarding" class="btn yellow" data-cy="action-onboarding">
-          Getting started
-        </router-link>
+        <router-link to="/login" class="btn border" data-cy="action-login">Login</router-link>
+        <router-link to="/onboarding" class="btn yellow" data-cy="action-onboarding">Getting started</router-link>
       </div>
     </main>
 
@@ -26,9 +23,7 @@
         rel="noopener"
         data-cy="footer-about"
       >
-        <v-text small color="special">
-          About
-        </v-text>
+        <v-text small color="special">About</v-text>
       </a>
       <a
         href="https://happyplants.app/#contact"
@@ -36,9 +31,7 @@
         rel="noopener"
         data-cy="footer-contact"
       >
-        <v-text small color="special">
-          Contact
-        </v-text>
+        <v-text small color="special">Contact</v-text>
       </a>
       <a
         href="https://github.com/morkro/happy-plants"
@@ -46,9 +39,7 @@
         rel="noopener"
         data-cy="footer-os"
       >
-        <v-text small color="special">
-          Open Source
-        </v-text>
+        <v-text small color="special">Open Source</v-text>
       </a>
     </footer>
   </div>

@@ -1,8 +1,6 @@
 <template>
   <label :for="id">
-    <v-text color="special">
-      {{ label }}
-    </v-text>
+    <v-text color="special">{{ label }}</v-text>
     <slot :label="ariaDescribedBy" />
     <div :class="{ visible: !!error }">
       <feather-alert />
@@ -13,6 +11,7 @@
 
 <script lang="ts">
   import Vue from 'vue'
+  let id = 0
   export default Vue.extend({
     name: 'LabelGroup',
     props: {
@@ -26,8 +25,11 @@
     },
     computed: {
       ariaDescribedBy() {
-        return `labelgroup-${this._uid}`
+        return `labelgroup-${id}`
       },
+    },
+    created() {
+      id++
     },
   })
 </script>
@@ -55,14 +57,17 @@
     border-bottom-right-radius: var(--base-radius);
 
     &.visible {
-      display: flex;
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      grid-gap: calc(0.5 * var(--base-gap));
+      align-items: start;
     }
 
     & svg {
       height: 14px;
       width: 14px;
       stroke: var(--brand-white);
-      margin-right: calc(0.5 * var(--base-gap));
+      margin-top: 5px;
     }
   }
 </style>

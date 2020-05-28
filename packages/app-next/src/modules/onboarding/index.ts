@@ -8,15 +8,20 @@ const routes: RouteConfig[] = [
       requiresAuth: false,
     },
     children: [
-      {
-        path: '',
-        name: 'Onboarding',
-        component: () => import('./views/Features.vue' /* webpackChunkName: "onboarding" */),
-      },
+      // {
+      //   path: '',
+      //   name: 'Onboarding',
+      //   component: () => import('./views/Features.vue' /* webpackChunkName: "onboarding" */),
+      // },
       {
         name: 'OnboardingAccount',
-        path: 'account',
-        component: () => import('./views/Account.vue' /* webpackChunkName: "onboarding" */),
+        path: '',
+        component: () => import('./views/AccountCreation.vue' /* webpackChunkName: "onboarding" */),
+      },
+      {
+        name: 'OnboardingEmail',
+        path: 'email',
+        component: () => import('./views/EmailAccount.vue' /* webpackChunkName: "onboarding" */),
       },
       {
         name: 'OnboardingSuccess',

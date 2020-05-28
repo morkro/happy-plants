@@ -1,8 +1,6 @@
 <template>
   <div class="screen-debug">
-    <app-header return-to="/">
-      Debugger
-    </app-header>
+    <app-header return-to="/">Debugger</app-header>
 
     <main>
       <div class="text-wrap">
@@ -94,7 +92,6 @@
 <style lang="postcss" scoped>
   .screen-debug {
     width: 100%;
-    padding-top: var(--app-header-height);
   }
 
   .screen-debug main {

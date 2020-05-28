@@ -1,8 +1,6 @@
 <template>
-  <v-layout class="screen-onboarding-account">
-    <app-header return-to="/onboarding">
-      Create account
-    </app-header>
+  <v-layout class="screen-onboarding-email">
+    <app-header return-to="/onboarding">Create account</app-header>
 
     <main>
       <form class="create-account-form" @submit.prevent="createAccount()">
@@ -61,18 +59,12 @@
           </template>
         </label-group>
 
-        <v-button color="yellow" type="submit">
-          Create account
-        </v-button>
+        <v-button color="yellow" type="submit">Create account</v-button>
       </form>
 
       <div class="create-account-actions">
-        <router-link to="/onboarding" class="btn">
-          Back
-        </router-link>
-        <router-link to="/onboarding/success" class="btn">
-          Next
-        </router-link>
+        <router-link to="/onboarding" class="btn">Back</router-link>
+        <router-link to="/onboarding/success" class="btn">Next</router-link>
       </div>
     </main>
   </v-layout>

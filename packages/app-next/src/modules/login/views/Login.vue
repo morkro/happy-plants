@@ -98,6 +98,7 @@
       email: null,
       password: null,
       error: { el: null, message: null },
+      loading: false,
     }),
     methods: {
       ...mapActions({
@@ -146,11 +147,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-
-    /* & label,
-                  & input {
-                    margin-bottom: var(--base-gap);
-                  } */
 
     & .btn.yellow {
       box-shadow: 0 1px 2px var(--brand-green-dark);

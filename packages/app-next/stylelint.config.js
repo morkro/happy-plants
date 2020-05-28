@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   processors: ['stylelint-processor-html'],
   extends: ['stylelint-config-standard'],
+  ignoreFiles: ['**/*.js', '**/*.ts'],
   rules: {
     'no-empty-source': null,
     'declaration-empty-line-before': null,

@@ -28,10 +28,10 @@ if (config.isProduction) {
   })
 }
 
-const { app, store } = createApp()
-
 if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
   firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
+    const { store, create } = createApp({ hold: true })
+
     if (user) {
       const idToken = await user.getIdToken()
       const details = {
@@ -40,11 +40,13 @@ if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
         email: user.email,
         idToken,
       }
+
       store.commit('user/assignDetails', details, { root: true })
     }
 
-    app.$mount('#app')
+    create().$mount('#app')
   })
 } else {
+  const { app } = createApp()
   app.$mount('#app')
 }

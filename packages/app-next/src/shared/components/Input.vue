@@ -2,7 +2,7 @@
   <input :class="{ hasError: error }" :value="value" @input="handleInput" />
   <!--
     :aria-describedby="`input-${_uid}`"
-    -->
+  -->
   <!-- <span v-if="error" :id="`input-${_uid}`">{{ errorMessage }}</span> -->
 </template>
 
