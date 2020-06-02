@@ -1,5 +1,6 @@
 import { Commit, Dispatch } from 'vuex'
 import { RootState } from '@/store'
+import { setLocalEntry } from '@/services/localStorage'
 import logger from '@/utils/vueLogger'
 
 export const loadPlants = async (context: {
@@ -12,6 +13,7 @@ export const loadPlants = async (context: {
       headers: new Headers({ Authorization: context.rootState.user.idToken }),
     })
     const plants = await response.json()
+    setLocalEntry('plant-data-count', plants.length)
     context.commit('assignPlants', plants)
   } catch (error) {
     logger(error.message, true)

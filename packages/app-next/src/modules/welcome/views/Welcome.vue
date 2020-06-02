@@ -86,6 +86,7 @@
         background: var(--brand-beige);
         display: inline;
         box-shadow: 3px 0 0 var(--brand-beige), -3px 0 0 var(--brand-beige);
+        border-radius: var(--base-radius);
       }
     }
 

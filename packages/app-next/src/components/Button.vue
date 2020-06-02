@@ -7,7 +7,7 @@
 <script lang="ts">
   import Vue from 'vue'
 
-  const colors = ['green', 'blue', 'yellow', 'red', 'grey']
+  const colors = ['green', 'blue', 'yellow', 'red', 'grey', 'white']
 
   export default Vue.extend({
     name: 'VButton',
@@ -55,7 +55,7 @@
     align-items: center;
     transition: border-color 100ms ease-in-out, box-shadow 100ms ease-in-out;
 
-    &:focus {
+    &:active {
       animation: bounce 650ms;
     }
 
@@ -86,6 +86,17 @@
       }
 
       &.yellow {
+        color: var(--brand-white);
+      }
+
+      &.green {
+        border: 2px solid var(--brand-green);
+        color: var(--brand-green);
+        --shadow: var(--brand-green);
+      }
+
+      &.white {
+        border: 2px solid var(--brand-white);
         color: var(--brand-white);
       }
     }

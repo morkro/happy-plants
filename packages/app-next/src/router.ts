@@ -7,6 +7,7 @@ import { routes as home } from './modules/home'
 import { routes as watering } from './modules/watering'
 import { routes as addnew } from './modules/new'
 import { routes as settings } from './modules/settings'
+import { routes as plant } from './modules/plant'
 import { routes as debug } from './modules/debug'
 import { routes as notfound } from './modules/404'
 import store from './store'
@@ -26,6 +27,7 @@ export function createRouter(): VueRouter {
       ...watering,
       ...addnew,
       ...settings,
+      ...plant,
       ...debug,
       ...notfound,
     ],

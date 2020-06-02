@@ -7,6 +7,7 @@ const routes: RouteConfig[] = [
     component: () => import('./views/Welcome.vue' /* webpackChunkName: "Welcome" */),
     meta: {
       requiresAuth: false,
+      showAppMenu: false,
     },
   },
 ]

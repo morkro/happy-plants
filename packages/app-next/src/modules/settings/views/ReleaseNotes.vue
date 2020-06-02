@@ -41,8 +41,6 @@
         </li>
       </ul>
     </main>
-
-    <app-menu />
   </v-layout>
 </template>
 
@@ -73,6 +71,10 @@
 </script>
 
 <style lang="postcss" scoped>
+  .screen-release-notes #app-header {
+    background: var(--brand-beige);
+  }
+
   .screen-release-notes main {
     justify-content: flex-start;
   }

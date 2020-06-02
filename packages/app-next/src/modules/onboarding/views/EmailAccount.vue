@@ -3,7 +3,7 @@
     <app-header return-to="/onboarding">Create account</app-header>
 
     <main>
-      <form class="create-account-form" @submit.prevent="createAccount()">
+      <form class="create-account-form" @submit.prevent="createAccount">
         <label-group
           label="Your e-mail *"
           id="create-account-email"
@@ -55,17 +55,21 @@
               :error="error.el === 'password'"
               :error-message="error.message"
               :aria-invalid="error.el === 'password' || password !== passwordConfirmed"
+              @blur.native="comparePasswords"
             />
           </template>
         </label-group>
 
-        <v-button color="yellow" type="submit">Create account</v-button>
+        <div class="create-account-actions">
+          <router-link to="/onboarding" class="btn border green">Back</router-link>
+          <v-button
+            type="submit"
+            :disabled="!canProceed"
+            :aria-disabled="!canProceed"
+            :color="canProceed ? 'green':'grey'"
+          >Create account</v-button>
+        </div>
       </form>
-
-      <div class="create-account-actions">
-        <router-link to="/onboarding" class="btn">Back</router-link>
-        <router-link to="/onboarding/success" class="btn">Next</router-link>
-      </div>
     </main>
   </v-layout>
 </template>
@@ -84,24 +88,47 @@
 
   export default Vue.extend({
     name: 'OnboardingAccount',
-
-    data: (): OnboardingAccountData => ({
-      email: null,
-      password: null,
-      passwordConfirmed: null,
-      error: { el: null, message: null },
-    }),
-
+    data(): OnboardingAccountData {
+      return {
+        email: String(this.$route.query.email),
+        password: null,
+        passwordConfirmed: null,
+        error: { el: null, message: null },
+      }
+    },
+    computed: {
+      canProceed(): boolean {
+        return this.email && this.password && this.password === this.passwordConfirmed
+      },
+    },
+    watch: {
+      email(newValue): void {
+        this.$router.push({ path: '/onboarding/email', query: { email: newValue } })
+      },
+    },
     methods: {
       ...mapActions({
         create: 'user/createAccount',
+        sendEmailVerification: 'user/verifyEmail',
       }),
+      comparePasswords(): void {
+        if (this.passwordConfirmed !== this.password) {
+          this.error = { el: 'password', message: `Password's don't match` }
+        } else {
+          this.error = { el: null, message: null }
+        }
+      },
       async createAccount() {
+        if (!this.canProceed) {
+          return
+        }
+
         this.error.el = null
         this.error.message = null
 
         try {
           await this.create({ email: this.email, password: this.password })
+          await this.sendEmailVerification()
           this.$router.push('/onboarding/success')
         } catch (error) {
           this.error = setErrorMessage(error)
@@ -111,19 +138,28 @@
   })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .screen-onboarding-account {
     width: 100%;
   }
 
   .create-account-form {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    & label > .text {
+      color: var(--brand-green-dark);
+    }
   }
 
   .create-account-actions {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: var(--base-gap);
+    padding-bottom: var(--base-gap);
+    margin-top: auto;
     width: 100%;
-    margin-top: var(--base-gap);
   }
 </style>

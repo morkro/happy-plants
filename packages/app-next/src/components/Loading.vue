@@ -95,6 +95,7 @@
     height: 100vh;
     position: fixed;
     top: 0;
+    left: 0;
     z-index: 3;
     display: flex;
     flex-direction: column;

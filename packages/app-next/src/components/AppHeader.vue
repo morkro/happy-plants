@@ -1,21 +1,26 @@
 <template>
-  <header id="app-header">
-    <div class="app-header-icon">
-      <router-link v-if="returnTo" :to="returnTo">
-        <feather-left />
-        <v-text class="visuallyhidden" color="inactive">Back</v-text>
-      </router-link>
-      <img v-else src="@/assets/logo-small.svg" width="32" height="28" alt="HappyPlants Logo" />
+  <header id="app-header" :class="[color]">
+    <div class="app-header-essentials">
+      <div class="app-header-icon">
+        <router-link v-if="returnTo" :to="returnTo">
+          <feather-left />
+          <v-text class="visuallyhidden" color="inactive">Back</v-text>
+        </router-link>
+        <app-logo :color="color" v-else />
+      </div>
+
+      <v-text type="subtitle" :color="titleColor" class="app-header-title">
+        <slot>HappyPlants</slot>
+      </v-text>
     </div>
 
-    <v-text type="subtitle" :color="titleColor" class="app-header-title">
-      <slot>HappyPlants</slot>
-    </v-text>
+    <slot name="actions" />
   </header>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
+
   export default Vue.extend({
     name: 'AppHeader',
 
@@ -53,19 +58,28 @@
     height: var(--app-header-height);
     display: flex;
     align-items: center;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 1;
+
+    & .app-header-essentials {
+      display: grid;
+      align-items: center;
+      height: 100%;
+      grid-template-columns: auto auto;
+    }
   }
 
   .app-header-icon {
     height: 100%;
-    width: 50px;
+    min-width: var(--app-header-height);
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 var(--base-gap);
 
-    & svg {
+    & svg:not(#app-logo) {
       stroke: var(--brand-green-dark);
     }
 

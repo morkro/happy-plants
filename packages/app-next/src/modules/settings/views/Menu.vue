@@ -7,11 +7,19 @@
     <main>
       <section class="settings-header">
         <div class="settings-header-photo">
-          <img :src="userPhotoURL" :alt="`Photo of ${userName}`" :title="`Photo of ${userName}`" />
+          <img
+            v-if="userPhotoURL"
+            :src="userPhotoURL"
+            :alt="`Photo of ${displayName}`"
+            :title="`Photo of ${displayName}`"
+          />
+          <div v-else>
+            <feather-smile />
+          </div>
         </div>
         <div class="settings-header-content">
-          <v-text color="special">{{ userName }}</v-text>
-          <v-text color="special">{{ plants }} Plants</v-text>
+          <v-text color="special">{{ displayName }}</v-text>
+          <v-text color="special">{{ plantCount }} Plants</v-text>
         </div>
 
         <svg
@@ -37,7 +45,7 @@
         <v-text type="subtitle" color="inactive">Account</v-text>
         <ul>
           <li>
-            <router-link to="/settings/email">
+            <router-link to="/settings/account">
               <v-text>Email & password</v-text>
               <feather-arrow />
             </router-link>
@@ -99,17 +107,16 @@
 
       <v-button @click.native="logoutUser" color="red" small>Logout</v-button>
     </main>
-
-    <app-menu />
   </v-layout>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import delay from '@/utils/promiseDelay'
   import { RootState } from '@/store'
   import config from '@/config'
+  import delay from '@/utils/promiseDelay'
+  import { getLocalEntry } from '@/services/localStorage'
 
   export default Vue.extend({
     name: 'Settings',
@@ -117,27 +124,47 @@
     components: {
       'feather-arrow': () =>
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
+      'feather-smile': () =>
+        import('vue-feather-icons/icons/SmileIcon' /* webpackChunkName: "icons" */),
     },
 
     data: () => ({
       logoutRedirect: false,
       version: config.version,
+      plantCountFromLocalStorage: getLocalEntry('plant-data-count'),
     }),
 
-    computed: mapState<RootState>({
-      userName: (state: RootState) => state.user.displayName,
-      userPhotoURL: (state: RootState) => state.user.photoURL,
-      plants: (state: RootState) => state.home.plants.length,
-    }),
+    computed: {
+      ...mapState<RootState>({
+        userName: (state: RootState) => state.user.displayName,
+        email: (state: RootState) => state.user.email,
+        userPhotoURL: (state: RootState) => state.user.photoURL,
+        plants: (state: RootState) => state.home.plants.length,
+      }),
+      plantCount(): string {
+        return this.plants ? String(this.plants) : this.plantCountFromLocalStorage
+      },
+      displayName(): string {
+        return this.userName || this.email
+      },
+    },
 
     methods: {
       ...mapActions({
         logout: 'user/signOutUser',
+        showNotification: 'notifications/show',
       }),
       async logoutUser() {
         this.logoutRedirect = true
-        await Promise.all([this.logout(), delay(2000)])
-        this.$router.push('/')
+        try {
+          await this.logout()
+          await delay(2000)
+          this.$store.commit('home/resetState', null, { root: true })
+          this.$router.push('/welcome')
+        } catch (error) {
+          this.logoutRedirect = false
+          this.showNotification({ info: 'alert', message: error.message })
+        }
       },
     },
   })
@@ -171,10 +198,23 @@
     margin-bottom: 60px;
 
     & .settings-header-photo {
-      & img {
+      & img,
+      & div {
         width: 100%;
         border-radius: var(--base-radius);
         box-shadow: 0 2px 4px var(--brand-green-dark);
+      }
+
+      & div {
+        height: 45px;
+        background: var(--brand-yellow);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & svg {
+          stroke: var(--brand-green-dark);
+        }
       }
     }
 

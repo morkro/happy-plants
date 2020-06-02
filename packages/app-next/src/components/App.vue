@@ -3,30 +3,44 @@
     <transition>
       <app-notification v-if="notificationMessage" />
     </transition>
-    <router-view />
+
+    <screen-transition>
+      <router-view />
+    </screen-transition>
+
+    <app-menu v-if="showAppMenu" />
   </div>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
   import { mapState } from 'vuex'
-  import { NotificationsState } from './notifications/store/state'
-  import AppNotification from './notifications/components/Notification.vue'
+  import { NotificationsState } from '@/modules/notifications/store/state'
+  import AppNotification from '@/modules/notifications/components/Notification.vue'
+  import { Route } from 'vue-router'
+
   export default Vue.extend({
     name: 'HappyPlants',
-
     metaInfo: {
       title: 'HappyPlants',
       titleTemplate: '%s — HappyPlants',
     },
-
+    data: () => ({
+      showAppMenu: false,
+    }),
     components: {
       'app-notification': AppNotification,
     },
-
     computed: mapState<NotificationsState>('notifications', {
       notificationMessage: (state: NotificationsState) => state.message,
     }),
+    created() {
+      this.showAppMenu = this.$router.currentRoute.matched.some(record => record.meta.showAppMenu)
+      this.$router.beforeEach((to: Route, from: Route, next) => {
+        this.showAppMenu = to.matched.some(record => record.meta.showAppMenu)
+        next()
+      })
+    },
   })
 </script>
 
@@ -34,13 +48,14 @@
   @import 'normalize.css';
   @import '@happy-plants/styles/dist/colors-next.css';
   @import '@happy-plants/styles/dist/fonts.css';
-  @import '../shared/styles/animations.css';
-  @import '../shared/styles/media-queries.css';
+  @import '../styles/animations.css';
+  @import '../styles/media-queries.css';
 
   :root {
     --base-radius: 2px;
     --base-gap: 15px;
     --app-header-height: 50px;
+    --app-max-width: 375px;
   }
 
   * {
@@ -69,20 +84,20 @@
 
   #app {
     width: 100vw;
-    min-width: 375px;
+    min-width: var(--app-max-width);
     min-height: 100vh;
     height: 100%;
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr auto;
     position: relative;
 
     @media (--max-mobile-viewport) {
       overflow-x: hidden;
-      max-width: 375px;
+      max-width: var(--app-max-width);
       height: 812px;
-      min-height: 818px;
-      border: 10px var(--brand-black) solid;
+      min-height: 812px;
       border-radius: 30px;
-      box-shadow: 0 0 0 4px var(--brand-black-50);
+      box-shadow: 0 0 0 14px var(--brand-black-50), 0 0 0 10px var(--brand-black);
     }
   }
 

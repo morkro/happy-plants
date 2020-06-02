@@ -4,7 +4,7 @@ import { Store } from 'vuex'
 import { sync } from 'vuex-router-sync'
 import { createRouter } from './router'
 import { createStore, RootState } from './store'
-import App from './modules/App.vue'
+import App from './components/App.vue'
 
 interface CreateApp {
   hold?: boolean

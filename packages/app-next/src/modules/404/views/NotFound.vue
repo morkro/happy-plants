@@ -11,8 +11,6 @@
       </v-text>
       <router-link to="/" class="btn">Back to your plants</router-link>
     </main>
-
-    <app-menu />
   </div>
 </template>
 

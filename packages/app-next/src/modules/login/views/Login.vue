@@ -55,13 +55,13 @@
       </div>
 
       <div class="login-services">
-        <v-button border @click.native="login('google')">
+        <v-button border color="white" @click.native="login('google')">
           <feather-chrome />Google
         </v-button>
-        <v-button border @click.native="login('github')">
+        <v-button border color="white" @click.native="login('github')">
           <feather-github />GitHub
         </v-button>
-        <v-button border @click.native="login('twitter')">
+        <v-button border color="white" @click.native="login('twitter')">
           <feather-twitter />Twitter
         </v-button>
       </div>
@@ -134,13 +134,17 @@
   })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .screen-login {
     background-color: var(--brand-green);
     background-image: url(../assets/login-illustration.svg);
     background-repeat: no-repeat;
     background-position: top left;
     background-size: calc(100% - var(--base-gap) * 4) auto;
+
+    & #app-header .app-header-icon svg {
+      transform: rotate(-90deg);
+    }
   }
 
   .login-form {
