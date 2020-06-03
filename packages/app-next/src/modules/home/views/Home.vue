@@ -79,7 +79,7 @@
       </div>
     </transition>
 
-    <main :class="{ overlay: viewOptionsVisible }">
+    <main :class="{ overlay: viewOptionsVisible, empty: plantData.length === 0 }">
       <div v-if="plantData.length" class="home-plants-list">
         <plant-preview
           v-for="plant of plantData"
@@ -224,6 +224,10 @@
       &.overlay::before {
         overflow: none;
         animation: appear 150ms both;
+      }
+
+      &.empty {
+        justify-content: center;
       }
     }
   }

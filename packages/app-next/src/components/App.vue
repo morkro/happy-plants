@@ -17,7 +17,6 @@
   import { mapState } from 'vuex'
   import { NotificationsState } from '@/modules/notifications/store/state'
   import AppNotification from '@/modules/notifications/components/Notification.vue'
-  import { Route } from 'vue-router'
 
   export default Vue.extend({
     name: 'HappyPlants',
@@ -25,21 +24,16 @@
       title: 'HappyPlants',
       titleTemplate: '%s — HappyPlants',
     },
-    data: () => ({
-      showAppMenu: false,
-    }),
     components: {
       'app-notification': AppNotification,
     },
-    computed: mapState<NotificationsState>('notifications', {
-      notificationMessage: (state: NotificationsState) => state.message,
-    }),
-    created() {
-      this.showAppMenu = this.$router.currentRoute.matched.some(record => record.meta.showAppMenu)
-      this.$router.beforeEach((to: Route, from: Route, next) => {
-        this.showAppMenu = to.matched.some(record => record.meta.showAppMenu)
-        next()
-      })
+    computed: {
+      ...mapState<NotificationsState>('notifications', {
+        notificationMessage: (state: NotificationsState) => state.message,
+      }),
+      showAppMenu(): boolean {
+        return this.$route.matched.some(record => record.meta.showAppMenu)
+      },
     },
   })
 </script>

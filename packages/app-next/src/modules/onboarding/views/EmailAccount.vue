@@ -24,6 +24,26 @@
           </template>
         </label-group>
 
+        <label-group
+          id="login-name"
+          label="Your name"
+          :error="error.el === 'name' && error.message"
+        >
+          <template v-slot="{ label }">
+            <v-input
+              required
+              type="text"
+              placeholder="Plant Lover"
+              id="login-name"
+              v-model="name"
+              :aria-describedby="label"
+              :aria-invalid="error.el === 'name'"
+              :error="error.el === 'name'"
+              :error-message="error.message"
+            />
+          </template>
+        </label-group>
+
         <label-group id="create-account-pw" label="Your password *">
           <template v-slot="{ label }">
             <v-input
@@ -81,6 +101,7 @@
 
   interface OnboardingAccountData {
     email: string
+    name: string
     password: string
     passwordConfirmed: string
     error: FormErrorObject
@@ -89,8 +110,10 @@
   export default Vue.extend({
     name: 'OnboardingAccount',
     data(): OnboardingAccountData {
+      const query = this.$route.query
       return {
-        email: String(this.$route.query.email),
+        email: Object.prototype.hasOwnProperty.call(query, 'email') ? String(query.email) : null,
+        name: null,
         password: null,
         passwordConfirmed: null,
         error: { el: null, message: null },
@@ -109,7 +132,6 @@
     methods: {
       ...mapActions({
         create: 'user/createAccount',
-        sendEmailVerification: 'user/verifyEmail',
       }),
       comparePasswords(): void {
         if (this.passwordConfirmed !== this.password) {
@@ -127,8 +149,7 @@
         this.error.message = null
 
         try {
-          await this.create({ email: this.email, password: this.password })
-          await this.sendEmailVerification()
+          await this.create({ email: this.email, password: this.password, displayName: this.name })
           this.$router.push('/onboarding/success')
         } catch (error) {
           this.error = setErrorMessage(error)

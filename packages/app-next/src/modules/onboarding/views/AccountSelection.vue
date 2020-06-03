@@ -91,17 +91,17 @@
             <v-button
               small
               :color="socialBtnSelected('twitter')"
-              @click.native="selectSocial('twitter')"
+              @click.native.prevent="selectSocial('twitter')"
             >Twitter</v-button>
             <v-button
               small
               :color="socialBtnSelected('github')"
-              @click.native="selectSocial('github')"
+              @click.native.prevent="selectSocial('github')"
             >GitHub</v-button>
             <v-button
               small
               :color="socialBtnSelected('google')"
-              @click.native="selectSocial('google')"
+              @click.native.prevent="selectSocial('google')"
             >Google</v-button>
           </div>
         </label-group>
@@ -139,6 +139,13 @@
         return this.email || this.social
       },
     },
+    watch: {
+      email(newValue) {
+        if (newValue) {
+          this.social = null
+        }
+      },
+    },
     methods: {
       ...mapActions({
         createAccount: 'user/signInUser',
@@ -146,7 +153,8 @@
         showNotification: 'notifications/show',
       }),
       selectSocial(provider: string): void {
-        this.social = provider
+        this.email = null
+        this.social = this.social === provider ? null : provider
       },
       socialBtnSelected(provider: string): string {
         if (this.social === provider) {

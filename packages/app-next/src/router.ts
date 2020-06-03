@@ -40,7 +40,7 @@ export function createRouter(): VueRouter {
     },
   })
 
-  router.beforeEach((to: Route, from: Route, next) => {
+  router.beforeEach(async (to: Route, from: Route, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     if (requiresAuth && store.state.user.authenticated === false) {
       next('welcome')

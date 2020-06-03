@@ -45,8 +45,14 @@
         <v-text type="subtitle" color="inactive">Account</v-text>
         <ul>
           <li>
-            <router-link to="/settings/account">
+            <router-link to="/settings/credentials">
               <v-text>Email & password</v-text>
+              <feather-arrow />
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/settings/profile">
+              <v-text>Profile</v-text>
               <feather-arrow />
             </router-link>
           </li>
