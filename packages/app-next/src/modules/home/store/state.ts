@@ -1,4 +1,4 @@
-import { Plant } from '@/shared/types/plant'
+import { Plant } from '@/types/plant'
 
 export interface HomeState {
   plants: Plant[]

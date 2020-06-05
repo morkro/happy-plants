@@ -1,12 +1,10 @@
 <template>
   <div class="screen-watering">
-    <app-header />
+    <app-header color="white">Watering</app-header>
 
     <main>
       <v-text type="title">Waterrrrrr</v-text>
     </main>
-
-    <app-menu />
   </div>
 </template>
 
@@ -22,6 +20,10 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    & #app-header {
+      background: var(--brand-blue);
+    }
 
     & main {
       padding: 0 var(--base-gap);

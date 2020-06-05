@@ -7,6 +7,8 @@ const routes: RouteConfig[] = [
     component: () => import('./views/Login.vue' /* webpackChunkName: "Login" */),
     meta: {
       requiresAuth: false,
+      showAppMenu: false,
+      transitionName: 'slide-up',
     },
   },
 ]

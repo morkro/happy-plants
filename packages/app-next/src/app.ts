@@ -4,20 +4,18 @@ import { Store } from 'vuex'
 import { sync } from 'vuex-router-sync'
 import { createRouter } from './router'
 import { createStore, RootState } from './store'
-import App from './modules/App.vue'
+import App from './components/App.vue'
 
-interface CreateApp {
-  hold?: boolean
-}
-
-export function createApp({ hold = false }: CreateApp = {}): {
-  app: Vue
+export function createApp(): {
+  create: () => Vue
   router: VueRouter
   store: Store<RootState>
-  create: () => Vue
 } {
   const router = createRouter()
   const store = createStore()
+
+  sync(store, router)
+
   const create = () =>
     new Vue({
       router,
@@ -25,16 +23,5 @@ export function createApp({ hold = false }: CreateApp = {}): {
       render: h => h(App),
     })
 
-  sync(store, router)
-
-  let app
-  if (hold === false) {
-    app = new Vue({
-      router,
-      store,
-      render: h => h(App),
-    })
-  }
-
-  return { app, router, store, create }
+  return { create, router, store }
 }

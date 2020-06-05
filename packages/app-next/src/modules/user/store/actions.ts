@@ -1,74 +1,45 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
 import { Commit, Dispatch } from 'vuex'
-import { setSessionEntry } from '@/services/sessionStorage'
-import { AssignDetailsPayload } from '@/modules/user/store/mutations'
+import {
+  createAccount as _createAccount,
+  getRedirectResults,
+  signInWithEmail,
+  signInWithProvider,
+  signOutUser as _signOutUser,
+} from '@/services/firebase'
 import logger from '@/utils/vueLogger'
 import { RootState } from '@/store'
+import { deleteLocalEntry } from '@/services/localStorage'
 
 export type LoginType = 'email' | 'google' | 'github' | 'twitter'
 
-export const createAccount = async (
+const createAccount = async (
   context: { commit: Commit },
-  { email, password }: { email: string; password: string }
+  { email, password, displayName }: { email: string; password: string; displayName?: string }
 ): Promise<void> => {
-  const results = await firebase.auth().createUserWithEmailAndPassword(email, password)
-  const idToken = await results.user.getIdToken()
-  const details: AssignDetailsPayload = {
-    displayName: results.user.displayName,
-    photoURL: results.user.photoURL,
-    email: results.user.email,
-    idToken,
-  }
-  context.commit('assignDetails', details)
+  const results = await _createAccount(email, password, displayName)
+  context.commit('assignDetails', results)
 }
 
-const _signInWithProvider = (loginType: LoginType): void => {
-  setSessionEntry('USER_SIGNIN_PROGRESS', 'true')
-
-  let provider
-  switch (loginType) {
-    case 'google':
-      provider = new firebase.auth.GoogleAuthProvider()
-      break
-    case 'github':
-      provider = new firebase.auth.GithubAuthProvider()
-      break
-    case 'twitter':
-      provider = new firebase.auth.TwitterAuthProvider()
-      break
-  }
-
-  firebase.auth().signInWithRedirect(provider)
-}
-
-export const signInUser = async (
+const signInUser = async (
   context: { dispatch: Dispatch },
   payload: { type: LoginType; email: string; password: string }
 ): Promise<void> => {
   if (payload.type === 'email') {
-    await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+    await signInWithEmail(payload.email, payload.password)
   } else {
-    _signInWithProvider(payload.type)
+    signInWithProvider(payload.type)
   }
 }
 
-export const authRedirectResults = async (context: {
+const authRedirectResults = async (context: {
   commit: Commit
   dispatch: Dispatch
   rootState: RootState
 }): Promise<void> => {
   if (context.rootState.user.authenticated) return
   try {
-    const results = await firebase.auth().getRedirectResult()
-    const idToken = await results.user.getIdToken()
-    const details: AssignDetailsPayload = {
-      displayName: results.user.displayName,
-      photoURL: results.user.photoURL,
-      email: results.user.email,
-      idToken,
-    }
-    context.commit('assignDetails', details)
+    const results = await getRedirectResults()
+    context.commit('assignDetails', results)
   } catch (error) {
     logger(error.message, true)
     context.dispatch(
@@ -82,9 +53,10 @@ export const authRedirectResults = async (context: {
   }
 }
 
-export const signOutUser = async (context: { commit: Commit; dispatch: Dispatch }) => {
+const signOutUser = async (context: { commit: Commit; dispatch: Dispatch }) => {
   try {
-    await firebase.auth().signOut()
+    await _signOutUser()
+    deleteLocalEntry('data-plant-count')
     context.commit('resetState')
   } catch (error) {
     logger(error.message, true)
@@ -98,3 +70,5 @@ export const signOutUser = async (context: { commit: Commit; dispatch: Dispatch 
     )
   }
 }
+
+export { authRedirectResults, createAccount, signInUser, signOutUser }

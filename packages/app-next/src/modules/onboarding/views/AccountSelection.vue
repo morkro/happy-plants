@@ -1,10 +1,11 @@
 <template>
   <v-layout class="screen-onboarding-account">
+    <v-loading v-if="loginRedirect" message="login" />
+
     <app-header return-to="/welcome">Create account</app-header>
 
     <main>
       <header class="onboarding-account-header">
-        <v-text type="subtitle">How do you want to use your account?</v-text>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -69,9 +70,10 @@
             />
           </g>
         </svg>
+        <v-text type="subtitle">How do you want to use your account?</v-text>
       </header>
 
-      <form class="onboarding-account-form">
+      <form class="onboarding-account-form" @submit.prevent>
         <label-group label="Email and password" id="create-account-email">
           <template v-slot="{ label }">
             <v-input
@@ -84,18 +86,35 @@
           </template>
         </label-group>
 
-        <label-group label="Social login" id="create-account-social">
-          <template>
-            <v-button small color="grey">Twitter</v-button>
-            <v-button small color="grey">GitHub</v-button>
-            <v-button small color="grey">Google</v-button>
-          </template>
+        <label-group label="Social login" id="create-account-social" :error="false">
+          <div>
+            <v-button
+              small
+              :color="socialBtnSelected('twitter')"
+              @click.native.prevent="selectSocial('twitter')"
+            >Twitter</v-button>
+            <v-button
+              small
+              :color="socialBtnSelected('github')"
+              @click.native.prevent="selectSocial('github')"
+            >GitHub</v-button>
+            <v-button
+              small
+              :color="socialBtnSelected('google')"
+              @click.native.prevent="selectSocial('google')"
+            >Google</v-button>
+          </div>
         </label-group>
       </form>
 
       <div class="onboarding-account-actions">
-        <router-link to="/welcome" class="btn border">Back</router-link>
-        <router-link to="/onboarding/success" class="btn">Next</router-link>
+        <router-link to="/welcome" class="btn border green">Back</router-link>
+        <v-button
+          @click.native="resolveNextPage"
+          :disabled="!canProceed"
+          :aria-disabled="!canProceed"
+          :color="canProceed ? 'green' : 'grey'"
+        >Next</v-button>
       </div>
     </main>
   </v-layout>
@@ -103,10 +122,82 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  export default Vue.extend({})
+  import { mapActions } from 'vuex'
+  import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
+  import delay from '@/utils/promiseDelay'
+  import logger from '@/utils/vueLogger'
+
+  export default Vue.extend({
+    name: 'AccountSelection',
+    data: () => ({
+      loginRedirect: false,
+      email: null,
+      social: null,
+    }),
+    computed: {
+      canProceed(): boolean {
+        return this.email || this.social
+      },
+    },
+    watch: {
+      email(newValue) {
+        if (newValue) {
+          this.social = null
+        }
+      },
+    },
+    methods: {
+      ...mapActions({
+        createAccount: 'user/signInUser',
+        authRedirectResults: 'user/authRedirectResults',
+        showNotification: 'notifications/show',
+      }),
+      selectSocial(provider: string): void {
+        this.email = null
+        this.social = this.social === provider ? null : provider
+      },
+      socialBtnSelected(provider: string): string {
+        if (this.social === provider) {
+          return 'blue'
+        }
+        return 'grey'
+      },
+      async resolveNextPage(): Promise<void> {
+        if (!this.email && !this.social) {
+          return
+        }
+
+        if (this.email) {
+          this.$router.push({ path: '/onboarding/email', query: { email: this.email } })
+          return
+        }
+
+        try {
+          await this.createAccount({ type: this.social })
+        } catch (error) {
+          logger(error.message, true)
+          this.showNotification({
+            type: 'alert',
+            message: error.message,
+          })
+        }
+      },
+    },
+    async created() {
+      if (getSessionEntry('USER_SIGNIN_PROGRESS')) {
+        deleteSessionEntry('USER_SIGNIN_PROGRESS')
+        this.loginRedirect = true
+        await Promise.all([this.authRedirectResults(), delay(4000)])
+        this.$router.push('/onboarding/success')
+      }
+    },
+    beforeDestroy() {
+      this.loginRedirect = false
+    },
+  })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .screen-onboarding-account main {
     justify-content: flex-start;
   }
@@ -114,18 +205,26 @@
   .onboarding-account-header {
     width: 100%;
     position: relative;
-    padding: var(--base-gap) 0;
-    margin-bottom: var(--base-gap);
 
     & h2 {
-      position: absolute;
-      bottom: 0;
+      display: block;
       width: 80%;
+      transform: translateY(calc(-1 * var(--base-gap)));
     }
   }
 
   .onboarding-account-form {
     width: 100%;
+
+    & label[for='create-account-social'] > div:not(.error-container) {
+      display: grid;
+      grid-gap: var(--base-gap);
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    & label .text {
+      color: var(--brand-green-dark);
+    }
   }
 
   .onboarding-account-actions {
@@ -133,7 +232,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: var(--base-gap);
-    position: sticky;
-    bottom: 0;
+    margin-top: auto;
+    padding-bottom: var(--base-gap);
   }
 </style>

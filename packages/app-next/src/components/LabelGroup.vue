@@ -2,7 +2,7 @@
   <label :for="id">
     <v-text color="special">{{ label }}</v-text>
     <slot :label="ariaDescribedBy" />
-    <div :class="{ visible: !!error }">
+    <div :class="{ 'error-container': true, visible: !!error }">
       <feather-alert />
       <v-text :id="ariaDescribedBy" small color="special">{{ error }}</v-text>
     </div>
@@ -37,17 +37,18 @@
 <style lang="postcss" scoped>
   label {
     margin-bottom: var(--base-gap);
+    display: block;
   }
 
   label > p {
     margin-bottom: var(--base-gap);
   }
 
-  label input {
+  label > input {
     width: 100%;
   }
 
-  label input + div {
+  label > * + .error-container {
     display: none;
     align-items: center;
     width: 100%;
