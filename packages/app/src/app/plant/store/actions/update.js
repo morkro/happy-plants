@@ -47,6 +47,9 @@ export const updateNotesModule = (...args) =>
 export const updateWateringModule = (...args) =>
   updatePlant('UPDATE_MODULE_WATERING', ...args)
 
+export const updateFoodModule = (...args) =>
+  updatePlant('UPDATE_MODULE_FOOD', ...args)
+
 export const updateSunshineModule = (...args) =>
   updatePlant('UPDATE_MODULE_SUNSHINE', ...args)
 

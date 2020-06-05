@@ -58,6 +58,10 @@ export default {
     updatePlantModule('watering', ['amount', 'frequency'], ...args)
   },
 
+  UPDATE_MODULE_FOOD (...args) {
+    updatePlantModule('food', ['amount', 'frequency'], ...args)
+  },
+
   UPDATE_MODULE_SUNSHINE (...args) {
     updatePlantModule('sunshine', ['level'], ...args)
   },

@@ -1,7 +1,8 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import { ArrowRightIcon, LoaderIcon } from 'vue-feather-icons'
 import IntroStart from '@/app/intro/screens/Welcome'
-import PlantWatering from '@/app/plant/components/PlantWatering'
+import PlantWatering from '@/app/plant/components/PlantFood'
+import PlantFood from '@/app/plant/components/PlantWatering'
 import PlantSunshine from '@/app/plant/components/PlantSunshine'
 import PlantSeasons from '@/app/plant/components/PlantSeasons'
 import Button from '@/components/Button'
@@ -26,6 +27,7 @@ describe('app/intro/Welcome.vue', () => {
       'v-box': Box,
       'v-button': Button,
       'plant-watering': PlantWatering,
+      'plant-food': PlantFood,
       'plant-sunshine': PlantSunshine,
       'plant-seasons': PlantSeasons,
       'feather-right': ArrowRightIcon,
