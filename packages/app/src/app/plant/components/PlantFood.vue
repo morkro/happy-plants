@@ -46,7 +46,7 @@
           </button>
           and
           <strong class="food-amount">
-            {{ selectedFoodAmount }}
+            {{ selectedAmount }}
           </strong>.
         </p>
       </div>
@@ -81,7 +81,7 @@
     },
 
     computed: {
-      selectedFoodAmount () {
+      selectedAmount () {
         let index = this.amount - 1
 
         // This is only needed for converting legacy module data.

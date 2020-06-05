@@ -231,7 +231,6 @@
         }
       },
       getModuleListener (event) {
-        console.log(event)
         switch (event.type) {
           case 'watering':
             return this.onWateringUpdate(event.payload)
@@ -258,11 +257,9 @@
         this.updateSeasonsModule({ guid: this.plant.guid, month })
       },
       onWateringUpdate (watering) {
-        console.log('watering update')
         this.updateWateringModule({ guid: this.plant.guid, watering })
       },
       onFoodUpdate (food) {
-        console.log('food update')
         this.updateFoodModule({ guid: this.plant.guid, food })
       },
       onSunshineUpdate (sunshine) {
