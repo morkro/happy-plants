@@ -7,6 +7,7 @@ const routes: RouteConfig[] = [
     component: () => import('./views/New.vue' /* webpackChunkName: "new" */),
     meta: {
       requiresAuth: true,
+      showAppMenu: true,
     },
   },
 ]

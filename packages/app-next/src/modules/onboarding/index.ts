@@ -3,9 +3,10 @@ import { RouteConfig } from 'vue-router'
 const routes: RouteConfig[] = [
   {
     path: '/onboarding',
-    component: () => import('@/shared/components/RouterShell.vue' /* webpackChunkName: "shared" */),
+    component: () => import('@/components/RouterShell.vue' /* webpackChunkName: "shared" */),
     meta: {
       requiresAuth: false,
+      showAppMenu: false,
     },
     children: [
       // {
@@ -16,7 +17,8 @@ const routes: RouteConfig[] = [
       {
         name: 'OnboardingAccount',
         path: '',
-        component: () => import('./views/AccountCreation.vue' /* webpackChunkName: "onboarding" */),
+        component: () =>
+          import('./views/AccountSelection.vue' /* webpackChunkName: "onboarding" */),
       },
       {
         name: 'OnboardingEmail',

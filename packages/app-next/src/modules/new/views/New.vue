@@ -1,12 +1,10 @@
 <template>
   <div class="screen-new">
-    <app-header />
+    <app-header color="white">Add a new friend</app-header>
 
     <main>
       <v-text type="title">Newwwwwwww</v-text>
     </main>
-
-    <app-menu />
   </div>
 </template>
 
@@ -22,6 +20,10 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    & #app-header {
+      background: var(--brand-green);
+    }
 
     & main {
       padding: 0 var(--base-gap);

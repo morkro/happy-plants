@@ -2,9 +2,9 @@ import { RouteConfig } from 'vue-router'
 
 const routes: RouteConfig[] = [
   {
-    name: 'Watering',
-    path: '/watering',
-    component: () => import('./views/Watering.vue' /* webpackChunkName: "watering" */),
+    name: 'Plant',
+    path: '/plant/:id',
+    component: () => import('./views/Plant.vue' /* webpackChunkName: "plant" */),
     meta: {
       requiresAuth: true,
       showAppMenu: true,

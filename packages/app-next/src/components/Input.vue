@@ -8,7 +8,7 @@
 
 <script lang="ts">
   import Vue from 'vue'
-  import { HTMLElementEvent } from '@/shared/events'
+  import { HTMLElementEvent } from '@/types/events'
 
   export default Vue.extend({
     name: 'VInput',

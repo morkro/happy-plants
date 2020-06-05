@@ -28,10 +28,11 @@ if (config.isProduction) {
   })
 }
 
+let app: Vue
+const { create, store } = createApp()
+
 if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
   firebase.auth().onAuthStateChanged(async (user: firebase.User) => {
-    const { store, create } = createApp({ hold: true })
-
     if (user) {
       const idToken = await user.getIdToken()
       const details = {
@@ -44,9 +45,12 @@ if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
       store.commit('user/assignDetails', details, { root: true })
     }
 
-    create().$mount('#app')
+    if (!app) {
+      app = create()
+      app.$mount('#app')
+    }
   })
 } else {
-  const { app } = createApp()
+  app = create()
   app.$mount('#app')
 }
