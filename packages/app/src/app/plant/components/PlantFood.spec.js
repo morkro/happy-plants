@@ -23,7 +23,7 @@ describe('app/plant/PlantFood.vue', () => {
   it('has correct default props data', () => {
     const wrapper = shallowMount(PlantFood, options)
     expect(wrapper.props().amount).toEqual(1)
-    expect(wrapper.props().frequency).toEqual('weekly')
+    expect(wrapper.props().frequency).toEqual('monthly')
   })
 
   it('computed property selectedAmount() works as expected', () => {
