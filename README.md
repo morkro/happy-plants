@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.7.3</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
+  Current version: <code>2.0.0</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
 </p>
 
 <p align="center">
@@ -12,16 +12,6 @@
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
   </a>
 </p>
-
----
-
-## 🛠 HappyPlants v2 in development!
-
-HappyPlants v2 is currently in development. It will be a complete rebuild from scratch, eliminating some early architectural design decision issues. **HappyPlants v2** will be **managed as a monorepo**, to make migration easier I've already moved the current version to this setup using Lerna.
-
-You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6). I am currently finalising the new design and features.
-
----
 
 <img src="resources/happyplants-phone-presentation.png" alt="HappyPlants App" />
 
@@ -62,12 +52,11 @@ By participating, you are expected to uphold this code. Please report unacceptab
   - 📝 Notes
   - 🖼 Gallery
 
-## 🎉 Credits
-### Logo
-The logo is a combination of existing illustrations by [Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev) and [Freepik](https://www.flaticon.com/authors/freepik).
+## Development
 
-### Icons
-Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
+This repository is organised with [Lerna](https://lerna.js.org).
+
+tbd.
 
 ## License
 [BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)

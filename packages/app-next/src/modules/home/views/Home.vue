@@ -102,6 +102,7 @@
   import EmptyIllustration from '../components/EmptyIllustration.vue'
   import { Plant } from '@/types/plant'
   import fuzzySearch from '@/utils/fuzzySearch'
+  import hasProperty from '@/utils/hasProperty'
 
   export default Vue.extend({
     name: 'Home',
@@ -117,12 +118,12 @@
     },
 
     data() {
-      const query = this.$route.query.search
+      const query = this.$route.query
       return {
         loading: true,
-        searchVisible: !!query,
-        viewOptionsVisible: false,
-        searchQuery: query ? String(query).toLowerCase() : '',
+        searchVisible: hasProperty(query, 'search'),
+        viewOptionsVisible: hasProperty(query, 'showViewOptions'),
+        searchQuery: query.search ? String(query.search).toLowerCase() : '',
       }
     },
 
@@ -147,12 +148,9 @@
 
     watch: {
       searchQuery(newQuery): void {
-        let query
         if (newQuery) {
-          query = { search: newQuery }
+          this.$router.push({ path: '/home', query: { search: newQuery } })
         }
-
-        this.$router.push({ path: '/home', query })
       },
     },
 
@@ -163,11 +161,17 @@
       },
       showViewOptions(): void {
         this.viewOptionsVisible = true
+        this.$router.push({ path: '/home', query: { showViewOptions: null } })
       },
       closeActions(): void {
         this.searchQuery = ''
         this.searchVisible = false
         this.viewOptionsVisible = false
+
+        const query = this.$route.query
+        if (hasProperty(query, 'search') || hasProperty(query, 'showViewOptions')) {
+          this.$router.push({ path: '/home' })
+        }
       },
     },
 

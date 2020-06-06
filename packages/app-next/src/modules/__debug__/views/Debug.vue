@@ -60,12 +60,64 @@
           <v-button disabled>Disabled</v-button>
         </div>
         <div>
+          <v-button round>
+            <feather-loader />
+            <span class="visuallyhidden">Default</span>
+          </v-button>
+          <v-button round color="blue">
+            <feather-loader />
+            <span class="visuallyhidden">Blue</span>
+          </v-button>
+          <v-button round color="yellow">
+            <feather-loader />
+            <span class="visuallyhidden">Yellow</span>
+          </v-button>
+          <v-button round color="red">
+            <feather-loader />
+            <span class="visuallyhidden">Red</span>
+          </v-button>
+          <v-button round color="grey">
+            <feather-loader />
+            <span class="visuallyhidden">Grey</span>
+          </v-button>
+          <v-button round disabled>
+            <feather-loader />
+            <span class="visuallyhidden">Disabled</span>
+          </v-button>
+        </div>
+        <div>
           <v-button small>Default</v-button>
           <v-button small color="blue">Blue</v-button>
           <v-button small color="yellow">Yellow</v-button>
           <v-button small color="red">Red</v-button>
           <v-button small color="grey">Grey</v-button>
           <v-button small disabled>Disabled</v-button>
+        </div>
+        <div>
+          <v-button round small>
+            <feather-loader />
+            <span class="visuallyhidden">Default</span>
+          </v-button>
+          <v-button round small color="blue">
+            <feather-loader />
+            <span class="visuallyhidden">Blue</span>
+          </v-button>
+          <v-button round small color="yellow">
+            <feather-loader />
+            <span class="visuallyhidden">Yellow</span>
+          </v-button>
+          <v-button round small color="red">
+            <feather-loader />
+            <span class="visuallyhidden">Red</span>
+          </v-button>
+          <v-button round small color="grey">
+            <feather-loader />
+            <span class="visuallyhidden">Grey</span>
+          </v-button>
+          <v-button round small disabled>
+            <feather-loader />
+            <span class="visuallyhidden">Disabled</span>
+          </v-button>
         </div>
         <div style="background:var(--brand-green);">
           <v-button border>Default</v-button>
@@ -77,8 +129,6 @@
         </div>
       </div>
     </main>
-
-    <app-menu />
   </div>
 </template>
 
@@ -86,6 +136,10 @@
   import Vue from 'vue'
   export default Vue.extend({
     name: 'debug',
+    components: {
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
+    },
   })
 </script>
 

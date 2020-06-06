@@ -38,7 +38,7 @@
     &:focus {
       border-color: var(--brand-beige-dark);
       outline: none;
-      box-shadow: 0 2px 9px var(--brand-green-dark);
+      box-shadow: 0 2px 9px var(--brand-beige-dark);
     }
 
     &::placeholder {

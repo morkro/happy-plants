@@ -56,7 +56,7 @@ const authRedirectResults = async (context: {
 const signOutUser = async (context: { commit: Commit; dispatch: Dispatch }) => {
   try {
     await _signOutUser()
-    deleteLocalEntry('data-plant-count')
+    deleteLocalEntry('plant-data-count')
     context.commit('resetState')
   } catch (error) {
     logger(error.message, true)

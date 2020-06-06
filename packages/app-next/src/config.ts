@@ -22,10 +22,10 @@ const config: AppConfig = {
   },
   firebase: {
     apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-    authDomain: 'happy-plants-app.firebaseapp.com',
-    databaseURL: 'https://happy-plants-app.firebaseio.com',
-    projectId: 'happy-plants-app',
-    storageBucket: 'happy-plants-app.appspot.com',
+    authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.VUE_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.VUE_APP_FIREBASE_MESSENGER_ID,
   },
 }

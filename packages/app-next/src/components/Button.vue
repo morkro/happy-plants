@@ -22,6 +22,10 @@
         type: Boolean,
         default: false,
       },
+      round: {
+        type: Boolean,
+        default: false,
+      },
       border: {
         type: Boolean,
         default: false,
@@ -30,7 +34,13 @@
 
     computed: {
       btnClass(): string[] {
-        return ['btn', this.color, this.small && 'small', this.border && 'border']
+        return [
+          'btn',
+          this.color,
+          this.small && 'small',
+          this.border && 'border',
+          this.round && 'round',
+        ]
       },
     },
   })
@@ -46,7 +56,7 @@
     font-weight: 500;
     font-size: var(--text-size-base);
     border: 2px solid var(--background);
-    padding: 13.5px var(--base-gap);
+    padding: 10.5px var(--base-gap);
     box-shadow: 0 2px 9px var(--shadow);
     text-decoration: none;
     text-align: center;
@@ -73,6 +83,19 @@
     }
 
     /* Type */
+    &.round {
+      border-radius: 100%;
+      padding: 10.5px;
+
+      & svg {
+        margin-right: 0;
+      }
+
+      &.small {
+        padding: calc(var(--base-gap) / 3);
+      }
+    }
+
     &.border {
       background: transparent !important;
       border: 2px solid var(--brand-white);

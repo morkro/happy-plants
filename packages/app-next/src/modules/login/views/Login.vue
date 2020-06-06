@@ -90,12 +90,13 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions } from 'vuex'
-  import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
-  import delay from '@/utils/promiseDelay'
-  import setErrorMessage from '@/utils/setErrorMessage'
   import { LoginType } from '@/modules/user/store/actions'
+  import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
   import { forgotPassword } from '@/services/firebase'
-  import logger from '../../../utils/vueLogger'
+  import setErrorMessage from '@/utils/setErrorMessage'
+  import logger from '@/utils/vueLogger'
+  import delay from '@/utils/promiseDelay'
+  import hasProperty from '@/utils/hasProperty'
 
   export default Vue.extend({
     name: 'Login',
@@ -110,14 +111,13 @@
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
     },
     data() {
-      const query = this.$route.query
       return {
         loginRedirect: false,
         email: null,
         password: null,
         error: { el: null, message: null },
         loading: false,
-        showForgotPassword: query && Object.prototype.hasOwnProperty.call(query, 'forgotPassword'),
+        showForgotPassword: hasProperty(this.$route.query, 'forgotPassword'),
         sendForgotPassword: false,
       }
     },
@@ -237,6 +237,10 @@
 
     & button[type='submit'] svg {
       animation: spin 3s linear infinite;
+    }
+
+    & input:focus {
+      border-color: var(--brand-yellow);
     }
   }
 

@@ -77,7 +77,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 var(--base-gap);
 
     & svg:not(#app-logo) {
       stroke: var(--brand-green-dark);
