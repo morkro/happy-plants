@@ -3,36 +3,38 @@
     <app-header color="white">Add a new friend</app-header>
 
     <main>
-      <form class="addplant-form">
-        <label-group
-          id="addplant-name"
-          label="What's your friends name? *"
-          :error="error.el === 'name' && error.message"
-        >
-          <template v-slot="{ label }">
-            <v-input
-              required
-              type="text"
-              placeholder="e.g. Echeveria pulvinata"
-              id="addplant-name"
-              v-model="name"
-              :aria-describedby="label"
-              :aria-invalid="error.el === 'name'"
-              :error="error.el === 'name'"
-              :error-message="error.message"
-            />
-          </template>
-        </label-group>
+      <form class="addplant-form" @submit.prevent="addPlant">
+        <div>
+          <label-group
+            id="addplant-name"
+            label="What's your friends name? *"
+            :error="error.el === 'name' && error.message"
+          >
+            <template v-slot="{ label }">
+              <v-input
+                required
+                type="text"
+                placeholder="e.g. Echeveria pulvinata"
+                id="addplant-name"
+                v-model="name"
+                :aria-describedby="label"
+                :aria-invalid="error.el === 'name'"
+                :error="error.el === 'name'"
+                :error-message="error.message"
+              />
+            </template>
+          </label-group>
 
-        <label-group
-          id="addplant-photo"
-          label="Do you want to upload a photo?"
-          :error="error.el === 'photo' && error.message"
-        >
-          <template v-slot="{ label }">
-            <file-upload id="addplant-photo" @file-selected="getFile" :aria-describedby="label" />
-          </template>
-        </label-group>
+          <label-group
+            id="addplant-photo"
+            label="Do you want to upload a photo?"
+            :error="error.el === 'photo' && error.message"
+          >
+            <template v-slot="{ label }">
+              <file-upload id="addplant-photo" @file-selected="getFile" :aria-describedby="label" />
+            </template>
+          </label-group>
+        </div>
 
         <v-button color="yellow">Add friend</v-button>
       </form>
@@ -54,18 +56,22 @@
     data() {
       return {
         name: null,
+        file: null,
         error: { el: null, message: null },
       }
     },
     methods: {
       getFile(file: File) {
-        console.log(file)
+        this.file = file
+      },
+      addPlant() {
+        console.log('add')
       },
     },
   })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .screen-addplant {
     width: 100%;
     display: flex;

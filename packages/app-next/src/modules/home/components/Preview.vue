@@ -1,13 +1,13 @@
 <template>
-  <div :class="['plant-preview', loading && 'loading']">
+  <div :class="['plant-preview', loading && 'loading', photo === null && 'no-photo']">
     <feather-loader v-if="loading" class="plant-preview-bg-svg" />
 
     <router-link v-else :to="link" class="plant-preview-wrapper">
       <div class="plant-preview-label">
-        <v-text v-if="!loading">{{ label }}</v-text>
+        <v-text v-if="!loading" :color="photo ? 'special' : 'normal'">{{ label }}</v-text>
       </div>
       <div class="plant-preview-bg">
-        <img v-if="photo" :src="photo" :alt="label" :title="label" />
+        <lazy-image v-if="photo" :src="photo" :alt="label" :title="label" />
         <feather-camera v-else class="plant-preview-bg-svg" />
       </div>
     </router-link>
@@ -48,6 +48,28 @@
     overflow: hidden;
     background: var(--brand-white);
 
+    &:not(.no-photo) .plant-preview-label {
+      background-image: linear-gradient(
+        to bottom,
+        hsla(0, 0%, 0%, 0) 0%,
+        hsla(0, 0%, 0%, 0) 0.5%,
+        hsla(0, 0%, 0%, 0.002) 1.9%,
+        hsla(0, 0%, 0%, 0.008) 4.2%,
+        hsla(0, 0%, 0%, 0.019) 7.4%,
+        hsla(0, 0%, 0%, 0.037) 11.5%,
+        hsla(0, 0%, 0%, 0.064) 16.5%,
+        hsla(0, 0%, 0%, 0.102) 22.4%,
+        hsla(0, 0%, 0%, 0.152) 29.1%,
+        hsla(0, 0%, 0%, 0.216) 36.7%,
+        hsla(0, 0%, 0%, 0.296) 45.2%,
+        hsla(0, 0%, 0%, 0.394) 54.5%,
+        hsla(0, 0%, 0%, 0.512) 64.6%,
+        hsla(0, 0%, 0%, 0.651) 75.6%,
+        hsla(0, 0%, 0%, 0.813) 87.4%,
+        hsl(0, 0%, 0%) 100%
+      );
+    }
+
     & .plant-preview-wrapper {
       display: flex;
       width: 100%;
@@ -59,7 +81,14 @@
 
     & .plant-preview-label {
       text-align: left;
-      padding: calc(0.5 * var(--base-gap)) calc(0.75 * var(--base-gap));
+      padding: var(--base-gap) calc(0.5 * var(--base-gap)) calc(0.5 * var(--base-gap));
+      position: relative;
+      z-index: 1;
+      width: 100%;
+
+      & .text {
+        font-weight: 500;
+      }
     }
 
     & .plant-preview-bg {

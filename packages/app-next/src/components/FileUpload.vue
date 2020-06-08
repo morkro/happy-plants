@@ -1,13 +1,20 @@
 <template>
-  <div class="fileupload">
-    <input ref="fileInput" type="file" :id="id" :accept="acceptedFilePattern" @change="emitPhoto" />
+  <div class="fileupload" tabindex="0" @keypress="triggerUpload">
+    <input
+      ref="fileInput"
+      type="file"
+      tabindex="-1"
+      :id="id"
+      :accept="acceptedFilePattern"
+      @change="emitPhoto"
+    />
 
-    <div class="fileupload-preview">
-      <span class="loading-icon">
+    <div class="fileupload-container">
+      <div :class="['loading-icon', loading && 'loading']">
         <feather-loader v-if="loading" />
         <feather-image v-else-if="!loading && !imageBlob" />
         <img v-else :src="imageURL" />
-      </span>
+      </div>
       <div>
         <v-text color="inactive">{{ fileName }}</v-text>
       </div>
@@ -52,15 +59,15 @@
 
         return 'Select photo'
       },
-      acceptedFilePattern() {
+      acceptedFilePattern(): string {
         return Array.isArray(this.accepts) ? this.accepts.join(', ') : this.accepts
       },
     },
     methods: {
-      triggerUpload() {
+      triggerUpload(): void {
         ;(this.$refs.fileInput as HTMLInputElement).click()
       },
-      async emitPhoto(event: HTMLElementEvent<HTMLInputElement>) {
+      async emitPhoto(event: HTMLElementEvent<HTMLInputElement>): Promise<void> {
         if (!event.target.files && !event.target.files.length) {
           return
         }
@@ -91,6 +98,19 @@
 </script>
 
 <style lang="postcss" scoped>
+  .fileupload {
+    background: var(--brand-white);
+    border-radius: var(--base-radius);
+    overflow: hidden;
+    border: 2px solid var(--brand-white);
+
+    &:focus {
+      border-color: var(--brand-beige-dark);
+      outline: none;
+      box-shadow: 0 2px 9px var(--brand-beige-dark);
+    }
+  }
+
   .fileupload input[type='file'] {
     width: 0.1px;
     height: 0.1px;
@@ -98,5 +118,44 @@
     overflow: hidden;
     position: absolute;
     z-index: -1;
+  }
+
+  .fileupload-container {
+    display: grid;
+    grid-template-columns: 67px 1fr;
+
+    & > div:not(.loading-icon) {
+      padding: calc(var(--base-gap) * 1.5);
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      & .text {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    & > .loading-icon {
+      background: var(--brand-beige-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--brand-white);
+      height: 67px;
+
+      &.loading svg {
+        animation: spin 3s linear infinite;
+      }
+
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 </style>

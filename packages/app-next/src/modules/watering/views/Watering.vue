@@ -182,7 +182,7 @@
   }
 
   .watering-header {
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 0;
     padding-top: var(--app-header-height);

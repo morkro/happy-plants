@@ -80,13 +80,21 @@
     </transition>
 
     <main :class="{ overlay: viewOptionsVisible, empty: plantData.length === 0 }">
-      <div v-if="plantData.length" class="home-plants-list">
+      <div v-if="loading" class="home-plants-list">
+        <plant-preview
+          v-for="(plant, index) of loadingPlantData"
+          :key="`loading-plant-${index}`"
+          :loading="loading"
+        />
+      </div>
+      <div v-else-if="!loading && plantData.length" class="home-plants-list">
         <plant-preview
           v-for="plant of plantData"
           :loading="loading"
           :key="plant.guid"
           :label="plant.name"
           :link="`plant/${plant.guid}`"
+          :photo="plant.imageURL"
         />
       </div>
       <empty-illustration v-else />
@@ -95,16 +103,20 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import { RootState } from '@/store'
   import Preview from '../components/Preview.vue'
   import EmptyIllustration from '../components/EmptyIllustration.vue'
   import { Plant } from '@/types/plant'
   import fuzzySearch from '@/utils/fuzzySearch'
   import hasProperty from '@/utils/hasProperty'
+  import { HomeState } from '../store/state'
 
-  export default Vue.extend({
+  interface HomeMapState extends HomeState {
+    plants: Plant[]
+  }
+
+  export default (Vue as VueConstructor<Vue & HomeMapState>).extend({
     name: 'Home',
 
     components: {
@@ -121,6 +133,7 @@
       const query = this.$route.query
       return {
         loading: true,
+        loadingPlantData: new Array(5).fill({}),
         searchVisible: hasProperty(query, 'search'),
         viewOptionsVisible: hasProperty(query, 'showViewOptions'),
         searchQuery: query.search ? String(query.search).toLowerCase() : '',
@@ -128,13 +141,11 @@
     },
 
     computed: {
-      ...mapState<RootState>({
-        plants: (state: RootState) => state.home.plants,
+      ...mapState<HomeState>('home', {
+        plants: (state: HomeState) => state.plants,
       }),
-      plantData(): Array<Plant | {}> {
-        if (this.loading) {
-          return new Array(5).fill({})
-        } else if (this.searchQuery) {
+      plantData(): Plant[] {
+        if (this.searchQuery) {
           return this.plants.filter((plant: Plant) =>
             fuzzySearch(this.searchQuery.toLowerCase(), plant.name.toLowerCase())
           )
@@ -147,6 +158,11 @@
     },
 
     watch: {
+      plants(newValue) {
+        if (this.loading && newValue.length) {
+          this.loading = false
+        }
+      },
       searchQuery(newQuery): void {
         if (newQuery) {
           this.$router.push({ path: '/home', query: { search: newQuery } })
@@ -321,7 +337,7 @@
 
   .home-plants-list {
     --screen-width-half: 50vw;
-    --grid-item-height: calc(var(--screen-width-half) - 2 * var(--base-gap));
+    --grid-item-height: calc(var(--screen-width-half) - 1.5 * var(--base-gap));
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;

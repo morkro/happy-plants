@@ -10,11 +10,16 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue, { VueConstructor } from 'vue'
   import { mapState } from 'vuex'
   import { NotificationsState, NotificationsType } from '../store/state'
 
-  export default Vue.extend({
+  interface NotificationMapState {
+    message: string
+    type: NotificationsType
+  }
+
+  export default (Vue as VueConstructor<Vue & NotificationMapState>).extend({
     name: 'AppNotification',
 
     // components: {
@@ -26,8 +31,8 @@
 
     computed: {
       ...mapState<NotificationsState>('notifications', {
-        message: (state: NotificationsState): string | null => state.message,
-        type: (state: NotificationsState): NotificationsType => state.type,
+        message: (state: NotificationsState) => state.message,
+        type: (state: NotificationsState) => state.type,
       }),
       icon(): string {
         let icon = 'feather-check'

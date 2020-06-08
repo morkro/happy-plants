@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { init as initSentry } from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
+import { Vue as VueIntegration } from '@sentry/integrations'
 import firebase from '@/services/firebase'
 import { getSessionEntry } from '@/services/sessionStorage'
 import errorHandler from './utils/vueErrorHandler'
@@ -24,7 +24,8 @@ if (config.isProduction) {
   initSentry({
     release: 'pkg.version',
     dsn: config.sentry.dsn,
-    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+    // @ts-ignore
+    integrations: [new VueIntegration({ Vue, attachProps: true })],
   })
 }
 
@@ -39,6 +40,7 @@ if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
         displayName: user.displayName,
         photoURL: user.photoURL,
         email: user.email,
+        uid: user.uid,
         idToken,
       }
 

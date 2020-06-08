@@ -11,6 +11,7 @@ const state: UserState = {
   email: null,
   photoURL: null,
   idToken: null,
+  uid: null,
 }
 
 export default state

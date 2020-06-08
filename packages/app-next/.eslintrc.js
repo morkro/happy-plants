@@ -44,6 +44,7 @@ module.exports = {
     indent: 'off',
     'arrow-parens': 'off',
     'generator-star-spacing': 'off',
+    'ban-ts-ignore': 'off',
   },
   overrides: [
     {

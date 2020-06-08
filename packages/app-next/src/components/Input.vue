@@ -35,7 +35,8 @@
     color: var(--brand-green-dark);
     transition: box-shadow 100ms ease-in-out;
 
-    &:focus {
+    &:focus,
+    &:active {
       border-color: var(--brand-beige-dark);
       outline: none;
       box-shadow: 0 2px 9px var(--brand-beige-dark);

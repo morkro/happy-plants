@@ -63,13 +63,13 @@
       }
     },
     computed: {
-      headlineMonthYear() {
+      headlineMonthYear(): string {
         return this.current.format('MMMM YYYY')
       },
       currentMonth(): CalendarMonth {
         return getCurrentMonth(this.current, this.startOfWeek)
       },
-      tableWeekHeader() {
+      tableWeekHeader(): Set<string> {
         return new Set(
           ...(this.currentMonth as CalendarMonth).map(week => week.map(day => day.weekday))
         )

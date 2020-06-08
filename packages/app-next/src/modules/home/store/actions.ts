@@ -2,6 +2,7 @@ import { Commit, Dispatch } from 'vuex'
 import { RootState } from '@/store'
 import { setLocalEntry } from '@/services/localStorage'
 import logger from '@/utils/vueLogger'
+import { getCollection, FirestoreCollections, downloadFile } from '@/services/firebase'
 
 export const loadPlants = async (context: {
   commit: Commit
@@ -9,12 +10,23 @@ export const loadPlants = async (context: {
   rootState: RootState
 }): Promise<void> => {
   try {
-    const response = await fetch('/api/plants', {
-      headers: new Headers({ Authorization: context.rootState.user.idToken }),
-    })
-    const plants = await response.json()
-    setLocalEntry('plant-data-count', plants.length)
-    context.commit('assignPlants', plants)
+    const userID = context.rootState.user.uid
+    const snapshot = await getCollection(userID, FirestoreCollections.Plants).get()
+
+    setLocalEntry('plant-data-count', String(snapshot.docs.length))
+
+    for (const doc of snapshot.docs) {
+      const plant = await getCollection(userID, FirestoreCollections.Plants)
+        .doc(doc.id)
+        .get()
+      const plantData = plant.data()
+
+      if (plantData.imageURL) {
+        plantData.imageURL = await downloadFile(plantData.imageURL)
+      }
+
+      context.commit('assignPlant', plantData)
+    }
   } catch (error) {
     logger(error.message, true)
     context.dispatch(

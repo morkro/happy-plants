@@ -12,12 +12,16 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue, { VueConstructor } from 'vue'
   import { mapState } from 'vuex'
   import { RootState } from '@/store'
   import { Plant } from '@/types/plant'
 
-  export default Vue.extend({
+  interface PlantMapState {
+    plants: Plant[]
+  }
+
+  export default (Vue as VueConstructor<Vue & PlantMapState>).extend({
     data() {
       return {
         loading: true,

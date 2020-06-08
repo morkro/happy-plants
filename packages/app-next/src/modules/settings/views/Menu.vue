@@ -117,14 +117,22 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
   import { RootState } from '@/store'
   import config from '@/config'
   import delay from '@/utils/promiseDelay'
   import { getLocalEntry } from '@/services/localStorage'
+  import { Plant } from '@/types/plant'
 
-  export default Vue.extend({
+  interface MenuMapState {
+    userName: string
+    email: string
+    userPhotoURL: string
+    plants: Plant[]
+  }
+
+  export default (Vue as VueConstructor<Vue & MenuMapState>).extend({
     name: 'Settings',
 
     components: {

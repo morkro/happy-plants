@@ -11,6 +11,11 @@ export const firestore = app.firestore()
 export const storage = firebase.storage()
 export default firebase
 
+export enum FirestoreCollections {
+  Users = 'users',
+  Plants = 'plants',
+}
+
 const createAccount = async (
   email: string,
   password: string,
@@ -47,8 +52,16 @@ const getRedirectResults = async (): Promise<AssignDetailsPayload> => {
     displayName: results.user.displayName,
     photoURL: results.user.photoURL,
     email: results.user.email,
+    uid: results.user.uid,
     idToken,
   }
+}
+
+function getCollection(userID: string, collection: string): firebase.firestore.CollectionReference {
+  return firestore
+    .collection(FirestoreCollections.Users)
+    .doc(userID)
+    .collection(collection)
 }
 
 const signInWithEmail = async (email: string, password: string) =>
@@ -85,6 +98,7 @@ export {
   createAccount,
   forgotPassword,
   getRedirectResults,
+  getCollection,
   downloadFile,
   signInWithEmail,
   signInWithProvider,

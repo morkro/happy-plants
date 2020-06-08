@@ -58,23 +58,28 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
-  const messages = ['login', 'logout']
-  export default Vue.extend({
-    name: 'Loading',
+  import { defineComponent, computed } from '@vue/composition-api'
 
+  interface LoadingProps {
+    message: string
+    foo: string
+  }
+
+  const messages = ['login', 'logout']
+
+  export default defineComponent<LoadingProps>({
+    name: 'Loading',
     props: {
       message: {
         type: String,
-        validator: v => messages.includes(v),
+        validator: (v: string) => messages.includes(v),
       },
     },
-
-    computed: {
-      title(): string {
+    setup(props) {
+      const title = computed(() => {
         let text = 'Waiting'
 
-        switch (this.message) {
+        switch (props.message) {
           case 'login':
             text = 'Logging you in'
             break
@@ -84,7 +89,9 @@
         }
 
         return text
-      },
+      })
+
+      return { title }
     },
   })
 </script>

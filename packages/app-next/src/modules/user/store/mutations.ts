@@ -9,6 +9,7 @@ export default {
     state.photoURL = payload.photoURL
     state.email = payload.email
     state.idToken = payload.idToken
+    state.uid = payload.uid
   },
   resetState(state: UserState) {
     state.authenticated = false
