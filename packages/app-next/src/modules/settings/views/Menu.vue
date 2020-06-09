@@ -145,7 +145,7 @@
     data: () => ({
       logoutRedirect: false,
       version: config.version,
-      plantCountFromLocalStorage: getLocalEntry('plant-data-count'),
+      plantCountFromLocalStorage: getLocalEntry(config.localStorage.plantCount),
     }),
 
     computed: {

@@ -175,7 +175,7 @@
         try {
           await this.createAccount({ type: this.social })
         } catch (error) {
-          logger(error.message, true)
+          logger(`resolveNextPage() => ${error.message}`, true)
           this.showNotification({
             type: 'alert',
             message: error.message,

@@ -22,6 +22,7 @@
               :aria-invalid="error.el === 'email'"
               :error="error.el === 'email'"
               :error-message="error.message"
+              data-cy="login-form-email"
             />
           </template>
         </label-group>
@@ -43,6 +44,7 @@
               :error="error.el === 'password'"
               :error-message="error.message"
               :aria-invalid="error.el === 'password'"
+              data-cy="login-form-password"
             />
           </template>
         </label-group>
@@ -51,11 +53,12 @@
           to="/login?forgotPassword=true"
           @click.native.prevent="toggleResetPassword"
           class="login-form-forgot-pw"
+          data-cy="login-form-forgot-pw"
         >
           <v-text color="special" small>{{ togglePasswordReset }}</v-text>
         </router-link>
 
-        <v-button color="yellow" type="submit">
+        <v-button color="yellow" type="submit" data-cy="login-form-submit">
           <feather-loader v-if="sendForgotPassword" />
           {{ submitBtnLabel }}
         </v-button>
@@ -67,22 +70,58 @@
       </div>
 
       <div class="login-services">
-        <v-button border color="white" @click.native="login('google')">
+        <v-button
+          border
+          color="white"
+          @click.native="login('google')"
+          data-cy="form-service-google"
+        >
           <feather-chrome />Google
         </v-button>
-        <v-button border color="white" @click.native="login('github')">
+        <v-button
+          border
+          color="white"
+          @click.native="login('github')"
+          data-cy="form-service-github"
+        >
           <feather-github />GitHub
         </v-button>
-        <v-button border color="white" @click.native="login('twitter')">
+        <v-button
+          border
+          color="white"
+          @click.native="login('twitter')"
+          data-cy="form-service-twitter"
+        >
           <feather-twitter />Twitter
         </v-button>
       </div>
     </main>
 
     <footer>
-      <v-text small color="special">About</v-text>
-      <v-text small color="special">Contact</v-text>
-      <v-text small color="special">Open Source</v-text>
+      <a
+        href="https://happyplants.app/#about"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-about"
+      >
+        <v-text small color="special">About</v-text>
+      </a>
+      <a
+        href="https://happyplants.app/#contact"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-contact"
+      >
+        <v-text small color="special">Contact</v-text>
+      </a>
+      <a
+        href="https://github.com/morkro/happy-plants"
+        target="_blank"
+        rel="noopener"
+        data-cy="footer-os"
+      >
+        <v-text small color="special">Open Source</v-text>
+      </a>
     </footer>
   </v-layout>
 </template>
@@ -178,7 +217,7 @@
             message: 'An email to reset your password has been sent.',
           })
         } catch (error) {
-          logger(error.message, true)
+          logger(`formAction() => ${error.message}`, true)
           this.error = setErrorMessage(error)
         } finally {
           this.sendForgotPassword = false
@@ -288,7 +327,11 @@
     align-items: center;
     color: var(--brand-white);
 
-    & .text:not(:last-of-type) {
+    & a {
+      text-decoration: none;
+    }
+
+    & a:not(:last-of-type) {
       margin-right: calc(var(--base-gap) * 2);
     }
   }

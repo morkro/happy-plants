@@ -1,7 +1,8 @@
 export interface PlantTag {
-  created: DateConstructor
-  modified: DateConstructor
+  created: number
+  modified: number
   label: string
   name: string
+  guid: string
   plants: string[]
 }

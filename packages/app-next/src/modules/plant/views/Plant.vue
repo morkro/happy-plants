@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <app-header return-to="/home" />
+    <app-header return-to="/home">{{ plant.name }}</app-header>
 
     <main>
       <div v-if="loading">

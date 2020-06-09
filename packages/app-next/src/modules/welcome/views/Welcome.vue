@@ -11,8 +11,12 @@
         </div>
       </div>
       <div class="welcome-actions">
-        <router-link to="/login" class="btn border" data-cy="action-login">Login</router-link>
-        <router-link to="/onboarding" class="btn yellow" data-cy="action-onboarding">Getting started</router-link>
+        <router-link to="/login" class="btn border" data-cy="action-login">
+          <v-text color="special">Login</v-text>
+        </router-link>
+        <router-link to="/onboarding" class="btn yellow" data-cy="action-onboarding">
+          <v-text>Getting started</v-text>
+        </router-link>
       </div>
     </main>
 

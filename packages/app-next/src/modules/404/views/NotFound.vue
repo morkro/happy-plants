@@ -4,12 +4,12 @@
 
     <main>
       <img src="../assets/404-illustration.svg" />
-      <v-text type="title">Oops, how did you get here?</v-text>
+      <v-text type="title" data-cy="404-title">Oops, how did you get here?</v-text>
       <v-text color="inactive">
         Let’s just act like this never happend,
         <br />shall we?
       </v-text>
-      <router-link to="/" class="btn">Back to your plants</router-link>
+      <router-link to="/" class="btn" data-cy="404-back-to-root">Back to your plants</router-link>
     </main>
   </div>
 </template>

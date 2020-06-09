@@ -1,7 +1,7 @@
 import * as blobUtil from 'blob-util'
 import hermiteResize from './hermiteResize'
 
-export const isBase64 = (string: string) => {
+export const isBase64 = (string?: string) => {
   try {
     return btoa(atob(string)) === string
   } catch (err) {
@@ -13,7 +13,7 @@ export const hasReaderSupport = typeof FileReader !== 'undefined' || typeof URL 
 
 export const isBlobbable = (blob: unknown) => blob instanceof Blob || blob instanceof File
 
-export function getUrlFromBlob(blob: Blob) {
+export function getUrlFromBlob(blob?: Blob) {
   return isBlobbable(blob) ? blobUtil.createObjectURL(blob) : ''
 }
 

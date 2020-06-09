@@ -13,7 +13,7 @@ export default function hermiteResize(
 ): HTMLCanvasElement {
   if (!canvas) return
 
-  const time1 = Date.now()
+  // const time1 = Date.now()
   const img = canvas.getContext('2d').getImageData(0, 0, W, H)
   const img2 = canvas.getContext('2d').getImageData(0, 0, W2, H2)
   const data = img.data

@@ -3,8 +3,8 @@ import { PlantTag } from './tags'
 
 export interface Plant {
   guid: string
-  created: DateConstructor
-  modified: DateConstructor
+  created: number
+  modified: number
   blob: Blob | null
   imageURL: string | null
   name: string

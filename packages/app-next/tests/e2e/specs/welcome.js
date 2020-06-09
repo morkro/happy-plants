@@ -2,7 +2,6 @@
 
 describe('Welcome', () => {
   beforeEach(() => {
-    cy.viewport('samsung-s10')
     cy.visit('/welcome')
   })
 

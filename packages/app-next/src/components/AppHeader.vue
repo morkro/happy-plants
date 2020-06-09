@@ -2,7 +2,7 @@
   <header id="app-header" :class="[color]">
     <div class="app-header-essentials">
       <div class="app-header-icon">
-        <router-link v-if="returnTo" :to="returnTo">
+        <router-link v-if="returnTo" :to="returnTo" data-cy="app-header-return">
           <feather-left />
           <v-text class="visuallyhidden" color="inactive">Back</v-text>
         </router-link>

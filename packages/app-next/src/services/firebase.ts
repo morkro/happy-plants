@@ -14,6 +14,7 @@ export default firebase
 export enum FirestoreCollections {
   Users = 'users',
   Plants = 'plants',
+  Tags = 'tags',
 }
 
 const createAccount = async (
@@ -64,6 +65,10 @@ function getCollection(userID: string, collection: string): firebase.firestore.C
     .collection(collection)
 }
 
+function getUserDoc(userID: string): firebase.firestore.DocumentReference {
+  return firestore.collection(FirestoreCollections.Users).doc(userID)
+}
+
 const signInWithEmail = async (email: string, password: string) =>
   firebase.auth().signInWithEmailAndPassword(email, password)
 
@@ -99,6 +104,7 @@ export {
   forgotPassword,
   getRedirectResults,
   getCollection,
+  getUserDoc,
   downloadFile,
   signInWithEmail,
   signInWithProvider,

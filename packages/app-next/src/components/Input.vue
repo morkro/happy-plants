@@ -35,6 +35,25 @@
     color: var(--brand-green-dark);
     transition: box-shadow 100ms ease-in-out;
 
+    &[type='radio'] {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--brand-beige-dark);
+      border-radius: 100%;
+      appearance: none;
+      padding: 0;
+
+      &:checked {
+        border-color: var(--brand-green);
+        background: var(--brand-green);
+      }
+
+      &:focus,
+      &:active {
+        box-shadow: 0 2px 9px var(--brand-green);
+      }
+    }
+
     &:focus,
     &:active {
       border-color: var(--brand-beige-dark);

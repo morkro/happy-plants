@@ -24,8 +24,7 @@ if (config.isProduction) {
   initSentry({
     release: 'pkg.version',
     dsn: config.sentry.dsn,
-    // @ts-ignore
-    integrations: [new VueIntegration({ Vue, attachProps: true })],
+    integrations: [new VueIntegration({ Vue, attachProps: true } as any)],
   })
 }
 

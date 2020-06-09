@@ -35,51 +35,27 @@
     </app-header>
 
     <transition name="slide">
-      <div v-if="viewOptionsVisible" class="home-view-options">
-        <section>
-          <v-text type="subtitle">Viewmode</v-text>
-          <ul>
-            <li>
-              <v-input type="radio" />
-              <v-text>Grid</v-text>
-            </li>
-            <li>
-              <v-input type="radio" />
-              <v-text>List</v-text>
-            </li>
-          </ul>
-          <v-text type="subtitle">Order by</v-text>
-          <ul>
-            <li>
-              <v-input type="radio" />
-              <v-text>Latest</v-text>
-            </li>
-            <li>
-              <v-input type="radio" />
-              <v-text>Alphabetically</v-text>
-            </li>
-          </ul>
-        </section>
-        <section>
-          <v-text type="subtitle">Filter by tags</v-text>
-        </section>
-
-        <svg
-          class="home-view-options-bg"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 360 32"
-          aria-hidden="true"
-        >
-          <path
-            fill="#FFF"
-            fill-rule="evenodd"
-            d="M202.13 18.156c.386 3.896.201 1.481.035 6.35-.034 1.002-.48 1.648-1.32 1.98-7.018 2.764-32.58 5.9-39.062 4.755-.876-2.465-1.016-5.159-.422-7.188 1.09-.84 0 .117 21.717-2.63 10.732-1.358 14.256-2.554 16.625-3.093.701-.16 1.395-.545 2.426-.174zM360 0v10.245c-3.864 3.4-10.353 1.537-26.979.121-102.7-8.747-132.682 15.276-244.46 8.368-75.47-4.665-51.996-2.844-76.452-6.022l.09-.354C7.145 11.283 2.97 10.646 0 9.73L.002 0h360z"
-          />
-        </svg>
-      </div>
+      <view-options
+        v-if="viewOptionsVisible"
+        :viewmode="viewmode"
+        :order-by="orderBy"
+        :filter-by="filterBy && filterBy.guid"
+        :tags="tags"
+        :loading="loading"
+        @update-viewmode="updateViewmode"
+        @update-orderby="updateOrderBy"
+        @update-tag="updateTags"
+      />
     </transition>
 
-    <main :class="{ overlay: viewOptionsVisible, empty: plantData.length === 0 }">
+    <main :class="mainContentClasses">
+      <div v-if="!loading && plantData.length && filterBy" class="home-plants-filterby">
+        <v-text color="inactive">
+          <strong>Filtered by</strong>
+        </v-text>
+        <v-tag>{{ filterBy.label }}</v-tag>
+      </div>
+
       <div v-if="loading" class="home-plants-list">
         <plant-preview
           v-for="(plant, index) of loadingPlantData"
@@ -87,6 +63,7 @@
           :loading="loading"
         />
       </div>
+
       <div v-else-if="!loading && plantData.length" class="home-plants-list">
         <plant-preview
           v-for="plant of plantData"
@@ -95,6 +72,7 @@
           :label="plant.name"
           :link="`plant/${plant.guid}`"
           :photo="plant.imageURL"
+          :listview="viewmode === 'list'"
         />
       </div>
       <empty-illustration v-else />
@@ -105,16 +83,25 @@
 <script lang="ts">
   import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import Preview from '../components/Preview.vue'
-  import EmptyIllustration from '../components/EmptyIllustration.vue'
   import { Plant } from '@/types/plant'
+  import { PlantTag } from '@/types/tags'
   import fuzzySearch from '@/utils/fuzzySearch'
   import hasProperty from '@/utils/hasProperty'
+  import { sortByAlphabet, sortByDate } from '@/utils/sort'
+  import { getLocalEntry, setLocalEntry } from '@/services/localStorage'
+  import config from '@/config'
+  import Preview from '../components/Preview.vue'
+  import EmptyIllustration from '../components/EmptyIllustration.vue'
+  import ViewOptions from '../components/Options.vue'
   import { HomeState } from '../store/state'
+  import { HomeViewmode, HomeOrderBy } from '..'
 
   interface HomeMapState extends HomeState {
     plants: Plant[]
+    tags: PlantTag[]
   }
+
+  const noop = () => {} // eslint-disable-line
 
   export default (Vue as VueConstructor<Vue & HomeMapState>).extend({
     name: 'Home',
@@ -122,6 +109,7 @@
     components: {
       'plant-preview': Preview,
       'empty-illustration': EmptyIllustration,
+      'view-options': ViewOptions,
       'feather-search': () =>
         import('vue-feather-icons/icons/SearchIcon' /* webpackChunkName: "icons" */),
       'feather-cross': () => import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
@@ -137,12 +125,16 @@
         searchVisible: hasProperty(query, 'search'),
         viewOptionsVisible: hasProperty(query, 'showViewOptions'),
         searchQuery: query.search ? String(query.search).toLowerCase() : '',
+        viewmode: getLocalEntry(config.localStorage.homeViewmode) ?? 'grid',
+        orderBy: getLocalEntry(config.localStorage.homeOrderBy) ?? 'latest',
+        filterBy: null,
       }
     },
 
     computed: {
       ...mapState<HomeState>('home', {
         plants: (state: HomeState) => state.plants,
+        tags: (state: HomeState) => state.tags,
       }),
       plantData(): Plant[] {
         if (this.searchQuery) {
@@ -150,10 +142,29 @@
             fuzzySearch(this.searchQuery.toLowerCase(), plant.name.toLowerCase())
           )
         }
-        return this.plants
+
+        if (this.filterBy) {
+          return this.plants.filter(plant => this.filterBy.plants.includes(plant.guid))
+        }
+
+        const copy = this.plants
+        if (this.orderBy === 'latest') {
+          return copy.sort(sortByDate).reverse()
+        } else if (this.orderBy === 'alphabetically') {
+          return copy.sort(sortByAlphabet)
+        }
+
+        return copy
       },
       actionsActive(): boolean {
         return this.searchVisible || this.viewOptionsVisible
+      },
+      mainContentClasses(): Record<string, boolean> {
+        return {
+          overlay: this.viewOptionsVisible,
+          empty: this.plantData.length === 0,
+          [this.viewmode]: true,
+        }
       },
     },
 
@@ -164,14 +175,14 @@
         }
       },
       searchQuery(newQuery): void {
-        if (newQuery) {
-          this.$router.push({ path: '/home', query: { search: newQuery } })
+        if (newQuery && this.$route.path !== `/home?search=${newQuery}`) {
+          this.$router.push({ path: '/home', query: { search: newQuery } }).catch(noop)
         }
       },
     },
 
     methods: {
-      ...mapActions({ loadPlants: 'home/loadPlants' }),
+      ...mapActions({ loadPlants: 'home/loadPlants', loadTags: 'home/loadTags' }),
       showSearch(): void {
         this.searchVisible = true
       },
@@ -189,12 +200,27 @@
           this.$router.push({ path: '/home' })
         }
       },
+      updateViewmode(type: HomeViewmode): void {
+        this.viewmode = type
+        setLocalEntry(config.localStorage.homeViewmode, type)
+      },
+      updateOrderBy(type: HomeOrderBy): void {
+        this.orderBy = type
+        setLocalEntry(config.localStorage.homeOrderBy, type)
+      },
+      updateTags(tag: PlantTag): void {
+        this.filterBy = tag
+      },
     },
 
     async created() {
       if (this.plants.length === 0) {
-        await this.loadPlants()
+        await this.loadPlants({ orderBy: this.orderBy })
         this.loading = false
+      }
+
+      if (this.tags.length === 0) {
+        await this.loadTags()
       }
     },
 
@@ -294,45 +320,14 @@
     }
   }
 
-  .home-view-options {
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    background: var(--brand-white);
+  .home-plants-filterby {
     width: 100%;
+    text-align: left;
+    padding-bottom: calc(0.5 * var(--base-gap));
     display: grid;
-    grid-template-columns: 50% 50%;
-    padding-top: var(--app-header-height);
-
-    & section {
-      padding: var(--base-gap);
-      position: relative;
-
-      &:first-of-type {
-        border-right: 4px solid var(--brand-beige);
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        z-index: 10;
-        right: 0;
-        bottom: 0;
-        background: var(--brand-beige);
-        border-radius: var(--base-radius);
-        height: 4px;
-        width: 4px;
-        transform: translate(4px, 11px);
-      }
-    }
-
-    & .home-view-options-bg {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      transform: translateY(100%);
-    }
+    grid-template-columns: max-content min-content;
+    grid-gap: calc(0.5 * var(--base-gap));
+    align-items: center;
   }
 
   .home-plants-list {
@@ -343,6 +338,11 @@
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: var(--grid-item-height);
     grid-gap: var(--base-gap);
+
+    @nest main.list & {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 70px;
+    }
 
     @media (--max-mobile-viewport) {
       --screen-width-half: calc(0.5 * var(--app-max-width));

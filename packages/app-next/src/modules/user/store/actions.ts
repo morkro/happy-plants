@@ -9,6 +9,7 @@ import {
 import logger from '@/utils/vueLogger'
 import { RootState } from '@/store'
 import { deleteLocalEntry } from '@/services/localStorage'
+import config from '@/config'
 
 export type LoginType = 'email' | 'google' | 'github' | 'twitter'
 
@@ -41,7 +42,7 @@ const authRedirectResults = async (context: {
     const results = await getRedirectResults()
     context.commit('assignDetails', results)
   } catch (error) {
-    logger(error.message, true)
+    logger(`authRedirectResults() => ${error.message}`, true)
     context.dispatch(
       'notifications/show',
       {
@@ -56,10 +57,10 @@ const authRedirectResults = async (context: {
 const signOutUser = async (context: { commit: Commit; dispatch: Dispatch }) => {
   try {
     await _signOutUser()
-    deleteLocalEntry('plant-data-count')
+    deleteLocalEntry(config.localStorage.plantCount)
     context.commit('resetState')
   } catch (error) {
-    logger(error.message, true)
+    logger(`signOutUser() => ${error.message}`, true)
     context.dispatch(
       'notifications/show',
       {

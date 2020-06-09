@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay-loading">
+  <div class="overlay-loading" data-cy="app-overlay-loading">
     <svg
       id="loading-illustration"
       width="102px"

@@ -12,6 +12,11 @@ interface AppConfig {
     storageBucket: string
     messagingSenderId: string
   }
+  localStorage: {
+    plantCount: string
+    homeViewmode: string
+    homeOrderBy: string
+  }
 }
 
 const config: AppConfig = {
@@ -27,6 +32,11 @@ const config: AppConfig = {
     projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
     storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.VUE_APP_FIREBASE_MESSENGER_ID,
+  },
+  localStorage: {
+    plantCount: 'data:plant-count',
+    homeViewmode: 'view:home-viewmode',
+    homeOrderBy: 'view:home-orderby',
   },
 }
 
