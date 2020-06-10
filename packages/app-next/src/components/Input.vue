@@ -1,5 +1,5 @@
 <template>
-  <input :class="{ hasError: error }" :value="value" @input="handleInput" />
+  <input :class="{ 'has-error': error }" :value="value" @input="handleInput" />
   <!--
     :aria-describedby="`input-${_uid}`"
   -->
@@ -69,7 +69,7 @@
       border-color: var(--brand-red);
     }
 
-    &.hasError {
+    &.has-error {
       border-color: var(--brand-red);
     }
   }

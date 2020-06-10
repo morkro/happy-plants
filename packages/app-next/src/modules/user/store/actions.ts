@@ -5,6 +5,7 @@ import {
   signInWithEmail,
   signInWithProvider,
   signOutUser as _signOutUser,
+  updateProfile as _updateProfile,
 } from '@/services/firebase'
 import logger from '@/utils/vueLogger'
 import { RootState } from '@/store'
@@ -72,4 +73,12 @@ const signOutUser = async (context: { commit: Commit; dispatch: Dispatch }) => {
   }
 }
 
-export { authRedirectResults, createAccount, signInUser, signOutUser }
+const updateProfile = async (
+  context: { commit: Commit },
+  payload: { displayName?: string; photoURL?: string }
+) => {
+  await _updateProfile(payload)
+  context.commit('updateProfile', payload)
+}
+
+export { authRedirectResults, createAccount, signInUser, signOutUser, updateProfile }

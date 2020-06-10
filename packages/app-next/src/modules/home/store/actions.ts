@@ -39,6 +39,8 @@ export const loadPlants = async (
 
       context.commit('assignPlant', plantData)
     }
+
+    context.commit('finishLoadingPlants')
   } catch (error) {
     logger(`loadPlants() => ${error.message}`, true)
     context.dispatch(

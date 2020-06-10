@@ -153,7 +153,7 @@
         userName: (state: RootState) => state.user.displayName,
         email: (state: RootState) => state.user.email,
         userPhotoURL: (state: RootState) => state.user.photoURL,
-        plants: (state: RootState) => state.home.plants.length,
+        plants: (state: RootState) => state.home.plants.data.length,
       }),
       plantCount(): string {
         return this.plants ? String(this.plants) : this.plantCountFromLocalStorage

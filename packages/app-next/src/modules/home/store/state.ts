@@ -2,12 +2,18 @@ import { Plant } from '@/types/plant'
 import { PlantTag } from '@/types/tags'
 
 export interface HomeState {
-  plants: Plant[]
+  plants: {
+    data: Plant[]
+    loaded: boolean
+  }
   tags: PlantTag[]
 }
 
 const state: HomeState = {
-  plants: [],
+  plants: {
+    data: [],
+    loaded: false,
+  },
   tags: [],
 }
 

@@ -1,5 +1,6 @@
 import { FirebaseError } from 'firebase'
 import store from '@/store'
+import logger from './vueLogger'
 
 export interface FormErrorObject {
   el: string | null
@@ -14,6 +15,7 @@ export interface FormErrorObject {
 export default function setErrorMessage(error: FirebaseError): FormErrorObject {
   const _error: FormErrorObject = { el: null, message: null }
   console.log(error)
+
   switch (error.code) {
     case 'auth/email-already-in-use':
     case 'auth/invalid-email':

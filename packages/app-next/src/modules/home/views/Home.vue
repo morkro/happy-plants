@@ -97,7 +97,10 @@
   import { HomeViewmode, HomeOrderBy } from '..'
 
   interface HomeMapState extends HomeState {
-    plants: Plant[]
+    plants: {
+      data: Plant[]
+      loaded: boolean
+    }
     tags: PlantTag[]
   }
 
@@ -138,16 +141,16 @@
       }),
       plantData(): Plant[] {
         if (this.searchQuery) {
-          return this.plants.filter((plant: Plant) =>
+          return this.plants.data.filter((plant: Plant) =>
             fuzzySearch(this.searchQuery.toLowerCase(), plant.name.toLowerCase())
           )
         }
 
         if (this.filterBy) {
-          return this.plants.filter(plant => this.filterBy.plants.includes(plant.guid))
+          return this.plants.data.filter(plant => this.filterBy.plants.includes(plant.guid))
         }
 
-        const copy = this.plants
+        const copy = this.plants.data
         if (this.orderBy === 'latest') {
           return copy.sort(sortByDate).reverse()
         } else if (this.orderBy === 'alphabetically') {
@@ -214,7 +217,7 @@
     },
 
     async created() {
-      if (this.plants.length === 0) {
+      if (!this.plants.loaded) {
         await this.loadPlants({ orderBy: this.orderBy })
         this.loading = false
       }
@@ -225,7 +228,7 @@
     },
 
     beforeMount() {
-      if (this.plants.length) {
+      if (this.plants.loaded) {
         this.loading = false
       }
     },

@@ -11,6 +11,10 @@ export default {
     state.idToken = payload.idToken
     state.uid = payload.uid
   },
+  updateProfile(state: UserState, payload: { displayName?: string; photoURL?: string }) {
+    state.displayName = payload.displayName
+    state.photoURL = payload.photoURL
+  },
   resetState(state: UserState) {
     state.authenticated = false
     state.displayName = null

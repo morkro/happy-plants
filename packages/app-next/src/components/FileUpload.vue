@@ -1,5 +1,5 @@
 <template>
-  <div class="fileupload" tabindex="0" @keypress="triggerUpload">
+  <div :class="['fileupload', error && 'has-error']" tabindex="0" @keypress="triggerUpload">
     <input
       ref="fileInput"
       type="file"
@@ -31,7 +31,8 @@
     name: 'FileUpload',
     props: {
       id: { type: String },
-      accepts: { type: [Array, String], default: () => ['.png', '.jpg', '.jpeg'] },
+      accepts: { type: [Array, String], default: () => ['image/png', 'image/jpg', 'image/jpeg'] },
+      error: { type: Boolean, default: false },
     },
     components: {
       'feather-loader': () =>
@@ -76,6 +77,13 @@
         this.$emit('loading-file', { loading: this.loading })
 
         const file = event.target.files[0]
+        if (!this.acceptedFilePattern.includes(file.type)) {
+          this.$emit('has-error', 'File format not supported.')
+          this.loading = false
+          this.$emit('loading-file', { loading: this.loading })
+          return
+        }
+
         if (!file.type.includes('image')) {
           this.imageBlob = file
         } else {
@@ -103,6 +111,10 @@
     border-radius: var(--base-radius);
     overflow: hidden;
     border: 2px solid var(--brand-white);
+
+    &.has-error {
+      border-color: var(--brand-red);
+    }
 
     &:focus {
       border-color: var(--brand-beige-dark);
