@@ -1,13 +1,28 @@
 import { PlantModule } from './modules'
-import { PlantTag } from './tags'
+
+export interface PlantTag {
+  created: number
+  guid: string
+  label: string
+  modified: number
+  name: string
+  plants: string[]
+}
+
+export interface PlantType {
+  label: string
+  value: string
+  guid: string
+}
 
 export interface Plant {
-  guid: string
-  created: number
-  modified: number
   blob: Blob | null
+  type: PlantType | null
+  created: number
+  guid: string
   imageURL: string | null
-  name: string
+  modified: number
   modules: PlantModule[]
-  tags: PlantTag[]
+  name: string
+  tags?: PlantTag[]
 }

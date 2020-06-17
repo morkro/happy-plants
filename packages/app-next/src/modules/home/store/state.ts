@@ -1,12 +1,14 @@
-import { Plant } from '@/types/plant'
-import { PlantTag } from '@/types/tags'
+import { Plant, PlantTag } from '@/types/plant'
 
 export interface HomeState {
   plants: {
     data: Plant[]
     loaded: boolean
   }
-  tags: PlantTag[]
+  tags: {
+    data: PlantTag[]
+    loaded: boolean
+  }
 }
 
 const state: HomeState = {
@@ -14,7 +16,10 @@ const state: HomeState = {
     data: [],
     loaded: false,
   },
-  tags: [],
+  tags: {
+    data: [],
+    loaded: false,
+  },
 }
 
 export default state

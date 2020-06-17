@@ -111,6 +111,7 @@
     border-radius: var(--base-radius);
     overflow: hidden;
     border: 2px solid var(--brand-white);
+    font-family: 'FiraMono', 'Courier New', Courier, monospace;
 
     &.has-error {
       border-color: var(--brand-red);

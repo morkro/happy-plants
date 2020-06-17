@@ -5,5 +5,5 @@ export const show = (context: { commit: Commit }, payload: SetNotificationPayloa
   context.commit('set', payload)
   setTimeout(() => {
     context.commit('clear')
-  }, 3000)
+  }, 4000)
 }

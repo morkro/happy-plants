@@ -4,7 +4,7 @@
       {{ ' ' }}
       <template #actions>
         <div class="plant-header-actions">
-          <v-button round small @click.native="openSettings">
+          <v-button round small @click.native="toggleDialog(true)">
             <span class="visuallyhidden">Open settings</span>
             <feather-more />
           </v-button>
@@ -12,73 +12,57 @@
       </template>
     </app-header>
 
+    <settings-dialog :show="showSettingsDialog" :plant="plant" @close-dialog="toggleDialog(false)" />
+
     <main>
       <div v-if="loading">
         <v-text>loading</v-text>
       </div>
       <v-text v-else>{{ plant.name }}</v-text>
-      <div style="height: 110vh;background:var(--brand-white);">really long content</div>
+      <div style="height: 110vh;background:var(--brand-white);">
+        really long content
+        <router-link :to="`${$route.path}/gallery`">Gallery</router-link>
+      </div>
     </main>
   </v-layout>
 </template>
 
 <script lang="ts">
-  import Vue, { VueConstructor } from 'vue'
-  import { mapState } from 'vuex'
-  import { RootState } from '@/store'
+  import Vue, { PropType } from 'vue'
   import { Plant } from '@/types/plant'
-  import { getCollection, FirestoreCollections } from '../../../services/firebase'
+  import hasProperty from '@/utils/hasProperty'
+  import SettingsDialog from '../components/SettingsDialog.vue'
 
-  interface PlantMapState {
-    userID: string
-    plants: {
-      data: Plant[]
-      loaded: boolean
-    }
-  }
-
-  export default (Vue as VueConstructor<Vue & PlantMapState>).extend({
+  export default Vue.extend({
     name: 'Plant',
+    props: {
+      plant: {
+        type: Object as PropType<Plant>,
+      },
+      loading: {
+        type: Boolean,
+      },
+    },
     components: {
+      'settings-dialog': SettingsDialog,
       'feather-more': () =>
         import('vue-feather-icons/icons/MoreVerticalIcon' /* webpackChunkName: "icons" */),
     },
     data() {
       return {
-        loading: true,
-        individualPlant: null,
+        showSettingsDialog: hasProperty(this.$route.query, 'settings'),
       }
-    },
-    computed: {
-      ...mapState<RootState>({
-        userID: (state: RootState) => state.user.uid,
-        plants: (state: RootState) => state.home.plants,
-      }),
-      plant(): Plant {
-        if (this.plants.loaded) {
-          return this.plants.data.find((plant: Plant) => plant.guid === this.$route.params.id)
-        }
-        return this.individualPlant
-      },
     },
     methods: {
-      openSettings() {
-        console.log('open settings')
+      toggleDialog(show: boolean) {
+        this.showSettingsDialog = show
+
+        if (show) {
+          this.$router.push({ path: this.$route.path, query: { settings: null } })
+        } else {
+          this.$router.push(this.$route.path)
+        }
       },
-    },
-    async created() {
-      if (!this.plants.loaded && this.individualPlant === null) {
-        const snapshot = await getCollection(this.userID, FirestoreCollections.Plants)
-          .doc(this.$route.params.id)
-          .get()
-        this.individualPlant = snapshot.data()
-        this.loading = false
-      }
-    },
-    mounted() {
-      if (this.plants.data.length) {
-        this.loading = false
-      }
     },
   })
 </script>

@@ -5,7 +5,7 @@ import 'firebase/storage'
 import config from '@/config'
 import { AssignDetailsPayload } from '@/modules/user/store/mutations'
 import { setSessionEntry } from './sessionStorage'
-import { Plant } from '@/types/plant'
+import { Plant, PlantTag } from '@/types/plant'
 
 export const app = firebase.initializeApp(config.firebase)
 export const firestore = app.firestore()
@@ -78,6 +78,15 @@ const addPlant = async (userID: string, data: Plant): Promise<void> =>
     .doc(data.guid)
     .set(data)
 
+const setTags = async (userID: string, data: PlantTag[]): Promise<void> =>
+  getUserDoc(userID).set({ tags: data })
+
+const deletePlant = async (userID: string, data: Plant): Promise<void> =>
+  getUserDoc(userID)
+    .collection(FirestoreCollections.Plants)
+    .doc(data.guid)
+    .delete()
+
 const signInWithEmail = async (email: string, password: string) =>
   firebase.auth().signInWithEmailAndPassword(email, password)
 
@@ -114,6 +123,12 @@ const uploadFile = (path: string, file: File) =>
     .child(path)
     .put(file)
 
+const deleteFile = async (path: string): Promise<any> =>
+  storage
+    .ref()
+    .child(path)
+    .delete()
+
 const updateProfile = async (payload: { displayName?: string; photoURL?: string }) => {
   const user = firebase.auth().currentUser
   await user.updateProfile(payload)
@@ -121,7 +136,10 @@ const updateProfile = async (payload: { displayName?: string; photoURL?: string 
 
 export {
   addPlant,
+  setTags,
   createAccount,
+  deleteFile,
+  deletePlant,
   downloadFile,
   forgotPassword,
   getCollection,

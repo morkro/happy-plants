@@ -15,6 +15,7 @@ interface AppConfig {
   localStorage: {
     plantCount: string
     homeViewmode: string
+    homeShowPlantTypes: string
     homeOrderBy: string
   }
 }
@@ -36,6 +37,7 @@ const config: AppConfig = {
   localStorage: {
     plantCount: 'data:plant-count',
     homeViewmode: 'view:home-viewmode',
+    homeShowPlantTypes: 'view:home-showplanttypes',
     homeOrderBy: 'view:home-orderby',
   },
 }

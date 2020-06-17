@@ -29,6 +29,19 @@
             <v-text>List</v-text>
           </label>
         </li>
+        <li>
+          <label for="viewmode-types">
+            <v-input
+              type="checkbox"
+              id="viewmode-types"
+              name="types"
+              value="types"
+              :checked="types"
+              @click.native="updateShowTypes"
+            />
+            <v-text>Show plant types</v-text>
+          </label>
+        </li>
       </ul>
       <v-text type="subtitle">Order by</v-text>
       <ul>
@@ -75,10 +88,10 @@
                 checked
                 @click.native="updateTag(null)"
               />
-              <v-text>All</v-text>
+              <v-text>Show all</v-text>
             </label>
           </li>
-          <li v-for="tag of tags" :key="tag.name">
+          <li v-for="tag of tags.data" :key="tag.name">
             <label :for="tag.name">
               <v-input
                 type="radio"
@@ -113,14 +126,17 @@
 <script lang="ts">
   import Vue, { PropType } from 'vue'
   import { HomeViewmode, HomeOrderBy } from '../index'
-  import { PlantTag } from '@/types/tags'
+  import { HomeState } from '../store/state'
+  import { PlantTag } from '@/types/plant'
+
   export default Vue.extend({
     name: 'ViewOptions',
     props: {
       viewmode: { type: String },
+      types: { type: Boolean },
       orderBy: { type: String },
       filterBy: { type: String },
-      tags: { type: Array as PropType<PlantTag[]> },
+      tags: { type: Object as PropType<Pick<HomeState, 'tags'>> },
       loading: { type: Boolean, default: true },
     },
     components: {
@@ -133,6 +149,9 @@
       },
       updateOrderBy(type: HomeOrderBy): void {
         this.$emit('update-orderby', type)
+      },
+      updateShowTypes(): void {
+        this.$emit('toggle-types')
       },
       updateTag(tag: PlantTag): void {
         this.$emit('update-tag', tag)

@@ -35,7 +35,8 @@
     color: var(--brand-green-dark);
     transition: box-shadow 100ms ease-in-out;
 
-    &[type='radio'] {
+    &[type='radio'],
+    &[type='checkbox'] {
       width: 22px;
       height: 22px;
       border: 2px solid var(--brand-beige-dark);

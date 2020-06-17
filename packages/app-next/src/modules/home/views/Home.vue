@@ -38,11 +38,13 @@
       <view-options
         v-if="viewOptionsVisible"
         :viewmode="viewmode"
+        :types="types"
         :order-by="orderBy"
         :filter-by="filterBy && filterBy.guid"
         :tags="tags"
         :loading="loading"
         @update-viewmode="updateViewmode"
+        @toggle-types="toggleShowTypes"
         @update-orderby="updateOrderBy"
         @update-tag="updateTags"
       />
@@ -83,8 +85,7 @@
 <script lang="ts">
   import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import { Plant } from '@/types/plant'
-  import { PlantTag } from '@/types/tags'
+  import { Plant, PlantTag } from '@/types/plant'
   import fuzzySearch from '@/utils/fuzzySearch'
   import hasProperty from '@/utils/hasProperty'
   import { sortByAlphabet, sortByDate } from '@/utils/sort'
@@ -101,7 +102,10 @@
       data: Plant[]
       loaded: boolean
     }
-    tags: PlantTag[]
+    tags: {
+      data: PlantTag[]
+      loaded: boolean
+    }
   }
 
   const noop = () => {} // eslint-disable-line
@@ -126,9 +130,10 @@
         loading: true,
         loadingPlantData: new Array(5).fill({}),
         searchVisible: hasProperty(query, 'search'),
-        viewOptionsVisible: hasProperty(query, 'showViewOptions'),
+        viewOptionsVisible: hasProperty(query, 'options'),
         searchQuery: query.search ? String(query.search).toLowerCase() : '',
         viewmode: getLocalEntry(config.localStorage.homeViewmode) ?? 'grid',
+        types: getLocalEntry(config.localStorage.homeShowPlantTypes) === 'true',
         orderBy: getLocalEntry(config.localStorage.homeOrderBy) ?? 'latest',
         filterBy: null,
       }
@@ -185,13 +190,17 @@
     },
 
     methods: {
-      ...mapActions({ loadPlants: 'home/loadPlants', loadTags: 'home/loadTags' }),
+      ...mapActions({
+        loadPlants: 'home/loadPlants',
+        loadTags: 'home/loadTags',
+        showNotification: 'notifications/show',
+      }),
       showSearch(): void {
         this.searchVisible = true
       },
       showViewOptions(): void {
         this.viewOptionsVisible = true
-        this.$router.push({ path: '/home', query: { showViewOptions: null } })
+        this.$router.push({ path: '/home', query: { options: null } })
       },
       closeActions(): void {
         this.searchQuery = ''
@@ -199,13 +208,17 @@
         this.viewOptionsVisible = false
 
         const query = this.$route.query
-        if (hasProperty(query, 'search') || hasProperty(query, 'showViewOptions')) {
+        if (hasProperty(query, 'search') || hasProperty(query, 'options')) {
           this.$router.push({ path: '/home' })
         }
       },
       updateViewmode(type: HomeViewmode): void {
         this.viewmode = type
         setLocalEntry(config.localStorage.homeViewmode, type)
+      },
+      toggleShowTypes(): void {
+        this.types = !this.types
+        setLocalEntry(config.localStorage.homeShowPlantTypes, String(this.types))
       },
       updateOrderBy(type: HomeOrderBy): void {
         this.orderBy = type
@@ -222,7 +235,7 @@
         this.loading = false
       }
 
-      if (this.tags.length === 0) {
+      if (!this.tags.loaded) {
         await this.loadTags()
       }
     },
