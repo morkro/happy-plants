@@ -20,6 +20,7 @@ export enum FirestoreCollections {
   Users = 'users',
   Plants = 'plants',
   Tags = 'tags',
+  BugReports = 'bugreports',
 }
 
 const createAccount = async (

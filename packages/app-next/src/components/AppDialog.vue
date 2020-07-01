@@ -141,7 +141,6 @@
     grid-template-areas:
       'title close'
       'content content';
-    grid-gap: var(--base-gap);
     grid-template-columns: 1fr min-content;
   }
 

@@ -50,6 +50,7 @@
   .btn {
     --background: var(--brand-green);
     --shadow: var(--brand-green);
+    --icon-size: 20px;
     background: var(--background);
     border-radius: var(--base-radius);
     color: var(--brand-white);
@@ -77,8 +78,8 @@
 
     /* Icons */
     & > svg {
-      width: 20px;
-      height: 20px;
+      width: var(--icon-size);
+      height: var(--icon-size);
       margin-right: calc(0.5 * var(--base-gap));
     }
 
@@ -92,7 +93,8 @@
       }
 
       &.small {
-        padding: calc(var(--base-gap) / 3);
+        --icon-size: 26px;
+        padding: 0;
       }
     }
 

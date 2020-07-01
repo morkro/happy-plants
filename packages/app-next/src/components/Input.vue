@@ -47,6 +47,20 @@
       &:checked {
         border-color: var(--brand-green);
         background: var(--brand-green);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+          content: '';
+          display: block;
+          width: 60%;
+          height: 30%;
+          border-radius: var(--base-radius);
+          border-bottom: 2px solid var(--brand-white);
+          border-left: 2px solid var(--brand-white);
+          transform: rotate(-45deg) translateX(1px);
+        }
       }
 
       &:focus,

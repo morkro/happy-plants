@@ -3,9 +3,22 @@
     <template v-slot:headline>Settings</template>
 
     <template>
-      <v-button color="red" class="remove-plant-btn" @click.native="deletePlant">
-        <feather-loader v-if="progress" />Delete plant
+      <v-button
+        color="red"
+        :class="['remove-plant-btn', progress && 'progress']"
+        @click.native="deletePlant"
+      >
+        <feather-loader v-if="progress" />
+        <feather-trash v-else />
+        <span>Delete plant</span>
       </v-button>
+
+      <div class="dialog-settings-modified">
+        <v-text
+          small
+          color="inactive"
+        >Last modified {{ plant.modified | formatDate }} {{ modifiedTime }}</v-text>
+      </div>
     </template>
   </app-dialog>
 </template>
@@ -18,7 +31,7 @@
   import { RootState } from '@/store'
   import { Plant } from '@/types/plant'
   import delay from '@/utils/promiseDelay'
-  import { isBlobbable } from '@/utils/blob'
+  import { toReadableTime } from '../../../services/dayjs'
 
   interface SettingsMapState {
     userID: string
@@ -33,15 +46,22 @@
     components: {
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
+      'feather-trash': () =>
+        import('vue-feather-icons/icons/TrashIcon' /* webpackChunkName: "icons" */),
     },
     data() {
       return {
         progress: false,
       }
     },
-    computed: mapState<RootState>({
-      userID: (state: RootState) => state.user.uid,
-    }),
+    computed: {
+      ...mapState<RootState>({
+        userID: (state: RootState) => state.user.uid,
+      }),
+      modifiedTime(): string {
+        return toReadableTime(this.plant.modified)
+      },
+    },
     methods: {
       ...mapActions({ showNotification: 'notifications/show' }),
       async deletePlant() {
@@ -76,7 +96,17 @@
 </script>
 
 <style lang="postcss">
-  .remove-plant-btn svg {
-    animation: spin 3s linear infinite;
+  .remove-plant-btn {
+    width: 100%;
+
+    &.progress svg {
+      animation: spin 3s linear infinite;
+    }
+  }
+
+  .dialog-settings-modified {
+    width: 100%;
+    padding-top: var(--base-gap);
+    text-align: center;
   }
 </style>

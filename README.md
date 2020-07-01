@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  Current version: <code>2.0.0</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
+  Current version: <code>1.7.3</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
 </p>
 
 <p align="center">
@@ -15,16 +15,22 @@
 
 <img src="resources/happyplants-phone-presentation.png" alt="HappyPlants App" />
 
-[_HappyPlants_](https://happyplants.garden) is all about collecting, organising, and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application.
+[**🌿 HappyPlants**](https://happyplants.garden) is all about collecting, organising, and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a **mobile-first web application**.
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior.
 
--   [✨ Features](#features)
--   [⌨️ Development](#development)
--   [🎉 Credits](#credits)
+**Table of contents:**
+
+- [🔜 Version 2](#version-2)
+- [🎁 Features](#features)
+- [👩🏻‍💻 Development](#development)
 
 ---
+
+## 🔜 Version 2
+
+HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for some time mid-July to early August.
 
 ## ✨ Features
 
@@ -56,7 +62,6 @@ By participating, you are expected to uphold this code. Please report unacceptab
 
 This repository is organised with [Lerna](https://lerna.js.org).
 
-tbd.
-
 ## License
+
 [BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)

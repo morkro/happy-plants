@@ -25,7 +25,7 @@
             :value="type.value"
             :checked="type.guid === selected && selected.guid"
             @click.native="updatetype(type)"
-          />
+          ></v-input>
           <v-text>{{ type.label }}</v-text>
         </label>
       </li>

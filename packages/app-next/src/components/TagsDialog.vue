@@ -1,5 +1,5 @@
 <template>
-  <app-dialog id="dialog-tags" :show="show" @close-dialog="$emit('close-dialog')">
+  <app-dialog id="dialog-tags" :show="show" @close-dialog="onCloseDialog">
     <template v-slot:headline>Select tags</template>
 
     <div :class="['dialog-tags-content', !tags.loaded && 'loading']">
@@ -36,13 +36,14 @@
 <script lang="ts">
   import Vue, { PropType } from 'vue'
   import { HomeState } from '@/modules/home/store/state'
-  import { PlantTag } from '../../../types/plant'
+  import { PlantTag } from '@/types/plant'
 
   export default Vue.extend({
     name: 'TagsDialog',
     props: {
       show: { type: Boolean, default: false },
       tags: { type: Object as PropType<Pick<HomeState, 'tags'>>, default: false },
+      preselected: { type: Array as PropType<PlantTag[]>, default: [] },
     },
     components: {
       'feather-plus': () =>
@@ -53,7 +54,7 @@
     data() {
       return {
         newTagName: null,
-        selected: [],
+        selected: this.preselected,
       }
     },
     methods: {
@@ -69,6 +70,13 @@
         }
         this.$emit('tags-selected', this.selected)
       },
+      onCloseDialog() {
+        this.selected = []
+        this.$emit('close-dialog')
+      },
+    },
+    beforeUpdate() {
+      this.selected = this.preselected
     },
   })
 </script>
@@ -91,11 +99,16 @@
   }
 
   .dialog-tags-list {
-    padding-bottom: var(--base-gap);
     display: flex;
+    flex-wrap: wrap;
+    padding-bottom: calc(0.5 * var(--base-gap));
+
+    & .plant-tag {
+      margin-bottom: calc(0.5 * var(--base-gap));
+    }
 
     & > .plant-tag:not(:last-of-type) {
-      margin-right: var(--base-gap);
+      margin-right: calc(0.5 * var(--base-gap));
     }
   }
 

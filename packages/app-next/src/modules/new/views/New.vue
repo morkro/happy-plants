@@ -12,6 +12,7 @@
     <tags-dialog
       :show="showTagsDialog"
       :tags="existingTags"
+      :preselected="selectedTags"
       @create-tag="createNewTag"
       @tags-selected="setSelectedTags"
       @close-dialog="toggleDialog('tags', false)"
@@ -69,15 +70,19 @@
           </label-group>
 
           <label-group id="addplant-tags" label="Tags">
-            <div :class="['addplant-tags-container', existingTags.data.length && 'has-tags']">
+            <div :class="['addplant-tags-container', selectedTags.length && 'has-tags']">
               <v-button color="yellow" round small @click.native="toggleDialog('tags', true)">
                 <feather-plus />
                 <span class="visuallyhidden">Open dialog</span>
               </v-button>
+
               <v-text
-                v-if="!existingTags.data.length"
+                v-if="!selectedTags.length"
                 color="special"
               >Add tags for more granular organisation</v-text>
+              <div v-else>
+                <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{ tag.label }}</v-tag>
+              </div>
             </div>
           </label-group>
         </div>
@@ -106,7 +111,6 @@
   import { isBlobbable } from '@/utils/blob'
   import Illustration from '../components/Illustration.vue'
   import TypeDialog from '../components/TypeDialog.vue'
-  import TagsDialog from '../components/TagsDialog.vue'
 
   interface NewMapState {
     userID: string
@@ -121,7 +125,6 @@
     components: {
       'new-illustration': Illustration,
       'type-dialog': TypeDialog,
-      'tags-dialog': TagsDialog,
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
       'feather-list': () =>
@@ -347,6 +350,20 @@
     & > button {
       --shadow: var(--brand-green-dark) !important;
       margin-right: var(--base-gap);
+    }
+
+    & > div {
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: calc(0.5 * var(--base-gap));
+
+      & .plant-tag {
+        margin-bottom: calc(0.5 * var(--base-gap));
+      }
+
+      & .plant-tag:not(:last-of-type) {
+        margin-right: calc(0.5 * var(--base-gap));
+      }
     }
   }
 </style>

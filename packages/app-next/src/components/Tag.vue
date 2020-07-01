@@ -36,6 +36,7 @@
     padding: calc(0.25 * var(--base-gap)) calc(0.5 * var(--base-gap));
     border-radius: var(--base-radius);
     font-weight: 500;
+    white-space: nowrap;
 
     &.selected {
       background: var(--brand-green);

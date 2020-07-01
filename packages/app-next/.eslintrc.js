@@ -34,9 +34,9 @@ module.exports = {
     'vue/max-attributes-per-line': [
       error,
       {
-        singleline: 20,
+        singleline: 5,
         multiline: {
-          max: warn,
+          max: 1,
           allowFirstLine: false,
         },
       },
@@ -45,6 +45,7 @@ module.exports = {
     'arrow-parens': 'off',
     'generator-star-spacing': 'off',
     'typescript-eslint/ban-ts-ignore': 'off',
+    'typescript-eslint/no-explicit-any': 'off',
   },
   overrides: [
     {

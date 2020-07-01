@@ -2,7 +2,13 @@
   <img src="../../resources/logo-readme.png" alt="HappyPlants 🌵🌱" />
 </h1>
 
+<p align="center">
+  Current version: <code>2.0.0</code>
+</p>
+
+
 ## ⌨️ Development
+
 This is a Vue.js progressive web application, developed with [`@vue/cli`](https://github.com/vuejs/vue-cli).
 
 | Command | Description |
@@ -13,8 +19,3 @@ This is a Vue.js progressive web application, developed with [`@vue/cli`](https:
 | `npm test:unit` | Run all unit tests |
 | `npm lint` | Runs `standard` over all `.js` and `.vue` files |
 | `npm lint:style` | Uses Stylelint to lint all CSS |
-
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
-## License
-[BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)
