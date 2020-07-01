@@ -2,7 +2,12 @@
   <img src="../../resources/logo-readme.png" alt="HappyPlants 🌵🌱" />
 </h1>
 
+<p align="center">
+  Current version: <code>1.7.3</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
+</p>
+
 ## ⌨️ Development
+
 This is a Vue.js progressive web application, developed with [`@vue/cli`](https://github.com/vuejs/vue-cli).
 
 | Command | Description |
@@ -16,5 +21,12 @@ This is a Vue.js progressive web application, developed with [`@vue/cli`](https:
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
 
-## License
-[BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)
+## 🎉 Credits
+
+### Logo
+
+The logo is a combination of existing illustrations by [Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev) and [Freepik](https://www.flaticon.com/authors/freepik).
+
+### Icons
+
+Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
