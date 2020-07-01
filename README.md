@@ -30,7 +30,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 
 ## 🔜 Version 2
 
-HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for some time mid-July to early August.
+HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for some time mid-July to early August. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
 
 ## ✨ Features
 
