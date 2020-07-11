@@ -13,28 +13,24 @@
   </a>
 </p>
 
----
-
-## 🛠 HappyPlants v2 in development!
-
-HappyPlants v2 is currently in development and lives in [`feature/next`](https://github.com/morkro/happy-plants/tree/feature/next). It will be a complete rebuild from scratch, eliminating some early architectural design decision issues. 
-
-You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6). I am currently finalising the new design and features.
-
----
-
 <img src="resources/happyplants-phone-presentation.png" alt="HappyPlants App" />
 
-[_HappyPlants_](https://happyplants.garden) is all about collecting, organising, and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application.
+[**🌿 HappyPlants**](https://happyplants.garden) is all about collecting, organising, and adding all kinds of information of your little friends. _How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun?_ Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a **mobile-first web application**.
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report unacceptable behavior.
 
--   [✨ Features](#features)
--   [⌨️ Development](#development)
--   [🎉 Credits](#credits)
+**Table of contents:**
+
+- [🔜 Version 2](#version-2)
+- [🎁 Features](#features)
+- [👩🏻‍💻 Development](#development)
 
 ---
+
+## 🔜 Version 2
+
+HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for some time mid-July to early August. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
 
 ## ✨ Features
 
@@ -86,8 +82,8 @@ After this has finished move to the packages/app directory and view the readme t
 ### Logo
 The logo is a combination of existing illustrations by [Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev) and [Freepik](https://www.flaticon.com/authors/freepik).
 
-### Icons
-Icons taken from [Freepik](http://www.freepik.com) and [Dimitry Miroliubov](http://www.flaticon.com/authors/dimitry-miroliubov).
+This repository is organised with [Lerna](https://lerna.js.org).
 
 ## License
+
 [BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)
