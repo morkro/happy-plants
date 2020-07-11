@@ -17,6 +17,20 @@ export default function getPlantModules () {
       }
     },
     {
+      type: 'food',
+      selected: false,
+      meta: {
+        title: 'Food',
+        description: 'Define the amount of plant food your plant requires.',
+        icon: 'droplet',
+        cloudOnly: false
+      },
+      value: {
+        amount: 1,
+        frequency: 'weekly'
+      }
+    },
+    {
       type: 'sunshine',
       selected: false,
       meta: {

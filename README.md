@@ -59,6 +59,28 @@ HappyPlants is currently being rewritten for a new major release with more featu
   - 🖼 Gallery
 
 ## Development
+This repository consists of multiple sub-projects bound together with Lerna. Developing locally is easy!
+
+### Pre requirements
+Please make sure your system has node.js and NPM installed (preferably <= 12.16.3, there is a bug with higher versions)
+With NVM it's easy to install or switch to the correct version `nvm install 12.16.3`
+
+### Building the app
+
+All available commands can be found in package.json, the most important are listed below:
+
+| Command | Description |
+| ------- | ----------- |
+| `npm run clean` | Cleanup the project |
+| `npm run bootstrap:app` | Bootstrap happy-plants/app - replace :app with :app-next, :landing or :server for other projects |
+| `npm run build:app` | Build happy-plants/app |
+| `npm run init:app` | Both bootstrap and build in one command |
+
+After this has finished move to the packages/app directory and view the readme to host and serve the app!
+
+## 🎉 Credits
+### Logo
+The logo is a combination of existing illustrations by [Vitaly Gorbachev](https://www.flaticon.com/authors/vitaly-gorbachev) and [Freepik](https://www.flaticon.com/authors/freepik).
 
 This repository is organised with [Lerna](https://lerna.js.org).
 

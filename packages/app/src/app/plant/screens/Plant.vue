@@ -80,6 +80,7 @@
   import PlantNotes from '@/app/plant/components/PlantNotes'
   import PlantSeasons from '@/app/plant/components/PlantSeasons'
   import PlantWatering from '@/app/plant/components/PlantWatering'
+  import PlantFood from '@/app/plant/components/PlantFood'
   import PlantSunshine from '@/app/plant/components/PlantSunshine'
   import PlantGallery from '@/app/plant/components/PlantGallery'
   import PlantFooter from '@/app/plant/components/PlantFooter'
@@ -102,6 +103,7 @@
       'plant-notes': PlantNotes,
       'plant-seasons': PlantSeasons,
       'plant-watering': PlantWatering,
+      'plant-food': PlantFood,
       'plant-sunshine': PlantSunshine,
       'plant-gallery': PlantGallery,
       'plant-footer': PlantFooter
@@ -184,6 +186,7 @@
         'updateNotesModule',
         'updateSunshineModule',
         'updateWateringModule',
+        'updateFoodModule',
         'updateName',
         'updatePhoto',
         'toggleTags',
@@ -199,6 +202,11 @@
         const module = this.plant.modules.find(mod => mod.type === type).value
         switch (type) {
           case 'watering':
+            return {
+              amount: module && (module.level || module.amount),
+              frequency: module && module.frequency
+            }
+          case 'food':
             return {
               amount: module && (module.level || module.amount),
               frequency: module && module.frequency
@@ -226,6 +234,8 @@
         switch (event.type) {
           case 'watering':
             return this.onWateringUpdate(event.payload)
+          case 'food':
+            return this.onFoodUpdate(event.payload)
           case 'sunshine':
             return this.onSunshineUpdate(event.payload)
           case 'seasons':
@@ -248,6 +258,9 @@
       },
       onWateringUpdate (watering) {
         this.updateWateringModule({ guid: this.plant.guid, watering })
+      },
+      onFoodUpdate (food) {
+        this.updateFoodModule({ guid: this.plant.guid, food })
       },
       onSunshineUpdate (sunshine) {
         this.updateSunshineModule({ guid: this.plant.guid, sunshine })
