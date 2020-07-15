@@ -8,7 +8,14 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
   >
     <defs>
-      <rect id="path-1" x="0" y="0" width="171" height="45" rx="2" />
+      <rect
+        id="path-1"
+        x="0"
+        y="0"
+        width="171"
+        height="45"
+        rx="2"
+      />
       <filter
         x="-8.5%"
         y="-27.8%"
