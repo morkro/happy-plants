@@ -14,10 +14,9 @@
       </v-button>
 
       <div class="dialog-settings-modified">
-        <v-text
-          small
-          color="inactive"
-        >Last modified {{ plant.modified | formatDate }} {{ modifiedTime }}</v-text>
+        <v-text small color="inactive">
+          Last modified {{ plant.modified | formatDate }} {{ modifiedTime }}
+        </v-text>
       </div>
     </template>
   </app-dialog>
@@ -31,7 +30,7 @@
   import { RootState } from '@/store'
   import { Plant } from '@/types/plant'
   import delay from '@/utils/promiseDelay'
-  import { toReadableTime } from '../../../services/dayjs'
+  import { toReadableTime } from '@/services/dayjs'
 
   interface SettingsMapState {
     userID: string
@@ -56,7 +55,7 @@
     },
     computed: {
       ...mapState<RootState>({
-        userID: (state: RootState) => state.user.uid,
+        userID: (state: RootState) => state.account.uid,
       }),
       modifiedTime(): string {
         return toReadableTime(this.plant.modified)

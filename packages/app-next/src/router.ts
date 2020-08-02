@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { Route } from 'vue-router'
+import { routes as account } from './modules/account'
 import { routes as welcome } from './modules/welcome'
 import { routes as login } from './modules/login'
 import { routes as onboarding } from './modules/onboarding'
@@ -20,6 +21,7 @@ export function createRouter(): VueRouter {
     base: process.env.BASE_URL,
     routes: [
       { path: '/', redirect: '/home' },
+      ...account,
       ...welcome,
       ...login,
       ...onboarding,
@@ -42,7 +44,7 @@ export function createRouter(): VueRouter {
 
   router.beforeEach((to: Route, from: Route, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-    if (requiresAuth && store.state.user.authenticated === false) {
+    if (requiresAuth && store.state.account.authenticated === false) {
       store.dispatch('notifications/show', {
         type: 'info',
         message: 'You got redirected. Please login in again.',

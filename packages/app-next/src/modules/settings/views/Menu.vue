@@ -150,9 +150,9 @@
 
     computed: {
       ...mapState<RootState>({
-        userName: (state: RootState) => state.user.displayName,
-        email: (state: RootState) => state.user.email,
-        userPhotoURL: (state: RootState) => state.user.photoURL,
+        userName: (state: RootState) => state.account.displayName,
+        email: (state: RootState) => state.account.email,
+        userPhotoURL: (state: RootState) => state.account.photoURL,
         plants: (state: RootState) => state.home.plants.data.length,
       }),
       plantCount(): string {
@@ -165,7 +165,7 @@
 
     methods: {
       ...mapActions({
-        logout: 'user/signOutUser',
+        logout: 'account/signOutUser',
         showNotification: 'notifications/show',
       }),
       async logoutUser() {

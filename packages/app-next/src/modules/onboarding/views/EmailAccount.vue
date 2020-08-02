@@ -86,8 +86,10 @@
             type="submit"
             :disabled="!canProceed"
             :aria-disabled="!canProceed"
-            :color="canProceed ? 'green':'grey'"
-          >Create account</v-button>
+            :color="canProceed ? 'green' : 'grey'"
+          >
+            Create account
+          </v-button>
         </div>
       </form>
     </main>
@@ -97,7 +99,9 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions } from 'vuex'
+  import { setLocalEntry } from '@/services/localStorage'
   import setErrorMessage, { FormErrorObject } from '@/utils/setErrorMessage'
+  import config from '@/config'
 
   interface OnboardingAccountData {
     email: string
@@ -131,7 +135,7 @@
     },
     methods: {
       ...mapActions({
-        create: 'user/createAccount',
+        create: 'account/createAccount',
       }),
       comparePasswords(): void {
         if (this.passwordConfirmed !== this.password) {

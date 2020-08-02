@@ -20,32 +20,7 @@
       </div>
     </main>
 
-    <footer>
-      <a
-        href="https://happyplants.app/#about"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-about"
-      >
-        <v-text small color="special">About</v-text>
-      </a>
-      <a
-        href="https://happyplants.app/#contact"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-contact"
-      >
-        <v-text small color="special">Contact</v-text>
-      </a>
-      <a
-        href="https://github.com/morkro/happy-plants"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-os"
-      >
-        <v-text small color="special">Open Source</v-text>
-      </a>
-    </footer>
+    <footer-no-auth />
   </div>
 </template>
 
@@ -105,23 +80,6 @@
       & .btn.yellow {
         box-shadow: 0 1px 2px var(--brand-green-dark);
       }
-    }
-  }
-
-  .screen-welcome footer {
-    height: 70px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--brand-white);
-
-    & a {
-      text-decoration: none;
-    }
-
-    & a:not(:last-of-type) {
-      margin-right: calc(var(--base-gap) * 2);
     }
   }
 </style>

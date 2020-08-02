@@ -35,8 +35,8 @@
 <script lang="ts">
   import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import { UserState } from '@/modules/user/store/state'
-  import setErrorMessage from '../../../utils/setErrorMessage'
+  import { AccountState } from '@/modules/account/store/state'
+  import setErrorMessage from '@/utils/setErrorMessage'
 
   interface ProfileMapState {
     _displayName: string
@@ -58,13 +58,13 @@
       }
     },
     computed: {
-      ...mapState<UserState>({
-        _displayName: (state: UserState) => state.displayName,
-        _photoURL: (state: UserState) => state.photoURL,
+      ...mapState<AccountState>({
+        _displayName: (state: AccountState) => state.displayName,
+        _photoURL: (state: AccountState) => state.photoURL,
       }),
     },
     methods: {
-      ...mapActions({ update: 'user/updateProfile' }),
+      ...mapActions({ update: 'account/updateProfile' }),
       updateProfile() {
         if (!this.name) return
         this.updateProgress = true

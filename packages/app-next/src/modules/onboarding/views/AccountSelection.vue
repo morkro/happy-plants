@@ -92,17 +92,23 @@
               small
               :color="socialBtnSelected('twitter')"
               @click.native.prevent="selectSocial('twitter')"
-            >Twitter</v-button>
+            >
+              Twitter
+            </v-button>
             <v-button
               small
               :color="socialBtnSelected('github')"
               @click.native.prevent="selectSocial('github')"
-            >GitHub</v-button>
+            >
+              GitHub
+            </v-button>
             <v-button
               small
               :color="socialBtnSelected('google')"
               @click.native.prevent="selectSocial('google')"
-            >Google</v-button>
+            >
+              Google
+            </v-button>
           </div>
         </label-group>
       </form>
@@ -114,7 +120,9 @@
           :disabled="!canProceed"
           :aria-disabled="!canProceed"
           :color="canProceed ? 'green' : 'grey'"
-        >Next</v-button>
+        >
+          Next
+        </v-button>
       </div>
     </main>
   </v-layout>
@@ -148,8 +156,8 @@
     },
     methods: {
       ...mapActions({
-        createAccount: 'user/signInUser',
-        authRedirectResults: 'user/authRedirectResults',
+        createAccount: 'account/signInUser',
+        authRedirectResults: 'account/authRedirectResults',
         showNotification: 'notifications/show',
       }),
       selectSocial(provider: string): void {

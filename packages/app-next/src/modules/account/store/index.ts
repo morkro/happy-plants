@@ -1,10 +1,10 @@
 import { Module } from 'vuex'
 import { RootState } from '@/store'
-import state, { UserState } from './state'
+import state, { AccountState } from './state'
 import mutations from './mutations'
 import * as actions from './actions'
 
-const store: Module<UserState, RootState> = {
+const store: Module<AccountState, RootState> = {
   namespaced: true,
   state,
   mutations,

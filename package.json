@@ -12,6 +12,7 @@
     "packages/*"
   ],
   "scripts": {
+    "outdated": "npx lerna exec --no-bail -- npm outdated",
     "clean": "lerna clean --yes",
     "bootstrap:app": "lerna bootstrap --include-dependencies --scope @happy-plants/app",
     "bootstrap:app-next": "lerna bootstrap --include-dependencies --scope @happy-plants/app-next",
@@ -27,8 +28,8 @@
     "init:server": "npm run bootstrap:server && npm run build:server"
   },
   "devDependencies": {
-    "husky": "^4.2.3",
-    "lerna": "^3.20.2"
+    "husky": "^4.2.5",
+    "lerna": "^3.22.1"
   },
   "husky": {
     "hooks": {

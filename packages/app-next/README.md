@@ -6,7 +6,6 @@
   Current version: <code>2.0.0</code>
 </p>
 
-
 ## ⌨️ Development
 
 This is a Vue.js progressive web application, developed with [`@vue/cli`](https://github.com/vuejs/vue-cli).

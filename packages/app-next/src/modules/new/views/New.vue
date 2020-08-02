@@ -76,12 +76,13 @@
                 <span class="visuallyhidden">Open dialog</span>
               </v-button>
 
-              <v-text
-                v-if="!selectedTags.length"
-                color="special"
-              >Add tags for more granular organisation</v-text>
+              <v-text v-if="!selectedTags.length" color="special">
+                Add tags for more granular organisation
+              </v-text>
               <div v-else>
-                <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{ tag.label }}</v-tag>
+                <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{
+                  tag.label
+                }}</v-tag>
               </div>
             </div>
           </label-group>
@@ -106,11 +107,10 @@
   import { RootState } from '@/store'
   import { Plant, PlantType, PlantTag } from '@/types/plant'
   import logger from '@/utils/vueLogger'
-  import hasProperty from '@/utils/hasProperty'
   import setErrorMessage from '@/utils/setErrorMessage'
   import { isBlobbable } from '@/utils/blob'
+  import TypeDialog from '@/components/TypeDialog.vue'
   import Illustration from '../components/Illustration.vue'
-  import TypeDialog from '../components/TypeDialog.vue'
 
   interface NewMapState {
     userID: string
@@ -140,12 +140,12 @@
         progress: false,
         error: { el: null, message: null },
         selectedTags: [] as PlantTag[],
-        showTypesDialog: hasProperty(this.$route.query, 'type'),
-        showTagsDialog: hasProperty(this.$route.query, 'tags'),
+        showTypesDialog: this.$hasQuery('type'),
+        showTagsDialog: this.$hasQuery('tags'),
       }
     },
     computed: mapState<RootState>({
-      userID: (state: RootState) => state.user.uid,
+      userID: (state: RootState) => state.account.uid,
       existingTags: (state: RootState) => state.home.tags,
     }),
     methods: {

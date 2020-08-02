@@ -63,7 +63,6 @@
   import { getDate, getDay, CalendarDay } from '@/services/dayjs'
   import WateringCalendar from '../components/Calendar.vue'
   import WateringCalendarDay from '../components/CalendarDay.vue'
-  import hasProperty from '@/utils/hasProperty'
 
   interface WateringData {
     currentWeek: CalendarDay[]
@@ -82,7 +81,7 @@
     data(): WateringData {
       return {
         currentWeek: [],
-        calendarVisible: hasProperty(this.$route.query, 'showCalendar'),
+        calendarVisible: this.$hasQuery('showCalendar'),
       }
     },
     methods: {

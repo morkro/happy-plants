@@ -43,7 +43,7 @@ if (!getSessionEntry('USER_SIGNIN_PROGRESS')) {
         idToken,
       }
 
-      store.commit('user/assignDetails', details, { root: true })
+      store.commit('account/assignDetails', details, { root: true })
     }
 
     if (!app) {

@@ -3,7 +3,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
 import config from '@/config'
-import { AssignDetailsPayload } from '@/modules/user/store/mutations'
+import { AssignDetailsPayload } from '@/modules/account/store/mutations'
 import { setSessionEntry } from './sessionStorage'
 import { Plant, PlantTag } from '@/types/plant'
 
@@ -36,12 +36,6 @@ const createAccount = async (
     await user.updateProfile({ displayName })
   }
 
-  if (!user.emailVerified) {
-    await user.sendEmailVerification({
-      url: `https://happyplants.garden/onboarding/success?email=${user.email}`,
-    })
-  }
-
   return {
     displayName: results.user.displayName,
     photoURL: results.user.photoURL,
@@ -51,6 +45,11 @@ const createAccount = async (
 }
 
 const forgotPassword = (email: string) => firebase.auth().sendPasswordResetEmail(email)
+
+const verifyPasswordResetCode = (code: string) => firebase.auth().verifyPasswordResetCode(code)
+
+const confirmNewPassword = (code: string, password: string) =>
+  firebase.auth().confirmPasswordReset(code, password)
 
 const getRedirectResults = async (): Promise<AssignDetailsPayload> => {
   const results = await firebase.auth().getRedirectResult()
@@ -79,14 +78,22 @@ const addPlant = async (userID: string, data: Plant): Promise<void> =>
     .doc(data.guid)
     .set(data)
 
-const setTags = async (userID: string, data: PlantTag[]): Promise<void> =>
-  getUserDoc(userID).set({ tags: data })
+const updatePlant = async (userID: string, data: Plant): Promise<void> => {
+  const ref = getCollection(userID, FirestoreCollections.Plants).doc(data.guid)
+  const snapshot = await ref.get()
+  if (snapshot.exists) {
+    ref.update(data)
+  }
+}
 
 const deletePlant = async (userID: string, data: Plant): Promise<void> =>
   getUserDoc(userID)
     .collection(FirestoreCollections.Plants)
     .doc(data.guid)
     .delete()
+
+const setTags = async (userID: string, data: PlantTag[]): Promise<void> =>
+  getUserDoc(userID).set({ tags: data })
 
 const signInWithEmail = async (email: string, password: string) =>
   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -124,7 +131,7 @@ const uploadFile = (path: string, file: File) =>
     .child(path)
     .put(file)
 
-const deleteFile = async (path: string): Promise<any> =>
+const deleteFile = async (path: string): Promise<void> =>
   storage
     .ref()
     .child(path)
@@ -137,7 +144,7 @@ const updateProfile = async (payload: { displayName?: string; photoURL?: string 
 
 export {
   addPlant,
-  setTags,
+  confirmNewPassword,
   createAccount,
   deleteFile,
   deletePlant,
@@ -147,9 +154,12 @@ export {
   getRedirectResults,
   getStoragePath,
   getUserDoc,
+  setTags,
   signInWithEmail,
   signInWithProvider,
   signOutUser,
+  updatePlant,
   updateProfile,
   uploadFile,
+  verifyPasswordResetCode,
 }

@@ -87,7 +87,6 @@
   import { mapActions, mapState } from 'vuex'
   import { Plant, PlantTag } from '@/types/plant'
   import fuzzySearch from '@/utils/fuzzySearch'
-  import hasProperty from '@/utils/hasProperty'
   import { sortByAlphabet, sortByDate } from '@/utils/sort'
   import { getLocalEntry, setLocalEntry } from '@/services/localStorage'
   import config from '@/config'
@@ -119,7 +118,8 @@
       'view-options': ViewOptions,
       'feather-search': () =>
         import('vue-feather-icons/icons/SearchIcon' /* webpackChunkName: "icons" */),
-      'feather-cross': () => import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
+      'feather-cross': () =>
+        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
       'feather-sliders': () =>
         import('vue-feather-icons/icons/SlidersIcon' /* webpackChunkName: "icons" */),
     },
@@ -129,8 +129,8 @@
       return {
         loading: true,
         loadingPlantData: new Array(5).fill({}),
-        searchVisible: hasProperty(query, 'search'),
-        viewOptionsVisible: hasProperty(query, 'options'),
+        searchVisible: this.$hasQuery('search'),
+        viewOptionsVisible: this.$hasQuery('options'),
         searchQuery: query.search ? String(query.search).toLowerCase() : '',
         viewmode: getLocalEntry(config.localStorage.homeViewmode) ?? 'grid',
         types: getLocalEntry(config.localStorage.homeShowPlantTypes) === 'true',
@@ -193,7 +193,6 @@
       ...mapActions({
         loadPlants: 'home/loadPlants',
         loadTags: 'home/loadTags',
-        showNotification: 'notifications/show',
       }),
       showSearch(): void {
         this.searchVisible = true
@@ -207,8 +206,7 @@
         this.searchVisible = false
         this.viewOptionsVisible = false
 
-        const query = this.$route.query
-        if (hasProperty(query, 'search') || hasProperty(query, 'options')) {
+        if (this.$hasQuery('search') || this.$hasQuery('options')) {
           this.$router.push({ path: '/home' })
         }
       },

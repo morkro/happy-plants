@@ -1,6 +1,6 @@
 <template>
   <v-layout :class="layoutClass">
-    <app-header return-to="/home">
+    <app-header :class="{ 'hide-logo': headerInView }">
       {{ headerInView ? ' ' : plant && plant.name }}
       <template #actions>
         <div class="plant-header-actions">
@@ -27,6 +27,13 @@
       @close-dialog="toggleDialog('tags', false)"
     />
 
+    <type-dialog
+      :show="showTypeDialog"
+      :selected="plant.type"
+      @type-selected="setSelectedType"
+      @close-dialog="toggleDialog('type', false)"
+    />
+
     <main>
       <plant-header
         :loading="loading"
@@ -35,12 +42,11 @@
         v-observe-visibility.60="observeVisibility"
       />
 
+      <module-type :type="plant.type" @open-dialog="toggleDialog('type', true)" />
+
       <module-tags :tags="plantTags.data" @open-dialog="toggleDialog('tags', true)" />
 
-      <div style="height: 110vh;background:var(--brand-white);">
-        really long content
-        <router-link :to="`${$route.path}/gallery`">Gallery</router-link>
-      </div>
+      <modules-container />
     </main>
   </v-layout>
 </template>
@@ -49,12 +55,13 @@
   import Vue, { PropType, VueConstructor } from 'vue'
   import { mapState, mapActions } from 'vuex'
   import { RootState } from '@/store'
-  import { Plant, PlantTag } from '@/types/plant'
-  import hasProperty from '@/utils/hasProperty'
+  import { Plant, PlantTag, PlantType } from '@/types/plant'
+  import { HomeState } from '@/modules/home/store/state'
   import SettingsDialog from '../components/SettingsDialog.vue'
   import PlantHeader from '../components/PlantHeader.vue'
   import ModuleTags from '../components/ModuleTags.vue'
-  import { HomeState } from '@/modules/home/store/state'
+  import ModuleType from '../components/ModuleType.vue'
+  import ModulesContainer from '../components/ModulesContainer.vue'
 
   interface PlantMapState {
     allTags: {
@@ -76,14 +83,17 @@
     components: {
       'settings-dialog': SettingsDialog,
       'plant-header': PlantHeader,
+      'module-type': ModuleType,
       'module-tags': ModuleTags,
+      'modules-container': ModulesContainer,
       'feather-more': () =>
         import('vue-feather-icons/icons/MoreVerticalIcon' /* webpackChunkName: "icons" */),
     },
     data() {
       return {
-        showSettingsDialog: hasProperty(this.$route.query, 'settings'),
-        showTagsDialog: hasProperty(this.$route.query, 'tags'),
+        showSettingsDialog: this.$hasQuery('settings'),
+        showTagsDialog: this.$hasQuery('tags'),
+        showTypeDialog: this.$hasQuery('type'),
         headerInView: true,
         selectedTags: [] as PlantTag[],
       }
@@ -111,12 +121,15 @@
         createTag: 'home/createTag',
         updateTags: 'home/updateTags',
       }),
-      toggleDialog(type: 'tags' | 'settings', show: boolean) {
+      toggleDialog(type: 'tags' | 'settings' | 'type', show: boolean) {
         let query
 
         if (type === 'tags') {
           this.showTagsDialog = show
           query = { tags: null }
+        } else if (type === 'type') {
+          this.showTypeDialog = show
+          query = { type: null }
         } else {
           this.showSettingsDialog = show
           query = { settings: null }
@@ -132,12 +145,20 @@
         this.headerInView = visible
       },
       async setSelectedTags(tags: PlantTag[]) {
+        const removed = this.allTags.data.filter(tag => !tags.find(t => t.guid === tag.guid))
         await this.updateTags(
-          tags.map(tag => {
-            tag.plants.push(this.plant.guid)
+          this.plantTags.data.map((tag: PlantTag) => {
+            if (!tag.plants.includes(this.plant.guid)) {
+              tag.plants.push(this.plant.guid)
+            } else if (removed.find(r => r.guid === tag.guid)) {
+              tag.plants = tag.plants.filter(p => p !== this.plant.guid)
+            }
             return tag
           })
         )
+      },
+      async setSelectedType(type: PlantType) {
+        console.log(type)
       },
       async createNewTag(label: string) {
         await this.createTag({ label })
@@ -188,7 +209,12 @@
     }
   }
 
+  .app-screen.screen-plant #app-header.hide-logo .app-header-icon {
+    opacity: 0;
+  }
+
   .app-screen.screen-plant main {
     padding: 0;
+    justify-content: flex-start;
   }
 </style>

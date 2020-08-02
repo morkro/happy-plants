@@ -97,45 +97,19 @@
       </div>
     </main>
 
-    <footer>
-      <a
-        href="https://happyplants.app/#about"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-about"
-      >
-        <v-text small color="special">About</v-text>
-      </a>
-      <a
-        href="https://happyplants.app/#contact"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-contact"
-      >
-        <v-text small color="special">Contact</v-text>
-      </a>
-      <a
-        href="https://github.com/morkro/happy-plants"
-        target="_blank"
-        rel="noopener"
-        data-cy="footer-os"
-      >
-        <v-text small color="special">Open Source</v-text>
-      </a>
-    </footer>
+    <footer-no-auth />
   </v-layout>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions } from 'vuex'
-  import { LoginType } from '@/modules/user/store/actions'
+  import { LoginType } from '@/modules/account/store/actions'
   import { getSessionEntry, deleteSessionEntry } from '@/services/sessionStorage'
   import { forgotPassword } from '@/services/firebase'
   import setErrorMessage from '@/utils/setErrorMessage'
   import logger from '@/utils/vueLogger'
   import delay from '@/utils/promiseDelay'
-  import hasProperty from '@/utils/hasProperty'
 
   export default Vue.extend({
     name: 'Login',
@@ -156,7 +130,7 @@
         password: null,
         error: { el: null, message: null },
         loading: false,
-        showForgotPassword: hasProperty(this.$route.query, 'forgotPassword'),
+        showForgotPassword: this.$hasQuery('forgotPassword'),
         sendForgotPassword: false,
       }
     },
@@ -170,8 +144,8 @@
     },
     methods: {
       ...mapActions({
-        signInUser: 'user/signInUser',
-        authRedirectResults: 'user/authRedirectResults',
+        signInUser: 'account/signInUser',
+        authRedirectResults: 'account/authRedirectResults',
         showNotification: 'notifications/show',
       }),
       async login(type: LoginType): Promise<void> {
@@ -241,7 +215,7 @@
 <style lang="postcss">
   .screen-login {
     background-color: var(--brand-green);
-    background-image: url(../assets/login-illustration.svg);
+    background-image: url(../../../assets/green-illustrated-bg.svg);
     background-repeat: no-repeat;
     background-position: top left;
     background-size: calc(100% - var(--base-gap) * 4) auto;
@@ -316,23 +290,6 @@
 
     & button {
       width: 100%;
-    }
-  }
-
-  .screen-login footer {
-    height: 70px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--brand-white);
-
-    & a {
-      text-decoration: none;
-    }
-
-    & a:not(:last-of-type) {
-      margin-right: calc(var(--base-gap) * 2);
     }
   }
 </style>

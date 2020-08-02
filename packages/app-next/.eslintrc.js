@@ -19,7 +19,7 @@ module.exports = {
   ],
   ignorePatterns: ['vue.config.js'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/script-indent': 'off',
     'vue/html-indent': [
@@ -32,9 +32,9 @@ module.exports = {
       },
     ],
     'vue/max-attributes-per-line': [
-      error,
+      warn,
       {
-        singleline: 5,
+        singleline: 10,
         multiline: {
           max: 1,
           allowFirstLine: false,

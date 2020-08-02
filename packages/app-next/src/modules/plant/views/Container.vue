@@ -26,7 +26,7 @@
     },
     computed: {
       ...mapState<RootState>({
-        userID: (state: RootState) => state.user.uid,
+        userID: (state: RootState) => state.account.uid,
         plants: (state: RootState) => state.home.plants,
       }),
       plant(): Plant {

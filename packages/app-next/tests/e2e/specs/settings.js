@@ -7,7 +7,7 @@ describe('Settings', () => {
 
   context('required elements', () => {
     beforeEach(() => {
-      cy.login('foo@foo.foo', 'foo')
+      cy.login(Cypress.env('TESTUSER_EMAIL'), Cypress.env('TESTUSER_PASSWORD'))
     })
 
     it('has all required elements', () => {

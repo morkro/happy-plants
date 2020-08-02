@@ -148,6 +148,12 @@
       --shadow: var(--brand-red);
     }
 
+    &.white {
+      --background: var(--brand-white);
+      --shadow: none;
+      color: var(--brand-green-dark);
+    }
+
     &.grey,
     &[disabled],
     &[aria-disabled] {

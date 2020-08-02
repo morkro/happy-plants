@@ -27,7 +27,7 @@ export const loadPlants = async (
   payload: { orderBy: string } = { orderBy: 'latest' }
 ): Promise<void> => {
   try {
-    const userID = context.rootState.user.uid
+    const userID = context.rootState.account.uid
     const [_orderBy, sortBy] = orderMap.get(payload.orderBy)
     const snapshot = await getCollection(userID, FirestoreCollections.Plants)
       .orderBy(_orderBy, sortBy)
@@ -68,7 +68,7 @@ export const loadTags = async (context: {
   rootState: RootState
 }) => {
   try {
-    const userID = context.rootState.user.uid
+    const userID = context.rootState.account.uid
     const snapshot = await getUserDoc(userID).get()
     if (snapshot.exists) {
       context.commit('assignTags', snapshot.data().tags)
@@ -95,7 +95,7 @@ export const createTag = async (
   if (!payload.label) return
 
   try {
-    const userID = context.rootState.user.uid
+    const userID = context.rootState.account.uid
     const tags = context.rootState.home.tags.data
     const guid = uuid()
     const tag: PlantTag = {
@@ -127,17 +127,40 @@ export const updateTags = async (
   tags: PlantTag[]
 ) => {
   try {
-    const userID = context.rootState.user.uid
+    const userID = context.rootState.account.uid
+    const stateTags = context.rootState.home.tags.data
+    const updated = stateTags.map(tag =>
+      Object.assign(
+        {},
+        tag,
+        tags.find(t => t.guid === tag.guid)
+      )
+    )
+    context.commit('assignTags', updated)
+    await setTags(userID, updated)
+  } catch (error) {
+    logger(`createTag() => ${error.message}`, true)
+    context.dispatch(
+      'notifications/show',
+      {
+        type: 'alert',
+        message: 'Unable to create tags.',
+      },
+      { root: true }
+    )
+  }
+}
+
+export const deleteTags = async (
+  context: { commit: Commit; dispatch: Dispatch; rootState: RootState },
+  tags: PlantTag[]
+) => {
+  try {
+    const userID = context.rootState.account.uid
     const stateTags = context.rootState.home.tags.data
     await setTags(
       userID,
-      stateTags.map(tag =>
-        Object.assign(
-          {},
-          tag,
-          tags.find(t => t.guid === tag.guid)
-        )
-      )
+      stateTags.filter(tag => tags.find(t => t.guid !== tag.guid))
     )
   } catch (error) {
     logger(`createTag() => ${error.message}`, true)

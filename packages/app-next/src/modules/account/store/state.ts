@@ -1,11 +1,11 @@
 import { UserInfo } from 'firebase'
 
-export interface UserState extends Partial<UserInfo> {
+export interface AccountState extends Partial<UserInfo> {
   authenticated: boolean
   idToken: string
 }
 
-const state: UserState = {
+const state: AccountState = {
   authenticated: false,
   displayName: null,
   email: null,

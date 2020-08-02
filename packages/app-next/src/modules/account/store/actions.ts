@@ -38,7 +38,7 @@ const authRedirectResults = async (context: {
   dispatch: Dispatch
   rootState: RootState
 }): Promise<void> => {
-  if (context.rootState.user.authenticated) return
+  if (context.rootState.account.authenticated) return
   try {
     const results = await getRedirectResults()
     context.commit('assignDetails', results)

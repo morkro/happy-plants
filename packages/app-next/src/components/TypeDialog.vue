@@ -23,7 +23,7 @@
             :id="`type-${type.value}`"
             name="type"
             :value="type.value"
-            :checked="type.guid === selected && selected.guid"
+            :checked="selected ? type.guid === selected.guid : false"
             @click.native="updatetype(type)"
           ></v-input>
           <v-text>{{ type.label }}</v-text>

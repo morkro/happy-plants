@@ -3,7 +3,7 @@
     "packages/app-next/src/**/*"
   ],
   "compilerOptions": {
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "target": "es5",
     "sourceMap": true,

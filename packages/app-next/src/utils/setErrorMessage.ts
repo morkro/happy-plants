@@ -1,6 +1,5 @@
 import { FirebaseError } from 'firebase'
 import store from '@/store'
-import logger from './vueLogger'
 
 export interface FormErrorObject {
   el: string | null

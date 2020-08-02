@@ -50,6 +50,8 @@
     align-items: flex-end;
     justify-content: flex-start;
     position: relative;
+    mask: url(../assets/header-mask.svg);
+    mask-size: cover;
 
     &.loading {
       justify-content: center;
