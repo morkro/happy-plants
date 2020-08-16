@@ -50,6 +50,17 @@ HappyPlants is currently being rewritten for a new major release with more featu
 
 This repository is organised with [Lerna](https://lerna.js.org). Detailed development documentation can be found in each packages README.
 
+### Packages
+
+| Name | Description |
+| ---- | ----------- |
+| [`packages/app`](packages/app) | [Archived] First version of HappyPlants. No further development. |
+| [`packages/app-next`](packages/app-next) | Second release (`v2`) of HappyPlants and current focus of development. |
+| [`packages/firebase`](packages/firebase) | Serverless functions for Firebase, used for various automated tasks. |
+| [`packages/landing`](packages/landing) | Landing page for HappyPlants, written with Nuxt.js. |
+| [`packages/server`](packages/server) | _Currently unused._ |
+| [`packages/styles`](packages/styles) | Global, shared styles across all projects. |
+
 ## License
 
 [BSD 3-Clause](https:/github.com/morkro/happy-plants/LICENSE)
