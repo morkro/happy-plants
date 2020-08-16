@@ -6,6 +6,7 @@ import config from '@/config'
 import { AssignDetailsPayload } from '@/modules/account/store/mutations'
 import { setSessionEntry } from './sessionStorage'
 import { Plant, PlantTag } from '@/types/plant'
+import { BugReport } from '@/types/meta'
 
 export const app = firebase.initializeApp(config.firebase)
 export const firestore = app.firestore()
@@ -20,7 +21,7 @@ export enum FirestoreCollections {
   Users = 'users',
   Plants = 'plants',
   Tags = 'tags',
-  BugReports = 'bug-reports',
+  BugReports = 'bugReports',
 }
 
 const createAccount = async (
@@ -69,15 +70,11 @@ const getUserDoc = (userID: string): FirestoreDocument =>
 const getCollection = (userID: string, collection: string): FirestoreCollection =>
   getUserDoc(userID).collection(collection)
 
-const getBugReports = (): Promise<firebase.firestore.QuerySnapshot<
-  firebase.firestore.DocumentData
->> => {
-  const user = firebase.auth().currentUser
-  return firestore
+const addBugReport = async (guid: string, report: BugReport): Promise<void> =>
+  firestore
     .collection(FirestoreCollections.BugReports)
-    .where('reportedBy.userId', '==', user.uid)
-    .get()
-}
+    .doc(guid)
+    .set(report)
 
 const getStoragePath = (userID: string, guid: string): string =>
   `${FirestoreCollections.Users}/${userID}/${FirestoreCollections.Plants}/${guid}/cover.png`
@@ -153,6 +150,7 @@ const updateProfile = async (payload: { displayName?: string; photoURL?: string 
 }
 
 export {
+  addBugReport,
   addPlant,
   confirmNewPassword,
   createAccount,
@@ -163,7 +161,6 @@ export {
   getCollection,
   getRedirectResults,
   getStoragePath,
-  getBugReports,
   getUserDoc,
   setTags,
   signInWithEmail,

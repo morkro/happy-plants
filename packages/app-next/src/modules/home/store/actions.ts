@@ -14,6 +14,15 @@ const orderMap = new Map<string, [string, firebase.firestore.OrderByDirection]>(
 ])
 const downloadURLWorker = new DownloadURLWorker()
 
+interface DownloadWorkerEvent {
+  data: {
+    error: boolean
+    guid: string
+    message: string
+    imageURL?: string
+  }
+}
+
 export const loadPlants = async (
   context: {
     commit: Commit
@@ -31,7 +40,7 @@ export const loadPlants = async (
 
     setLocalEntry(config.localStorage.plantCount, String(snapshot.docs.length))
 
-    downloadURLWorker.onmessage = event => {
+    downloadURLWorker.onmessage = (event: DownloadWorkerEvent) => {
       if (event.data.error) {
         logger(
           `[Worker] Failed to load plant (${event.data.guid}) photo ${event.data.message}`,

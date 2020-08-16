@@ -1,6 +1,6 @@
 // Code taken from https://jsfiddle.net/kmturley/Gd6c8/
 
-interface DeviceInfo {
+export interface DeviceInfo {
   os: {
     name: string
     version: number
@@ -41,7 +41,6 @@ const browserMap = [
 ]
 
 function match(agents: string, map: Record<string, string>[]) {
-  const html = ''
   let regex, regexv, match, matches, version
 
   for (let i = 0; i < map.length; i += 1) {

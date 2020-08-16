@@ -111,7 +111,6 @@
   import { isBlobbable } from '@/utils/blob'
   import TypeDialog from '@/components/TypeDialog.vue'
   import Illustration from '../components/Illustration.vue'
-  import { downloadFile } from '../../../services/firebase'
 
   interface NewMapState {
     userID: string

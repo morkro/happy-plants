@@ -64,7 +64,7 @@
       acceptedFilePattern(): string {
         return Array.isArray(this.accepts) ? this.accepts.join(', ') : this.accepts
       },
-      image() {
+      image(): string {
         return this.preview && !this.imageBlob ? this.preview : this.imageURL
       },
     },

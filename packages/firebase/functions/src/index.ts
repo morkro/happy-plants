@@ -1,6 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as nodemailer from 'nodemailer'
 
+const config = {
+  region: 'europe-west1',
+}
 const { email, password, recipient } = functions.config().gmail
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -17,8 +20,8 @@ const format = (date: string) =>
   })
 
 export const onNewBugReport = functions
-  .region('europe-west1')
-  .firestore.document('bug-reports/{uid}')
+  .region(config.region)
+  .firestore.document('bugReports/{uid}')
   .onCreate(async (snapshot) => {
     const data = snapshot.data()
 
@@ -27,11 +30,13 @@ export const onNewBugReport = functions
         from: `HappyPlants 🌵 <${email}>`,
         to: recipient,
         subject: `🐛 A new bug report has been created`,
-        html: `<p>Hey!<br>Someone just opened a new bug report.</p>
-          <p><strong>Report ID:</strong> ${snapshot.id}</p>
-          <p><strong>Created:</strong> ${format(data.createdAt)}</p>
-          <p><strong>Title:</strong> ${data.title}</p>
-          <p><strong>Description:</strong> <br>${data.description}</p>`,
+        html: `<p>Hey! Someone just opened a new bug report:</p>
+          <p><strong>ID:</strong> ${snapshot.id}</p>
+          <p><strong>Created:</strong> ${format(data.created)}</p>
+          <p><strong>Reporter:</strong> ${data.reportedBy.email} (${data.reportedBy.userId})</p>
+          <p><strong>App Version:</strong> ${data.appVersion}</p>
+          <p><strong>Description:</strong> <br>${data.description}</p>
+          <p><strong>Device:</strong> ${JSON.stringify(data.deviceInfo, null, 2)}</p>`,
         attachments:
           data.screenshot === null
             ? []

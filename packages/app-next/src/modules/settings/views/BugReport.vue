@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <v-layout class="screen-settings-bugreport">
     <app-header return-to="/settings">Bug report</app-header>
 
     <main>
@@ -14,8 +14,8 @@
               :aria-invalid="error.el === 'description'"
               :error="error.el === 'description'"
             >
-Please describe the bug you're facing.</textarea
-            >
+              Please describe the bug you're facing.
+            </textarea>
           </template>
         </label-group>
 
@@ -33,46 +33,90 @@ Please describe the bug you're facing.</textarea
           </template>
         </label-group>
 
-        <v-button>Submit bug report</v-button>
+        <v-button :disabled="!this.description" :aria-disabled="!this.description">
+          <feather-loader v-if="progress" />
+          {{ ' ' }}Submit bug report
+        </v-button>
       </form>
     </main>
   </v-layout>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue, { VueConstructor } from 'vue'
+  import { mapState, mapActions } from 'vuex'
+  import { v4 as uuid } from 'uuid'
+  import { RootState } from '@/store'
+  import { addBugReport } from '@/services/firebase'
   import { getDeviceInfo } from '@/utils/getDeviceInfo'
-  import { getBugReports } from '@/services/firebase'
+  import setErrorMessage from '@/utils/setErrorMessage'
+  import logger from '@/utils/vueLogger'
 
-  export default Vue.extend({
+  interface BugReportState {
+    userID: string
+  }
+
+  export default (Vue as VueConstructor<Vue & BugReportState>).extend({
     name: 'BugReport',
+    components: {
+      'feather-loader': () =>
+        import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
+    },
     data() {
       return {
         description: null,
         file: null,
         error: { el: null, message: null },
+        progress: false,
       }
     },
+    computed: {
+      ...mapState<RootState>({
+        userID: (state: RootState) => state.account.uid,
+        userEmail: (state: RootState) => state.account.email,
+      }),
+    },
     methods: {
-      submitBugReport(): void {
-        const deviceInfo = getDeviceInfo()
-        const appVersion = ''
-        console.log('submit', {
-          deviceInfo,
-          appVersion,
-          description: this.description,
-          file: this.file,
-        })
+      ...mapActions({
+        showNotification: 'notifications/show',
+      }),
+      async submitBugReport(): Promise<void> {
+        this.progress = true
+        try {
+          await addBugReport(uuid(), {
+            deviceInfo: getDeviceInfo(),
+            appVersion: '2.0.0',
+            description: this.description,
+            screenshot: this.file,
+            reportedBy: {
+              userId: this.userID,
+              email: this.userEmail,
+            },
+            created: Date.now(),
+            modified: Date.now(),
+          })
+          this.showNotification({
+            type: 'info',
+            message: 'Thank you for reporting this bug!',
+          })
+        } catch (error) {
+          logger(error.message, true)
+          this.error = setErrorMessage(error)
+        } finally {
+          this.progress = false
+        }
       },
       getFile(file: File): void {
         this.file = file
       },
     },
-    async mounted() {
-      const reports = await getBugReports()
-      for (const doc of reports.docs) {
-        console.log(doc.data())
-      }
-    },
   })
 </script>
+
+<style lang="postcss">
+  .screen-settings-bugreport form {
+    & button svg {
+      animation: spin 3s linear infinite;
+    }
+  }
+</style>

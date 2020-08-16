@@ -176,7 +176,7 @@
         this.error.el = 'photo'
         this.error.message = message
       },
-      toggleDialog(show) {
+      toggleDialog(show: boolean) {
         this.showDeleteAccount = show
 
         if (show) {

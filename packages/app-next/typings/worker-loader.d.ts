@@ -3,7 +3,5 @@ declare module 'worker-loader!*' {
     constructor()
   }
 
-  // Uncomment this if you set the `esModule` option to `false`
-  // export = WebpackWorker;
   export default WebpackWorker
 }

@@ -1,13 +1,9 @@
 import { downloadFile } from '@/services/firebase'
 import { Plant } from '@/types/plant'
 
-interface WorkerEvent extends MessageEvent {
-  data: Plant
-}
-
 const context: Worker = self as any // eslint-disable-line
 
-context.addEventListener('message', async (event: WorkerEvent) => {
+context.addEventListener('message', async (event: MessageEvent & { data: Plant }) => {
   try {
     const imageURL = await downloadFile(event.data.imageURL)
     context.postMessage({ imageURL, guid: event.data.guid })

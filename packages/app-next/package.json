@@ -36,8 +36,7 @@
     "vue-meta": "^2.4.0",
     "vue-router": "^3.3.4",
     "vuex": "^3.5.1",
-    "vuex-router-sync": "^5.0.0",
-    "vuexfire": "^3.2.4"
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "@ascendancyy/vue-cli-plugin-stylelint": "^1.1.2",
