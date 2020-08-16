@@ -12,8 +12,8 @@
     <div class="fileupload-container">
       <div :class="['loading-icon', loading && 'loading']">
         <feather-loader v-if="loading" />
-        <feather-image v-else-if="!loading && !imageBlob" />
-        <img v-else :src="imageURL" />
+        <feather-image v-else-if="!loading && !imageBlob && !preview" />
+        <img v-else :src="image" />
       </div>
       <div>
         <v-text color="inactive">{{ fileName }}</v-text>
@@ -33,6 +33,7 @@
       id: { type: String },
       accepts: { type: [Array, String], default: () => ['image/png', 'image/jpg', 'image/jpeg'] },
       error: { type: Boolean, default: false },
+      preview: { type: String },
     },
     components: {
       'feather-loader': () =>
@@ -62,6 +63,9 @@
       },
       acceptedFilePattern(): string {
         return Array.isArray(this.accepts) ? this.accepts.join(', ') : this.accepts
+      },
+      image() {
+        return this.preview && !this.imageBlob ? this.preview : this.imageURL
       },
     },
     methods: {

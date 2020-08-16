@@ -3,20 +3,16 @@ import { v4 as uuid } from 'uuid'
 import { RootState } from '@/store'
 import { setLocalEntry } from '@/services/localStorage'
 import logger from '@/utils/vueLogger'
-import {
-  setTags,
-  getCollection,
-  getUserDoc,
-  FirestoreCollections,
-  downloadFile,
-} from '@/services/firebase'
+import { setTags, getCollection, getUserDoc, FirestoreCollections } from '@/services/firebase'
 import config from '@/config'
 import { PlantTag } from '@/types/plant'
+import DownloadURLWorker from 'worker-loader!../../../workers/downloadURL.worker'
 
 const orderMap = new Map<string, [string, firebase.firestore.OrderByDirection]>([
   ['alphabetically', ['name', 'asc']],
   ['latest', ['created', 'desc']],
 ])
+const downloadURLWorker = new DownloadURLWorker()
 
 export const loadPlants = async (
   context: {
@@ -35,17 +31,25 @@ export const loadPlants = async (
 
     setLocalEntry(config.localStorage.plantCount, String(snapshot.docs.length))
 
+    downloadURLWorker.onmessage = event => {
+      if (event.data.error) {
+        logger(
+          `[Worker] Failed to load plant (${event.data.guid}) photo ${event.data.message}`,
+          true
+        )
+      } else {
+        context.commit('updatePlant', { guid: event.data.guid, imageURL: event.data.imageURL })
+      }
+    }
+
     for (const doc of snapshot.docs) {
-      const plant = await getCollection(userID, FirestoreCollections.Plants)
-        .doc(doc.id)
-        .get()
-      const plantData = plant.data()
+      const plantData = doc.data()
+      context.commit('assignPlant', plantData)
 
       if (plantData.imageURL) {
-        plantData.imageURL = await downloadFile(plantData.imageURL)
+        logger(`[Worker] Fetching plant image ${plantData.guid}`)
+        downloadURLWorker.postMessage(plantData)
       }
-
-      context.commit('assignPlant', plantData)
     }
 
     context.commit('finishLoadingPlants')

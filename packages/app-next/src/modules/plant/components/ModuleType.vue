@@ -40,6 +40,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: calc(0.5 * var(--base-gap)) var(--base-gap) 0;
 
     & .text {

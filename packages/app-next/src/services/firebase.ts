@@ -20,7 +20,7 @@ export enum FirestoreCollections {
   Users = 'users',
   Plants = 'plants',
   Tags = 'tags',
-  BugReports = 'bugreports',
+  BugReports = 'bug-reports',
 }
 
 const createAccount = async (
@@ -68,6 +68,16 @@ const getUserDoc = (userID: string): FirestoreDocument =>
 
 const getCollection = (userID: string, collection: string): FirestoreCollection =>
   getUserDoc(userID).collection(collection)
+
+const getBugReports = (): Promise<firebase.firestore.QuerySnapshot<
+  firebase.firestore.DocumentData
+>> => {
+  const user = firebase.auth().currentUser
+  return firestore
+    .collection(FirestoreCollections.BugReports)
+    .where('reportedBy.userId', '==', user.uid)
+    .get()
+}
 
 const getStoragePath = (userID: string, guid: string): string =>
   `${FirestoreCollections.Users}/${userID}/${FirestoreCollections.Plants}/${guid}/cover.png`
@@ -153,6 +163,7 @@ export {
   getCollection,
   getRedirectResults,
   getStoragePath,
+  getBugReports,
   getUserDoc,
   setTags,
   signInWithEmail,

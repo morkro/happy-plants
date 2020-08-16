@@ -17,9 +17,9 @@ const routes: RouteConfig[] = [
         meta,
       },
       {
-        path: 'credentials',
-        name: 'SettingsCredentials',
-        component: () => import('./views/Credentials.vue' /* webpackChunkName: "settings" */),
+        path: 'account',
+        name: 'SettingsAccount',
+        component: () => import('./views/Account.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {

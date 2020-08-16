@@ -9,8 +9,16 @@ export default {
     }
     state.plants.data.push(payload)
   },
-  assignPlants(state: HomeState, payload: Plant[]): void {
-    state.plants.data = payload
+  updatePlant(state: HomeState, payload: Plant): void {
+    const plant = state.plants.data.find(p => p.guid === payload.guid)
+    if (!plant) {
+      return
+    }
+    state.plants.data.splice(
+      state.plants.data.findIndex(p => p.guid === payload.guid),
+      1,
+      Object.assign({}, plant, payload)
+    )
   },
   removePlant(state: HomeState, payload: Plant): void {
     Vue.delete(

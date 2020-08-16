@@ -4,10 +4,12 @@
 
     <router-link v-else :to="link" class="plant-preview-wrapper">
       <div class="plant-preview-label">
-        <v-text v-if="!loading" :color="photo && !listview ? 'special' : 'normal'">{{ label }}</v-text>
+        <v-text v-if="!loading" :color="isPhoto && !listview ? 'special' : 'normal'">
+          {{ label }}
+        </v-text>
       </div>
       <div class="plant-preview-bg">
-        <lazy-image v-if="photo" :src="photo" :alt="label" :title="label" />
+        <lazy-image v-if="isPhoto" :src="photo" :alt="label" :title="label" />
         <feather-camera v-else class="plant-preview-bg-svg" />
       </div>
     </router-link>
@@ -16,6 +18,8 @@
 
 <script lang="ts">
   import Vue from 'vue'
+  import { isValidURL } from '@/utils/url'
+
   export default Vue.extend({
     name: 'Preview',
     props: {
@@ -48,9 +52,12 @@
         return {
           'plant-preview': true,
           loading: this.loading,
-          'no-photo': this.photo === null,
+          'no-photo': this.photo === null || !this.isPhoto,
           listview: this.listview,
         }
+      },
+      isPhoto(): boolean {
+        return this.photo && isValidURL(this.photo)
       },
     },
   })

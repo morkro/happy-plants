@@ -13,7 +13,9 @@
               :aria-describedby="label"
               :aria-invalid="error.el === 'description'"
               :error="error.el === 'description'"
-            >Please describe the bug you're facing.</textarea>
+            >
+Please describe the bug you're facing.</textarea
+            >
           </template>
         </label-group>
 
@@ -40,6 +42,7 @@
 <script lang="ts">
   import Vue from 'vue'
   import { getDeviceInfo } from '@/utils/getDeviceInfo'
+  import { getBugReports } from '@/services/firebase'
 
   export default Vue.extend({
     name: 'BugReport',
@@ -64,6 +67,12 @@
       getFile(file: File): void {
         this.file = file
       },
+    },
+    async mounted() {
+      const reports = await getBugReports()
+      for (const doc of reports.docs) {
+        console.log(doc.data())
+      }
     },
   })
 </script>
