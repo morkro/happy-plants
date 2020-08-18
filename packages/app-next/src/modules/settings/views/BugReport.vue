@@ -34,8 +34,7 @@
         </label-group>
 
         <v-button :disabled="!this.description" :aria-disabled="!this.description">
-          <feather-loader v-if="progress" />
-          Submit bug report
+          <feather-loader v-if="progress" />Submit bug report
         </v-button>
       </form>
     </main>
@@ -51,6 +50,7 @@
   import { getDeviceInfo } from '@/utils/getDeviceInfo'
   import setErrorMessage from '@/utils/setErrorMessage'
   import logger from '@/utils/vueLogger'
+  import config from '@/config'
 
   interface BugReportState {
     userID: string
@@ -86,7 +86,7 @@
         try {
           await addBugReport(uuid(), {
             deviceInfo: getDeviceInfo(),
-            appVersion: '2.0.0',
+            appVersion: config.version,
             description: this.description,
             screenshot: this.file,
             reportedBy: {

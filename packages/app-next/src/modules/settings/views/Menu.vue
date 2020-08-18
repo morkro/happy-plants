@@ -119,6 +119,7 @@
   import { getLocalEntry } from '@/services/localStorage'
   import { Plant } from '@/types/plant'
 
+  console.log(config)
   interface MenuMapState {
     userName: string
     email: string

@@ -68,7 +68,7 @@ const observeVisibility = {
     })
   },
 
-  update(el: HTMLElement, { value }: { value?: any }) {
+  update(el: HTMLElement, { value }: { value?: unknown }) {
     throwFunctionError(value)
   },
 

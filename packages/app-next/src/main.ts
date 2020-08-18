@@ -22,7 +22,7 @@ Vue.config.errorHandler = errorHandler
 if (config.isProduction) {
   logger('Initialising Sentry')
   initSentry({
-    release: 'pkg.version',
+    release: config.version,
     dsn: config.sentry.dsn,
     integrations: [new VueIntegration({ Vue, attachProps: true } as any)],
   })
