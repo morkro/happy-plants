@@ -6,7 +6,7 @@ import logger from '@/utils/vueLogger'
 import { setTags, getCollection, getUserDoc, FirestoreCollections } from '@/services/firebase'
 import config from '@/config'
 import { PlantTag } from '@/types/plant'
-import DownloadURLWorker from 'worker-loader!../../../workers/downloadURL.worker'
+import DownloadURLWorker from 'worker-loader!../downloadURL.worker'
 
 const orderMap = new Map<string, [string, firebase.firestore.OrderByDirection]>([
   ['alphabetically', ['name', 'asc']],

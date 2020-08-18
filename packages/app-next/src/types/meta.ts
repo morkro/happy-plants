@@ -4,7 +4,7 @@ export interface BugReport {
   created: number
   modified: number
   reportedBy: {
-    userID: string
+    userId: string
     email: string
   }
   description: string

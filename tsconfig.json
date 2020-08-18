@@ -1,6 +1,7 @@
 {
   "include": [
-    "packages/app-next/src/**/*"
+    "packages/app-next/src/**/*",
+    "packages/firebase/functions/src/**/*"
   ],
   "compilerOptions": {
     "module": "esnext",

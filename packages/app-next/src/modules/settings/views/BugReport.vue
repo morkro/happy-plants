@@ -35,7 +35,7 @@
 
         <v-button :disabled="!this.description" :aria-disabled="!this.description">
           <feather-loader v-if="progress" />
-          {{ ' ' }}Submit bug report
+          Submit bug report
         </v-button>
       </form>
     </main>
@@ -54,6 +54,7 @@
 
   interface BugReportState {
     userID: string
+    userEmail: string
   }
 
   export default (Vue as VueConstructor<Vue & BugReportState>).extend({
@@ -95,10 +96,13 @@
             created: Date.now(),
             modified: Date.now(),
           })
+
           this.showNotification({
             type: 'info',
-            message: 'Thank you for reporting this bug!',
+            message: 'Thank you for reporting this bug. We will look into it!',
           })
+
+          this.description = null
         } catch (error) {
           logger(error.message, true)
           this.error = setErrorMessage(error)
