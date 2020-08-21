@@ -3,7 +3,17 @@
 </h1>
 
 <p align="center">
-  Current version: <code>1.7.3</code> <a href="packages/app/CHANGELOG.md">(Changelog)</a>
+  <a href="https://happyplants.garden"><strong>📱 Application</strong></a>
+   ⁃ 
+  <a href="https://happyplants.app"><strong>🌍 Website</strong></a>
+   ⁃ 
+  <a href="https://github.com/morkro/happy-plants/projects/6"><strong>🗓 Roadmap</strong></a>
+   ⁃ 
+  <a href="https://github.com/morkro/happy-plants/issues"><strong>🐛 Issues</strong></a>
+</p>
+
+<p align="center">
+  Current version: <strong><code>1.7.3</code></strong>
 </p>
 
 <p align="center">
@@ -23,7 +33,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 
 ## 🔜 Version 2
 
-HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for some time mid-July to early August. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
+HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for Q3 2020. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
 
 ## ✨ Features
 
@@ -46,7 +56,7 @@ HappyPlants is currently being rewritten for a new major release with more featu
 - 📝 Notes
 - 🖼 Gallery
 
-## Development
+## 👩🏻‍💻 Development
 
 This repository is organised with [Lerna](https://lerna.js.org). Detailed development documentation can be found in each packages README.
 
@@ -54,7 +64,7 @@ This repository is organised with [Lerna](https://lerna.js.org). Detailed develo
 
 | Name | Description |
 | ---- | ----------- |
-| [`packages/app`](packages/app) | [Archived] First version of HappyPlants. No further development. |
+| [`packages/app`](packages/app) | _[Archived]_ First version of HappyPlants. No further development. |
 | [`packages/app-next`](packages/app-next) | Second release (`v2`) of HappyPlants and current focus of development. |
 | [`packages/firebase`](packages/firebase) | Serverless functions for Firebase, used for various automated tasks. |
 | [`packages/landing`](packages/landing) | Landing page for HappyPlants, written with Nuxt.js. |
