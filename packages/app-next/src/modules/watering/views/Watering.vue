@@ -1,5 +1,5 @@
 <template>
-  <div class="screen-watering">
+  <v-layout class="screen-watering">
     <app-header color="white">
       <template #default>Watering</template>
       <template #actions v-if="calendarVisible">
@@ -53,9 +53,9 @@
     </section>
 
     <main :class="{ overlay: calendarVisible }">
-      <v-text>List</v-text>
+      <v-text color="inactive">Feature in progress</v-text>
     </main>
-  </div>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -132,10 +132,6 @@
 
     & main {
       width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
       text-align: center;
       position: relative;
       z-index: 0;

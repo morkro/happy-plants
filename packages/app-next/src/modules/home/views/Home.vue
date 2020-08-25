@@ -47,6 +47,7 @@
         @toggle-types="toggleShowTypes"
         @update-orderby="updateOrderBy"
         @update-tag="updateTags"
+        @update-type="updateTypes"
       />
     </transition>
 
@@ -85,7 +86,7 @@
 <script lang="ts">
   import Vue, { VueConstructor } from 'vue'
   import { mapActions, mapState } from 'vuex'
-  import { Plant, PlantTag } from '@/types/plant'
+  import { Plant, PlantTag, PlantType } from '@/types/plant'
   import fuzzySearch from '@/utils/fuzzySearch'
   import { sortByAlphabet, sortByDate } from '@/utils/sort'
   import { getLocalEntry, setLocalEntry } from '@/services/localStorage'
@@ -118,8 +119,7 @@
       'view-options': ViewOptions,
       'feather-search': () =>
         import('vue-feather-icons/icons/SearchIcon' /* webpackChunkName: "icons" */),
-      'feather-cross': () =>
-        import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
+      'feather-cross': () => import('vue-feather-icons/icons/XIcon' /* webpackChunkName: "icons" */),
       'feather-sliders': () =>
         import('vue-feather-icons/icons/SlidersIcon' /* webpackChunkName: "icons" */),
     },
@@ -135,6 +135,7 @@
         viewmode: getLocalEntry(config.localStorage.homeViewmode) ?? 'grid',
         types: getLocalEntry(config.localStorage.homeShowPlantTypes) === 'true',
         orderBy: getLocalEntry(config.localStorage.homeOrderBy) ?? 'latest',
+        filterById: null,
         filterBy: null,
       }
     },
@@ -152,7 +153,11 @@
         }
 
         if (this.filterBy) {
-          return this.plants.data.filter(plant => this.filterBy.plants.includes(plant.guid))
+          if (this.filterById === 'tags') {
+            return this.plants.data.filter(plant => this.filterBy.plants.includes(plant.guid))
+          } else if (this.filterById === 'type') {
+            return this.plants.data.filter(plant => plant.type.guid === this.filterBy.guid)
+          }
         }
 
         const copy = this.plants.data
@@ -223,7 +228,12 @@
         setLocalEntry(config.localStorage.homeOrderBy, type)
       },
       updateTags(tag: PlantTag): void {
+        this.filterById = 'tag'
         this.filterBy = tag
+      },
+      updateTypes(type: PlantType): void {
+        this.filterById = 'type'
+        this.filterBy = type
       },
     },
 

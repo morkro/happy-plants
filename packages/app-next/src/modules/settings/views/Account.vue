@@ -12,8 +12,7 @@
       <v-text color="special">Are you sure you want to delete your account?</v-text>
       <div class="dialog-account-delete-actions">
         <v-button border color="white" @click.native="deleteAccount">
-          <feather-loader v-if="deleteProgress" />
-          Yes, delete my account
+          <feather-loader v-if="deleteProgress" />Yes, delete my account
         </v-button>
       </div>
     </app-dialog>
@@ -24,6 +23,7 @@
           <label-group
             id="settings-account-name"
             label="Your name"
+            color="green"
             :error="error.el === 'name' && error.message"
           >
             <template v-slot="{ label }">
@@ -44,6 +44,7 @@
           <label-group
             id="settings-account-photo"
             label="Your current photo"
+            color="green"
             :error="error.el === 'photo' && error.message"
           >
             <template v-slot="{ label }">
@@ -62,6 +63,7 @@
         <label-group
           id="settings-account-email"
           label="Your email"
+          color="green"
           :error="error.el === 'email' && error.message"
         >
           <template v-slot="{ label }">
@@ -81,23 +83,19 @@
         </label-group>
 
         <v-button type="submit">
-          <feather-loader v-if="progress" />
-          Update profile
+          <feather-loader v-if="progress" />Update profile
         </v-button>
       </form>
 
       <div class="account-dangerzone">
         <v-text color="special" type="subtitle">
-          <feather-alert />
-          Danger zone
+          <feather-alert />Danger zone
         </v-text>
         <v-text color="special">
           Deleting your account will remove all your personal information (name, email) and plant
           data. This step can't be reversed.
         </v-text>
-        <v-button color="yellow" @click.native="toggleDialog(true)">
-          Delete account
-        </v-button>
+        <v-button color="yellow" @click.native="toggleDialog(true)">Delete account</v-button>
       </div>
     </main>
   </v-layout>

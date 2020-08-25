@@ -1,7 +1,10 @@
-import { downloadFile } from '@/services/firebase'
+import firebase, { downloadFile } from '@/services/firebase'
 import { Plant } from '@/types/plant'
 
 const context: Worker = self as any // eslint-disable-line
+
+// Authenticate in new context, otherwise no permissions granted.
+firebase.auth()
 
 context.addEventListener('message', async (event: MessageEvent & { data: Plant }) => {
   try {

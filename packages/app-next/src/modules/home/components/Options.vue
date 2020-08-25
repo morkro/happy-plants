@@ -73,9 +73,50 @@
         </li>
       </ul>
     </section>
-    <section :class="['home-view-options-tags', loading && 'loading']">
-      <v-text type="subtitle">Filter by tags</v-text>
-      <div>
+    <section :class="['home-view-options-filter', loading && 'loading']">
+      <div class="filter-type">
+        <button @click="toggleFilter('type')">
+          <v-text type="subtitle">Filter by type</v-text>
+          <feather-minimize v-if="filterVisible === 'type'" />
+          <feather-maximize v-else />
+        </button>
+
+        <ul>
+          <li>
+            <label for="filterby-all">
+              <v-input
+                type="radio"
+                id="filterby-all"
+                name="type"
+                value="filterby-all"
+                checked
+                @click.native="updateTag(null)"
+              />
+              <v-text>Show all</v-text>
+            </label>
+          </li>
+          <li v-for="type of plantTypes" :key="type.guid">
+            <label :for="`${type.value}`">
+              <v-input
+                type="radio"
+                :id="type.value"
+                name="type"
+                :value="type.value"
+                :checked="filterBy === type.guid"
+                @click.native="updateType(type)"
+              ></v-input>
+              <v-text>{{ type.label }}</v-text>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="filter-tags">
+        <button @click="toggleFilter('tags')">
+          <v-text type="subtitle">Filter by tags</v-text>
+          <feather-minimize v-if="filterVisible === 'tags'" />
+          <feather-maximize v-else />
+        </button>
+
         <feather-loader v-if="loading" />
         <ul v-else>
           <li>
@@ -127,7 +168,10 @@
   import Vue, { PropType } from 'vue'
   import { HomeViewmode, HomeOrderBy } from '../index'
   import { HomeState } from '../store/state'
-  import { PlantTag } from '@/types/plant'
+  import { PlantTag, PlantType } from '@/types/plant'
+  import types from '@/data/types'
+
+  type FilterTypes = 'type' | 'tags'
 
   export default Vue.extend({
     name: 'ViewOptions',
@@ -142,6 +186,16 @@
     components: {
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
+      'feather-minimize': () =>
+        import('vue-feather-icons/icons/Minimize2Icon' /* webpackChunkName: "icons" */),
+      'feather-maximize': () =>
+        import('vue-feather-icons/icons/Maximize2Icon' /* webpackChunkName: "icons" */),
+    },
+    data() {
+      return {
+        filterVisible: null,
+        plantTypes: types,
+      }
     },
     methods: {
       updateViewmode(type: HomeViewmode): void {
@@ -155,6 +209,12 @@
       },
       updateTag(tag: PlantTag): void {
         this.$emit('update-tag', tag)
+      },
+      updateType(type: PlantType): void {
+        this.$emit('update-type', type)
+      },
+      toggleFilter(type: FilterTypes): void {
+        this.filterVisible = type
       },
     },
   })
@@ -222,7 +282,7 @@
     }
   }
 
-  .home-view-options-tags {
+  .home-view-options-filter {
     &.loading > div {
       display: flex;
       justify-content: center;
@@ -232,10 +292,40 @@
 
     & > div {
       width: 100%;
-      height: 170px;
-      overflow: scroll;
+      height: 200px;
+      overflow: hidden;
 
-      & svg {
+      & ul {
+        height: 100%;
+        overflow: scroll;
+        padding: 0;
+      }
+
+      & button {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background: none;
+        border: none;
+        padding: var(--base-gap) 0;
+
+        &:active svg,
+        &:focus svg {
+          stroke: var(--brand-green-dark);
+        }
+
+        & svg {
+          stroke: var(--brand-beige-dark);
+        }
+      }
+
+      &:first-of-type button {
+        padding-top: 0;
+      }
+    }
+
+    & .filter-tags {
+      & > svg {
         animation: spin 3s linear infinite;
       }
     }
