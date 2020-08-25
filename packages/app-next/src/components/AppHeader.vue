@@ -79,8 +79,12 @@
     justify-content: center;
     align-items: center;
 
-    & svg:not(#app-logo) {
+    @nest .green & svg:not(#app-logo) {
       stroke: var(--brand-green-dark);
+    }
+
+    @nest .white & svg:not(#app-logo) {
+      stroke: var(--brand-white);
     }
 
     & > a {

@@ -1,4 +1,6 @@
-const webpack = require('webpack')
+const path = require('path')
+
+process.env.VUE_APP_VERSION = require('./package.json').version
 
 module.exports = {
   pluginOptions: {
@@ -20,22 +22,31 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: 'white',
   },
 
-  configureWebpack: {
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          VUE_APP_VERSION: require('./package.json').version,
-        },
-      }),
-    ],
+  configureWebpack: config => {
+    config.resolve.alias['#'] = path.resolve(__dirname, '')
   },
 
   chainWebpack: config => {
+    // prettier-ignore
     config.module
-      .rule('worker-loader')
-      .test(/\.worker\.js$/)
-      .use('worker-loader')
-      .loader('worker-loader')
+      .rule('web-worker')
+        .test(/\.worker\.js$/)
+        .use('worker-loader')
+          .loader('worker-loader')
+          .end()
       .end()
+      .rule('markdown')
+        .test(/\.md$/)
+        .use('vue-loader')
+          .loader('vue-loader')
+          .options({
+            compilerOptions: {
+              preserveWhiteSpace: false
+            }
+          })
+          .end()
+        .use('vmark-loader')
+          .loader('vmark-loader')
+          .end()
   },
 }

@@ -1,6 +1,6 @@
 <template>
   <label :for="id">
-    <v-text color="special">{{ label }}</v-text>
+    <v-text :color="titleColor">{{ label }}</v-text>
     <slot :label="ariaDescribedBy" />
     <div :class="{ 'error-container': true, visible: !!error }">
       <feather-alert />
@@ -18,6 +18,11 @@
       error: [Boolean, String],
       id: String,
       label: String,
+      color: {
+        type: String,
+        default: 'white',
+        validator: v => ['white', 'green'].includes(v),
+      },
     },
     components: {
       'feather-alert': () =>
@@ -26,6 +31,12 @@
     computed: {
       ariaDescribedBy() {
         return `labelgroup-${id}`
+      },
+      titleColor(): string {
+        if (this.color === 'white') {
+          return 'special'
+        }
+        return 'normal'
       },
     },
     created() {

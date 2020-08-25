@@ -53,6 +53,12 @@ const routes: RouteConfig[] = [
         meta,
       },
       {
+        path: 'feature-request',
+        name: 'SettingsFeatureRequest',
+        component: () => import('./views/FeatureRequest.vue' /* webpackChunkName: "settings" */),
+        meta,
+      },
+      {
         path: 'bug-report',
         name: 'SettingsBugReport',
         component: () => import('./views/BugReport.vue' /* webpackChunkName: "settings" */),

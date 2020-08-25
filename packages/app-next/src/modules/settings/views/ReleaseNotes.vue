@@ -29,17 +29,7 @@
         </svg>
       </header>
 
-      <ul class="release-notes-list">
-        <li v-for="entry of releaseNotes" :key="entry.version">
-          <button
-            @click="toggleReleaseNote(entry.version)"
-            :aria-expanded="toggled.includes(entry.version) || 'false'"
-          >
-            <v-text type="subtitle">{{ entry.version }} ({{ entry.date }})</v-text>
-          </button>
-          <div :class="{ show: toggled.includes(entry.version) }">{{ entry.content }}</div>
-        </li>
-      </ul>
+      <md-changelog />
     </main>
   </v-layout>
 </template>
@@ -47,36 +37,62 @@
 <script lang="ts">
   import Vue from 'vue'
   import config from '@/config'
-  import releaseNotes from '@/data/release-notes.json'
+  import ChangeLog from '#/CHANGELOG.md'
 
   export default Vue.extend({
     name: 'SettingsReleaseNotes',
 
+    components: {
+      'md-changelog': ChangeLog,
+    },
+
     data: () => ({
       version: config.version,
-      toggled: [],
-      releaseNotes,
     }),
-
-    methods: {
-      toggleReleaseNote(version: string): void {
-        if (!this.toggled.includes(version)) {
-          this.toggled.push(version)
-        } else {
-          this.toggled = this.toggled.filter(v => v !== version)
-        }
-      },
-    },
   })
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
   .screen-release-notes #app-header {
     background: var(--brand-beige);
   }
 
   .screen-release-notes main {
-    justify-content: flex-start;
+    justify-content: flex-start !important;
+
+    & .vmark {
+      & > * {
+        display: none;
+      }
+
+      & > h2,
+      & > h2 ~ * {
+        display: block;
+      }
+
+      & h2 {
+        width: 100%;
+        border: none;
+        border-radius: var(--base-radius);
+        background: var(--brand-white);
+        text-align: left;
+        padding: var(--base-gap);
+        margin: var(--base-gap) 0;
+        color: var(--brand-green);
+        font-size: 125%;
+        font-weight: 500;
+
+        &:first-of-type {
+          background: var(--brand-blue);
+          box-shadow: 0 2px 9px var(--brand-blue);
+          color: var(--brand-white);
+        }
+
+        & > a {
+          display: none;
+        }
+      }
+    }
   }
 
   .release-notes-header {
@@ -95,43 +111,6 @@
       background: var(--brand-white);
       padding: calc(0.5 * var(--base-gap));
       border-radius: var(--base-radius);
-    }
-  }
-
-  .release-notes-list {
-    width: 100%;
-    list-style: none;
-    padding-top: calc(0.5 * var(--base-gap));
-
-    & li {
-      padding-bottom: var(--base-gap);
-
-      &:first-child button {
-        background: var(--brand-blue);
-        box-shadow: 0 2px 9px var(--brand-blue);
-
-        & h2 {
-          color: var(--brand-white);
-        }
-      }
-    }
-
-    & li div {
-      display: none;
-      padding-top: var(--base-gap);
-
-      &.show {
-        display: block;
-      }
-    }
-
-    & button {
-      width: 100%;
-      border: none;
-      border-radius: var(--base-radius);
-      background: var(--brand-white);
-      text-align: left;
-      padding: var(--base-gap);
     }
   }
 </style>

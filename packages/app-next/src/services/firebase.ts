@@ -6,7 +6,7 @@ import config from '@/config'
 import { AssignDetailsPayload } from '@/modules/account/store/mutations'
 import { setSessionEntry } from './sessionStorage'
 import { Plant, PlantTag } from '@/types/plant'
-import { BugReport } from '@/types/meta'
+import { BugReport, FeatureRequest } from '@/types/meta'
 
 export const app = firebase.initializeApp(config.firebase)
 export const firestore = app.firestore()
@@ -22,6 +22,7 @@ export enum FirestoreCollections {
   Plants = 'plants',
   Tags = 'tags',
   BugReports = 'bugReports',
+  FeatureRequests = 'featureRequests',
 }
 
 const createAccount = async (
@@ -73,6 +74,12 @@ const getCollection = (userID: string, collection: string): FirestoreCollection 
 const addBugReport = async (guid: string, report: BugReport): Promise<void> =>
   firestore
     .collection(FirestoreCollections.BugReports)
+    .doc(guid)
+    .set(report)
+
+const addFeatureRequest = async (guid: string, report: FeatureRequest): Promise<void> =>
+  firestore
+    .collection(FirestoreCollections.FeatureRequests)
     .doc(guid)
     .set(report)
 
@@ -151,6 +158,7 @@ const updateProfile = async (payload: { displayName?: string; photoURL?: string 
 
 export {
   addBugReport,
+  addFeatureRequest,
   addPlant,
   confirmNewPassword,
   createAccount,

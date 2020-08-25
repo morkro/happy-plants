@@ -21,7 +21,7 @@ interface AppConfig {
 }
 
 const config: AppConfig = {
-  version: '',
+  version: process.env.VUE_APP_VERSION,
   isProduction: process.env.NODE_ENV === 'production',
   sentry: {
     dsn: process.env.VUE_APP_SENTRY_DSN,

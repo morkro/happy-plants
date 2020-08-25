@@ -54,3 +54,30 @@ export const onNewBugReport = functions
 
     return null
   })
+
+export const onNewFeatureRequest = functions
+  .region(config.region)
+  .firestore.document('featureRequests/{uid}')
+  .onCreate(async (snapshot) => {
+    const data = snapshot.data()
+
+    try {
+      await transporter.sendMail({
+        from: `HappyPlants 🌵 <${email}>`,
+        to: recipient,
+        subject: `✨ A new feature has been requested!`,
+        html: `<p>Hey! Someone just opened a new feature request:</p>
+          <p><strong>ID:</strong> ${snapshot.id}</p>
+          <p><strong>Created:</strong> ${format(data.created)}</p>
+          <p><strong>Reporter:</strong> ${data.reportedBy.email} (${data.reportedBy.userId})</p>
+          <p><strong>App Version:</strong> ${data.appVersion}</p>
+          <p><strong>Description:</strong> <br>${data.description}</p>
+          <p><strong>Device:</strong> ${JSON.stringify(data.deviceInfo, null, 2)}</p>`,
+      })
+      console.log('Feature request send.')
+    } catch (error) {
+      console.error('There was an error while sending the email:', error)
+    }
+
+    return null
+  })

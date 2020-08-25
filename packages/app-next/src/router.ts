@@ -45,10 +45,6 @@ export function createRouter(): VueRouter {
   router.beforeEach((to: Route, from: Route, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
     if (requiresAuth && store.state.account.authenticated === false) {
-      store.dispatch('notifications/show', {
-        type: 'info',
-        message: 'You got redirected. Please login in again.',
-      })
       next({ path: 'welcome', query: { redirectFrom: to.fullPath } })
     } else {
       next()
