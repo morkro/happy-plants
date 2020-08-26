@@ -81,7 +81,7 @@
           <feather-maximize v-else />
         </button>
 
-        <ul>
+        <ul v-if="filterVisible === 'type'">
           <li>
             <label for="filterby-all">
               <v-input
@@ -118,7 +118,7 @@
         </button>
 
         <feather-loader v-if="loading" />
-        <ul v-else>
+        <ul v-else-if="!loading && filterVisible === 'tags'">
           <li>
             <label for="filterby-all">
               <v-input
@@ -193,7 +193,7 @@
     },
     data() {
       return {
-        filterVisible: null,
+        filterVisible: 'type',
         plantTypes: types,
       }
     },
@@ -214,6 +214,13 @@
         this.$emit('update-type', type)
       },
       toggleFilter(type: FilterTypes): void {
+        if (type === 'tags' && this.filterVisible === type) {
+          this.filterVisible = 'type'
+          return
+        } else if (type === 'type' && this.filterVisible === type) {
+          this.filterVisible = 'tags'
+          return
+        }
         this.filterVisible = type
       },
     },
@@ -234,6 +241,7 @@
     & section {
       padding: var(--base-gap) var(--base-gap) 0;
       position: relative;
+      min-height: 275px;
 
       &:first-of-type {
         border-right: 4px solid var(--brand-beige);
@@ -307,7 +315,7 @@
         justify-content: space-between;
         background: none;
         border: none;
-        padding: var(--base-gap) 0;
+        margin: var(--base-gap) 0;
 
         &:active svg,
         &:focus svg {
@@ -320,7 +328,7 @@
       }
 
       &:first-of-type button {
-        padding-top: 0;
+        margin-top: 0;
       }
     }
 

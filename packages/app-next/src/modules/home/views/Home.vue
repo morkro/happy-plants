@@ -337,9 +337,13 @@
       padding: 0 var(--base-gap);
       background: transparent;
       border: none;
+      color: var(--brand-green-dark);
 
-      & svg {
-        stroke: var(--brand-green-dark);
+      &:focus,
+      &:active {
+        color: var(--brand-white);
+        background: var(--brand-green-dark);
+        outline: none;
       }
     }
   }
