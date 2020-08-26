@@ -68,6 +68,7 @@
       & > h2,
       & > h2 ~ * {
         display: block;
+        padding-bottom: var(--base-gap);
       }
 
       & h2 {
@@ -77,8 +78,8 @@
         background: var(--brand-white);
         text-align: left;
         padding: var(--base-gap);
-        margin: var(--base-gap) 0;
-        color: var(--brand-green);
+        margin-bottom: var(--base-gap);
+        color: var(--brand-green-dark);
         font-size: 125%;
         font-weight: 500;
 
@@ -91,6 +92,14 @@
         & > a {
           display: none;
         }
+      }
+
+      & h3 {
+        color: var(--brand-green-dark);
+      }
+
+      & ul {
+        padding-left: var(--base-gap);
       }
     }
   }

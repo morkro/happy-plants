@@ -51,6 +51,7 @@
               type="password"
               v-model="password"
               placeholder="********"
+              autocomplete="new-password"
               id="create-account-pw"
               :aria-describedby="label"
               :error="error.el === 'password'"
@@ -97,7 +98,6 @@
 <script lang="ts">
   import Vue from 'vue'
   import { mapActions } from 'vuex'
-  import { setLocalEntry } from '@/services/localStorage'
   import setErrorMessage, { FormErrorObject } from '@/utils/setErrorMessage'
 
   interface OnboardingAccountData {

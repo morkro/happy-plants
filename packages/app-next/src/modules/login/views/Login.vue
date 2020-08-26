@@ -5,9 +5,9 @@
     <app-header return-to="/welcome">Login</app-header>
 
     <main>
-      <form class="login-form" @submit.prevent="formAction">
+      <form class="login-form">
         <label-group
-          id="login-email"
+          id="email"
           label="Your e-mail *"
           :error="error.el === 'email' && error.message"
         >
@@ -16,8 +16,9 @@
               required
               type="email"
               placeholder="lover@plants.garden"
-              id="login-email"
+              id="email"
               v-model="email"
+              autocomplete="username"
               :aria-describedby="label"
               :aria-invalid="error.el === 'email'"
               :error="error.el === 'email'"
@@ -28,24 +29,33 @@
         </label-group>
 
         <label-group
-          id="login-pw"
+          id="password"
           label="Your password *"
           :error="error.el === 'password' && error.message"
           v-if="!showForgotPassword"
         >
           <template v-slot="{ label }">
             <v-input
-              type="password"
+              :type="showPasswordPlain ? 'text' : 'password'"
               v-model="password"
               :required="!showForgotPassword"
               placeholder="********"
-              id="login-pw"
+              id="password"
+              autocomplete="current-password"
               :aria-describedby="label"
               :error="error.el === 'password'"
               :error-message="error.message"
               :aria-invalid="error.el === 'password'"
               data-cy="login-form-password"
             />
+            <button
+              class="login-form-toggle-password"
+              @click.prevent="togglePlainPassword"
+              :aria-label="showPasswordPlain ? 'Hide your password' : 'Show your password'"
+            >
+              <component :is="showPasswordPlain ? 'feather-eye-off' : 'feather-eye'" />
+              <v-text class="visuallyhidden">{{ passwordPlainLabel }}</v-text>
+            </button>
           </template>
         </label-group>
 
@@ -58,7 +68,12 @@
           <v-text color="special" small>{{ togglePasswordReset }}</v-text>
         </router-link>
 
-        <v-button color="yellow" type="submit" data-cy="login-form-submit">
+        <v-button
+          color="yellow"
+          type="submit"
+          data-cy="login-form-submit"
+          @click.native.prevent="formAction"
+        >
           <feather-loader v-if="sendForgotPassword" />
           {{ submitBtnLabel }}
         </v-button>
@@ -122,6 +137,9 @@
         import('vue-feather-icons/icons/TwitterIcon' /* webpackChunkName: "icons" */),
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
+      'feather-eye': () => import('vue-feather-icons/icons/EyeIcon' /* webpackChunkName: "icons" */),
+      'feather-eye-off': () =>
+        import('vue-feather-icons/icons/EyeOffIcon' /* webpackChunkName: "icons" */),
     },
     data() {
       return {
@@ -130,6 +148,7 @@
         password: null,
         error: { el: null, message: null },
         loading: false,
+        showPasswordPlain: false,
         showForgotPassword: this.$hasQuery('forgotPassword'),
         sendForgotPassword: false,
       }
@@ -140,6 +159,9 @@
       },
       togglePasswordReset(): string {
         return this.showForgotPassword ? 'Show password field again' : 'I forgot my password'
+      },
+      passwordPlainLabel(): string {
+        return this.showPasswordPlain ? 'Hide password' : 'Show password'
       },
     },
     methods: {
@@ -196,6 +218,9 @@
         } finally {
           this.sendForgotPassword = false
         }
+      },
+      togglePlainPassword() {
+        this.showPasswordPlain = !this.showPasswordPlain
       },
     },
     async created() {
@@ -254,6 +279,24 @@
 
     & input:focus {
       border-color: var(--brand-yellow);
+    }
+
+    & .login-form-toggle-password {
+      position: absolute;
+      z-index: 1;
+      bottom: calc(1.5 * var(--base-gap));
+      right: calc(1.5 * var(--base-gap));
+      background: transparent;
+      border: none;
+      color: var(--brand-beige-dark);
+      display: flex;
+
+      &:focus,
+      &:active {
+        color: var(--brand-white);
+        outline: none;
+        background: var(--brand-green);
+      }
     }
   }
 

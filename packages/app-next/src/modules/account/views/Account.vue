@@ -19,6 +19,7 @@
               v-model="newPassword"
               placeholder="********"
               id="account-newpw"
+              autocomplete="new-password"
               :aria-describedby="label"
               :error="error.el === 'newPassword'"
               :error-message="error.message"
@@ -59,8 +60,7 @@
           </router-link>
 
           <v-button color="yellow" type="submit" data-cy="account-resetpassword-submit">
-            <feather-loader v-if="loading" />
-            Reset password
+            <feather-loader v-if="loading" />Reset password
           </v-button>
         </div>
       </form>

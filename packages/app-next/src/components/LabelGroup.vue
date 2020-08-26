@@ -49,6 +49,7 @@
   label {
     margin-bottom: var(--base-gap);
     display: block;
+    position: relative;
   }
 
   label > p {

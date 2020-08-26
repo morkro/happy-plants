@@ -83,7 +83,8 @@
         </label-group>
 
         <v-button type="submit">
-          <feather-loader v-if="progress" />Update profile
+          <feather-loader v-if="progress" />
+          {{ ' ' }} Update profile
         </v-button>
       </form>
 
