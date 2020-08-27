@@ -1,4 +1,4 @@
-// const off = 0
+const off = 0
 const warn = 1
 const error = 2
 
@@ -19,9 +19,9 @@ module.exports = {
   ],
   ignorePatterns: ['vue.config.js'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/script-indent': 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? warn : off,
+    'no-debugger': process.env.NODE_ENV === 'production' ? error : off,
+    'vue/script-indent': off,
     'vue/html-indent': [
       error,
       2,
@@ -41,11 +41,12 @@ module.exports = {
         },
       },
     ],
-    indent: 'off',
-    'arrow-parens': 'off',
-    'generator-star-spacing': 'off',
-    'typescript-eslint/ban-ts-ignore': 'off',
-    'typescript-eslint/no-explicit-any': 'off',
+    indent: off,
+    'arrow-parens': off,
+    'generator-star-spacing': off,
+    'typescript-eslint/ban-ts-ignore': off,
+    'typescript-eslint/no-explicit-any': off,
+    'typescript-eslint/explicit-module-boundary-types': off,
   },
   overrides: [
     {

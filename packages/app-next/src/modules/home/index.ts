@@ -1,5 +1,4 @@
 import { RouteConfig } from 'vue-router'
-import store from './store'
 
 export type HomeViewmode = 'grid' | 'list'
 export type HomeOrderBy = 'latest' | 'alphabetically'
@@ -16,4 +15,4 @@ const routes: RouteConfig[] = [
   },
 ]
 
-export { routes, store }
+export { routes }

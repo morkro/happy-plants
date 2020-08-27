@@ -46,11 +46,13 @@ const createAccount = async (
   }
 }
 
-const forgotPassword = (email: string) => firebase.auth().sendPasswordResetEmail(email)
+const forgotPassword = (email: string): Promise<void> =>
+  firebase.auth().sendPasswordResetEmail(email)
 
-const verifyPasswordResetCode = (code: string) => firebase.auth().verifyPasswordResetCode(code)
+const verifyPasswordResetCode = (code: string): Promise<string> =>
+  firebase.auth().verifyPasswordResetCode(code)
 
-const confirmNewPassword = (code: string, password: string) =>
+const confirmNewPassword = (code: string, password: string): Promise<void> =>
   firebase.auth().confirmPasswordReset(code, password)
 
 const getRedirectResults = async (): Promise<AssignDetailsPayload> => {
@@ -72,25 +74,16 @@ const getCollection = (userID: string, collection: string): FirestoreCollection 
   getUserDoc(userID).collection(collection)
 
 const addBugReport = async (guid: string, report: BugReport): Promise<void> =>
-  firestore
-    .collection(FirestoreCollections.BugReports)
-    .doc(guid)
-    .set(report)
+  firestore.collection(FirestoreCollections.BugReports).doc(guid).set(report)
 
 const addFeatureRequest = async (guid: string, report: FeatureRequest): Promise<void> =>
-  firestore
-    .collection(FirestoreCollections.FeatureRequests)
-    .doc(guid)
-    .set(report)
+  firestore.collection(FirestoreCollections.FeatureRequests).doc(guid).set(report)
 
 const getStoragePath = (userID: string, guid: string): string =>
   `${FirestoreCollections.Users}/${userID}/${FirestoreCollections.Plants}/${guid}/cover.png`
 
 const addPlant = async (userID: string, data: Plant): Promise<void> =>
-  getUserDoc(userID)
-    .collection(FirestoreCollections.Plants)
-    .doc(data.guid)
-    .set(data)
+  getUserDoc(userID).collection(FirestoreCollections.Plants).doc(data.guid).set(data)
 
 const updatePlant = async (userID: string, data: Plant): Promise<void> => {
   const ref = getCollection(userID, FirestoreCollections.Plants).doc(data.guid)
@@ -101,18 +94,18 @@ const updatePlant = async (userID: string, data: Plant): Promise<void> => {
 }
 
 const deletePlant = async (userID: string, data: Plant): Promise<void> =>
-  getUserDoc(userID)
-    .collection(FirestoreCollections.Plants)
-    .doc(data.guid)
-    .delete()
+  getUserDoc(userID).collection(FirestoreCollections.Plants).doc(data.guid).delete()
 
 const setTags = async (userID: string, data: PlantTag[]): Promise<void> =>
   getUserDoc(userID).set({ tags: data })
 
-const signInWithEmail = async (email: string, password: string) =>
+const signInWithEmail = async (
+  email: string,
+  password: string
+): Promise<firebase.auth.UserCredential> =>
   firebase.auth().signInWithEmailAndPassword(email, password)
 
-const signInWithProvider = async (loginType: string) => {
+const signInWithProvider = async (loginType: string): Promise<void> => {
   setSessionEntry('USER_SIGNIN_PROGRESS', 'true')
 
   let provider
@@ -131,27 +124,19 @@ const signInWithProvider = async (loginType: string) => {
   firebase.auth().signInWithRedirect(provider)
 }
 
-const signOutUser = async () => firebase.auth().signOut()
+const signOutUser = async (): Promise<void> => firebase.auth().signOut()
 
-const downloadFile = (path: string): Promise<string> =>
-  storage
-    .ref()
-    .child(path)
-    .getDownloadURL()
+const downloadFile = (path: string): Promise<string> => storage.ref().child(path).getDownloadURL()
 
-const uploadFile = (path: string, file: File) =>
-  storage
-    .ref()
-    .child(path)
-    .put(file)
+const uploadFile = (path: string, file: File): firebase.storage.UploadTask =>
+  storage.ref().child(path).put(file)
 
-const deleteFile = async (path: string): Promise<void> =>
-  storage
-    .ref()
-    .child(path)
-    .delete()
+const deleteFile = async (path: string): Promise<void> => storage.ref().child(path).delete()
 
-const updateProfile = async (payload: { displayName?: string; photoURL?: string }) => {
+const updateProfile = async (payload: {
+  displayName?: string
+  photoURL?: string
+}): Promise<void> => {
   const user = firebase.auth().currentUser
   await user.updateProfile(payload)
 }

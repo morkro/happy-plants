@@ -1,5 +1,5 @@
 <template>
-  <input :class="{ 'has-error': error }" :value="value" @input="handleInput" />
+  <input :class="{ 'has-error': error }" :value="value" @input="handleInput" ref="input" />
   <!--
     :aria-describedby="`input-${_uid}`"
   -->
@@ -20,6 +20,9 @@
     methods: {
       handleInput(event: HTMLElementEvent<HTMLInputElement>) {
         this.$emit('input', event.target.value)
+      },
+      focus() {
+        ;(this.$refs.input as HTMLInputElement).focus()
       },
     },
   })

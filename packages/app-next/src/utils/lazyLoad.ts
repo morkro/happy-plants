@@ -1,5 +1,5 @@
 function loadImage($el: Element) {
-  const $img = Array.from($el.children).find(el => el.nodeName === 'IMG') as HTMLImageElement
+  const $img = Array.from($el.children).find((el) => el.nodeName === 'IMG') as HTMLImageElement
   if ($img) {
     $img.addEventListener('load', () => setTimeout(() => $el.classList.add('loaded'), 100))
     $img.src = $img.dataset.src
@@ -21,7 +21,7 @@ function createObserver($el: Element) {
 }
 
 export default {
-  inserted: ($el: Element) => {
+  inserted: ($el: Element): void => {
     if ('IntersectionObserver' in window) {
       createObserver($el)
     } else {

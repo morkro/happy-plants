@@ -32,7 +32,7 @@
         notificationMessage: (state: NotificationsState) => state.message,
       }),
       showAppMenu(): boolean {
-        return this.$route.matched.some(record => record.meta.showAppMenu)
+        return this.$route.matched.some((record) => record.meta.showAppMenu)
       },
     },
   })

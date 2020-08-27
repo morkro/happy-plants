@@ -147,7 +147,7 @@
         userName: (state: RootState) => state.account.displayName,
         email: (state: RootState) => state.account.email,
         userPhotoURL: (state: RootState) => state.account.photoURL,
-        plants: (state: RootState) => state.home.plants.data.length,
+        plants: (state: RootState) => state.plants.data.length,
       }),
       plantCount(): string {
         return this.plants ? String(this.plants) : this.plantCountFromLocalStorage
@@ -167,7 +167,8 @@
         try {
           await this.logout()
           await delay(2000)
-          this.$store.commit('home/resetState', null, { root: true })
+          this.$store.commit('plants/resetState', null, { root: true })
+          this.$store.commit('tags/resetState', null, { root: true })
           this.$router.push('/welcome')
         } catch (error) {
           this.logoutRedirect = false

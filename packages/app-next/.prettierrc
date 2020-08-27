@@ -3,6 +3,7 @@
   "singleQuote": true,
   "semi": false,
   "vueIndentScriptAndStyle": true,
+  "htmlWhitespaceSensitivity": "strict",
   "trailingComma": "es5",
-  "endOfLine":"auto"
+  "endOfLine": "auto"
 }

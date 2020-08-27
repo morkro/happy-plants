@@ -71,7 +71,7 @@
       },
       tableWeekHeader(): Set<string> {
         return new Set(
-          ...(this.currentMonth as CalendarMonth).map(week => week.map(day => day.weekday))
+          ...(this.currentMonth as CalendarMonth).map((week) => week.map((day) => day.weekday))
         )
       },
     },

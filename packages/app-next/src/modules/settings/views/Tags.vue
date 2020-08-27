@@ -27,11 +27,11 @@
     name: 'SettingsTags',
     computed: {
       ...mapState<RootState>({
-        allTags: (state: RootState) => state.home.tags,
+        allTags: (state: RootState) => state.tags,
       }),
     },
     methods: {
-      ...mapActions({ loadTags: 'home/loadTags' }),
+      ...mapActions({ loadTags: 'tags/loadTags' }),
     },
     async created() {
       if (!this.allTags.loaded) {

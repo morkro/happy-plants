@@ -37,7 +37,7 @@
       color: {
         type: String,
         default: 'green',
-        validator: v => ['white', 'green'].includes(v),
+        validator: (v) => ['white', 'green'].includes(v),
       },
     },
 

@@ -27,11 +27,11 @@
     computed: {
       ...mapState<RootState>({
         userID: (state: RootState) => state.account.uid,
-        plants: (state: RootState) => state.home.plants,
+        plants: (state: RootState) => state.plants,
       }),
       plant(): Plant {
         if (this.plants.loaded) {
-          return this.plants.data.find(plant => plant.guid === this.$route.params.id)
+          return this.plants.data.find((plant) => plant.guid === this.$route.params.id)
         }
         return this.individualPlant
       },

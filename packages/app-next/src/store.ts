@@ -2,28 +2,31 @@ import Vue from 'vue'
 import Vuex, { Store } from 'vuex'
 import { store as notifications } from '@/modules/notifications'
 import { store as account } from '@/modules/account'
-import { store as home } from '@/modules/home'
+import { store as plants } from '@/modules/plants'
+import { store as tags } from '@/modules/tags'
 import { NotificationsState } from '@/modules/notifications/store/state'
 import { AccountState } from '@/modules/account/store/state'
-import { HomeState } from '@/modules/home/store/state'
+import { PlantsState } from '@/modules/plants/store/state'
+import { TagsState } from '@/modules/tags/store/state'
 import config from './config'
 
 Vue.use(Vuex)
 
 export interface RootState {
-  notifications: NotificationsState
   account: AccountState
-  login: {}
-  home: HomeState
+  notifications: NotificationsState
+  plants: PlantsState
+  tags: TagsState
 }
 
 export function createStore(): Store<RootState> {
   return new Vuex.Store<RootState>({
     strict: config.isProduction,
     modules: {
-      notifications,
       account,
-      home,
+      notifications,
+      plants,
+      tags,
     },
   })
 }

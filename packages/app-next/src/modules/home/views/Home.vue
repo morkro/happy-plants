@@ -9,6 +9,7 @@
               v-model="searchQuery"
               aria-placeholder="Search"
               placeholder="Search"
+              ref="homeHeaderSearch"
             />
             <button @click.prevent="closeActions">
               <span class="visuallyhidden">Search</span>
@@ -22,11 +23,15 @@
             <span class="visuallyhidden">Search</span>
             <feather-cross />
           </button>
-          <button v-if="!loading && !actionsActive" @click.prevent="showSearch">
+          <button
+            v-if="!loading && !actionsActive"
+            @click.prevent="showSearch"
+            ref="headerActionSearch"
+          >
             <span class="visuallyhidden">Search</span>
             <feather-search />
           </button>
-          <button v-if="!actionsActive" @click.prevent="showViewOptions">
+          <button v-if="!actionsActive" @click.prevent="showViewOptions" ref="headerActionOptions">
             <span class="visuallyhidden">Configure view</span>
             <feather-sliders />
           </button>
@@ -94,10 +99,10 @@
   import Preview from '../components/Preview.vue'
   import EmptyIllustration from '../components/EmptyIllustration.vue'
   import ViewOptions from '../components/Options.vue'
-  import { HomeState } from '../store/state'
   import { HomeViewmode, HomeOrderBy } from '..'
+  import { RootState } from '@/store'
 
-  interface HomeMapState extends HomeState {
+  interface HomeMapState extends RootState {
     plants: {
       data: Plant[]
       loaded: boolean
@@ -141,9 +146,9 @@
     },
 
     computed: {
-      ...mapState<HomeState>('home', {
-        plants: (state: HomeState) => state.plants,
-        tags: (state: HomeState) => state.tags,
+      ...mapState<RootState>({
+        plants: (state: RootState) => state.plants,
+        tags: (state: RootState) => state.tags,
       }),
       plantData(): Plant[] {
         if (this.searchQuery) {
@@ -154,9 +159,9 @@
 
         if (this.filterBy) {
           if (this.filterById === 'tags') {
-            return this.plants.data.filter(plant => this.filterBy.plants.includes(plant.guid))
+            return this.plants.data.filter((plant) => this.filterBy.plants.includes(plant.guid))
           } else if (this.filterById === 'type') {
-            return this.plants.data.filter(plant => plant.type.guid === this.filterBy.guid)
+            return this.plants.data.filter((plant) => plant.type.guid === this.filterBy.guid)
           }
         }
 
@@ -196,11 +201,13 @@
 
     methods: {
       ...mapActions({
-        loadPlants: 'home/loadPlants',
-        loadTags: 'home/loadTags',
+        loadPlants: 'plants/loadPlants',
+        loadTags: 'tags/loadTags',
       }),
-      showSearch(): void {
+      async showSearch(): Promise<void> {
         this.searchVisible = true
+        await Vue.nextTick()
+        ;(this.$refs.homeHeaderSearch as HTMLInputElement).focus()
       },
       showViewOptions(): void {
         this.viewOptionsVisible = true

@@ -50,9 +50,10 @@ const observeVisibility = {
 
   bind(
     el: HTMLElement,
+    // eslint-disable-next-line
     { value, arg, modifiers }: { value?: any; arg?: string; modifiers: { [key: string]: boolean } },
     vnode: VNode
-  ) {
+  ): void {
     throwFunctionError(value)
 
     const interval = parseInt(arg, 10) || 200
@@ -68,11 +69,11 @@ const observeVisibility = {
     })
   },
 
-  update(el: HTMLElement, { value }: { value?: unknown }) {
+  update(el: HTMLElement, { value }: { value?: unknown }): void {
     throwFunctionError(value)
   },
 
-  unbind() {
+  unbind(): void {
     document.removeEventListener('scroll', observeVisibility.viewListener)
     observeVisibility.viewListener = () => {} // eslint-disable-line
   },
@@ -81,7 +82,7 @@ const observeVisibility = {
 export { observeVisibility }
 
 export default {
-  install(Vue: VueConstructor) {
+  install(Vue: VueConstructor): void {
     Vue.directive('observe-visibility', observeVisibility)
   },
 }

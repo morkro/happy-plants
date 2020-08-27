@@ -29,7 +29,7 @@
 
     <type-dialog
       :show="showTypeDialog"
-      :selected="plant.type"
+      :selected="plant && plant.type"
       @type-selected="setSelectedType"
       @close-dialog="toggleDialog('type', false)"
     />
@@ -37,12 +37,12 @@
     <main>
       <plant-header
         :loading="loading"
-        :name="plant.name"
-        :photo="plant.imageURL"
+        :name="plant && plant.name"
+        :photo="plant && plant.imageURL"
         v-observe-visibility.60="observeVisibility"
       />
 
-      <module-type :type="plant.type" @open-dialog="toggleDialog('type', true)" />
+      <module-type :type="plant && plant.type" @open-dialog="toggleDialog('type', true)" />
 
       <module-tags :tags="plantTags.data" @open-dialog="toggleDialog('tags', true)" />
 
@@ -56,7 +56,7 @@
   import { mapState, mapActions } from 'vuex'
   import { RootState } from '@/store'
   import { Plant, PlantTag, PlantType } from '@/types/plant'
-  import { HomeState } from '@/modules/home/store/state'
+  import { TagsState } from '@/modules/tags/store/state'
   import SettingsDialog from '../components/SettingsDialog.vue'
   import PlantHeader from '../components/PlantHeader.vue'
   import ModuleTags from '../components/ModuleTags.vue'
@@ -100,11 +100,11 @@
     },
     computed: {
       ...mapState<RootState>({
-        allTags: (state: RootState) => state.home.tags,
+        allTags: (state: RootState) => state.tags,
       }),
-      plantTags(): HomeState['tags'] {
+      plantTags(): TagsState {
         return Object.assign({}, this.allTags, {
-          data: this.allTags.data.filter(tag => tag.plants.includes(this.plant.guid)),
+          data: this.allTags.data.filter((tag) => tag.plants.includes(this.plant.guid)),
         })
       },
       layoutClass(): Record<string, boolean> {
@@ -117,9 +117,9 @@
     },
     methods: {
       ...mapActions({
-        loadTags: 'home/loadTags',
-        createTag: 'home/createTag',
-        updateTags: 'home/updateTags',
+        loadTags: 'tags/loadTags',
+        createTag: 'tags/createTag',
+        updateTags: 'tags/updateTags',
       }),
       toggleDialog(type: 'tags' | 'settings' | 'type', show: boolean) {
         let query
@@ -145,19 +145,20 @@
         this.headerInView = visible
       },
       async setSelectedTags(tags: PlantTag[]) {
-        const removed = this.allTags.data.filter(tag => !tags.find(t => t.guid === tag.guid))
+        const removed = this.allTags.data.filter((tag) => !tags.find((t) => t.guid === tag.guid))
         await this.updateTags(
           this.plantTags.data.map((tag: PlantTag) => {
             if (!tag.plants.includes(this.plant.guid)) {
               tag.plants.push(this.plant.guid)
-            } else if (removed.find(r => r.guid === tag.guid)) {
-              tag.plants = tag.plants.filter(p => p !== this.plant.guid)
+            } else if (removed.find((r) => r.guid === tag.guid)) {
+              tag.plants = tag.plants.filter((p) => p !== this.plant.guid)
             }
             return tag
           })
         )
       },
       async setSelectedType(type: PlantType) {
+        // TODO: Implement updating plant type
         console.log(type)
       },
       async createNewTag(label: string) {

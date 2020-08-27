@@ -84,7 +84,7 @@ export function getDeviceInfo(): DeviceInfo {
     navigator.userAgent,
     navigator.appVersion,
     navigator.vendor,
-    (window as any).opera,
+    (window as any).opera, // eslint-disable-line @typescript-eslint/no-explicit-any
   ].join(' ')
 
   return {

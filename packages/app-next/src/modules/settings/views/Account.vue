@@ -90,7 +90,8 @@
 
       <div class="account-dangerzone">
         <v-text color="special" type="subtitle">
-          <feather-alert />Danger zone
+          <feather-alert />
+          {{ ' ' }} Danger zone
         </v-text>
         <v-text color="special">
           Deleting your account will remove all your personal information (name, email) and plant

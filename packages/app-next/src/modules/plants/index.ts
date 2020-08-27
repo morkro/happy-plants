@@ -1,4 +1,5 @@
 import { RouteConfig } from 'vue-router'
+import store from './store'
 
 const meta = {
   requiresAuth: true,
@@ -26,4 +27,4 @@ const routes: RouteConfig[] = [
   },
 ]
 
-export { routes }
+export { routes, store }

@@ -15,7 +15,7 @@
 
       <div class="dialog-settings-modified">
         <v-text small color="inactive">
-          Last modified {{ plant.modified | formatDate }} {{ modifiedTime }}
+          <span>Last modified {{ plant && plant.modified | formatDate }} {{ modifiedTime }}</span>
         </v-text>
       </div>
     </template>
@@ -58,7 +58,7 @@
         userID: (state: RootState) => state.account.uid,
       }),
       modifiedTime(): string {
-        return toReadableTime(this.plant.modified)
+        return toReadableTime(this.plant?.modified)
       },
     },
     methods: {
@@ -68,7 +68,7 @@
           this.progress = true
 
           await deletePlant(this.userID, this.plant)
-          this.$store.commit('home/removePlant', this.plant)
+          this.$store.commit('plants/removePlant', this.plant)
 
           if (this.plant.imageURL) {
             await deleteFile(getStoragePath(this.userID, this.plant.guid))

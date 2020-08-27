@@ -167,7 +167,7 @@
 <script lang="ts">
   import Vue, { PropType } from 'vue'
   import { HomeViewmode, HomeOrderBy } from '../index'
-  import { HomeState } from '../store/state'
+  import { TagsState } from '@/modules/tags/store/state'
   import { PlantTag, PlantType } from '@/types/plant'
   import types from '@/data/types'
 
@@ -180,7 +180,7 @@
       types: { type: Boolean },
       orderBy: { type: String },
       filterBy: { type: String },
-      tags: { type: Object as PropType<Pick<HomeState, 'tags'>> },
+      tags: { type: Object as PropType<TagsState> },
       loading: { type: Boolean, default: true },
     },
     components: {

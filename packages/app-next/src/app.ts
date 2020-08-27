@@ -20,7 +20,7 @@ export function createApp(): {
     new Vue({
       router,
       store,
-      render: h => h(App),
+      render: (h) => h(App),
     })
 
   return { create, router, store }

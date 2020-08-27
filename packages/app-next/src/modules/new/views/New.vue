@@ -76,13 +76,12 @@
                 <span class="visuallyhidden">Open dialog</span>
               </v-button>
 
-              <v-text v-if="!selectedTags.length" color="special">
-                Add tags for more granular organisation
-              </v-text>
+              <v-text
+                v-if="!selectedTags.length"
+                color="special"
+              >Add tags for more granular organisation</v-text>
               <div v-else>
-                <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{
-                  tag.label
-                }}</v-tag>
+                <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{ tag.label }}</v-tag>
               </div>
             </div>
           </label-group>
@@ -146,13 +145,13 @@
     },
     computed: mapState<RootState>({
       userID: (state: RootState) => state.account.uid,
-      existingTags: (state: RootState) => state.home.tags,
+      existingTags: (state: RootState) => state.tags,
     }),
     methods: {
       ...mapActions({
-        loadTags: 'home/loadTags',
-        createTag: 'home/createTag',
-        updateTags: 'home/updateTags',
+        loadTags: 'tags/loadTags',
+        createTag: 'tags/createTag',
+        updateTags: 'tags/updateTags',
       }),
       getFile(file: File) {
         this.error = { el: null, message: null }
@@ -194,7 +193,7 @@
 
           await addPlant(this.userID, plant)
           await this.updateTags(
-            this.selectedTags.map(tag => {
+            this.selectedTags.map((tag) => {
               tag.plants.push(guid)
               return tag
             })
@@ -204,7 +203,7 @@
             await uploadFile(getStoragePath(this.userID, guid), this.file.blob)
           }
 
-          this.$store.commit('home/assignPlant', plant)
+          this.$store.commit('plants/assignPlant', plant)
           await this.$router.push(`/plant/${guid}`)
         } catch (error) {
           logger(error.message, true)

@@ -24,7 +24,7 @@
       type: {
         type: String,
         default: 'text',
-        validator: v => types.has(v),
+        validator: (v) => types.has(v),
       },
       small: {
         type: Boolean,
@@ -33,7 +33,7 @@
       color: {
         type: String,
         default: 'normal',
-        validator: v => colors.includes(v),
+        validator: (v) => colors.includes(v),
       },
     },
 

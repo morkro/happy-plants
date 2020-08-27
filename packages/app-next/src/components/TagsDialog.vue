@@ -5,9 +5,10 @@
     <div :class="['dialog-tags-content', !tags.loaded && 'loading']">
       <feather-loader v-if="!tags.loaded" />
 
-      <v-text v-else-if="tags.loaded && tags.data.length === 0" color="inactive">
-        You haven't created any tags yet.
-      </v-text>
+      <v-text
+        v-else-if="tags.loaded && tags.data.length === 0"
+        color="inactive"
+      >You haven't created any tags yet.</v-text>
 
       <div v-else class="dialog-tags-list">
         <v-tag
@@ -16,9 +17,7 @@
           :selected="!!selected.find(t => t.guid === tag.guid)"
           :tag="tag"
           @tag-selected="toggleSelectedTag"
-        >
-          {{ tag.label }}
-        </v-tag>
+        >{{ tag.label }}</v-tag>
       </div>
 
       <form class="dialog-tags-form" @submit.prevent="addNewTag">
@@ -36,14 +35,14 @@
 
 <script lang="ts">
   import Vue, { PropType } from 'vue'
-  import { HomeState } from '@/modules/home/store/state'
+  import { TagsState } from '@/modules/tags/store/state'
   import { PlantTag } from '@/types/plant'
 
   export default Vue.extend({
     name: 'TagsDialog',
     props: {
       show: { type: Boolean, default: false },
-      tags: { type: Object as PropType<Pick<HomeState, 'tags'>>, default: false },
+      tags: { type: Object as PropType<TagsState>, default: false },
       preselected: { type: Array as PropType<PlantTag[]>, default: [] },
     },
     components: {
@@ -67,7 +66,7 @@
         if (payload.selected) {
           this.selected.push(payload.tag)
         } else {
-          this.selected = this.selected.filter(tag => tag.guid !== payload.tag.guid)
+          this.selected = this.selected.filter((tag) => tag.guid !== payload.tag.guid)
         }
         this.$emit('tags-selected', this.selected)
       },

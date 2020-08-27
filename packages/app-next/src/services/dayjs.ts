@@ -74,4 +74,4 @@ export const getCurrentMonth = (
   return month
 }
 
-export const toReadableTime = (time: number) => dayjs(time).format('HH:mm:ss')
+export const toReadableTime = (time: number): string => dayjs(time).format('HH:mm:ss')
