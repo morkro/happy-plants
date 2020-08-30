@@ -48,6 +48,7 @@
         :filter-by="filterBy && filterBy.guid"
         :tags="tags"
         :loading="loading"
+        ref="viewOptions"
         @update-viewmode="updateViewmode"
         @toggle-types="toggleShowTypes"
         @update-orderby="updateOrderBy"
@@ -209,8 +210,10 @@
         await Vue.nextTick()
         ;(this.$refs.homeHeaderSearch as HTMLInputElement).focus()
       },
-      showViewOptions(): void {
+      async showViewOptions(): Promise<void> {
         this.viewOptionsVisible = true
+        await Vue.nextTick()
+        ;(this.$refs.viewOptions as HTMLDivElement).focus()
         this.$router.push({ path: '/home', query: { options: null } })
       },
       closeActions(): void {
@@ -296,6 +299,11 @@
         display: block;
         transform: translateY(-100%);
         animation: appear-reverse 150ms;
+      }
+
+      &.overlay {
+        overflow: hidden;
+        height: calc(100vh - (2 * var(--app-header-height)));
       }
 
       &.overlay::before {

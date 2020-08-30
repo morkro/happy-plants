@@ -1,5 +1,5 @@
 <template>
-  <div class="home-view-options">
+  <div class="home-view-options" ref="homeViewOptions">
     <section>
       <v-text type="subtitle">Viewmode</v-text>
       <ul>
@@ -81,34 +81,36 @@
           <feather-maximize v-else />
         </button>
 
-        <ul v-if="filterVisible === 'type'">
-          <li>
-            <label for="filterby-all">
-              <v-input
-                type="radio"
-                id="filterby-all"
-                name="type"
-                value="filterby-all"
-                checked
-                @click.native="updateTag(null)"
-              />
-              <v-text>Show all</v-text>
-            </label>
-          </li>
-          <li v-for="type of plantTypes" :key="type.guid">
-            <label :for="`${type.value}`">
-              <v-input
-                type="radio"
-                :id="type.value"
-                name="type"
-                :value="type.value"
-                :checked="filterBy === type.guid"
-                @click.native="updateType(type)"
-              ></v-input>
-              <v-text>{{ type.label }}</v-text>
-            </label>
-          </li>
-        </ul>
+        <div class="filter-list-wrapper" v-if="filterVisible === 'type'">
+          <ul>
+            <li>
+              <label for="filterby-all">
+                <v-input
+                  type="radio"
+                  id="filterby-all"
+                  name="type"
+                  value="filterby-all"
+                  checked
+                  @click.native="updateTag(null)"
+                />
+                <v-text>Show all</v-text>
+              </label>
+            </li>
+            <li v-for="type of plantTypes" :key="type.guid">
+              <label :for="`${type.value}`">
+                <v-input
+                  type="radio"
+                  :id="type.value"
+                  name="type"
+                  :value="type.value"
+                  :checked="filterBy === type.guid"
+                  @click.native="updateType(type)"
+                ></v-input>
+                <v-text>{{ type.label }}</v-text>
+              </label>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="filter-tags">
         <button @click="toggleFilter('tags')">
@@ -118,34 +120,36 @@
         </button>
 
         <feather-loader v-if="loading" />
-        <ul v-else-if="!loading && filterVisible === 'tags'">
-          <li>
-            <label for="filterby-all">
-              <v-input
-                type="radio"
-                id="filterby-all"
-                name="tags"
-                value="filterby-all"
-                checked
-                @click.native="updateTag(null)"
-              />
-              <v-text>Show all</v-text>
-            </label>
-          </li>
-          <li v-for="tag of tags.data" :key="tag.name">
-            <label :for="tag.name">
-              <v-input
-                type="radio"
-                :id="tag.name"
-                name="tags"
-                :value="tag.name"
-                :checked="filterBy === tag.guid"
-                @click.native="updateTag(tag)"
-              />
-              <v-text>{{ tag.label }}</v-text>
-            </label>
-          </li>
-        </ul>
+        <div class="filter-list-wrapper" v-else-if="!loading && filterVisible === 'tags'">
+          <ul>
+            <li>
+              <label for="filterby-all">
+                <v-input
+                  type="radio"
+                  id="filterby-all"
+                  name="tags"
+                  value="filterby-all"
+                  checked
+                  @click.native="updateTag(null)"
+                />
+                <v-text>Show all</v-text>
+              </label>
+            </li>
+            <li v-for="tag of tags.data" :key="tag.name">
+              <label :for="tag.name">
+                <v-input
+                  type="radio"
+                  :id="tag.name"
+                  name="tags"
+                  :value="tag.name"
+                  :checked="filterBy === tag.guid"
+                  @click.native="updateTag(tag)"
+                />
+                <v-text>{{ tag.label }}</v-text>
+              </label>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -222,6 +226,9 @@
           return
         }
         this.filterVisible = type
+      },
+      focus(): void {
+        ;(this.$refs.homeViewOptions as HTMLDivElement).focus()
       },
     },
   })
@@ -300,8 +307,12 @@
 
     & > div {
       width: 100%;
-      max-height: 200px;
       overflow: hidden;
+
+      & .filter-list-wrapper {
+        overflow: scroll;
+        height: 180px;
+      }
 
       & ul {
         height: 100%;

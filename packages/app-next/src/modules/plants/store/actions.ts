@@ -3,8 +3,14 @@ import { setLocalEntry } from '@/services/localStorage'
 import { RootState } from '@/store'
 import config from '@/config'
 import logger from '@/utils/vueLogger'
-import { getCollection, FirestoreCollections } from '@/services/firebase'
+import {
+  getCollection,
+  FirestoreCollections,
+  updatePlant as _updatePlant,
+} from '@/services/firebase'
 import DownloadURLWorker from 'worker-loader!../downloadURL.worker'
+import { Plant } from '@/types/plant'
+import deepMerge from '@/utils/merge'
 
 const orderMap = new Map<string, [string, firebase.firestore.OrderByDirection]>([
   ['alphabetically', ['name', 'asc']],
@@ -67,6 +73,31 @@ export const loadPlants = async (
       {
         type: 'alert',
         message: 'Unable to load plants.',
+      },
+      { root: true }
+    )
+  }
+}
+
+export const updatePlant = async (
+  context: {
+    commit: Commit
+    dispatch: Dispatch
+    rootState: RootState
+  },
+  plant: Plant
+): Promise<void> => {
+  try {
+    const userID = context.rootState.account.uid
+    await _updatePlant(userID, plant)
+    context.commit('updatePlant', plant)
+  } catch (error) {
+    logger(`updatePlant() => ${error.message}`, true)
+    context.dispatch(
+      'notifications/show',
+      {
+        type: 'alert',
+        message: 'Failed to update plant. Please try again.',
       },
       { root: true }
     )

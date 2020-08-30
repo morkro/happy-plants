@@ -9,18 +9,18 @@ const meta = {
 const routes: RouteConfig[] = [
   {
     path: '/plant/:id',
-    component: () => import('./views/Container.vue' /* webpackChunkName: "plant" */),
+    component: () => import('./components/Container.vue' /* webpackChunkName: "plant" */),
     children: [
       {
         path: '',
         name: 'Plant',
-        component: () => import('./views/Plant.vue' /* webpackChunkName: "plant" */),
+        component: () => import('./components/PlantView.vue' /* webpackChunkName: "plant" */),
         meta,
       },
       {
         path: 'gallery',
         name: 'Gallery',
-        component: () => import('./views/Gallery.vue' /* webpackChunkName: "plant" */),
+        component: () => import('./components/GalleryView.vue' /* webpackChunkName: "plant" */),
         meta,
       },
     ],

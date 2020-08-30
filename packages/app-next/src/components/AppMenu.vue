@@ -94,7 +94,7 @@
 
 <style lang="postcss">
   #app-menu {
-    height: 50px;
+    height: var(--app-header-height);
     width: 100%;
     background: var(--brand-beige);
     position: sticky;

@@ -7,7 +7,7 @@ const routes: RouteConfig[] = [
   {
     name: 'Home',
     path: '/home',
-    component: () => import('./views/Home.vue' /* webpackChunkName: "home" */),
+    component: () => import('./components/HomeView.vue' /* webpackChunkName: "home" */),
     meta: {
       requiresAuth: true,
       showAppMenu: true,

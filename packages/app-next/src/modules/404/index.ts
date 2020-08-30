@@ -4,7 +4,7 @@ const routes: RouteConfig[] = [
   {
     name: 'NotFound',
     path: '*',
-    component: () => import('./views/NotFound.vue' /* webpackChunkName: "notfound" */),
+    component: () => import('./components/NotFoundView.vue' /* webpackChunkName: "notfound" */),
     meta: {
       requiresAuth: false,
       showAppMenu: true,

@@ -4,7 +4,7 @@ const routes: RouteConfig[] = [
   {
     name: 'Watering',
     path: '/watering',
-    component: () => import('./views/Watering.vue' /* webpackChunkName: "watering" */),
+    component: () => import('./components/WateringView.vue' /* webpackChunkName: "watering" */),
     meta: {
       requiresAuth: true,
       showAppMenu: true,

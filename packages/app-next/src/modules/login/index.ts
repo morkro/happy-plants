@@ -4,7 +4,7 @@ const routes: RouteConfig[] = [
   {
     name: 'Login',
     path: '/login',
-    component: () => import('./views/Login.vue' /* webpackChunkName: "Login" */),
+    component: () => import('./components/LoginView.vue' /* webpackChunkName: "Login" */),
     meta: {
       requiresAuth: false,
       showAppMenu: false,

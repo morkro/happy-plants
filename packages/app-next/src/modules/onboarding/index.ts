@@ -18,17 +18,19 @@ const routes: RouteConfig[] = [
         name: 'OnboardingAccount',
         path: '',
         component: () =>
-          import('./views/AccountSelection.vue' /* webpackChunkName: "onboarding" */),
+          import('./components/AccountSelectionView.vue' /* webpackChunkName: "onboarding" */),
       },
       {
         name: 'OnboardingEmail',
         path: 'email',
-        component: () => import('./views/EmailAccount.vue' /* webpackChunkName: "onboarding" */),
+        component: () =>
+          import('./components/EmailAccountView.vue' /* webpackChunkName: "onboarding" */),
       },
       {
         name: 'OnboardingSuccess',
         path: 'success',
-        component: () => import('./views/Success.vue' /* webpackChunkName: "onboarding" */),
+        component: () =>
+          import('./components/SuccessView.vue' /* webpackChunkName: "onboarding" */),
       },
     ],
   },

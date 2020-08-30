@@ -5,7 +5,7 @@ const routes: RouteConfig[] = [
   {
     path: '/account',
     name: 'Account',
-    component: () => import('./views/Account.vue' /* webpackChunkName: "account" */),
+    component: () => import('./components/AccountView.vue' /* webpackChunkName: "account" */),
     meta: {
       requiresAuth: false,
       showAppMenu: false,

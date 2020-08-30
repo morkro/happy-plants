@@ -4,7 +4,7 @@ const routes: RouteConfig[] = [
   {
     name: 'Welcome',
     path: '/welcome',
-    component: () => import('./views/Welcome.vue' /* webpackChunkName: "Welcome" */),
+    component: () => import('./components/WelcomeView.vue' /* webpackChunkName: "Welcome" */),
     meta: {
       requiresAuth: false,
       showAppMenu: false,

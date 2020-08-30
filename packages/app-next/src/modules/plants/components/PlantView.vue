@@ -62,6 +62,14 @@
   import ModuleTags from '../components/ModuleTags.vue'
   import ModuleType from '../components/ModuleType.vue'
   import ModulesContainer from '../components/ModulesContainer.vue'
+  import deepMerge from '@/utils/merge'
+
+  /**
+   * TODO: Implement update name
+   * TODO: Implement update photo
+   * TODO: Add modules
+   * TODO: Add gallery
+   */
 
   interface PlantMapState {
     allTags: {
@@ -120,6 +128,7 @@
         loadTags: 'tags/loadTags',
         createTag: 'tags/createTag',
         updateTags: 'tags/updateTags',
+        updatePlant: 'plants/updatePlant',
       }),
       toggleDialog(type: 'tags' | 'settings' | 'type', show: boolean) {
         let query
@@ -158,8 +167,14 @@
         )
       },
       async setSelectedType(type: PlantType) {
-        // TODO: Implement updating plant type
-        console.log(type)
+        await this.updatePlant(
+          deepMerge(this.plant, {
+            guid: this.plant.guid,
+            modified: Date.now(),
+            type,
+          })
+        )
+        this.plant.type = type
       },
       async createNewTag(label: string) {
         await this.createTag({ label })

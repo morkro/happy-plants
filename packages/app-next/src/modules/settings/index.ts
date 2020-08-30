@@ -13,55 +13,58 @@ const routes: RouteConfig[] = [
       {
         path: '',
         name: 'Settings',
-        component: () => import('./views/Menu.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/MenuView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'account',
         name: 'SettingsAccount',
-        component: () => import('./views/Account.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/AccountView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'profile',
         name: 'SettingsProfile',
-        component: () => import('./views/Profile.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/ProfileView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'tags',
         name: 'SettingsTags',
-        component: () => import('./views/Tags.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/TagsView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'modules',
         name: 'SettingsModules',
-        component: () => import('./views/Modules.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/ModulesView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'about',
         name: 'SettingsAbout',
-        component: () => import('./views/About.vue' /* webpackChunkName: "settings" */),
+        component: () => import('./components/AboutView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'release-notes',
         name: 'SettingsReleaseNotes',
-        component: () => import('./views/ReleaseNotes.vue' /* webpackChunkName: "settings" */),
+        component: () =>
+          import('./components/ReleaseNotesView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'feature-request',
         name: 'SettingsFeatureRequest',
-        component: () => import('./views/FeatureRequest.vue' /* webpackChunkName: "settings" */),
+        component: () =>
+          import('./components/FeatureRequestView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
       {
         path: 'bug-report',
         name: 'SettingsBugReport',
-        component: () => import('./views/BugReport.vue' /* webpackChunkName: "settings" */),
+        component: () =>
+          import('./components/BugReportView.vue' /* webpackChunkName: "settings" */),
         meta,
       },
     ],

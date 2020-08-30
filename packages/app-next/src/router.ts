@@ -12,6 +12,7 @@ import { routes as plant } from './modules/plants'
 import { routes as debug } from './modules/__debug__'
 import { routes as notfound } from './modules/404'
 import store from './store'
+import config from './config'
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,6 @@ export function createRouter(): VueRouter {
       ...addnew,
       ...settings,
       ...plant,
-      ...debug,
       ...notfound,
     ],
     scrollBehavior(to: Route, from: Route, savedPosition) {
@@ -41,6 +41,10 @@ export function createRouter(): VueRouter {
       }
     },
   })
+
+  if (!config.isProduction) {
+    router.addRoutes([...debug])
+  }
 
   router.beforeEach((to: Route, from: Route, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)

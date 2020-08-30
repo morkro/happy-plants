@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { PlantsState } from './state'
 import { Plant } from '@/types/plant'
+import deepMerge from '@/utils/merge'
 
 export default {
   assignPlant(state: PlantsState, payload: Plant): void {
@@ -17,7 +18,7 @@ export default {
     state.data.splice(
       state.data.findIndex((p) => p.guid === payload.guid),
       1,
-      Object.assign({}, plant, payload)
+      deepMerge(plant, payload) as Plant
     )
   },
   removePlant(state: PlantsState, payload: Plant): void {
