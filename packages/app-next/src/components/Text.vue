@@ -1,5 +1,5 @@
 <template>
-  <component :is="textNode" :class="textClass">
+  <component :is="textNode" :class="textClass" ref="textNode">
     <slot />
   </component>
 </template>
@@ -19,7 +19,6 @@
 
   export default Vue.extend({
     name: 'VText',
-
     props: {
       type: {
         type: String,
@@ -36,7 +35,6 @@
         validator: (v) => colors.includes(v),
       },
     },
-
     computed: {
       textNode(): string {
         return types.get(this.type).node
@@ -47,6 +45,11 @@
       textClass(): string[] {
         const typeNotText = this.type && this.type !== 'text'
         return ['text', typeNotText ? this.type : '', this.textSize, this.color]
+      },
+    },
+    methods: {
+      focus(): void {
+        ;(this.$refs.textNode as HTMLElement).focus()
       },
     },
   })

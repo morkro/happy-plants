@@ -1,22 +1,30 @@
 <template>
-  <header
-    :class="['plant-header', photo && 'has-photo', loading && 'loading']"
-    @click="uploadNewPhoto"
-  >
-    <div v-if="!loading" class="plant-header-label">
-      <v-text type="subtitle" :color="photo ? 'special' : 'normal'">{{ name }}</v-text>
+  <header :class="['plant-header', photo && 'has-photo', loading && 'loading']">
+    <div v-if="!loading" :class="['plant-header-label', canEditName && 'edit']" @click="editName">
+      <v-text
+        type="subtitle"
+        :color="photo ? 'special' : 'normal'"
+        @blur.native="updateName"
+        :contenteditable="canEditName"
+        ref="headerName"
+      >
+        <span>{{ name }}</span>
+      </v-text>
     </div>
 
-    <div class="plant-header-bg">
+    <div class="plant-header-bg" @click="uploadNewPhoto">
       <feather-loader v-if="loading" class="plant-header-icon" />
       <lazy-image v-else-if="!loading && photo" :src="photo" :alt="name" :title="name" />
       <feather-camera v-else class="plant-header-icon" />
+
+      <file-upload ref="headerFile" id="plant-header-file" @file-selected="getFile" />
     </div>
   </header>
 </template>
 
 <script lang="ts">
   import Vue from 'vue'
+  import { HTMLElementEvent } from '@/types/events'
 
   export default Vue.extend({
     name: 'PlantHeader',
@@ -31,9 +39,34 @@
       'feather-loader': () =>
         import('vue-feather-icons/icons/LoaderIcon' /* webpackChunkName: "icons" */),
     },
+    data() {
+      return {
+        canEditName: false,
+        triggerUpload: false,
+      }
+    },
     methods: {
       uploadNewPhoto() {
-        console.log('yes upload')
+        this.triggerUpload = true
+        // Really hoping this can be done better in future.
+        ;(this.$refs.headerFile as Vue & { triggerUpload: () => void }).triggerUpload()
+      },
+      async editName() {
+        this.canEditName = true
+        await Vue.nextTick()
+        ;(this.$refs.headerName as HTMLHeadingElement).focus()
+      },
+      updateName(event: HTMLElementEvent<HTMLHeadingElement>) {
+        this.canEditName = false
+        if (event.target?.textContent) {
+          const newName = event.target.textContent.trim().replace(/\s\s+/g, ' ')
+          if (newName !== this.name) {
+            this.$emit('update-name', newName)
+          }
+        }
+      },
+      getFile(file: File) {
+        console.log(file)
       },
     },
   })
@@ -85,6 +118,10 @@
     position: relative;
     z-index: 1;
 
+    &.edit {
+      background: var(--brand-black-50);
+    }
+
     @nest .has-photo & {
       background-image: linear-gradient(
         to bottom,
@@ -119,6 +156,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & .fileupload {
+      position: absolute;
+      left: 0;
+      transform: translateX(-100%);
+      height: 0;
+      opacity: 0;
+    }
   }
 
   .plant-header-icon {

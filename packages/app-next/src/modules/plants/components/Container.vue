@@ -7,7 +7,8 @@
   import { mapState } from 'vuex'
   import { RootState } from '@/store'
   import { Plant } from '@/types/plant'
-  import { getCollection, FirestoreCollections } from '@/services/firebase'
+  import { getCollection, FirestoreCollections, downloadFile } from '@/services/firebase'
+  import logger from '@/utils/vueLogger'
 
   interface PlantMapState {
     userID: string
@@ -31,7 +32,7 @@
       }),
       plant(): Plant {
         if (this.plants.loaded) {
-          return this.plants.data.find((plant) => plant.guid === this.$route.params.id)
+          return this.plants.data.find((plant) => plant?.guid === this.$route.params.id)
         }
         return this.individualPlant
       },
@@ -41,7 +42,17 @@
         const snapshot = await getCollection(this.userID, FirestoreCollections.Plants)
           .doc(this.$route.params.id)
           .get()
-        this.individualPlant = snapshot.data()
+        const plantData = snapshot.data()
+
+        if (plantData.imageURL) {
+          try {
+            plantData.imageURL = await downloadFile(plantData.imageURL)
+          } catch (error) {
+            logger(error.message, true)
+          }
+        }
+
+        this.individualPlant = plantData
         this.loading = false
       }
     },

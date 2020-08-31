@@ -1,6 +1,15 @@
 import firebase, { downloadFile } from '@/services/firebase'
 import { Plant } from '@/types/plant'
 
+export interface DownloadWorkerEvent {
+  data: {
+    error: boolean
+    guid: string
+    message: string
+    imageURL?: string
+  }
+}
+
 const context: Worker = self as any // eslint-disable-line
 
 // Authenticate in new context, otherwise no permissions granted.

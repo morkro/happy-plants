@@ -9,23 +9,14 @@ import {
   updatePlant as _updatePlant,
 } from '@/services/firebase'
 import DownloadURLWorker from 'worker-loader!../downloadURL.worker'
+import { DownloadWorkerEvent } from '../downloadURL.worker'
 import { Plant } from '@/types/plant'
-import deepMerge from '@/utils/merge'
 
 const orderMap = new Map<string, [string, firebase.firestore.OrderByDirection]>([
   ['alphabetically', ['name', 'asc']],
   ['latest', ['created', 'desc']],
 ])
 const downloadURLWorker = new DownloadURLWorker()
-
-interface DownloadWorkerEvent {
-  data: {
-    error: boolean
-    guid: string
-    message: string
-    imageURL?: string
-  }
-}
 
 export const loadPlants = async (
   context: {
@@ -60,7 +51,7 @@ export const loadPlants = async (
       context.commit('assignPlant', plantData)
 
       if (plantData.imageURL) {
-        logger(`[Worker] Fetching plant image ${plantData.guid}`)
+        // logger(`[Worker] Fetching plant image ${plantData.guid}`)
         downloadURLWorker.postMessage(plantData)
       }
     }

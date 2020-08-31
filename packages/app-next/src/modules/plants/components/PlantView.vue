@@ -39,6 +39,7 @@
         :loading="loading"
         :name="plant && plant.name"
         :photo="plant && plant.imageURL"
+        @update-name="setNewName"
         v-observe-visibility.60="observeVisibility"
       />
 
@@ -63,6 +64,7 @@
   import ModuleType from '../components/ModuleType.vue'
   import ModulesContainer from '../components/ModulesContainer.vue'
   import deepMerge from '@/utils/merge'
+  import logger from '@/utils/vueLogger'
 
   /**
    * TODO: Implement update name
@@ -112,7 +114,7 @@
       }),
       plantTags(): TagsState {
         return Object.assign({}, this.allTags, {
-          data: this.allTags.data.filter((tag) => tag.plants.includes(this.plant.guid)),
+          data: this.allTags.data.filter((tag) => tag.plants.includes(this.plant?.guid)),
         })
       },
       layoutClass(): Record<string, boolean> {
@@ -129,6 +131,7 @@
         createTag: 'tags/createTag',
         updateTags: 'tags/updateTags',
         updatePlant: 'plants/updatePlant',
+        showNotification: 'notifications/show',
       }),
       toggleDialog(type: 'tags' | 'settings' | 'type', show: boolean) {
         let query
@@ -151,7 +154,22 @@
         }
       },
       observeVisibility(visible: boolean) {
+        console.log('visible', visible)
         this.headerInView = visible
+      },
+      async setNewName(name: string) {
+        try {
+          await this.updatePlant(
+            deepMerge(this.plant, {
+              guid: this.plant.guid,
+              modified: Date.now(),
+              name,
+            })
+          )
+        } catch (error) {
+          logger(error.name, true)
+          this.showNotification({ type: 'alert', message: 'There was a problem updating. ' })
+        }
       },
       async setSelectedTags(tags: PlantTag[]) {
         const removed = this.allTags.data.filter((tag) => !tags.find((t) => t.guid === tag.guid))
@@ -167,22 +185,36 @@
         )
       },
       async setSelectedType(type: PlantType) {
-        await this.updatePlant(
-          deepMerge(this.plant, {
-            guid: this.plant.guid,
-            modified: Date.now(),
-            type,
-          })
-        )
-        this.plant.type = type
+        try {
+          await this.updatePlant(
+            deepMerge(this.plant, {
+              guid: this.plant.guid,
+              modified: Date.now(),
+              type,
+            })
+          )
+          this.plant.type = type
+        } catch (error) {
+          logger(error.name, true)
+          this.showNotification({ type: 'alert', message: 'There was a problem updating. ' })
+        }
       },
       async createNewTag(label: string) {
-        await this.createTag({ label })
+        try {
+          await this.createTag({ label })
+        } catch (error) {
+          logger(error.name, true)
+          this.showNotification({ type: 'alert', message: 'There was a problem updating. ' })
+        }
       },
     },
     async created() {
       if (!this.allTags.loaded) {
-        await this.loadTags()
+        try {
+          await this.loadTags()
+        } catch (error) {
+          logger(error.message, true)
+        }
       }
     },
   })
@@ -190,6 +222,8 @@
 
 <style lang="postcss">
   .screen-plant {
+    background: var(--brand-beige);
+
     &.header-in-view:not(.no-photo) #app-header .app-header-icon svg {
       stroke: var(--brand-white);
     }

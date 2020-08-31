@@ -39,23 +39,21 @@
       </template>
     </app-header>
 
-    <transition name="slide">
-      <view-options
-        v-if="viewOptionsVisible"
-        :viewmode="viewmode"
-        :types="types"
-        :order-by="orderBy"
-        :filter-by="filterBy && filterBy.guid"
-        :tags="tags"
-        :loading="loading"
-        ref="viewOptions"
-        @update-viewmode="updateViewmode"
-        @toggle-types="toggleShowTypes"
-        @update-orderby="updateOrderBy"
-        @update-tag="updateTags"
-        @update-type="updateTypes"
-      />
-    </transition>
+    <view-options
+      :visible="viewOptionsVisible"
+      :viewmode="viewmode"
+      :types="types"
+      :order-by="orderBy"
+      :filter-by="filterBy && filterBy.guid"
+      :tags="tags"
+      :loading="loading"
+      ref="viewOptions"
+      @update-viewmode="updateViewmode"
+      @toggle-types="toggleShowTypes"
+      @update-orderby="updateOrderBy"
+      @update-tag="updateTags"
+      @update-type="updateTypes"
+    />
 
     <main :class="mainContentClasses">
       <div v-if="!loading && plantData.length && filterBy" class="home-plants-filterby">
@@ -274,7 +272,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    position: relative;
 
     & main {
       padding: 0 var(--base-gap);
@@ -284,8 +281,6 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      position: relative;
-      z-index: 0;
 
       &::before {
         width: 100%;
@@ -319,7 +314,7 @@
 
   .screen-home #app-header {
     background: var(--brand-beige);
-    z-index: 2;
+    z-index: 3;
 
     & .home-header-actions {
       display: flex;
@@ -407,59 +402,6 @@
     }
     100% {
       clip-path: circle(150% at 93.5%);
-    }
-  }
-
-  .slide-enter-active {
-    animation: slide-in 500ms linear both;
-  }
-
-  .slide-leave-active {
-    animation: slide-up 150ms linear;
-  }
-
-  @keyframes slide-up {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-100%);
-    }
-  }
-
-  @keyframes slide-in {
-    0% {
-      transform: translateY(-100%);
-    }
-    4.5% {
-      transform: translateY(-51.473%);
-    }
-    9.01% {
-      transform: translateY(-12.002%);
-    }
-    13.51% {
-      transform: translateY(8.742%);
-    }
-    17.92% {
-      transform: translateY(13.922%);
-    }
-    29.03% {
-      transform: translateY(3.229%);
-    }
-    34.63% {
-      transform: translateY(-0.593%);
-    }
-    40.14% {
-      transform: translateY(-1.543%);
-    }
-    62.36% {
-      transform: translateY(0.171%);
-    }
-    84.68% {
-      transform: translateY(-0.019%);
-    }
-    100% {
-      transform: translateY(0%);
     }
   }
 </style>

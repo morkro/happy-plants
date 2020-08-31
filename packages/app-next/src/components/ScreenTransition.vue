@@ -106,6 +106,7 @@
     transition-property: transform;
     transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
     overflow: hidden;
+    display: block;
     position: absolute;
     top: 0;
     left: 0;

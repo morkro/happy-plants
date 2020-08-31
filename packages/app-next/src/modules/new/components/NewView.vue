@@ -76,10 +76,9 @@
                 <span class="visuallyhidden">Open dialog</span>
               </v-button>
 
-              <v-text
-                v-if="!selectedTags.length"
-                color="special"
-              >Add tags for more granular organisation</v-text>
+              <v-text v-if="!selectedTags.length" color="special">
+                <span>Add tags for more granular organisation</span>
+              </v-text>
               <div v-else>
                 <v-tag v-for="tag of selectedTags" :key="tag.guid" :tag="tag">{{ tag.label }}</v-tag>
               </div>

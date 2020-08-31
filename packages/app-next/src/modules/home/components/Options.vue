@@ -1,5 +1,5 @@
 <template>
-  <div class="home-view-options" ref="homeViewOptions">
+  <div :class="['home-view-options', visible && 'visible']" ref="homeViewOptions">
     <section>
       <v-text type="subtitle">Viewmode</v-text>
       <ul>
@@ -180,6 +180,7 @@
   export default Vue.extend({
     name: 'ViewOptions',
     props: {
+      visible: { type: Boolean, default: false },
       viewmode: { type: String },
       types: { type: Boolean },
       orderBy: { type: String },
@@ -237,13 +238,18 @@
 <style lang="postcss">
   .home-view-options {
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     top: 0;
     background: var(--brand-white);
     width: 100%;
     display: grid;
     grid-template-columns: 50% 50%;
     padding-top: var(--app-header-height);
+    transform: translateY(-100%);
+
+    &.visible {
+      animation: slide-options-in 1000ms linear both;
+    }
 
     & section {
       padding: var(--base-gap) var(--base-gap) 0;
@@ -294,6 +300,42 @@
       left: 0;
       width: 100%;
       transform: translateY(100%);
+    }
+  }
+
+  @keyframes slide-options-in {
+    0% {
+      transform: translateY(-100%);
+    }
+    4.5% {
+      transform: translateY(-51.473%);
+    }
+    9.01% {
+      transform: translateY(-12.002%);
+    }
+    13.51% {
+      transform: translateY(8.742%);
+    }
+    17.92% {
+      transform: translateY(13.922%);
+    }
+    29.03% {
+      transform: translateY(3.229%);
+    }
+    34.63% {
+      transform: translateY(-0.593%);
+    }
+    40.14% {
+      transform: translateY(-1.543%);
+    }
+    62.36% {
+      transform: translateY(0.171%);
+    }
+    84.68% {
+      transform: translateY(-0.019%);
+    }
+    100% {
+      transform: translateY(0%);
     }
   }
 
