@@ -162,7 +162,7 @@
           if (this.filterById === 'tags') {
             return this.plants.data.filter((plant) => this.filterBy.plants.includes(plant.guid))
           } else if (this.filterById === 'type') {
-            return this.plants.data.filter((plant) => plant.type.guid === this.filterBy.guid)
+            return this.plants.data.filter((plant) => plant.type?.guid === this.filterBy?.guid)
           }
         }
 
