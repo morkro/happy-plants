@@ -36,12 +36,6 @@ export const loadPlants = async (
     setLocalEntry(config.localStorage.plantCount, String(snapshot.docs.length))
 
     downloadURLWorker.onmessage = (event: DownloadWorkerEvent) => {
-      console.log('outside', event)
-      // if (event.origin !== context.location.host) {
-      //   logger('Web Worker terminated as event origin and location host do not match.')
-      //   return
-      // }
-
       if (event.data.error) {
         logger(
           `[Worker] Failed to load plant (${event.data.guid}) photo ${event.data.message}`,
