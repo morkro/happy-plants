@@ -65,6 +65,7 @@
     },
     methods: {
       ...mapActions({ update: 'account/updateProfile' }),
+      // TODO: Uploading a new photo does nothing right now. Feature needs to be implemented separately.
       updateProfile() {
         if (!this.name) return
         this.updateProgress = true

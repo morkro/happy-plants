@@ -10,6 +10,8 @@ import './registerServiceWorker'
 import './registerPlugins'
 import './registerComponents'
 
+// TODO: Top system bar color should match (manifest `theme_color`)
+
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
 )

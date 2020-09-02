@@ -16,6 +16,7 @@ const context: Worker = self as any // eslint-disable-line
 firebase.auth()
 
 context.addEventListener('message', async (event: MessageEvent & { data: Plant }) => {
+  console.log('inside', event)
   try {
     const imageURL = await downloadFile(event.data.imageURL)
     context.postMessage({ imageURL, guid: event.data.guid })

@@ -110,6 +110,8 @@
   import TypeDialog from '@/components/TypeDialog.vue'
   import Illustration from '../components/Illustration.vue'
 
+  // TODO: After adding plant, photo is not shown
+
   interface NewMapState {
     userID: string
     existingTags: {
@@ -263,6 +265,7 @@
       text-align: center;
       background: var(--brand-green);
       position: relative;
+      z-index: 0;
 
       & .new-illustration-bg {
         position: absolute;

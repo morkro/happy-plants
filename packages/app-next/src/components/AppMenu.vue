@@ -116,7 +116,6 @@
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 9px -2px var(--brand-beige-dark);
     }
 
     &.router-link-active svg {
@@ -130,6 +129,7 @@
       transition: fill 100ms ease-in-out, stroke 100ms ease-in-out;
     }
 
+    &.link-home:focus svg,
     &.link-home.router-link-active svg {
       & path {
         fill: var(--brand-green-dark);
@@ -139,12 +139,14 @@
       }
     }
 
+    &.link-watering:focus svg,
     &.link-watering.router-link-active svg {
       & path {
         fill: var(--brand-green-dark);
       }
     }
 
+    &.link-add-new:focus svg,
     &.link-add-new.router-link-active svg {
       & rect {
         fill: var(--brand-green-dark);
@@ -154,6 +156,7 @@
       }
     }
 
+    &.link-settings:focus svg,
     &.link-settings.router-link-active svg {
       & circle {
         fill: var(--brand-beige);

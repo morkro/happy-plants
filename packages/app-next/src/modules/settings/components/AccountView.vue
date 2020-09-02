@@ -110,6 +110,8 @@
   import logger from '@/utils/vueLogger'
   import setErrorMessage from '@/utils/setErrorMessage'
 
+  // TODO: Move account deletion to new page Account settings
+
   interface SettingsAccountMapState {
     currentName: string | null
     currentPhotoURL: string | null

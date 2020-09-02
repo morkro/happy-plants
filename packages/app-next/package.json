@@ -1,6 +1,6 @@
 {
   "name": "@happy-plants/app-next",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "private": true,
   "description": "🌵 Web application to keep your plants happy",
   "author": "Moritz Kröger <write@morkro.de> (https://moritz.berlin)",
@@ -36,7 +36,6 @@
     "vue-feather-icons": "^5.1.0",
     "vue-meta": "^2.4.0",
     "vue-router": "^3.4.3",
-    "vue-virtual-scroll-list": "^2.3.1",
     "vuex": "^3.5.1",
     "vuex-router-sync": "^5.0.0"
   },

@@ -187,6 +187,10 @@
       height: 20vh;
     }
 
+    & button {
+      margin-top: calc(0.5 * var(--base-gap));
+    }
+
     & button svg {
       animation: spin 3s linear infinite;
     }

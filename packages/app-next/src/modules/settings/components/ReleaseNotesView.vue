@@ -39,6 +39,10 @@
   import config from '@/config'
   import ChangeLog from '#/CHANGELOG.md'
 
+  /**
+   * TODO: Remove current version, just a duplicate
+   */
+
   export default Vue.extend({
     name: 'SettingsReleaseNotes',
 

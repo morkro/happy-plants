@@ -293,9 +293,8 @@
 
       &:focus,
       &:active {
-        color: var(--brand-white);
+        color: var(--brand-green-dark);
         outline: none;
-        background: var(--brand-green);
       }
     }
   }

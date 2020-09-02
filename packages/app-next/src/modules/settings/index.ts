@@ -41,12 +41,6 @@ const routes: RouteConfig[] = [
         meta,
       },
       {
-        path: 'about',
-        name: 'SettingsAbout',
-        component: () => import('./components/AboutView.vue' /* webpackChunkName: "settings" */),
-        meta,
-      },
-      {
         path: 'release-notes',
         name: 'SettingsReleaseNotes',
         component: () =>

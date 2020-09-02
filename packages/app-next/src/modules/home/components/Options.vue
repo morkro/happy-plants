@@ -175,6 +175,8 @@
   import { PlantTag, PlantType } from '@/types/plant'
   import types from '@/data/types'
 
+  // TODO: Add clear button for filter
+
   type FilterTypes = 'type' | 'tags'
 
   export default Vue.extend({

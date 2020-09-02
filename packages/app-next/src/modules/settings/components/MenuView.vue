@@ -19,7 +19,7 @@
         </div>
         <div class="settings-header-content">
           <v-text color="special">{{ displayName }}</v-text>
-          <v-text color="special">{{ plantCount }} Plants</v-text>
+          <v-text color="special">{{ plantCount }} {{ plantCountLabel }}</v-text>
         </div>
 
         <svg
@@ -46,7 +46,9 @@
         <ul>
           <li>
             <router-link to="/settings/account">
-              <v-text>Update profile</v-text>
+              <v-text>
+                <strong>Edit profile</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
@@ -58,13 +60,17 @@
         <ul>
           <li>
             <router-link to="/settings/tags">
-              <v-text>Tags</v-text>
+              <v-text>
+                <strong>Tags</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
           <li>
             <router-link to="/settings/modules">
-              <v-text>Modules</v-text>
+              <v-text>
+                <strong>Modules</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
@@ -75,37 +81,50 @@
         <v-text type="subtitle" color="inactive">HappyPlants</v-text>
         <ul>
           <li>
-            <router-link to="/settings/about">
-              <v-text>About</v-text>
-              <feather-arrow />
-            </router-link>
+            <a href="https://happyplants.app/#about" target="_blank" rel="noopener">
+              <v-text>
+                <strong>About</strong>
+              </v-text>
+              <feather-external />
+            </a>
           </li>
           <li>
             <router-link to="/settings/release-notes">
-              <v-text>Release Notes</v-text>
+              <v-text>
+                <strong>Release Notes</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
           <li>
             <router-link to="/settings/feature-request">
-              <v-text>Request a feature</v-text>
+              <v-text>
+                <strong>Request a feature</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
           <li>
             <router-link to="/settings/bug-report">
-              <v-text>Found a bug?</v-text>
+              <v-text>
+                <strong>Found a bug?</strong>
+              </v-text>
               <feather-arrow />
             </router-link>
           </li>
           <li>
-            <v-text>Version</v-text>
+            <v-text>
+              <strong>Version</strong>
+            </v-text>
             <v-text>{{ version }}</v-text>
           </li>
         </ul>
       </section>
 
-      <v-button @click.native="logoutUser" color="red" small>Logout</v-button>
+      <v-button @click.native="logoutUser" color="red">
+        <feather-logout />
+        Logout {{ ' ' }}
+      </v-button>
     </main>
   </v-layout>
 </template>
@@ -134,6 +153,10 @@
         import('vue-feather-icons/icons/ArrowRightIcon' /* webpackChunkName: "icons" */),
       'feather-smile': () =>
         import('vue-feather-icons/icons/SmileIcon' /* webpackChunkName: "icons" */),
+      'feather-logout': () =>
+        import('vue-feather-icons/icons/LogOutIcon' /* webpackChunkName: "icons" */),
+      'feather-external': () =>
+        import('vue-feather-icons/icons/ExternalLinkIcon' /* webpackChunkName: "icons" */),
     },
 
     data: () => ({
@@ -151,6 +174,9 @@
       }),
       plantCount(): string {
         return this.plants ? String(this.plants) : this.plantCountFromLocalStorage
+      },
+      plantCountLabel(): string {
+        return this.plantCount === '1' ? 'Plant friend' : 'Plant friends'
       },
       displayName(): string {
         return this.userName || this.email

@@ -101,6 +101,11 @@
   import { HomeViewmode, HomeOrderBy } from '..'
   import { RootState } from '@/store'
 
+  /**
+   * TODO: Overall app performance goes right to trash once user has a large list of plants. Look into virtual lists.
+   * TODO: Keep scroll position when coming back to view. It gets lost because scroll happens inside a container.
+   */
+
   interface HomeMapState extends RootState {
     plants: {
       data: Plant[]
