@@ -110,8 +110,6 @@
   import TypeDialog from '@/components/TypeDialog.vue'
   import Illustration from '../components/Illustration.vue'
 
-  // TODO: After adding plant, photo is not shown
-
   interface NewMapState {
     userID: string
     existingTags: {
@@ -201,7 +199,8 @@
           )
 
           if (hasFile) {
-            await uploadFile(getStoragePath(this.userID, guid), this.file.blob)
+            const uploadTask = await uploadFile(getStoragePath(this.userID, guid), this.file.blob)
+            plant.imageURL = await uploadTask.ref.getDownloadURL()
           }
 
           this.$store.commit('plants/assignPlant', plant)

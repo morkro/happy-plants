@@ -139,7 +139,6 @@
   import { Plant } from '@/types/plant'
 
   // TODO: Menu flickers when coming from another route. Possibly because of how the router is setup.
-  // TODO: Change Watering active icon to blue
 
   interface MenuMapState {
     userName: string

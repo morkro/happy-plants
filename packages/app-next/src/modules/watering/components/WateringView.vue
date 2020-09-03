@@ -64,7 +64,6 @@
   import WateringCalendar from '../components/Calendar.vue'
   import WateringCalendarDay from '../components/CalendarDay.vue'
 
-  // TODO: calendar icon doesn't fit size
   // TODO: left/right button should be normal size
 
   interface WateringData {
@@ -202,6 +201,10 @@
     & .watering-header-toggle-btn {
       display: flex;
       align-items: center;
+
+      & svg {
+        transform: scale(0.75);
+      }
     }
   }
 

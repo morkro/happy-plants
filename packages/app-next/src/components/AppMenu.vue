@@ -142,7 +142,8 @@
     &.link-watering:focus svg,
     &.link-watering.router-link-active svg {
       & path {
-        fill: var(--brand-green-dark);
+        stroke: var(--brand-blue-dark);
+        fill: var(--brand-blue-dark);
       }
     }
 
