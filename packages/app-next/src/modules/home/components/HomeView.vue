@@ -55,7 +55,7 @@
       @update-type="updateTypes"
     />
 
-    <main :class="mainContentClasses">
+    <main :class="mainContentClasses" @click="closeActions">
       <div v-if="!loading && plantData.length && filterBy" class="home-plants-filterby">
         <div>
           <v-text color="inactive">
@@ -110,7 +110,6 @@
 
   // TODO: Overall app performance goes right to trash once user has a large list of plants. Look into virtual lists.
   // TODO: Keep scroll position when coming back to view. It gets lost because scroll happens inside a container.
-  // TODO: Closing Options should be possible via swipe up or tap on background
   // TODO: Implement view for "show plant types"
 
   interface HomeMapState extends RootState {
@@ -227,9 +226,14 @@
         this.$router.push({ path: '/home', query: { options: null } })
       },
       closeActions(): void {
-        this.searchQuery = ''
-        this.searchVisible = false
-        this.viewOptionsVisible = false
+        if (this.searchVisible) {
+          this.searchQuery = ''
+          this.searchVisible = false
+        }
+
+        if (this.viewOptionsVisible) {
+          this.viewOptionsVisible = false
+        }
 
         if (this.$hasQuery('search') || this.$hasQuery('options')) {
           this.$router.push({ path: '/home' })
