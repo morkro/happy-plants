@@ -57,10 +57,16 @@
 
     <main :class="mainContentClasses">
       <div v-if="!loading && plantData.length && filterBy" class="home-plants-filterby">
-        <v-text color="inactive">
-          <strong>Filtered by</strong>
-        </v-text>
-        <v-tag>{{ filterBy.label }}</v-tag>
+        <div>
+          <v-text color="inactive">
+            <strong>Filtered by</strong>
+          </v-text>
+          <v-tag>{{ filterBy.label }}</v-tag>
+        </div>
+        <v-button small round color="white" @click.native="clearFilter">
+          <feather-cross />
+          <span class="visuallyhidden">Clear filter</span>
+        </v-button>
       </div>
 
       <div v-if="loading" class="home-plants-list">
@@ -82,6 +88,7 @@
           :listview="viewmode === 'list'"
         />
       </div>
+
       <empty-illustration v-else />
     </main>
   </div>
@@ -101,10 +108,10 @@
   import { HomeViewmode, HomeOrderBy } from '..'
   import { RootState } from '@/store'
 
-  /**
-   * TODO: Overall app performance goes right to trash once user has a large list of plants. Look into virtual lists.
-   * TODO: Keep scroll position when coming back to view. It gets lost because scroll happens inside a container.
-   */
+  // TODO: Overall app performance goes right to trash once user has a large list of plants. Look into virtual lists.
+  // TODO: Keep scroll position when coming back to view. It gets lost because scroll happens inside a container.
+  // TODO: Closing Options should be possible via swipe up or tap on background
+  // TODO: Implement view for "show plant types"
 
   interface HomeMapState extends RootState {
     plants: {
@@ -248,6 +255,10 @@
         this.filterById = 'type'
         this.filterBy = type
       },
+      clearFilter(): void {
+        this.filterById = null
+        this.filterBy = null
+      },
     },
 
     async created() {
@@ -367,10 +378,16 @@
     width: 100%;
     text-align: left;
     padding-bottom: calc(0.5 * var(--base-gap));
-    display: grid;
-    grid-template-columns: max-content min-content;
-    grid-gap: calc(0.5 * var(--base-gap));
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+
+    & > div {
+      display: grid;
+      grid-template-columns: max-content min-content;
+      grid-gap: calc(0.5 * var(--base-gap));
+      align-items: center;
+    }
   }
 
   .home-plants-list {

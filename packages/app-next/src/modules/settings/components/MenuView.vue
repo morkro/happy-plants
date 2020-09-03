@@ -56,7 +56,7 @@
       </section>
 
       <section class="settings-list list-app">
-        <v-text type="subtitle" color="inactive">Application</v-text>
+        <v-text type="subtitle" color="inactive">HappyPlants</v-text>
         <ul>
           <li>
             <router-link to="/settings/tags">
@@ -78,7 +78,7 @@
       </section>
 
       <section class="settings-list list-happyplants">
-        <v-text type="subtitle" color="inactive">HappyPlants</v-text>
+        <v-text type="subtitle" color="inactive">Application</v-text>
         <ul>
           <li>
             <a href="https://happyplants.app/#about" target="_blank" rel="noopener">
@@ -137,6 +137,9 @@
   import delay from '@/utils/promiseDelay'
   import { getLocalEntry } from '@/services/localStorage'
   import { Plant } from '@/types/plant'
+
+  // TODO: Menu flickers when coming from another route. Possibly because of how the router is setup.
+  // TODO: Change Watering active icon to blue
 
   interface MenuMapState {
     userName: string
