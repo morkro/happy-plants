@@ -4,11 +4,11 @@
 
 <p align="center">
   <a href="https://happyplants.garden"><strong>📱 Application</strong></a>
-   ⁃ 
+   ⁃
   <a href="https://happyplants.app"><strong>🌍 Website</strong></a>
-   ⁃ 
+   ⁃
   <a href="https://github.com/morkro/happy-plants/projects/6"><strong>🗓 Roadmap</strong></a>
-   ⁃ 
+   ⁃
   <a href="https://github.com/morkro/happy-plants/issues"><strong>🐛 Issues</strong></a>
 </p>
 
