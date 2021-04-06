@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Chrome, Eye, EyeOff, GitHub, Twitter } from 'react-feather'
+import { Chrome, GitHub, Twitter } from 'react-feather'
 import { useHistory, useLocation } from 'react-router'
 import { routePaths } from 'routes'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -9,7 +9,6 @@ import { AppState, useAppStore } from 'store'
 import { Button } from 'components/Button'
 import Input from 'components/Input'
 import { Text } from 'components/Typography'
-import VisuallyHidden from 'components/VisuallyHidden'
 import { BaseLayout } from 'components/Layout'
 import { toast } from 'components/Toaster'
 import useSearchParams from 'utilities/useSearchParams'
@@ -67,24 +66,6 @@ const ForgotPasswordLink = styled(Link)`
   }
 `
 
-const TogglePasswordButton = styled(Button)`
-  position: absolute;
-  z-index: 1;
-  bottom: calc(1.5 * ${(props) => props.theme.spacings.m});
-  right: calc(1.5 * ${(props) => props.theme.spacings.m});
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  color: ${(props) => props.theme.colors.beigeDark};
-  display: flex;
-
-  &:focus,
-  &:active {
-    color: ${(props) => props.theme.colors.greenDark};
-    outline: none;
-  }
-`
-
 const FormSeperator = styled.div`
   display: block;
   margin: calc(2 * ${({ theme }) => theme.spacings.m}) 0;
@@ -125,10 +106,9 @@ export default function Login() {
   const location = useLocation<{ from: { pathname: string } }>()
   const queries = useSearchParams()
   const { store, setStore } = useAppStore()
-  const [email, setEmail] = useState({ value: '', invalid: false })
-  const [password, setPassword] = useState({ value: '', invalid: false })
+  const [email, setEmail] = useState({ value: '', invalid: false, error: '' })
+  const [password, setPassword] = useState({ value: '', invalid: false, error: '' })
   const [isProgress, setIsProgress] = useState(false)
-  const [showPlainPassword, setPlainPassword] = useState(false)
   const [showForgotPassword, setForgotPassword] = useState(queries.has('forgotPassword'))
 
   function getResetPasswordLink() {
@@ -146,9 +126,9 @@ export default function Login() {
     const errorMessage = getErrorMessage(error)
 
     if (errorMessage.type === 'password') {
-      setPassword((p) => ({ ...p, invalid: true }))
+      setPassword((p) => ({ ...p, invalid: true, error: errorMessage.message }))
     } else if (errorMessage.type === 'email') {
-      setEmail((p) => ({ ...p, invalid: true }))
+      setEmail((p) => ({ ...p, invalid: true, error: errorMessage.message }))
     }
 
     logger(errorMessage.message, true)
@@ -237,7 +217,7 @@ export default function Login() {
               autoComplete="username"
               aria-describedby="email"
               aria-invalid={email.invalid}
-              error={email.invalid}
+              error={email.error}
               data-cy="login-form-email"
               onChange={(event) => setEmail((d) => ({ ...d, value: event.target.value }))}
             />
@@ -251,31 +231,17 @@ export default function Login() {
               <Input
                 required
                 fullWidth
-                type={showPlainPassword ? 'text' : 'password'}
+                type="password"
                 value={password.value}
                 placeholder="********"
                 id="password"
                 autoComplete="current-password"
                 aria-describedby="password"
                 aria-invalid={password.invalid}
-                error={password.invalid}
+                error={password.error}
                 data-cy="login-form-password"
                 onChange={(event) => setPassword((d) => ({ ...d, value: event.target.value }))}
               />
-
-              <TogglePasswordButton
-                onClick={(event) => {
-                  event.preventDefault()
-                  setPlainPassword(!showPlainPassword)
-                }}
-                aria-label={showPlainPassword ? 'Hide your password' : 'Show your password'}
-                size="s"
-              >
-                {showPlainPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
-                <VisuallyHidden>
-                  {showPlainPassword ? 'Hide password' : 'Show password'}
-                </VisuallyHidden>
-              </TogglePasswordButton>
             </label>
           )}
 
