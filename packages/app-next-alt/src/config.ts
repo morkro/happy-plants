@@ -1,4 +1,7 @@
+import pkg from '../package.json'
+
 interface Config {
+  version: string
   isProductionMode: boolean
   meta: Record<string, string>
   session: Record<string, string>
@@ -12,6 +15,7 @@ interface Config {
 }
 
 const config: Config = {
+  version: pkg.version,
   isProductionMode: process.env.NODE_ENV === 'production',
   meta: {
     title: 'HappyPlants',

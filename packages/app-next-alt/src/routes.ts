@@ -21,13 +21,13 @@ export const routePaths = {
   new: '/new',
   settings: {
     base: '/settings',
-    account: 'account',
-    profile: 'profile',
-    tags: 'tags',
-    modules: 'modules',
-    releaseNotes: 'release-notes',
-    featureRequest: 'feature-request',
-    bugReport: 'bug-report',
+    account: '/settings/account',
+    tags: '/settings/tags',
+    modules: '/settings/modules',
+    about: '/settings/about',
+    releaseNotes: '/settings/release-notes',
+    featureRequest: '/settings/feature-request',
+    bugReport: '/settings/bug-report',
   },
 }
 
@@ -66,6 +66,14 @@ export const privateRoutes: CustomRouteProps[] = [
       showAppMenu: true,
       pageTitle: 'Settings',
       appHeaderColor: 'green',
+    },
+  },
+  {
+    path: routePaths.settings.about,
+    component: lazy(() => import('pages/SettingsAbout' /* webpackChunkName: "settings" */)),
+    meta: {
+      showAppMenu: true,
+      pageTitle: 'About',
     },
   },
 ]

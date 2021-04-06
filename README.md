@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2020.svg" alt="Maintenance" />
+  <img src="https://img.shields.io/maintenance/yes/2021.svg" alt="Maintenance" />
   <a href="http://makeapullrequest.com" target="_blank">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
   </a>

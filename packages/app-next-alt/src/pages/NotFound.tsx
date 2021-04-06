@@ -7,7 +7,12 @@ import { ButtonLink } from 'components/Button'
 export default function NotFound() {
   return (
     <React.Fragment>
-      <img src={NotFoundIllustration} alt="Illustration of plants" aria-hidden="true" />
+      <img
+        src={NotFoundIllustration}
+        loading="lazy"
+        alt="Illustration of plants"
+        aria-hidden="true"
+      />
       <Heading color="greenDark" as="h2" mt="l" data-cy="404-title">
         Oops, how did you get here?
       </Heading>

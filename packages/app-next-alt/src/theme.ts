@@ -224,11 +224,12 @@ export const GlobalStyle = createGlobalStyle`
 
   html {
     height: 100%;
+    width: 100%;
   }
 
   body {
-    display: flex;
-    justify-content: center;
+    height: 100%;
+    width: 100%;
     background: ${theme.colors.beige};
     margin: 0;
     font-family: var(--font-normal);
@@ -243,11 +244,8 @@ export const GlobalStyle = createGlobalStyle`
   #root {
     width: 100vw;
     min-width: ${(props) => props.theme.frameMaxWidth};
-    min-height: 100vh;
     height: 100%;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    position: relative;
+    min-height: 100vh;
   }
 
   strong {

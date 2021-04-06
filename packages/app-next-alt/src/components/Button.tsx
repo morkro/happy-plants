@@ -19,6 +19,7 @@ const BaseStyles = css<BaseProps>`
   --base-color: ${({ theme, border }) => (border ? theme.colors.white : theme.colors.green)};
   --shadow: var(--base-color);
 
+  position: relative;
   background-color: ${(props) => (props.border ? 'transparent' : 'var(--base-color)')};
   border-radius: ${(props) => props.theme.baseRadius};
   border: 2px solid var(--base-color);
@@ -63,11 +64,18 @@ const BaseStyles = css<BaseProps>`
     `}
 
   &[disabled],
-  &[aria-disabled] {
-    --base-color: ${(props) => props.theme.colors.beigeDark};
-    border-color: ${(props) => props.theme.colors.beigeDark};
-    box-shadow: none;
+  &[aria-disabled="true"] {
+    border-color: rgb(0 0 0 / 25%);
     cursor: not-allowed;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 0;
+      background: rgb(0 0 0 / 25%);
+    }
   }
 
   &:focus:not([disabled]),

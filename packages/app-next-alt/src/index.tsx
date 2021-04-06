@@ -49,11 +49,11 @@ function App() {
               {store.isSignedIn ? <Redirect to={routePaths.home} /> : <Welcome />}
             </Route>
             {publicRoutes.map((route, index) => (
-              <LayoutRoute key={`${route.path} + ${index}`} {...route} />
+              <LayoutRoute exact key={`${route.path} + ${index}`} {...route} />
             ))}
             {privateRoutes.map((route, index) =>
               store.isSignedIn ? (
-                <LayoutRoute isPrivateRoute key={`${route.path} + ${index}`} {...route} />
+                <LayoutRoute isPrivateRoute exact key={`${route.path} + ${index}`} {...route} />
               ) : (
                 <Redirect key={'redirect' + index} to={routePaths.login} />
               )

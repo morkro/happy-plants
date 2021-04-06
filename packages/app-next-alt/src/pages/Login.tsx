@@ -19,6 +19,7 @@ import delay from 'utilities/delay'
 import logger from 'utilities/logger'
 import Spinner from 'components/Spinner'
 import { deleteSessionEntry, getSessionEntry } from 'services/sessionStorage'
+import getErrorMessage from 'utilities/getErrorMessage'
 
 const LoginGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -124,8 +125,8 @@ export default function Login() {
   const location = useLocation<{ from: { pathname: string } }>()
   const queries = useSearchParams()
   const { store, setStore } = useAppStore()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState({ value: '', invalid: false })
+  const [password, setPassword] = useState({ value: '', invalid: false })
   const [isProgress, setIsProgress] = useState(false)
   const [showPlainPassword, setPlainPassword] = useState(false)
   const [showForgotPassword, setForgotPassword] = useState(queries.has('forgotPassword'))
@@ -141,17 +142,29 @@ export default function Login() {
     setForgotPassword(!showForgotPassword)
   }
 
+  function showError(error: firebase.default.FirebaseError) {
+    const errorMessage = getErrorMessage(error)
+
+    if (errorMessage.type === 'password') {
+      setPassword((p) => ({ ...p, invalid: true }))
+    } else if (errorMessage.type === 'email') {
+      setEmail((p) => ({ ...p, invalid: true }))
+    }
+
+    logger(errorMessage.message, true)
+    toast.error(errorMessage.message)
+  }
+
   async function loginVia(provider: FirestoreLoginProvider) {
     setStore({ authLoader: { show: true, message: 'login' } })
 
     try {
-      await signInUser({ provider, email, password })
+      await signInUser({ provider, email: email.value, password: password.value })
       await delay(config.ui.authLoaderTimeout)
       const { from } = location.state || { from: { pathname: routePaths.home } }
       history.replace(from)
     } catch (error) {
-      logger(error, true)
-      toast.error('Something went wrong, please try again.')
+      showError(error)
     } finally {
       setStore({ authLoader: { show: false } })
     }
@@ -163,10 +176,10 @@ export default function Login() {
     if (showForgotPassword) {
       setIsProgress(true)
       try {
-        await forgotPassword(email)
+        await forgotPassword(email.value)
         toast('An email to reset your password has been sent.')
       } catch (error) {
-        toast.error('Something went wrong, please try again.')
+        showError(error)
       } finally {
         setIsProgress(false)
       }
@@ -218,14 +231,15 @@ export default function Login() {
               required
               fullWidth
               type="email"
-              value={email}
+              value={email.value}
               placeholder="lover@plants.garden"
               id="email"
               autoComplete="username"
               aria-describedby="email"
-              aria-invalid="false"
+              aria-invalid={email.invalid}
+              error={email.invalid}
               data-cy="login-form-email"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail((d) => ({ ...d, value: event.target.value }))}
             />
           </label>
 
@@ -238,19 +252,24 @@ export default function Login() {
                 required
                 fullWidth
                 type={showPlainPassword ? 'text' : 'password'}
-                value={password}
+                value={password.value}
                 placeholder="********"
                 id="password"
                 autoComplete="current-password"
                 aria-describedby="password"
-                aria-invalid="true"
+                aria-invalid={password.invalid}
+                error={password.invalid}
                 data-cy="login-form-password"
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setPassword((d) => ({ ...d, value: event.target.value }))}
               />
 
               <TogglePasswordButton
-                onClick={() => setPlainPassword(!showPlainPassword)}
+                onClick={(event) => {
+                  event.preventDefault()
+                  setPlainPassword(!showPlainPassword)
+                }}
                 aria-label={showPlainPassword ? 'Hide your password' : 'Show your password'}
+                size="s"
               >
                 {showPlainPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
                 <VisuallyHidden>
@@ -270,7 +289,11 @@ export default function Login() {
             </Text>
           </ForgotPasswordLink>
 
-          <LoginButton variant="warning" data-cy="login-form-submit">
+          <LoginButton
+            aria-disabled={!showForgotPassword && password.value === ''}
+            variant="warning"
+            data-cy="login-form-submit"
+          >
             {isProgress && <Spinner aria-hidden="true" />}
             {showForgotPassword ? 'Send password reset' : 'Login'}
           </LoginButton>

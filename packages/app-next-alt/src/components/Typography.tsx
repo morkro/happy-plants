@@ -14,6 +14,7 @@ type TypographyBaseProps = React.PropsWithChildren<
       WithPaddingProps<{
         italic?: boolean
         bold?: boolean
+        semiBold?: boolean
         center?: boolean
         color: 'red' | 'greenDark' | 'white' | 'beigeDark'
       }>
@@ -25,9 +26,16 @@ const TypographyBaseStyles = css<TypographyBaseProps>`
   ${WithMarginStyles}
   ${WithPaddingStyles}
   color: ${({ color, theme }) => theme.colors[color]};
-  font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
-  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
   text-align: ${({ center }) => (center ? 'center' : 'left')};
+  font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
+  font-weight: ${(props) => {
+    if (props.semiBold) {
+      return 500
+    } else if (props.bold) {
+      return 700
+    }
+    return 400
+  }};
 `
 
 /**

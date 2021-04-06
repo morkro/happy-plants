@@ -78,11 +78,12 @@ export default function AppHeader(props: AppHeaderProps) {
   const { color, children } = props
   const textColor = color === undefined ? 'greenDark' : 'white'
   const hasRouteTitle = React.Children.count(children) > 0
+  const showBackButton = history.location.pathname.split('/').filter(Boolean).length > 1
 
   return (
     <AppHeaderContainer backgroundColor={color}>
       <AppHeaderIcon>
-        {hasRouteTitle ? (
+        {showBackButton ? (
           <button
             onClick={() =>
               history.location.pathname === routePaths.login
@@ -95,7 +96,7 @@ export default function AppHeader(props: AppHeaderProps) {
             <VisuallyHidden>Back</VisuallyHidden>
           </button>
         ) : (
-          <AppLogo color={textColor} />
+          <AppLogo color={textColor} inverse={textColor !== 'greenDark'} />
         )}
       </AppHeaderIcon>
 

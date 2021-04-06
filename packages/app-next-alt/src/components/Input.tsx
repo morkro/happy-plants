@@ -4,7 +4,7 @@ import { Text } from 'components/Typography'
 import { WithMarginProps, WithMarginStyles } from 'utilities/withProps'
 
 interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: string
+  error?: boolean
   fullWidth?: boolean
 }
 
@@ -78,7 +78,7 @@ const BaseInput = styled.input<InputProps>`
 `
 
 export default function Input(props: InputProps) {
-  const { error, m, mt, mr, mb, ml, ...remainingProps } = props
+  const { error = false, m, mt, mr, mb, ml, ...remainingProps } = props
   return (
     <InputContainer {...{ m, mt, mr, mb, ml }}>
       <BaseInput error={error} {...remainingProps} />
