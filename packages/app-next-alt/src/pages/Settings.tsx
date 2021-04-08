@@ -107,8 +107,12 @@ const SettingsList = styled.ul`
 const menu = {
   account: [
     {
-      label: 'Email & password',
-      link: routePaths.settings.account,
+      label: 'Change email',
+      link: routePaths.settings.email,
+    },
+    {
+      label: 'Change password',
+      link: routePaths.settings.password,
     },
   ],
   happyplants: [
@@ -133,10 +137,6 @@ const menu = {
     {
       label: 'Bug reports',
       link: routePaths.settings.bugReport,
-    },
-    {
-      label: 'Feature requests',
-      link: routePaths.settings.featureRequest,
     },
   ],
 }
@@ -208,11 +208,11 @@ export default function Settings() {
 
       <SettingsSection>
         <Heading as="h2" color="beigeDark" mb="m">
-          <User aria-hidden="true" />
-          Account
+          <AppLogo color="beigeDark" aria-hidden="true" />
+          HappyPlants
         </Heading>
         <SettingsList>
-          {menu.account.map((item, index) => (
+          {menu.happyplants.map((item, index) => (
             <SettingsMenuItem key={item.label + index} {...item} />
           ))}
         </SettingsList>
@@ -220,11 +220,11 @@ export default function Settings() {
 
       <SettingsSection>
         <Heading as="h2" color="beigeDark" mb="m">
-          <AppLogo color="beigeDark" aria-hidden="true" />
-          HappyPlants
+          <User aria-hidden="true" />
+          Account
         </Heading>
         <SettingsList>
-          {menu.happyplants.map((item, index) => (
+          {menu.account.map((item, index) => (
             <SettingsMenuItem key={item.label + index} {...item} />
           ))}
         </SettingsList>

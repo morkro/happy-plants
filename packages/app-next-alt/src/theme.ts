@@ -243,12 +243,16 @@ export const GlobalStyle = createGlobalStyle`
 
   #root {
     width: 100vw;
-    min-width: ${(props) => props.theme.frameMaxWidth};
+    min-width: ${theme.frameMaxWidth};
     height: 100%;
     min-height: 100vh;
   }
 
   strong {
     font-weight: bold;
+  }
+
+  a:hover {
+    color: ${theme.colors.greenDark};
   }
 `

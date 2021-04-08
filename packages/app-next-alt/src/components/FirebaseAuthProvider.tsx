@@ -14,7 +14,6 @@ export function FirebaseAuthProvider(props: FirebaseAuthProviderProps) {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
       setStore({
-        initializing: false,
         user,
         isSignedIn: user !== null,
       })

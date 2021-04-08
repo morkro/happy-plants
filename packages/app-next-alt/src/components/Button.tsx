@@ -33,6 +33,7 @@ const BaseStyles = css<BaseProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   padding: ${(props) =>
     props.size === 's'
       ? `calc(0.5 * ${props.theme.spacings.m}) ${props.theme.spacings.m}`
@@ -65,17 +66,7 @@ const BaseStyles = css<BaseProps>`
 
   &[disabled],
   &[aria-disabled="true"] {
-    border-color: rgb(0 0 0 / 25%);
     cursor: not-allowed;
-
-    &::after {
-      content: '';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: 0;
-      background: rgb(0 0 0 / 25%);
-    }
   }
 
   &:focus:not([disabled]),

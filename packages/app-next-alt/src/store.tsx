@@ -3,7 +3,6 @@ import { AuthLoaderType } from 'components/AuthLoader'
 import { FirebaseUser } from 'typings/firebase'
 
 export interface AppState {
-  initializing: boolean
   user: FirebaseUser | null
   isSignedIn: boolean
   authLoader: {
@@ -13,7 +12,6 @@ export interface AppState {
 }
 
 export const initialStore: AppState = {
-  initializing: true,
   user: null,
   isSignedIn: false,
   authLoader: {

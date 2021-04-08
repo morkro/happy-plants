@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import config from 'config'
 import { AppState, useAppStore } from 'store'
 import { Button } from 'components/Button'
-import Input from 'components/Input'
+import { Input } from 'components/Input'
 import { Text } from 'components/Typography'
 import { BaseLayout } from 'components/Layout'
 import { toast } from 'components/Toaster'
@@ -132,7 +132,9 @@ export default function Login() {
     }
 
     logger(errorMessage.message, true)
-    toast.error(errorMessage.message)
+    if (!['password', 'email'].includes(errorMessage.type)) {
+      toast.error(errorMessage.message)
+    }
   }
 
   async function loginVia(provider: FirestoreLoginProvider) {
@@ -150,7 +152,7 @@ export default function Login() {
     }
   }
 
-  async function formAction(event: React.FormEvent<HTMLDivElement>) {
+  async function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (showForgotPassword) {
@@ -201,8 +203,8 @@ export default function Login() {
   return (
     <React.Fragment>
       <LoginGlobalStyle />
-      <LoginContainer onSubmit={formAction}>
-        <LoginForm>
+      <LoginContainer>
+        <LoginForm onSubmit={formAction}>
           <label htmlFor="email">
             <Text color="white" mb="m">
               Your email <span aria-hidden="true">*</span>

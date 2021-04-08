@@ -9,8 +9,7 @@ import { Heading } from './Typography'
 import VisuallyHidden from './VisuallyHidden'
 import AppLogo from './AppLogo'
 
-const Portal = createTeleporter()
-export const AppHeaderActions = Portal.Source
+export const AppHeaderPortal = createTeleporter()
 
 const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
   width: 100%;
@@ -104,7 +103,7 @@ export default function AppHeader(props: AppHeaderProps) {
         {hasRouteTitle ? children : 'HappyPlants'}
       </Heading>
 
-      <Portal.Target />
+      <AppHeaderPortal.Target />
     </AppHeaderContainer>
   )
 }

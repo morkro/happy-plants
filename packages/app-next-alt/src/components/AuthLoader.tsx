@@ -42,7 +42,7 @@ const Illustration = styled.svg`
 const LoadingTitle = styled.div`
   position: relative;
 
-  & h1 {
+  & h2 {
     position: relative;
     z-index: 1;
   }
