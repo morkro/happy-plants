@@ -17,6 +17,7 @@ import { FirestoreLoginProvider } from 'typings/firebase'
 import delay from 'utilities/delay'
 import logger from 'utilities/logger'
 import Spinner from 'components/Spinner'
+import VisuallyHidden from 'components/VisuallyHidden'
 import { deleteSessionEntry, getSessionEntry } from 'services/sessionStorage'
 import getErrorMessage from 'utilities/getErrorMessage'
 
@@ -40,6 +41,7 @@ const LoginForm = styled.form`
   width: 100%;
 
   label {
+    text-align: left;
     position: relative;
     margin-bottom: ${(props) => props.theme.spacings.m};
   }
@@ -106,8 +108,8 @@ export default function Login() {
   const location = useLocation<{ from: { pathname: string } }>()
   const queries = useSearchParams()
   const { store, setStore } = useAppStore()
-  const [email, setEmail] = useState({ value: '', invalid: false, error: '' })
-  const [password, setPassword] = useState({ value: '', invalid: false, error: '' })
+  const [email, setEmail] = useState({ value: '', error: '' })
+  const [password, setPassword] = useState({ value: '', error: '' })
   const [isProgress, setIsProgress] = useState(false)
   const [showForgotPassword, setForgotPassword] = useState(queries.has('forgotPassword'))
 
@@ -126,9 +128,9 @@ export default function Login() {
     const errorMessage = getErrorMessage(error)
 
     if (errorMessage.type === 'password') {
-      setPassword((p) => ({ ...p, invalid: true, error: errorMessage.message }))
+      setPassword((p) => ({ ...p, error: errorMessage.message }))
     } else if (errorMessage.type === 'email') {
-      setEmail((p) => ({ ...p, invalid: true, error: errorMessage.message }))
+      setEmail((p) => ({ ...p, error: errorMessage.message }))
     }
 
     logger(errorMessage.message, true)
@@ -206,8 +208,12 @@ export default function Login() {
       <LoginContainer>
         <LoginForm onSubmit={formAction}>
           <label htmlFor="email">
-            <Text color="white" mb="m">
-              Your email <span aria-hidden="true">*</span>
+            <Text color="white" mb="m" as="span">
+              Your email{' '}
+              <span title="Required">
+                {'*'}
+                <VisuallyHidden>(required)</VisuallyHidden>
+              </span>
             </Text>
             <Input
               required
@@ -217,8 +223,6 @@ export default function Login() {
               placeholder="lover@plants.garden"
               id="email"
               autoComplete="username"
-              aria-describedby="email"
-              aria-invalid={email.invalid}
               error={email.error}
               data-cy="login-form-email"
               onChange={(event) => setEmail((d) => ({ ...d, value: event.target.value }))}
@@ -227,8 +231,12 @@ export default function Login() {
 
           {!showForgotPassword && (
             <label htmlFor="password">
-              <Text color="white" mb="m">
-                Your password <span aria-hidden="true">*</span>
+              <Text color="white" mb="m" as="span">
+                Your password{' '}
+                <span title="Required">
+                  {'*'}
+                  <VisuallyHidden>(required)</VisuallyHidden>
+                </span>
               </Text>
               <Input
                 required
@@ -238,8 +246,6 @@ export default function Login() {
                 placeholder="********"
                 id="password"
                 autoComplete="current-password"
-                aria-describedby="password"
-                aria-invalid={password.invalid}
                 error={password.error}
                 data-cy="login-form-password"
                 onChange={(event) => setPassword((d) => ({ ...d, value: event.target.value }))}
@@ -261,6 +267,7 @@ export default function Login() {
             aria-disabled={!showForgotPassword && password.value === ''}
             variant="warning"
             data-cy="login-form-submit"
+            type="submit"
           >
             {isProgress && <Spinner aria-hidden="true" focusable="false" />}
             {showForgotPassword ? 'Send password reset' : 'Login'}
@@ -279,24 +286,27 @@ export default function Login() {
             border
             data-cy="form-service-google"
             onClick={async () => await loginVia('google')}
+            type="button"
           >
-            <Chrome />
+            <Chrome aria-hidden="true" focusable="false" />
             Google
           </Button>
           <Button
             border
             data-cy="form-service-github"
             onClick={async () => await loginVia('github')}
+            type="button"
           >
-            <GitHub />
+            <GitHub aria-hidden="true" focusable="false" />
             GitHub
           </Button>
           <Button
             border
             data-cy="form-service-twitter"
             onClick={async () => await loginVia('twitter')}
+            type="button"
           >
-            <Twitter />
+            <Twitter aria-hidden="true" focusable="false" />
             Twitter
           </Button>
         </LoginServices>

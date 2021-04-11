@@ -7,7 +7,14 @@ import { bounce, theme } from 'theme'
 import VisuallyHidden from './VisuallyHidden'
 
 const HomeIcon = () => (
-  <svg width="24px" height="26px" viewBox="0 0 24 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="24px"
+    height="26px"
+    viewBox="0 0 24 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       stroke="none"
       strokeWidth="1"
@@ -28,7 +35,14 @@ const HomeIcon = () => (
 )
 
 const WateringIcon = () => (
-  <svg width="22px" height="26px" viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="22px"
+    height="26px"
+    viewBox="0 0 22 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       stroke="none"
       strokeWidth="1"
@@ -50,7 +64,14 @@ const WateringIcon = () => (
 )
 
 const NewIcon = () => (
-  <svg width="26px" height="26px" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="26px"
+    height="26px"
+    viewBox="0 0 26 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       fill="none"
       fillRule="evenodd"
@@ -86,7 +107,7 @@ const SettingsIcon = () => (
   </svg>
 )
 
-const AppMenuContainer = styled.div<{ enableAnimations: boolean }>`
+const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
   height: ${(props) => props.theme.frameWidgetHeight};
   width: 100%;
   background: ${(props) => props.theme.colors.beige};
@@ -170,7 +191,10 @@ const AppMenuContainer = styled.div<{ enableAnimations: boolean }>`
 export default function AppMenu() {
   const { store } = useAppStore()
   return (
-    <AppMenuContainer enableAnimations={store.userPreferences.animations === 'enabled'}>
+    <AppMenuContainer
+      enableAnimations={store.userPreferences.animations === 'enabled'}
+      role="navigation"
+    >
       <NavLink to={routePaths.home} id="menu-link-home">
         <HomeIcon aria-hidden="true" />
         <VisuallyHidden>Home</VisuallyHidden>

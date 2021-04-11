@@ -42,7 +42,7 @@ const FooterContainer = styled.footer`
 
 export default function FooterNoAuth() {
   return (
-    <FooterContainer>
+    <FooterContainer role="contentinfo">
       {footerLinks.map((link, index) => (
         <a
           key={link.label + index}

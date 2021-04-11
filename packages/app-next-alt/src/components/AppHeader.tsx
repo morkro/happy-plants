@@ -80,7 +80,7 @@ export default function AppHeader(props: AppHeaderProps) {
   const showBackButton = history.location.pathname.split('/').filter(Boolean).length > 1
 
   return (
-    <AppHeaderContainer backgroundColor={color}>
+    <AppHeaderContainer backgroundColor={color} role="banner">
       <AppHeaderIcon>
         {showBackButton ? (
           <button
@@ -97,6 +97,7 @@ export default function AppHeader(props: AppHeaderProps) {
         ) : (
           <Link to={routePaths.root}>
             <AppLogo color={textColor} inverse={textColor !== 'greenDark'} />
+            <VisuallyHidden>Happy Plants</VisuallyHidden>
           </Link>
         )}
       </AppHeaderIcon>
