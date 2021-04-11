@@ -7,6 +7,7 @@ interface BaseProps {
   variant?: 'normal' | 'info' | 'warning' | 'alarm'
   size?: 's'
   border?: boolean
+  type?: 'button' | 'submit'
 }
 
 type WithBaseProps = WithCssProps<WithMarginProps<BaseProps>>
