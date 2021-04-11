@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { routePaths } from 'routes'
-import styled from 'styled-components'
+import { useAppStore } from 'store'
+import styled, { css } from 'styled-components'
 import { bounce, theme } from 'theme'
 import VisuallyHidden from './VisuallyHidden'
 
@@ -85,7 +86,7 @@ const SettingsIcon = () => (
   </svg>
 )
 
-const AppMenuContainer = styled.div`
+const AppMenuContainer = styled.div<{ enableAnimations: boolean }>`
   height: ${(props) => props.theme.frameWidgetHeight};
   width: 100%;
   background: ${(props) => props.theme.colors.beige};
@@ -110,7 +111,12 @@ const AppMenuContainer = styled.div`
     }
 
     &.active svg {
-      animation: ${bounce} 650ms;
+      animation: ${({ enableAnimations }) =>
+        enableAnimations
+          ? css`
+              ${bounce} 650ms
+            `
+          : 'none'};
     }
 
     & svg {
@@ -162,8 +168,9 @@ const AppMenuContainer = styled.div`
 `
 
 export default function AppMenu() {
+  const { store } = useAppStore()
   return (
-    <AppMenuContainer>
+    <AppMenuContainer enableAnimations={store.userPreferences.animations === 'enabled'}>
       <NavLink to={routePaths.home} id="menu-link-home">
         <HomeIcon aria-hidden="true" />
         <VisuallyHidden>Home</VisuallyHidden>

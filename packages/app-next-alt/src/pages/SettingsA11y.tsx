@@ -5,6 +5,7 @@ import { useAppStore } from 'store'
 import { Heading, Text } from 'components/Typography'
 import { ButtonToggle } from 'components/Toggle'
 import { setLocalEntry } from 'services/localStorage'
+import { AnimationPreferences } from 'utilities/getAnimationPreference'
 
 const A11ySection = styled.section`
   width: 100%;
@@ -19,7 +20,7 @@ export default function SettingsA11y() {
   const prefersEnabledAnimations = store.userPreferences.animations === 'enabled'
 
   function setPreference() {
-    const preference = prefersEnabledAnimations ? 'disabled' : 'enabled'
+    const preference: AnimationPreferences = prefersEnabledAnimations ? 'disabled' : 'enabled'
     setLocalEntry(config.session.userAnimationPreference, preference)
     setStore({ userPreferences: { ...store.userPreferences, animations: preference } })
   }
@@ -35,11 +36,7 @@ export default function SettingsA11y() {
           them <strong>{prefersEnabledAnimations ? 'enabled' : 'disabled'}</strong>, based on your
           operating systems settings. Setting them explicitly will overwrite your systems settings.
         </Text>
-        <ButtonToggle
-          pressed={store.userPreferences.animations === 'enabled'}
-          mt="l"
-          onClick={setPreference}
-        >
+        <ButtonToggle pressed={prefersEnabledAnimations} mt="l" onClick={setPreference}>
           Enable animation
         </ButtonToggle>
       </A11ySection>

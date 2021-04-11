@@ -133,7 +133,7 @@ export const bounce = keyframes`{
   }
 }`
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
   ${reset}
 
   @font-face {
@@ -199,14 +199,7 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --font-special: 'FiraMono', 'Courier New', Courier, monospace;
     --font-normal: "Asap", Open Sans, Helvetica, Arial, sans-serif;
-    --base-transition: 100ms;
-  }
-
-  /** Disable animation if user has reduced motion enabled */
-  @media (prefers-reduced-motion: reduce) {
-    :root {
-      --base-transition: 0;
-    }
+    --base-transition: ${({ enableAnimations }) => (enableAnimations ? '100ms' : '0')};
   }
 
   * {

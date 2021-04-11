@@ -38,9 +38,9 @@ if (config.isProductionMode) {
 
 function App() {
   const { store } = useAppStore()
-  console.log(store.userPreferences)
   return (
     <React.Fragment>
+      <GlobalStyle enableAnimations={store.userPreferences.animations === 'enabled'} />
       <SkipLink />
       <Toaster />
 
@@ -80,7 +80,6 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <AppContextProvider>
           <FirebaseAuthProvider config={config.api.firebase}>
-            <GlobalStyle />
             <Sentry.ErrorBoundary showDialog={false} fallback={<Error />}>
               <App />
             </Sentry.ErrorBoundary>

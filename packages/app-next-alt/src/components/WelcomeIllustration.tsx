@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import anime from 'animejs'
 import { spin, theme } from 'theme'
-import useReducedMotion from 'utilities/useReducedMotion'
+import { useAppStore } from 'store'
 
 const pulse = keyframes`
   from {
@@ -39,10 +39,10 @@ const IllustrationSvg = styled.svg`
 `
 
 export default function WelcomeIllustration() {
-  const shouldReduceMotion = useReducedMotion()
+  const { store } = useAppStore()
 
   useLayoutEffect(() => {
-    if (!shouldReduceMotion) {
+    if (store.userPreferences.animations === 'enabled') {
       anime({
         targets: '#welcome-illustration #Group path',
         duration: 1000,
@@ -53,7 +53,7 @@ export default function WelcomeIllustration() {
         delay: anime.stagger(100),
       })
     }
-  }, [shouldReduceMotion])
+  }, [store.userPreferences.animations])
 
   return (
     <IllustrationSvg
