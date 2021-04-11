@@ -17,6 +17,7 @@ import { FirestoreLoginProvider } from 'typings/firebase'
 import delay from 'utilities/delay'
 import logger from 'utilities/logger'
 import Spinner from 'components/Spinner'
+import VisuallyHidden from 'components/VisuallyHidden'
 import { deleteSessionEntry, getSessionEntry } from 'services/sessionStorage'
 import getErrorMessage from 'utilities/getErrorMessage'
 
@@ -207,7 +208,11 @@ export default function Login() {
         <LoginForm onSubmit={formAction}>
           <label htmlFor="email">
             <Text color="white" mb="m">
-              Your email <span aria-hidden="true">*</span>
+              Your email{' '}
+              <span title="Required">
+                {'*'}
+                <VisuallyHidden>(required)</VisuallyHidden>
+              </span>
             </Text>
             <Input
               required
@@ -226,7 +231,11 @@ export default function Login() {
           {!showForgotPassword && (
             <label htmlFor="password">
               <Text color="white" mb="m">
-                Your password <span aria-hidden="true">*</span>
+                Your password{' '}
+                <span title="Required">
+                  {'*'}
+                  <VisuallyHidden>(required)</VisuallyHidden>
+                </span>
               </Text>
               <Input
                 required
