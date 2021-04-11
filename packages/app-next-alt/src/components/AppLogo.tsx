@@ -17,7 +17,12 @@ export default function AppLogo(props: AppLogoProps) {
   const { color = 'greenDark', fill = true, inverse = false } = props
   const logoColor = theme.colors[color]
   return (
-    <LogoSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 31" aria-hidden="true">
+    <LogoSvg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 34 31"
+      aria-hidden="true"
+      focusable="false"
+    >
       <g fill="none" fillRule="evenodd" stroke={inverse || fill === false ? logoColor : undefined}>
         {inverse ? (
           <React.Fragment>
