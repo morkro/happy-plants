@@ -107,7 +107,7 @@ const SettingsIcon = () => (
   </svg>
 )
 
-const AppMenuContainer = styled.div<{ enableAnimations: boolean }>`
+const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
   height: ${(props) => props.theme.frameWidgetHeight};
   width: 100%;
   background: ${(props) => props.theme.colors.beige};
@@ -191,7 +191,10 @@ const AppMenuContainer = styled.div<{ enableAnimations: boolean }>`
 export default function AppMenu() {
   const { store } = useAppStore()
   return (
-    <AppMenuContainer enableAnimations={store.userPreferences.animations === 'enabled'}>
+    <AppMenuContainer
+      enableAnimations={store.userPreferences.animations === 'enabled'}
+      role="navigation"
+    >
       <NavLink to={routePaths.home} id="menu-link-home">
         <HomeIcon aria-hidden="true" />
         <VisuallyHidden>Home</VisuallyHidden>
