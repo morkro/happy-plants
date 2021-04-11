@@ -276,6 +276,7 @@ export default function Login() {
             border
             data-cy="form-service-google"
             onClick={async () => await loginVia('google')}
+            type="button"
           >
             <Chrome aria-hidden="true" focusable="false" />
             Google
@@ -284,6 +285,7 @@ export default function Login() {
             border
             data-cy="form-service-github"
             onClick={async () => await loginVia('github')}
+            type="button"
           >
             <GitHub aria-hidden="true" focusable="false" />
             GitHub
@@ -292,6 +294,7 @@ export default function Login() {
             border
             data-cy="form-service-twitter"
             onClick={async () => await loginVia('twitter')}
+            type="button"
           >
             <Twitter aria-hidden="true" focusable="false" />
             Twitter
