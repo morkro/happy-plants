@@ -54,7 +54,7 @@ export default function Layout(props: LayoutProps) {
       {store.authLoader.show && <AuthLoader message={store.authLoader.message} />}
       <BaseLayout>
         {withAppHeader && <AppHeader color={appHeaderColor}>{pageTitle}</AppHeader>}
-        <AppContent id="main" tabIndex={-1} justifyContent={appContentOrientation}>
+        <AppContent id="main" justifyContent={appContentOrientation}>
           {props.children}
         </AppContent>
         {isPrivateRoute ? withAppMenu ? <AppMenu /> : null : <FooterNoAuth />}
