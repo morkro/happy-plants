@@ -303,7 +303,6 @@ export function Input(props: InputProps) {
             event.preventDefault()
             setPlainPassword(!showPlainPassword)
           }}
-          aria-label={showPlainPassword ? 'Hide your password' : 'Show your password'}
           size="s"
         >
           {showPlainPassword ? (
