@@ -274,7 +274,7 @@ export function Input(props: InputProps) {
       <BaseInput
         ref={fileInput}
         error={error}
-        tabIndex={isFileInput ? -1 : 0}
+        tabIndex={isFileInput ? -1 : undefined}
         accept={isFileInput ? accept : undefined}
         type={type === 'password' && showPlainPassword ? 'text' : type}
         onChange={_onChange}
