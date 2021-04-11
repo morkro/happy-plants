@@ -80,7 +80,7 @@ export default function AppHeader(props: AppHeaderProps) {
   const showBackButton = history.location.pathname.split('/').filter(Boolean).length > 1
 
   return (
-    <AppHeaderContainer backgroundColor={color}>
+    <AppHeaderContainer backgroundColor={color} role="banner">
       <AppHeaderIcon>
         {showBackButton ? (
           <button
