@@ -62,6 +62,8 @@ export default function WelcomeIllustration() {
       viewBox="0 0 295 308"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
     >
       <g id="welcome-illustration" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="2.-Welcome" transform="translate(-33.000000, -65.000000)">
