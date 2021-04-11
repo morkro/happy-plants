@@ -7,7 +7,14 @@ import { bounce, theme } from 'theme'
 import VisuallyHidden from './VisuallyHidden'
 
 const HomeIcon = () => (
-  <svg width="24px" height="26px" viewBox="0 0 24 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="24px"
+    height="26px"
+    viewBox="0 0 24 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       stroke="none"
       strokeWidth="1"
@@ -28,7 +35,14 @@ const HomeIcon = () => (
 )
 
 const WateringIcon = () => (
-  <svg width="22px" height="26px" viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="22px"
+    height="26px"
+    viewBox="0 0 22 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       stroke="none"
       strokeWidth="1"
@@ -50,7 +64,14 @@ const WateringIcon = () => (
 )
 
 const NewIcon = () => (
-  <svg width="26px" height="26px" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="26px"
+    height="26px"
+    viewBox="0 0 26 26"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    focusable="false"
+  >
     <g
       fill="none"
       fillRule="evenodd"
