@@ -12,12 +12,7 @@ export default function LayoutRoute({ isPrivateRoute = false, ...route }: Layout
   return (
     <React.Fragment>
       <DocumentTitle title={route.meta?.pageTitle} />
-      <Layout
-        isPrivateRoute={isPrivateRoute}
-        withAppMenu={route.meta?.showAppMenu}
-        pageTitle={route.meta?.pageTitle}
-        appHeaderColor={route.meta?.appHeaderColor}
-      >
+      <Layout isPrivateRoute={isPrivateRoute} {...route.meta}>
         <Route exact path={route.path} component={route.component} />
       </Layout>
     </React.Fragment>

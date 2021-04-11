@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { createTeleporter } from 'react-teleporter'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { theme } from 'theme'
 import { routePaths } from 'routes'
@@ -91,11 +91,13 @@ export default function AppHeader(props: AppHeaderProps) {
             }
             data-cy="app-header-return"
           >
-            <ArrowLeft color={theme.colors[textColor]} aria-hidden="true" />
+            <ArrowLeft color={theme.colors[textColor]} aria-hidden="true" focusable="false" />
             <VisuallyHidden>Back</VisuallyHidden>
           </button>
         ) : (
-          <AppLogo color={textColor} inverse={textColor !== 'greenDark'} />
+          <Link to={routePaths.root}>
+            <AppLogo color={textColor} inverse={textColor !== 'greenDark'} />
+          </Link>
         )}
       </AppHeaderIcon>
 

@@ -20,7 +20,7 @@ import Spinner from './Spinner'
 interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string
   fullWidth?: boolean
-  onFileInput?(data: { blob?: Blob; fileName: string }): void
+  onFileInput?(data: { file: File | null; fileName: string }): void
   filePreview?: string
 }
 
@@ -214,12 +214,12 @@ export function Input(props: InputProps) {
     ...remainingProps
   } = props
   const [showPlainPassword, setPlainPassword] = useState(false)
-  const [blob, setBlob] = useState<Blob | File>()
+  const [file, setFile] = useState<File | null>(null)
   const [fileName, setFileName] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const isFileInput = type === 'file'
-  const previewImage = filePreview && !isBlobbable(blob) ? filePreview : imageUrl
+  const previewImage = filePreview && !isBlobbable(file) ? filePreview : imageUrl
   const fileInput = useRef<HTMLInputElement>(null)
 
   async function _onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -237,9 +237,15 @@ export function Input(props: InputProps) {
 
     try {
       const resized = await resizeBlob(file, { width: window.outerWidth * 1.5 })
-      setBlob(() => resized)
+      setFile(
+        () =>
+          new File([resized], file.name, {
+            type: file.type,
+            lastModified: Date.now(),
+          })
+      )
     } catch {
-      setBlob(file)
+      setFile(file)
     }
 
     setIsLoading(false)
@@ -252,9 +258,11 @@ export function Input(props: InputProps) {
   }
 
   useEffect(() => {
-    setImageUrl(getUrlFromBlob(blob))
-    onFileInput({ blob, fileName })
-  }, [fileName, blob, onFileInput])
+    console.log('ho oftn?')
+    setImageUrl(getUrlFromBlob(file as Blob))
+    onFileInput({ file, fileName })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [file])
 
   return (
     <InputContainer
@@ -278,7 +286,7 @@ export function Input(props: InputProps) {
         <FileUploadContainer>
           <FileUploadImage>
             {isLoading && <Spinner />}
-            {!isLoading && !blob ? <Image /> : <img src={previewImage} alt="" />}
+            {!isLoading && !file ? <Image /> : <img src={previewImage} alt="" />}
           </FileUploadImage>
           <div>
             <Text color="beigeDark" variant="special">
@@ -298,7 +306,11 @@ export function Input(props: InputProps) {
           aria-label={showPlainPassword ? 'Hide your password' : 'Show your password'}
           size="s"
         >
-          {showPlainPassword ? <EyeOff aria-hidden="true" /> : <Eye aria-hidden="true" />}
+          {showPlainPassword ? (
+            <EyeOff aria-hidden="true" focusable="false" />
+          ) : (
+            <Eye aria-hidden="true" focusable="false" />
+          )}
           <VisuallyHidden>{showPlainPassword ? 'Hide password' : 'Show password'}</VisuallyHidden>
         </TogglePasswordButton>
       )}

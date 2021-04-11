@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { theme } from 'theme'
 import { useAppStore } from 'store'
 import { AppHeaderPortal } from 'components/AppHeader'
-import { AppContent } from 'components/Layout'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
 import { Input, Textarea } from 'components/Input'
@@ -12,13 +11,6 @@ import { addBugReport } from 'services/firebase'
 import { toast } from 'components/Toaster'
 import logger from 'utilities/logger'
 import getErrorMessage from 'utilities/getErrorMessage'
-
-const BugReportGlobalStyle = createGlobalStyle`
-  #root ${AppContent} {
-    justify-content: flex-start;
-    height: 100%;
-  }
-`
 
 const HeaderIllustration = styled.svg`
   width: 104px;
@@ -52,7 +44,11 @@ const BugReportForm = styled.form`
 export default function SettingsBugReport() {
   const { store } = useAppStore()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
-  const [file, setFile] = useState({ value: null, invalid: false, error: '' })
+  const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({
+    value: null,
+    invalid: false,
+    error: '',
+  })
   const [isProgress, setIsProgress] = useState(false)
 
   async function submitBug(event: React.FormEvent<HTMLFormElement>) {
@@ -81,8 +77,6 @@ export default function SettingsBugReport() {
 
   return (
     <React.Fragment>
-      <BugReportGlobalStyle />
-
       <AppHeaderPortal.Source>
         <HeaderIllustration xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 86">
           <g fill="none" fillRule="evenodd">
@@ -135,11 +129,11 @@ export default function SettingsBugReport() {
           <Text color="greenDark" mb="m">
             You can upload a screenshot of the bug you&apos;re having.
           </Text>
-          <Input type="file" />
+          <Input type="file" onFileInput={({ file }) => setFile((f) => ({ ...f, value: file }))} />
         </label>
 
         <Button aria-disabled={description.value === ''} mt="m">
-          {isProgress && <Spinner aria-hidden="true" />}
+          {isProgress && <Spinner aria-hidden="true" focusable="false" />}
           Submit bug report
         </Button>
       </BugReportForm>

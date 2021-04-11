@@ -1,7 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
+import { useAppStore } from 'store'
 
 export default function useReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const { store } = useAppStore()
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    store.userPreferences.animations === 'enabled'
+  )
   const { current: mediaQuery } = useRef(window?.matchMedia('(prefers-reduced-motion: reduce)'))
 
   useEffect(() => {

@@ -22,6 +22,7 @@ const config: Config = {
   },
   session: {
     signInProgress: 'USER_SIGNIN_PROGRESS',
+    userAnimationPreference: 'USER_PREFERENCE_ANIMATIONS',
   },
   ui: {
     authLoaderTimeout: 4000,

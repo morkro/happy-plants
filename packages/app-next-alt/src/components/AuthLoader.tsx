@@ -75,6 +75,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
         viewBox="0 0 102 127"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
+        focusable="false"
       >
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="2.1.-Login--Loading" transform="translate(-138.000000, -274.000000)">
@@ -119,6 +120,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
           viewBox="0 0 173 30"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
+          focusable="false"
         >
           <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" fillOpacity="0.5">
             <g transform="translate(-93.000000, -433.000000)" fill="#000000">

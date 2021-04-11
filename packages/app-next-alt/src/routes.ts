@@ -2,13 +2,17 @@ import { lazy } from 'react'
 import { RouteProps } from 'react-router-dom'
 import { AppHeaderColor } from 'components/AppHeader'
 
+export interface RouteLayoutOptions {
+  pageTitle?: string
+  withAppMenu?: boolean
+  withAppHeader?: boolean
+  appHeaderColor?: AppHeaderColor
+  appContentOrientation?: 'start' | 'center' | 'end' | 'space-between'
+}
+
 export interface CustomRouteProps extends RouteProps {
   title?: string
-  meta?: {
-    showAppMenu?: boolean
-    pageTitle?: string
-    appHeaderColor?: AppHeaderColor
-  }
+  meta?: RouteLayoutOptions
 }
 
 export const routePaths = {
@@ -25,6 +29,7 @@ export const routePaths = {
     password: '/settings/password',
     tags: '/settings/tags',
     modules: '/settings/modules',
+    a11y: '/settings/a11y',
     about: '/settings/about',
     releaseNotes: '/settings/release-notes',
     bugReport: '/settings/bug-report',
@@ -36,8 +41,9 @@ export const publicRoutes: CustomRouteProps[] = [
     path: routePaths.login,
     component: lazy(() => import('pages/Login' /* webpackChunkName: "unauthorized" */)),
     meta: {
-      showAppMenu: false,
+      withAppMenu: false,
       pageTitle: 'Login',
+      appContentOrientation: 'center',
     },
   },
 ]
@@ -47,14 +53,15 @@ export const privateRoutes: CustomRouteProps[] = [
     path: routePaths.home,
     component: lazy(() => import('pages/Home' /* webpackChunkName: "home" */)),
     meta: {
-      showAppMenu: true,
+      withAppMenu: true,
+      appContentOrientation: 'center',
     },
   },
   {
     path: routePaths.watering,
     component: lazy(() => import('pages/Watering' /* webpackChunkName: "watering" */)),
     meta: {
-      showAppMenu: true,
+      withAppMenu: true,
       pageTitle: 'Watering',
       appHeaderColor: 'blue',
     },
@@ -63,26 +70,38 @@ export const privateRoutes: CustomRouteProps[] = [
     path: routePaths.settings.base,
     component: lazy(() => import('pages/Settings' /* webpackChunkName: "settings" */)),
     meta: {
-      showAppMenu: true,
+      withAppMenu: true,
       pageTitle: 'Settings',
       appHeaderColor: 'green',
+      appContentOrientation: 'start',
+    },
+  },
+  {
+    path: routePaths.settings.a11y,
+    component: lazy(() => import('pages/SettingsA11y' /* webpackChunkName: "settings" */)),
+    meta: {
+      withAppMenu: true,
+      pageTitle: 'Accessibility',
+      appContentOrientation: 'start',
     },
   },
   {
     path: routePaths.settings.about,
     component: lazy(() => import('pages/SettingsAbout' /* webpackChunkName: "settings" */)),
     meta: {
-      showAppMenu: true,
+      withAppMenu: true,
       pageTitle: 'About',
+      appContentOrientation: 'start',
     },
   },
   {
     path: routePaths.settings.bugReport,
     component: lazy(() => import('pages/SettingsBugReport' /* webpackChunkName: "settings" */)),
     meta: {
-      showAppMenu: true,
+      withAppMenu: true,
       pageTitle: 'Bug reports',
       appHeaderColor: 'green',
+      appContentOrientation: 'start',
     },
   },
 ]

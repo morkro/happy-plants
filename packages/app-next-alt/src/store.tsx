@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useReducer } from 'react'
+import config from 'config'
 import { AuthLoaderType } from 'components/AuthLoader'
 import { FirebaseUser } from 'typings/firebase'
+import { getLocalEntry } from 'services/localStorage'
+
+type AnimationPreferences = 'enabled' | 'disabled'
 
 export interface AppState {
   user: FirebaseUser | null
@@ -8,6 +12,9 @@ export interface AppState {
   authLoader: {
     show: boolean
     message?: AuthLoaderType
+  }
+  userPreferences: {
+    animations: null | AnimationPreferences
   }
 }
 
@@ -17,6 +24,12 @@ export const initialStore: AppState = {
   authLoader: {
     show: false,
     message: undefined,
+  },
+  userPreferences: {
+    animations:
+      getLocalEntry(config.session.userAnimationPreference) === null
+        ? 'disabled'
+        : (getLocalEntry(config.session.userAnimationPreference) as AnimationPreferences),
   },
 }
 

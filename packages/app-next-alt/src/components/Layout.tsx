@@ -1,7 +1,8 @@
 import React from 'react'
+import { RouteLayoutOptions } from 'routes'
 import { useAppStore } from 'store'
 import styled from 'styled-components'
-import AppHeader, { AppHeaderColor } from './AppHeader'
+import AppHeader from './AppHeader'
 import AppMenu from './AppMenu'
 import AuthLoader from './AuthLoader'
 import FooterNoAuth from './FooterNoAuth'
@@ -14,13 +15,14 @@ export const BaseLayout = styled.div`
   justify-content: space-between;
 `
 
-export const AppContent = styled.main<{ justifyContent?: string }>`
+export const AppContent = styled.main<{ justifyContent: string }>`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: ${({ justifyContent }) =>
+    ['start', 'end'].includes(justifyContent) ? `flex-${justifyContent}` : justifyContent};
   align-items: center;
-  justify-content: ${(props) => props.justifyContent || 'center'};
   padding: ${({ theme }) => `0 ${theme.spacings.m}`};
   position: relative;
   z-index: 0;
@@ -31,21 +33,20 @@ export const AppContent = styled.main<{ justifyContent?: string }>`
   }
 `
 
-export type LayoutProps = React.PropsWithChildren<{
-  pageTitle?: string
-  withAppMenu?: boolean
-  withAppHeader?: boolean
-  appHeaderColor?: AppHeaderColor
-  isPrivateRoute?: boolean
-}>
+export type LayoutProps = React.PropsWithChildren<
+  RouteLayoutOptions & {
+    isPrivateRoute?: boolean
+  }
+>
 
 export default function Layout(props: LayoutProps) {
   const {
-    withAppMenu = true,
-    withAppHeader = true,
+    isPrivateRoute,
     pageTitle,
     appHeaderColor,
-    isPrivateRoute,
+    appContentOrientation = 'space-between',
+    withAppMenu = true,
+    withAppHeader = true,
   } = props
   const { store } = useAppStore()
   return (
@@ -53,7 +54,7 @@ export default function Layout(props: LayoutProps) {
       {store.authLoader.show && <AuthLoader message={store.authLoader.message} />}
       <BaseLayout>
         {withAppHeader && <AppHeader color={appHeaderColor}>{pageTitle}</AppHeader>}
-        <AppContent id="main" tabIndex={-1}>
+        <AppContent id="main" tabIndex={-1} justifyContent={appContentOrientation}>
           {props.children}
         </AppContent>
         {isPrivateRoute ? withAppMenu ? <AppMenu /> : null : <FooterNoAuth />}

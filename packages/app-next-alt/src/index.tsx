@@ -37,6 +37,7 @@ if (config.isProductionMode) {
 
 function App() {
   const { store } = useAppStore()
+  console.log(store.userPreferences)
   return (
     <React.Fragment>
       <SkipLink />
@@ -58,7 +59,13 @@ function App() {
                 <Redirect key={'redirect' + index} to={routePaths.login} />
               )
             )}
-            <LayoutRoute exact isPrivateRoute path={routePaths.catchAll} component={NotFound} />
+            <LayoutRoute
+              exact
+              isPrivateRoute
+              path={routePaths.catchAll}
+              component={NotFound}
+              meta={{ appContentOrientation: 'center' }}
+            />
           </Switch>
         </React.Suspense>
       </Router>

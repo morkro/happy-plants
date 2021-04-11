@@ -45,9 +45,9 @@ export function resizeBlob(file: File, options: ResizeBlobOptions = {}): Promise
 
       blobUtil
         .canvasToBlob(hermiteResize(canvas, width, height, resizedWidth, resizedHeight))
-        .then((blob: Blob) => {
+        .then((cBlob: Blob) => {
           blobUtil.revokeObjectURL(img.src)
-          resolve(blob)
+          resolve(cBlob)
         })
         .catch((error: Error) => {
           blobUtil.revokeObjectURL(img.src)

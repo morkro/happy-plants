@@ -3,7 +3,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { routePaths } from 'routes'
 import { ButtonLink } from 'components/Button'
 import { Text } from 'components/Typography'
-import Layout, { AppContent, BaseLayout } from 'components/Layout'
+import Layout, { BaseLayout } from 'components/Layout'
 import WelcomeIllustration from 'components/WelcomeIllustration'
 
 const WelcomeGlobalStyle = createGlobalStyle`
@@ -12,10 +12,6 @@ const WelcomeGlobalStyle = createGlobalStyle`
     background-repeat: no-repeat;
     background-size: calc(100% + 2px);
     background-position: bottom;
-  }
-
-  #root ${AppContent} {
-    justify-content: space-between;
   }
 `
 
@@ -54,7 +50,7 @@ export default function Welcome() {
     <React.Fragment>
       <WelcomeGlobalStyle />
 
-      <Layout isPrivateRoute={false} withAppMenu={false}>
+      <Layout isPrivateRoute={false} withAppMenu={false} appContentOrientation="space-between">
         <IllustrationContainer>
           <WelcomeIllustration data-cy="illustration" />
           <div>

@@ -262,7 +262,7 @@ export default function Login() {
             variant="warning"
             data-cy="login-form-submit"
           >
-            {isProgress && <Spinner aria-hidden="true" />}
+            {isProgress && <Spinner aria-hidden="true" focusable="false" />}
             {showForgotPassword ? 'Send password reset' : 'Login'}
           </LoginButton>
         </LoginForm>

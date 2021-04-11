@@ -2,8 +2,8 @@ import React from 'react'
 import { initialStore, useAppStore } from 'store'
 import { useHistory } from 'react-router'
 import { routePaths } from 'routes'
-import styled, { createGlobalStyle } from 'styled-components'
-import { ArrowRight, Smartphone, Smile, User } from 'react-feather'
+import styled from 'styled-components'
+import { ArrowRight, Smile } from 'react-feather'
 import { Link } from 'react-router-dom'
 import config from 'config'
 import { theme } from 'theme'
@@ -13,14 +13,6 @@ import logger from 'utilities/logger'
 import { toast } from 'components/Toaster'
 import delay from 'utilities/delay'
 import { Heading, Text } from 'components/Typography'
-import AppLogo from 'components/AppLogo'
-import { AppContent } from 'components/Layout'
-
-const SettingsGlobalStyle = createGlobalStyle`
-  #root ${AppContent} {
-    justify-content: flex-start;
-  }
-`
 
 const SettingsHeader = styled.header`
   --avatar-size: 45px;
@@ -89,7 +81,8 @@ const SettingsList = styled.ul`
   a {
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &:focus {
       text-decoration: underline;
     }
   }
@@ -105,16 +98,6 @@ const SettingsList = styled.ul`
 `
 
 const menu = {
-  account: [
-    {
-      label: 'Change email',
-      link: routePaths.settings.email,
-    },
-    {
-      label: 'Change password',
-      link: routePaths.settings.password,
-    },
-  ],
   happyplants: [
     {
       label: 'Tags',
@@ -123,6 +106,20 @@ const menu = {
     {
       label: 'Modules',
       link: routePaths.settings.modules,
+    },
+    {
+      label: 'Accessibility',
+      link: routePaths.settings.a11y,
+    },
+  ],
+  account: [
+    {
+      label: 'Change email',
+      link: routePaths.settings.email,
+    },
+    {
+      label: 'Change password',
+      link: routePaths.settings.password,
     },
   ],
   application: [
@@ -148,7 +145,7 @@ function SettingsMenuItem(props: { label: string; link: string }) {
         <Text color="greenDark" semiBold>
           {props.label}
         </Text>
-        <ArrowRight color={theme.colors.greenDark} aria-hidden="true" />
+        <ArrowRight color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
       </Link>
     </li>
   )
@@ -174,8 +171,6 @@ export default function Settings() {
 
   return (
     <React.Fragment>
-      <SettingsGlobalStyle />
-
       <SettingsHeader>
         <SettingsHeaderContent>
           <SettingsAvatar role="img" aria-label={store.user?.displayName || undefined}>
@@ -191,7 +186,12 @@ export default function Settings() {
             </Text>
           </div>
         </SettingsHeaderContent>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 204" aria-hidden="true">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 360 204"
+          aria-hidden="true"
+          focusable="false"
+        >
           <g fill="none" fillRule="evenodd">
             <path
               fill={theme.colors.white}
@@ -208,7 +208,6 @@ export default function Settings() {
 
       <SettingsSection>
         <Heading as="h2" color="beigeDark" mb="m">
-          <AppLogo color="beigeDark" aria-hidden="true" />
           HappyPlants
         </Heading>
         <SettingsList>
@@ -220,7 +219,6 @@ export default function Settings() {
 
       <SettingsSection>
         <Heading as="h2" color="beigeDark" mb="m">
-          <User aria-hidden="true" />
           Account
         </Heading>
         <SettingsList>
@@ -232,7 +230,6 @@ export default function Settings() {
 
       <SettingsSection>
         <Heading as="h2" color="beigeDark" mb="m">
-          <Smartphone aria-hidden="true" />
           Application
         </Heading>
         <SettingsList>
