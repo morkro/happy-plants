@@ -41,6 +41,7 @@ const LoginForm = styled.form`
   width: 100%;
 
   label {
+    text-align: left;
     position: relative;
     margin-bottom: ${(props) => props.theme.spacings.m};
   }
@@ -207,7 +208,7 @@ export default function Login() {
       <LoginContainer>
         <LoginForm onSubmit={formAction}>
           <label htmlFor="email">
-            <Text color="white" mb="m">
+            <Text color="white" mb="m" as="span">
               Your email{' '}
               <span title="Required">
                 {'*'}
@@ -230,7 +231,7 @@ export default function Login() {
 
           {!showForgotPassword && (
             <label htmlFor="password">
-              <Text color="white" mb="m">
+              <Text color="white" mb="m" as="span">
                 Your password{' '}
                 <span title="Required">
                   {'*'}
