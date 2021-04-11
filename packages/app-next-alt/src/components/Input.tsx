@@ -303,6 +303,7 @@ export function Input(props: InputProps) {
             event.preventDefault()
             setPlainPassword(!showPlainPassword)
           }}
+          type="button"
           size="s"
         >
           {showPlainPassword ? (
