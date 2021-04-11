@@ -261,6 +261,7 @@ export default function Login() {
             aria-disabled={!showForgotPassword && password.value === ''}
             variant="warning"
             data-cy="login-form-submit"
+            type="submit"
           >
             {isProgress && <Spinner aria-hidden="true" focusable="false" />}
             {showForgotPassword ? 'Send password reset' : 'Login'}
