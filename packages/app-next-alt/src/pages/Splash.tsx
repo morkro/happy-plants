@@ -1,5 +1,6 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
+import BaseSVG from 'components/BaseSVG'
 
 const LoadingGlobalStyle = createGlobalStyle`
   body {
@@ -19,10 +20,10 @@ export default function Splash() {
   return (
     <React.Fragment>
       <LoadingGlobalStyle />
-      <svg
+      <BaseSVG
         width="177"
         height="157"
-        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="false"
         aria-describedby="splash-svg-title splash-svg-description"
         role="img"
       >
@@ -45,7 +46,7 @@ export default function Splash() {
             strokeWidth="6"
           />
         </g>
-      </svg>
+      </BaseSVG>
     </React.Fragment>
   )
 }

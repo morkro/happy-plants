@@ -15,7 +15,7 @@ export default function Home() {
   const [isLoadingPlants, setLoadingPlants] = useState(true)
   return (
     <EmptyDataContainer>
-      <EmptyDataIllustration aria-hidden="true" focusable="false" />
+      <EmptyDataIllustration />
       <Heading as="h2" size="l" color="beigeDark" center>
         You haven&apos;t added
         <br />

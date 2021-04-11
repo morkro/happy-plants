@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { spin } from 'theme'
+import BaseSVG from './BaseSVG'
 import { Heading } from './Typography'
 
 const Overlay = styled.div`
@@ -17,9 +18,9 @@ const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `
 
-const Illustration = styled.svg`
+const Illustration = styled(BaseSVG)`
   transform: translateX(10px);
-  margin-bottom: var(--base-gap);
+  margin-bottom: ${(props) => props.theme.spacings.m};
 
   & #Fill-531 {
     transform-origin: 41px 78px;
@@ -69,14 +70,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
 
   return (
     <Overlay data-cy="app-overlay-loading">
-      <Illustration
-        width="102px"
-        height="127px"
-        viewBox="0 0 102 127"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        focusable="false"
-      >
+      <Illustration width="102px" height="127px" viewBox="0 0 102 127">
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="2.1.-Login--Loading" transform="translate(-138.000000, -274.000000)">
             <g id="Group-5" transform="translate(138.000000, 274.000000)">
@@ -114,14 +108,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
         <Heading as="h2" color="white" size="l">
           {title}
         </Heading>
-        <svg
-          width="173px"
-          height="30px"
-          viewBox="0 0 173 30"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          focusable="false"
-        >
+        <BaseSVG width="173px" height="30px" viewBox="0 0 173 30">
           <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" fillOpacity="0.5">
             <g transform="translate(-93.000000, -433.000000)" fill="#000000">
               <g transform="translate(93.000000, 427.000000)">
@@ -129,7 +116,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
               </g>
             </g>
           </g>
-        </svg>
+        </BaseSVG>
       </LoadingTitle>
     </Overlay>
   )

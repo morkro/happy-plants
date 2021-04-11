@@ -8,10 +8,12 @@ import { setLocalEntry } from 'services/localStorage'
 import { AnimationPreferences } from 'utilities/getAnimationPreference'
 
 const A11ySection = styled.section`
-  width: 100%;
+  width: ${({ theme }) => `calc(100% + ${theme.spacings.l})`};
+  background: ${(props) => props.theme.colors.white};
+  padding: ${({ theme }) => theme.spacings.m};
 
   &:not(:last-of-type) {
-    margin-bottom: ${({ theme }) => theme.spacings.l};
+    margin-bottom: ${({ theme }) => theme.spacings.m};
   }
 `
 
@@ -31,14 +33,21 @@ export default function SettingsA11y() {
         <Heading as="h2" bold color="beigeDark" mb="m">
           Animations
         </Heading>
-        <Text color="greenDark">
+        <ButtonToggle
+          toggleDirection="right"
+          pressed={prefersEnabledAnimations}
+          mt="s"
+          mb="m"
+          onClick={setPreference}
+          fullWidth
+        >
+          Enable animations
+        </ButtonToggle>
+        <Text color="beigeDark">
           This option lets you toggle all animations and transitions. Your current settings have
           them <strong>{prefersEnabledAnimations ? 'enabled' : 'disabled'}</strong>, based on your
           operating systems settings. Setting them explicitly will overwrite your systems settings.
         </Text>
-        <ButtonToggle pressed={prefersEnabledAnimations} mt="l" onClick={setPreference}>
-          Enable animation
-        </ButtonToggle>
       </A11ySection>
       <A11ySection>
         <Heading as="h2" bold color="beigeDark" mb="m">

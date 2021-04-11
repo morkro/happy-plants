@@ -6,8 +6,8 @@ export type AnimationPreferences = 'enabled' | 'disabled'
 export default function getAnimationPreference(): AnimationPreferences {
   const settingOS: AnimationPreferences = window?.matchMedia('(prefers-reduced-motion: reduce)')
     .matches
-    ? 'enabled'
-    : 'disabled'
+    ? 'disabled'
+    : 'enabled'
   const userPreference = getLocalEntry(
     config.session.userAnimationPreference
   ) as null | AnimationPreferences

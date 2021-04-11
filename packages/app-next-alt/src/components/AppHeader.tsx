@@ -97,7 +97,7 @@ export default function AppHeader(props: AppHeaderProps) {
         ) : (
           <Link to={routePaths.root}>
             <AppLogo color={textColor} inverse={textColor !== 'greenDark'} />
-            <VisuallyHidden>Happy Plants</VisuallyHidden>
+            <VisuallyHidden>HappyPlants</VisuallyHidden>
           </Link>
         )}
       </AppHeaderIcon>

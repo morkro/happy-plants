@@ -262,7 +262,6 @@ export function Input(props: InputProps) {
   }
 
   useEffect(() => {
-    console.log('ho oftn?')
     setImageUrl(getUrlFromBlob(file as Blob))
     onFileInput({ file, fileName })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -325,12 +324,12 @@ export function Input(props: InputProps) {
 
       <ErrorContainer id={props.id + '-error'}>
         {error && (
-          <>
+          <React.Fragment>
             <AlertCircle color={theme.colors.white} />
             <Text color="white" size="s">
               {error}
             </Text>
-          </>
+          </React.Fragment>
         )}
       </ErrorContainer>
     </InputContainer>

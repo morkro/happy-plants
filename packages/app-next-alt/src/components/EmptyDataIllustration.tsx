@@ -1,8 +1,9 @@
 import React from 'react'
+import BaseSVG from './BaseSVG'
 
 export default function EmptyDataIllustration(props: React.SVGProps<SVGSVGElement>) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 234" {...props}>
+    <BaseSVG viewBox="0 0 230 234" {...props}>
       <g fill="none" fillRule="evenodd">
         <path
           fill="#83817C"
@@ -29,6 +30,6 @@ export default function EmptyDataIllustration(props: React.SVGProps<SVGSVGElemen
           <path d="M202.99 194.103c.828-.113 1.48-.447 2.355.456 1.44 1.489.036 3.331-1.297 3.895-.965.409-1.934.826-2.936 1.109-3.05.861-6.309-1.935-4.794-4.37 1.214-1.945 2.448-.51 6.672-1.09" />
         </g>
       </g>
-    </svg>
+    </BaseSVG>
   )
 }

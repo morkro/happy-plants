@@ -13,6 +13,7 @@ import logger from 'utilities/logger'
 import { toast } from 'components/Toaster'
 import delay from 'utilities/delay'
 import { Heading, Text } from 'components/Typography'
+import BaseSVG from 'components/BaseSVG'
 
 const SettingsHeader = styled.header`
   --avatar-size: 45px;
@@ -186,12 +187,7 @@ export default function Settings() {
             </Text>
           </div>
         </SettingsHeaderContent>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 360 204"
-          aria-hidden="true"
-          focusable="false"
-        >
+        <BaseSVG viewBox="0 0 360 204">
           <g fill="none" fillRule="evenodd">
             <path
               fill={theme.colors.white}
@@ -203,7 +199,7 @@ export default function Settings() {
               d="M295.782 119.436c16.422 2.233 42.549 6.005 56.274 11.532 3.435 1.375 5.867 3.357 7.122 5.737 1.864 3.488.515 5.254-3.616 7.255-13.441 6.46-27.08 5.92-43.125 3.407-17.813-2.788-29.088 3.744-35.93 6.846-6.757 3.062-14.265 4.168-22.392 3.717-22.653-1.243-23.708-6.385-46.906-12.24-19.238-4.856-28.679 4.75-39.802 10.478-45.202 23.275-68.645-18.366-116.215-.053-7.166 2.758-19.463 8.763-25.671 11.115-6.98 2.644-18.093 3.623-25.522-1.227v-48.19c3.495-6.366 8.947-12.186 16.185-17.433 33.551-24.413 98.474-5.552 279.598 19.056z"
             />
           </g>
-        </svg>
+        </BaseSVG>
       </SettingsHeader>
 
       <SettingsSection>
