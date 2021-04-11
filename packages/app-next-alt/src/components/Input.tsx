@@ -133,6 +133,10 @@ const ErrorContainer = styled.div`
   border-bottom-left-radius: ${({ theme }) => theme.baseRadius};
   border-bottom-right-radius: ${({ theme }) => theme.baseRadius};
 
+  :empty {
+    padding: 0;
+  }
+
   svg {
     margin-right: ${({ theme }) => theme.spacings.s};
     height: 20px;
@@ -279,6 +283,10 @@ export function Input(props: InputProps) {
         type={type === 'password' && showPlainPassword ? 'text' : type}
         onChange={_onChange}
         {...remainingProps}
+        aria-describedby={[props['aria-describedby'], props.id + '-error']
+          .filter(Boolean)
+          .join(' ')}
+        aria-invalid={Boolean(error)}
       />
 
       {/* If input is used as type="file" we render a custom component. */}
@@ -315,14 +323,16 @@ export function Input(props: InputProps) {
         </TogglePasswordButton>
       )}
 
-      {error && (
-        <ErrorContainer>
-          <AlertCircle color={theme.colors.white} />
-          <Text color="white" size="s">
-            {error}
-          </Text>
-        </ErrorContainer>
-      )}
+      <ErrorContainer id={props.id + '-error'}>
+        {error && (
+          <>
+            <AlertCircle color={theme.colors.white} />
+            <Text color="white" size="s">
+              {error}
+            </Text>
+          </>
+        )}
+      </ErrorContainer>
     </InputContainer>
   )
 }
