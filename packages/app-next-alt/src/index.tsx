@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { HelmetProvider } from 'react-helmet-async'
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
 import { ThemeProvider } from 'styled-components'
@@ -68,16 +69,18 @@ function App() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <AppContextProvider>
-        <FirebaseAuthProvider config={config.api.firebase}>
-          <GlobalStyle />
-          <Sentry.ErrorBoundary showDialog={false} fallback={<Error />}>
-            <App />
-          </Sentry.ErrorBoundary>
-        </FirebaseAuthProvider>
-      </AppContextProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <AppContextProvider>
+          <FirebaseAuthProvider config={config.api.firebase}>
+            <GlobalStyle />
+            <Sentry.ErrorBoundary showDialog={false} fallback={<Error />}>
+              <App />
+            </Sentry.ErrorBoundary>
+          </FirebaseAuthProvider>
+        </AppContextProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
