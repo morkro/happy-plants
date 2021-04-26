@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/maintenance/yes/2020.svg" alt="Maintenance" />
+  <img src="https://img.shields.io/maintenance/yes/2021.svg" alt="Maintenance" />
   <a href="http://makeapullrequest.com" target="_blank">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome" />
   </a>
@@ -33,7 +33,7 @@ By participating, you are expected to uphold this code. Please report unacceptab
 
 ## 🔜 Version 2
 
-HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next`**](packages/app-next). The first release candidate is currently planned for Q3 2020. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
+HappyPlants is currently being rewritten for a new major release with more features and better application architecture. The progress can be found in [**`packages/app-next-alt`**](https://github.com/morkro/happy-plants/tree/next/react). The first release candidate is currently planned for Q2 2021. You can follow the progress on the [**v2 project board**](https://github.com/morkro/happy-plants/projects/6).
 
 ## ✨ Features
 
