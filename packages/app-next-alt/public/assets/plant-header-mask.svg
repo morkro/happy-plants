@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 361 360" id="plant-header-mask">
+  <defs>
+    <path id="plant-header-path" d="M360.002096 0l.004416 356.07181c-9.642666 1.796584-41.481488 1.604076-142.78065 2.514398C56.320837 360.031844 12.766854 360.867249 0 358.581201L.002096 0h360z"/>
+  </defs>
+  <use fill="#fff" fill-rule="evenodd" xlink:href="#plant-header-path"/>
+</svg>

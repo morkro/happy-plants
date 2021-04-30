@@ -9,7 +9,7 @@ export default function getAnimationPreference(): AnimationPreferences {
     ? 'disabled'
     : 'enabled'
   const userPreference = getLocalEntry(
-    config.session.userAnimationPreference
+    config.localStorage.userAnimationPreference
   ) as null | AnimationPreferences
 
   /** If the user has not set their prefences, we default to the operating systems settings. */

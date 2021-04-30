@@ -6,6 +6,7 @@
   "eslint.workingDirectories": [
     "./packages/app",
     "./packages/app-next",
+    "./packages/app-next-alt",
     "./packages/components",
     "./packages/landing",
     "./packages/server",

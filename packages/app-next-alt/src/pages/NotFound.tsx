@@ -1,13 +1,13 @@
 import React from 'react'
 import { routePaths } from 'routes'
-import NotFoundIllustration from 'assets/404-illustration.svg'
 import { Heading, Text } from 'components/Typography'
 import { ButtonLink } from 'components/Button'
+import NotFoundIllustration from 'components/NotFoundIllustration'
 
 export default function NotFound() {
   return (
     <React.Fragment>
-      <img src={NotFoundIllustration} loading="lazy" alt="" />
+      <NotFoundIllustration />
       <Heading color="greenDark" as="h2" mt="l" data-cy="404-title">
         Oops, how did you get here?
       </Heading>

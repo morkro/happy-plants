@@ -2,29 +2,81 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Web site created using create-react-app" />
+    <meta
+      name="description"
+      content="HappyPlants is all about collecting, organising, and adding all kinds of information of your little friends. How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun? Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application."
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="alternate" hreflang="en" href="https://happyplants.garden" />
+    <link rel="canonical" href="https://happyplants.garden" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    <link rel="apple-touch-icon" sizes="57x57" href="%PUBLIC_URL%/assets/img/icons/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="%PUBLIC_URL%/assets/img/icons/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="%PUBLIC_URL%/assets/img/icons/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/assets/img/icons/apple-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="%PUBLIC_URL%/assets/img/icons/apple-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="%PUBLIC_URL%/assets/img/icons/apple-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="%PUBLIC_URL%/assets/img/icons/apple-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="%PUBLIC_URL%/assets/img/icons/apple-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/assets/img/icons/apple-icon-180x180.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="%PUBLIC_URL%/assets/img/icons/android-icon-192x192.png"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/assets/img/icons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="%PUBLIC_URL%/assets/img/icons/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/assets/img/icons/favicon-16x16.png" />
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="HappyPlants" />
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="%PUBLIC_URL%/assets/img/icons/logo-mdpi-192x192.png" />
+    <meta name="msapplication-TileColor" content="#1B6D4F" />
+    <!-- Color the status bar on mobile devices -->
+    <meta name="theme-color" content="#ffffff" />
     <title>HappyPlants</title>
+    <!-- Critical CSS, also useful for <noscript> content -->
+    <style type="text/css">
+      body {
+        background: #F0EDE5;
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <img
+        width="100px"
+        height="100px"
+        src="%PUBLIC_URL%/assets/img/icons/logo-hdpi-288x288.png"
+        alt="HappyPlants"
+        title="HappyPlants"
+      />
+
+      <h1 style="color:#0A3E2B;">Oops, that's awkward.</h1>
+
+      <p style="color:#0A3E2B;">
+        <strong>HappyPlants</strong> is a
+        <a href="https://en.wikipedia.org/wiki/Web_application" target="_blank">web application</a>
+        and therefore requires JavaScript to run. Please consider enabling it.
+      </p>
+
+      <ul style="color:#0A3E2B">
+        <li>
+          More info:
+          <a href="https://github.com/morkro/happy-plants" target="_blank">HappyPlants on GitHub (source code)</a>
+        </li>
+        <li>Developer: <a href="https://moritz.berlin" target="_blank">Moritz Kröger</a></li>
+      </ul>
+    </noscript>
+
     <div id="root"></div>
     <!--
       This HTML file is a template.

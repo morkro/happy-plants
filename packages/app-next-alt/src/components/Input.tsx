@@ -22,6 +22,7 @@ interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   fullWidth?: boolean
   onFileInput?(data: { file: File | null; fileName: string }): void
   filePreview?: string
+  fileBackgroundColor?: 'beigeDark' | 'greenDark'
 }
 
 interface BaseTextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -44,7 +45,7 @@ const BaseStyles = css<InputProps | TextareaProps>`
   background: ${({ theme }) => theme.colors.white};
   font-family: var(--font-special);
   font-size: ${({ theme }) => theme.fonts.base};
-  padding: calc(${({ theme }) => theme.spacings.m} * 2);
+  padding: calc(${({ theme }) => theme.spacings.m} * 1.7);
   border: 2px solid ${({ theme, error }) => (error ? theme.colors.red : theme.colors.white)};
   color: var(--brand-green-dark);
   transition: box-shadow var(--base-transition) ease-in-out;
@@ -162,8 +163,8 @@ const TogglePasswordButton = styled(Button)`
   }
 `
 
-const FileUploadImage = styled.div`
-  background: ${({ theme }) => theme.colors.beigeDark};
+const FileUploadImage = styled.div<{ $color: 'beigeDark' | 'greenDark' }>`
+  background: ${({ theme, $color }) => theme.colors[$color]};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -215,6 +216,7 @@ export function Input(props: InputProps) {
     onFileInput = noop,
     filePreview,
     accept = 'image/png, image/jpg, image/jpeg',
+    fileBackgroundColor = 'beigeDark',
     ...remainingProps
   } = props
   const [showPlainPassword, setPlainPassword] = useState(false)
@@ -291,7 +293,7 @@ export function Input(props: InputProps) {
       {/* If input is used as type="file" we render a custom component. */}
       {isFileInput && (
         <FileUploadContainer>
-          <FileUploadImage>
+          <FileUploadImage $color={fileBackgroundColor}>
             {isLoading && <Spinner />}
             {!isLoading && !file ? <Image /> : <img src={previewImage} alt="" />}
           </FileUploadImage>

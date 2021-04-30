@@ -15,11 +15,12 @@ import logger from 'utilities/logger'
 import NotFound from 'pages/NotFound'
 import Welcome from 'pages/Welcome'
 import Error from 'pages/Error'
-import Loading from 'pages/Loading'
 import { FirebaseAuthProvider } from 'components/FirebaseAuthProvider'
 import SkipLink from 'components/SkipLink'
 import LayoutRoute from 'components/LayoutRoute'
 import Toaster from 'components/Toaster'
+import Splash from 'pages/Splash'
+import A11yTitleAnnouncer from 'components/A11yTitleAnnouncer'
 
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
@@ -41,11 +42,12 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyle enableAnimations={store.userPreferences.animations === 'enabled'} />
-      <SkipLink />
-      <Toaster />
-
       <Router>
-        <React.Suspense fallback={<Loading />}>
+        <A11yTitleAnnouncer />
+        <SkipLink />
+        <Toaster />
+
+        <React.Suspense fallback={<Splash />}>
           <Switch>
             <Route exact path={routePaths.root}>
               {store.isSignedIn ? <Redirect to={routePaths.home} /> : <Welcome />}

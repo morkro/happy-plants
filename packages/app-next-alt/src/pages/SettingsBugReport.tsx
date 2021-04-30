@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { theme } from 'theme'
-import { useAppStore } from 'store'
 import { AppHeaderPortal } from 'components/AppHeader'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
@@ -12,6 +11,7 @@ import { toast } from 'components/Toaster'
 import logger from 'utilities/logger'
 import getErrorMessage from 'utilities/getErrorMessage'
 import BaseSVG from 'components/BaseSVG'
+import useUserInfo from 'utilities/useUserInfo'
 
 const HeaderIllustration = styled(BaseSVG)`
   width: 104px;
@@ -43,7 +43,7 @@ const BugReportForm = styled.form`
 `
 
 export default function SettingsBugReport() {
-  const { store } = useAppStore()
+  const userInfo = useUserInfo()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
   const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({
     value: null,
@@ -61,8 +61,8 @@ export default function SettingsBugReport() {
         description: description.value,
         screenshot: file.value,
         reportedBy: {
-          userId: store.user?.uid ?? '',
-          email: store.user?.email ?? '',
+          userId: userInfo.id,
+          email: userInfo.email,
         },
       })
       toast.success('Thank you for reporting this bug. We will look into it!')

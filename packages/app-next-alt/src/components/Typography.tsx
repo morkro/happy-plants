@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { ThemeColors } from 'theme'
 import {
   WithCssProps,
   WithMarginProps,
@@ -16,7 +17,7 @@ type TypographyBaseProps = React.PropsWithChildren<
         bold?: boolean
         semiBold?: boolean
         center?: boolean
-        color: 'red' | 'greenDark' | 'white' | 'beigeDark'
+        color: ThemeColors
       }>
     >
   >
@@ -46,7 +47,7 @@ type HeadingProps = TypographyBaseProps & {
   size?: 's' | 'm' | 'l'
 }
 
-const HeadingBaseStyles = css<HeadingProps>`
+export const HeadingBaseStyles = css<HeadingProps>`
   ${TypographyBaseStyles}
   line-height: 1.25;
   font-family: var(--font-normal);
@@ -120,7 +121,7 @@ type TextProps = TypographyBaseProps & {
   variant?: 'normal' | 'special'
 }
 
-const TextBaseStyles = css<TextProps>`
+export const TextBaseStyles = css<TextProps>`
   ${TypographyBaseStyles}
   font-family: ${(props) =>
     props.variant === 'normal' ? 'var(--font-normal)' : 'var(--font-special)'};

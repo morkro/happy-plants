@@ -4,11 +4,14 @@ import { Text } from './Typography'
 import { VisuallyHiddenStyles } from './VisuallyHidden'
 
 const StyledLink = styled.a`
-  ${VisuallyHiddenStyles}
   position: fixed;
   z-index: 100;
   background: ${(props) => props.theme.colors.red};
   padding: ${(props) => props.theme.spacings.m};
+
+  :not(:focus) {
+    ${VisuallyHiddenStyles}
+  }
 `
 
 export default function SkipLink() {

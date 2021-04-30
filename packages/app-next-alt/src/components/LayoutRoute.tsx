@@ -11,7 +11,7 @@ interface LayoutRouteProps extends CustomRouteProps {
 export default function LayoutRoute({ isPrivateRoute = false, ...route }: LayoutRouteProps) {
   return (
     <React.Fragment>
-      <DocumentTitle title={route.meta?.pageTitle} />
+      {route.meta?.pageTitle && <DocumentTitle title={route.meta?.pageTitle} />}
       <Layout isPrivateRoute={isPrivateRoute} {...route.meta}>
         <Route exact path={route.path} component={route.component} />
       </Layout>

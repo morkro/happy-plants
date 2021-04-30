@@ -31,13 +31,6 @@ const Illustration = styled(BaseSVG)`
     transform-origin: 25px 10px;
     animation: ${spin} 9s linear infinite reverse;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    & #Fill-531,
-    & #Fill-150 {
-      animation: none;
-    }
-  }
 `
 
 const LoadingTitle = styled.div`

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { createTeleporter } from 'react-teleporter'
 import { Link, useHistory } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
-import { theme } from 'theme'
+import { theme, ThemeColors } from 'theme'
 import { routePaths } from 'routes'
 import { Heading } from './Typography'
 import VisuallyHidden from './VisuallyHidden'
@@ -16,8 +16,6 @@ const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
   height: ${(props) => props.theme.frameWidgetHeight};
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -26,18 +24,12 @@ const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
       ? 'transparent'
       : props.theme.colors[props.backgroundColor]};
 
-  & > div {
+  & > div:not(:first-of-type) {
     display: grid;
     align-items: center;
     height: 100%;
     grid-template-columns: auto auto;
-  }
-
-  & > h1 {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
+    margin-left: auto;
   }
 `
 
@@ -66,16 +58,40 @@ const AppHeaderIcon = styled.div`
   }
 `
 
-export type AppHeaderColor = 'green' | 'blue'
+export const AppHeaderButton = styled.button`
+  background: ${({ theme }) => theme.colors.beige};
+  border: none;
+  cursor: pointer;
+  min-width: ${(props) => props.theme.frameWidgetHeight};
+  height: 100%;
+  position: relative;
+
+  &:focus {
+    outline: none;
+    background: ${(props) => props.theme.colors.green};
+
+    svg {
+      stroke: ${(props) => props.theme.colors.white};
+    }
+  }
+`
+
+export type AppHeaderColor = 'green' | 'blue' | 'beige'
 
 export type AppHeaderProps = React.PropsWithChildren<{
   color?: AppHeaderColor
 }>
 
+const textColorMap: Record<AppHeaderColor, Partial<ThemeColors>> = {
+  beige: 'greenDark',
+  blue: 'white',
+  green: 'white',
+}
+
 export default function AppHeader(props: AppHeaderProps) {
-  const history = useHistory()
   const { color, children } = props
-  const textColor = color === undefined ? 'greenDark' : 'white'
+  const history = useHistory()
+  const textColor = (color && textColorMap[color]) || 'greenDark'
   const hasRouteTitle = React.Children.count(children) > 0
   const showBackButton = history.location.pathname.split('/').filter(Boolean).length > 1
 

@@ -23,14 +23,14 @@ export default function SettingsA11y() {
 
   function setPreference() {
     const preference: AnimationPreferences = prefersEnabledAnimations ? 'disabled' : 'enabled'
-    setLocalEntry(config.session.userAnimationPreference, preference)
+    setLocalEntry(config.localStorage.userAnimationPreference, preference)
     setStore({ userPreferences: { ...store.userPreferences, animations: preference } })
   }
 
   return (
     <React.Fragment>
       <A11ySection>
-        <Heading as="h2" bold color="beigeDark" mb="m">
+        <Heading as="h2" bold color="greenDark" mb="m">
           Animations
         </Heading>
         <ButtonToggle
@@ -50,7 +50,7 @@ export default function SettingsA11y() {
         </Text>
       </A11ySection>
       <A11ySection>
-        <Heading as="h2" bold color="beigeDark" mb="m">
+        <Heading as="h2" bold color="greenDark" mb="m">
           Colors
         </Heading>
         <Text color="beigeDark">This option is not yet available.</Text>

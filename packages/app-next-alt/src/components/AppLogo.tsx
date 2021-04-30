@@ -1,14 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { theme } from 'theme'
+import { theme, ThemeColors } from 'theme'
+import BaseSVG from './BaseSVG'
 
-const LogoSvg = styled.svg`
+const LogoSvg = styled(BaseSVG)`
   width: 32px;
   height: 28px;
 `
 
 interface AppLogoProps {
-  color?: 'greenDark' | 'white' | 'beigeDark'
+  color?: ThemeColors
   fill?: boolean
   inverse?: boolean
 }
@@ -17,12 +18,7 @@ export default function AppLogo(props: AppLogoProps) {
   const { color = 'greenDark', fill = true, inverse = false } = props
   const logoColor = theme.colors[color]
   return (
-    <LogoSvg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 34 31"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <LogoSvg viewBox="0 0 34 31">
       <g fill="none" fillRule="evenodd" stroke={inverse || fill === false ? logoColor : undefined}>
         {inverse ? (
           <React.Fragment>

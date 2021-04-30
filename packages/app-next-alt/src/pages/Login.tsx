@@ -43,7 +43,7 @@ const LoginForm = styled.form`
   label {
     text-align: left;
     position: relative;
-    margin-bottom: ${(props) => props.theme.spacings.m};
+    margin-bottom: ${(props) => props.theme.spacings.l};
   }
 `
 
@@ -174,8 +174,8 @@ export default function Login() {
 
   useEffect(() => {
     async function verifySession() {
-      if (getSessionEntry(config.session.signInProgress)) {
-        deleteSessionEntry(config.session.signInProgress)
+      if (getSessionEntry(config.localStorage.userAuthProgress)) {
+        deleteSessionEntry(config.localStorage.userAuthProgress)
         setStore({ authLoader: { show: true, message: 'login' } })
 
         if (!store.isSignedIn) {

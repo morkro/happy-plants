@@ -1,12 +1,21 @@
+import { FirestoreOrderByDirection } from 'typings/firebase'
 import pkg from '../package.json'
+
+export enum PlantOrderType {
+  Alphabetically = 'alphabetically',
+  Latest = 'latest',
+}
+
+export type PlantOrderMap = [string, FirestoreOrderByDirection]
 
 interface Config {
   version: string
   isProductionMode: boolean
   meta: Record<string, string>
-  session: Record<string, string>
+  localStorage: Record<string, string>
   ui: {
     authLoaderTimeout: number
+    plantOrderMap: Map<PlantOrderType, PlantOrderMap>
   }
   api: {
     sentry: Record<string, string>
@@ -20,12 +29,20 @@ const config: Config = {
   meta: {
     title: 'HappyPlants',
   },
-  session: {
-    signInProgress: 'USER_SIGNIN_PROGRESS',
-    userAnimationPreference: 'USER_PREFERENCE_ANIMATIONS',
+  localStorage: {
+    userAuthProgress: 'user:auth:progress',
+    userAnimationPreference: 'user:preferences:animations',
+    homeOrderBy: 'view:home:orderby',
+    homeShowPlantCategorys: 'view:home:showPlantCategorys',
+    homeViewmode: 'view:home:viewmode',
+    plantCount: 'data:plants:count',
   },
   ui: {
     authLoaderTimeout: 4000,
+    plantOrderMap: new Map([
+      [PlantOrderType.Alphabetically, ['name', 'asc']],
+      [PlantOrderType.Latest, ['created', 'desc']],
+    ]),
   },
   api: {
     sentry: {

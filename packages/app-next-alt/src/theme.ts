@@ -1,4 +1,4 @@
-import { createGlobalStyle, DefaultTheme, keyframes } from 'styled-components'
+import { createGlobalStyle, css, DefaultTheme, keyframes } from 'styled-components'
 import reset from 'styled-reset'
 
 export type ThemeColors =
@@ -199,7 +199,26 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
   :root {
     --font-special: 'FiraMono', 'Courier New', Courier, monospace;
     --font-normal: "Asap", Open Sans, Helvetica, Arial, sans-serif;
-    --base-transition: ${({ enableAnimations }) => (enableAnimations ? '100ms' : '0')};
+    --base-transition: ${({ enableAnimations }) => (enableAnimations ? '100ms' : '0ms')};
+    --top-notch-gradient: linear-gradient(
+        to bottom,
+        hsla(0, 0%, 0%, 0) 0%,
+        hsla(0, 0%, 0%, 0) 0.5%,
+        hsla(0, 0%, 0%, 0.002) 1.9%,
+        hsla(0, 0%, 0%, 0.008) 4.2%,
+        hsla(0, 0%, 0%, 0.019) 7.4%,
+        hsla(0, 0%, 0%, 0.037) 11.5%,
+        hsla(0, 0%, 0%, 0.064) 16.5%,
+        hsla(0, 0%, 0%, 0.102) 22.4%,
+        hsla(0, 0%, 0%, 0.152) 29.1%,
+        hsla(0, 0%, 0%, 0.216) 36.7%,
+        hsla(0, 0%, 0%, 0.296) 45.2%,
+        hsla(0, 0%, 0%, 0.394) 54.5%,
+        hsla(0, 0%, 0%, 0.512) 64.6%,
+        hsla(0, 0%, 0%, 0.651) 75.6%,
+        hsla(0, 0%, 0%, 0.813) 87.4%,
+        hsl(0, 0%, 0%) 100%
+      );
   }
 
   * {
@@ -218,9 +237,34 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
   html {
     height: 100%;
     width: 100%;
+
+    &:focus-within {
+      scroll-behavior: smooth;
+    }
   }
 
+  /* Remove all animations if user has disabled the feature. */
+  ${({ enableAnimations }) =>
+    !enableAnimations &&
+    css`
+      @media (prefers-reduced-motion: reduce) {
+        html:focus-within {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    `}
+
   body {
+    min-height: 100vh;
     height: 100%;
     width: 100%;
     background: ${theme.colors.beige};
@@ -236,16 +280,24 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
 
   #root {
     width: 100vw;
-    min-width: ${theme.frameMaxWidth};
-    height: 100%;
     min-height: 100vh;
+    display: flex;
   }
 
   strong {
     font-weight: bold;
   }
 
+  a:not([class]) {
+    text-decoration-skip-ink: auto;
+  }
+
   a:hover {
     color: ${theme.colors.greenDark};
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
   }
 `

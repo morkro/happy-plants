@@ -3,7 +3,7 @@ import { RouteProps } from 'react-router-dom'
 import { AppHeaderColor } from 'components/AppHeader'
 
 export interface RouteLayoutOptions {
-  pageTitle?: string
+  pageTitle?: string | false
   withAppMenu?: boolean
   withAppHeader?: boolean
   appHeaderColor?: AppHeaderColor
@@ -23,6 +23,10 @@ export const routePaths = {
   home: '/home',
   watering: '/watering',
   new: '/new',
+  plant: {
+    base: '/plant/:id',
+    gallery: '/plant/:id/gallery',
+  },
   settings: {
     base: '/settings',
     email: '/settings/email',
@@ -54,7 +58,9 @@ export const privateRoutes: CustomRouteProps[] = [
     component: lazy(() => import('pages/Home' /* webpackChunkName: "home" */)),
     meta: {
       withAppMenu: true,
+      pageTitle: 'Home',
       appContentOrientation: 'center',
+      appHeaderColor: 'beige',
     },
   },
   {
@@ -64,6 +70,24 @@ export const privateRoutes: CustomRouteProps[] = [
       withAppMenu: true,
       pageTitle: 'Watering',
       appHeaderColor: 'blue',
+    },
+  },
+  {
+    path: routePaths.plant.base,
+    component: lazy(() => import('pages/Plant' /* webpackChunkName: "plant" */)),
+    meta: {
+      withAppMenu: true,
+      pageTitle: false,
+      appContentOrientation: 'start',
+    },
+  },
+  {
+    path: routePaths.new,
+    component: lazy(() => import('pages/New' /* webpackChunkName: "new" */)),
+    meta: {
+      withAppMenu: true,
+      pageTitle: 'Add a new friend',
+      appHeaderColor: 'green',
     },
   },
   {

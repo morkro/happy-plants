@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components'
 import anime from 'animejs'
 import { spin, theme } from 'theme'
 import { useAppStore } from 'store'
+import BaseSVG from './BaseSVG'
 
 const pulse = keyframes`
   from {
@@ -18,7 +19,7 @@ const pulse = keyframes`
   }
 `
 
-const IllustrationSvg = styled.svg`
+const IllustrationSvg = styled(BaseSVG)`
   #welcome-illustration #Fill-127 {
     transform-origin: 25px 26px;
     animation: ${spin} 17s linear infinite;
@@ -27,14 +28,6 @@ const IllustrationSvg = styled.svg`
   #welcome-illustration #Fill-98 {
     transform-origin: 0 200px;
     animation: ${pulse} 1.5s linear infinite;
-  }
-
-  /** Disable animation if user has reduced motion enabled */
-  @media (prefers-reduced-motion: reduce) {
-    #welcome-illustration #Fill-127,
-    #welcome-illustration #Fill-98 {
-      animation: none;
-    }
   }
 `
 
@@ -56,15 +49,7 @@ export default function WelcomeIllustration() {
   }, [store.userPreferences.animations])
 
   return (
-    <IllustrationSvg
-      width="295px"
-      height="308px"
-      viewBox="0 0 295 308"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      focusable="false"
-    >
+    <IllustrationSvg width="295px" height="308px" viewBox="0 0 295 308">
       <g id="welcome-illustration" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="Welcome" transform="translate(-33.000000, -65.000000)">
           <g id="Hero" transform="translate(33.000000, 65.000000)">

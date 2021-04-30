@@ -87,9 +87,9 @@ const SettingsIcon = () => (
 )
 
 const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
-  height: ${(props) => props.theme.frameWidgetHeight};
+  height: ${({ theme }) => theme.frameWidgetHeight};
   width: 100%;
-  background: ${(props) => props.theme.colors.beige};
+  background: ${({ theme }) => theme.colors.beige};
   position: sticky;
   bottom: 0;
   z-index: 1;
@@ -102,9 +102,6 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top-left-radius: ${(props) => props.theme.baseRadius};
-    border-top-right-radius: ${(props) => props.theme.baseRadius};
-    transition: box-shadow var(--base-transition) ease-in-out;
 
     &:focus {
       outline: none;

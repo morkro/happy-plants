@@ -5,18 +5,27 @@ import 'firebase/storage'
 import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
-import { FirestoreCollections, FirestoreLoginProvider } from 'typings/firebase'
+import {
+  FirestoreCollection,
+  FirestoreCollections,
+  FirestoreDocument,
+  FirestoreLoginProvider,
+  StorageReference,
+} from 'typings/firebase'
 import logger from 'utilities/logger'
 import { BugReport } from 'typings/bugReport'
 import { getDeviceInfo } from 'utilities/getDeviceInfo'
+import { isValidHttpUrl } from 'utilities/isUrl'
 import { setSessionEntry } from './sessionStorage'
 
 /**
  * Table of contents:
  * 1. Authentication
  * 2. Collections
+ * 3. Files
  */
 
+// const downloadURLWorker = new DownloadURLWorker()
 let firebaseApp: firebase.app.App
 
 export function initFirebaseApp(options: Record<string, string> = {}): void {
@@ -41,7 +50,7 @@ export async function signInUser(payload: {
     await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
   } else {
     // We are setting this property to later on check for it when the user returns to the app.
-    setSessionEntry(config.session.signInProgress, 'true')
+    setSessionEntry(config.localStorage.userAuthProgress, 'true')
 
     let provider
     switch (payload.provider) {
@@ -79,6 +88,18 @@ export async function signOutUser() {
 /**
  * ###################### 2. Collections ######################
  */
+export function getUserDoc(userId: string): FirestoreDocument {
+  return firebaseApp.firestore().collection(FirestoreCollections.Users).doc(userId)
+}
+
+export function getCollection(userId: string, collection: string): FirestoreCollection {
+  return getUserDoc(userId).collection(collection)
+}
+
+export function getPlantDoc(userId: string, documentId: string) {
+  return getCollection(userId, FirestoreCollections.Plants).doc(documentId)
+}
+
 export async function addBugReport(report: Partial<BugReport>) {
   const guid = uuid()
   const now = Date.now()
@@ -95,4 +116,14 @@ export async function addBugReport(report: Partial<BugReport>) {
     .collection(FirestoreCollections.BugReports)
     .doc(guid)
     .set(fullReport)
+}
+
+/**
+ * ###################### 2. Files ######################
+ */
+export function getFileRef(path: string): StorageReference {
+  if (isValidHttpUrl(path)) {
+    return firebase.storage().refFromURL(path)
+  }
+  return firebase.storage().ref(path)
 }

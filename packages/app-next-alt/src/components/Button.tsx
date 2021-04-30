@@ -7,12 +7,18 @@ interface BaseProps {
   variant?: 'normal' | 'info' | 'warning' | 'alarm'
   size?: 's'
   border?: boolean
+  round?: boolean
   type?: 'button' | 'submit'
 }
 
 type WithBaseProps = WithCssProps<WithMarginProps<BaseProps>>
 type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & WithBaseProps
 type ButtonLinkProps = LinkProps & WithBaseProps
+
+const defaultProps: BaseProps = {
+  border: false,
+  round: false,
+}
 
 const BaseStyles = css<BaseProps>`
   ${WithMarginStyles}
@@ -22,7 +28,7 @@ const BaseStyles = css<BaseProps>`
 
   position: relative;
   background-color: ${(props) => (props.border ? 'transparent' : 'var(--base-color)')};
-  border-radius: ${(props) => props.theme.baseRadius};
+  border-radius: ${(props) => (props.round ? '100%' : props.theme.baseRadius)};
   border: 2px solid var(--base-color);
   box-shadow: ${(props) => (props.border ? 'none' : '0 2px 9px var(--shadow)')};
   color: ${(props) => props.theme.colors.white};
@@ -79,7 +85,7 @@ const BaseStyles = css<BaseProps>`
   & > svg {
     width: 20px;
     height: 20px;
-    margin-right: ${({ theme }) => theme.spacings.m};
+    margin-right: ${({ theme, round }) => !round && theme.spacings.m};
   }
 `
 
@@ -87,18 +93,18 @@ const ButtonContainer = styled.button<BaseProps>`
   ${BaseStyles}
 `
 
-export const StyledLink = styled(({ variant, border, ...props }) => <Link {...props} />)<BaseProps>`
+const LinkContainer = styled(({ variant, border, ...props }) => <Link {...props} />)<BaseProps>`
   ${BaseStyles}
 `
 
 export function ButtonLink(props: ButtonLinkProps) {
-  return <StyledLink {...props} />
+  return <LinkContainer {...props} />
 }
 
-ButtonLink.defaultProps = { border: false }
+ButtonLink.defaultProps = defaultProps
 
 export function Button(props: ButtonProps) {
   return <ButtonContainer {...props} />
 }
 
-Button.defaultProps = { border: false }
+Button.defaultProps = defaultProps
