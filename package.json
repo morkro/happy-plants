@@ -28,8 +28,8 @@
     "init:server": "npm run bootstrap:server && npm run build:server"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
-    "lerna": "^3.22.1"
+    "husky": "^4.3.7",
+    "lerna": "^4.0.0"
   },
   "husky": {
     "hooks": {
