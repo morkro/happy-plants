@@ -8,7 +8,7 @@ module.exports = {
       version: 'detect',
     },
   },
-  plugins: ['prettier', 'react', 'react-hooks', 'filenames', 'jest', 'jsx-a11y'],
+  plugins: ['prettier', 'react', 'react-hooks', 'filenames', 'jsx-a11y'],
   extends: [
     'eslint:recommended',
     'react-app',
@@ -26,6 +26,7 @@ module.exports = {
       },
     ],
     'react/button-has-type': 'off',
+    'no-debugger': 'off',
     'import/order': [
       'error',
       {

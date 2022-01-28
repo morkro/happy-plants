@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { toast as toastInstance, useToaster } from 'react-hot-toast'
+import { toast as toastInstance, ToastType, useToaster } from 'react-hot-toast'
 import { AlertCircle, CheckCircle } from 'react-feather'
 import { Text } from './Typography'
 
@@ -47,22 +47,22 @@ const Container = styled.div<{ type: ToastType }>`
   }
 `
 
-type ToastType = 'success' | 'error' | 'loading' | 'blank'
-
 export const toast = toastInstance
 
 export default function Toaster() {
-  const { visibleToasts, handlers } = useToaster()
+  const { toasts, handlers } = useToaster()
   return (
     <ToastWrapper onMouseEnter={handlers.startPause} onMouseLeave={handlers.endPause}>
-      {visibleToasts.map((toast) => (
-        <Container key={toast.id} type={toast.type} role={toast.role} aria-live={toast.ariaLive}>
-          {toast.type === 'success' ? <CheckCircle /> : <AlertCircle />}
-          <Text color="white" size="m" as="span">
-            {toast.message}
-          </Text>
-        </Container>
-      ))}
+      {toasts
+        .filter((toast) => toast.visible)
+        .map((toast) => (
+          <Container key={toast.id} type={toast.type} {...toast.ariaProps}>
+            {toast.type === 'success' ? <CheckCircle /> : <AlertCircle />}
+            <Text color="white" size="m" as="span">
+              {toast.message}
+            </Text>
+          </Container>
+        ))}
     </ToastWrapper>
   )
 }

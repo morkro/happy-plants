@@ -4,7 +4,8 @@ import { List, Plus } from 'react-feather'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import A11yDialogInstance from 'a11y-dialog'
 import { theme } from 'theme'
-import { BaseLayout } from 'components/Layout'
+import { routeConfigMap } from 'routes'
+import Layout, { BaseLayout } from 'components/Layout'
 import NewIllustration from 'components/NewIllustration'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
@@ -15,7 +16,6 @@ import Dialog from 'components/Dialog'
 import CategoriesList from 'components/CategoriesList'
 import { PlantCategory, PlantTag } from 'typings/plant'
 import { getUserDoc } from 'services/firebase'
-import { FirestoreUserDocument } from 'typings/firebase'
 import useUserInfo from 'utilities/useUserInfo'
 import Tag from 'components/Tag'
 
@@ -99,6 +99,7 @@ const TagList = styled.ul`
 `
 
 export default function New() {
+  const routeConfig = routeConfigMap.get('new')
   const userInfo = useUserInfo()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()
@@ -107,7 +108,7 @@ export default function New() {
   const [category, setCategory] = useState<PlantCategory | null | undefined>(undefined)
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isProgress, setIsProgress] = useState(false)
-  const [userDoc, loadingUserDoc] = useDocumentData<FirestoreUserDocument>(getUserDoc(userInfo.id))
+  const [userDoc, loadingUserDoc] = useDocumentData(getUserDoc(userInfo.id))
 
   function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -134,7 +135,7 @@ export default function New() {
   }, [selectedTags])
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <NewGlobalStyle />
 
       <Dialog id="newplant-tags" title="Add tags" reference={setTagsDialog}>
@@ -250,6 +251,6 @@ export default function New() {
       </NewForm>
 
       <Illustration />
-    </React.Fragment>
+    </Layout>
   )
 }

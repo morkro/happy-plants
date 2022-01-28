@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import config, { PlantOrderMap, PlantOrderType } from 'config'
 import { Search, Sliders, X } from 'react-feather'
 import { theme } from 'theme'
-import { generatePath, useHistory } from 'react-router'
-import { routePaths } from 'routes'
+import { generatePath, useNavigate } from 'react-router-dom'
+import { routeConfigMap, routePaths } from 'routes'
+import { orderBy, query } from 'firebase/firestore'
 import { Heading, Text } from 'components/Typography'
 import EmptyDataIllustration from 'components/EmptyDataIllustration'
 import { getCollection } from 'services/firebase'
@@ -20,6 +21,7 @@ import PlantPreview from 'components/PlantPreview'
 import { Plant } from 'typings/plant'
 import { Input } from 'components/Input'
 import useUserInfo from 'utilities/useUserInfo'
+import Layout from 'components/Layout'
 
 const PlantList = styled.ul`
   --grid-item-height: calc(50vw - 1.5 * ${({ theme }) => theme.spacings.m});
@@ -76,35 +78,41 @@ function EmptyData() {
 }
 
 export default function Home() {
-  const history = useHistory()
+  const routeConfig = routeConfigMap.get('home')
+  const navigate = useNavigate()
   const queries = useSearchParams()
   const userInfo = useUserInfo()
   const [showOptions, setShowOptions] = useState(queries.has('options'))
   const [showSearch, setShowSearch] = useState(queries.has('search'))
-  const [search, setSearch] = useState(queries.get('search') ?? '')
-  const [orderBy] = useState(
+  const [search, setSearch] = useState('')
+  const [storageOrderBy] = useState(
     (getLocalEntry(config.localStorage.homeOrderBy) as PlantOrderType) ?? PlantOrderType.Latest
   )
-  const [orderType, orderDirection] = config.ui.plantOrderMap.get(orderBy) as PlantOrderMap
+  const [orderType, orderDirection] = config.ui.plantOrderMap.get(storageOrderBy) as PlantOrderMap
   const [snapshot, loading, error] = useCollection(
-    getCollection(userInfo.id, FirestoreCollections.Plants).orderBy(orderType, orderDirection)
+    query(
+      getCollection(userInfo.id, FirestoreCollections.Plants),
+      orderBy(orderType, orderDirection)
+    )
   )
+  const plantDataListRaw = snapshot?.docs?.map((doc) => doc.data() as Plant)
+  const plantDataList =
+    search === ''
+      ? plantDataListRaw
+      : plantDataListRaw?.filter((plant) => plant.name.includes(search))
 
   function closeActions() {
     if (showOptions) setShowOptions(false)
     if (showSearch) setShowSearch(false)
+    if (search !== '') setSearch('')
 
-    history.replace(routePaths.home)
+    navigate(routePaths.home, { replace: true })
   }
 
   function triggerOptions() {
     setShowOptions(true)
-    history.replace(`${routePaths.home}?options`)
+    navigate(`${routePaths.home}?options`, { replace: true })
   }
-
-  useEffect(() => {
-    history.replace(`${routePaths.home}?search=${search}`)
-  }, [history, search])
 
   useEffect(() => {
     if (error !== undefined) {
@@ -113,7 +121,7 @@ export default function Home() {
   }, [error])
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <AppHeaderPortal.Source>
         {showSearch && (
           <SearchContainer>
@@ -124,10 +132,20 @@ export default function Home() {
                 id="plant-search"
                 aria-placeholder="Search"
                 placeholder="Search"
-                value={search}
+                list="search-list"
+                // onClick={() => history.replace(`${routePaths.home}?search`)}
                 onChange={(event) => setSearch(event.target.value)}
+                // onChange={(event) => console.log(event)}
               />
             </label>
+            {!loading && !snapshot?.empty && (
+              <datalist id="search-list">
+                {snapshot?.docs.map((doc) => {
+                  const data = doc.data() as Plant
+                  return <option key={doc.id} value={data.name} />
+                })}
+              </datalist>
+            )}
           </SearchContainer>
         )}
 
@@ -155,19 +173,16 @@ export default function Home() {
 
       {!loading && !snapshot?.empty ? (
         <PlantList>
-          {snapshot?.docs.map((doc) => {
-            const data = doc.data() as Plant
-            return (
-              <li key={doc.id}>
-                <PlantPreview
-                  loading={false}
-                  name={data.name}
-                  href={generatePath(routePaths.plant.base, { id: data.guid })}
-                  imageUrl={data.imageURL}
-                />
-              </li>
-            )
-          })}
+          {plantDataList?.map((plant) => (
+            <li key={plant.guid + plant.name}>
+              <PlantPreview
+                loading={false}
+                name={plant.name}
+                href={generatePath(routePaths.plant.base, { id: plant.guid })}
+                imageUrl={plant.imageURL}
+              />
+            </li>
+          ))}
         </PlantList>
       ) : (
         <PlantList>
@@ -180,6 +195,6 @@ export default function Home() {
       )}
 
       {!loading && snapshot?.empty && <EmptyData />}
-    </React.Fragment>
+    </Layout>
   )
 }

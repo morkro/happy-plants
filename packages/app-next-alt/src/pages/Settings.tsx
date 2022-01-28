@@ -1,7 +1,7 @@
 import React from 'react'
 import { initialStore, useAppStore } from 'store'
-import { useHistory } from 'react-router'
-import { routePaths } from 'routes'
+import { useNavigate } from 'react-router-dom'
+import { routeConfigMap, routePaths } from 'routes'
 import styled from 'styled-components'
 import { ArrowRight, Smile } from 'react-feather'
 import { Link } from 'react-router-dom'
@@ -14,6 +14,7 @@ import { toast } from 'components/Toaster'
 import delay from 'utilities/delay'
 import { Heading, Text } from 'components/Typography'
 import BaseSVG from 'components/BaseSVG'
+import Layout from 'components/Layout'
 
 const SettingsHeader = styled.header`
   --avatar-size: 45px;
@@ -153,7 +154,8 @@ function SettingsMenuItem(props: { label: string; link: string }) {
 }
 
 export default function Settings() {
-  const history = useHistory()
+  const routeConfig = routeConfigMap.get('settingsBase')
+  const navigate = useNavigate()
   const { store, setStore } = useAppStore()
 
   async function signOut() {
@@ -161,17 +163,17 @@ export default function Settings() {
 
     try {
       await Promise.all([signOutUser(), delay(2000)])
-      history.push(routePaths.home)
+      navigate(routePaths.home)
       setStore(initialStore)
-    } catch (error) {
+    } catch (error: any) {
       setStore({ authLoader: { show: false } })
-      logger(error, true)
+      logger(error.message, true)
       toast.error('There was an issue logging you out, please refresh.')
     }
   }
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <SettingsHeader>
         <SettingsHeaderContent>
           <SettingsAvatar role="img" aria-label={store.user?.displayName || undefined}>
@@ -246,6 +248,6 @@ export default function Settings() {
       <Button onClick={signOut} variant="alarm" size="s" mt="m" mb="l">
         Logout
       </Button>
-    </React.Fragment>
+    </Layout>
   )
 }

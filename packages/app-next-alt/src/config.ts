@@ -1,4 +1,4 @@
-import { FirestoreOrderByDirection } from 'typings/firebase'
+import { OrderByDirection } from 'firebase/firestore'
 import pkg from '../package.json'
 
 export enum PlantOrderType {
@@ -6,7 +6,7 @@ export enum PlantOrderType {
   Latest = 'latest',
 }
 
-export type PlantOrderMap = [string, FirestoreOrderByDirection]
+export type PlantOrderMap = [string, OrderByDirection]
 
 interface Config {
   version: string

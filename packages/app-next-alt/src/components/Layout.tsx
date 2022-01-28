@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import AppHeader from './AppHeader'
 import AppMenu from './AppMenu'
 import AuthLoader from './AuthLoader'
+import DocumentTitle from './DocumentTitle'
 import FooterNoAuth from './FooterNoAuth'
 
 export const BaseLayout = styled.div`
@@ -33,11 +34,7 @@ export const AppContent = styled.main<{ justifyContent: string }>`
   }
 `
 
-export type LayoutProps = React.PropsWithChildren<
-  RouteLayoutOptions & {
-    isPrivateRoute?: boolean
-  }
->
+export type LayoutProps = React.PropsWithChildren<RouteLayoutOptions>
 
 export default function Layout(props: LayoutProps) {
   const {
@@ -51,6 +48,7 @@ export default function Layout(props: LayoutProps) {
   const { store } = useAppStore()
   return (
     <React.Fragment>
+      {pageTitle && <DocumentTitle title={pageTitle} />}
       {store.authLoader.show && <AuthLoader message={store.authLoader.message} />}
       <BaseLayout>
         {withAppHeader && <AppHeader color={appHeaderColor}>{pageTitle}</AppHeader>}

@@ -2,10 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import config from 'config'
 import { useAppStore } from 'store'
+import { routeConfigMap } from 'routes'
 import { Heading, Text } from 'components/Typography'
 import { ButtonToggle } from 'components/Toggle'
 import { setLocalEntry } from 'services/localStorage'
 import { AnimationPreferences } from 'utilities/getAnimationPreference'
+import Layout from 'components/Layout'
 
 const A11ySection = styled.section`
   width: ${({ theme }) => `calc(100% + ${theme.spacings.l})`};
@@ -18,6 +20,7 @@ const A11ySection = styled.section`
 `
 
 export default function SettingsA11y() {
+  const routeConfig = routeConfigMap.get('settingsA11y')
   const { store, setStore } = useAppStore()
   const prefersEnabledAnimations = store.userPreferences.animations === 'enabled'
 
@@ -28,7 +31,7 @@ export default function SettingsA11y() {
   }
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <A11ySection>
         <Heading as="h2" bold color="greenDark" mb="m">
           Animations
@@ -55,6 +58,6 @@ export default function SettingsA11y() {
         </Heading>
         <Text color="beigeDark">This option is not yet available.</Text>
       </A11ySection>
-    </React.Fragment>
+    </Layout>
   )
 }

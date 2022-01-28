@@ -282,6 +282,13 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
     width: 100vw;
     min-height: 100vh;
     display: flex;
+
+    @media screen and (min-width: 650px) {
+      width: 650px;
+      min-height: auto;
+      max-height: 90vh;
+      margin: auto;
+    }
   }
 
   strong {

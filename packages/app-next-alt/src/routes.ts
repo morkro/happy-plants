@@ -1,8 +1,7 @@
-import { lazy } from 'react'
-import { RouteProps } from 'react-router-dom'
 import { AppHeaderColor } from 'components/AppHeader'
 
 export interface RouteLayoutOptions {
+  isPrivateRoute?: boolean
   pageTitle?: string | false
   withAppMenu?: boolean
   withAppHeader?: boolean
@@ -10,13 +9,8 @@ export interface RouteLayoutOptions {
   appContentOrientation?: 'start' | 'center' | 'end' | 'space-between'
 }
 
-export interface CustomRouteProps extends RouteProps {
-  title?: string
-  meta?: RouteLayoutOptions
-}
-
 export const routePaths = {
-  catchAll: '**',
+  catchAll: '*/*',
   root: '/',
   login: '/login',
   onboarding: '/onboarding',
@@ -40,92 +34,97 @@ export const routePaths = {
   },
 }
 
-export const publicRoutes: CustomRouteProps[] = [
-  {
-    path: routePaths.login,
-    component: lazy(() => import('pages/Login' /* webpackChunkName: "unauthorized" */)),
-    meta: {
+export const routeConfigMap = new Map<string, RouteLayoutOptions>([
+  ['catchAll', { isPrivateRoute: true, appContentOrientation: 'center' }],
+  ['root', {}],
+  ['onboarding', {}],
+  [
+    'login',
+    {
       withAppMenu: false,
       pageTitle: 'Login',
       appContentOrientation: 'center',
     },
-  },
-]
-
-export const privateRoutes: CustomRouteProps[] = [
-  {
-    path: routePaths.home,
-    component: lazy(() => import('pages/Home' /* webpackChunkName: "home" */)),
-    meta: {
+  ],
+  [
+    'home',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Home',
       appContentOrientation: 'center',
       appHeaderColor: 'beige',
     },
-  },
-  {
-    path: routePaths.watering,
-    component: lazy(() => import('pages/Watering' /* webpackChunkName: "watering" */)),
-    meta: {
+  ],
+  [
+    'watering',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Watering',
       appHeaderColor: 'blue',
     },
-  },
-  {
-    path: routePaths.plant.base,
-    component: lazy(() => import('pages/Plant' /* webpackChunkName: "plant" */)),
-    meta: {
-      withAppMenu: true,
-      pageTitle: false,
-      appContentOrientation: 'start',
-    },
-  },
-  {
-    path: routePaths.new,
-    component: lazy(() => import('pages/New' /* webpackChunkName: "new" */)),
-    meta: {
+  ],
+  [
+    'new',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Add a new friend',
       appHeaderColor: 'green',
     },
-  },
-  {
-    path: routePaths.settings.base,
-    component: lazy(() => import('pages/Settings' /* webpackChunkName: "settings" */)),
-    meta: {
+  ],
+  [
+    'plantBase',
+    {
+      isPrivateRoute: false,
+      withAppMenu: true,
+      pageTitle: false,
+      appContentOrientation: 'start',
+    },
+  ],
+  ['plantGallery', { isPrivateRoute: false }],
+  [
+    'settingsBase',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Settings',
       appHeaderColor: 'green',
       appContentOrientation: 'start',
     },
-  },
-  {
-    path: routePaths.settings.a11y,
-    component: lazy(() => import('pages/SettingsA11y' /* webpackChunkName: "settings" */)),
-    meta: {
+  ],
+  ['settingsEmail', { isPrivateRoute: false }],
+  ['settingsPassword', { isPrivateRoute: false }],
+  ['settingsTags', { isPrivateRoute: false }],
+  ['settingsModules', { isPrivateRoute: false }],
+  [
+    'settingsA11y',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Accessibility',
       appContentOrientation: 'start',
     },
-  },
-  {
-    path: routePaths.settings.about,
-    component: lazy(() => import('pages/SettingsAbout' /* webpackChunkName: "settings" */)),
-    meta: {
+  ],
+  [
+    'settingsAbout',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'About',
       appContentOrientation: 'start',
     },
-  },
-  {
-    path: routePaths.settings.bugReport,
-    component: lazy(() => import('pages/SettingsBugReport' /* webpackChunkName: "settings" */)),
-    meta: {
+  ],
+  ['settingsReleaseNotes', { isPrivateRoute: false }],
+  [
+    'settingsBugReport',
+    {
+      isPrivateRoute: false,
       withAppMenu: true,
       pageTitle: 'Bug reports',
       appHeaderColor: 'green',
       appContentOrientation: 'start',
     },
-  },
-]
+  ],
+])

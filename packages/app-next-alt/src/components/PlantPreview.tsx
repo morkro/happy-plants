@@ -95,9 +95,11 @@ const Background = styled.div`
 `
 
 export default function PlantPreview(props: PlantProps) {
-  const { loading = true, href = '', name, imageUrl = '' } = props
+  const { loading = true, href = '', name, imageUrl } = props
   const hasImageUrl = typeof imageUrl === 'string'
-  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(imageUrl as string))
+  const imageRef = getFileRef(imageUrl === null ? undefined : imageUrl)
+  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(imageRef)
+
   return (
     <PlantContainer $loading={loading}>
       {loading ? (

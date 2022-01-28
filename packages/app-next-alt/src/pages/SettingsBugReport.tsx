@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { theme } from 'theme'
+import { FirebaseError } from 'firebase/app'
+import { routeConfigMap } from 'routes'
 import { AppHeaderPortal } from 'components/AppHeader'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
@@ -12,6 +14,7 @@ import logger from 'utilities/logger'
 import getErrorMessage from 'utilities/getErrorMessage'
 import BaseSVG from 'components/BaseSVG'
 import useUserInfo from 'utilities/useUserInfo'
+import Layout from 'components/Layout'
 
 const HeaderIllustration = styled(BaseSVG)`
   width: 104px;
@@ -43,6 +46,7 @@ const BugReportForm = styled.form`
 `
 
 export default function SettingsBugReport() {
+  const routeConfig = routeConfigMap.get('settingsBugReport')
   const userInfo = useUserInfo()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
   const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({
@@ -67,8 +71,8 @@ export default function SettingsBugReport() {
       })
       toast.success('Thank you for reporting this bug. We will look into it!')
       setDescription((d) => ({ ...d, value: '' }))
-    } catch (error) {
-      const errorMessage = getErrorMessage(error)
+    } catch (error: unknown) {
+      const errorMessage = getErrorMessage(error as FirebaseError)
       logger(errorMessage.message, true)
       toast.error(errorMessage.message)
     } finally {
@@ -77,7 +81,7 @@ export default function SettingsBugReport() {
   }
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <AppHeaderPortal.Source>
         <HeaderIllustration viewBox="0 0 104 86">
           <g fill="none" fillRule="evenodd">
@@ -138,6 +142,6 @@ export default function SettingsBugReport() {
           Submit bug report
         </Button>
       </BugReportForm>
-    </React.Fragment>
+    </Layout>
   )
 }

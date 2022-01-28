@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Chrome, GitHub, Twitter } from 'react-feather'
-import { useHistory, useLocation } from 'react-router'
-import { routePaths } from 'routes'
+import { useNavigate, useLocation } from 'react-router'
+import { routeConfigMap, routePaths } from 'routes'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import config from 'config'
 import { AppState, useAppStore } from 'store'
+import { FirebaseError } from 'firebase/app'
 import { Button } from 'components/Button'
 import { Input } from 'components/Input'
 import { Text } from 'components/Typography'
-import { BaseLayout } from 'components/Layout'
+import Layout, { BaseLayout } from 'components/Layout'
 import { toast } from 'components/Toaster'
 import useSearchParams from 'utilities/useSearchParams'
 import { forgotPassword, getAuthRedirectResults, signInUser } from 'services/firebase'
@@ -20,6 +21,12 @@ import Spinner from 'components/Spinner'
 import VisuallyHidden from 'components/VisuallyHidden'
 import { deleteSessionEntry, getSessionEntry } from 'services/sessionStorage'
 import getErrorMessage from 'utilities/getErrorMessage'
+
+type LocationState = {
+  from: {
+    pathname: string
+  }
+}
 
 const LoginGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -104,8 +111,9 @@ const LoginServices = styled.div`
 `
 
 export default function Login() {
-  const history = useHistory()
-  const location = useLocation<{ from: { pathname: string } }>()
+  const routeConfig = routeConfigMap.get('login')
+  const navigate = useNavigate()
+  const location = useLocation()
   const queries = useSearchParams()
   const { store, setStore } = useAppStore()
   const [email, setEmail] = useState({ value: '', error: '' })
@@ -124,7 +132,7 @@ export default function Login() {
     setForgotPassword(!showForgotPassword)
   }
 
-  function showError(error: firebase.default.FirebaseError) {
+  function showError(error: FirebaseError) {
     const errorMessage = getErrorMessage(error)
 
     if (errorMessage.type === 'password') {
@@ -145,9 +153,9 @@ export default function Login() {
     try {
       await signInUser({ provider, email: email.value, password: password.value })
       await delay(config.ui.authLoaderTimeout)
-      const { from } = location.state || { from: { pathname: routePaths.home } }
-      history.replace(from)
-    } catch (error) {
+      const { from } = (location.state as LocationState) || { from: { pathname: routePaths.home } }
+      navigate(from, { replace: true })
+    } catch (error: any) {
       showError(error)
     } finally {
       setStore({ authLoader: { show: false } })
@@ -162,7 +170,7 @@ export default function Login() {
       try {
         await forgotPassword(email.value)
         toast('An email to reset your password has been sent.')
-      } catch (error) {
+      } catch (error: any) {
         showError(error)
       } finally {
         setIsProgress(false)
@@ -185,13 +193,13 @@ export default function Login() {
               delay(4000),
             ])
             setStore({ ...authResults })
-          } catch (error) {
-            logger(error, true)
+          } catch (error: any) {
+            logger(error.message, true)
             toast.error('There was an issue logging you in, please try again.')
           }
         }
 
-        history.push(routePaths.home)
+        navigate(routePaths.home)
       }
     }
 
@@ -200,10 +208,10 @@ export default function Login() {
     return () => {
       setStore({ authLoader: { show: false } })
     }
-  }, [store.isSignedIn, setStore, history])
+  }, [store.isSignedIn, setStore, navigate])
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       <LoginGlobalStyle />
       <LoginContainer>
         <LoginForm onSubmit={formAction}>
@@ -311,6 +319,6 @@ export default function Login() {
           </Button>
         </LoginServices>
       </LoginContainer>
-    </React.Fragment>
+    </Layout>
   )
 }

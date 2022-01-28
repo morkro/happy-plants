@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useReducer } from 'react'
+import { User } from 'firebase/auth'
 import { AuthLoaderType } from 'components/AuthLoader'
-import { FirebaseUser } from 'typings/firebase'
 import getAnimationPreference, { AnimationPreferences } from 'utilities/getAnimationPreference'
 
 export interface AppState {
-  user: FirebaseUser | null
+  user: User | null
   isSignedIn: boolean
   authLoader: {
     show: boolean

@@ -1,19 +1,28 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import 'firebase/storage'
+import { FirebaseApp, initializeApp } from 'firebase/app'
+import {
+  getAuth,
+  getRedirectResult,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  signOut,
+  TwitterAuthProvider,
+} from 'firebase/auth'
+import { getDownloadURL, getStorage, ref } from 'firebase/storage'
+import { collection, doc, DocumentReference, getFirestore, setDoc } from 'firebase/firestore'
 import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
 import {
-  FirestoreCollection,
   FirestoreCollections,
-  FirestoreDocument,
   FirestoreLoginProvider,
-  StorageReference,
+  FirestoreUserDocument,
 } from 'typings/firebase'
 import logger from 'utilities/logger'
 import { BugReport } from 'typings/bugReport'
+import { Plant } from 'typings/plant'
 import { getDeviceInfo } from 'utilities/getDeviceInfo'
 import { isValidHttpUrl } from 'utilities/isUrl'
 import { setSessionEntry } from './sessionStorage'
@@ -26,16 +35,17 @@ import { setSessionEntry } from './sessionStorage'
  */
 
 // const downloadURLWorker = new DownloadURLWorker()
-let firebaseApp: firebase.app.App
+let firebaseApp: FirebaseApp
 
-export function initFirebaseApp(options: Record<string, string> = {}): void {
+export function initFirebaseApp(options: Record<string, string> = {}): FirebaseApp {
   try {
-    firebaseApp = firebase.initializeApp(options)
-  } catch (error) {
+    firebaseApp = initializeApp(options)
+  } catch (error: any) {
     if (error.code !== 'app/duplicate-app') {
       logger(`Failed to initialize Firebase with error ${error.message}`, true)
     }
   }
+  return firebaseApp
 }
 
 /**
@@ -46,8 +56,9 @@ export async function signInUser(payload: {
   email: string
   password: string
 }): Promise<void> {
+  const auth = getAuth(firebaseApp)
   if (payload.provider === 'email') {
-    await firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+    await signInWithEmailAndPassword(auth, payload.email, payload.password)
   } else {
     // We are setting this property to later on check for it when the user returns to the app.
     setSessionEntry(config.localStorage.userAuthProgress, 'true')
@@ -55,26 +66,26 @@ export async function signInUser(payload: {
     let provider
     switch (payload.provider) {
       case 'google':
-        provider = new firebase.auth.GoogleAuthProvider()
+        provider = new GoogleAuthProvider()
         break
       case 'github':
-        provider = new firebase.auth.GithubAuthProvider()
+        provider = new GithubAuthProvider()
         break
       case 'twitter':
-        provider = new firebase.auth.TwitterAuthProvider()
+        provider = new TwitterAuthProvider()
         break
     }
 
-    await firebase.auth().signInWithRedirect(provider)
+    await signInWithRedirect(auth, provider)
   }
 }
 
 export async function forgotPassword(email: string): Promise<void> {
-  return firebase.auth().sendPasswordResetEmail(email)
+  return sendPasswordResetEmail(getAuth(firebaseApp), email)
 }
 
 export async function getAuthRedirectResults(): Promise<Partial<AppState>> {
-  const results = await firebase.auth().getRedirectResult()
+  const results = await getRedirectResult(getAuth(firebaseApp))
   return {
     user: results?.user,
     isSignedIn: true,
@@ -82,22 +93,27 @@ export async function getAuthRedirectResults(): Promise<Partial<AppState>> {
 }
 
 export async function signOutUser() {
-  return firebase.auth().signOut()
+  return signOut(getAuth(firebaseApp))
 }
 
 /**
  * ###################### 2. Collections ######################
  */
-export function getUserDoc(userId: string): FirestoreDocument {
-  return firebaseApp.firestore().collection(FirestoreCollections.Users).doc(userId)
+export function getUserDoc(userId: string) {
+  const db = getFirestore(firebaseApp)
+  const ref = doc(db, FirestoreCollections.Users, userId)
+  return ref as DocumentReference<FirestoreUserDocument>
 }
 
-export function getCollection(userId: string, collection: string): FirestoreCollection {
-  return getUserDoc(userId).collection(collection)
+export function getCollection(userId: string, collectionName: string) {
+  const db = getFirestore(firebaseApp)
+  return collection(db, FirestoreCollections.Users, userId, collectionName)
 }
 
 export function getPlantDoc(userId: string, documentId: string) {
-  return getCollection(userId, FirestoreCollections.Plants).doc(documentId)
+  const db = getFirestore(firebaseApp)
+  const ref = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, documentId)
+  return ref as DocumentReference<Plant>
 }
 
 export async function addBugReport(report: Partial<BugReport>) {
@@ -110,20 +126,21 @@ export async function addBugReport(report: Partial<BugReport>) {
     created: now,
     modified: now,
   } as BugReport
-
-  return firebaseApp
-    .firestore()
-    .collection(FirestoreCollections.BugReports)
-    .doc(guid)
-    .set(fullReport)
+  const db = getFirestore(firebaseApp)
+  return setDoc(doc(db, FirestoreCollections.BugReports, guid), fullReport)
 }
 
 /**
  * ###################### 2. Files ######################
  */
-export function getFileRef(path: string): StorageReference {
-  if (isValidHttpUrl(path)) {
-    return firebase.storage().refFromURL(path)
+export function getFileRef(path?: string) {
+  const storage = getStorage(firebaseApp)
+  if (path && isValidHttpUrl(path)) {
+    return ref(storage, path)
   }
-  return firebase.storage().ref(path)
+  const _ref = ref(storage, path)
+  if (_ref.fullPath === '') {
+    return
+  }
+  return _ref
 }

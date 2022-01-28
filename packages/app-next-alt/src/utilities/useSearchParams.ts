@@ -1,5 +1,5 @@
-import { useHistory } from 'react-router'
+import { useLocation } from 'react-router'
 
 export default function useSearchParams() {
-  return new URLSearchParams(useHistory().location.search)
+  return new URLSearchParams(useLocation().search)
 }

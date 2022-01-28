@@ -295,7 +295,7 @@ export function Input(props: InputProps) {
         <FileUploadContainer>
           <FileUploadImage $color={fileBackgroundColor}>
             {isLoading && <Spinner />}
-            {!isLoading && !file ? <Image /> : <img src={previewImage} alt="" />}
+            {!isLoading && !file ? <Image /> : <img src={previewImage} loading="lazy" alt="" />}
           </FileUploadImage>
           <div>
             <Text color="beigeDark" variant="special">

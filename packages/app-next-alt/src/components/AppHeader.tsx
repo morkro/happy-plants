@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { createTeleporter } from 'react-teleporter'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { theme, ThemeColors } from 'theme'
 import { routePaths } from 'routes'
@@ -90,10 +90,11 @@ const textColorMap: Record<AppHeaderColor, Partial<ThemeColors>> = {
 
 export default function AppHeader(props: AppHeaderProps) {
   const { color, children } = props
-  const history = useHistory()
+  const navigate = useNavigate()
+  const location = useLocation()
   const textColor = (color && textColorMap[color]) || 'greenDark'
   const hasRouteTitle = React.Children.count(children) > 0
-  const showBackButton = history.location.pathname.split('/').filter(Boolean).length > 1
+  const showBackButton = location.pathname.split('/').filter(Boolean).length > 1
 
   return (
     <AppHeaderContainer backgroundColor={color} role="banner">
@@ -101,9 +102,7 @@ export default function AppHeader(props: AppHeaderProps) {
         {showBackButton ? (
           <button
             onClick={() =>
-              history.location.pathname === routePaths.login
-                ? history.push(routePaths.root)
-                : history.goBack()
+              location.pathname === routePaths.login ? navigate(routePaths.root) : navigate(-1)
             }
             data-cy="app-header-return"
           >

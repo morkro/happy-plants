@@ -6,8 +6,8 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
+import { routeConfigMap } from 'routes'
 import { Heading, Text } from 'components/Typography'
-import { Plant as PlantType } from 'typings/plant'
 import { getFileRef, getPlantDoc } from 'services/firebase'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
@@ -21,6 +21,7 @@ import { Button } from 'components/Button'
 import Time from 'components/Time'
 import { toLocaleDate } from 'utilities/toLocaleDate'
 import useUserInfo from 'utilities/useUserInfo'
+import Layout from 'components/Layout'
 
 const PlantGlobalStyle = createGlobalStyle`
   #plant-dialog-settings .dialog-content > div {
@@ -140,13 +141,14 @@ const CategoryAction = styled.button`
 `
 
 export default function Plant() {
+  const routeConfig = routeConfigMap.get('plantBase')
   const params = useParams<{ id: string }>()
   const userInfo = useUserInfo()
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [modulesDialog, setModulesDialog] = useState<A11yDialogInstance>()
   const [settingsDialog, setSettingsDialog] = useState<A11yDialogInstance>()
-  const [data, loading, error] = useDocumentData<PlantType>(getPlantDoc(userInfo.id, params.id))
+  const [data, loading, error] = useDocumentData(getPlantDoc(userInfo.id, params.id ?? ''))
   const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
   const hasImageUrl = typeof data?.imageURL === 'string'
 
@@ -157,7 +159,7 @@ export default function Plant() {
   }, [error])
 
   return (
-    <React.Fragment>
+    <Layout {...routeConfig}>
       {/* Globals */}
       <PlantGlobalStyle />
       <DocumentTitle title={data?.name} />
@@ -266,6 +268,6 @@ export default function Plant() {
         </header>
         <Text color="beigeDark">Add modules for interactive care taking</Text>
       </PlantSection>
-    </React.Fragment>
+    </Layout>
   )
 }
