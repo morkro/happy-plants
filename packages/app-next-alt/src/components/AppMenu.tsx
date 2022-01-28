@@ -179,7 +179,7 @@ export default function AppMenu() {
         <WateringIcon />
         <VisuallyHidden>Watering</VisuallyHidden>
       </NavLink>
-      <NavLink to={routePaths.new} id="menu-link-add-new">
+      <NavLink to={routePaths.plant.new} id="menu-link-add-new">
         <NewIcon />
         <VisuallyHidden>Add new</VisuallyHidden>
       </NavLink>

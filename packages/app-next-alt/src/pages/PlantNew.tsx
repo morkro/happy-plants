@@ -98,8 +98,8 @@ const TagList = styled.ul`
   }
 `
 
-export default function New() {
-  const routeConfig = useRouteConfig('new')
+export default function PlantNew() {
+  const routeConfig = useRouteConfig('plantNew')
   const userInfo = useUserInfo()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()

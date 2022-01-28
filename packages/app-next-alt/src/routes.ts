@@ -16,8 +16,8 @@ export const routePaths = {
   onboarding: '/onboarding',
   home: '/home',
   watering: '/watering',
-  new: '/new',
   plant: {
+    new: '/new',
     base: '/plant/:id',
     gallery: '/plant/:id/gallery',
   },
@@ -66,7 +66,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
     },
   ],
   [
-    'new',
+    'plantNew',
     {
       isPrivateRoute: true,
       withAppMenu: true,

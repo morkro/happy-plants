@@ -40,10 +40,22 @@ const Login = lazy(() => import('pages/Login' /* webpackChunkName: "unauthorized
 const Home = lazy(() => import('pages/Home' /* webpackChunkName: "home" */))
 const Watering = lazy(() => import('pages/Watering' /* webpackChunkName: "watering" */))
 const Plant = lazy(() => import('pages/Plant' /* webpackChunkName: "plant" */))
-const New = lazy(() => import('pages/New' /* webpackChunkName: "new" */))
+const PlantGallery = lazy(() => import('pages/PlantGallery' /* webpackChunkName: "plant" */))
+const PlantNew = lazy(() => import('pages/PlantNew' /* webpackChunkName: "plant" */))
 const Settings = lazy(() => import('pages/Settings' /* webpackChunkName: "settings" */))
+const SettingsTags = lazy(() => import('pages/SettingsTags' /* webpackChunkName: "settings" */))
+const SettingsModules = lazy(
+  () => import('pages/SettingsModules' /* webpackChunkName: "settings" */)
+)
 const SettingsA11y = lazy(() => import('pages/SettingsA11y' /* webpackChunkName: "settings" */))
+const SettingsEmail = lazy(() => import('pages/SettingsEmail' /* webpackChunkName: "settings" */))
+const SettingsPassword = lazy(
+  () => import('pages/SettingsPassword' /* webpackChunkName: "settings" */)
+)
 const SettingsAbout = lazy(() => import('pages/SettingsAbout' /* webpackChunkName: "settings" */))
+const SettingsReleaseNotes = lazy(
+  () => import('pages/SettingsReleaseNotes' /* webpackChunkName: "settings" */)
+)
 const SettingsBugReport = lazy(
   () => import('pages/SettingsBugReport' /* webpackChunkName: "settings" */)
 )
@@ -66,11 +78,17 @@ function App() {
             <Route path={routePaths.login} element={<Login />} />
             <Route path={routePaths.home} element={<Home />} />
             <Route path={routePaths.watering} element={<Watering />} />
+            <Route path={routePaths.plant.new} element={<PlantNew />} />
             <Route path={routePaths.plant.base} element={<Plant />} />
-            <Route path={routePaths.new} element={<New />} />
+            <Route path={routePaths.plant.gallery} element={<PlantGallery />} />
             <Route path={routePaths.settings.base} element={<Settings />} />
+            <Route path={routePaths.settings.tags} element={<SettingsTags />} />
+            <Route path={routePaths.settings.modules} element={<SettingsModules />} />
             <Route path={routePaths.settings.a11y} element={<SettingsA11y />} />
+            <Route path={routePaths.settings.email} element={<SettingsEmail />} />
+            <Route path={routePaths.settings.password} element={<SettingsPassword />} />
             <Route path={routePaths.settings.about} element={<SettingsAbout />} />
+            <Route path={routePaths.settings.releaseNotes} element={<SettingsReleaseNotes />} />
             <Route path={routePaths.settings.bugReport} element={<SettingsBugReport />} />
             <Route path={routePaths.catchAll} element={<NotFound />} />
           </Routes>
