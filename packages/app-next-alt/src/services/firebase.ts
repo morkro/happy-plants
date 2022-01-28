@@ -10,34 +10,28 @@ import {
   signOut,
   TwitterAuthProvider,
 } from 'firebase/auth'
-import { getDownloadURL, getStorage, ref } from 'firebase/storage'
+import { getStorage, ref } from 'firebase/storage'
 import { collection, doc, DocumentReference, getFirestore, setDoc } from 'firebase/firestore'
 import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
-import {
-  FirestoreCollections,
-  FirestoreLoginProvider,
-  FirestoreUserDocument,
-} from 'typings/firebase'
 import logger from 'utilities/logger'
-import { BugReport } from 'typings/bugReport'
-import { Plant } from 'typings/plant'
-import { getDeviceInfo } from 'utilities/getDeviceInfo'
+import { Plant, PlantTag } from 'typings/plant'
+import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
 import { isValidHttpUrl } from 'utilities/isUrl'
-import { setSessionEntry } from './sessionStorage'
+import { setSessionEntry } from './webStorage'
 
 /**
  * Table of contents:
- * 1. Authentication
- * 2. Collections
- * 3. Files
+ * 1. Types
+ * 2. Authentication
+ * 3. Collections
+ * 4. Files
  */
 
-// const downloadURLWorker = new DownloadURLWorker()
 let firebaseApp: FirebaseApp
 
-export function initFirebaseApp(options: Record<string, string> = {}): FirebaseApp {
+export function initFirebaseApp(options: Record<string, string> = {}) {
   try {
     firebaseApp = initializeApp(options)
   } catch (error: any) {
@@ -49,7 +43,37 @@ export function initFirebaseApp(options: Record<string, string> = {}): FirebaseA
 }
 
 /**
- * ###################### 1. Authentication ######################
+ * ###################### 1. Types ###############################
+ */
+export enum FirestoreCollections {
+  Users = 'users',
+  Plants = 'plants',
+  Tags = 'tags',
+  BugReports = 'bugReports',
+  FeatureRequests = 'featureRequests',
+}
+
+export type FirestoreLoginProvider = 'email' | 'google' | 'github' | 'twitter'
+
+export interface FirestoreUserDocument {
+  tags: PlantTag[]
+}
+
+export interface FirestoreBugReport {
+  created: number
+  modified: number
+  reportedBy: {
+    userId: string
+    email: string
+  }
+  description: string
+  screenshot?: null | File
+  appVersion: string
+  deviceInfo: DeviceInfo
+}
+
+/**
+ * ###################### 2. Authentication ######################
  */
 export async function signInUser(payload: {
   provider: FirestoreLoginProvider
@@ -97,7 +121,7 @@ export async function signOutUser() {
 }
 
 /**
- * ###################### 2. Collections ######################
+ * ###################### 3. Collections ######################
  */
 export function getUserDoc(userId: string) {
   const db = getFirestore(firebaseApp)
@@ -116,7 +140,7 @@ export function getPlantDoc(userId: string, documentId: string) {
   return ref as DocumentReference<Plant>
 }
 
-export async function addBugReport(report: Partial<BugReport>) {
+export async function addBugReport(report: Partial<FirestoreBugReport>) {
   const guid = uuid()
   const now = Date.now()
   const fullReport = {
@@ -125,13 +149,13 @@ export async function addBugReport(report: Partial<BugReport>) {
     appVersion: config.version,
     created: now,
     modified: now,
-  } as BugReport
+  } as FirestoreBugReport
   const db = getFirestore(firebaseApp)
   return setDoc(doc(db, FirestoreCollections.BugReports, guid), fullReport)
 }
 
 /**
- * ###################### 2. Files ######################
+ * ###################### 4. Files ######################
  */
 export function getFileRef(path?: string) {
   const storage = getStorage(firebaseApp)

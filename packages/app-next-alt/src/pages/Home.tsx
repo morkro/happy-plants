@@ -5,14 +5,13 @@ import config, { PlantOrderMap, PlantOrderType } from 'config'
 import { Search, Sliders, X } from 'react-feather'
 import { theme } from 'theme'
 import { generatePath, useNavigate } from 'react-router-dom'
-import { routeConfigMap, routePaths } from 'routes'
-import { orderBy, query } from 'firebase/firestore'
+import { routePaths } from 'routes'
+import { orderBy, query, QuerySnapshot } from 'firebase/firestore'
 import { Heading, Text } from 'components/Typography'
 import EmptyDataIllustration from 'components/EmptyDataIllustration'
-import { getCollection } from 'services/firebase'
-import { FirestoreCollections } from 'typings/firebase'
+import { getCollection, FirestoreCollections } from 'services/firebase'
 import { toast } from 'components/Toaster'
-import { getLocalEntry } from 'services/localStorage'
+import { getLocalEntry } from 'services/webStorage'
 import { AppHeaderButton, AppHeaderPortal } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
 import useSearchParams from 'utilities/useSearchParams'
@@ -22,6 +21,7 @@ import { Plant } from 'typings/plant'
 import { Input } from 'components/Input'
 import useUserInfo from 'utilities/useUserInfo'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const PlantList = styled.ul`
   --grid-item-height: calc(50vw - 1.5 * ${({ theme }) => theme.spacings.m});
@@ -77,8 +77,15 @@ function EmptyData() {
   )
 }
 
+function usePlantList(snapshot?: QuerySnapshot, searchQuery = '') {
+  const mappedList = snapshot?.docs?.map((doc) => doc.data() as Plant)
+  return searchQuery === ''
+    ? mappedList
+    : mappedList?.filter((plant) => plant.name.includes(searchQuery))
+}
+
 export default function Home() {
-  const routeConfig = routeConfigMap.get('home')
+  const routeConfig = useRouteConfig('home')
   const navigate = useNavigate()
   const queries = useSearchParams()
   const userInfo = useUserInfo()
@@ -95,11 +102,7 @@ export default function Home() {
       orderBy(orderType, orderDirection)
     )
   )
-  const plantDataListRaw = snapshot?.docs?.map((doc) => doc.data() as Plant)
-  const plantDataList =
-    search === ''
-      ? plantDataListRaw
-      : plantDataListRaw?.filter((plant) => plant.name.includes(search))
+  const plantDataList = usePlantList(snapshot, search)
 
   function closeActions() {
     if (showOptions) setShowOptions(false)

@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import config from 'config'
 import { useAppStore } from 'store'
-import { routeConfigMap } from 'routes'
 import { Heading, Text } from 'components/Typography'
 import { ButtonToggle } from 'components/Toggle'
-import { setLocalEntry } from 'services/localStorage'
+import { setLocalEntry } from 'services/webStorage'
 import { AnimationPreferences } from 'utilities/getAnimationPreference'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const A11ySection = styled.section`
   width: ${({ theme }) => `calc(100% + ${theme.spacings.l})`};
@@ -20,7 +20,7 @@ const A11ySection = styled.section`
 `
 
 export default function SettingsA11y() {
-  const routeConfig = routeConfigMap.get('settingsA11y')
+  const routeConfig = useRouteConfig('settingsA11y')
   const { store, setStore } = useAppStore()
   const prefersEnabledAnimations = store.userPreferences.animations === 'enabled'
 

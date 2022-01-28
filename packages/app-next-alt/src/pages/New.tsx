@@ -4,7 +4,6 @@ import { List, Plus } from 'react-feather'
 import { useDocumentData } from 'react-firebase-hooks/firestore'
 import A11yDialogInstance from 'a11y-dialog'
 import { theme } from 'theme'
-import { routeConfigMap } from 'routes'
 import Layout, { BaseLayout } from 'components/Layout'
 import NewIllustration from 'components/NewIllustration'
 import { Button } from 'components/Button'
@@ -18,6 +17,7 @@ import { PlantCategory, PlantTag } from 'typings/plant'
 import { getUserDoc } from 'services/firebase'
 import useUserInfo from 'utilities/useUserInfo'
 import Tag from 'components/Tag'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const NewGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -99,7 +99,7 @@ const TagList = styled.ul`
 `
 
 export default function New() {
-  const routeConfig = routeConfigMap.get('new')
+  const routeConfig = useRouteConfig('new')
   const userInfo = useUserInfo()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()

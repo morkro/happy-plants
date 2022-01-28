@@ -1,7 +1,7 @@
 import React from 'react'
 import { initialStore, useAppStore } from 'store'
 import { useNavigate } from 'react-router-dom'
-import { routeConfigMap, routePaths } from 'routes'
+import { routePaths } from 'routes'
 import styled from 'styled-components'
 import { ArrowRight, Smile } from 'react-feather'
 import { Link } from 'react-router-dom'
@@ -15,6 +15,7 @@ import delay from 'utilities/delay'
 import { Heading, Text } from 'components/Typography'
 import BaseSVG from 'components/BaseSVG'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const SettingsHeader = styled.header`
   --avatar-size: 45px;
@@ -154,7 +155,7 @@ function SettingsMenuItem(props: { label: string; link: string }) {
 }
 
 export default function Settings() {
-  const routeConfig = routeConfigMap.get('settingsBase')
+  const routeConfig = useRouteConfig('settingsBase')
   const navigate = useNavigate()
   const { store, setStore } = useAppStore()
 

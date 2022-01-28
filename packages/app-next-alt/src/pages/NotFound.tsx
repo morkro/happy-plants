@@ -1,12 +1,13 @@
 import React from 'react'
-import { routeConfigMap, routePaths } from 'routes'
+import { routePaths } from 'routes'
 import { Heading, Text } from 'components/Typography'
 import { ButtonLink } from 'components/Button'
 import NotFoundIllustration from 'components/NotFoundIllustration'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 export default function NotFound() {
-  const routeConfig = routeConfigMap.get('catchAll')
+  const routeConfig = useRouteConfig('catchAll')
   return (
     <Layout {...routeConfig}>
       <NotFoundIllustration />

@@ -6,7 +6,6 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
-import { routeConfigMap } from 'routes'
 import { Heading, Text } from 'components/Typography'
 import { getFileRef, getPlantDoc } from 'services/firebase'
 import { toast } from 'components/Toaster'
@@ -22,6 +21,7 @@ import Time from 'components/Time'
 import { toLocaleDate } from 'utilities/toLocaleDate'
 import useUserInfo from 'utilities/useUserInfo'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const PlantGlobalStyle = createGlobalStyle`
   #plant-dialog-settings .dialog-content > div {
@@ -141,7 +141,7 @@ const CategoryAction = styled.button`
 `
 
 export default function Plant() {
-  const routeConfig = routeConfigMap.get('plantBase')
+  const routeConfig = useRouteConfig('plantBase')
   const params = useParams<{ id: string }>()
   const userInfo = useUserInfo()
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()

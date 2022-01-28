@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Chrome, GitHub, Twitter } from 'react-feather'
 import { useNavigate, useLocation } from 'react-router'
-import { routeConfigMap, routePaths } from 'routes'
+import { routePaths } from 'routes'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import config from 'config'
@@ -13,14 +13,19 @@ import { Text } from 'components/Typography'
 import Layout, { BaseLayout } from 'components/Layout'
 import { toast } from 'components/Toaster'
 import useSearchParams from 'utilities/useSearchParams'
-import { forgotPassword, getAuthRedirectResults, signInUser } from 'services/firebase'
-import { FirestoreLoginProvider } from 'typings/firebase'
+import {
+  forgotPassword,
+  getAuthRedirectResults,
+  signInUser,
+  FirestoreLoginProvider,
+} from 'services/firebase'
 import delay from 'utilities/delay'
 import logger from 'utilities/logger'
 import Spinner from 'components/Spinner'
 import VisuallyHidden from 'components/VisuallyHidden'
-import { deleteSessionEntry, getSessionEntry } from 'services/sessionStorage'
+import { deleteSessionEntry, getSessionEntry } from 'services/webStorage'
 import getErrorMessage from 'utilities/getErrorMessage'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 type LocationState = {
   from: {
@@ -111,7 +116,7 @@ const LoginServices = styled.div`
 `
 
 export default function Login() {
-  const routeConfig = routeConfigMap.get('login')
+  const routeConfig = useRouteConfig('login')
   const navigate = useNavigate()
   const location = useLocation()
   const queries = useSearchParams()

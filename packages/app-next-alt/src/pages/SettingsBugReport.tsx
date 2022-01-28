@@ -2,19 +2,19 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { theme } from 'theme'
 import { FirebaseError } from 'firebase/app'
-import { routeConfigMap } from 'routes'
 import { AppHeaderPortal } from 'components/AppHeader'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
 import { Input, Textarea } from 'components/Input'
 import Spinner from 'components/Spinner'
-import { addBugReport } from 'services/firebase'
+import Layout from 'components/Layout'
 import { toast } from 'components/Toaster'
+import { addBugReport } from 'services/firebase'
 import logger from 'utilities/logger'
 import getErrorMessage from 'utilities/getErrorMessage'
 import BaseSVG from 'components/BaseSVG'
 import useUserInfo from 'utilities/useUserInfo'
-import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const HeaderIllustration = styled(BaseSVG)`
   width: 104px;
@@ -46,7 +46,7 @@ const BugReportForm = styled.form`
 `
 
 export default function SettingsBugReport() {
-  const routeConfig = routeConfigMap.get('settingsBugReport')
+  const routeConfig = useRouteConfig('settingsBugReport')
   const userInfo = useUserInfo()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
   const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({

@@ -49,7 +49,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'home',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Home',
       appContentOrientation: 'center',
@@ -59,7 +59,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'watering',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Watering',
       appHeaderColor: 'blue',
@@ -68,7 +68,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'new',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Add a new friend',
       appHeaderColor: 'green',
@@ -77,31 +77,31 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'plantBase',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: false,
       appContentOrientation: 'start',
     },
   ],
-  ['plantGallery', { isPrivateRoute: false }],
+  ['plantGallery', { isPrivateRoute: true }],
   [
     'settingsBase',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Settings',
       appHeaderColor: 'green',
       appContentOrientation: 'start',
     },
   ],
-  ['settingsEmail', { isPrivateRoute: false }],
-  ['settingsPassword', { isPrivateRoute: false }],
-  ['settingsTags', { isPrivateRoute: false }],
-  ['settingsModules', { isPrivateRoute: false }],
+  ['settingsEmail', { isPrivateRoute: true }],
+  ['settingsPassword', { isPrivateRoute: true }],
+  ['settingsTags', { isPrivateRoute: true }],
+  ['settingsModules', { isPrivateRoute: true }],
   [
     'settingsA11y',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Accessibility',
       appContentOrientation: 'start',
@@ -110,17 +110,17 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'settingsAbout',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'About',
       appContentOrientation: 'start',
     },
   ],
-  ['settingsReleaseNotes', { isPrivateRoute: false }],
+  ['settingsReleaseNotes', { isPrivateRoute: true }],
   [
     'settingsBugReport',
     {
-      isPrivateRoute: false,
+      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Bug reports',
       appHeaderColor: 'green',

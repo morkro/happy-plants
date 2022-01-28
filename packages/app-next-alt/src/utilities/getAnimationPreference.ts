@@ -1,5 +1,5 @@
 import config from 'config'
-import { getLocalEntry } from 'services/localStorage'
+import { getLocalEntry } from 'services/webStorage'
 
 export type AnimationPreferences = 'enabled' | 'disabled'
 

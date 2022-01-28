@@ -1,9 +1,9 @@
 import React from 'react'
-import { routeConfigMap } from 'routes'
 import Layout from 'components/Layout'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 export default function SettingsAbout() {
-  const routeConfig = routeConfigMap.get('settingsAbout')
+  const routeConfig = useRouteConfig('settingsAbout')
   return (
     <Layout {...routeConfig}>
       <h1>about</h1>
