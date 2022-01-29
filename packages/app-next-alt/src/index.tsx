@@ -5,21 +5,22 @@ import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
 import { ThemeProvider } from 'styled-components'
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
-import { GlobalStyle, theme } from 'theme'
 import * as serviceWorkerRegistration from 'serviceWorkerRegistration'
 import reportWebVitals from 'reportWebVitals'
+import { GlobalStyle, theme } from 'theme'
 import config from 'config'
 import { routePaths } from 'routes'
 import { AppContextProvider, useAppStore } from 'store'
-import logger from 'utilities/logger'
 import NotFound from 'pages/NotFound'
 import Welcome from 'pages/Welcome'
 import Error from 'pages/Error'
+import Splash from 'pages/Splash'
 import { FirebaseAuthProvider } from 'components/FirebaseAuthProvider'
 import SkipLink from 'components/SkipLink'
 import Toaster from 'components/Toaster'
-import Splash from 'pages/Splash'
 import A11yTitleAnnouncer from 'components/A11yTitleAnnouncer'
+import AuthRoute from 'components/AuthRoute'
+import logger from 'utilities/logger'
 
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
@@ -76,20 +77,118 @@ function App() {
               element={store.isSignedIn ? <Navigate to={routePaths.home} /> : <Welcome />}
             />
             <Route path={routePaths.login} element={<Login />} />
-            <Route path={routePaths.home} element={<Home />} />
-            <Route path={routePaths.watering} element={<Watering />} />
-            <Route path={routePaths.plant.new} element={<PlantNew />} />
-            <Route path={routePaths.plant.base} element={<Plant />} />
-            <Route path={routePaths.plant.gallery} element={<PlantGallery />} />
-            <Route path={routePaths.settings.base} element={<Settings />} />
-            <Route path={routePaths.settings.tags} element={<SettingsTags />} />
-            <Route path={routePaths.settings.modules} element={<SettingsModules />} />
-            <Route path={routePaths.settings.a11y} element={<SettingsA11y />} />
-            <Route path={routePaths.settings.email} element={<SettingsEmail />} />
-            <Route path={routePaths.settings.password} element={<SettingsPassword />} />
-            <Route path={routePaths.settings.about} element={<SettingsAbout />} />
-            <Route path={routePaths.settings.releaseNotes} element={<SettingsReleaseNotes />} />
-            <Route path={routePaths.settings.bugReport} element={<SettingsBugReport />} />
+            <Route
+              path={routePaths.home}
+              element={
+                <AuthRoute>
+                  <Home />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.watering}
+              element={
+                <AuthRoute>
+                  <Watering />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.plant.new}
+              element={
+                <AuthRoute>
+                  <PlantNew />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.plant.base}
+              element={
+                <AuthRoute>
+                  <Plant />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.plant.gallery}
+              element={
+                <AuthRoute>
+                  <PlantGallery />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.base}
+              element={
+                <AuthRoute>
+                  <Settings />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.tags}
+              element={
+                <AuthRoute>
+                  <SettingsTags />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.modules}
+              element={
+                <AuthRoute>
+                  <SettingsModules />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.a11y}
+              element={
+                <AuthRoute>
+                  <SettingsA11y />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.email}
+              element={
+                <AuthRoute>
+                  <SettingsEmail />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.password}
+              element={
+                <AuthRoute>
+                  <SettingsPassword />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.about}
+              element={
+                <AuthRoute>
+                  <SettingsAbout />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.releaseNotes}
+              element={
+                <AuthRoute>
+                  <SettingsReleaseNotes />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.settings.bugReport}
+              element={
+                <AuthRoute>
+                  <SettingsBugReport />
+                </AuthRoute>
+              }
+            />
             <Route path={routePaths.catchAll} element={<NotFound />} />
           </Routes>
         </React.Suspense>

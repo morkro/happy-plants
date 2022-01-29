@@ -307,4 +307,8 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
     max-width: 100%;
     display: block;
   }
+
+  button {
+    cursor: pointer;
+  }
 `

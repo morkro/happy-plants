@@ -204,7 +204,8 @@ export default function Login() {
           }
         }
 
-        navigate(routePaths.home)
+        const locationState = location.state as { from?: Location }
+        navigate(locationState?.from?.pathname || routePaths.home)
       }
     }
 
@@ -213,7 +214,7 @@ export default function Login() {
     return () => {
       setStore({ authLoader: { show: false } })
     }
-  }, [store.isSignedIn, setStore, navigate])
+  }, [location, store.isSignedIn, setStore, navigate])
 
   return (
     <Layout {...routeConfig}>

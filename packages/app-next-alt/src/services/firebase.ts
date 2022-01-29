@@ -15,10 +15,12 @@ import { collection, doc, DocumentReference, getFirestore, setDoc } from 'fireba
 import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
+import { useDocumentData } from 'react-firebase-hooks/firestore'
 import logger from 'utilities/logger'
 import { Plant, PlantTag } from 'typings/plant'
 import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
 import { isValidHttpUrl } from 'utilities/isUrl'
+import useUserProfile from 'utilities/useUserProfile'
 import { setSessionEntry } from './webStorage'
 
 /**
@@ -123,10 +125,15 @@ export async function signOutUser() {
 /**
  * ###################### 3. Collections ######################
  */
-export function getUserDoc(userId: string) {
+export function useUserDocument() {
+  const profile = useUserProfile()
   const db = getFirestore(firebaseApp)
-  const ref = doc(db, FirestoreCollections.Users, userId)
-  return ref as DocumentReference<FirestoreUserDocument>
+  const ref = doc(
+    db,
+    FirestoreCollections.Users,
+    profile.id
+  ) as DocumentReference<FirestoreUserDocument>
+  return useDocumentData(ref)
 }
 
 export function getCollection(userId: string, collectionName: string) {
@@ -138,6 +145,19 @@ export function getPlantDoc(userId: string, documentId: string) {
   const db = getFirestore(firebaseApp)
   const ref = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, documentId)
   return ref as DocumentReference<Plant>
+}
+
+export function usePlantDocument(documentId: string) {
+  const profile = useUserProfile()
+  const db = getFirestore(firebaseApp)
+  const ref = doc(
+    db,
+    FirestoreCollections.Users,
+    profile.id,
+    FirestoreCollections.Plants,
+    documentId
+  ) as DocumentReference<Plant>
+  return useDocumentData(ref)
 }
 
 export async function addBugReport(report: Partial<FirestoreBugReport>) {

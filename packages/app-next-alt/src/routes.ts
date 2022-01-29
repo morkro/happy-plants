@@ -10,7 +10,7 @@ export interface RouteLayoutOptions {
 }
 
 export const routePaths = {
-  catchAll: '*/*',
+  catchAll: '*',
   root: '/',
   login: '/login',
   onboarding: '/onboarding',
@@ -52,7 +52,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
       isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Home',
-      appContentOrientation: 'center',
+      appContentOrientation: 'start',
       appHeaderColor: 'beige',
     },
   ],
@@ -94,10 +94,10 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
       appContentOrientation: 'start',
     },
   ],
-  ['settingsEmail', { isPrivateRoute: true }],
-  ['settingsPassword', { isPrivateRoute: true }],
-  ['settingsTags', { isPrivateRoute: true }],
-  ['settingsModules', { isPrivateRoute: true }],
+  ['settingsEmail', { isPrivateRoute: true, pageTitle: 'Email' }],
+  ['settingsPassword', { isPrivateRoute: true, pageTitle: 'Password' }],
+  ['settingsTags', { isPrivateRoute: true, pageTitle: 'Tags' }],
+  ['settingsModules', { isPrivateRoute: true, pageTitle: 'Modules' }],
   [
     'settingsA11y',
     {

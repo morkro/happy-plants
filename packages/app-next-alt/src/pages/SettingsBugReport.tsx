@@ -13,7 +13,7 @@ import { addBugReport } from 'services/firebase'
 import logger from 'utilities/logger'
 import getErrorMessage from 'utilities/getErrorMessage'
 import BaseSVG from 'components/BaseSVG'
-import useUserInfo from 'utilities/useUserInfo'
+import useUserProfile from 'utilities/useUserProfile'
 import useRouteConfig from 'utilities/useRouteConfig'
 
 const HeaderIllustration = styled(BaseSVG)`
@@ -47,7 +47,7 @@ const BugReportForm = styled.form`
 
 export default function SettingsBugReport() {
   const routeConfig = useRouteConfig('settingsBugReport')
-  const userInfo = useUserInfo()
+  const userInfo = useUserProfile()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
   const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({
     value: null,

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useCollection } from 'react-firebase-hooks/firestore'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 import styled from 'styled-components'
 import config, { PlantOrderMap, PlantOrderType } from 'config'
 import { Search, Sliders, X } from 'react-feather'
 import { theme } from 'theme'
 import { generatePath, useNavigate } from 'react-router-dom'
 import { routePaths } from 'routes'
-import { orderBy, query, QuerySnapshot } from 'firebase/firestore'
+import { DocumentData, orderBy, query } from 'firebase/firestore'
 import { Heading, Text } from 'components/Typography'
 import EmptyDataIllustration from 'components/EmptyDataIllustration'
 import { getCollection, FirestoreCollections } from 'services/firebase'
@@ -17,9 +17,8 @@ import VisuallyHidden from 'components/VisuallyHidden'
 import useSearchParams from 'utilities/useSearchParams'
 import HomeOptions from 'components/HomeOptions'
 import PlantPreview from 'components/PlantPreview'
-import { Plant } from 'typings/plant'
 import { Input } from 'components/Input'
-import useUserInfo from 'utilities/useUserInfo'
+import useUserProfile from 'utilities/useUserProfile'
 import Layout from 'components/Layout'
 import useRouteConfig from 'utilities/useRouteConfig'
 
@@ -77,18 +76,17 @@ function EmptyData() {
   )
 }
 
-function usePlantList(snapshot?: QuerySnapshot, searchQuery = '') {
-  const mappedList = snapshot?.docs?.map((doc) => doc.data() as Plant)
+function usePlantList(collectionData?: DocumentData[], searchQuery = '') {
   return searchQuery === ''
-    ? mappedList
-    : mappedList?.filter((plant) => plant.name.includes(searchQuery))
+    ? collectionData
+    : collectionData?.filter((plant) => plant.name.includes(searchQuery))
 }
 
 export default function Home() {
   const routeConfig = useRouteConfig('home')
   const navigate = useNavigate()
   const queries = useSearchParams()
-  const userInfo = useUserInfo()
+  const userInfo = useUserProfile()
   const [showOptions, setShowOptions] = useState(queries.has('options'))
   const [showSearch, setShowSearch] = useState(queries.has('search'))
   const [search, setSearch] = useState('')
@@ -96,13 +94,13 @@ export default function Home() {
     (getLocalEntry(config.localStorage.homeOrderBy) as PlantOrderType) ?? PlantOrderType.Latest
   )
   const [orderType, orderDirection] = config.ui.plantOrderMap.get(storageOrderBy) as PlantOrderMap
-  const [snapshot, loading, error] = useCollection(
+  const [collectionData, loading, error, collectionSnapshot] = useCollectionData(
     query(
       getCollection(userInfo.id, FirestoreCollections.Plants),
       orderBy(orderType, orderDirection)
     )
   )
-  const plantDataList = usePlantList(snapshot, search)
+  const plantDataList = usePlantList(collectionData, search)
 
   function closeActions() {
     if (showOptions) setShowOptions(false)
@@ -141,12 +139,11 @@ export default function Home() {
                 // onChange={(event) => console.log(event)}
               />
             </label>
-            {!loading && !snapshot?.empty && (
+            {!loading && !collectionSnapshot?.empty && (
               <datalist id="search-list">
-                {snapshot?.docs.map((doc) => {
-                  const data = doc.data() as Plant
-                  return <option key={doc.id} value={data.name} />
-                })}
+                {collectionData?.map((doc) => (
+                  <option key={doc.id} value={doc.name} />
+                ))}
               </datalist>
             )}
           </SearchContainer>
@@ -174,7 +171,7 @@ export default function Home() {
 
       {showOptions && <HomeOptions />}
 
-      {!loading && !snapshot?.empty ? (
+      {!loading && !collectionSnapshot?.empty ? (
         <PlantList>
           {plantDataList?.map((plant) => (
             <li key={plant.guid + plant.name}>
@@ -197,7 +194,7 @@ export default function Home() {
         </PlantList>
       )}
 
-      {!loading && snapshot?.empty && <EmptyData />}
+      {!loading && collectionSnapshot?.empty && <EmptyData />}
     </Layout>
   )
 }

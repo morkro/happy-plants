@@ -1,5 +1,5 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useAppStore } from 'store'
 import { initFirebaseApp } from 'services/firebase'
 import Splash from 'pages/Splash'

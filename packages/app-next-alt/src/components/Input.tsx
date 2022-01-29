@@ -38,6 +38,10 @@ const InputContainer = styled.div<InputProps | TextareaProps>`
   ${WithMarginStyles}
   position: relative;
   width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
+
+  input[disabled] + div:first-of-type {
+    cursor: not-allowed;
+  }
 `
 
 const BaseStyles = css<InputProps | TextareaProps>`
@@ -70,6 +74,11 @@ const BaseStyles = css<InputProps | TextareaProps>`
 
   &:invalid:not(:empty) {
     border-color: ${({ theme }) => theme.colors.red};
+  }
+
+  &[disabled] {
+    color: ${({ theme }) => theme.colors.beigeDark};
+    cursor: not-allowed;
   }
 `
 
@@ -185,6 +194,7 @@ const FileUploadContainer = styled.div`
   background: ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.baseRadius};
   overflow: hidden;
+  cursor: text;
 
   & > div:not(${FileUploadImage}) {
     padding: calc(${({ theme }) => theme.spacings.m} * 1.5);

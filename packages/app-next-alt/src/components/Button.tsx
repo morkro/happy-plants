@@ -24,6 +24,7 @@ const BaseStyles = css<BaseProps>`
   ${WithMarginStyles}
 
   --base-color: ${({ theme, border }) => (border ? theme.colors.white : theme.colors.green)};
+  --text-color: ${(props) => props.theme.colors.white};
   --shadow: var(--base-color);
 
   position: relative;
@@ -31,7 +32,7 @@ const BaseStyles = css<BaseProps>`
   border-radius: ${(props) => (props.round ? '100%' : props.theme.baseRadius)};
   border: 2px solid var(--base-color);
   box-shadow: ${(props) => (props.border ? 'none' : '0 2px 9px var(--shadow)')};
-  color: ${(props) => props.theme.colors.white};
+  color: var(--text-color);
   text-decoration: none;
   font-family: var(--font-normal);
   text-align: center;
@@ -41,10 +42,17 @@ const BaseStyles = css<BaseProps>`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: ${(props) =>
-    props.size === 's'
+  padding: ${(props) => {
+    if (props.round) {
+      if (props.size === 's') {
+        return `calc(0.5 * ${props.theme.spacings.m}) calc(0.5 * ${props.theme.spacings.m})`
+      }
+      return props.theme.spacings.m
+    }
+    return props.size === 's'
       ? `calc(0.5 * ${props.theme.spacings.m}) ${props.theme.spacings.m}`
-      : `${props.theme.spacings.m} calc(2 * ${props.theme.spacings.m})`};
+      : `calc(1.5 * ${props.theme.spacings.m}) calc(2 * ${props.theme.spacings.m})`
+  }};
 
   ${(props) =>
     props.variant === 'normal' &&
@@ -62,7 +70,7 @@ const BaseStyles = css<BaseProps>`
     props.variant === 'warning' &&
     css`
       --base-color: ${(props) => props.theme.colors.yellow};
-      color: ${(props) => props.theme.colors.greenDark};
+      --text-color: ${(props) => props.theme.colors.greenDark};
     `}
 
   ${(props) =>
@@ -71,8 +79,12 @@ const BaseStyles = css<BaseProps>`
       --base-color: ${(props) => props.theme.colors.red};
     `}
 
+  &:hover {
+    text-decoration: underline;
+  }
+
   &[disabled],
-  &[aria-disabled="true"] {
+  &[aria-disabled='true'] {
     cursor: not-allowed;
   }
 

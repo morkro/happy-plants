@@ -1,6 +1,6 @@
 import { useAppStore } from 'store'
 
-interface UserInfo {
+interface UserProfile {
   id: string
   email: string
   displayName: string | null
@@ -9,7 +9,7 @@ interface UserInfo {
   providerId?: string
 }
 
-export default function useUserInfo(): UserInfo {
+export default function useUserProfile(): UserProfile {
   const { store } = useAppStore()
   return {
     id: store.user?.uid ?? '',

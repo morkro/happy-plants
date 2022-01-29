@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import A11yDialogInstance from 'a11y-dialog'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
 import { Heading, Text } from 'components/Typography'
-import { getFileRef, getPlantDoc } from 'services/firebase'
+import { getFileRef, usePlantDocument, useUserDocument } from 'services/firebase'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
 import Spinner from 'components/Spinner'
@@ -19,9 +18,11 @@ import VisuallyHidden from 'components/VisuallyHidden'
 import { Button } from 'components/Button'
 import Time from 'components/Time'
 import { toLocaleDate } from 'utilities/toLocaleDate'
-import useUserInfo from 'utilities/useUserInfo'
 import Layout from 'components/Layout'
 import useRouteConfig from 'utilities/useRouteConfig'
+import TagsDialog from 'components/TagsDialog'
+import { PlantTag } from 'typings/plant'
+import TagList from 'components/TagList'
 
 const PlantGlobalStyle = createGlobalStyle`
   #plant-dialog-settings .dialog-content > div {
@@ -35,6 +36,7 @@ const PlantHeader = styled.header<{ $loading: boolean }>`
   width: calc(100% + ${({ theme }) => theme.spacings.l});
   height: 100vw;
   background: ${({ theme }) => theme.colors.white};
+  margin-top: -${(props) => props.theme.frameWidgetHeight};
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -113,7 +115,8 @@ const CategoryAction = styled.button`
   z-index: 0;
   padding: calc(0.5 * ${({ theme }) => theme.spacings.m}) ${({ theme }) => theme.spacings.m};
 
-  &:focus {
+  &:focus,
+  &:hover {
     outline: none;
 
     & svg path {
@@ -142,15 +145,22 @@ const CategoryAction = styled.button`
 
 export default function Plant() {
   const routeConfig = useRouteConfig('plantBase')
+  const [userDoc, loadingUserDoc] = useUserDocument()
   const params = useParams<{ id: string }>()
-  const userInfo = useUserInfo()
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [modulesDialog, setModulesDialog] = useState<A11yDialogInstance>()
   const [settingsDialog, setSettingsDialog] = useState<A11yDialogInstance>()
-  const [data, loading, error] = useDocumentData(getPlantDoc(userInfo.id, params.id ?? ''))
+  const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
+  const [data, loading, error] = usePlantDocument(params.id ?? '')
   const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
   const hasImageUrl = typeof data?.imageURL === 'string'
+
+  useEffect(() => console.log(data), [data])
+
+  useEffect(() => {
+    console.log(selectedTags)
+  }, [selectedTags])
 
   useEffect(() => {
     if (error !== undefined) {
@@ -186,9 +196,14 @@ export default function Plant() {
         )}
       </Dialog>
 
-      <Dialog title="Select tags" reference={setTagsDialog} id="plant-dialog-tags">
-        <Text color="beigeDark">You haven&apos;t created any tags yet.</Text>
-      </Dialog>
+      <TagsDialog
+        id="plant-dialog-tags"
+        reference={setTagsDialog}
+        tags={userDoc?.tags}
+        loading={loadingUserDoc}
+        selected={selectedTags}
+        onSelect={setSelectedTags}
+      />
 
       <Dialog title="Select modules" reference={setModulesDialog} id="plant-dialog-modules">
         <Text color="beigeDark">There are no modules.</Text>
@@ -198,7 +213,7 @@ export default function Plant() {
       <AppHeaderPortal.Source>
         <AppHeaderButton onClick={() => settingsDialog?.show()}>
           <MoreVertical color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
-          <VisuallyHidden>Search</VisuallyHidden>
+          <VisuallyHidden>Settings</VisuallyHidden>
         </AppHeaderButton>
       </AppHeaderPortal.Source>
 
@@ -235,7 +250,7 @@ export default function Plant() {
             <BaseSVG viewBox="0 0 165 30" preserveAspectRatio="none" role="presentation">
               <path
                 fillRule="evenodd"
-                fill="#1B6D4F"
+                fill={theme.colors.green}
                 d="M15.2980242 1.6865913C54.3474655-.0040447 142.277064-1.0595373 158.333369 1.687221c3.375937.5775946 5.502516 1.7986084 5.918387 3.8707842 1.21636 6.106668 1.016982 12.190389-1.095662 18.3021319-1.949603 5.6402323-10.579788 5.712085-23.246595 5.8007791C1.8856749 30.6329676 1.9064585 29.5996066.7651242 25.4596764c-.4861923-1.7819255-.903879-3.6105191-.7214437-5.4103613C1.9143985 2.0020504 4.40911 2.1588096 15.2980242 1.6865913"
               />
             </BaseSVG>
@@ -248,12 +263,16 @@ export default function Plant() {
           <Text bold color="beigeDark">
             Tags
           </Text>
-          <button onClick={() => tagsDialog?.show()}>
+          <Button round size="s" variant="info" onClick={() => tagsDialog?.show()}>
             <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
             <VisuallyHidden>Open tags dialog</VisuallyHidden>
-          </button>
+          </Button>
         </header>
-        <Text color="beigeDark">Add tags for better organisation</Text>
+        {selectedTags?.length ? (
+          <TagList tags={selectedTags} />
+        ) : (
+          <Text color="beigeDark">Add tags for better organisation</Text>
+        )}
       </PlantSection>
 
       <PlantSection>
@@ -261,10 +280,10 @@ export default function Plant() {
           <Text bold color="beigeDark">
             Modules
           </Text>
-          <button onClick={() => modulesDialog?.show()}>
+          <Button round size="s" variant="info" onClick={() => modulesDialog?.show()}>
             <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
             <VisuallyHidden>Open modules dialog</VisuallyHidden>
-          </button>
+          </Button>
         </header>
         <Text color="beigeDark">Add modules for interactive care taking</Text>
       </PlantSection>

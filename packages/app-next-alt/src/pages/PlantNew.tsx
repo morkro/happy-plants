@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import { List, Plus } from 'react-feather'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
 import A11yDialogInstance from 'a11y-dialog'
 import { theme } from 'theme'
 import Layout, { BaseLayout } from 'components/Layout'
@@ -14,10 +13,10 @@ import VisuallyHidden from 'components/VisuallyHidden'
 import Dialog from 'components/Dialog'
 import CategoriesList from 'components/CategoriesList'
 import { PlantCategory, PlantTag } from 'typings/plant'
-import { getUserDoc } from 'services/firebase'
-import useUserInfo from 'utilities/useUserInfo'
-import Tag from 'components/Tag'
+import { useUserDocument } from 'services/firebase'
 import useRouteConfig from 'utilities/useRouteConfig'
+import TagsDialog from 'components/TagsDialog'
+import TagList from 'components/TagList'
 
 const NewGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -47,7 +46,7 @@ const NewForm = styled.form`
   }
 `
 
-const NewPlantButton = styled(Button)`
+const NewPlantButton = styled((p) => <Button {...p} />)`
   box-shadow: 0 1px 2px ${({ theme }) => theme.colors.greenDark};
   margin-top: auto;
   margin-bottom: ${({ theme }) => theme.spacings.m};
@@ -87,20 +86,15 @@ const CategoryButton = styled.button`
   }
 `
 
-const TagList = styled.ul`
+const TagContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  margin-bottom: -${({ theme }) => theme.spacings.l};
-
-  li {
-    margin-right: ${({ theme }) => theme.spacings.m};
-    margin-bottom: ${({ theme }) => theme.spacings.m};
-  }
+  align-items: center;
+  gap: ${({ theme }) => theme.spacings.m};
 `
 
 export default function PlantNew() {
   const routeConfig = useRouteConfig('plantNew')
-  const userInfo = useUserInfo()
+  const [userDoc, loadingUserDoc] = useUserDocument()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()
   const [name, setName] = useState({ value: '', error: '' })
@@ -108,27 +102,17 @@ export default function PlantNew() {
   const [category, setCategory] = useState<PlantCategory | null | undefined>(undefined)
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isProgress, setIsProgress] = useState(false)
-  const [userDoc, loadingUserDoc] = useDocumentData(getUserDoc(userInfo.id))
 
   function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsProgress(true)
-  }
-
-  function toggleTagSelection(tag: PlantTag) {
-    if (selectedTags.some((t) => t.guid === tag.guid)) {
-      setSelectedTags(selectedTags.filter((t) => t.guid !== tag.guid))
-    } else {
-      setSelectedTags((t) => [...t, tag])
-    }
-  }
-
-  useEffect(() => {
+    console.group()
     console.log('name =>', name)
     console.log('photo =>', photo)
     console.log('category =>', category)
     console.log('isProgress =>', isProgress)
-  }, [name, photo, category, isProgress])
+    console.groupEnd()
+  }
 
   useEffect(() => {
     console.log(selectedTags)
@@ -136,37 +120,25 @@ export default function PlantNew() {
 
   return (
     <Layout {...routeConfig}>
+      {/* Globals */}
       <NewGlobalStyle />
 
-      <Dialog id="newplant-tags" title="Add tags" reference={setTagsDialog}>
-        {!loadingUserDoc && (
-          <TagList>
-            {userDoc?.tags?.map((tag) => (
-              <li key={tag.label + tag.guid}>
-                <Tag
-                  active={selectedTags.some((t) => t.guid === tag.guid)}
-                  onClick={() => toggleTagSelection(tag)}
-                >
-                  {tag.label}
-                </Tag>
-              </li>
-            ))}
-          </TagList>
-        )}
-        <label htmlFor="tags-create">
-          <Input fullWidth type="text" placeholder="Create new" id="tags-create" />
-          <Button>
-            <VisuallyHidden>Create</VisuallyHidden>
-            <Plus color={theme.colors.white} />
-          </Button>
-        </label>
-      </Dialog>
+      {/* Dialogs */}
+      <TagsDialog
+        id="newplant-tags"
+        reference={setTagsDialog}
+        tags={userDoc?.tags}
+        loading={loadingUserDoc}
+        selected={selectedTags}
+        onSelect={setSelectedTags}
+      />
 
       <Dialog id="newplant-categories" title="Select a category" reference={setCategoriesDialog}>
         <CategoriesList onSelectCategory={(category) => setCategory(category)} />
       </Dialog>
 
-      <NewForm onSubmit={formAction}>
+      {/* Page content */}
+      <NewForm>
         <label htmlFor="name">
           <Text color="white" mb="m" as="span">
             What&apos;s your friends name?
@@ -183,6 +155,7 @@ export default function PlantNew() {
             placeholder="Echeveria pulvinata"
             id="name"
             error={name.error}
+            disabled={isProgress}
             data-cy="new-form-name"
             onChange={(event) => setName((d) => ({ ...d, value: event.target.value }))}
           />
@@ -193,13 +166,13 @@ export default function PlantNew() {
             Do you want to upload a photo?
           </Text>
           <Input
-            required
             fullWidth
             type="file"
             value={photo.value}
             id="photo"
             error={photo.error}
             data-cy="new-form-photo"
+            disabled={isProgress}
             fileBackgroundColor="greenDark"
             onChange={(event) => setPhoto((d) => ({ ...d, value: event.target.value }))}
           />
@@ -209,7 +182,7 @@ export default function PlantNew() {
           <Text color="white" mb="m" as="span">
             Category
           </Text>
-          <CategoryButton onClick={() => categoriesDialog?.show()}>
+          <CategoryButton onClick={() => !isProgress && categoriesDialog?.show()}>
             <div>
               <Text color="beigeDark" as="span" variant="special">
                 {category ? category.label : 'e.g. Succulent, Herb, …'}
@@ -225,31 +198,31 @@ export default function PlantNew() {
           <Text color="white" mb="m" as="span">
             Tags
           </Text>
-          {selectedTags?.length ? (
-            <TagList onClick={() => tagsDialog?.show()}>
-              {selectedTags?.map((tag) => (
-                <li key={tag.guid}>
-                  <Tag>{tag.label}</Tag>
-                </li>
-              ))}
-            </TagList>
-          ) : (
-            <div>
-              <Button round size="s" variant="warning" onClick={() => tagsDialog?.show()}>
-                <Plus color={theme.colors.greenDark} />
-                <VisuallyHidden>Open tags dialog</VisuallyHidden>
-              </Button>
+          <TagContainer>
+            <Button
+              round
+              size="s"
+              variant="warning"
+              onClick={() => !isProgress && tagsDialog?.show()}
+            >
+              <Plus color={theme.colors.greenDark} />
+              <VisuallyHidden>Open tags dialog</VisuallyHidden>
+            </Button>
+            {selectedTags?.length ? (
+              <TagList tags={selectedTags} />
+            ) : (
               <Text color="white">Add tags for more granular organisation</Text>
-            </div>
-          )}
+            )}
+          </TagContainer>
         </label>
 
-        <NewPlantButton type="submit" variant="warning">
+        <NewPlantButton type="submit" variant="warning" onClick={formAction}>
           {isProgress && <Spinner />}
           Add friend
         </NewPlantButton>
       </NewForm>
 
+      {/* Background */}
       <Illustration />
     </Layout>
   )

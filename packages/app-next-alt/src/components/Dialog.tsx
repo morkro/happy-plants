@@ -82,6 +82,7 @@ const DialogStyles = createGlobalStyle`
     grid-area: title;
     margin-bottom: ${({ theme }) => theme.spacings.l};
     ${HeadingBaseStyles}
+    font-weight: 500;
   }
 `
 

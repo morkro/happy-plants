@@ -107,6 +107,7 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
       outline: none;
     }
 
+    &:hover svg,
     &.active svg {
       animation: ${({ enableAnimations }) =>
         enableAnimations
