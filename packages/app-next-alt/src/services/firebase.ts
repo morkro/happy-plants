@@ -11,11 +11,26 @@ import {
   TwitterAuthProvider,
 } from 'firebase/auth'
 import { getStorage, ref } from 'firebase/storage'
-import { collection, doc, DocumentReference, getFirestore, setDoc } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDocs,
+  getFirestore,
+  query,
+  QuerySnapshot,
+  setDoc,
+  Timestamp,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
-import { useDocumentData } from 'react-firebase-hooks/firestore'
+import { useCollection, useDocumentData } from 'react-firebase-hooks/firestore'
 import logger from 'utilities/logger'
 import { Plant, PlantTag } from 'typings/plant'
 import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
@@ -52,7 +67,6 @@ export enum FirestoreCollections {
   Plants = 'plants',
   Tags = 'tags',
   BugReports = 'bugReports',
-  FeatureRequests = 'featureRequests',
 }
 
 export type FirestoreLoginProvider = 'email' | 'google' | 'github' | 'twitter'
@@ -160,8 +174,87 @@ export function usePlantDocument(documentId: string) {
   return useDocumentData(ref)
 }
 
-export async function addBugReport(report: Partial<FirestoreBugReport>) {
+export function usePlantTags(): [PlantTag[], boolean, QuerySnapshot<DocumentData>?] {
+  const profile = useUserProfile()
+  const ref = getCollection(profile.id, FirestoreCollections.Tags)
+  const [data, loading] = useCollection(ref)
+  // FIXME: Annyoying workaround, look into FirestoreDataConverter
+  const tags = data?.docs?.map((d) => ({ id: d.id, ...d.data() } as PlantTag))
+  return [tags || [], loading, data]
+}
+
+export async function addPlantTag(userId: string, tag: Partial<PlantTag>) {
+  const db = getFirestore(firebaseApp)
+  const now = Date.now()
+  const data = {
+    ...tag,
+    created: Timestamp.fromMillis(now),
+    modified: Timestamp.fromMillis(now),
+  }
+  const collectionRef = collection(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Tags
+  )
+  return addDoc(collectionRef, data)
+}
+
+export async function updatePlantTag(userId: string, tag: PlantTag) {
+  const db = getFirestore(firebaseApp)
+  const documentRef = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Tags, tag.id)
+  return updateDoc(documentRef, {
+    modified: Timestamp.fromMillis(Date.now()),
+    label: tag.label,
+    value: tag.value,
+  })
+}
+
+export async function deletePlantTag(userId: string, tagId: string) {
+  const db = getFirestore(firebaseApp)
+  const documentRef = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Tags, tagId)
+  return deleteDoc(documentRef)
+}
+
+export async function queryTagsFromPlants(userId: string, tagId: string) {
+  const db = getFirestore(firebaseApp)
+  const tagRef = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Tags, tagId)
+  const collectionRef = collection(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Plants
+  )
+  const q = query(collectionRef, where('tags', 'array-contains', tagRef))
+  return getDocs(q)
+}
+
+export function addPlant(userId: string, plantData: Partial<Plant>) {
   const guid = uuid()
+  const now = Date.now()
+  const plant = {
+    ...plantData,
+    guid,
+    created: now,
+    modified: now,
+  } as Plant
+
+  const db = getFirestore(firebaseApp)
+  return setDoc(
+    doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, guid),
+    plant
+  )
+}
+
+export async function updatePlant(userId: string, plantData: Partial<Plant>) {
+  const { guid, ...data } = plantData
+  if (typeof guid !== 'string') return
+
+  const ref = getPlantDoc(userId, guid)
+  return updateDoc(ref, data)
+}
+
+export async function addBugReport(report: Partial<FirestoreBugReport>) {
   const now = Date.now()
   const fullReport = {
     ...report,
@@ -171,7 +264,7 @@ export async function addBugReport(report: Partial<FirestoreBugReport>) {
     modified: now,
   } as FirestoreBugReport
   const db = getFirestore(firebaseApp)
-  return setDoc(doc(db, FirestoreCollections.BugReports, guid), fullReport)
+  return addDoc(collection(db, FirestoreCollections.BugReports), fullReport)
 }
 
 /**

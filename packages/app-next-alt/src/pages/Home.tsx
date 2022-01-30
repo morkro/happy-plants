@@ -101,6 +101,7 @@ export default function Home() {
     )
   )
   const plantDataList = usePlantList(collectionData, search)
+  console.log(plantDataList)
 
   function closeActions() {
     if (showOptions) setShowOptions(false)

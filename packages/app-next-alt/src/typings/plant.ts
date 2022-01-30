@@ -1,12 +1,12 @@
+import { Timestamp } from 'firebase/firestore'
 import { PlantModule } from 'typings/modules'
 
 export interface PlantTag {
-  created: number
-  guid: string
+  id: string
   label: string
-  modified: number
-  name: string
-  plants: string[]
+  value: string
+  created: Timestamp
+  modified: Timestamp
 }
 
 export interface PlantCategory {

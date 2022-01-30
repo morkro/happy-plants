@@ -227,6 +227,7 @@ export function Input(props: InputProps) {
     filePreview,
     accept = 'image/png, image/jpg, image/jpeg',
     fileBackgroundColor = 'beigeDark',
+    fullWidth,
     ...remainingProps
   } = props
   const [showPlainPassword, setPlainPassword] = useState(false)
@@ -285,6 +286,7 @@ export function Input(props: InputProps) {
       tabIndex={isFileInput ? 0 : undefined}
       onKeyPress={triggerFileUpload}
       onClick={triggerFileUpload}
+      fullWidth
     >
       <BaseInput
         ref={fileInput}
@@ -298,6 +300,7 @@ export function Input(props: InputProps) {
           .filter(Boolean)
           .join(' ')}
         aria-invalid={Boolean(error)}
+        fullWidth
       />
 
       {/* If input is used as type="file" we render a custom component. */}

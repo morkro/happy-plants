@@ -13,10 +13,11 @@ import VisuallyHidden from 'components/VisuallyHidden'
 import Dialog from 'components/Dialog'
 import CategoriesList from 'components/CategoriesList'
 import { PlantCategory, PlantTag } from 'typings/plant'
-import { useUserDocument } from 'services/firebase'
+import { addPlant, usePlantTags } from 'services/firebase'
 import useRouteConfig from 'utilities/useRouteConfig'
 import TagsDialog from 'components/TagsDialog'
 import TagList from 'components/TagList'
+import useUserProfile from 'utilities/useUserProfile'
 
 const NewGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -86,15 +87,16 @@ const CategoryButton = styled.button`
   }
 `
 
-const TagContainer = styled.div`
+const TagContainer = styled.div<{ hasContent: boolean }>`
   display: flex;
-  align-items: center;
+  align-items: ${({ hasContent }) => (hasContent ? 'start' : 'center')};
   gap: ${({ theme }) => theme.spacings.m};
 `
 
 export default function PlantNew() {
   const routeConfig = useRouteConfig('plantNew')
-  const [userDoc, loadingUserDoc] = useUserDocument()
+  const userProfile = useUserProfile()
+  const [tags, loadingTags] = usePlantTags()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()
   const [name, setName] = useState({ value: '', error: '' })
@@ -106,6 +108,10 @@ export default function PlantNew() {
   function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsProgress(true)
+    // await addPlant(userProfile.id, {
+    //   name: name.value.trim(),
+    //   category:
+    // })
     console.group()
     console.log('name =>', name)
     console.log('photo =>', photo)
@@ -127,14 +133,14 @@ export default function PlantNew() {
       <TagsDialog
         id="newplant-tags"
         reference={setTagsDialog}
-        tags={userDoc?.tags}
-        loading={loadingUserDoc}
+        tags={tags}
+        loading={loadingTags}
         selected={selectedTags}
         onSelect={setSelectedTags}
       />
 
       <Dialog id="newplant-categories" title="Select a category" reference={setCategoriesDialog}>
-        <CategoriesList onSelectCategory={(category) => setCategory(category)} />
+        <CategoriesList onSelectCategory={setCategory} />
       </Dialog>
 
       {/* Page content */}
@@ -182,7 +188,7 @@ export default function PlantNew() {
           <Text color="white" mb="m" as="span">
             Category
           </Text>
-          <CategoryButton onClick={() => !isProgress && categoriesDialog?.show()}>
+          <CategoryButton type="button" onClick={() => !isProgress && categoriesDialog?.show()}>
             <div>
               <Text color="beigeDark" as="span" variant="special">
                 {category ? category.label : 'e.g. Succulent, Herb, …'}
@@ -198,11 +204,12 @@ export default function PlantNew() {
           <Text color="white" mb="m" as="span">
             Tags
           </Text>
-          <TagContainer>
+          <TagContainer hasContent={selectedTags?.length > 0}>
             <Button
               round
               size="s"
               variant="warning"
+              type="button"
               onClick={() => !isProgress && tagsDialog?.show()}
             >
               <Plus color={theme.colors.greenDark} />

@@ -6,7 +6,7 @@ import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
 import { Heading, Text } from 'components/Typography'
-import { getFileRef, usePlantDocument, useUserDocument } from 'services/firebase'
+import { getFileRef, usePlantDocument, usePlantTags } from 'services/firebase'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
 import Spinner from 'components/Spinner'
@@ -145,7 +145,7 @@ const CategoryAction = styled.button`
 
 export default function Plant() {
   const routeConfig = useRouteConfig('plantBase')
-  const [userDoc, loadingUserDoc] = useUserDocument()
+  const [tags, loadingTags] = usePlantTags()
   const params = useParams<{ id: string }>()
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
@@ -199,8 +199,8 @@ export default function Plant() {
       <TagsDialog
         id="plant-dialog-tags"
         reference={setTagsDialog}
-        tags={userDoc?.tags}
-        loading={loadingUserDoc}
+        tags={tags}
+        loading={loadingTags}
         selected={selectedTags}
         onSelect={setSelectedTags}
       />

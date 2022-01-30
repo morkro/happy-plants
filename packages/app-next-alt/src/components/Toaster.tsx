@@ -16,10 +16,9 @@ const ToastWrapper = styled.div`
 const Container = styled.div<{ type: ToastType }>`
   --base-color: ${(props) => {
     switch (props.type) {
-      case 'success':
-        return props.theme.colors.green
       case 'error':
         return props.theme.colors.red
+      case 'success':
       case 'loading':
       case 'blank':
       default:

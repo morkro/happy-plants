@@ -96,7 +96,7 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   ],
   ['settingsEmail', { isPrivateRoute: true, pageTitle: 'Email' }],
   ['settingsPassword', { isPrivateRoute: true, pageTitle: 'Password' }],
-  ['settingsTags', { isPrivateRoute: true, pageTitle: 'Tags' }],
+  ['settingsTags', { isPrivateRoute: true, pageTitle: 'Tags', appContentOrientation: 'start' }],
   ['settingsModules', { isPrivateRoute: true, pageTitle: 'Modules' }],
   [
     'settingsA11y',
