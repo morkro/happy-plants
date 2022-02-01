@@ -37,15 +37,15 @@ interface TagsDialogProps {
 export default function TagsDialog(props: TagsDialogProps) {
   const { id, tags = [], loading, onSelect = noop, selected = [], reference } = props
   const profile = useUserProfile()
-  const [selectedTags, setSelected] = useState<PlantTag[]>(selected)
+  const [selectedTags, setSelectedTags] = useState<PlantTag[]>(selected)
   const [inputTagName, setInputTagName] = useState({ value: '', error: '' })
   const [isUploading, setIsUploading] = useState(false)
 
   function toggleTagSelection(tag: PlantTag) {
     if (selectedTags.some((t) => t.id === tag.id)) {
-      setSelected(selectedTags.filter((t) => t.id !== tag.id))
+      setSelectedTags(selectedTags.filter((t) => t.id !== tag.id))
     } else {
-      setSelected((t) => [...t, tag])
+      setSelectedTags((t) => [...t, tag])
     }
   }
 
@@ -71,8 +71,12 @@ export default function TagsDialog(props: TagsDialogProps) {
   }
 
   useEffect(() => {
+    setSelectedTags(selected)
+  }, [selected])
+
+  useEffect(() => {
     onSelect(selectedTags)
-  }, [onSelect, selectedTags])
+  }, [selectedTags, onSelect])
 
   return (
     <Dialog id={id} title="Manage tags" reference={reference}>

@@ -32,8 +32,8 @@ export default function CategoriesList({ selected, onSelectCategory = noop }: Ca
 
   useEffect(() => {
     if (selected?.id !== selectedCategory?.id) {
-      setSelectedCategory(selected)
-      onSelectCategory(selected)
+      setSelectedCategory(selectedCategory)
+      onSelectCategory(selectedCategory)
     }
   }, [selected, selectedCategory, onSelectCategory])
 
@@ -46,16 +46,10 @@ export default function CategoriesList({ selected, onSelectCategory = noop }: Ca
             id="type-empty"
             name="type"
             value="empty"
-            checked={selectedCategory === undefined || selectedCategory === null}
+            checked={selectedCategory === undefined}
             onClick={() => setSelectedCategory(undefined)}
           />
-          <Text
-            color={
-              selectedCategory === undefined || selectedCategory === null
-                ? 'greenDark'
-                : 'beigeDark'
-            }
-          >
+          <Text color={selectedCategory === undefined ? 'greenDark' : 'beigeDark'}>
             Leave empty
           </Text>
         </label>

@@ -49,7 +49,7 @@ const BaseStyles = css<InputProps | TextareaProps>`
   background: ${({ theme }) => theme.colors.white};
   font-family: var(--font-special);
   font-size: ${({ theme }) => theme.fonts.base};
-  padding: calc(${({ theme }) => theme.spacings.m} * 1.7);
+  padding: calc(${({ theme }) => theme.spacings.m} * 2);
   border: 2px solid ${({ theme, error }) => (error ? theme.colors.red : theme.colors.white)};
   color: var(--brand-green-dark);
   transition: box-shadow var(--base-transition) ease-in-out;
@@ -269,30 +269,40 @@ export function Input(props: InputProps) {
     setFileName(file.name)
   }
 
-  function triggerFileUpload() {
+  function _onClick(event: React.MouseEvent<HTMLDivElement>) {
     if (!isFileInput) return
+    event.preventDefault()
+    triggerFileUpload()
+  }
+
+  function _onKeyPress(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (!isFileInput) return
+    event.preventDefault()
+    triggerFileUpload()
+  }
+
+  function triggerFileUpload() {
     fileInput?.current?.click()
   }
 
   useEffect(() => {
     setImageUrl(getUrlFromBlob(file as Blob))
     onFileInput({ file, fileName })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file])
+  }, [file, fileName, onFileInput])
 
   return (
     <InputContainer
       {...{ m, mt, mr, mb, ml }}
       tabIndex={isFileInput ? 0 : undefined}
-      onKeyPress={triggerFileUpload}
-      onClick={triggerFileUpload}
       fullWidth
+      onKeyPress={_onKeyPress}
     >
       <BaseInput
         ref={fileInput}
         error={error}
         tabIndex={isFileInput ? -1 : undefined}
         accept={isFileInput ? accept : undefined}
+        hidden={isFileInput}
         type={type === 'password' && showPlainPassword ? 'text' : type}
         onChange={_onChange}
         {...remainingProps}
@@ -305,7 +315,7 @@ export function Input(props: InputProps) {
 
       {/* If input is used as type="file" we render a custom component. */}
       {isFileInput && (
-        <FileUploadContainer>
+        <FileUploadContainer onClick={_onClick}>
           <FileUploadImage $color={fileBackgroundColor}>
             {isLoading && <Spinner />}
             {!isLoading && !file ? <Image /> : <img src={previewImage} loading="lazy" alt="" />}

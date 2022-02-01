@@ -106,9 +106,13 @@ export default function PlantNew() {
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()
   const [name, setName] = useState({ value: '', error: '' })
   const [photo, setPhoto] = useState({ value: '', error: '' })
-  const [category, setCategory] = useState<PlantCategory | null | undefined>(undefined)
+  const [category, setCategory] = useState<PlantCategory>()
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isProgress, setIsProgress] = useState(false)
+
+  function onSelectCategory(category?: PlantCategory) {
+    setCategory(category)
+  }
 
   async function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -125,6 +129,7 @@ export default function PlantNew() {
     try {
       const ref = await addPlant(userProfile.id, {
         name: name.value.trim(),
+        type: category,
         tags: selectedTags?.map((tag) => getTagRef(userProfile.id, tag.id)),
       })
       navigate(generatePath(routePaths.plant.base, { id: ref.id }))
@@ -135,10 +140,6 @@ export default function PlantNew() {
       setIsProgress(false)
     }
   }
-
-  useEffect(() => {
-    console.log(selectedTags)
-  }, [selectedTags])
 
   return (
     <Layout {...routeConfig}>
@@ -156,7 +157,7 @@ export default function PlantNew() {
       />
 
       <Dialog id="newplant-categories" title="Select a category" reference={setCategoriesDialog}>
-        <CategoriesList onSelectCategory={setCategory} />
+        <CategoriesList onSelectCategory={onSelectCategory} />
       </Dialog>
 
       {/* Page content */}
@@ -179,7 +180,9 @@ export default function PlantNew() {
             error={name.error}
             disabled={isProgress}
             data-cy="new-form-name"
-            onChange={(event) => setName((d) => ({ ...d, value: event.target.value }))}
+            onChange={(event) => {
+              setName((d) => ({ ...d, value: event.target.value }))
+            }}
           />
         </label>
 
@@ -206,8 +209,12 @@ export default function PlantNew() {
           </Text>
           <CategoryButton type="button" onClick={() => !isProgress && categoriesDialog?.show()}>
             <div>
-              <Text color="beigeDark" as="span" variant="special">
-                {category ? category.label : 'e.g. Succulent, Herb, …'}
+              <Text
+                color={category !== undefined ? 'black' : 'beigeDark'}
+                as="span"
+                variant="special"
+              >
+                {category !== undefined ? category.label : 'e.g. Succulent, Herb, …'}
               </Text>
             </div>
             <div>

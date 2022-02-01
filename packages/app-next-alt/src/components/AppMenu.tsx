@@ -95,6 +95,7 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
   z-index: 1;
   display: flex;
   justify-content: space-evenly;
+  border-top: 2px solid ${({ theme }) => theme.colors.white};
 
   > a {
     height: 100%;

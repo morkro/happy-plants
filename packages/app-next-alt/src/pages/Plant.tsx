@@ -108,6 +108,13 @@ const PlantSection = styled.section`
   }
 `
 
+const TagsDescription = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacings.s};
+  color: ${({ theme }) => theme.colors.beigeDark};
+`
+
 const CategoryAction = styled.button`
   background: transparent;
   border: none;
@@ -147,24 +154,30 @@ export default function Plant() {
   const routeConfig = useRouteConfig('plantBase')
   const [tags, loadingTags] = usePlantTags()
   const params = useParams<{ id: string }>()
+  const [data, loading, error] = usePlantDocument(params.id ?? '')
+  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [modulesDialog, setModulesDialog] = useState<A11yDialogInstance>()
   const [settingsDialog, setSettingsDialog] = useState<A11yDialogInstance>()
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
-  const [data, loading, error] = usePlantDocument(params.id ?? '')
-  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
+  const [isLoadingSelectedTags, setIsLoadingSelectedTags] = useState(false)
   const hasImageUrl = typeof data?.imageURL === 'string'
 
   useEffect(() => {
     async function get() {
+      if (!data?.tags?.length) {
+        return
+      }
+      setIsLoadingSelectedTags(true)
       const tags = await getTagDocs(data?.tags)
       if (tags?.length) {
         setSelectedTags(tags)
       }
+      setIsLoadingSelectedTags(false)
     }
     get()
-  }, [data])
+  }, [data?.tags])
 
   useEffect(() => {
     if (error !== undefined) {
@@ -275,7 +288,10 @@ export default function Plant() {
         {selectedTags?.length ? (
           <TagList tags={selectedTags} />
         ) : (
-          <Text color="beigeDark">Add tags for better organisation</Text>
+          <TagsDescription>
+            {isLoadingSelectedTags ? <Spinner /> : null}
+            <Text color="beigeDark">Add tags for better organisation</Text>
+          </TagsDescription>
         )}
       </PlantSection>
 

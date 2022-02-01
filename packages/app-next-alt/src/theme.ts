@@ -32,7 +32,7 @@ const baseSpacing = 8
 
 export const theme: DefaultTheme = {
   baseRadius: '2px',
-  frameWidgetHeight: '50px',
+  frameWidgetHeight: '60px',
   frameMaxWidth: '375px',
 
   colors: {

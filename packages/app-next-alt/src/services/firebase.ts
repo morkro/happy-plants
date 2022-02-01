@@ -1,4 +1,4 @@
-import { FirebaseApp, initializeApp } from 'firebase/app'
+import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
 import {
   getAuth,
   getRedirectResult,
@@ -26,15 +26,15 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
+import { useCollection, useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
 import config from 'config'
 import { AppState } from 'store'
-import { useCollection, useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
-import logger from 'utilities/logger'
-import { Plant, PlantFirestore, PlantTag } from 'typings/plant'
 import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
+import logger from 'utilities/logger'
 import { isValidHttpUrl } from 'utilities/isUrl'
 import useUserProfile from 'utilities/useUserProfile'
 import useHomePreferences from 'utilities/useHomePreferences'
+import { Plant, PlantTag } from 'typings/plant'
 import { setSessionEntry } from './webStorage'
 import { plantConverter, tagConverter } from './firebaseConverter'
 
@@ -48,7 +48,7 @@ import { plantConverter, tagConverter } from './firebaseConverter'
 
 let firebaseApp: FirebaseApp
 
-export function initFirebaseApp(options: Record<string, string> = {}) {
+export function initFirebaseApp(options: FirebaseOptions = {}) {
   try {
     firebaseApp = initializeApp(options)
   } catch (error: any) {
@@ -182,18 +182,18 @@ export function usePlantDocument(documentId: string) {
   return useDocumentData(ref)
 }
 
-export function addPlant(userId: string, plantData: Partial<PlantFirestore>) {
+export function addPlant(userId: string, plantData: Partial<Plant>) {
   const db = getFirestore(firebaseApp)
-  const plant = {
-    ...plantData,
-    created: Date.now(),
-  }
   const collectionRef = collection(
     db,
     FirestoreCollections.Users,
     userId,
     FirestoreCollections.Plants
-  )
+  ).withConverter(plantConverter)
+  const plant: Partial<Plant> = {
+    ...plantData,
+    created: Date.now(),
+  }
   return addDoc(collectionRef, plant)
 }
 
@@ -237,8 +237,13 @@ export async function getTagDocs(tagRefs: DocumentReference<PlantTag>[] = []) {
   }
   return Promise.all(
     tagRefs.map(async (ref) => {
-      const tag = await getDoc<PlantTag>(ref)
-      return tag.data() as PlantTag
+      const snapshot = await getDoc<PlantTag>(ref)
+      const data = snapshot.data()!
+      const tag = {
+        ...data,
+        id: ref.id,
+      }
+      return tag
     })
   )
 }

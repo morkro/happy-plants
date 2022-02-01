@@ -1,6 +1,7 @@
 import { DocumentData, QueryDocumentSnapshot, SnapshotOptions, Timestamp } from 'firebase/firestore'
-import { Plant, PlantTag } from 'typings/plant'
+import categoriesData from 'data/categories'
 import hasOwn from 'utilities/hasOwn'
+import { Plant, PlantTag } from 'typings/plant'
 
 function toDateNumber(time: number | Timestamp) {
   // We now store dates as a Timestamp and need to convert it
@@ -9,7 +10,15 @@ function toDateNumber(time: number | Timestamp) {
 
 export const plantConverter = {
   toFirestore(data: Plant): DocumentData {
-    return data
+    return {
+      name: data.name,
+      type: data?.type?.id ?? null,
+      imageURL: data?.imageURL ?? null,
+      tags: data?.tags ?? null,
+      modules: data?.modules ?? null,
+      created: Timestamp.fromMillis(data?.created),
+      modified: Timestamp.fromMillis(data?.created),
+    }
   },
   fromFirestore(snapshot: QueryDocumentSnapshot<DocumentData>, options?: SnapshotOptions): Plant {
     const data = snapshot.data(options)
@@ -17,7 +26,7 @@ export const plantConverter = {
       // This is required for legacy implementations.
       id: hasOwn(data, 'guid') ? data.guid : snapshot.id,
       name: data?.name,
-      type: data?.type,
+      type: categoriesData.find((c) => c.id === data?.type),
       imageURL: data?.imageURL,
       tags: data?.tags,
       modules: data?.modules,
