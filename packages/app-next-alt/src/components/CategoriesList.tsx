@@ -24,16 +24,18 @@ export interface CategoriesListProps {
 }
 
 export default function CategoriesList({ selected, onSelectCategory = noop }: CategoriesListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<PlantCategory | undefined>(selected)
+  const [selectedCategory, setSelectedCategory] = useState<PlantCategory>()
   const isSelected = useCallback(
-    (category: PlantCategory) =>
-      selectedCategory ? selectedCategory.guid === category.guid : false,
+    (category: PlantCategory) => (selectedCategory ? selectedCategory.id === category.id : false),
     [selectedCategory]
   )
 
   useEffect(() => {
-    onSelectCategory(selectedCategory)
-  }, [selectedCategory, onSelectCategory])
+    if (selected?.id !== selectedCategory?.id) {
+      setSelectedCategory(selected)
+      onSelectCategory(selected)
+    }
+  }, [selected, selectedCategory, onSelectCategory])
 
   return (
     <List>
@@ -59,7 +61,7 @@ export default function CategoriesList({ selected, onSelectCategory = noop }: Ca
         </label>
       </li>
       {categoriesData.map((category) => (
-        <li key={category.guid}>
+        <li key={category.id}>
           <label htmlFor={`type-${category.value}`}>
             <Input
               type="radio"

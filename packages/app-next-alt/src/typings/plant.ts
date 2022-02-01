@@ -1,28 +1,38 @@
-import { Timestamp } from 'firebase/firestore'
+import { DocumentReference, Timestamp } from 'firebase/firestore'
 import { PlantModule } from 'typings/modules'
 
 export interface PlantTag {
   id: string
   label: string
   value: string
-  created: Timestamp
-  modified: Timestamp
+  created: number
+  modified: number
 }
 
 export interface PlantCategory {
   label: string
   value: string
-  guid: string
+  id: string
 }
 
-export interface Plant {
-  blob: Blob | null
-  type: PlantCategory | null
-  created: number
-  guid: string
-  imageURL: string | null
-  modified: number
-  modules: PlantModule[]
+interface PlantConstructor {
   name: string
-  tags?: PlantTag[]
+  imageURL?: string
+  type?: PlantCategory
+  modules?: PlantModule[]
+}
+
+export interface PlantFirestore extends PlantConstructor {
+  created: Timestamp
+  modified: Timestamp
+  tags?: DocumentReference<PlantTag>[]
+}
+
+export interface Plant extends PlantConstructor {
+  id: string
+  tags?: DocumentReference<PlantTag>[]
+  created: number
+  modified: number
+  // FIXME: below
+  [key: string]: any
 }

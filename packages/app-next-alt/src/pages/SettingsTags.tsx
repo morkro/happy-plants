@@ -24,7 +24,7 @@ import useRouteConfig from 'utilities/useRouteConfig'
 import useUserProfile from 'utilities/useUserProfile'
 import toSlug from 'utilities/toSlug'
 import logger from 'utilities/logger'
-import { Plant, PlantTag } from 'typings/plant'
+import { PlantTag } from 'typings/plant'
 
 const Description = styled.div`
   margin-bottom: ${({ theme }) => theme.spacings.l};
@@ -47,7 +47,7 @@ export default function SettingsTags() {
   const [inputEditTag, setInputEditTag] = useState({ value: '', error: '' })
   const [isUploading, setIsUploading] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
-  const [tags, loading, snapshot] = usePlantTags()
+  const [tags, loading] = usePlantTags()
   const [selectedTag, setSelectedTag] = useState<PlantTag>()
   const [dialog, setDialog] = useState<A11yDialogInstance>()
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -115,12 +115,11 @@ export default function SettingsTags() {
       // Remove tag reference from plants
       const queried = await queryTagsFromPlants(profile.id, selectedTag!.id)
       if (!queried.empty) {
-        const cleanUpPlants = queried?.docs?.map((d) => d.data() as Plant)
-
+        const cleanUpPlants = queried?.docs?.map((d) => d.data())
         for (const plant of cleanUpPlants) {
           try {
             await updatePlant(profile.id, {
-              guid: plant.guid,
+              id: plant.id,
               tags: plant.tags?.filter((t) => t.id !== selectedTag!.id),
             })
           } catch (error) {
@@ -192,7 +191,7 @@ export default function SettingsTags() {
 
       {loading ? (
         <Spinner />
-      ) : snapshot?.empty ? (
+      ) : tags?.length === 0 ? (
         <Text as="span" color="beigeDark">
           You dont have any tags created yet.
         </Text>

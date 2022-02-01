@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import config, { PlantOrderMap, PlantOrderType } from 'config'
 import { Search, Sliders, X } from 'react-feather'
-import { theme } from 'theme'
 import { generatePath, useNavigate } from 'react-router-dom'
+import { theme } from 'theme'
 import { routePaths } from 'routes'
-import { DocumentData, orderBy, query } from 'firebase/firestore'
 import { Heading, Text } from 'components/Typography'
 import EmptyDataIllustration from 'components/EmptyDataIllustration'
-import { getCollection, FirestoreCollections } from 'services/firebase'
-import { toast } from 'components/Toaster'
-import { getLocalEntry } from 'services/webStorage'
 import { AppHeaderButton, AppHeaderPortal } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
-import useSearchParams from 'utilities/useSearchParams'
 import HomeOptions from 'components/HomeOptions'
 import PlantPreview from 'components/PlantPreview'
 import { Input } from 'components/Input'
-import useUserProfile from 'utilities/useUserProfile'
 import Layout from 'components/Layout'
+import { usePlantDocs } from 'services/firebase'
+import useSearchParams from 'utilities/useSearchParams'
 import useRouteConfig from 'utilities/useRouteConfig'
+import { Plant } from 'typings/plant'
 
 const PlantList = styled.ul`
-  --grid-item-height: calc(50vw - 1.5 * ${({ theme }) => theme.spacings.m});
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-auto-rows: var(--grid-item-height);
   grid-gap: ${({ theme }) => theme.spacings.m};
 `
 
@@ -76,7 +69,7 @@ function EmptyData() {
   )
 }
 
-function usePlantList(collectionData?: DocumentData[], searchQuery = '') {
+function filterPlants(collectionData?: Plant[], searchQuery = '') {
   return searchQuery === ''
     ? collectionData
     : collectionData?.filter((plant) => plant.name.includes(searchQuery))
@@ -86,22 +79,11 @@ export default function Home() {
   const routeConfig = useRouteConfig('home')
   const navigate = useNavigate()
   const queries = useSearchParams()
-  const userInfo = useUserProfile()
+  const [collectionData, loading] = usePlantDocs()
   const [showOptions, setShowOptions] = useState(queries.has('options'))
   const [showSearch, setShowSearch] = useState(queries.has('search'))
   const [search, setSearch] = useState('')
-  const [storageOrderBy] = useState(
-    (getLocalEntry(config.localStorage.homeOrderBy) as PlantOrderType) ?? PlantOrderType.Latest
-  )
-  const [orderType, orderDirection] = config.ui.plantOrderMap.get(storageOrderBy) as PlantOrderMap
-  const [collectionData, loading, error, collectionSnapshot] = useCollectionData(
-    query(
-      getCollection(userInfo.id, FirestoreCollections.Plants),
-      orderBy(orderType, orderDirection)
-    )
-  )
-  const plantDataList = usePlantList(collectionData, search)
-  console.log(plantDataList)
+  const plantDataList = filterPlants(collectionData, search)
 
   function closeActions() {
     if (showOptions) setShowOptions(false)
@@ -115,12 +97,6 @@ export default function Home() {
     setShowOptions(true)
     navigate(`${routePaths.home}?options`, { replace: true })
   }
-
-  useEffect(() => {
-    if (error !== undefined) {
-      toast.error(error?.message || 'Failed to load your data. Please reload.')
-    }
-  }, [error])
 
   return (
     <Layout {...routeConfig}>
@@ -140,7 +116,7 @@ export default function Home() {
                 // onChange={(event) => console.log(event)}
               />
             </label>
-            {!loading && !collectionSnapshot?.empty && (
+            {!loading && collectionData?.length !== 0 && (
               <datalist id="search-list">
                 {collectionData?.map((doc) => (
                   <option key={doc.id} value={doc.name} />
@@ -172,14 +148,14 @@ export default function Home() {
 
       {showOptions && <HomeOptions />}
 
-      {!loading && !collectionSnapshot?.empty ? (
+      {!loading && collectionData?.length !== 0 ? (
         <PlantList>
           {plantDataList?.map((plant) => (
-            <li key={plant.guid + plant.name}>
+            <li key={plant.id + plant.name}>
               <PlantPreview
                 loading={false}
                 name={plant.name}
-                href={generatePath(routePaths.plant.base, { id: plant.guid })}
+                href={generatePath(routePaths.plant.base, { id: plant.id })}
                 imageUrl={plant.imageURL}
               />
             </li>
@@ -195,7 +171,7 @@ export default function Home() {
         </PlantList>
       )}
 
-      {!loading && collectionSnapshot?.empty && <EmptyData />}
+      {!loading && collectionData?.length === 0 && <EmptyData />}
     </Layout>
   )
 }

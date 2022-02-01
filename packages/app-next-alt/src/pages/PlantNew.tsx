@@ -3,6 +3,8 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { List, Plus } from 'react-feather'
 import A11yDialogInstance from 'a11y-dialog'
 import { theme } from 'theme'
+import { generatePath, useNavigate } from 'react-router-dom'
+import { routePaths } from 'routes'
 import Layout, { BaseLayout } from 'components/Layout'
 import NewIllustration from 'components/NewIllustration'
 import { Button } from 'components/Button'
@@ -12,12 +14,14 @@ import Spinner from 'components/Spinner'
 import VisuallyHidden from 'components/VisuallyHidden'
 import Dialog from 'components/Dialog'
 import CategoriesList from 'components/CategoriesList'
-import { PlantCategory, PlantTag } from 'typings/plant'
-import { addPlant, usePlantTags } from 'services/firebase'
-import useRouteConfig from 'utilities/useRouteConfig'
 import TagsDialog from 'components/TagsDialog'
 import TagList from 'components/TagList'
+import { toast } from 'components/Toaster'
+import { addPlant, getTagRef, usePlantTags } from 'services/firebase'
+import { PlantCategory, PlantTag } from 'typings/plant'
+import useRouteConfig from 'utilities/useRouteConfig'
 import useUserProfile from 'utilities/useUserProfile'
+import logger from 'utilities/logger'
 
 const NewGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -97,6 +101,7 @@ export default function PlantNew() {
   const routeConfig = useRouteConfig('plantNew')
   const userProfile = useUserProfile()
   const [tags, loadingTags] = usePlantTags()
+  const navigate = useNavigate()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [categoriesDialog, setCategoriesDialog] = useState<A11yDialogInstance>()
   const [name, setName] = useState({ value: '', error: '' })
@@ -105,19 +110,30 @@ export default function PlantNew() {
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isProgress, setIsProgress] = useState(false)
 
-  function formAction(event: React.FormEvent<HTMLFormElement>) {
+  async function formAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsProgress(true)
-    // await addPlant(userProfile.id, {
-    //   name: name.value.trim(),
-    //   category:
-    // })
+
     console.group()
     console.log('name =>', name)
     console.log('photo =>', photo)
     console.log('category =>', category)
+    console.log('selectedTags =>', selectedTags)
     console.log('isProgress =>', isProgress)
     console.groupEnd()
+
+    try {
+      const ref = await addPlant(userProfile.id, {
+        name: name.value.trim(),
+        tags: selectedTags?.map((tag) => getTagRef(userProfile.id, tag.id)),
+      })
+      navigate(generatePath(routePaths.plant.base, { id: ref.id }))
+    } catch (error) {
+      logger(error as string, true)
+      toast.error('An error oc  cured adding your new plant, please try again')
+    } finally {
+      setIsProgress(false)
+    }
   }
 
   useEffect(() => {

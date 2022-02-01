@@ -19,6 +19,7 @@ export interface PlantProps {
 const PlantContainer = styled.div<{ $loading: boolean }>`
   width: 100%;
   height: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: ${({ theme }) => theme.baseRadius};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.white};

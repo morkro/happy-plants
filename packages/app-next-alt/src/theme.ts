@@ -276,6 +276,15 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
     text-rendering: geometricPrecision;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    @media screen and (min-width: 650px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      gap: calc(2 * ${theme.spacings.l});
+      background: ${theme.colors.greenDark};
+    }
   }
 
   #root {
@@ -284,10 +293,13 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
     display: flex;
 
     @media screen and (min-width: 650px) {
-      width: 650px;
-      min-height: auto;
-      max-height: 90vh;
-      margin: auto;
+      width: calc(650px/1.5);
+      height: 812px;
+      min-height: 812px;
+      border-radius: 30px;
+      box-shadow: 0 0 0 10px ${theme.colors.black}, 0 0 0 14px grey;
+      overflow: scroll;
+      background: ${theme.colors.beige};
     }
   }
 

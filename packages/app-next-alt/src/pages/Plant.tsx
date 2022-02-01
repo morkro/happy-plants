@@ -6,7 +6,7 @@ import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
 import { Heading, Text } from 'components/Typography'
-import { getFileRef, usePlantDocument, usePlantTags } from 'services/firebase'
+import { getFileRef, getTagDocs, usePlantDocument, usePlantTags } from 'services/firebase'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
 import Spinner from 'components/Spinner'
@@ -156,11 +156,15 @@ export default function Plant() {
   const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
   const hasImageUrl = typeof data?.imageURL === 'string'
 
-  useEffect(() => console.log(data), [data])
-
   useEffect(() => {
-    console.log(selectedTags)
-  }, [selectedTags])
+    async function get() {
+      const tags = await getTagDocs(data?.tags)
+      if (tags?.length) {
+        setSelectedTags(tags)
+      }
+    }
+    get()
+  }, [data])
 
   useEffect(() => {
     if (error !== undefined) {

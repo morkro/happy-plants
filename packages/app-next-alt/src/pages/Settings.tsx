@@ -7,18 +7,17 @@ import { ArrowRight, Smile } from 'react-feather'
 import { Link } from 'react-router-dom'
 import config from 'config'
 import { theme } from 'theme'
-import { useCollection } from 'react-firebase-hooks/firestore'
+import { signOutUser, usePlantCount } from 'services/firebase'
 import { Button } from 'components/Button'
-import { FirestoreCollections, getCollection, signOutUser } from 'services/firebase'
-import logger from 'utilities/logger'
 import { toast } from 'components/Toaster'
-import delay from 'utilities/delay'
 import { Heading, Text } from 'components/Typography'
 import BaseSVG from 'components/BaseSVG'
 import Layout from 'components/Layout'
+import Spinner from 'components/Spinner'
+import logger from 'utilities/logger'
+import delay from 'utilities/delay'
 import useRouteConfig from 'utilities/useRouteConfig'
 import useUserProfile from 'utilities/useUserProfile'
-import Spinner from 'components/Spinner'
 
 const SettingsHeaderSvg = styled(BaseSVG)`
   position: absolute;
@@ -175,11 +174,9 @@ const menu = {
 export default function Settings() {
   const routeConfig = useRouteConfig('settingsBase')
   const navigate = useNavigate()
-  const { store, setStore } = useAppStore()
-  const userInfo = useUserProfile()
-  const [plantList, loadingPlantList, errorPlantList] = useCollection(
-    getCollection(userInfo.id, FirestoreCollections.Plants)
-  )
+  const profile = useUserProfile()
+  const { setStore } = useAppStore()
+  const [plantCount, loadingPlantCount, errorPlantCount] = usePlantCount()
 
   async function signOut() {
     setStore({ authLoader: { show: true, message: 'logout' } })
@@ -200,20 +197,20 @@ export default function Settings() {
     <Layout {...routeConfig}>
       <SettingsHeader>
         <SettingsHeaderContent>
-          <SettingsAvatar role="img" aria-label={store.user?.displayName || undefined}>
-            {store.user?.photoURL ? (
-              <img src={store.user?.photoURL} loading="lazy" alt="" />
+          <SettingsAvatar role="img" aria-label={profile?.displayName || undefined}>
+            {profile.photoURL ? (
+              <img src={profile?.photoURL} loading="lazy" alt="" />
             ) : (
               <Smile color={theme.colors.greenDark} />
             )}
           </SettingsAvatar>
           <div>
             <Text color="white" size="m" bold>
-              {store.user?.displayName}
+              {profile?.displayName}
             </Text>
-            {!errorPlantList && (
+            {!errorPlantCount && (
               <Text color="white" size="m">
-                {loadingPlantList ? <Spinner /> : `${plantList?.size} Plants`}
+                {loadingPlantCount ? <Spinner /> : `${plantCount} Plants`}
               </Text>
             )}
           </div>

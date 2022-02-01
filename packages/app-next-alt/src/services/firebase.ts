@@ -16,27 +16,27 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   DocumentReference,
+  getDoc,
   getDocs,
   getFirestore,
+  orderBy,
   query,
-  QuerySnapshot,
-  setDoc,
   Timestamp,
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { v4 as uuid } from 'uuid'
 import config from 'config'
 import { AppState } from 'store'
-import { useCollection, useDocumentData } from 'react-firebase-hooks/firestore'
+import { useCollection, useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore'
 import logger from 'utilities/logger'
-import { Plant, PlantTag } from 'typings/plant'
+import { Plant, PlantFirestore, PlantTag } from 'typings/plant'
 import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
 import { isValidHttpUrl } from 'utilities/isUrl'
 import useUserProfile from 'utilities/useUserProfile'
+import useHomePreferences from 'utilities/useHomePreferences'
 import { setSessionEntry } from './webStorage'
+import { plantConverter, tagConverter } from './firebaseConverter'
 
 /**
  * Table of contents:
@@ -139,26 +139,34 @@ export async function signOutUser() {
 /**
  * ###################### 3. Collections ######################
  */
-export function useUserDocument() {
-  const profile = useUserProfile()
+/**
+ * 3.1 Plants
+ */
+export function usePlantDocs() {
   const db = getFirestore(firebaseApp)
-  const ref = doc(
+  const profile = useUserProfile()
+  const [orderType, orderDirection] = useHomePreferences()
+  const collectionRef = collection(
     db,
     FirestoreCollections.Users,
-    profile.id
-  ) as DocumentReference<FirestoreUserDocument>
-  return useDocumentData(ref)
+    profile.id,
+    FirestoreCollections.Plants
+  ).withConverter(plantConverter)
+  const filter = orderBy(orderType, orderDirection)
+  return useCollectionData(query(collectionRef, filter))
 }
 
-export function getCollection(userId: string, collectionName: string) {
+export function usePlantCount() {
   const db = getFirestore(firebaseApp)
-  return collection(db, FirestoreCollections.Users, userId, collectionName)
-}
-
-export function getPlantDoc(userId: string, documentId: string) {
-  const db = getFirestore(firebaseApp)
-  const ref = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, documentId)
-  return ref as DocumentReference<Plant>
+  const profile = useUserProfile()
+  const collectionRef = collection(
+    db,
+    FirestoreCollections.Users,
+    profile.id,
+    FirestoreCollections.Plants
+  )
+  const [data, loading, error] = useCollection(collectionRef)
+  return [data?.size, loading, error]
 }
 
 export function usePlantDocument(documentId: string) {
@@ -170,43 +178,100 @@ export function usePlantDocument(documentId: string) {
     profile.id,
     FirestoreCollections.Plants,
     documentId
-  ) as DocumentReference<Plant>
+  ).withConverter(plantConverter)
   return useDocumentData(ref)
 }
 
-export function usePlantTags(): [PlantTag[], boolean, QuerySnapshot<DocumentData>?] {
-  const profile = useUserProfile()
-  const ref = getCollection(profile.id, FirestoreCollections.Tags)
-  const [data, loading] = useCollection(ref)
-  // FIXME: Annyoying workaround, look into FirestoreDataConverter
-  const tags = data?.docs?.map((d) => ({ id: d.id, ...d.data() } as PlantTag))
-  return [tags || [], loading, data]
-}
-
-export async function addPlantTag(userId: string, tag: Partial<PlantTag>) {
+export function addPlant(userId: string, plantData: Partial<PlantFirestore>) {
   const db = getFirestore(firebaseApp)
-  const now = Date.now()
-  const data = {
-    ...tag,
-    created: Timestamp.fromMillis(now),
-    modified: Timestamp.fromMillis(now),
+  const plant = {
+    ...plantData,
+    created: Date.now(),
   }
   const collectionRef = collection(
     db,
     FirestoreCollections.Users,
     userId,
-    FirestoreCollections.Tags
+    FirestoreCollections.Plants
   )
+  return addDoc(collectionRef, plant)
+}
+
+export async function updatePlant(userId: string, plantData: Partial<Plant>) {
+  const { id, ...data } = plantData
+  if (typeof id !== 'string') return
+  const db = getFirestore(firebaseApp)
+  const ref = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, id)
+  return updateDoc(ref, data)
+}
+
+/**
+ * 3.2 Tags
+ */
+export function usePlantTags() {
+  const db = getFirestore(firebaseApp)
+  const profile = useUserProfile()
+  const ref = collection(
+    db,
+    FirestoreCollections.Users,
+    profile.id,
+    FirestoreCollections.Tags
+  ).withConverter(tagConverter)
+  return useCollectionData(ref)
+}
+
+export function getTagRef(userId: string, tagId: string) {
+  const db = getFirestore(firebaseApp)
+  return doc(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Tags,
+    tagId
+  ).withConverter(tagConverter)
+}
+
+export async function getTagDocs(tagRefs: DocumentReference<PlantTag>[] = []) {
+  if (tagRefs.length === 0) {
+    return []
+  }
+  return Promise.all(
+    tagRefs.map(async (ref) => {
+      const tag = await getDoc<PlantTag>(ref)
+      return tag.data() as PlantTag
+    })
+  )
+}
+
+export async function addPlantTag(userId: string, tag: Partial<PlantTag>) {
+  const db = getFirestore(firebaseApp)
+  const collectionRef = collection(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Tags
+  ).withConverter(tagConverter)
+  const data: Partial<PlantTag> = {
+    value: tag.value,
+    label: tag.label,
+    created: Date.now(),
+  }
   return addDoc(collectionRef, data)
 }
 
 export async function updatePlantTag(userId: string, tag: PlantTag) {
   const db = getFirestore(firebaseApp)
-  const documentRef = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Tags, tag.id)
+  const documentRef = doc(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Tags,
+    tag.id
+  ).withConverter(tagConverter)
   return updateDoc(documentRef, {
-    modified: Timestamp.fromMillis(Date.now()),
     label: tag.label,
     value: tag.value,
+    modified: Timestamp.fromMillis(Date.now()),
   })
 }
 
@@ -224,36 +289,14 @@ export async function queryTagsFromPlants(userId: string, tagId: string) {
     FirestoreCollections.Users,
     userId,
     FirestoreCollections.Plants
-  )
+  ).withConverter(plantConverter)
   const q = query(collectionRef, where('tags', 'array-contains', tagRef))
   return getDocs(q)
 }
 
-export function addPlant(userId: string, plantData: Partial<Plant>) {
-  const guid = uuid()
-  const now = Date.now()
-  const plant = {
-    ...plantData,
-    guid,
-    created: now,
-    modified: now,
-  } as Plant
-
-  const db = getFirestore(firebaseApp)
-  return setDoc(
-    doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, guid),
-    plant
-  )
-}
-
-export async function updatePlant(userId: string, plantData: Partial<Plant>) {
-  const { guid, ...data } = plantData
-  if (typeof guid !== 'string') return
-
-  const ref = getPlantDoc(userId, guid)
-  return updateDoc(ref, data)
-}
-
+/**
+ * 3.3 Bug reports
+ */
 export async function addBugReport(report: Partial<FirestoreBugReport>) {
   const now = Date.now()
   const fullReport = {

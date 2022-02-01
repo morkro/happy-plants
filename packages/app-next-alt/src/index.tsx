@@ -1,5 +1,5 @@
 import React, { lazy } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { createPortal } from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
@@ -21,6 +21,8 @@ import Toaster from 'components/Toaster'
 import A11yTitleAnnouncer from 'components/A11yTitleAnnouncer'
 import AuthRoute from 'components/AuthRoute'
 import logger from 'utilities/logger'
+import useMediaQuery from 'utilities/useMediaQuery'
+import DesktopExplainer from 'components/DesktopExplainer'
 
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
@@ -63,9 +65,11 @@ const SettingsBugReport = lazy(
 
 function App() {
   const { store } = useAppStore()
+  const isDesktop = useMediaQuery('screen and (min-width: 650px)')
   return (
     <React.Fragment>
       <GlobalStyle enableAnimations={store.userPreferences.animations === 'enabled'} />
+      {isDesktop && createPortal(<DesktopExplainer />, document.body)}
       <Router>
         <A11yTitleAnnouncer />
         <SkipLink />
