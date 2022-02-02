@@ -1,4 +1,4 @@
-import React, { lazy } from 'react'
+import React, { lazy, useEffect } from 'react'
 import ReactDOM, { createPortal } from 'react-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import * as Sentry from '@sentry/react'
@@ -17,12 +17,13 @@ import Error from 'pages/Error'
 import Splash from 'pages/Splash'
 import { FirebaseAuthProvider } from 'components/FirebaseAuthProvider'
 import SkipLink from 'components/SkipLink'
-import Toaster from 'components/Toaster'
+import Toaster, { toast } from 'components/Toaster'
 import A11yTitleAnnouncer from 'components/A11yTitleAnnouncer'
 import AuthRoute from 'components/AuthRoute'
 import logger from 'utilities/logger'
 import useMediaQuery from 'utilities/useMediaQuery'
 import DesktopExplainer from 'components/DesktopExplainer'
+import useOfflineEvent from 'utilities/useOfflineEvent'
 
 logger(
   "Hello, fellow developer 👋🏻\nInterested how this app is build? Well, it's open source! Go check it out on https://github.com/morkro/happy-plants 🤙🏼"
@@ -66,6 +67,14 @@ const SettingsBugReport = lazy(
 function App() {
   const { store } = useAppStore()
   const isDesktop = useMediaQuery('screen and (min-width: 650px)')
+  const isOffline = useOfflineEvent()
+
+  useEffect(() => {
+    if (isOffline) {
+      toast.error('Internet connection lost.')
+    }
+  }, [isOffline])
+
   return (
     <React.Fragment>
       <GlobalStyle enableAnimations={store.userPreferences.animations === 'enabled'} />

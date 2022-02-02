@@ -2,16 +2,17 @@ import React from 'react'
 import styled from 'styled-components'
 import { createTeleporter } from 'react-teleporter'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { ArrowLeft } from 'react-feather'
+import { ArrowLeft, WifiOff } from 'react-feather'
 import { theme, ThemeColors } from 'theme'
 import { routePaths } from 'routes'
+import useOfflineEvent from 'utilities/useOfflineEvent'
 import { Heading } from './Typography'
 import VisuallyHidden from './VisuallyHidden'
 import AppLogo from './AppLogo'
 
 export const AppHeaderPortal = createTeleporter()
 
-const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
+const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor; isOffline: boolean }>`
   width: 100%;
   height: ${(props) => props.theme.frameWidgetHeight};
   display: flex;
@@ -24,12 +25,44 @@ const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
       ? 'transparent'
       : props.theme.colors[props.backgroundColor]};
 
-  & > div:not(:first-of-type) {
+  & > div:last-of-type {
     display: grid;
     align-items: center;
     height: 100%;
     grid-template-columns: auto auto;
     margin-left: auto;
+  }
+
+  &::after {
+    content: '';
+    display: ${({ isOffline }) => (isOffline ? 'block' : 'none')};
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    background: ${({ theme }) => theme.colors.red};
+  }
+`
+
+const OfflineIndicator = styled.div`
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: ${({ theme }) => theme.colors.red};
+  border-radius: 50%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: ${({ theme }) => theme.spacings.s};
+  aspect-ratio: 1 / 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 65%;
   }
 `
 
@@ -109,12 +142,19 @@ export default function AppHeader(props: AppHeaderProps) {
   const { color, children } = props
   const navigate = useNavigate()
   const location = useLocation()
+  const isOffline = useOfflineEvent()
   const textColor = (color && textColorMap[color]) || 'greenDark'
   const hasRouteTitle = React.Children.count(children) > 0
   const showBackButton = location.pathname.split('/').filter(Boolean).length > 1
 
   return (
-    <AppHeaderContainer backgroundColor={color} role="banner">
+    <AppHeaderContainer isOffline={isOffline} backgroundColor={color} role="banner">
+      {isOffline ? (
+        <OfflineIndicator>
+          <WifiOff color={theme.colors.white} />
+        </OfflineIndicator>
+      ) : null}
+
       <AppHeaderIcon isTransparentBg={color === undefined}>
         {showBackButton ? (
           <button
