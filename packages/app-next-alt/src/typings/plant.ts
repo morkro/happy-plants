@@ -9,7 +9,7 @@ export interface PlantTag {
   modified: number
 }
 
-export interface PlantCategory {
+export interface PlantType {
   label: string
   value: string
   id: string
@@ -18,7 +18,7 @@ export interface PlantCategory {
 interface PlantConstructor {
   name: string
   imageURL?: string
-  type?: PlantCategory
+  type?: PlantType
   modules?: PlantModule[]
 }
 

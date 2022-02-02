@@ -13,7 +13,7 @@ export const hasReaderSupport = typeof FileReader !== 'undefined' || typeof URL 
 
 export const isBlobbable = (blob: unknown): boolean => blob instanceof Blob || blob instanceof File
 
-export function getUrlFromBlob(blob?: Blob): string {
+export function getUrlFromBlob(blob?: Blob | File): string {
   return isBlobbable(blob) ? blobUtil.createObjectURL(blob!) : ''
 }
 

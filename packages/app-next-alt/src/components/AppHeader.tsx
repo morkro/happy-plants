@@ -33,7 +33,7 @@ const AppHeaderContainer = styled.header<{ backgroundColor?: AppHeaderColor }>`
   }
 `
 
-const AppHeaderIcon = styled.div`
+const AppHeaderIcon = styled.div<{ isTransparentBg: boolean }>`
   height: 100%;
   min-width: ${(props) => props.theme.frameWidgetHeight};
   display: flex;
@@ -48,7 +48,24 @@ const AppHeaderIcon = styled.div`
     width: 100%;
     height: 100%;
     border: none;
+    position: relative;
     background: transparent;
+
+    &::before {
+      content: '';
+      display: ${({ isTransparentBg }) => {
+        return isTransparentBg ? 'block' : 'none'
+      }};
+      width: 55%;
+      aspect-ratio: 1 / 1;
+      background: ${(props) => props.theme.colors.white};
+      border-radius: 50%;
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     &:focus {
       outline: none;
@@ -98,7 +115,7 @@ export default function AppHeader(props: AppHeaderProps) {
 
   return (
     <AppHeaderContainer backgroundColor={color} role="banner">
-      <AppHeaderIcon>
+      <AppHeaderIcon isTransparentBg={color === undefined}>
         {showBackButton ? (
           <button
             onClick={() =>

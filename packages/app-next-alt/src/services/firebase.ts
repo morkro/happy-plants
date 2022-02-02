@@ -10,7 +10,7 @@ import {
   signOut,
   TwitterAuthProvider,
 } from 'firebase/auth'
-import { getStorage, ref } from 'firebase/storage'
+import { getStorage, ref, uploadBytes } from 'firebase/storage'
 import {
   addDoc,
   collection,
@@ -42,7 +42,7 @@ import { plantConverter, tagConverter } from './firebaseConverter'
  * Table of contents:
  * 1. Types
  * 2. Authentication
- * 3. Collections
+ * 3. Collections/Documents
  * 4. Files
  */
 
@@ -137,7 +137,7 @@ export async function signOutUser() {
 }
 
 /**
- * ###################### 3. Collections ######################
+ * ################# 3. Collections/Documents #####################
  */
 /**
  * 3.1 Plants
@@ -197,12 +197,33 @@ export function addPlant(userId: string, plantData: Partial<Plant>) {
   return addDoc(collectionRef, plant)
 }
 
-export async function updatePlant(userId: string, plantData: Partial<Plant>) {
+export function updatePlant(userId: string, plantData: Partial<Plant>) {
   const { id, ...data } = plantData
   if (typeof id !== 'string') return
   const db = getFirestore(firebaseApp)
-  const ref = doc(db, FirestoreCollections.Users, userId, FirestoreCollections.Plants, id)
-  return updateDoc(ref, data)
+  const documentRef = doc(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Plants,
+    id
+  ).withConverter(plantConverter)
+  return updateDoc(documentRef, data)
+}
+
+export function updatePlantType(userId: string, plantData: Partial<Plant>) {
+  if (typeof plantData.id !== 'string') return
+  const db = getFirestore(firebaseApp)
+  const documentRef = doc(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Plants,
+    plantData.id
+  )
+  return updateDoc(documentRef, {
+    type: plantData?.type?.id || null,
+  })
 }
 
 /**
@@ -328,4 +349,14 @@ export function getFileRef(path?: string) {
     return
   }
   return _ref
+}
+
+export async function uploadPhoto(userId: string, plantId: string, file: File) {
+  const storage = getStorage(firebaseApp)
+  const path = `${FirestoreCollections.Users}/${userId}/${FirestoreCollections.Plants}/${plantId}`
+  const storageRef = ref(storage, `${path}/cover`)
+  const metadata = {
+    contentType: file.type,
+  }
+  return uploadBytes(storageRef, file, metadata)
 }

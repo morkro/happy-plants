@@ -6,13 +6,21 @@ import { CameraOff, MoreVertical, Plus } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
 import { Heading, Text } from 'components/Typography'
-import { getFileRef, getTagDocs, usePlantDocument, usePlantTags } from 'services/firebase'
+import {
+  getFileRef,
+  getTagDocs,
+  getTagRef,
+  updatePlant,
+  updatePlantType,
+  usePlantDocument,
+  usePlantTags,
+} from 'services/firebase'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
 import Spinner from 'components/Spinner'
 import BaseSVG from 'components/BaseSVG'
 import Dialog from 'components/Dialog'
-import CategoriesList from 'components/CategoriesList'
+import TypesList from 'components/TypesList'
 import { AppHeaderPortal, AppHeaderButton } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
 import { Button } from 'components/Button'
@@ -21,8 +29,10 @@ import { toLocaleDate } from 'utilities/toLocaleDate'
 import Layout from 'components/Layout'
 import useRouteConfig from 'utilities/useRouteConfig'
 import TagsDialog from 'components/TagsDialog'
-import { PlantTag } from 'typings/plant'
+import { PlantTag, PlantType } from 'typings/plant'
 import TagList from 'components/TagList'
+import useUserProfile from 'utilities/useUserProfile'
+import logger from 'utilities/logger'
 
 const PlantGlobalStyle = createGlobalStyle`
   #plant-dialog-settings .dialog-content > div {
@@ -43,6 +53,11 @@ const PlantHeader = styled.header<{ $loading: boolean }>`
   position: relative;
   mask: url(../assets/plant-header-mask.svg);
   mask-size: cover;
+
+  @media screen and (min-width: 650px) {
+    height: auto;
+    aspect-ratio: 1/1;
+  }
 
   ${({ $loading }) =>
     $loading &&
@@ -136,7 +151,7 @@ const CategoryAction = styled.button`
     z-index: 1;
   }
 
-  svg {
+  > svg {
     height: 85%;
     width: 100%;
     position: absolute;
@@ -152,10 +167,11 @@ const CategoryAction = styled.button`
 
 export default function Plant() {
   const routeConfig = useRouteConfig('plantBase')
-  const [tags, loadingTags] = usePlantTags()
+  const profile = useUserProfile()
   const params = useParams<{ id: string }>()
+  const [tags, loadingTags] = usePlantTags()
   const [data, loading, error] = usePlantDocument(params.id ?? '')
-  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL as string))
+  const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL))
   const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [modulesDialog, setModulesDialog] = useState<A11yDialogInstance>()
@@ -163,6 +179,33 @@ export default function Plant() {
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isLoadingSelectedTags, setIsLoadingSelectedTags] = useState(false)
   const hasImageUrl = typeof data?.imageURL === 'string'
+
+  async function onSetPlantType(type?: PlantType) {
+    try {
+      await updatePlantType(profile.id, {
+        id: data?.id,
+        type: type,
+      })
+    } catch (error) {
+      logger(error as string, true)
+      toast.error('Failed to update plant type, please try again.')
+    }
+  }
+
+  useEffect(() => {
+    async function updateTags() {
+      try {
+        await updatePlant(profile.id, {
+          id: data?.id,
+          tags: selectedTags?.map((tag) => getTagRef(profile.id, tag.id)),
+        })
+      } catch (error) {
+        logger(error as string, true)
+        toast.error('Failed to update tags, please try again.')
+      }
+    }
+    updateTags()
+  }, [selectedTags, profile.id, data?.id])
 
   useEffect(() => {
     async function get() {
@@ -186,127 +229,123 @@ export default function Plant() {
   }, [error])
 
   return (
-    <Layout {...routeConfig}>
+    <React.Fragment>
       {/* Globals */}
       <PlantGlobalStyle />
       <DocumentTitle title={data?.name} />
-
-      {/* Dialogs */}
-      <Dialog title="Settings" reference={setSettingsDialog} id="plant-dialog-settings">
-        <Button variant="alarm" mb="l" mt="s">
-          Delete plant
-        </Button>
-        {data?.modified && (
-          <Text color="beigeDark" size="s" center>
-            Last modified {toLocaleDate(data?.modified)} (
-            <Time dateTime={data?.modified}>{data?.modified}</Time>)
-          </Text>
-        )}
-      </Dialog>
-
-      <Dialog title="Select a category" reference={setCategoryDialog} id="plant-dialog-category">
-        {!loading && (
-          <CategoriesList
-            selected={data?.type ?? undefined}
-            onSelectCategory={(c) => console.log(c)}
-          />
-        )}
-      </Dialog>
-
-      <TagsDialog
-        id="plant-dialog-tags"
-        reference={setTagsDialog}
-        tags={tags}
-        loading={loadingTags}
-        selected={selectedTags}
-        onSelect={setSelectedTags}
-      />
-
-      <Dialog title="Select modules" reference={setModulesDialog} id="plant-dialog-modules">
-        <Text color="beigeDark">There are no modules.</Text>
-      </Dialog>
-
-      {/* Page content */}
-      <AppHeaderPortal.Source>
-        <AppHeaderButton onClick={() => settingsDialog?.show()}>
-          <MoreVertical color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
-          <VisuallyHidden>Settings</VisuallyHidden>
-        </AppHeaderButton>
-      </AppHeaderPortal.Source>
-
-      <PlantHeader $loading={loading}>
-        {!loading && (
-          <PlantHeaderLabel gradient={hasImageUrl && !loadingImageUrl}>
-            <Heading
-              semiBold
-              color={hasImageUrl && !loadingImageUrl ? 'white' : 'greenDark'}
-              as="h2"
-            >
-              {data?.name}
-            </Heading>
-          </PlantHeaderLabel>
-        )}
-
-        <PlantHeaderBackground>
-          {loading && <Spinner />}
-          {!loading && data && hasImageUrl && !loadingImageUrl ? (
-            <img loading="lazy" src={downloadedImageUrl} alt={data.name} title={data.name} />
-          ) : (
-            <CameraOff color={theme.colors.beige} size={80} />
+      <Layout {...routeConfig}>
+        {/* Dialogs */}
+        <Dialog title="Plant settings" reference={setSettingsDialog} id="plant-dialog-settings">
+          <Button variant="alarm" mb="l" mt="s">
+            Delete plant
+          </Button>
+          {data?.modified && (
+            <Text color="beigeDark" size="s" center>
+              Last modified {toLocaleDate(data?.modified)} (
+              <Time dateTime={data?.modified}>{data?.modified}</Time>)
+            </Text>
           )}
-        </PlantHeaderBackground>
-      </PlantHeader>
+        </Dialog>
 
-      <PlantSection>
-        <header>
-          <Text bold color="beigeDark" mt="m">
-            Category
-          </Text>
-          <CategoryAction onClick={() => categoryDialog?.show()}>
-            <Text color="white">{data?.type?.label ?? 'No type'}</Text>
-            <BaseSVG viewBox="0 0 165 30" preserveAspectRatio="none" role="presentation">
-              <path
-                fillRule="evenodd"
-                fill={theme.colors.green}
-                d="M15.2980242 1.6865913C54.3474655-.0040447 142.277064-1.0595373 158.333369 1.687221c3.375937.5775946 5.502516 1.7986084 5.918387 3.8707842 1.21636 6.106668 1.016982 12.190389-1.095662 18.3021319-1.949603 5.6402323-10.579788 5.712085-23.246595 5.8007791C1.8856749 30.6329676 1.9064585 29.5996066.7651242 25.4596764c-.4861923-1.7819255-.903879-3.6105191-.7214437-5.4103613C1.9143985 2.0020504 4.40911 2.1588096 15.2980242 1.6865913"
-              />
-            </BaseSVG>
-          </CategoryAction>
-        </header>
-      </PlantSection>
+        <Dialog title="Select a category" reference={setCategoryDialog} id="plant-dialog-category">
+          {!loading && <TypesList selected={data?.type} onSelectType={onSetPlantType} />}
+        </Dialog>
 
-      <PlantSection>
-        <header>
-          <Text bold color="beigeDark">
-            Tags
-          </Text>
-          <Button round size="s" variant="info" onClick={() => tagsDialog?.show()}>
-            <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
-            <VisuallyHidden>Open tags dialog</VisuallyHidden>
-          </Button>
-        </header>
-        {selectedTags?.length ? (
-          <TagList tags={selectedTags} />
-        ) : (
-          <TagsDescription>
-            {isLoadingSelectedTags ? <Spinner /> : null}
-            <Text color="beigeDark">Add tags for better organisation</Text>
-          </TagsDescription>
-        )}
-      </PlantSection>
+        <TagsDialog
+          id="plant-dialog-tags"
+          reference={setTagsDialog}
+          tags={tags}
+          loading={loadingTags}
+          selected={selectedTags}
+          onSelect={setSelectedTags}
+        />
 
-      <PlantSection>
-        <header>
-          <Text bold color="beigeDark">
-            Modules
-          </Text>
-          <Button round size="s" variant="info" onClick={() => modulesDialog?.show()}>
-            <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
-            <VisuallyHidden>Open modules dialog</VisuallyHidden>
-          </Button>
-        </header>
-        <Text color="beigeDark">Add modules for interactive care taking</Text>
-      </PlantSection>
-    </Layout>
+        <Dialog title="Select modules" reference={setModulesDialog} id="plant-dialog-modules">
+          <Text color="beigeDark">There are no modules.</Text>
+        </Dialog>
+
+        {/* Page content */}
+        <AppHeaderPortal.Source>
+          <AppHeaderButton onClick={() => settingsDialog?.show()}>
+            <MoreVertical color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
+            <VisuallyHidden>Settings</VisuallyHidden>
+          </AppHeaderButton>
+        </AppHeaderPortal.Source>
+
+        <PlantHeader $loading={loading}>
+          {!loading && (
+            <PlantHeaderLabel gradient={hasImageUrl && !loadingImageUrl}>
+              <Heading
+                semiBold
+                color={hasImageUrl && !loadingImageUrl ? 'white' : 'greenDark'}
+                as="h2"
+              >
+                {data?.name}
+              </Heading>
+            </PlantHeaderLabel>
+          )}
+
+          <PlantHeaderBackground>
+            {loading && <Spinner />}
+            {!loading && data && hasImageUrl && !loadingImageUrl ? (
+              <img loading="lazy" src={downloadedImageUrl} alt={data.name} title={data.name} />
+            ) : (
+              <CameraOff color={theme.colors.beige} size={80} />
+            )}
+          </PlantHeaderBackground>
+        </PlantHeader>
+
+        <PlantSection>
+          <header>
+            <Text bold color="beigeDark" mt="m">
+              Type
+            </Text>
+            <CategoryAction onClick={() => categoryDialog?.show()}>
+              <Text color="white">{loading ? <Spinner /> : data?.type?.label ?? 'No type'}</Text>
+              <BaseSVG viewBox="0 0 165 30" preserveAspectRatio="none" role="presentation">
+                <path
+                  fillRule="evenodd"
+                  fill={theme.colors.green}
+                  d="M15.2980242 1.6865913C54.3474655-.0040447 142.277064-1.0595373 158.333369 1.687221c3.375937.5775946 5.502516 1.7986084 5.918387 3.8707842 1.21636 6.106668 1.016982 12.190389-1.095662 18.3021319-1.949603 5.6402323-10.579788 5.712085-23.246595 5.8007791C1.8856749 30.6329676 1.9064585 29.5996066.7651242 25.4596764c-.4861923-1.7819255-.903879-3.6105191-.7214437-5.4103613C1.9143985 2.0020504 4.40911 2.1588096 15.2980242 1.6865913"
+                />
+              </BaseSVG>
+            </CategoryAction>
+          </header>
+        </PlantSection>
+
+        <PlantSection>
+          <header>
+            <Text bold color="beigeDark">
+              Tags
+            </Text>
+            <Button round size="s" variant="info" onClick={() => tagsDialog?.show()}>
+              <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
+              <VisuallyHidden>Open tags dialog</VisuallyHidden>
+            </Button>
+          </header>
+          {selectedTags?.length ? (
+            <TagList tags={selectedTags} />
+          ) : (
+            <TagsDescription>
+              {isLoadingSelectedTags ? <Spinner /> : null}
+              <Text color="beigeDark">Add tags for better organisation</Text>
+            </TagsDescription>
+          )}
+        </PlantSection>
+
+        <PlantSection>
+          <header>
+            <Text bold color="beigeDark">
+              Modules
+            </Text>
+            <Button round size="s" variant="info" onClick={() => modulesDialog?.show()}>
+              <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
+              <VisuallyHidden>Open modules dialog</VisuallyHidden>
+            </Button>
+          </header>
+          <Text color="beigeDark">Add modules for interactive care taking</Text>
+        </PlantSection>
+      </Layout>
+    </React.Fragment>
   )
 }

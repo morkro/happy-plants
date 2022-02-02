@@ -1,5 +1,5 @@
 import { DocumentData, QueryDocumentSnapshot, SnapshotOptions, Timestamp } from 'firebase/firestore'
-import categoriesData from 'data/categories'
+import typesData from 'data/types'
 import hasOwn from 'utilities/hasOwn'
 import { Plant, PlantTag } from 'typings/plant'
 
@@ -26,7 +26,7 @@ export const plantConverter = {
       // This is required for legacy implementations.
       id: hasOwn(data, 'guid') ? data.guid : snapshot.id,
       name: data?.name,
-      type: categoriesData.find((c) => c.id === data?.type),
+      type: typesData.find((c) => c.id === data?.type),
       imageURL: data?.imageURL,
       tags: data?.tags,
       modules: data?.modules,

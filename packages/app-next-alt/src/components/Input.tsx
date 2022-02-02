@@ -12,6 +12,7 @@ import { Text } from 'components/Typography'
 import { WithMarginProps, WithMarginStyles } from 'utilities/withProps'
 import noop from 'utilities/noop'
 import { getUrlFromBlob, isBlobbable, resizeBlob } from 'utilities/blob'
+import logger from 'utilities/logger'
 import VisuallyHidden from './VisuallyHidden'
 import { Button } from './Button'
 import { toast } from './Toaster'
@@ -20,7 +21,7 @@ import Spinner from './Spinner'
 interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string
   fullWidth?: boolean
-  onFileInput?(data: { file: File | null; fileName: string }): void
+  onFileInput?(data: { file?: File; fileName: string }): void
   filePreview?: string
   fileBackgroundColor?: 'beigeDark' | 'greenDark'
 }
@@ -209,6 +210,10 @@ const FileUploadContainer = styled.div`
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+
+      > span {
+        color: ${({ theme }) => theme.colors.black};
+      }
     }
   }
 `
@@ -231,7 +236,7 @@ export function Input(props: InputProps) {
     ...remainingProps
   } = props
   const [showPlainPassword, setPlainPassword] = useState(false)
-  const [file, setFile] = useState<File | null>(null)
+  const [file, setFile] = useState<File>()
   const [fileName, setFileName] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -245,28 +250,29 @@ export function Input(props: InputProps) {
 
     setIsLoading(true)
 
-    const file = event.target.files[0]
-    if (!accept.includes(file.type)) {
+    let _file = event.target.files[0]
+    if (!accept.includes(_file.type)) {
       toast.error('File format not supported.')
       setIsLoading(false)
       return
     }
 
     try {
-      const resized = await resizeBlob(file, { width: window.outerWidth * 1.5 })
+      const resized = await resizeBlob(_file, { width: window.outerWidth * 1.5 })
       setFile(
-        () =>
-          new File([resized], file.name, {
-            type: file.type,
-            lastModified: Date.now(),
-          })
+        new File([resized], _file.name, {
+          type: _file.type,
+          lastModified: Date.now(),
+        })
       )
-    } catch {
+    } catch (error) {
+      logger(error as string, true)
+      console.error(error)
       setFile(file)
+    } finally {
+      setIsLoading(false)
+      setFileName(_file.name)
     }
-
-    setIsLoading(false)
-    setFileName(file.name)
   }
 
   function _onClick(event: React.MouseEvent<HTMLDivElement>) {
@@ -286,9 +292,12 @@ export function Input(props: InputProps) {
   }
 
   useEffect(() => {
-    setImageUrl(getUrlFromBlob(file as Blob))
-    onFileInput({ file, fileName })
-  }, [file, fileName, onFileInput])
+    if (!isFileInput) return
+    if (file) {
+      setImageUrl(getUrlFromBlob(file))
+      onFileInput({ file, fileName })
+    }
+  }, [isFileInput, file, fileName, onFileInput])
 
   return (
     <InputContainer
@@ -322,7 +331,7 @@ export function Input(props: InputProps) {
           </FileUploadImage>
           <div>
             <Text color="beigeDark" variant="special">
-              {isLoading ? 'Loading...' : fileName || 'Select a photo'}
+              {isLoading ? 'Loading...' : fileName ? <span>{fileName}</span> : 'Select a photo'}
             </Text>
           </div>
         </FileUploadContainer>

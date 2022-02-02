@@ -45,13 +45,13 @@ const BaseStyles = css<BaseProps>`
   padding: ${(props) => {
     if (props.round) {
       if (props.size === 's') {
-        return `calc(0.5 * ${props.theme.spacings.m}) calc(0.5 * ${props.theme.spacings.m})`
+        return `calc(0.5 * ${props.theme.spacings.m})`
       }
       return props.theme.spacings.m
     }
     return props.size === 's'
       ? `calc(0.5 * ${props.theme.spacings.m}) ${props.theme.spacings.m}`
-      : `calc(1.5 * ${props.theme.spacings.m}) calc(2 * ${props.theme.spacings.m})`
+      : `calc(2 * ${props.theme.spacings.m})`
   }};
 
   ${(props) =>

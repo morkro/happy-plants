@@ -1,6 +1,6 @@
-import { PlantCategory } from 'typings/plant'
+import { PlantType } from 'typings/plant'
 
-const categories: PlantCategory[] = [
+const types: PlantType[] = [
   { label: 'Algae', value: 'algae', id: 'c9cc7d7a-9903-4b91-9f26-ef42b0280752' },
   { label: 'Annual', value: 'annual', id: 'c0f3bffd-18ed-4db4-bf7a-51799a1d09af' },
   { label: 'Bamboo', value: 'bamboo', id: '2f665431-9319-4d37-a20f-e71cb9e87043' },
@@ -31,4 +31,4 @@ const categories: PlantCategory[] = [
   { label: 'Vegetable', value: 'vegetable', id: '58df51a4-46c5-4a8c-80d7-1660ef6871b4' },
 ]
 
-export default categories
+export default types

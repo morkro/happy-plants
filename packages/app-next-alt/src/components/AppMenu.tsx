@@ -128,7 +128,8 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
     &#menu-link-home:focus svg,
     &#menu-link-home.active svg {
       & path {
-        fill: ${(props) => props.theme.colors.greenDark};
+        stroke: ${(props) => props.theme.colors.green};
+        fill: ${(props) => props.theme.colors.green};
       }
       & polyline {
         stroke: ${(props) => props.theme.colors.beige};
@@ -138,15 +139,16 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
     &#menu-link-watering:focus svg,
     &#menu-link-watering.active svg {
       & path {
-        stroke: ${(props) => props.theme.colors.blueDark};
-        fill: ${(props) => props.theme.colors.blueDark};
+        stroke: ${(props) => props.theme.colors.blue};
+        fill: ${(props) => props.theme.colors.blue};
       }
     }
 
     &#menu-link-add-new:focus svg,
     &#menu-link-add-new.active svg {
       & rect {
-        fill: ${(props) => props.theme.colors.greenDark};
+        stroke: ${(props) => props.theme.colors.green};
+        fill: ${(props) => props.theme.colors.green};
       }
       & line {
         stroke: ${(props) => props.theme.colors.beige};
@@ -160,7 +162,8 @@ const AppMenuContainer = styled.nav<{ enableAnimations: boolean }>`
         stroke: ${(props) => props.theme.colors.beige};
       }
       & path {
-        fill: ${(props) => props.theme.colors.greenDark};
+        stroke: ${(props) => props.theme.colors.green};
+        fill: ${(props) => props.theme.colors.green};
       }
     }
   }

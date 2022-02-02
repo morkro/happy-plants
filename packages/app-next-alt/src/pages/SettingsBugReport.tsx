@@ -49,8 +49,8 @@ export default function SettingsBugReport() {
   const routeConfig = useRouteConfig('settingsBugReport')
   const userInfo = useUserProfile()
   const [description, setDescription] = useState({ value: '', invalid: false, error: '' })
-  const [file, setFile] = useState<{ value: File | null; invalid: boolean; error: string }>({
-    value: null,
+  const [file, setFile] = useState<{ value?: File; invalid: boolean; error: string }>({
+    value: undefined,
     invalid: false,
     error: '',
   })
