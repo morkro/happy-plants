@@ -10,7 +10,7 @@ import {
   signOut,
   TwitterAuthProvider,
 } from 'firebase/auth'
-import { getStorage, ref, uploadBytes } from 'firebase/storage'
+import { deleteObject, getStorage, ref, uploadBytes } from 'firebase/storage'
 import {
   addDoc,
   collection,
@@ -226,6 +226,18 @@ export function updatePlantType(userId: string, plantData: Partial<Plant>) {
   })
 }
 
+export function deletePlant(userId: string, plantId: string) {
+  const db = getFirestore(firebaseApp)
+  const documentRef = doc(
+    db,
+    FirestoreCollections.Users,
+    userId,
+    FirestoreCollections.Plants,
+    plantId
+  )
+  return deleteDoc(documentRef)
+}
+
 /**
  * 3.2 Tags
  */
@@ -359,4 +371,11 @@ export async function uploadPhoto(userId: string, plantId: string, file: File) {
     contentType: file.type,
   }
   return uploadBytes(storageRef, file, metadata)
+}
+
+export async function deletePhoto(userId: string, plantId: string, fileName: string) {
+  const storage = getStorage(firebaseApp)
+  const path = `${FirestoreCollections.Users}/${userId}/${FirestoreCollections.Plants}/${plantId}`
+  const storageRef = ref(storage, `${path}/${fileName}`)
+  return deleteObject(storageRef)
 }

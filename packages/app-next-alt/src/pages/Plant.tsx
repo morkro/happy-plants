@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import A11yDialogInstance from 'a11y-dialog'
 import styled, { createGlobalStyle, css } from 'styled-components'
-import { CameraOff, MoreVertical, Plus } from 'react-feather'
+import { CameraOff, MoreVertical, Plus, Trash2 } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
+import { routePaths } from 'routes'
 import { Heading, Text } from 'components/Typography'
 import {
+  deletePhoto,
+  deletePlant,
   getFileRef,
   getTagDocs,
   getTagRef,
@@ -168,16 +171,19 @@ const CategoryAction = styled.button`
 export default function Plant() {
   const routeConfig = useRouteConfig('plantBase')
   const profile = useUserProfile()
+  const navigate = useNavigate()
   const params = useParams<{ id: string }>()
   const [tags, loadingTags] = usePlantTags()
   const [data, loading, error] = usePlantDocument(params.id ?? '')
   const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(getFileRef(data?.imageURL))
-  const [categoryDialog, setCategoryDialog] = useState<A11yDialogInstance>()
+  const [typeDialog, setTypeDialog] = useState<A11yDialogInstance>()
   const [tagsDialog, setTagsDialog] = useState<A11yDialogInstance>()
   const [modulesDialog, setModulesDialog] = useState<A11yDialogInstance>()
   const [settingsDialog, setSettingsDialog] = useState<A11yDialogInstance>()
   const [selectedTags, setSelectedTags] = useState<PlantTag[]>([])
   const [isLoadingSelectedTags, setIsLoadingSelectedTags] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const hasImageUrl = typeof data?.imageURL === 'string'
 
   async function onSetPlantType(type?: PlantType) {
@@ -190,6 +196,34 @@ export default function Plant() {
       logger(error as string, true)
       toast.error('Failed to update plant type, please try again.')
     }
+  }
+
+  async function onDeletePlant() {
+    if (!data) return
+    if (confirmDelete === false) {
+      setConfirmDelete(true)
+      return
+    }
+
+    setIsDeleting(true)
+    try {
+      await deletePlant(profile.id, data.id)
+      if (hasImageUrl) {
+        const hasLegacyName = data?.imageURL?.includes('cover.png')
+        await deletePhoto(profile.id, data?.id, hasLegacyName ? 'cover.png' : 'cover')
+      }
+    } catch (error) {
+      logger(error as string, true)
+      toast.error('Unable to delete plant, please try again.')
+    } finally {
+      setIsDeleting(false)
+      setConfirmDelete(false)
+      navigate(routePaths.home)
+    }
+  }
+
+  function handleSettingsDialogClose() {
+    setConfirmDelete(false)
   }
 
   useEffect(() => {
@@ -228,6 +262,13 @@ export default function Plant() {
     }
   }, [error])
 
+  useEffect(() => {
+    settingsDialog?.on('hide', handleSettingsDialogClose)
+    return () => {
+      settingsDialog?.off('hide', handleSettingsDialogClose)
+    }
+  }, [settingsDialog])
+
   return (
     <React.Fragment>
       {/* Globals */}
@@ -236,8 +277,9 @@ export default function Plant() {
       <Layout {...routeConfig}>
         {/* Dialogs */}
         <Dialog title="Plant settings" reference={setSettingsDialog} id="plant-dialog-settings">
-          <Button variant="alarm" mb="l" mt="s">
-            Delete plant
+          <Button variant="alarm" mb="l" mt="s" onClick={onDeletePlant}>
+            {isDeleting ? <Spinner /> : <Trash2 />}
+            {confirmDelete ? 'Are you sure? This is permanent' : 'Delete plant'}
           </Button>
           {data?.modified && (
             <Text color="beigeDark" size="s" center>
@@ -247,7 +289,7 @@ export default function Plant() {
           )}
         </Dialog>
 
-        <Dialog title="Select a category" reference={setCategoryDialog} id="plant-dialog-category">
+        <Dialog title="Select a category" reference={setTypeDialog} id="plant-dialog-category">
           {!loading && <TypesList selected={data?.type} onSelectType={onSetPlantType} />}
         </Dialog>
 
@@ -300,7 +342,7 @@ export default function Plant() {
             <Text bold color="beigeDark" mt="m">
               Type
             </Text>
-            <CategoryAction onClick={() => categoryDialog?.show()}>
+            <CategoryAction onClick={() => typeDialog?.show()}>
               <Text color="white">{loading ? <Spinner /> : data?.type?.label ?? 'No type'}</Text>
               <BaseSVG viewBox="0 0 165 30" preserveAspectRatio="none" role="presentation">
                 <path
