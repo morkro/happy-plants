@@ -1,13 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 import { theme } from 'theme'
+import { PlantTag } from 'typings/plant'
 import BaseSVG from './BaseSVG'
 import { Input } from './Input'
+import Spinner from './Spinner'
 import { Heading, Text } from './Typography'
 
 const OptionsContainer = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 4;
   top: 0;
   background: ${({ theme }) => theme.colors.white};
   width: 100%;
@@ -16,10 +18,11 @@ const OptionsContainer = styled.div`
   padding-top: ${({ theme }) => theme.frameWidgetHeight};
 
   section {
-    padding: var(--base-gap) var(--base-gap) 0;
     padding: ${({ theme }) => `${theme.spacings.m} ${theme.spacings.m} 0`};
     position: relative;
     min-height: 275px;
+    max-height: 50vh;
+    overflow: scroll;
   }
 
   svg {
@@ -43,68 +46,46 @@ const OptionsList = styled.ul`
   }
 `
 
-export default function HomeOptions() {
+export type HomeOptionsProps = React.PropsWithChildren<{
+  tags?: PlantTag[]
+  loading: boolean
+}>
+
+export default function HomeOptions(props: HomeOptionsProps) {
+  const { tags, loading } = props
   return (
     <OptionsContainer>
       <section>
-        <Heading color="greenDark" as="h2" mb="m">
+        <Heading color="greenDark" as="h2" mb="l">
           Viewmode
         </Heading>
         <OptionsList>
           <li>
             <label htmlFor="viewmode-grid">
-              <Input
-                type="radio"
-                id="viewmode-grid"
-                name="viewmode"
-                value="grid"
-                // :checked="viewmode === 'grid'"
-                // @click.native="updateViewmode('grid')"
-              />
+              <Input type="radio" id="viewmode-grid" name="viewmode" value="grid" />
               <Text color="beigeDark">Grid</Text>
             </label>
           </li>
           <li>
             <label htmlFor="viewmode-list">
-              <Input
-                type="radio"
-                id="viewmode-list"
-                name="viewmode"
-                value="list"
-                // :checked="viewmode === 'list'"
-                // @click.native="updateViewmode('list')"
-              />
+              <Input type="radio" id="viewmode-list" name="viewmode" value="list" />
               <Text color="beigeDark">List</Text>
             </label>
           </li>
           <li>
             <label htmlFor="viewmode-types">
-              <Input
-                type="checkbox"
-                id="viewmode-types"
-                name="types"
-                value="types"
-                // :checked="types"
-                // @click.native="updateShowTypes"
-              />
+              <Input type="checkbox" id="viewmode-types" name="types" value="types" />
               <Text color="beigeDark">Show plant types</Text>
             </label>
           </li>
         </OptionsList>
-        <Heading color="greenDark" as="h2" mb="m">
+        <Heading color="greenDark" as="h2" mb="l" mt="l">
           Order by
         </Heading>
         <OptionsList>
           <li>
             <label htmlFor="orderby-latest">
-              <Input
-                type="radio"
-                id="orderby-latest"
-                name="orderby"
-                value="latest"
-                // :checked="orderBy === 'latest'"
-                // @click.native="updateOrderBy('latest')"
-              />
+              <Input type="radio" id="orderby-latest" name="orderby" value="latest" />
               <Text color="beigeDark">Latest</Text>
             </label>
           </li>
@@ -115,13 +96,37 @@ export default function HomeOptions() {
                 id="orderby-alphabetically"
                 name="orderby"
                 value="alphabetically"
-                // :checked="orderBy === 'alphabetically'"
-                // @click.native="updateOrderBy('alphabetically')"
               />
               <Text color="beigeDark">Alphabetically</Text>
             </label>
           </li>
         </OptionsList>
+      </section>
+
+      <section>
+        <Heading color="greenDark" as="h2" mb="l">
+          Filter by <span>tags</span>
+        </Heading>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <OptionsList>
+            <li>
+              <label htmlFor="filter-tag">
+                <Input type="checkbox" name="types" value="types" />
+                <Text color="beigeDark">Show all</Text>
+              </label>
+            </li>
+            {tags?.map((tag) => (
+              <li key={tag.id}>
+                <label htmlFor="filter-tag">
+                  <Input type="checkbox" name={tag.label} value={tag.value} />
+                  <Text color="beigeDark">{tag.label}</Text>
+                </label>
+              </li>
+            ))}
+          </OptionsList>
+        )}
       </section>
 
       <BaseSVG viewBox="0 0 360 32">

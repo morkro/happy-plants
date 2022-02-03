@@ -42,7 +42,7 @@ const SettingsAvatar = styled.div`
   border-radius: ${({ theme }) => theme.baseRadius};
   overflow: hidden;
   background-color: ${({ theme }) => theme.colors.yellow};
-  box-shadow: 0 2px 4px ${({ theme }) => theme.colors.greenDark};
+  box-shadow: 0px 4px 0px -2px ${({ theme }) => theme.colors.greenDark};
   display: flex;
   align-items: center;
 

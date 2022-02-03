@@ -1,19 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>HappyPlants</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="HappyPlants is all about collecting, organising, and adding all kinds of information of your little friends. How much water does it need? During which seasons does it grow? When is it dormant? Does it require lots of sun? Basically, creating your own plant database in a visual way. You can either save HappyPlants to your homescreens on mobile devices (recommended) or add it to your bookmarks on desktop. This is a mobile-first, progressive web application."
+      content="Keep track of your houseplants' well-being."
     />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="index,follow" />
     <link rel="alternate" hreflang="en" href="https://happyplants.garden" />
     <link rel="canonical" href="https://happyplants.garden" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!-- Web application specific -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="HappyPlants" />
+    <meta name="theme-color" content="#1B6D4F" />
+    <!-- Apple ecosystem -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="HappyPlants">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="apple-touch-icon" sizes="57x57" href="%PUBLIC_URL%/assets/img/icons/apple-icon-57x57.png" />
     <link rel="apple-touch-icon" sizes="60x60" href="%PUBLIC_URL%/assets/img/icons/apple-icon-60x60.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="%PUBLIC_URL%/assets/img/icons/apple-icon-72x72.png" />
@@ -32,17 +41,22 @@
     <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/assets/img/icons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="%PUBLIC_URL%/assets/img/icons/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/assets/img/icons/favicon-16x16.png" />
-    <!-- Web Application Manifest -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!-- Add to homescreen for Chrome on Android -->
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="HappyPlants" />
-    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <!-- Windows ecosystem -->
     <meta name="msapplication-TileImage" content="%PUBLIC_URL%/assets/img/icons/logo-mdpi-192x192.png" />
     <meta name="msapplication-TileColor" content="#1B6D4F" />
-    <!-- Color the status bar on mobile devices -->
-    <meta name="theme-color" content="#ffffff" />
-    <title>HappyPlants</title>
+    <!-- Open Graph -->
+    <meta property="og:title" content="HappyPlants">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="%PUBLIC_URL%/assets/img/icons/logo-mdpi-192x192.png">
+    <meta property="og:url" content="https://happyplants.garden">
+    <meta property="og:description" content="Keep track of your houseplants' well-being.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://happyplants.garden">
+    <meta name="twitter:title" content="HappyPlants">
+    <meta name="twitter:description" content="Keep track of your houseplants' well-being.">
+    <meta name="twitter:image" content="%PUBLIC_URL%/assets/img/icons/logo-mdpi-192x192.png">
+    <meta name="twitter:creator" content="@morkro">
     <!-- Critical CSS, also useful for <noscript> content -->
     <style type="text/css">
       body {
@@ -78,15 +92,5 @@
     </noscript>
 
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

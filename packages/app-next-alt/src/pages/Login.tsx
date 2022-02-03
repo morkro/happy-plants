@@ -36,7 +36,7 @@ type LocationState = {
 const LoginGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
     background-color: ${({ theme }) => theme.colors.green};
-    background-image: url('assets/green-illustrated-bg.svg');
+    background-image: url('assets/img/green-illustrated-bg.svg');
     background-repeat: no-repeat;
     background-position: top left;
     background-size: calc(100% - ${({ theme }) => theme.spacings.m} * 4) auto;

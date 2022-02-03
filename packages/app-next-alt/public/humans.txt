@@ -6,8 +6,8 @@ Contact: write@morkro.de
 Location: Berlin, Germany
 
 /* SITE */
-Last Update: XX.XX.2020
+Last Update: XX.XX.2022
 Language: English
 Standards: HTML5, CSS3, JavaScript
-Components: Vue.js
+Components: React.js
 Software: VSCode

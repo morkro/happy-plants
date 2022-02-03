@@ -1,25 +1,75 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "lang": "en",
+  "dir": "ltr",
+  "name": "HappyPlants",
+  "short_name": "HappyPlants",
+  "description": "Keep track of your houseplants' well-being.",
+  "id": "/home?homescreen=1",
+  "start_url": "/home?homescreen=1",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B6D4F",
+  "theme_color": "#1B6D4F",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "assets/img/icons/logo-ldpi-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any"
     },
     {
-      "src": "logo192.png",
+      "src": "assets/img/icons/logo-mdpi-192x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
-      "src": "logo512.png",
+      "src": "assets/img/icons/logo-hdpi-288x288.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "288x288",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/img/icons/logo-xhdpi-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/img/icons/logo-xxhdpi-576x576.png",
+      "type": "image/png",
+      "sizes": "576x576",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "shortcuts": [
+    {
+      "name": "Add new plant",
+      "short_name": "New",
+      "description": "Add a new plant to your garden",
+      "url": "/new?shortcut=1",
+      "icons": [
+        {
+          "src":"assets/img/icons/shortcut-new-96x96.webp",
+          "type": "image/webp",
+          "sizes": "96x96",
+          "purpose": "maskable"
+        }
+      ]
+    },
+    {
+      "name": "Watering",
+      "short_name": "Watering",
+      "description": "Manage your watering schedule",
+      "url": "/watering?shortcut=1",
+      "icons": [
+        {
+          "src":"assets/img/icons/shortcut-watering-96x96.webp",
+          "type": "image/webp",
+          "sizes": "96x96",
+          "purpose": "maskable"
+        }
+      ]
+    }
+  ]
 }

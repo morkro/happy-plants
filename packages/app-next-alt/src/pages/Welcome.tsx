@@ -8,7 +8,7 @@ import WelcomeIllustration from 'components/WelcomeIllustration'
 
 const WelcomeGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
-    background-image: url('assets/welcome-background.svg');
+    background-image: url('assets/img/welcome-background.svg');
     background-repeat: no-repeat;
     background-size: calc(100% + 2px);
     background-position: bottom;

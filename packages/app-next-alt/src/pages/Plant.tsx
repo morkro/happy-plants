@@ -54,7 +54,7 @@ const PlantHeader = styled.header<{ $loading: boolean }>`
   align-items: flex-end;
   justify-content: flex-start;
   position: relative;
-  mask: url(../assets/plant-header-mask.svg);
+  mask: url(../assets/img/plant-header-mask.svg);
   mask-size: cover;
 
   @media screen and (min-width: 650px) {

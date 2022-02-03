@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkapp_next_react=self.webpackChunkapp_next_react||[]).push([[451],{6530:function(e,n,r){r.r(n),r.d(n,{default:function(){return i}});var t=r(1413),a=(r(2791),r(4886)),c=r(7987),u=r(184);function i(){var e=(0,c.Z)("watering");return(0,u.jsx)(a.ZP,(0,t.Z)((0,t.Z)({},e),{},{children:(0,u.jsx)("h2",{children:"watering"})}))}}}]);
+//# sourceMappingURL=watering.53103152.chunk.js.map

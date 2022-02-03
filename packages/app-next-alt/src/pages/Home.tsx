@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Search, Sliders, X } from 'react-feather'
-import { generatePath, useNavigate } from 'react-router-dom'
+import { generatePath } from 'react-router-dom'
 import { theme } from 'theme'
 import { routePaths } from 'routes'
 import { Heading, Text } from 'components/Typography'
@@ -12,7 +12,7 @@ import HomeOptions from 'components/HomeOptions'
 import PlantPreview from 'components/PlantPreview'
 import { Input } from 'components/Input'
 import Layout from 'components/Layout'
-import { usePlantDocs } from 'services/firebase'
+import { usePlantDocs, usePlantTags } from 'services/firebase'
 import useSearchParams from 'utilities/useSearchParams'
 import useRouteConfig from 'utilities/useRouteConfig'
 import { Plant } from 'typings/plant'
@@ -53,6 +53,18 @@ const SearchContainer = styled.div`
   }
 `
 
+const ScreenCover = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  background: rgba(43, 46, 56, 0.6);
+`
+
 function EmptyData() {
   return (
     <EmptyDataContainer>
@@ -77,9 +89,9 @@ function filterPlants(collectionData?: Plant[], searchQuery = '') {
 
 export default function Home() {
   const routeConfig = useRouteConfig('home')
-  const navigate = useNavigate()
   const queries = useSearchParams()
   const [collectionData, loading] = usePlantDocs()
+  const [tags, loadingTags] = usePlantTags()
   const [showOptions, setShowOptions] = useState(queries.has('options'))
   const [showSearch, setShowSearch] = useState(queries.has('search'))
   const [search, setSearch] = useState('')
@@ -89,13 +101,10 @@ export default function Home() {
     if (showOptions) setShowOptions(false)
     if (showSearch) setShowSearch(false)
     if (search !== '') setSearch('')
-
-    navigate(routePaths.home, { replace: true })
   }
 
   function triggerOptions() {
     setShowOptions(true)
-    navigate(`${routePaths.home}?options`, { replace: true })
   }
 
   return (
@@ -146,7 +155,12 @@ export default function Home() {
         )}
       </AppHeaderPortal.Source>
 
-      {showOptions && <HomeOptions />}
+      {showOptions && (
+        <React.Fragment>
+          <HomeOptions tags={tags} loading={loadingTags} />
+          <ScreenCover onClick={closeActions} />
+        </React.Fragment>
+      )}
 
       {!loading && collectionData?.length !== 0 ? (
         <PlantList>

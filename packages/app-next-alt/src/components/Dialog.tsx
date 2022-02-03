@@ -37,7 +37,7 @@ const DialogStyles = createGlobalStyle`
   }
 
   .dialog-overlay {
-    background-color: rgba(43, 46, 56, 0.9);
+    background-color: rgba(10, 62, 43, 0.8);
   }
 
   .dialog-content {
