@@ -33,7 +33,7 @@ import { DeviceInfo, getDeviceInfo } from 'utilities/getDeviceInfo'
 import logger from 'utilities/logger'
 import { isValidHttpUrl } from 'utilities/isUrl'
 import useUserProfile from 'utilities/useUserProfile'
-import useHomePreferences from 'utilities/useHomePreferences'
+import { useHomeOrderMap } from 'utilities/useHomePreferences'
 import { Plant, PlantTag } from 'typings/plant'
 import { setSessionEntry } from './webStorage'
 import { plantConverter, tagConverter } from './firebaseConverter'
@@ -145,7 +145,7 @@ export async function signOutUser() {
 export function usePlantDocs() {
   const db = getFirestore(firebaseApp)
   const profile = useUserProfile()
-  const [orderType, orderDirection] = useHomePreferences()
+  const [orderType, orderDirection] = useHomeOrderMap()
   const collectionRef = collection(
     db,
     FirestoreCollections.Users,

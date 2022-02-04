@@ -1,12 +1,22 @@
 import { OrderByDirection } from 'firebase/firestore'
 import pkg from '../package.json'
 
-export enum PlantOrderType {
+export type HomeOrderMap = [string, OrderByDirection]
+
+export enum HomeOrderBy {
   Alphabetically = 'alphabetically',
   Latest = 'latest',
 }
 
-export type PlantOrderMap = [string, OrderByDirection]
+export enum HomeViewmode {
+  Grid = 'grid',
+  List = 'list',
+}
+
+export enum HomeFilterBy {
+  Tags = 'tags',
+  Type = 'type',
+}
 
 interface Config {
   version: string
@@ -15,7 +25,7 @@ interface Config {
   localStorage: Record<string, string>
   ui: {
     authLoaderTimeout: number
-    plantOrderMap: Map<PlantOrderType, PlantOrderMap>
+    homeOrderMap: Map<HomeOrderBy, HomeOrderMap>
   }
   api: {
     sentry: Record<string, string>
@@ -32,16 +42,15 @@ const config: Config = {
   localStorage: {
     userAuthProgress: 'user:auth:progress',
     userAnimationPreference: 'user:preferences:animations',
-    homeOrderBy: 'view:home:orderby',
-    homeShowPlantCategorys: 'view:home:showPlantCategorys',
     homeViewmode: 'view:home:viewmode',
-    plantCount: 'data:plants:count',
+    homeOrderBy: 'view:home:orderby',
+    homeFilterBy: 'view:home:homeFilterBy',
   },
   ui: {
     authLoaderTimeout: 4000,
-    plantOrderMap: new Map([
-      [PlantOrderType.Alphabetically, ['name', 'asc']],
-      [PlantOrderType.Latest, ['created', 'desc']],
+    homeOrderMap: new Map([
+      [HomeOrderBy.Alphabetically, ['name', 'asc']],
+      [HomeOrderBy.Latest, ['created', 'desc']],
     ]),
   },
   api: {

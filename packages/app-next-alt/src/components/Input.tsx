@@ -52,6 +52,7 @@ const BaseStyles = css<InputProps | TextareaProps>`
   font-size: ${({ theme }) => theme.fonts.base};
   padding: calc(${({ theme }) => theme.spacings.m} * 2);
   border: 2px solid ${({ theme, error }) => (error ? theme.colors.red : theme.colors.white)};
+  border-radius: ${({ theme }) => theme.baseRadius};
   color: var(--brand-green-dark);
   transition: box-shadow var(--base-transition) ease-in-out;
 

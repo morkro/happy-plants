@@ -3,7 +3,7 @@ import { initialStore, useAppStore } from 'store'
 import { useNavigate } from 'react-router-dom'
 import { routePaths } from 'routes'
 import styled from 'styled-components'
-import { ArrowRight, Smile } from 'react-feather'
+import { ArrowRight, ExternalLink, Lock, Smile } from 'react-feather'
 import { Link } from 'react-router-dom'
 import config from 'config'
 import { theme } from 'theme'
@@ -18,6 +18,7 @@ import logger from 'utilities/logger'
 import delay from 'utilities/delay'
 import useRouteConfig from 'utilities/useRouteConfig'
 import useUserProfile from 'utilities/useUserProfile'
+import menu, { SetttingsMenuItem } from 'data/settingsMenu'
 
 const SettingsHeaderSvg = styled(BaseSVG)`
   position: absolute;
@@ -117,58 +118,39 @@ const SettingsList = styled.ul`
   }
 `
 
-function SettingsMenuItem(props: { label: string; link: string }) {
+function SettingsMenuItem(props: SetttingsMenuItem) {
+  let FeatherIcon = ArrowRight
+  if (props.locked) FeatherIcon = Lock
+  if (props.external) FeatherIcon = ExternalLink
+
+  const Label = (
+    <Text color={props.locked ? 'beigeDark' : 'greenDark'} semiBold>
+      {props.label}
+    </Text>
+  )
+  const Icon = (
+    <FeatherIcon
+      color={props.locked ? theme.colors.beigeDark : theme.colors.greenDark}
+      aria-hidden="true"
+      focusable="false"
+    />
+  )
+
   return (
     <li>
-      <Link to={props.link}>
-        <Text color="greenDark" semiBold>
-          {props.label}
-        </Text>
-        <ArrowRight color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
-      </Link>
+      {props.locked ? (
+        <div>
+          {Label}
+          {Icon}
+        </div>
+      ) : (
+        <Link to={props.link} target={props.external ? '_blank' : '_self'}>
+          {Label}
+          {Icon}
+        </Link>
+      )}
     </li>
   )
-}
-
-const menu = {
-  happyplants: [
-    {
-      label: 'Tags',
-      link: routePaths.settings.tags,
-    },
-    {
-      label: 'Modules',
-      link: routePaths.settings.modules,
-    },
-    {
-      label: 'Accessibility',
-      link: routePaths.settings.a11y,
-    },
-  ],
-  account: [
-    {
-      label: 'Change email',
-      link: routePaths.settings.email,
-    },
-    {
-      label: 'Change password',
-      link: routePaths.settings.password,
-    },
-  ],
-  application: [
-    {
-      label: 'About',
-      link: routePaths.settings.about,
-    },
-    {
-      label: 'Release notes',
-      link: routePaths.settings.releaseNotes,
-    },
-    {
-      label: 'Bug reports',
-      link: routePaths.settings.bugReport,
-    },
-  ],
 }
 
 export default function Settings() {

@@ -24,7 +24,7 @@ export const AppContent = styled.main<{ justifyContent: string }>`
   justify-content: ${({ justifyContent }) =>
     ['start', 'end'].includes(justifyContent) ? `flex-${justifyContent}` : justifyContent};
   align-items: center;
-  padding: ${({ theme }) => `0 ${theme.spacings.m}`};
+  padding: ${({ theme }) => `0 calc(1.25 * ${theme.spacings.m})`};
   position: relative;
   z-index: 0;
   text-align: center;

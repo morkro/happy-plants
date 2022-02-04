@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useRef, useState } from 'react'
+import styled, { css } from 'styled-components'
 import { Search, Sliders, X } from 'react-feather'
 import { generatePath } from 'react-router-dom'
 import { theme } from 'theme'
 import { routePaths } from 'routes'
+import { HomeOrderBy, HomeViewmode } from 'config'
 import { Heading, Text } from 'components/Typography'
 import EmptyDataIllustration from 'components/EmptyDataIllustration'
 import { AppHeaderButton, AppHeaderPortal } from 'components/AppHeader'
@@ -13,15 +14,29 @@ import PlantPreview from 'components/PlantPreview'
 import { Input } from 'components/Input'
 import Layout from 'components/Layout'
 import { usePlantDocs, usePlantTags } from 'services/firebase'
-import useSearchParams from 'utilities/useSearchParams'
 import useRouteConfig from 'utilities/useRouteConfig'
 import { Plant } from 'typings/plant'
+import { useHomePreferences } from 'utilities/useHomePreferences'
+import { sortByAlphabet, sortByDate } from 'utilities/sortArray'
 
-const PlantList = styled.ul`
+const PlantList = styled.ul<{ viewmode: HomeViewmode }>`
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: ${({ theme }) => theme.spacings.m};
+
+  ${({ viewmode }) =>
+    viewmode === HomeViewmode.Grid &&
+    css`
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: ${({ theme }) => theme.spacings.m};
+    `}
+
+  ${({ viewmode }) =>
+    viewmode === HomeViewmode.List &&
+    css`
+      li {
+        margin-bottom: ${({ theme }) => theme.spacings.m};
+      }
+    `}
 `
 
 const EmptyDataContainer = styled.div`
@@ -62,7 +77,7 @@ const ScreenCover = styled.div`
   left: 0;
   right: 0;
   z-index: 2;
-  background: rgba(43, 46, 56, 0.6);
+  background: rgba(43, 46, 56, 0.7);
 `
 
 function EmptyData() {
@@ -81,31 +96,55 @@ function EmptyData() {
   )
 }
 
-function filterPlants(collectionData?: Plant[], searchQuery = '') {
+function searchPlants(collectionData: Plant[] = [], searchQuery = '') {
   return searchQuery === ''
     ? collectionData
     : collectionData?.filter((plant) => plant.name.includes(searchQuery))
 }
 
+function filterPlants(collectionData: Plant[] = [], orderBy: HomeOrderBy) {
+  if (orderBy === HomeOrderBy.Latest) {
+    return collectionData.sort(sortByDate).reverse()
+  } else if (orderBy === HomeOrderBy.Alphabetically) {
+    return collectionData.sort(sortByAlphabet)
+  }
+  return collectionData
+}
+
 export default function Home() {
   const routeConfig = useRouteConfig('home')
-  const queries = useSearchParams()
   const [collectionData, loading] = usePlantDocs()
   const [tags, loadingTags] = usePlantTags()
-  const [showOptions, setShowOptions] = useState(queries.has('options'))
-  const [showSearch, setShowSearch] = useState(queries.has('search'))
+  const { orderBy, filterBy, viewmode } = useHomePreferences()
+  const [showOptions, setShowOptions] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
   const [search, setSearch] = useState('')
-  const plantDataList = filterPlants(collectionData, search)
+  const [plantList, setPlantList] = useState(collectionData)
 
   function closeActions() {
     if (showOptions) setShowOptions(false)
     if (showSearch) setShowSearch(false)
     if (search !== '') setSearch('')
+    setPlantList(collectionData)
   }
 
   function triggerOptions() {
     setShowOptions(true)
   }
+
+  useEffect(() => {
+    if (loading === false) {
+      setPlantList(collectionData)
+    }
+  }, [loading, collectionData])
+
+  useEffect(() => {
+    setPlantList((prevList) => searchPlants(prevList, search))
+  }, [search])
+
+  useEffect(() => {
+    setPlantList((prevList) => filterPlants(prevList, orderBy.value))
+  }, [orderBy.value])
 
   return (
     <Layout {...routeConfig}>
@@ -157,29 +196,41 @@ export default function Home() {
 
       {showOptions && (
         <React.Fragment>
-          <HomeOptions tags={tags} loading={loadingTags} />
+          <HomeOptions
+            tags={tags}
+            loading={loadingTags}
+            orderBy={orderBy.value}
+            onChangeOrderBy={(value) => orderBy.set(value)}
+            filterBy={filterBy.value}
+            viewmode={viewmode.value}
+            onChangeViewmode={(value) => viewmode.set(value)}
+          />
           <ScreenCover onClick={closeActions} />
         </React.Fragment>
       )}
 
       {!loading && collectionData?.length !== 0 ? (
-        <PlantList>
-          {plantDataList?.map((plant) => (
+        <PlantList viewmode={viewmode.value}>
+          {plantList?.map((plant) => (
             <li key={plant.id + plant.name}>
               <PlantPreview
                 loading={false}
                 name={plant.name}
                 href={generatePath(routePaths.plant.base, { id: plant.id })}
                 imageUrl={plant.imageURL}
+                variant={viewmode.value === HomeViewmode.Grid ? 'compact' : 'detailed'}
               />
             </li>
           ))}
         </PlantList>
       ) : (
-        <PlantList>
+        <PlantList viewmode={viewmode.value}>
           {new Array(5).fill({}).map((_, index) => (
             <li key={`plant-loading-${index}`}>
-              <PlantPreview loading />
+              <PlantPreview
+                loading
+                variant={viewmode.value === HomeViewmode.Grid ? 'compact' : 'detailed'}
+              />
             </li>
           ))}
         </PlantList>

@@ -23,7 +23,6 @@ export const routePaths = {
   },
   settings: {
     base: '/settings',
-    email: '/settings/email',
     password: '/settings/password',
     tags: '/settings/tags',
     modules: '/settings/modules',
@@ -94,7 +93,6 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
       appContentOrientation: 'start',
     },
   ],
-  ['settingsEmail', { isPrivateRoute: true, pageTitle: 'Email', appHeaderColor: 'beige' }],
   ['settingsPassword', { isPrivateRoute: true, pageTitle: 'Password', appHeaderColor: 'beige' }],
   [
     'settingsTags',

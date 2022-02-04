@@ -52,7 +52,6 @@ const SettingsModules = lazy(
   () => import('pages/SettingsModules' /* webpackChunkName: "settings" */)
 )
 const SettingsA11y = lazy(() => import('pages/SettingsA11y' /* webpackChunkName: "settings" */))
-const SettingsEmail = lazy(() => import('pages/SettingsEmail' /* webpackChunkName: "settings" */))
 const SettingsPassword = lazy(
   () => import('pages/SettingsPassword' /* webpackChunkName: "settings" */)
 )
@@ -159,14 +158,6 @@ function App() {
               element={
                 <AuthRoute>
                   <SettingsA11y />
-                </AuthRoute>
-              }
-            />
-            <Route
-              path={routePaths.settings.email}
-              element={
-                <AuthRoute>
-                  <SettingsEmail />
                 </AuthRoute>
               }
             />

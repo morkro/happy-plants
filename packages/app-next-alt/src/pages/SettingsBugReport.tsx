@@ -26,7 +26,7 @@ const HeaderIllustration = styled(BaseSVG)`
 `
 
 const BugReportHeader = styled.div`
-  width: ${({ theme }) => `calc(100% + 2 * ${theme.spacings.m})`};
+  width: ${({ theme }) => `calc(100% + 1.25 * ${theme.spacings.l})`};
   margin-bottom: ${({ theme }) => theme.spacings.m};
 
   & svg {

@@ -1,3 +1,4 @@
+import { HomeFilterBy, HomeOrderBy, HomeViewmode } from 'config'
 import React from 'react'
 import styled from 'styled-components'
 import { theme } from 'theme'
@@ -49,10 +50,15 @@ const OptionsList = styled.ul`
 export type HomeOptionsProps = React.PropsWithChildren<{
   tags?: PlantTag[]
   loading: boolean
+  orderBy: HomeOrderBy
+  onChangeOrderBy: (value: HomeOrderBy) => void
+  viewmode: HomeViewmode
+  onChangeViewmode: (value: HomeViewmode) => void
+  filterBy: HomeFilterBy
 }>
 
 export default function HomeOptions(props: HomeOptionsProps) {
-  const { tags, loading } = props
+  const { tags, loading, orderBy, viewmode, filterBy, onChangeViewmode, onChangeOrderBy } = props
   return (
     <OptionsContainer>
       <section>
@@ -62,20 +68,28 @@ export default function HomeOptions(props: HomeOptionsProps) {
         <OptionsList>
           <li>
             <label htmlFor="viewmode-grid">
-              <Input type="radio" id="viewmode-grid" name="viewmode" value="grid" />
+              <Input
+                type="radio"
+                id="viewmode-grid"
+                name="viewmode"
+                value="grid"
+                checked={viewmode === HomeViewmode.Grid}
+                onClick={() => onChangeViewmode(HomeViewmode.Grid)}
+              />
               <Text color="beigeDark">Grid</Text>
             </label>
           </li>
           <li>
             <label htmlFor="viewmode-list">
-              <Input type="radio" id="viewmode-list" name="viewmode" value="list" />
+              <Input
+                type="radio"
+                id="viewmode-list"
+                name="viewmode"
+                value="list"
+                checked={viewmode === HomeViewmode.List}
+                onClick={() => onChangeViewmode(HomeViewmode.List)}
+              />
               <Text color="beigeDark">List</Text>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="viewmode-types">
-              <Input type="checkbox" id="viewmode-types" name="types" value="types" />
-              <Text color="beigeDark">Show plant types</Text>
             </label>
           </li>
         </OptionsList>
@@ -85,7 +99,14 @@ export default function HomeOptions(props: HomeOptionsProps) {
         <OptionsList>
           <li>
             <label htmlFor="orderby-latest">
-              <Input type="radio" id="orderby-latest" name="orderby" value="latest" />
+              <Input
+                type="radio"
+                id="orderby-latest"
+                name="orderby"
+                value="latest"
+                checked={orderBy === HomeOrderBy.Latest}
+                onClick={() => onChangeOrderBy(HomeOrderBy.Latest)}
+              />
               <Text color="beigeDark">Latest</Text>
             </label>
           </li>
@@ -96,6 +117,8 @@ export default function HomeOptions(props: HomeOptionsProps) {
                 id="orderby-alphabetically"
                 name="orderby"
                 value="alphabetically"
+                checked={orderBy === HomeOrderBy.Alphabetically}
+                onClick={() => onChangeOrderBy(HomeOrderBy.Alphabetically)}
               />
               <Text color="beigeDark">Alphabetically</Text>
             </label>
@@ -105,7 +128,7 @@ export default function HomeOptions(props: HomeOptionsProps) {
 
       <section>
         <Heading color="greenDark" as="h2" mb="l">
-          Filter by <span>tags</span>
+          Filter by <span>{filterBy}</span>
         </Heading>
         {loading ? (
           <Spinner />

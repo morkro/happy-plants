@@ -46,7 +46,7 @@ const PlantGlobalStyle = createGlobalStyle`
 `
 
 const PlantHeader = styled.header<{ $loading: boolean }>`
-  width: calc(100% + ${({ theme }) => theme.spacings.l});
+  width: calc(100% + calc(1.25 * ${({ theme }) => theme.spacings.l}));
   height: 100vw;
   background: ${({ theme }) => theme.colors.white};
   margin-top: -${(props) => props.theme.frameWidgetHeight};

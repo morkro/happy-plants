@@ -8,11 +8,7 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-
-  li {
-    margin-right: ${({ theme }) => theme.spacings.m};
-    margin-bottom: ${({ theme }) => theme.spacings.m};
-  }
+  gap: ${({ theme }) => theme.spacings.m};
 `
 
 interface TagListProps {

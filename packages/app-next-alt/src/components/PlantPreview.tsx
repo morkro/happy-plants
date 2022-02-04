@@ -8,18 +8,19 @@ import { getFileRef } from 'services/firebase'
 import Spinner from './Spinner'
 import { Text } from './Typography'
 
-export interface PlantProps {
+type PlantPreviewVariant = 'compact' | 'detailed'
+
+export interface PlantPreviewProps {
   imageUrl?: string | null
   href?: string
   loading?: boolean
   name?: string
-  size?: 'm' | 'l'
+  variant: PlantPreviewVariant
 }
 
-const PlantContainer = styled.div<{ $loading: boolean }>`
+const PlantContainer = styled.div<{ $loading: boolean; variant: PlantPreviewVariant }>`
   width: 100%;
   height: 100%;
-  aspect-ratio: 1 / 1;
   border-radius: ${({ theme }) => theme.baseRadius};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.white};
@@ -51,9 +52,21 @@ const PlantContainer = styled.div<{ $loading: boolean }>`
       }
     }
   `}
+
+  ${({ variant }) =>
+    variant === 'compact' &&
+    css`
+      aspect-ratio: 1 / 1;
+    `}
+
+  ${({ variant }) =>
+    variant === 'detailed' &&
+    css`
+      height: 70px;
+    `}
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link)<{ variant: PlantPreviewVariant }>`
   display: flex;
   width: 100%;
   height: 100%;
@@ -62,7 +75,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `
 
-const Label = styled.div<{ gradient: boolean }>`
+const Label = styled.div<{ gradient: boolean; variant: PlantPreviewVariant }>`
   text-align: left;
   padding: ${({ theme }) => theme.spacings.m};
   position: relative;
@@ -74,19 +87,43 @@ const Label = styled.div<{ gradient: boolean }>`
     css`
       background-image: var(--top-notch-gradient);
     `}
+
+  ${({ variant, theme }) =>
+    variant === 'detailed' &&
+    css`
+      order: 2;
+      background: ${theme.colors.white};
+      height: 100%;
+      display: flex;
+      align-items: flex-start;
+    `}
 `
 
-const Background = styled.div`
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  right: 0;
+const Background = styled.div<{ variant: PlantPreviewVariant }>`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ variant }) =>
+    variant === 'compact' &&
+    css`
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+    `}
+
+  ${({ variant, theme }) =>
+    variant === 'detailed' &&
+    css`
+      order: 1;
+      aspect-ratio: 1 / 1;
+      width: 70px;
+      background: ${theme.colors.yellow};
+    `}
 
   img {
     width: 100%;
@@ -95,26 +132,33 @@ const Background = styled.div`
   }
 `
 
-export default function PlantPreview(props: PlantProps) {
-  const { loading = true, href = '', name, imageUrl } = props
+export default function PlantPreview(props: PlantPreviewProps) {
+  const { loading = true, href = '', name, imageUrl, variant } = props
   const hasImageUrl = typeof imageUrl === 'string'
   const imageRef = getFileRef(imageUrl === null ? undefined : imageUrl)
   const [downloadedImageUrl, loadingImageUrl] = useDownloadURL(imageRef)
 
   return (
-    <PlantContainer $loading={loading}>
+    <PlantContainer $loading={loading} variant={variant}>
       {loading ? (
-        <Spinner color={theme.colors.beigeDark} size={45} />
+        <div>
+          <Spinner color={theme.colors.beigeDark} size={45} />
+        </div>
       ) : (
-        <StyledLink to={href}>
-          <Label gradient={hasImageUrl}>
-            <Text color={hasImageUrl ? 'white' : 'greenDark'}>{name}</Text>
+        <StyledLink to={href} variant={variant}>
+          <Label gradient={hasImageUrl} variant={variant}>
+            <Text color={!hasImageUrl || variant === 'detailed' ? 'greenDark' : 'white'}>
+              {name}
+            </Text>
           </Label>
-          <Background>
+          <Background variant={variant}>
             {hasImageUrl && !loadingImageUrl ? (
               <img loading="lazy" src={downloadedImageUrl} alt={name} title={name} />
             ) : (
-              <CameraOff color={theme.colors.beige} size={45} />
+              <CameraOff
+                color={variant === 'compact' ? theme.colors.beige : theme.colors.yellowLight}
+                size={45}
+              />
             )}
           </Background>
         </StyledLink>
