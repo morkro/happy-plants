@@ -1,7 +1,7 @@
 import { routeConfigMap } from 'routes'
 import { RouteLayoutOptions } from 'components/Layout'
 
-export default function useRouteConfig(configName: string): RouteLayoutOptions {
+export function getRouteConfig(configName: string): RouteLayoutOptions {
   if (!configName) {
     throw Error(`Route configuration name required, passed "${configName}"`)
   }
@@ -12,4 +12,8 @@ export default function useRouteConfig(configName: string): RouteLayoutOptions {
 
   console.warn(`Route option "${configName}" not found, returning empty`)
   return {}
+}
+
+export default function useRouteConfig(configName: string): RouteLayoutOptions {
+  return getRouteConfig(configName)
 }

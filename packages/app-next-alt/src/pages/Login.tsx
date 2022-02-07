@@ -59,10 +59,6 @@ const LoginForm = styled.form`
   }
 `
 
-const LoginButton = styled(Button)`
-  box-shadow: 0 1px 2px ${({ theme }) => theme.colors.greenDark};
-`
-
 const ForgotPasswordLink = styled(Link)`
   text-decoration: none;
   display: block;
@@ -190,17 +186,17 @@ export default function Login() {
       if (getSessionEntry(config.localStorage.userAuthProgress)) {
         deleteSessionEntry(config.localStorage.userAuthProgress)
         setStore({ authLoader: { show: true, message: 'login' } })
+        delay(2000)
 
         if (!store.isSignedIn) {
           try {
-            const [authResults]: [Partial<AppState>, void] = await Promise.all([
-              getAuthRedirectResults(),
-              delay(4000),
-            ])
-            setStore({ ...authResults })
-          } catch (error: any) {
-            logger(error.message, true)
+            const { user, isSignedIn } = await getAuthRedirectResults()
+            setStore({ user, isSignedIn })
+          } catch (error) {
+            logger(error as string, true)
             toast.error('There was an issue logging you in, please try again.')
+          } finally {
+            setStore({ authLoader: { show: false } })
           }
         }
 
@@ -210,10 +206,6 @@ export default function Login() {
     }
 
     verifySession()
-
-    return () => {
-      setStore({ authLoader: { show: false } })
-    }
   }, [location, store.isSignedIn, setStore, navigate])
 
   return (
@@ -273,14 +265,14 @@ export default function Login() {
               </Text>
             </ForgotPasswordLink>
 
-            <LoginButton
+            <Button
               aria-disabled={!showForgotPassword && password.value === ''}
               color="yellow"
               type="submit"
             >
               {isProgress && <Spinner aria-hidden="true" focusable="false" />}
               {showForgotPassword ? 'Send password reset' : 'Login'}
-            </LoginButton>
+            </Button>
           </LoginForm>
 
           <FormSeperator>
@@ -291,15 +283,30 @@ export default function Login() {
           </FormSeperator>
 
           <LoginServices>
-            <Button border onClick={async () => await loginVia('google')} type="button">
+            <Button
+              border
+              color="white"
+              type="button"
+              onClick={async () => await loginVia('google')}
+            >
               <Chrome aria-hidden="true" focusable="false" />
               Google
             </Button>
-            <Button border onClick={async () => await loginVia('github')} type="button">
+            <Button
+              border
+              color="white"
+              onClick={async () => await loginVia('github')}
+              type="button"
+            >
               <GitHub aria-hidden="true" focusable="false" />
               GitHub
             </Button>
-            <Button border onClick={async () => await loginVia('twitter')} type="button">
+            <Button
+              border
+              color="white"
+              onClick={async () => await loginVia('twitter')}
+              type="button"
+            >
               <Twitter aria-hidden="true" focusable="false" />
               Twitter
             </Button>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { routePaths } from 'routes'
 import styled from 'styled-components'
 import Layout from 'components/Layout'
-import useRouteConfig from 'utilities/useRouteConfig'
+import { getRouteConfig } from 'utilities/useRouteConfig'
 import { ButtonLink } from 'components/Button'
 
 const onboardingFlow = [
   routePaths.root,
-  routePaths.onboarding.base,
+  routePaths.onboarding.howTo,
   routePaths.onboarding.account,
   routePaths.onboarding.finished,
 ]
@@ -26,13 +26,20 @@ const Actions = styled.div`
 `
 
 export default function Onboarding() {
-  const routeConfig = useRouteConfig('onboarding')
+  const [routeConfig, setRouteConfig] = useState(getRouteConfig('onboarding'))
   const [navIndex, setNavIndex] = useState(0)
   const location = useLocation()
 
   useEffect(() => {
-    setNavIndex(onboardingFlow.findIndex((r) => r === location.pathname))
-  }, [location])
+    const index = onboardingFlow.findIndex((r) => r === location?.pathname)
+    let configName = 'onboarding'
+    if (index === 1) configName = 'onboardingHowTo'
+    if (index === 2) configName = 'onboardingAccount'
+    if (index === 3) configName = 'onboardingFinished'
+
+    setNavIndex(index)
+    setRouteConfig(getRouteConfig(configName))
+  }, [location?.pathname])
 
   return (
     <Layout {...routeConfig}>

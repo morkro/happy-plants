@@ -60,7 +60,7 @@ export default function Welcome() {
           <ButtonLink fullWidth color="white" border to={routePaths.login}>
             Login
           </ButtonLink>
-          <ButtonLink fullWidth color="yellow" to={routePaths.onboarding.base}>
+          <ButtonLink fullWidth color="yellow" to={routePaths.onboarding.howTo}>
             Getting started
           </ButtonLink>
         </WelcomeActions>

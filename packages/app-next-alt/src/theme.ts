@@ -14,6 +14,7 @@ export type ThemeColors =
   | 'greenDark'
   | 'blue'
   | 'blueDark'
+  | 'brown'
 
 export type ThemeFontSizes = 'heading' | 'extraLarge' | 'large' | 'base' | 'small'
 export type ThemeSpacings = 's' | 'm' | 'l'
@@ -50,6 +51,7 @@ export const theme: DefaultTheme = {
     yellowLight: '#F2DD9F',
     greenDark: '#0A3E2B',
     blueDark: '#112378',
+    brown: '#23221D',
   },
 
   fonts: {

@@ -155,7 +155,7 @@ export default function AppHeader(props: AppHeaderProps) {
         </OfflineIndicator>
       ) : null}
 
-      <AppHeaderIcon isTransparentBg={color === undefined}>
+      <AppHeaderIcon isTransparentBg={showBackButton && color === undefined}>
         {showBackButton ? (
           <button
             onClick={() =>

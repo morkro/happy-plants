@@ -6,6 +6,7 @@ export const routePaths = {
   login: '/login',
   onboarding: {
     base: '/onboarding',
+    howTo: '/onboarding/how-to',
     account: '/onboarding/account',
     finished: '/onboarding/finished',
   },
@@ -39,9 +40,12 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
       appContentOrientation: 'space-between',
     },
   ],
-  ['onboarding', { withAppMenu: false }],
-  ['onboardingAccount', { pageTitle: 'Create account' }],
-  ['onboardingHowTo', { pageTitle: 'How to' }],
+  ['onboarding', { withAppMenu: false, pageTitle: 'Onboarding' }],
+  ['onboardingHowTo', { withAppMenu: false, appHeaderColor: 'beige', pageTitle: 'How to' }],
+  [
+    'onboardingAccount',
+    { withAppMenu: false, appHeaderColor: 'beige', pageTitle: 'Create account' },
+  ],
   [
     'onboardingFinished',
     { withAppHeader: false, withAppMenu: false, appContentOrientation: 'center' },

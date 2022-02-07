@@ -99,7 +99,7 @@ function App() {
               element={store.isSignedIn ? <Navigate to={routePaths.home} /> : <Welcome />}
             />
             <Route path={routePaths.onboarding.base} element={<Onboarding />}>
-              <Route index element={<OnboardingHowTo />} />
+              <Route path={routePaths.onboarding.howTo} element={<OnboardingHowTo />} />
               <Route path={routePaths.onboarding.account} element={<OnboardingAccount />} />
             </Route>
             <Route path={routePaths.onboarding.finished} element={<OnboardingFinished />} />

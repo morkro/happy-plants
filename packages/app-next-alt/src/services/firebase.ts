@@ -124,10 +124,10 @@ export async function forgotPassword(email: string): Promise<void> {
   return sendPasswordResetEmail(getAuth(firebaseApp), email)
 }
 
-export async function getAuthRedirectResults(): Promise<Partial<AppState>> {
+export async function getAuthRedirectResults(): Promise<Pick<AppState, 'user' | 'isSignedIn'>> {
   const results = await getRedirectResult(getAuth(firebaseApp))
   return {
-    user: results?.user,
+    user: results?.user || null,
     isSignedIn: true,
   }
 }

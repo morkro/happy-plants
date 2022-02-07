@@ -93,7 +93,9 @@ const ButtonContainer = styled.button<BaseProps>`
   ${BaseStyles}
 `
 
-const LinkContainer = styled(({ variant, border, ...props }) => <Link {...props} />)<BaseProps>`
+const LinkContainer = styled(({ variant, border, fullWidth, ...props }) => (
+  <Link {...props} />
+))<BaseProps>`
   ${BaseStyles}
 `
 

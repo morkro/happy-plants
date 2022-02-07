@@ -258,7 +258,7 @@ export default function Settings() {
         </SettingsList>
       </SettingsSection>
 
-      <Button onClick={signOut} color="yellow" size="s" mt="m" mb="l">
+      <Button onClick={signOut} color="red" size="s" mt="m" mb="l">
         Logout
       </Button>
     </Layout>
