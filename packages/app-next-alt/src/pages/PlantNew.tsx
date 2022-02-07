@@ -190,7 +190,6 @@ export default function PlantNew() {
               id="name"
               error={name.error}
               disabled={isProgress}
-              data-cy="new-form-name"
               onChange={(event) => {
                 setName((d) => ({ ...d, value: event.target.value }))
               }}
@@ -205,7 +204,6 @@ export default function PlantNew() {
               fullWidth
               type="file"
               id="photo"
-              data-cy="new-form-photo"
               disabled={isProgress}
               fileBackgroundColor="greenDark"
               onFileInput={onFileInput}
@@ -240,7 +238,7 @@ export default function PlantNew() {
               <Button
                 round
                 size="s"
-                variant="warning"
+                color="yellow"
                 type="button"
                 onClick={() => !isProgress && tagsDialog?.show()}
               >
@@ -255,7 +253,7 @@ export default function PlantNew() {
             </TagContainer>
           </label>
 
-          <NewPlantButton type="submit" variant="warning" onClick={formAction}>
+          <NewPlantButton type="submit" color="yellow" onClick={formAction}>
             {isProgress && <Spinner />}
             Add friend
           </NewPlantButton>

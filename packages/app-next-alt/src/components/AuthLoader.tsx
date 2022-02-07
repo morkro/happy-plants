@@ -62,7 +62,7 @@ export default function AuthLoader(props: { message?: AuthLoaderType }) {
   }
 
   return (
-    <Overlay data-cy="app-overlay-loading">
+    <Overlay>
       <Illustration width="102px" height="127px" viewBox="0 0 102 127">
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <g id="2.1.-Login--Loading" transform="translate(-138.000000, -274.000000)">

@@ -157,7 +157,7 @@ const ErrorContainer = styled.div`
 `
 
 const TogglePasswordButton = styled(Button)`
-  position: absolute;
+  position: absolute !important;
   z-index: 1;
   top: calc(1.5 * ${(props) => props.theme.spacings.m});
   right: calc(1.5 * ${(props) => props.theme.spacings.m});

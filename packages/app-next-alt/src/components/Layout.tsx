@@ -1,8 +1,7 @@
 import React from 'react'
-import { RouteLayoutOptions } from 'routes'
 import { useAppStore } from 'store'
 import styled from 'styled-components'
-import AppHeader from './AppHeader'
+import AppHeader, { AppHeaderColor } from './AppHeader'
 import AppMenu from './AppMenu'
 import AuthLoader from './AuthLoader'
 import DocumentTitle from './DocumentTitle'
@@ -34,16 +33,25 @@ export const AppContent = styled.main<{ justifyContent: string }>`
   }
 `
 
+export interface RouteLayoutOptions {
+  pageTitle?: string | false
+  withAppMenu?: boolean
+  withAppHeader?: boolean
+  withPublicFooter?: boolean
+  appHeaderColor?: AppHeaderColor
+  appContentOrientation?: 'start' | 'center' | 'end' | 'space-between'
+}
+
 export type LayoutProps = React.PropsWithChildren<RouteLayoutOptions>
 
 export default function Layout(props: LayoutProps) {
   const {
-    isPrivateRoute,
     pageTitle,
     appHeaderColor,
     appContentOrientation = 'space-between',
     withAppMenu = true,
     withAppHeader = true,
+    withPublicFooter = false,
   } = props
   const { store } = useAppStore()
   return (
@@ -55,7 +63,8 @@ export default function Layout(props: LayoutProps) {
         <AppContent id="main" role="main" justifyContent={appContentOrientation}>
           {props.children}
         </AppContent>
-        {isPrivateRoute ? withAppMenu ? <AppMenu /> : null : <FooterNoAuth />}
+        {withAppMenu ? <AppMenu /> : null}
+        {withPublicFooter ? <FooterNoAuth /> : null}
       </BaseLayout>
     </React.Fragment>
   )

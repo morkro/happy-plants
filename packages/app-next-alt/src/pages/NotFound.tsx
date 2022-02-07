@@ -11,17 +11,15 @@ export default function NotFound() {
   return (
     <Layout {...routeConfig}>
       <NotFoundIllustration />
-      <Heading color="greenDark" as="h2" mt="l" data-cy="404-title">
+      <Heading color="greenDark" as="h2" mt="l" semiBold>
         Oops, how did you get here?
       </Heading>
       <Text color="beigeDark" mt="l" mb="l">
-        Let’s just act like this never happend,
+        Let&lsquo;s just act like this never happend,
         <br />
         shall we?
       </Text>
-      <ButtonLink to={routePaths.root} data-cy="404-back-to-root">
-        Back to your plants
-      </ButtonLink>
+      <ButtonLink to={routePaths.root}>Back to your plants</ButtonLink>
     </Layout>
   )
 }

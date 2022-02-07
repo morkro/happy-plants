@@ -4,11 +4,12 @@ import styled, { css } from 'styled-components'
 import { WithCssProps, WithMarginProps, WithMarginStyles } from 'utilities/withProps'
 
 interface BaseProps {
-  variant?: 'normal' | 'info' | 'warning' | 'alarm'
+  color: 'white' | 'red' | 'yellow' | 'green' | 'blue'
   size?: 's'
   border?: boolean
   round?: boolean
   type?: 'button' | 'submit'
+  fullWidth?: boolean
 }
 
 type WithBaseProps = WithCssProps<WithMarginProps<BaseProps>>
@@ -16,6 +17,7 @@ type ButtonProps = React.HTMLAttributes<HTMLButtonElement> & WithBaseProps
 type ButtonLinkProps = LinkProps & WithBaseProps
 
 const defaultProps: BaseProps = {
+  color: 'green',
   border: false,
   round: false,
 }
@@ -23,64 +25,45 @@ const defaultProps: BaseProps = {
 const BaseStyles = css<BaseProps>`
   ${WithMarginStyles}
 
-  --base-color: ${({ theme, border }) => (border ? theme.colors.white : theme.colors.green)};
-  --text-color: ${(props) => props.theme.colors.white};
+  --base-color: ${({ theme, color }) => theme.colors[color]};
+  --text-color: ${({ theme, color, border }) => {
+    const shouldHaveGreen = color === 'white' || color === 'yellow'
+    if (shouldHaveGreen && !border) return theme.colors.greenDark
+    if (border) return 'var(--base-color)'
+    return theme.colors.white
+  }};
   --shadow: var(--base-color);
 
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
+  border: 2px solid var(--base-color);
+  width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   background-color: ${(props) => (props.border ? 'transparent' : 'var(--base-color)')};
   border-radius: ${(props) => (props.round ? '100%' : props.theme.baseRadius)};
-  border: 2px solid var(--base-color);
   box-shadow: ${(props) => (props.border ? 'none' : '0 2px 9px var(--shadow)')};
   color: var(--text-color);
-  text-decoration: none;
   font-family: var(--font-normal);
   text-align: center;
   font-weight: 500;
   font-size: ${(props) => props.theme.fonts.base};
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+  text-decoration: none;
   cursor: pointer;
-  padding: ${(props) => {
-    if (props.round) {
-      if (props.size === 's') {
-        return `calc(0.5 * ${props.theme.spacings.m})`
+  padding: ${({ round, size, theme }) => {
+    const spacing = theme.spacings.m
+    if (round) {
+      if (size === 's') {
+        return `calc(0.5 * ${spacing})`
       }
-      return props.theme.spacings.m
+      return spacing
     }
-    return props.size === 's'
-      ? `calc(0.5 * ${props.theme.spacings.m}) ${props.theme.spacings.m}`
-      : `calc(2 * ${props.theme.spacings.m})`
+    return size === 's' ? `calc(0.5 * ${spacing}) ${spacing}` : `calc(2 * ${spacing})`
   }};
-
-  ${(props) =>
-    props.variant === 'normal' &&
-    css`
-      --base-color: ${(props) => props.theme.colors.green};
-    `}
-
-  ${(props) =>
-    props.variant === 'info' &&
-    css`
-      --base-color: ${(props) => props.theme.colors.blue};
-    `}
-
-  ${(props) =>
-    props.variant === 'warning' &&
-    css`
-      --base-color: ${(props) => props.theme.colors.yellow};
-      --text-color: ${(props) => props.theme.colors.greenDark};
-    `}
-
-  ${(props) =>
-    props.variant === 'alarm' &&
-    css`
-      --base-color: ${(props) => props.theme.colors.red};
-    `}
 
   &:hover {
     text-decoration: underline;
+    border-color: ${(props) => props.theme.colors.white};
   }
 
   &[disabled],
@@ -90,8 +73,13 @@ const BaseStyles = css<BaseProps>`
 
   &:focus:not([disabled]),
   &:active:not([aria-disabled]) {
-    border-color: ${(props) => props.theme.colors.white};
-    outline: none;
+    border-color: ${({ theme, color, border }) => {
+      if (color === 'white' && !border) return theme.colors.greenDark
+      if (border) return 'var(--base-color)'
+      return theme.colors.white
+    }};
+    border-style: ${({ border }) => (border ? 'dashed' : 'solid')};
+    outline: ${({ theme, border }) => (border ? `2px solid ${theme.colors.white}` : 'none')};
   }
 
   & > svg {

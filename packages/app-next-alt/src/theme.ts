@@ -288,7 +288,6 @@ export const GlobalStyle = createGlobalStyle<{ enableAnimations: boolean }>`
   }
 
   #root {
-    width: 100vw;
     min-height: 100vh;
     display: flex;
 

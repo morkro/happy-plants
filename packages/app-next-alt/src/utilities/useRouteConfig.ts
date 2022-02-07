@@ -1,4 +1,5 @@
-import { routeConfigMap, RouteLayoutOptions } from 'routes'
+import { routeConfigMap } from 'routes'
+import { RouteLayoutOptions } from 'components/Layout'
 
 export default function useRouteConfig(configName: string): RouteLayoutOptions {
   if (!configName) {

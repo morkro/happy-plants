@@ -1,24 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import footerLinks from 'data/publicFooterMenu'
 import { Text } from './Typography'
-
-const footerLinks = [
-  {
-    href: 'https://happyplants.app/#about',
-    dataCy: 'footer-about',
-    label: 'About',
-  },
-  {
-    href: 'https://happyplants.app/#contact',
-    dataCy: 'footer-contact',
-    label: 'Contact',
-  },
-  {
-    href: 'https://github.com/morkro/happy-plants',
-    dataCy: 'footer-os',
-    label: 'Open source',
-  },
-]
 
 const FooterContainer = styled.footer`
   height: 70px;
@@ -44,13 +27,7 @@ export default function FooterNoAuth() {
   return (
     <FooterContainer role="contentinfo">
       {footerLinks.map((link, index) => (
-        <a
-          key={link.label + index}
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cy={link.dataCy}
-        >
+        <a key={link.label + index} href={link.href} target="_blank" rel="noopener noreferrer">
           <Text as="span" color="white">
             {link.label}
           </Text>

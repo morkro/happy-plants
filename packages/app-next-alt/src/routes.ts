@@ -1,19 +1,14 @@
-import { AppHeaderColor } from 'components/AppHeader'
-
-export interface RouteLayoutOptions {
-  isPrivateRoute?: boolean
-  pageTitle?: string | false
-  withAppMenu?: boolean
-  withAppHeader?: boolean
-  appHeaderColor?: AppHeaderColor
-  appContentOrientation?: 'start' | 'center' | 'end' | 'space-between'
-}
+import { RouteLayoutOptions } from 'components/Layout'
 
 export const routePaths = {
   catchAll: '*',
   root: '/',
   login: '/login',
-  onboarding: '/onboarding',
+  onboarding: {
+    base: '/onboarding',
+    account: '/onboarding/account',
+    finished: '/onboarding/finished',
+  },
   home: '/home',
   watering: '/watering',
   plant: {
@@ -34,13 +29,28 @@ export const routePaths = {
 }
 
 export const routeConfigMap = new Map<string, RouteLayoutOptions>([
-  ['catchAll', { isPrivateRoute: true, appContentOrientation: 'center' }],
+  ['catchAll', { appContentOrientation: 'center' }],
   ['root', {}],
-  ['onboarding', {}],
+  [
+    'welcome',
+    {
+      withAppMenu: false,
+      withPublicFooter: true,
+      appContentOrientation: 'space-between',
+    },
+  ],
+  ['onboarding', { withAppMenu: false }],
+  ['onboardingAccount', { pageTitle: 'Create account' }],
+  ['onboardingHowTo', { pageTitle: 'How to' }],
+  [
+    'onboardingFinished',
+    { withAppHeader: false, withAppMenu: false, appContentOrientation: 'center' },
+  ],
   [
     'login',
     {
       withAppMenu: false,
+      withPublicFooter: true,
       pageTitle: 'Login',
       appContentOrientation: 'center',
     },
@@ -48,7 +58,6 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'home',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Home',
       appContentOrientation: 'start',
@@ -58,7 +67,6 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'watering',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Watering',
       appHeaderColor: 'blue',
@@ -67,7 +75,6 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'plantNew',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Add a new friend',
       appHeaderColor: 'green',
@@ -76,38 +83,34 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'plantBase',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: false,
       appContentOrientation: 'start',
     },
   ],
-  ['plantGallery', { isPrivateRoute: true }],
+  ['plantGallery', {}],
   [
     'settingsBase',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Settings',
       appHeaderColor: 'green',
       appContentOrientation: 'start',
     },
   ],
-  ['settingsPassword', { isPrivateRoute: true, pageTitle: 'Password', appHeaderColor: 'beige' }],
+  ['settingsPassword', { pageTitle: 'Password', appHeaderColor: 'beige' }],
   [
     'settingsTags',
     {
-      isPrivateRoute: true,
       pageTitle: 'Tags',
       appHeaderColor: 'beige',
       appContentOrientation: 'start',
     },
   ],
-  ['settingsModules', { isPrivateRoute: true, pageTitle: 'Modules', appHeaderColor: 'beige' }],
+  ['settingsModules', { pageTitle: 'Modules', appHeaderColor: 'beige' }],
   [
     'settingsA11y',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Accessibility',
       appHeaderColor: 'beige',
@@ -117,18 +120,16 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
   [
     'settingsAbout',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'About',
       appHeaderColor: 'beige',
       appContentOrientation: 'start',
     },
   ],
-  ['settingsReleaseNotes', { isPrivateRoute: true }],
+  ['settingsReleaseNotes', {}],
   [
     'settingsBugReport',
     {
-      isPrivateRoute: true,
       withAppMenu: true,
       pageTitle: 'Bug reports',
       appHeaderColor: 'green',

@@ -217,36 +217,15 @@ export default function Login() {
   }, [location, store.isSignedIn, setStore, navigate])
 
   return (
-    <Layout {...routeConfig}>
+    <React.Fragment>
       <LoginGlobalStyle />
-      <LoginContainer>
-        <LoginForm onSubmit={formAction}>
-          <label htmlFor="email">
-            <Text color="white" mb="m" as="span">
-              Your email{' '}
-              <span title="Required">
-                {'*'}
-                <VisuallyHidden>(required)</VisuallyHidden>
-              </span>
-            </Text>
-            <Input
-              required
-              fullWidth
-              type="email"
-              value={email.value}
-              placeholder="lover@plants.garden"
-              id="email"
-              autoComplete="username"
-              error={email.error}
-              data-cy="login-form-email"
-              onChange={(event) => setEmail((d) => ({ ...d, value: event.target.value }))}
-            />
-          </label>
 
-          {!showForgotPassword && (
-            <label htmlFor="password">
+      <Layout {...routeConfig}>
+        <LoginContainer>
+          <LoginForm onSubmit={formAction}>
+            <label htmlFor="email">
               <Text color="white" mb="m" as="span">
-                Your password{' '}
+                Your email{' '}
                 <span title="Required">
                   {'*'}
                   <VisuallyHidden>(required)</VisuallyHidden>
@@ -255,76 +234,78 @@ export default function Login() {
               <Input
                 required
                 fullWidth
-                type="password"
-                value={password.value}
-                placeholder="********"
-                id="password"
-                autoComplete="current-password"
-                error={password.error}
-                data-cy="login-form-password"
-                onChange={(event) => setPassword((d) => ({ ...d, value: event.target.value }))}
+                type="email"
+                value={email.value}
+                placeholder="lover@plants.garden"
+                id="email"
+                autoComplete="username"
+                error={email.error}
+                onChange={(event) => setEmail((d) => ({ ...d, value: event.target.value }))}
               />
             </label>
-          )}
 
-          <ForgotPasswordLink
-            to={getResetPasswordLink()}
-            onClick={toggleResetPassword}
-            data-cy="login-form-forgot-pw"
-          >
-            <Text color="white" size="s">
-              {showForgotPassword ? 'Show password field again' : 'I forgot my password'}
+            {!showForgotPassword && (
+              <label htmlFor="password">
+                <Text color="white" mb="m" as="span">
+                  Your password{' '}
+                  <span title="Required">
+                    {'*'}
+                    <VisuallyHidden>(required)</VisuallyHidden>
+                  </span>
+                </Text>
+                <Input
+                  required
+                  fullWidth
+                  type="password"
+                  value={password.value}
+                  placeholder="********"
+                  id="password"
+                  autoComplete="current-password"
+                  error={password.error}
+                  onChange={(event) => setPassword((d) => ({ ...d, value: event.target.value }))}
+                />
+              </label>
+            )}
+
+            <ForgotPasswordLink to={getResetPasswordLink()} onClick={toggleResetPassword}>
+              <Text color="white" size="s">
+                {showForgotPassword ? 'Show password field again' : 'I forgot my password'}
+              </Text>
+            </ForgotPasswordLink>
+
+            <LoginButton
+              aria-disabled={!showForgotPassword && password.value === ''}
+              color="yellow"
+              type="submit"
+            >
+              {isProgress && <Spinner aria-hidden="true" focusable="false" />}
+              {showForgotPassword ? 'Send password reset' : 'Login'}
+            </LoginButton>
+          </LoginForm>
+
+          <FormSeperator>
+            <Text size="s" color="white" pl="m" pr="m">
+              or login with
             </Text>
-          </ForgotPasswordLink>
+            <hr />
+          </FormSeperator>
 
-          <LoginButton
-            aria-disabled={!showForgotPassword && password.value === ''}
-            variant="warning"
-            data-cy="login-form-submit"
-            type="submit"
-          >
-            {isProgress && <Spinner aria-hidden="true" focusable="false" />}
-            {showForgotPassword ? 'Send password reset' : 'Login'}
-          </LoginButton>
-        </LoginForm>
-
-        <FormSeperator>
-          <Text size="s" color="white" pl="m" pr="m">
-            or login with
-          </Text>
-          <hr />
-        </FormSeperator>
-
-        <LoginServices>
-          <Button
-            border
-            data-cy="form-service-google"
-            onClick={async () => await loginVia('google')}
-            type="button"
-          >
-            <Chrome aria-hidden="true" focusable="false" />
-            Google
-          </Button>
-          <Button
-            border
-            data-cy="form-service-github"
-            onClick={async () => await loginVia('github')}
-            type="button"
-          >
-            <GitHub aria-hidden="true" focusable="false" />
-            GitHub
-          </Button>
-          <Button
-            border
-            data-cy="form-service-twitter"
-            onClick={async () => await loginVia('twitter')}
-            type="button"
-          >
-            <Twitter aria-hidden="true" focusable="false" />
-            Twitter
-          </Button>
-        </LoginServices>
-      </LoginContainer>
-    </Layout>
+          <LoginServices>
+            <Button border onClick={async () => await loginVia('google')} type="button">
+              <Chrome aria-hidden="true" focusable="false" />
+              Google
+            </Button>
+            <Button border onClick={async () => await loginVia('github')} type="button">
+              <GitHub aria-hidden="true" focusable="false" />
+              GitHub
+            </Button>
+            <Button border onClick={async () => await loginVia('twitter')} type="button">
+              <Twitter aria-hidden="true" focusable="false" />
+              Twitter
+            </Button>
+          </LoginServices>
+        </LoginContainer>
+      </Layout>
+    </React.Fragment>
   )
 }

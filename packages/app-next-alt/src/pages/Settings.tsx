@@ -116,6 +116,10 @@ const SettingsList = styled.ul`
     justify-content: space-between;
     align-items: center;
   }
+
+  li > div {
+    cursor: not-allowed;
+  }
 `
 
 function SettingsMenuItem(props: SetttingsMenuItem) {
@@ -254,7 +258,7 @@ export default function Settings() {
         </SettingsList>
       </SettingsSection>
 
-      <Button onClick={signOut} variant="alarm" size="s" mt="m" mb="l">
+      <Button onClick={signOut} color="yellow" size="s" mt="m" mb="l">
         Logout
       </Button>
     </Layout>

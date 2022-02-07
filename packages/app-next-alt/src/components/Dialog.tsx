@@ -49,7 +49,6 @@ const DialogStyles = createGlobalStyle`
     width: 100%;
     background-color: ${({ theme }) => theme.colors.beige};
     border-radius: ${({ theme }) => theme.baseRadius};
-    padding: ${({ theme }) => theme.spacings.m};
     display: grid;
     grid-template-columns: 1fr min-content;
     grid-template-areas:
@@ -60,7 +59,8 @@ const DialogStyles = createGlobalStyle`
       grid-area: content;
       overflow: scroll;
       max-height: 70vh;
-      padding-bottom: ${({ theme }) => theme.spacings.m};
+      padding: ${({ theme }) => theme.spacings.m};
+      padding-bottom: ${({ theme }) => theme.spacings.l};
     }
   }
 
@@ -68,21 +68,36 @@ const DialogStyles = createGlobalStyle`
     grid-area: close;
     background-color: ${({ theme }) => theme.colors.blue};
     box-shadow: 0px 2px 9px ${({ theme }) => theme.colors.blue};
-    border: none;
+    border: 2px solid ${({ theme }) => theme.colors.blue};
     width: 30px;
     height: 30px;
     border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: ${({ theme }) => theme.spacings.m};
+    margin-right: ${({ theme }) => theme.spacings.m};
     margin-bottom: ${({ theme }) => theme.spacings.l};
+
+    &:hover,
+    &:focus {
+      outline: none;
+      border-color: ${(props) => props.theme.colors.white};
+    }
+
+    > svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .dialog-title {
-    grid-area: title;
-    margin-bottom: ${({ theme }) => theme.spacings.l};
     ${HeadingBaseStyles}
+    grid-area: title;
     font-weight: 500;
+    padding: ${({ theme }) => theme.spacings.m};
+    padding-bottom: 0;
+    margin-bottom: ${({ theme }) => theme.spacings.l};
   }
 `
 

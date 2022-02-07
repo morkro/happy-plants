@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Search, Sliders, X } from 'react-feather'
 import { generatePath } from 'react-router-dom'

@@ -37,7 +37,8 @@ const Actions = styled.div`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacings.l};
   width: 100%;
-  margin-top: ${({ theme }) => theme.spacings.l};
+  margin-top: auto;
+  margin-bottom: ${({ theme }) => theme.spacings.l};
 `
 
 export default function SettingsTags() {
@@ -159,7 +160,7 @@ export default function SettingsTags() {
   }, [dialog])
 
   return (
-    <Layout {...routeConfig}>
+    <React.Fragment>
       {/* Dialog */}
       <Dialog id="tag-edit" title="Edit tag" reference={setDialog}>
         <Input
@@ -173,11 +174,11 @@ export default function SettingsTags() {
           onChange={(event) => setInputEditTag({ value: event.target.value, error: '' })}
         />
         <Actions>
-          <Button variant="alarm" onClick={deleteTag}>
+          <Button color="yellow" onClick={deleteTag}>
             {isDeleting ? <Spinner /> : <Trash2 />}
             {confirmDelete ? 'Are you sure?' : 'Delete tag'}
           </Button>
-          <Button variant="normal" onClick={editTag}>
+          <Button color="green" onClick={editTag}>
             {isUploading && <Spinner />}
             Save
           </Button>
@@ -185,36 +186,38 @@ export default function SettingsTags() {
       </Dialog>
 
       {/* Page content */}
-      <Description>
-        <Text color="greenDark">Some description how tags can be used here.</Text>
-      </Description>
+      <Layout {...routeConfig}>
+        <Description>
+          <Text color="greenDark">Some description how tags can be used here.</Text>
+        </Description>
 
-      {loading ? (
-        <Spinner />
-      ) : tags?.length === 0 ? (
-        <Text as="span" color="beigeDark">
-          You dont have any tags created yet.
-        </Text>
-      ) : (
-        <TagList tags={tags} onSelect={handleDialog} />
-      )}
+        {loading ? (
+          <Spinner />
+        ) : tags?.length === 0 ? (
+          <Text as="span" color="beigeDark">
+            You dont have any tags created yet.
+          </Text>
+        ) : (
+          <TagList tags={tags} onSelect={handleDialog} />
+        )}
 
-      <Actions>
-        <Input
-          fullWidth
-          type="text"
-          placeholder="Create new tag"
-          id="tags-create"
-          value={inputTagName.value}
-          error={inputTagName.error}
-          disabled={isUploading}
-          onChange={(event) => setInputTagName({ value: event.target.value, error: '' })}
-        />
-        <Button round onClick={addNewTag}>
-          <VisuallyHidden>Create new tag</VisuallyHidden>
-          {isUploading ? <Spinner /> : <Plus color={theme.colors.white} />}
-        </Button>
-      </Actions>
-    </Layout>
+        <Actions>
+          <Input
+            fullWidth
+            type="text"
+            placeholder="Create new tag"
+            id="tags-create"
+            value={inputTagName.value}
+            error={inputTagName.error}
+            disabled={isUploading}
+            onChange={(event) => setInputTagName({ value: event.target.value, error: '' })}
+          />
+          <Button round onClick={addNewTag}>
+            <VisuallyHidden>Create new tag</VisuallyHidden>
+            {isUploading ? <Spinner /> : <Plus color={theme.colors.white} />}
+          </Button>
+        </Actions>
+      </Layout>
+    </React.Fragment>
   )
 }

@@ -40,6 +40,16 @@ if (config.isProductionMode) {
   logger('[Application] Running in development mode.')
 }
 
+const Onboarding = lazy(() => import('pages/Onboarding' /* webpackChunkName: "unauthorized" */))
+const OnboardingHowTo = lazy(
+  () => import('pages/OnboardingHowTo' /* webpackChunkName: "unauthorized" */)
+)
+const OnboardingAccount = lazy(
+  () => import('pages/OnboardingAccount' /* webpackChunkName: "unauthorized" */)
+)
+const OnboardingFinished = lazy(
+  () => import('pages/OnboardingFinished' /* webpackChunkName: "unauthorized" */)
+)
 const Login = lazy(() => import('pages/Login' /* webpackChunkName: "unauthorized" */))
 const Home = lazy(() => import('pages/Home' /* webpackChunkName: "home" */))
 const Watering = lazy(() => import('pages/Watering' /* webpackChunkName: "watering" */))
@@ -88,6 +98,11 @@ function App() {
               path={routePaths.root}
               element={store.isSignedIn ? <Navigate to={routePaths.home} /> : <Welcome />}
             />
+            <Route path={routePaths.onboarding.base} element={<Onboarding />}>
+              <Route index element={<OnboardingHowTo />} />
+              <Route path={routePaths.onboarding.account} element={<OnboardingAccount />} />
+            </Route>
+            <Route path={routePaths.onboarding.finished} element={<OnboardingFinished />} />
             <Route path={routePaths.login} element={<Login />} />
             <Route
               path={routePaths.home}

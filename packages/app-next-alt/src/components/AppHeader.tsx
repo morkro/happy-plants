@@ -161,7 +161,6 @@ export default function AppHeader(props: AppHeaderProps) {
             onClick={() =>
               location.pathname === routePaths.login ? navigate(routePaths.root) : navigate(-1)
             }
-            data-cy="app-header-return"
           >
             <ArrowLeft color={theme.colors[textColor]} aria-hidden="true" focusable="false" />
             <VisuallyHidden>Back</VisuallyHidden>

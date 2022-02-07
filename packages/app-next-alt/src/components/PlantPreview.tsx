@@ -73,6 +73,19 @@ const StyledLink = styled(Link)<{ variant: PlantPreviewVariant }>`
   position: relative;
   align-items: flex-end;
   text-decoration: none;
+
+  &::after {
+    display: none;
+    content: '';
+    position: absolute;
+    width: ${({ variant }) => (variant === 'compact' ? '100%' : '70px')};
+    height: 100%;
+    border: 4px solid ${({ theme }) => theme.colors.yellow};
+  }
+
+  &:focus::after {
+    display: block;
+  }
 `
 
 const Label = styled.div<{ gradient: boolean; variant: PlantPreviewVariant }>`
@@ -122,7 +135,7 @@ const Background = styled.div<{ variant: PlantPreviewVariant }>`
       order: 1;
       aspect-ratio: 1 / 1;
       width: 70px;
-      background: ${theme.colors.yellow};
+      background: ${theme.colors.green};
     `}
 
   img {
@@ -156,7 +169,7 @@ export default function PlantPreview(props: PlantPreviewProps) {
               <img loading="lazy" src={downloadedImageUrl} alt={name} title={name} />
             ) : (
               <CameraOff
-                color={variant === 'compact' ? theme.colors.beige : theme.colors.yellowLight}
+                color={variant === 'compact' ? theme.colors.beige : theme.colors.beige}
                 size={45}
               />
             )}

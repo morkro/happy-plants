@@ -5,6 +5,7 @@ import { ButtonLink } from 'components/Button'
 import { Text } from 'components/Typography'
 import Layout, { BaseLayout } from 'components/Layout'
 import WelcomeIllustration from 'components/WelcomeIllustration'
+import useRouteConfig from 'utilities/useRouteConfig'
 
 const WelcomeGlobalStyle = createGlobalStyle`
   #root ${BaseLayout} {
@@ -31,30 +32,23 @@ const IllustrationContainer = styled.div`
 `
 
 const WelcomeActions = styled.div`
-  ${({ theme }) => css`
-    width: 100%;
-    display: grid;
-    grid-template-columns:
-      calc(50% - (${theme.spacings.m} / 2))
-      calc(50% - (${theme.spacings.m} / 2));
-    grid-column-gap: ${theme.spacings.m};
-
-    a[href='${routePaths.onboarding}'] {
-      box-shadow: 0 1px 2px ${theme.colors.greenDark};
-    }
-  `}
+  width: 100%;
+  display: flex;
+  gap: ${({ theme }) => theme.spacings.m};
 `
 
 export default function Welcome() {
+  const routeConfig = useRouteConfig('welcome')
+
   return (
     <React.Fragment>
       <WelcomeGlobalStyle />
 
-      <Layout isPrivateRoute={false} withAppMenu={false} appContentOrientation="space-between">
+      <Layout {...routeConfig}>
         <IllustrationContainer>
-          <WelcomeIllustration data-cy="illustration" />
+          <WelcomeIllustration />
           <div>
-            <Text color="beigeDark" data-cy="welcome-text">
+            <Text color="beigeDark">
               Keep track of your
               <br />
               houseplants&apos; well-being.
@@ -63,10 +57,10 @@ export default function Welcome() {
         </IllustrationContainer>
 
         <WelcomeActions>
-          <ButtonLink border to={routePaths.login} data-cy="action-login">
+          <ButtonLink fullWidth color="white" border to={routePaths.login}>
             Login
           </ButtonLink>
-          <ButtonLink variant="warning" to={routePaths.onboarding} data-cy="action-onboarding">
+          <ButtonLink fullWidth color="yellow" to={routePaths.onboarding.base}>
             Getting started
           </ButtonLink>
         </WelcomeActions>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import A11yDialogInstance from 'a11y-dialog'
 import styled, { createGlobalStyle, css } from 'styled-components'
-import { CameraOff, MoreVertical, Plus, Trash2 } from 'react-feather'
+import { Camera, CameraOff, MoreVertical, Plus, Trash2 } from 'react-feather'
 import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
 import { routePaths } from 'routes'
@@ -24,7 +24,7 @@ import Spinner from 'components/Spinner'
 import BaseSVG from 'components/BaseSVG'
 import Dialog from 'components/Dialog'
 import TypesList from 'components/TypesList'
-import { AppHeaderPortal, AppHeaderButton } from 'components/AppHeader'
+import { AppHeaderPortal } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
 import { Button } from 'components/Button'
 import Time from 'components/Time'
@@ -43,6 +43,10 @@ const PlantGlobalStyle = createGlobalStyle`
     flex-direction: column;
     align-items: center;
   }
+`
+
+const SettingsButton = styled(Button)`
+  margin-right: ${({ theme }) => `calc(1.25 * ${theme.spacings.m})`};
 `
 
 const PlantHeader = styled.header<{ $loading: boolean }>`
@@ -86,6 +90,25 @@ const PlantHeader = styled.header<{ $loading: boolean }>`
     width: 100%;
     object-fit: cover;
   }
+`
+
+const PlantHeaderUploadInfo = styled.div<{ showUploadLayer: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacings.m};
+  opacity: ${({ showUploadLayer }) => (showUploadLayer ? '1' : '0')};
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fonts.large};
+  transition: opacity var(--base-transition) ease-in-out;
 `
 
 const PlantHeaderLabel = styled.div<{ gradient: boolean }>`
@@ -184,6 +207,7 @@ export default function Plant() {
   const [isLoadingSelectedTags, setIsLoadingSelectedTags] = useState(false)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [confirmPhotoUpload, setConfirmPhotoUpload] = useState(false)
   const hasImageUrl = typeof data?.imageURL === 'string'
 
   async function onSetPlantType(type?: PlantType) {
@@ -224,6 +248,20 @@ export default function Plant() {
 
   function handleSettingsDialogClose() {
     setConfirmDelete(false)
+  }
+
+  function onHandlePhotoUpload() {
+    if (!confirmPhotoUpload) {
+      setConfirmPhotoUpload(true)
+
+      setTimeout(() => {
+        setConfirmPhotoUpload(false)
+      }, 3000)
+
+      return
+    }
+
+    console.log('upload new photo')
   }
 
   useEffect(() => {
@@ -274,47 +312,55 @@ export default function Plant() {
       {/* Globals */}
       <PlantGlobalStyle />
       <DocumentTitle title={data?.name} />
+
+      {/* Dialogs */}
+      <Dialog title="Plant settings" reference={setSettingsDialog} id="plant-dialog-settings">
+        <Button color="red" mb="l" mt="s" onClick={onDeletePlant}>
+          {isDeleting ? <Spinner /> : <Trash2 />}
+          {confirmDelete ? 'Are you sure? This is permanent' : 'Delete plant'}
+        </Button>
+        {data?.modified && (
+          <Text color="beigeDark" size="s" center>
+            Last modified {toLocaleDate(data?.modified)} (
+            <Time dateTime={data?.modified}>{data?.modified}</Time>)
+          </Text>
+        )}
+      </Dialog>
+
+      <Dialog title="Select a category" reference={setTypeDialog} id="plant-dialog-category">
+        {!loading && <TypesList selected={data?.type} onSelectType={onSetPlantType} />}
+      </Dialog>
+
+      <TagsDialog
+        id="plant-dialog-tags"
+        reference={setTagsDialog}
+        tags={tags}
+        loading={loadingTags}
+        selected={selectedTags}
+        onSelect={setSelectedTags}
+      />
+
+      <Dialog title="Select modules" reference={setModulesDialog} id="plant-dialog-modules">
+        <Text color="beigeDark">There are no modules.</Text>
+      </Dialog>
+
+      {/* Page content */}
       <Layout {...routeConfig}>
-        {/* Dialogs */}
-        <Dialog title="Plant settings" reference={setSettingsDialog} id="plant-dialog-settings">
-          <Button variant="alarm" mb="l" mt="s" onClick={onDeletePlant}>
-            {isDeleting ? <Spinner /> : <Trash2 />}
-            {confirmDelete ? 'Are you sure? This is permanent' : 'Delete plant'}
-          </Button>
-          {data?.modified && (
-            <Text color="beigeDark" size="s" center>
-              Last modified {toLocaleDate(data?.modified)} (
-              <Time dateTime={data?.modified}>{data?.modified}</Time>)
-            </Text>
-          )}
-        </Dialog>
-
-        <Dialog title="Select a category" reference={setTypeDialog} id="plant-dialog-category">
-          {!loading && <TypesList selected={data?.type} onSelectType={onSetPlantType} />}
-        </Dialog>
-
-        <TagsDialog
-          id="plant-dialog-tags"
-          reference={setTagsDialog}
-          tags={tags}
-          loading={loadingTags}
-          selected={selectedTags}
-          onSelect={setSelectedTags}
-        />
-
-        <Dialog title="Select modules" reference={setModulesDialog} id="plant-dialog-modules">
-          <Text color="beigeDark">There are no modules.</Text>
-        </Dialog>
-
-        {/* Page content */}
         <AppHeaderPortal.Source>
-          <AppHeaderButton onClick={() => settingsDialog?.show()}>
+          <SettingsButton round size="s" color="white" onClick={() => settingsDialog?.show()}>
             <MoreVertical color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
-            <VisuallyHidden>Settings</VisuallyHidden>
-          </AppHeaderButton>
+            <VisuallyHidden>Plant settings</VisuallyHidden>
+          </SettingsButton>
         </AppHeaderPortal.Source>
 
-        <PlantHeader $loading={loading}>
+        <PlantHeader $loading={loading} onClick={onHandlePhotoUpload}>
+          <PlantHeaderUploadInfo showUploadLayer={confirmPhotoUpload} aria-hidden="true">
+            <Camera color="white" />
+            <Text color="white" size="m" semiBold>
+              Upload new photo
+            </Text>
+          </PlantHeaderUploadInfo>
+
           {!loading && (
             <PlantHeaderLabel gradient={hasImageUrl && !loadingImageUrl}>
               <Heading
@@ -360,7 +406,7 @@ export default function Plant() {
             <Text bold color="beigeDark">
               Tags
             </Text>
-            <Button round size="s" variant="info" onClick={() => tagsDialog?.show()}>
+            <Button round size="s" color="blue" onClick={() => tagsDialog?.show()}>
               <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
               <VisuallyHidden>Open tags dialog</VisuallyHidden>
             </Button>
@@ -380,7 +426,7 @@ export default function Plant() {
             <Text bold color="beigeDark">
               Modules
             </Text>
-            <Button round size="s" variant="info" onClick={() => modulesDialog?.show()}>
+            <Button round size="s" color="blue" onClick={() => modulesDialog?.show()}>
               <Plus color={theme.colors.white} aria-hidden="true" focusable="false" />
               <VisuallyHidden>Open modules dialog</VisuallyHidden>
             </Button>
