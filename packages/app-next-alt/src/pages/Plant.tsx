@@ -3,10 +3,9 @@ import { useNavigate, useParams } from 'react-router'
 import A11yDialogInstance from 'a11y-dialog'
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { Camera, CameraOff, MoreVertical, Plus, Trash2 } from 'react-feather'
-import { theme } from 'theme'
 import { useDownloadURL } from 'react-firebase-hooks/storage'
+import { theme } from 'theme'
 import { routePaths } from 'routes'
-import { Heading, Text } from 'components/Typography'
 import {
   deletePhoto,
   deletePlant,
@@ -18,6 +17,7 @@ import {
   usePlantDocument,
   usePlantTags,
 } from 'services/firebase'
+import { Heading, Text } from 'components/Typography'
 import { toast } from 'components/Toaster'
 import DocumentTitle from 'components/DocumentTitle'
 import Spinner from 'components/Spinner'
@@ -28,12 +28,12 @@ import { AppHeaderPortal } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
 import { Button } from 'components/Button'
 import Time from 'components/Time'
-import { toLocaleDate } from 'utilities/toLocaleDate'
 import Layout from 'components/Layout'
-import useRouteConfig from 'utilities/useRouteConfig'
 import TagsDialog from 'components/TagsDialog'
-import { PlantTag, PlantType } from 'typings/plant'
 import TagList from 'components/TagList'
+import { toLocaleDate } from 'utilities/toLocaleDate'
+import useRouteConfig from 'utilities/useRouteConfig'
+import { PlantTag, PlantType } from 'typings/plant'
 import useUserProfile from 'utilities/useUserProfile'
 import logger from 'utilities/logger'
 

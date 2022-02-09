@@ -37,8 +37,7 @@ const Actions = styled.div`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacings.l};
   width: 100%;
-  margin-top: auto;
-  margin-bottom: ${({ theme }) => theme.spacings.l};
+  margin-top: ${({ theme }) => theme.spacings.l};
 `
 
 export default function SettingsTags() {
@@ -174,7 +173,7 @@ export default function SettingsTags() {
           onChange={(event) => setInputEditTag({ value: event.target.value, error: '' })}
         />
         <Actions>
-          <Button color="yellow" onClick={deleteTag}>
+          <Button color="red" onClick={deleteTag}>
             {isDeleting ? <Spinner /> : <Trash2 />}
             {confirmDelete ? 'Are you sure?' : 'Delete tag'}
           </Button>

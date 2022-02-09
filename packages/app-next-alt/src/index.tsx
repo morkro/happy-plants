@@ -40,6 +40,7 @@ if (config.isProductionMode) {
   logger('[Application] Running in development mode.')
 }
 
+const Debug = lazy(() => import('pages/__Debug__' /* webpackChunkName: "__debug__" */))
 const Onboarding = lazy(() => import('pages/Onboarding' /* webpackChunkName: "unauthorized" */))
 const OnboardingHowTo = lazy(
   () => import('pages/OnboardingHowTo' /* webpackChunkName: "unauthorized" */)
@@ -102,7 +103,14 @@ function App() {
               <Route path={routePaths.onboarding.howTo} element={<OnboardingHowTo />} />
               <Route path={routePaths.onboarding.account} element={<OnboardingAccount />} />
             </Route>
-            <Route path={routePaths.onboarding.finished} element={<OnboardingFinished />} />
+            <Route
+              path={routePaths.onboarding.finished}
+              element={
+                <AuthRoute>
+                  <OnboardingFinished />
+                </AuthRoute>
+              }
+            />
             <Route path={routePaths.login} element={<Login />} />
             <Route
               path={routePaths.home}
@@ -205,6 +213,14 @@ function App() {
               element={
                 <AuthRoute>
                   <SettingsBugReport />
+                </AuthRoute>
+              }
+            />
+            <Route
+              path={routePaths.debug}
+              element={
+                <AuthRoute>
+                  <Debug />
                 </AuthRoute>
               }
             />

@@ -170,7 +170,7 @@ export default function Settings() {
 
     try {
       await signOutUser()
-      navigate(routePaths.home)
+      navigate(routePaths.root)
       setStore(initialStore)
     } catch (error: any) {
       setStore({ authLoader: { show: false } })

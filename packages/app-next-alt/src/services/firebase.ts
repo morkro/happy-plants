@@ -1,5 +1,6 @@
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app'
 import {
+  createUserWithEmailAndPassword,
   getAuth,
   getRedirectResult,
   GithubAuthProvider,
@@ -91,6 +92,18 @@ export interface FirestoreBugReport {
 /**
  * ###################### 2. Authentication ######################
  */
+export async function createAccount(
+  email: string,
+  password: string
+): Promise<Pick<AppState, 'user' | 'isSignedIn'>> {
+  const auth = getAuth(firebaseApp)
+  const results = await createUserWithEmailAndPassword(auth, email, password)
+  return {
+    user: results?.user || null,
+    isSignedIn: true,
+  }
+}
+
 export async function signInUser(payload: {
   provider: FirestoreLoginProvider
   email: string

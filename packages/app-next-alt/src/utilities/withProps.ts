@@ -8,18 +8,18 @@ export type WithCssProps<P> = P & {
 
 export type WithMarginProps<P> = P & {
   m?: ThemeSpacings
-  mt?: ThemeSpacings
+  mt?: ThemeSpacings | 'auto'
   mr?: ThemeSpacings
-  mb?: ThemeSpacings
+  mb?: ThemeSpacings | 'auto'
   ml?: ThemeSpacings
 }
 
 export const WithMarginStyles = css<WithMarginProps<{}>>`
   ${({ theme, m, mt, mr, mb, ml }) => css`
     margin: ${m && theme.spacings[m]};
-    margin-top: ${mt && theme.spacings[mt]};
+    margin-top: ${mt && (mt === 'auto' ? mt : theme.spacings[mt])};
     margin-right: ${mr && theme.spacings[mr]};
-    margin-bottom: ${mb && theme.spacings[mb]};
+    margin-bottom: ${mb && (mb === 'auto' ? mb : theme.spacings[mb])};
     margin-left: ${ml && theme.spacings[ml]};
   `}
 `

@@ -61,18 +61,22 @@ const BaseStyles = css<BaseProps>`
     return size === 's' ? `calc(0.5 * ${spacing}) ${spacing}` : `calc(2 * ${spacing})`
   }};
 
-  &:hover {
+  &:hover:not([disabled]):not([aria-disabled='true']) {
+    color: var(--text-color);
     text-decoration: underline;
-    border-color: ${(props) => props.theme.colors.white};
   }
 
   &[disabled],
   &[aria-disabled='true'] {
+    --base-color: ${({ theme, color }) => {
+      if (color === 'red') return theme.colors.redLight
+      else if (color === 'yellow') return theme.colors.yellowLight
+      else return theme.colors.beigeDark
+    }};
     cursor: not-allowed;
   }
 
-  &:focus:not([disabled]),
-  &:active:not([aria-disabled]) {
+  &:is(:hover, :focus, :active):not([disabled]):not([aria-disabled='true']) {
     border-color: ${({ theme, color, border }) => {
       if (color === 'white' && !border) return theme.colors.greenDark
       if (border) return 'var(--base-color)'

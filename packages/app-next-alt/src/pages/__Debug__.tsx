@@ -78,6 +78,9 @@ export default function OnboardingFinished() {
       <Button fullWidth mb="m">
         Default props fullWidth
       </Button>
+      <Button color="blue" aria-disabled="true" mb="m">
+        Disabled
+      </Button>
       <Container>
         <Button round>
           <Smile />

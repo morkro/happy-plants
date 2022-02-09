@@ -4,7 +4,7 @@ import { routePaths } from 'routes'
 import { ButtonLink } from 'components/Button'
 import { Text } from 'components/Typography'
 import Layout, { BaseLayout } from 'components/Layout'
-import WelcomeIllustration from 'components/WelcomeIllustration'
+import WelcomeIllustration from 'components/IllustrationWelcome'
 import useRouteConfig from 'utilities/useRouteConfig'
 
 const WelcomeGlobalStyle = createGlobalStyle`

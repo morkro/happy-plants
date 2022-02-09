@@ -157,16 +157,16 @@ const ErrorContainer = styled.div`
 `
 
 const TogglePasswordButton = styled(Button)`
+  --base-color: transparent;
   position: absolute !important;
   z-index: 1;
   top: calc(1.5 * ${(props) => props.theme.spacings.m});
   right: calc(1.5 * ${(props) => props.theme.spacings.m});
-  background: transparent;
-  border: none;
   box-shadow: none;
   color: ${(props) => props.theme.colors.beigeDark};
   display: flex;
 
+  &:hover,
   &:focus,
   &:active {
     color: ${(props) => props.theme.colors.greenDark};
@@ -347,6 +347,7 @@ export function Input(props: InputProps) {
           }}
           type="button"
           size="s"
+          round
         >
           {showPlainPassword ? (
             <EyeOff aria-hidden="true" focusable="false" />

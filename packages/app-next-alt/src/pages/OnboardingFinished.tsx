@@ -1,7 +1,7 @@
 import React from 'react'
 import { routePaths } from 'routes'
 import styled from 'styled-components'
-import OnboardingFinishedIllustration from 'components/OnboardingFinishedIllustration'
+import OnboardingFinishedIllustration from 'components/IllustrationOnboardingFinished'
 import { Heading } from 'components/Typography'
 import Layout from 'components/Layout'
 import { ButtonLink } from 'components/Button'

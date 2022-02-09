@@ -5,7 +5,7 @@ import { routePaths } from 'routes'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Link } from 'react-router-dom'
 import config from 'config'
-import { AppState, useAppStore } from 'store'
+import { useAppStore } from 'store'
 import { FirebaseError } from 'firebase/app'
 import { Button } from 'components/Button'
 import { Input } from 'components/Input'
@@ -186,7 +186,7 @@ export default function Login() {
       if (getSessionEntry(config.localStorage.userAuthProgress)) {
         deleteSessionEntry(config.localStorage.userAuthProgress)
         setStore({ authLoader: { show: true, message: 'login' } })
-        delay(2000)
+        await delay(2000)
 
         if (!store.isSignedIn) {
           try {

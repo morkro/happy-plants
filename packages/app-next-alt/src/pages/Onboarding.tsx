@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { routePaths } from 'routes'
 import styled from 'styled-components'
 import Layout from 'components/Layout'
@@ -12,6 +12,22 @@ const onboardingFlow = [
   routePaths.onboarding.account,
   routePaths.onboarding.finished,
 ]
+
+const OnboardingProgress = styled.progress`
+  appearance: none;
+  width: ${({ theme }) => `calc(100% + (2.5 * ${theme.spacings.m}))`};
+  height: 4px;
+  top: 0;
+
+  &::-webkit-progress-bar {
+    background-color: ${({ theme }) => theme.colors.white};
+  }
+
+  &::-webkit-progress-value {
+    background-color: ${({ theme }) => theme.colors.green};
+    transition: width var(--base-transition) ease-in-out;
+  }
+`
 
 const Actions = styled.div`
   display: flex;
@@ -26,9 +42,10 @@ const Actions = styled.div`
 `
 
 export default function Onboarding() {
+  const location = useLocation()
   const [routeConfig, setRouteConfig] = useState(getRouteConfig('onboarding'))
   const [navIndex, setNavIndex] = useState(0)
-  const location = useLocation()
+  const [canContinue, setCanContinue] = useState(false)
 
   useEffect(() => {
     const index = onboardingFlow.findIndex((r) => r === location?.pathname)
@@ -39,16 +56,26 @@ export default function Onboarding() {
 
     setNavIndex(index)
     setRouteConfig(getRouteConfig(configName))
+    setCanContinue(false)
   }, [location?.pathname])
 
   return (
     <Layout {...routeConfig}>
-      <Outlet />
+      <OnboardingProgress max={onboardingFlow.length - 1} value={navIndex}>
+        {`${navIndex}/${onboardingFlow.length - 1}`}
+      </OnboardingProgress>
+
+      <Outlet context={[canContinue, setCanContinue]} />
+
       <Actions>
         <ButtonLink to={onboardingFlow[navIndex === 0 ? navIndex : navIndex - 1]} border fullWidth>
           Back
         </ButtonLink>
-        <ButtonLink to={onboardingFlow[navIndex + 1]} fullWidth>
+        <ButtonLink
+          to={canContinue ? onboardingFlow[navIndex + 1] : '#'}
+          aria-disabled={!canContinue}
+          fullWidth
+        >
           Next
         </ButtonLink>
       </Actions>

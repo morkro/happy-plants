@@ -27,6 +27,7 @@ export const routePaths = {
     releaseNotes: '/settings/release-notes',
     bugReport: '/settings/bug-report',
   },
+  debug: '/__debug__',
 }
 
 export const routeConfigMap = new Map<string, RouteLayoutOptions>([
@@ -36,19 +37,38 @@ export const routeConfigMap = new Map<string, RouteLayoutOptions>([
     'welcome',
     {
       withAppMenu: false,
+      withAppHeader: false,
       withPublicFooter: true,
       appContentOrientation: 'space-between',
     },
   ],
   ['onboarding', { withAppMenu: false, pageTitle: 'Onboarding' }],
-  ['onboardingHowTo', { withAppMenu: false, appHeaderColor: 'beige', pageTitle: 'How to' }],
+  [
+    'onboardingHowTo',
+    {
+      withAppMenu: false,
+      appHeaderColor: 'beige',
+      appContentOrientation: 'start',
+      pageTitle: 'How to',
+    },
+  ],
   [
     'onboardingAccount',
-    { withAppMenu: false, appHeaderColor: 'beige', pageTitle: 'Create account' },
+    {
+      withAppMenu: false,
+      appHeaderColor: 'beige',
+      appContentOrientation: 'start',
+      pageTitle: 'Create account',
+    },
   ],
   [
     'onboardingFinished',
-    { withAppHeader: false, withAppMenu: false, appContentOrientation: 'center' },
+    {
+      withAppHeader: false,
+      withAppMenu: false,
+      appContentOrientation: 'center',
+      pageTitle: 'Onboarding finished',
+    },
   ],
   [
     'login',
