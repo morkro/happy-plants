@@ -8,6 +8,7 @@ import { Input } from 'components/Input'
 import { Button } from 'components/Button'
 import { FirestoreLoginProvider } from 'services/firebase'
 import { WithMarginStyles } from 'utilities/withProps'
+import { OutletContext } from './Onboarding'
 
 const Illustration = styled.div`
   width: 100%;
@@ -25,12 +26,29 @@ const AccountSection = styled.section`
 `
 
 const AccountNote = styled.div`
-  margin-top: auto;
   width: 100%;
-  margin-bottom: ${({ theme }) => theme.spacings.m};
+  margin-top: auto;
+  margin-bottom: ${({ theme }) => theme.spacings.l};
+  padding: ${({ theme }) => theme.spacings.m};
+  background: ${({ theme }) => theme.colors.blue};
+  border-radius: ${({ theme }) => theme.baseRadius};
+  filter: ${({ theme }) => `drop-shadow(0 2px 9px ${theme.colors.blue})`};
+
+  &::after {
+    content: '';
+    background: ${({ theme }) => theme.colors.blue};
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    right: ${({ theme }) => `calc(25% - ${theme.spacings.m})`};
+    width: 15px;
+    height: 15px;
+    border-radius: ${({ theme }) => theme.baseRadius};
+    transform: rotate(45deg);
+  }
 
   p {
-    text-align: center;
+    text-align: right;
   }
 `
 
@@ -44,14 +62,17 @@ export default function OnboardingAccount() {
   const [email, setEmail] = useState({ value: '', error: '', isValidEmail: false })
   const [password, setPassword] = useState({ value: '', error: '' })
   const [loginProvider, setLoginProvider] = useState<FirestoreLoginProvider>()
-  const [canContinue, setCanContinue] =
-    useOutletContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>]>()
+  const {
+    progress: [canContinue, setCanContinue],
+    account: [setAccountProvider, setEmailPassword],
+  } = useOutletContext<OutletContext>()
 
   function setProvider(type: FirestoreLoginProvider) {
     if (loginProvider !== type) {
       setLoginProvider(type)
     } else {
       setLoginProvider(undefined)
+      setCanContinue(false)
     }
   }
 
@@ -59,8 +80,16 @@ export default function OnboardingAccount() {
     const hasEmailPwFilled = email.isValidEmail && password.value
     if (hasEmailPwFilled || loginProvider) {
       setCanContinue(true)
+      setAccountProvider(hasEmailPwFilled ? 'email' : loginProvider)
     }
-  }, [email.isValidEmail, password.value, loginProvider, setCanContinue])
+  }, [email.isValidEmail, password.value, loginProvider, setCanContinue, setAccountProvider])
+
+  useEffect(() => {
+    const hasEmailPwFilled = email.isValidEmail && password.value
+    if (hasEmailPwFilled) {
+      setEmailPassword({ email: email.value, password: password.value })
+    }
+  }, [email.isValidEmail, email.value, password.value, setEmailPassword])
 
   return (
     <React.Fragment>
@@ -152,7 +181,7 @@ export default function OnboardingAccount() {
 
       {canContinue ? (
         <AccountNote>
-          <Text color="beigeDark" italic>
+          <Text color="white" size="s">
             By tapping next,{' '}
             {loginProvider
               ? `you will be navigated to ${loginProvider} to sign in, then send back.`

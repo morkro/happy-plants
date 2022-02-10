@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import { Heading, Text } from 'components/Typography'
+import { OutletContext } from './Onboarding'
 
 export default function OnboardingHowTo() {
-  const [_, setCanContinue] =
-    useOutletContext<[boolean, React.Dispatch<React.SetStateAction<boolean>>]>()
+  const {
+    progress: [canContinue, setCanContinue],
+  } = useOutletContext<OutletContext>()
 
   useEffect(() => {
-    setCanContinue(true)
-  })
+    if (!canContinue) setCanContinue(true)
+  }, [canContinue, setCanContinue])
 
   return (
     <React.Fragment>
-      <Heading color="greenDark" as="h2" mt="l" semiBold>
+      <Heading color="greenDark" as="h2" mt="auto" semiBold>
         Some nice illustrations here
       </Heading>
       <Text color="greenDark" mb="auto">

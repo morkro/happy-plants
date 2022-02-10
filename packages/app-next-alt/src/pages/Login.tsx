@@ -12,18 +12,18 @@ import { Input } from 'components/Input'
 import { Text } from 'components/Typography'
 import Layout, { BaseLayout } from 'components/Layout'
 import { toast } from 'components/Toaster'
-import useSearchParams from 'utilities/useSearchParams'
+import Spinner from 'components/Spinner'
+import VisuallyHidden from 'components/VisuallyHidden'
 import {
   forgotPassword,
   getAuthRedirectResults,
   signInUser,
   FirestoreLoginProvider,
 } from 'services/firebase'
+import { deleteSessionEntry, getSessionEntry } from 'services/webStorage'
 import delay from 'utilities/delay'
 import logger from 'utilities/logger'
-import Spinner from 'components/Spinner'
-import VisuallyHidden from 'components/VisuallyHidden'
-import { deleteSessionEntry, getSessionEntry } from 'services/webStorage'
+import useSearchParams from 'utilities/useSearchParams'
 import getErrorMessage from 'utilities/getErrorMessage'
 import useRouteConfig from 'utilities/useRouteConfig'
 

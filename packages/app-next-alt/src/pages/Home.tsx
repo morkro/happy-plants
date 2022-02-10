@@ -6,7 +6,7 @@ import { theme } from 'theme'
 import { routePaths } from 'routes'
 import { HomeOrderBy, HomeViewmode } from 'config'
 import { Heading, Text } from 'components/Typography'
-import EmptyDataIllustration from 'components/EmptyDataIllustration'
+import IllustrationEmptyData from 'components/IllustrationEmptyData'
 import { AppHeaderButton, AppHeaderPortal } from 'components/AppHeader'
 import VisuallyHidden from 'components/VisuallyHidden'
 import HomeOptions from 'components/HomeOptions'
@@ -41,6 +41,8 @@ const PlantList = styled.ul<{ viewmode: HomeViewmode }>`
 
 const EmptyDataContainer = styled.div`
   width: 65%;
+  margin-top: auto;
+  margin-bottom: auto;
 
   h2 {
     line-height: 160%;
@@ -83,7 +85,7 @@ const ScreenCover = styled.div`
 function EmptyData() {
   return (
     <EmptyDataContainer>
-      <EmptyDataIllustration />
+      <IllustrationEmptyData />
       <Heading as="h2" size="l" color="beigeDark" center>
         You haven&apos;t added
         <br />
@@ -223,7 +225,9 @@ export default function Home() {
             </li>
           ))}
         </PlantList>
-      ) : (
+      ) : null}
+
+      {loading && collectionData?.length !== 0 ? (
         <PlantList viewmode={viewmode.value}>
           {new Array(5).fill({}).map((_, index) => (
             <li key={`plant-loading-${index}`}>
@@ -234,7 +238,7 @@ export default function Home() {
             </li>
           ))}
         </PlantList>
-      )}
+      ) : null}
 
       {!loading && collectionData?.length === 0 && <EmptyData />}
     </Layout>

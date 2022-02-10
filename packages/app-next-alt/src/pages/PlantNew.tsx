@@ -7,7 +7,7 @@ import { generatePath, useNavigate } from 'react-router-dom'
 import { routePaths } from 'routes'
 import { getDownloadURL } from 'firebase/storage'
 import Layout, { BaseLayout } from 'components/Layout'
-import NewIllustration from 'components/NewIllustration'
+import IllustrationPlantNew from 'components/IllustrationPlantNew'
 import { Button } from 'components/Button'
 import { Text } from 'components/Typography'
 import { Input } from 'components/Input'
@@ -30,7 +30,7 @@ const NewGlobalStyle = createGlobalStyle`
   }
 `
 
-const Illustration = styled(NewIllustration)`
+const Illustration = styled(IllustrationPlantNew)`
   width: 100%;
   position: absolute;
   z-index: 0;
