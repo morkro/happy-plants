@@ -195,11 +195,10 @@ export default function Login() {
           } catch (error) {
             logger(error as string, true)
             toast.error('There was an issue logging you in, please try again.')
-          } finally {
-            setStore({ authLoader: { show: false } })
           }
         }
 
+        setStore({ authLoader: { show: false } })
         const locationState = location.state as { from?: Location }
         navigate(locationState?.from?.pathname || routePaths.home)
       }

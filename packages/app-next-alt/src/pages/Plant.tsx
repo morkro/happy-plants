@@ -347,7 +347,13 @@ export default function Plant() {
       {/* Page content */}
       <Layout {...routeConfig}>
         <AppHeaderPortal.Source>
-          <SettingsButton round size="s" color="white" onClick={() => settingsDialog?.show()}>
+          <SettingsButton
+            round
+            size="s"
+            color="white"
+            shadow={false}
+            onClick={() => settingsDialog?.show()}
+          >
             <MoreVertical color={theme.colors.greenDark} aria-hidden="true" focusable="false" />
             <VisuallyHidden>Plant settings</VisuallyHidden>
           </SettingsButton>

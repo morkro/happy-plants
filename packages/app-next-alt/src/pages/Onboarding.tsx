@@ -111,13 +111,10 @@ export default function Onboarding() {
           } catch (error) {
             logger(error as string, true)
             toast.error('There was an creating your account, please try again.')
-          } finally {
-            setStore({ authLoader: { show: false } })
           }
-        } else {
-          setStore({ authLoader: { show: false } })
         }
 
+        setStore({ authLoader: { show: false } })
         navigate(routePaths.onboarding.finished)
       }
     }

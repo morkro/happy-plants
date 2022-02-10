@@ -10,6 +10,7 @@ interface BaseProps {
   round?: boolean
   type?: 'button' | 'submit'
   fullWidth?: boolean
+  shadow?: boolean
 }
 
 type WithBaseProps = WithCssProps<WithMarginProps<BaseProps>>
@@ -20,6 +21,7 @@ const defaultProps: BaseProps = {
   color: 'green',
   border: false,
   round: false,
+  shadow: true,
 }
 
 const BaseStyles = css<BaseProps>`
@@ -42,7 +44,7 @@ const BaseStyles = css<BaseProps>`
   width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   background-color: ${(props) => (props.border ? 'transparent' : 'var(--base-color)')};
   border-radius: ${(props) => (props.round ? '100%' : props.theme.baseRadius)};
-  box-shadow: ${(props) => (props.border ? 'none' : '0 2px 9px var(--shadow)')};
+  box-shadow: ${(props) => (props.border || !props.shadow ? 'none' : '0 2px 9px var(--shadow)')};
   color: var(--text-color);
   font-family: var(--font-normal);
   text-align: center;
