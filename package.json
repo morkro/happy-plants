@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "husky": "^4.2.5",
-    "lerna": "^3.22.1"
+    "lerna": "^6.5.0"
   },
   "husky": {
     "hooks": {
